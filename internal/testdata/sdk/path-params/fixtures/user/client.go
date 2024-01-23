@@ -25,20 +25,37 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetUser(ctx context.Context, userId string) (string, error) {
+func (c *Client) GetUser(
+	ctx context.Context,
+	userId string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
+
 	var response string
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -47,20 +64,37 @@ func (c *Client) GetUser(ctx context.Context, userId string) (string, error) {
 	return response, nil
 }
 
-func (c *Client) GetUserV2(ctx context.Context, userId string) (string, error) {
+func (c *Client) GetUserV2(
+	ctx context.Context,
+	userId string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info", userId)
 
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
+
 	var response string
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -69,12 +103,29 @@ func (c *Client) GetUserV2(ctx context.Context, userId string) (string, error) {
 	return response, nil
 }
 
-func (c *Client) GetUserV3(ctx context.Context, userId string, infoId string) (string, error) {
+func (c *Client) GetUserV3(
+	ctx context.Context,
+	userId string,
+	infoId string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info/%v", userId, infoId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -82,7 +133,8 @@ func (c *Client) GetUserV3(ctx context.Context, userId string, infoId string) (s
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

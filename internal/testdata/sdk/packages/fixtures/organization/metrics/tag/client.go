@@ -25,19 +25,36 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) PostTag(ctx context.Context, request *metrics.Tag) error {
+func (c *Client) PostTag(
+	ctx context.Context,
+	request *metrics.Tag,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "metrics/tag"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:     endpointURL,
 			Method:  http.MethodPost,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 			Request: request,
 		},
 	); err != nil {

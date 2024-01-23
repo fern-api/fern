@@ -26,10 +26,19 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Get(ctx context.Context, request *fern.WithNonLiteralHeadersRequest) error {
+func (c *Client) Get(
+	ctx context.Context,
+	request *fern.WithNonLiteralHeadersRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL + "/" + "with-non-literal-headers"
 
@@ -37,6 +46,11 @@ func (c *Client) Get(ctx context.Context, request *fern.WithNonLiteralHeadersReq
 	headers.Add("nonLiteralEndpointHeader", fmt.Sprintf("%v", request.NonLiteralEndpointHeader))
 	headers.Add("literalEndpointHeader", fmt.Sprintf("%v", "endpoint header"))
 	headers.Add("trueEndpointHeader", fmt.Sprintf("%v", true))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	if err := c.caller.Call(
 		ctx,
@@ -44,6 +58,7 @@ func (c *Client) Get(ctx context.Context, request *fern.WithNonLiteralHeadersReq
 			URL:     endpointURL,
 			Method:  http.MethodPost,
 			Headers: headers,
+			Client:  options.HTTPClient,
 		},
 	); err != nil {
 		return err

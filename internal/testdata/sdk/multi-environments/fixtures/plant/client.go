@@ -24,12 +24,27 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetPlant(ctx context.Context) (string, error) {
+func (c *Client) GetPlant(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://plants.yoursite.com"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "plants"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -37,7 +52,8 @@ func (c *Client) GetPlant(ctx context.Context) (string, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

@@ -30,12 +30,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Get(ctx context.Context, id string) (string, error) {
+func (c *Client) Get(
+	ctx context.Context,
+	id string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -90,7 +106,8 @@ func (c *Client) Get(ctx context.Context, id string) (string, error) {
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
 		},
@@ -100,12 +117,29 @@ func (c *Client) Get(ctx context.Context, id string) (string, error) {
 	return response, nil
 }
 
-func (c *Client) Update(ctx context.Context, id string, request string) (string, error) {
+func (c *Client) Update(
+	ctx context.Context,
+	id string,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"%v", id)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -139,7 +173,8 @@ func (c *Client) Update(ctx context.Context, id string, request string) (string,
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Request:      request,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,

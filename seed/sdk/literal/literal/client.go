@@ -25,12 +25,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) CreateOptions(ctx context.Context, request *fern.CreateOptionsRequest) (*fern.CreateOptionsResponse, error) {
+func (c *Client) CreateOptions(
+	ctx context.Context,
+	request *fern.CreateOptionsRequest,
+	opts ...option.RequestOption,
+) (*fern.CreateOptionsResponse, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "options"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.CreateOptionsResponse
 	if err := c.caller.Call(
@@ -38,7 +54,8 @@ func (c *Client) CreateOptions(ctx context.Context, request *fern.CreateOptionsR
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -48,12 +65,28 @@ func (c *Client) CreateOptions(ctx context.Context, request *fern.CreateOptionsR
 	return response, nil
 }
 
-func (c *Client) GetOptions(ctx context.Context, request *fern.GetOptionsRequest) (*fern.Options, error) {
+func (c *Client) GetOptions(
+	ctx context.Context,
+	request *fern.GetOptionsRequest,
+	opts ...option.RequestOption,
+) (*fern.Options, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "options"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.Options
 	if err := c.caller.Call(
@@ -61,7 +94,8 @@ func (c *Client) GetOptions(ctx context.Context, request *fern.GetOptionsRequest
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -71,12 +105,28 @@ func (c *Client) GetOptions(ctx context.Context, request *fern.GetOptionsRequest
 	return response, nil
 }
 
-func (c *Client) GetUndiscriminatedOptions(ctx context.Context, request *fern.GetUndiscriminatedOptionsRequest) (*fern.UndiscriminatedOptions, error) {
+func (c *Client) GetUndiscriminatedOptions(
+	ctx context.Context,
+	request *fern.GetUndiscriminatedOptionsRequest,
+	opts ...option.RequestOption,
+) (*fern.UndiscriminatedOptions, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "options"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.UndiscriminatedOptions
 	if err := c.caller.Call(
@@ -84,7 +134,8 @@ func (c *Client) GetUndiscriminatedOptions(ctx context.Context, request *fern.Ge
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},

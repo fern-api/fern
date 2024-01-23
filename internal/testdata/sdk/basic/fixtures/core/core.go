@@ -83,6 +83,11 @@ type Caller struct {
 
 // NewCaller returns a new *Caller backed by the given HTTP client.
 func NewCaller(client HTTPClient) *Caller {
+	if client == nil {
+		return &Caller{
+			client: http.DefaultClient,
+		}
+	}
 	return &Caller{
 		client: client,
 	}
@@ -93,6 +98,7 @@ type CallParams struct {
 	URL                string
 	Method             string
 	Headers            http.Header
+	Client             HTTPClient
 	Request            interface{}
 	Response           interface{}
 	ResponseIsOptional bool
@@ -111,7 +117,13 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 		return err
 	}
 
-	resp, err := c.client.Do(req)
+	client := c.client
+	if params.Client != nil {
+		// Use the HTTP client scoped to the request.
+		client = params.Client
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return err
 	}

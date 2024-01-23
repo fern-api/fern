@@ -27,10 +27,19 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Test(ctx context.Context, request *fern.Test) (string, error) {
+func (c *Client) Test(
+	ctx context.Context,
+	request *fern.Test,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL + "/" + "test"
 
@@ -42,13 +51,21 @@ func (c *Client) Test(ctx context.Context, request *fern.Test) (string, error) {
 		endpointURL += "?" + queryParams.Encode()
 	}
 
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
+
 	var response string
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

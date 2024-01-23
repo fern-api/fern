@@ -30,12 +30,30 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, request *fern.MyRequest) error {
+func (c *Client) Post(
+	ctx context.Context,
+	file io.Reader,
+	maybeFile io.Reader,
+	request *fern.MyRequest,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	requestBuffer := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(requestBuffer)
@@ -114,14 +132,15 @@ func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, 
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	c.header.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.FormDataContentType())
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:     endpointURL,
 			Method:  http.MethodPost,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 			Request: requestBuffer,
 		},
 	); err != nil {
@@ -130,12 +149,28 @@ func (c *Client) Post(ctx context.Context, file io.Reader, maybeFile io.Reader, 
 	return nil
 }
 
-func (c *Client) JustFile(ctx context.Context, file io.Reader) error {
+func (c *Client) JustFile(
+	ctx context.Context,
+	file io.Reader,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "just-file"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	requestBuffer := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(requestBuffer)
@@ -153,14 +188,15 @@ func (c *Client) JustFile(ctx context.Context, file io.Reader) error {
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	c.header.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.FormDataContentType())
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:     endpointURL,
 			Method:  http.MethodPost,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 			Request: requestBuffer,
 		},
 	); err != nil {
@@ -169,10 +205,20 @@ func (c *Client) JustFile(ctx context.Context, file io.Reader) error {
 	return nil
 }
 
-func (c *Client) JustFileWithQueryParams(ctx context.Context, file io.Reader, request *fern.JustFileWithQueryParamsRequet) error {
+func (c *Client) JustFileWithQueryParams(
+	ctx context.Context,
+	file io.Reader,
+	request *fern.JustFileWithQueryParamsRequet,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL + "/" + "just-file-with-query-params"
 
@@ -194,6 +240,13 @@ func (c *Client) JustFileWithQueryParams(ctx context.Context, file io.Reader, re
 		endpointURL += "?" + queryParams.Encode()
 	}
 
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
+
 	requestBuffer := bytes.NewBuffer(nil)
 	writer := multipart.NewWriter(requestBuffer)
 	fileFilename := "file_filename"
@@ -210,14 +263,15 @@ func (c *Client) JustFileWithQueryParams(ctx context.Context, file io.Reader, re
 	if err := writer.Close(); err != nil {
 		return err
 	}
-	c.header.Set("Content-Type", writer.FormDataContentType())
+	headers.Set("Content-Type", writer.FormDataContentType())
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:     endpointURL,
 			Method:  http.MethodPost,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 			Request: requestBuffer,
 		},
 	); err != nil {

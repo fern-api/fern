@@ -239,7 +239,6 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("// to be used directly; use RequestOption instead.")
 	f.P("func NewRequestOptions(opts ...RequestOption) *RequestOptions {")
 	f.P("options := &RequestOptions{")
-	f.P("HTTPClient: http.DefaultClient,")
 	f.P("HTTPHeader: make(http.Header),")
 	f.P("}")
 	f.P("for _, opt := range opts {")
@@ -637,8 +636,6 @@ type GeneratedClient struct {
 }
 
 // WriteClient writes a client for interacting with the given service.
-//
-// TODO: Add support for endpoint-level RequestOptions.
 func (f *fileWriter) WriteClient(
 	irEndpoints []*ir.HttpEndpoint,
 	idempotencyHeaders []*ir.HttpHeader,
@@ -705,21 +702,22 @@ func (f *fileWriter) WriteClient(
 	// Implement this service's methods.
 	for _, endpoint := range endpoints {
 		f.WriteDocs(endpoint.Docs)
-		if endpoint.Docs != nil && len(*endpoint.Docs) > 0 {
-			// Include a separator between the endpoint-level docs, and
-			// the path parameter-specific docs.
-			f.P("//")
+		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(")
+		for _, signatureParameter := range endpoint.SignatureParameters {
+			f.WriteDocs(signatureParameter.docs)
+			f.P(signatureParameter.parameter, ",")
 		}
-		if len(endpoint.PathParameterDocs) > 0 {
-			for _, pathParameterDoc := range endpoint.PathParameterDocs {
-				f.WriteDocs(pathParameterDoc)
-			}
-		}
-		f.P("func (", receiver, " *", clientName, ") ", endpoint.Name.PascalCase.UnsafeName, "(", endpoint.SignatureParameters, ") ", endpoint.ReturnValues, " {")
+		f.P(") ", endpoint.ReturnValues, " {")
+		// Compose all the request options.
+		f.P("options := core.NewRequestOptions(opts...)")
+		f.P()
 		// Compose the URL, including any query parameters.
 		f.P(fmt.Sprintf("baseURL := %q", endpoint.BaseURL))
 		f.P("if ", fmt.Sprintf("%s.baseURL", receiver), ` != "" {`)
 		f.P("baseURL = ", fmt.Sprintf("%s.baseURL", receiver))
+		f.P("}")
+		f.P(`if options.BaseURL != "" {`)
+		f.P("baseURL = options.BaseURL")
 		f.P("}")
 		baseURLVariable := "baseURL"
 		if len(endpoint.PathSuffix) > 0 {
@@ -758,15 +756,17 @@ func (f *fileWriter) WriteClient(
 			f.P(`endpointURL += "?" + queryParams.Encode()`)
 			f.P("}")
 		}
-		// Add endpoint-specific headers from the request, if any.
-		headersParameter := fmt.Sprintf("%s.header", receiver)
+
+		headersParameter := "headers"
+		f.P()
+		f.P(headersParameter, " := ", receiver, ".header.Clone()")
+
 		headers := endpoint.Headers
 		if endpoint.Idempotent {
 			headers = append(headers, idempotencyHeaders...)
 		}
 		if len(headers) > 0 {
-			f.P()
-			f.P("headers := ", receiver, ".header.Clone()")
+			// Add endpoint-specific headers from the request, if any.
 			for _, header := range headers {
 				valueTypeFormat := formatForValueType(header.ValueType)
 				requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + header.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
@@ -780,8 +780,14 @@ func (f *fileWriter) WriteClient(
 					f.P(`headers.Add("`, header.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
 				}
 			}
-			headersParameter = "headers"
 		}
+
+		// Apply all the request option header overrides, if any.
+		f.P("for key, values := range options.HTTPHeader {")
+		f.P("for _, value := range values {")
+		f.P("headers.Add(key, value)")
+		f.P("}")
+		f.P("}")
 		f.P()
 
 		// Include the error decoder, if any.
@@ -923,6 +929,7 @@ func (f *fileWriter) WriteClient(
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
+			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}
@@ -943,6 +950,7 @@ func (f *fileWriter) WriteClient(
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
 			f.P("Headers:", headersParameter, ",")
+			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
 				f.P("Request: ", endpoint.RequestValueName, ",")
 			}
@@ -996,7 +1004,6 @@ func (f *fileWriter) WriteClient(
 type endpoint struct {
 	Name                        *ir.Name
 	Docs                        *string
-	PathParameterDocs           []*string
 	ImportPath                  string
 	RequestParameterName        string
 	RequestValueName            string
@@ -1005,7 +1012,7 @@ type endpoint struct {
 	ResponseInitializerFormat   string
 	ResponseIsOptionalParameter bool
 	PathParameterNames          string
-	SignatureParameters         string
+	SignatureParameters         []*signatureParameter
 	ReturnValues                string
 	SuccessfulReturnValues      string
 	ErrorReturnValues           string
@@ -1023,6 +1030,11 @@ type endpoint struct {
 	FileBodyProperties          []*ir.InlinedRequestBodyProperty
 }
 
+type signatureParameter struct {
+	docs      *string // e.g. "Identifies a single user."
+	parameter string  // e.g. 'userId string'
+}
+
 // signatureForEndpoint returns a signature template for the given endpoint.
 func (f *fileWriter) endpointFromIR(
 	fernFilepath *ir.FernFilepath,
@@ -1036,12 +1048,18 @@ func (f *fileWriter) endpointFromIR(
 	scope := f.scope.Child()
 
 	// Add path parameters and request body, if any.
-	signatureParameters := "ctx context.Context"
+	signatureParameters := []*signatureParameter{{parameter: "ctx context.Context"}}
 	var pathParameterNames []string
 	for _, pathParameter := range irEndpoint.AllPathParameters {
 		pathParameterName := scope.Add(pathParameter.Name.CamelCase.SafeName)
 		parameterType := typeReferenceToGoType(pathParameter.ValueType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
-		signatureParameters += fmt.Sprintf(", %s %s", pathParameterName, parameterType)
+		signatureParameters = append(
+			signatureParameters,
+			&signatureParameter{
+				docs:      pathParameter.Docs,
+				parameter: fmt.Sprintf("%s %s", pathParameterName, parameterType),
+			},
+		)
 		pathParameterNames = append(pathParameterNames, pathParameterName)
 	}
 
@@ -1055,7 +1073,12 @@ func (f *fileWriter) endpointFromIR(
 			if fileUploadProperty.File != nil {
 				parameterName := fileUploadProperty.File.Key.Name.CamelCase.SafeName
 				parameterType := "io.Reader"
-				signatureParameters += fmt.Sprintf(", %s %s", parameterName, parameterType)
+				signatureParameters = append(
+					signatureParameters,
+					&signatureParameter{
+						parameter: fmt.Sprintf("%s %s", parameterName, parameterType),
+					},
+				)
 				fileProperties = append(fileProperties, fileUploadProperty.File)
 			}
 			if fileUploadProperty.BodyProperty != nil {
@@ -1080,8 +1103,12 @@ func (f *fileWriter) endpointFromIR(
 				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
 			}
 			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
-			signatureParameters += fmt.Sprintf(", %s %s", requestParameterName, requestType)
-
+			signatureParameters = append(
+				signatureParameters,
+				&signatureParameter{
+					parameter: fmt.Sprintf("%s %s", requestParameterName, requestType),
+				},
+			)
 			if irEndpoint.RequestBody != nil {
 				// Only send a request body if one is defined.
 				requestValueName = requestParameterName
@@ -1093,6 +1120,15 @@ func (f *fileWriter) endpointFromIR(
 			requestValueName = "requestBuffer"
 		}
 	}
+
+	// TODO: Add support for idempotency headers.
+	// The request options must always be the last parameter.
+	signatureParameters = append(
+		signatureParameters,
+		&signatureParameter{
+			parameter: "opts ...option.RequestOption",
+		},
+	)
 
 	// Format all of the response values.
 	var (
@@ -1213,7 +1249,6 @@ func (f *fileWriter) endpointFromIR(
 	return &endpoint{
 		Name:                        irEndpoint.Name,
 		Docs:                        irEndpoint.Docs,
-		PathParameterDocs:           pathParameterDocs,
 		ImportPath:                  importPath,
 		RequestParameterName:        requestParameterName,
 		RequestValueName:            requestValueName,

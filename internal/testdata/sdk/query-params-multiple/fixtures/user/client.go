@@ -27,10 +27,19 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetAllUsers(ctx context.Context, request *fixtures.GetAllUsersRequest) (string, error) {
+func (c *Client) GetAllUsers(
+	ctx context.Context,
+	request *fixtures.GetAllUsersRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL + "/" + "users/all"
 
@@ -51,6 +60,11 @@ func (c *Client) GetAllUsers(ctx context.Context, request *fixtures.GetAllUsersR
 
 	headers := c.header.Clone()
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -59,6 +73,7 @@ func (c *Client) GetAllUsers(ctx context.Context, request *fixtures.GetAllUsersR
 			URL:      endpointURL,
 			Method:   http.MethodGet,
 			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

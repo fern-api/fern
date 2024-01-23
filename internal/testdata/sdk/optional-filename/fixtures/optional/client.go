@@ -25,12 +25,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Get(ctx context.Context, request *fixtures.Request) (string, error) {
+func (c *Client) Get(
+	ctx context.Context,
+	request *fixtures.Request,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "post"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -38,7 +54,8 @@ func (c *Client) Get(ctx context.Context, request *fixtures.Request) (string, er
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},

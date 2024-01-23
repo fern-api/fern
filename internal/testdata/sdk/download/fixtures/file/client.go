@@ -27,12 +27,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Download(ctx context.Context, filename string) (io.Reader, error) {
+func (c *Client) Download(
+	ctx context.Context,
+	filename string,
+	opts ...option.RequestOption,
+) (io.Reader, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	response := bytes.NewBuffer(nil)
 	if err := c.caller.Call(
@@ -40,7 +56,8 @@ func (c *Client) Download(ctx context.Context, filename string) (io.Reader, erro
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: response,
 		},
 	); err != nil {

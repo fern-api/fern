@@ -25,12 +25,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GenerateStream(ctx context.Context, request *v2.GenerateStreamRequestzs) (*core.Stream[v2.StreamResponse], error) {
+func (c *Client) GenerateStream(
+	ctx context.Context,
+	request *v2.GenerateStreamRequestzs,
+	opts ...option.RequestOption,
+) (*core.Stream[v2.StreamResponse], error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "generate-stream"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	streamer := core.NewStreamer[v2.StreamResponse](c.caller)
 	return streamer.Stream(
@@ -38,7 +54,8 @@ func (c *Client) GenerateStream(ctx context.Context, request *v2.GenerateStreamR
 		&core.StreamParams{
 			URL:     endpointURL,
 			Method:  http.MethodPost,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 			Request: request,
 		},
 	)

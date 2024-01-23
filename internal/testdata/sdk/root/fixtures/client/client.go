@@ -34,12 +34,27 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
+func (c *Client) GetFoo(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "foo"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
@@ -47,7 +62,8 @@ func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -56,12 +72,28 @@ func (c *Client) GetFoo(ctx context.Context) ([]*fixtures.Foo, error) {
 	return response, nil
 }
 
-func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.Foo, error) {
+func (c *Client) PostFoo(
+	ctx context.Context,
+	request *fixtures.Bar,
+	opts ...option.RequestOption,
+) (*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "foo"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -95,7 +127,8 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Request:      request,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
@@ -106,12 +139,28 @@ func (c *Client) PostFoo(ctx context.Context, request *fixtures.Bar) (*fixtures.
 	return response, nil
 }
 
-func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
+func (c *Client) GetFooFooId(
+	ctx context.Context,
+	fooId fixtures.Id,
+	opts ...option.RequestOption,
+) (*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -138,7 +187,8 @@ func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
 		},
@@ -148,12 +198,29 @@ func (c *Client) GetFooFooId(ctx context.Context, fooId fixtures.Id) (*fixtures.
 	return response, nil
 }
 
-func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *fixtures.Foo) (*fixtures.Foo, error) {
+func (c *Client) PatchFooFooId(
+	ctx context.Context,
+	fooId fixtures.Id,
+	request *fixtures.Foo,
+	opts ...option.RequestOption,
+) (*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -194,7 +261,8 @@ func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPatch,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Request:      request,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
@@ -205,12 +273,28 @@ func (c *Client) PatchFooFooId(ctx context.Context, fooId fixtures.Id, request *
 	return response, nil
 }
 
-func (c *Client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
+func (c *Client) DeleteFooFooId(
+	ctx context.Context,
+	fooId fixtures.Id,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -236,7 +320,8 @@ func (c *Client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodDelete,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			ErrorDecoder: errorDecoder,
 		},
 	); err != nil {
@@ -245,12 +330,28 @@ func (c *Client) DeleteFooFooId(ctx context.Context, fooId fixtures.Id) error {
 	return nil
 }
 
-func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtures.Foo, error) {
+func (c *Client) PostFooFooIdRun(
+	ctx context.Context,
+	fooId fixtures.Id,
+	opts ...option.RequestOption,
+) (*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v/run", fooId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -284,7 +385,8 @@ func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtu
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
 		},
@@ -294,12 +396,28 @@ func (c *Client) PostFooFooIdRun(ctx context.Context, fooId fixtures.Id) (*fixtu
 	return response, nil
 }
 
-func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar) ([]*fixtures.Foo, error) {
+func (c *Client) PostFooBatchCreate(
+	ctx context.Context,
+	request []*fixtures.Bar,
+	opts ...option.RequestOption,
+) ([]*fixtures.Foo, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "foo/batch-create"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -347,7 +465,8 @@ func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Request:      request,
 			Response:     &response,
 			ErrorDecoder: errorDecoder,
@@ -358,12 +477,28 @@ func (c *Client) PostFooBatchCreate(ctx context.Context, request []*fixtures.Bar
 	return response, nil
 }
 
-func (c *Client) PostFooBatchDelete(ctx context.Context, request []fixtures.Id) error {
+func (c *Client) PostFooBatchDelete(
+	ctx context.Context,
+	request []fixtures.Id,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "foo/batch-delete"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -396,7 +531,8 @@ func (c *Client) PostFooBatchDelete(ctx context.Context, request []fixtures.Id) 
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
-			Headers:      c.header,
+			Headers:      headers,
+			Client:       options.HTTPClient,
 			Request:      request,
 			ErrorDecoder: errorDecoder,
 		},

@@ -29,6 +29,7 @@ type StreamParams struct {
 	Method       string
 	Delimiter    string
 	Headers      http.Header
+	Client       HTTPClient
 	Request      interface{}
 	ErrorDecoder ErrorDecoder
 }
@@ -45,7 +46,13 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream
 		return nil, err
 	}
 
-	resp, err := s.client.Do(req)
+	client := s.client
+	if params.Client != nil {
+		// Use the HTTP client scoped to the request.
+		client = params.Client
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
 	}

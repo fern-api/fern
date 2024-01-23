@@ -26,12 +26,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) CreateConfig(ctx context.Context, request *fixtures.CreateConfigRequest) (*config.Config, error) {
+func (c *Client) CreateConfig(
+	ctx context.Context,
+	request *fixtures.CreateConfigRequest,
+	opts ...option.RequestOption,
+) (*config.Config, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "config"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *config.Config
 	if err := c.caller.Call(
@@ -39,7 +55,8 @@ func (c *Client) CreateConfig(ctx context.Context, request *fixtures.CreateConfi
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -49,12 +66,27 @@ func (c *Client) CreateConfig(ctx context.Context, request *fixtures.CreateConfi
 	return response, nil
 }
 
-func (c *Client) GetConfig(ctx context.Context) ([]*config.Config, error) {
+func (c *Client) GetConfig(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*config.Config, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "config"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []*config.Config
 	if err := c.caller.Call(
@@ -62,7 +94,8 @@ func (c *Client) GetConfig(ctx context.Context) ([]*config.Config, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

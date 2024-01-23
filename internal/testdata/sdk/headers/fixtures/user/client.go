@@ -28,10 +28,20 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.SetNameRequest) (string, error) {
+func (c *Client) SetName(
+	ctx context.Context,
+	userId string,
+	request *fixtures.SetNameRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
@@ -57,6 +67,11 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 		headers.Add("X-Endpoint-Optional-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*request.XEndpointOptionalBytesHeader)))
 	}
 	headers.Add("X-Endpoint-Fern-Header", fmt.Sprintf("%v", "fern"))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -65,6 +80,7 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 			URL:      endpointURL,
 			Method:   http.MethodPost,
 			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -73,16 +89,31 @@ func (c *Client) SetName(ctx context.Context, userId string, request *fixtures.S
 	return response, nil
 }
 
-func (c *Client) UpdateName(ctx context.Context, userId string, request *fixtures.UpdateNameRequest) (string, error) {
+func (c *Client) UpdateName(
+	ctx context.Context,
+	userId string,
+	request *fixtures.UpdateNameRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update-name", userId)
 
 	headers := c.header.Clone()
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	headers.Add("Idempotency-Key", fmt.Sprintf("%v", request.IdempotencyKey))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -91,6 +122,7 @@ func (c *Client) UpdateName(ctx context.Context, userId string, request *fixture
 			URL:      endpointURL,
 			Method:   http.MethodPut,
 			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

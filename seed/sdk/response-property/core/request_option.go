@@ -27,7 +27,6 @@ type RequestOptions struct {
 // to be used directly; use RequestOption instead.
 func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 	options := &RequestOptions{
-		HTTPClient: http.DefaultClient,
 		HTTPHeader: make(http.Header),
 	}
 	for _, opt := range opts {

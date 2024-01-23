@@ -25,12 +25,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetMovie(ctx context.Context, request string) (*fern.Movie, error) {
+func (c *Client) GetMovie(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (*fern.Movie, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -38,7 +54,8 @@ func (c *Client) GetMovie(ctx context.Context, request string) (*fern.Movie, err
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -48,12 +65,28 @@ func (c *Client) GetMovie(ctx context.Context, request string) (*fern.Movie, err
 	return response.Data, nil
 }
 
-func (c *Client) GetMovieDocs(ctx context.Context, request string) (string, error) {
+func (c *Client) GetMovieDocs(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -61,7 +94,8 @@ func (c *Client) GetMovieDocs(ctx context.Context, request string) (string, erro
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -71,12 +105,28 @@ func (c *Client) GetMovieDocs(ctx context.Context, request string) (string, erro
 	return response.Docs, nil
 }
 
-func (c *Client) GetMovieName(ctx context.Context, request string) (string, error) {
+func (c *Client) GetMovieName(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.StringResponse
 	if err := c.caller.Call(
@@ -84,7 +134,8 @@ func (c *Client) GetMovieName(ctx context.Context, request string) (string, erro
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -94,12 +145,28 @@ func (c *Client) GetMovieName(ctx context.Context, request string) (string, erro
 	return response.Data, nil
 }
 
-func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[string]string, error) {
+func (c *Client) GetMovieMetadata(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (map[string]string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -107,7 +174,8 @@ func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[stri
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -117,12 +185,28 @@ func (c *Client) GetMovieMetadata(ctx context.Context, request string) (map[stri
 	return response.Metadata, nil
 }
 
-func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*fern.Movie, error) {
+func (c *Client) GetOptionalMovie(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (*fern.Movie, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -130,7 +214,8 @@ func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*fern.Mo
 		&core.CallParams{
 			URL:                endpointURL,
 			Method:             http.MethodPost,
-			Headers:            c.header,
+			Headers:            headers,
+			Client:             options.HTTPClient,
 			Request:            request,
 			Response:           &response,
 			ResponseIsOptional: true,
@@ -141,12 +226,28 @@ func (c *Client) GetOptionalMovie(ctx context.Context, request string) (*fern.Mo
 	return response.Data, nil
 }
 
-func (c *Client) GetOptionalMovieDocs(ctx context.Context, request string) (string, error) {
+func (c *Client) GetOptionalMovieDocs(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response fern.OptionalWithDocs
 	if err := c.caller.Call(
@@ -154,7 +255,8 @@ func (c *Client) GetOptionalMovieDocs(ctx context.Context, request string) (stri
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -164,12 +266,28 @@ func (c *Client) GetOptionalMovieDocs(ctx context.Context, request string) (stri
 	return response.Docs, nil
 }
 
-func (c *Client) GetOptionalMovieName(ctx context.Context, request string) (string, error) {
+func (c *Client) GetOptionalMovieName(
+	ctx context.Context,
+	request string,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "movie"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response fern.OptionalStringResponse
 	if err := c.caller.Call(
@@ -177,7 +295,8 @@ func (c *Client) GetOptionalMovieName(ctx context.Context, request string) (stri
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},

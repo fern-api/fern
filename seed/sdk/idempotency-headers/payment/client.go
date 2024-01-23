@@ -27,16 +27,30 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Create(ctx context.Context, request *fern.CreatePaymentRequest) (uuid.UUID, error) {
+func (c *Client) Create(
+	ctx context.Context,
+	request *fern.CreatePaymentRequest,
+	opts ...option.RequestOption,
+) (uuid.UUID, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := baseURL + "/" + "payment"
 
 	headers := c.header.Clone()
 	headers.Add("Idempotency-Key", fmt.Sprintf("%v", request.IdempotencyKey))
 	headers.Add("Idempotency-Expiration", fmt.Sprintf("%v", request.IdempotencyExpiration))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response uuid.UUID
 	if err := c.caller.Call(
@@ -45,6 +59,7 @@ func (c *Client) Create(ctx context.Context, request *fern.CreatePaymentRequest)
 			URL:      endpointURL,
 			Method:   http.MethodPost,
 			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -54,19 +69,36 @@ func (c *Client) Create(ctx context.Context, request *fern.CreatePaymentRequest)
 	return response, nil
 }
 
-func (c *Client) Delete(ctx context.Context, paymentId string) error {
+func (c *Client) Delete(
+	ctx context.Context,
+	paymentId string,
+	opts ...option.RequestOption,
+) error {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"payment/%v", paymentId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:     endpointURL,
 			Method:  http.MethodDelete,
-			Headers: c.header,
+			Headers: headers,
+			Client:  options.HTTPClient,
 		},
 	); err != nil {
 		return err

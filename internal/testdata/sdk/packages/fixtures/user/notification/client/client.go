@@ -30,12 +30,29 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetUserNotification(ctx context.Context, userId string, notificationId string) (*notification.Notification, error) {
+func (c *Client) GetUserNotification(
+	ctx context.Context,
+	userId string,
+	notificationId string,
+	opts ...option.RequestOption,
+) (*notification.Notification, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications/%v", userId, notificationId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *notification.Notification
 	if err := c.caller.Call(
@@ -43,7 +60,8 @@ func (c *Client) GetUserNotification(ctx context.Context, userId string, notific
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

@@ -28,12 +28,21 @@ func NewClient(opts ...option.RequestOption) *Client {
 }
 
 // Returns the username associated with the given userId.
-//
-// userId uniquely identifies a user.
-func (c *Client) GetName(ctx context.Context, userId string, request *fixtures.GetNameRequest) (string, error) {
+func (c *Client) GetName(
+	ctx context.Context,
+	// userId uniquely identifies a user.
+	userId string,
+	request *fixtures.GetNameRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/get-name", userId)
 
@@ -45,6 +54,11 @@ func (c *Client) GetName(ctx context.Context, userId string, request *fixtures.G
 
 	headers := c.header.Clone()
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -53,6 +67,7 @@ func (c *Client) GetName(ctx context.Context, userId string, request *fixtures.G
 			URL:      endpointURL,
 			Method:   http.MethodGet,
 			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

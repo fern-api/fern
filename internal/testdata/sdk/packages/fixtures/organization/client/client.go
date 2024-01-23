@@ -30,12 +30,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Check(ctx context.Context, id string) (*fixtures.Organization, error) {
+func (c *Client) Check(
+	ctx context.Context,
+	id string,
+	opts ...option.RequestOption,
+) (*fixtures.Organization, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"organization/%v", id)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fixtures.Organization
 	if err := c.caller.Call(
@@ -43,7 +59,8 @@ func (c *Client) Check(ctx context.Context, id string) (*fixtures.Organization, 
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

@@ -26,12 +26,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetName(ctx context.Context, userId string) (*string, error) {
+func (c *Client) GetName(
+	ctx context.Context,
+	userId string,
+	opts ...option.RequestOption,
+) (*string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/name", userId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *string
 	if err := c.caller.Call(
@@ -39,7 +55,8 @@ func (c *Client) GetName(ctx context.Context, userId string) (*string, error) {
 		&core.CallParams{
 			URL:                endpointURL,
 			Method:             http.MethodGet,
-			Headers:            c.header,
+			Headers:            headers,
+			Client:             options.HTTPClient,
 			Response:           &response,
 			ResponseIsOptional: true,
 		},
@@ -49,12 +66,28 @@ func (c *Client) GetName(ctx context.Context, userId string) (*string, error) {
 	return response, nil
 }
 
-func (c *Client) GetUser(ctx context.Context, userId string) (*fixtures.User, error) {
+func (c *Client) GetUser(
+	ctx context.Context,
+	userId string,
+	opts ...option.RequestOption,
+) (*fixtures.User, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *fixtures.User
 	if err := c.caller.Call(
@@ -62,7 +95,8 @@ func (c *Client) GetUser(ctx context.Context, userId string) (*fixtures.User, er
 		&core.CallParams{
 			URL:                endpointURL,
 			Method:             http.MethodGet,
-			Headers:            c.header,
+			Headers:            headers,
+			Client:             options.HTTPClient,
 			Response:           &response,
 			ResponseIsOptional: true,
 		},

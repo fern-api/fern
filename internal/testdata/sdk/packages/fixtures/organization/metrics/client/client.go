@@ -31,12 +31,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) CreateMetricsTag(ctx context.Context, request *organization.CreateMetricsTagRequest) (*metrics.Tag, error) {
+func (c *Client) CreateMetricsTag(
+	ctx context.Context,
+	request *organization.CreateMetricsTagRequest,
+	opts ...option.RequestOption,
+) (*metrics.Tag, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "metrics"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *metrics.Tag
 	if err := c.caller.Call(
@@ -44,7 +60,8 @@ func (c *Client) CreateMetricsTag(ctx context.Context, request *organization.Cre
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -54,12 +71,28 @@ func (c *Client) CreateMetricsTag(ctx context.Context, request *organization.Cre
 	return response, nil
 }
 
-func (c *Client) GetMetricsTag(ctx context.Context, id string) (*metrics.Tag, error) {
+func (c *Client) GetMetricsTag(
+	ctx context.Context,
+	id string,
+	opts ...option.RequestOption,
+) (*metrics.Tag, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"metrics/%v", id)
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response *metrics.Tag
 	if err := c.caller.Call(
@@ -67,7 +100,8 @@ func (c *Client) GetMetricsTag(ctx context.Context, id string) (*metrics.Tag, er
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

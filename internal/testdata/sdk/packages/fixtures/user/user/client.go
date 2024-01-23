@@ -26,12 +26,28 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) Create(ctx context.Context, request *user.CreateUserRequest) ([]*user.User, error) {
+func (c *Client) Create(
+	ctx context.Context,
+	request *user.CreateUserRequest,
+	opts ...option.RequestOption,
+) ([]*user.User, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "users"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []*user.User
 	if err := c.caller.Call(
@@ -39,7 +55,8 @@ func (c *Client) Create(ctx context.Context, request *user.CreateUserRequest) ([
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},
@@ -49,12 +66,27 @@ func (c *Client) Create(ctx context.Context, request *user.CreateUserRequest) ([
 	return response, nil
 }
 
-func (c *Client) List(ctx context.Context) ([]*user.User, error) {
+func (c *Client) List(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]*user.User, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "users"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []*user.User
 	if err := c.caller.Call(
@@ -62,7 +94,8 @@ func (c *Client) List(ctx context.Context) ([]*user.User, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -71,12 +104,28 @@ func (c *Client) List(ctx context.Context) ([]*user.User, error) {
 	return response, nil
 }
 
-func (c *Client) Update(ctx context.Context, request *config.Config) (bool, error) {
+func (c *Client) Update(
+	ctx context.Context,
+	request *config.Config,
+	opts ...option.RequestOption,
+) (bool, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://api.foo.io/v1"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "users/update"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response bool
 	if err := c.caller.Call(
@@ -84,7 +133,8 @@ func (c *Client) Update(ctx context.Context, request *config.Config) (bool, erro
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodPost,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Request:  request,
 			Response: &response,
 		},

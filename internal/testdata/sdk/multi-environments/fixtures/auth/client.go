@@ -24,12 +24,27 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetAuth(ctx context.Context) (string, error) {
+func (c *Client) GetAuth(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://auth.yoursite.com"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "auth"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response string
 	if err := c.caller.Call(
@@ -37,7 +52,8 @@ func (c *Client) GetAuth(ctx context.Context) (string, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -46,12 +62,27 @@ func (c *Client) GetAuth(ctx context.Context) (string, error) {
 	return response, nil
 }
 
-func (c *Client) ListAuth(ctx context.Context) ([]string, error) {
+func (c *Client) ListAuth(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://auth.yoursite.com"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "auth/list"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []string
 	if err := c.caller.Call(
@@ -59,7 +90,8 @@ func (c *Client) ListAuth(ctx context.Context) ([]string, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
@@ -68,12 +100,27 @@ func (c *Client) ListAuth(ctx context.Context) ([]string, error) {
 	return response, nil
 }
 
-func (c *Client) ListPlants(ctx context.Context) ([]string, error) {
+func (c *Client) ListPlants(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) ([]string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := "https://plants.yoursite.com"
 	if c.baseURL != "" {
 		baseURL = c.baseURL
 	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
+	}
 	endpointURL := baseURL + "/" + "auth/plants"
+
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
 
 	var response []string
 	if err := c.caller.Call(
@@ -81,7 +128,8 @@ func (c *Client) ListPlants(ctx context.Context) ([]string, error) {
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {

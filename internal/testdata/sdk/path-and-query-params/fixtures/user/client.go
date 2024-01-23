@@ -27,10 +27,20 @@ func NewClient(opts ...option.RequestOption) *Client {
 	}
 }
 
-func (c *Client) GetUser(ctx context.Context, userId string, request *fixtures.GetUserRequest) (string, error) {
+func (c *Client) GetUser(
+	ctx context.Context,
+	userId string,
+	request *fixtures.GetUserRequest,
+	opts ...option.RequestOption,
+) (string, error) {
+	options := core.NewRequestOptions(opts...)
+
 	baseURL := ""
 	if c.baseURL != "" {
 		baseURL = c.baseURL
+	}
+	if options.BaseURL != "" {
+		baseURL = options.BaseURL
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
@@ -42,13 +52,21 @@ func (c *Client) GetUser(ctx context.Context, userId string, request *fixtures.G
 		endpointURL += "?" + queryParams.Encode()
 	}
 
+	headers := c.header.Clone()
+	for key, values := range options.HTTPHeader {
+		for _, value := range values {
+			headers.Add(key, value)
+		}
+	}
+
 	var response string
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
 			URL:      endpointURL,
 			Method:   http.MethodGet,
-			Headers:  c.header,
+			Headers:  headers,
+			Client:   options.HTTPClient,
 			Response: &response,
 		},
 	); err != nil {
