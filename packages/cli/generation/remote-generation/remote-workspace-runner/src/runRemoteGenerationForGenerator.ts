@@ -14,6 +14,7 @@ export async function runRemoteGenerationForGenerator({
     interactiveTaskContext,
     generatorInvocation,
     version,
+    irVersion,
     audiences,
     shouldLogS3Url,
     token
@@ -23,6 +24,7 @@ export async function runRemoteGenerationForGenerator({
     interactiveTaskContext: InteractiveTaskContext;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
+    irVersion: string | undefined;
     audiences: Audiences;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -32,13 +34,13 @@ export async function runRemoteGenerationForGenerator({
         generationLanguage: generatorInvocation.language,
         audiences
     });
-
     const job = await createAndStartJob({
         workspace,
         organization,
         generatorInvocation,
         context: interactiveTaskContext,
         version,
+        irVersion,
         intermediateRepresentation,
         shouldLogS3Url,
         token

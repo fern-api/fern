@@ -13,6 +13,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     workspace,
     context,
     generatorGroup,
+    irVersion,
     version,
     shouldLogS3Url,
     token
@@ -21,6 +22,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     workspace: FernWorkspace;
     context: TaskContext;
     generatorGroup: GeneratorGroup;
+    irVersion: string | undefined;
     version: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -42,6 +44,7 @@ export async function runRemoteGenerationForAPIWorkspace({
                     interactiveTaskContext,
                     generatorInvocation,
                     version,
+                    irVersion,
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
                     token

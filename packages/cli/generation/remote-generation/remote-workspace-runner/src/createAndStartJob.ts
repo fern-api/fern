@@ -2,7 +2,10 @@ import { FernToken } from "@fern-api/auth";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
-import { migrateIntermediateRepresentationForGenerator } from "@fern-api/ir-migrations";
+import {
+    migrateIntermediateRepresentationForGenerator,
+    migrateIntermediateRepresentationThroughVersion
+} from "@fern-api/ir-migrations";
 import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
@@ -19,6 +22,7 @@ export async function createAndStartJob({
     intermediateRepresentation,
     generatorInvocation,
     version,
+    irVersion,
     context,
     shouldLogS3Url,
     token
@@ -28,6 +32,7 @@ export async function createAndStartJob({
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: GeneratorInvocation;
     version: string | undefined;
+    irVersion: string | undefined;
     context: TaskContext;
     shouldLogS3Url: boolean;
     token: FernToken;
@@ -41,7 +46,8 @@ export async function createAndStartJob({
         shouldLogS3Url,
         token
     });
-    await startJob({ intermediateRepresentation, job, context, generatorInvocation });
+    await startJob({ intermediateRepresentation, job, context, generatorInvocation, irVersion });
+
     return job;
 }
 
@@ -124,21 +130,33 @@ async function startJob({
     intermediateRepresentation,
     generatorInvocation,
     job,
-    context
+    context,
+    irVersion
 }: {
     intermediateRepresentation: IntermediateRepresentation;
     generatorInvocation: GeneratorInvocation;
     job: FernFiddle.remoteGen.CreateJobResponse;
     context: TaskContext;
+    irVersion: string | undefined;
 }): Promise<void> {
-    const migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
-        intermediateRepresentation,
-        context,
-        targetGenerator: {
-            name: generatorInvocation.name,
-            version: generatorInvocation.version
-        }
-    });
+    let migratedIntermediateRepresentation;
+
+    if (irVersion !== undefined && irVersion && irVersion.length > 0) {
+        migratedIntermediateRepresentation = await migrateIntermediateRepresentationThroughVersion({
+            intermediateRepresentation,
+            context,
+            version: irVersion
+        });
+    } else {
+        migratedIntermediateRepresentation = await migrateIntermediateRepresentationForGenerator({
+            intermediateRepresentation,
+            context,
+            targetGenerator: {
+                name: generatorInvocation.name,
+                version: generatorInvocation.version
+            }
+        });
+    }
 
     const formData = new FormData();
 

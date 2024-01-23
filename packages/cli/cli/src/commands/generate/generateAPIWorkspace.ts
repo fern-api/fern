@@ -72,6 +72,7 @@ export async function generateWorkspace({
             organization,
             context,
             generatorGroup: group,
+            irVersion,
             version,
             shouldLogS3Url,
             token
