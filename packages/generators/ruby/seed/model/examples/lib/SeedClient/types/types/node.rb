@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "types/types/Tree"
+require_relative "tree"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param trees [Array<Types::Tree>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Node]
-      def initialze(name:, nodes: nil, trees: nil, additional_properties: nil)
+      def initialize(name:, nodes: nil, trees: nil, additional_properties: nil)
         # @type [String]
         @name = name
         # @type [Array<Types::Node>]
@@ -32,9 +32,11 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
         nodes = struct.nodes.map do |v|
+          v = v.to_h.to_json
           Types::Node.from_json(json_object: v)
         end
         trees = struct.trees.map do |v|
+          v = v.to_h.to_json
           Types::Tree.from_json(json_object: v)
         end
         new(name: name, nodes: nodes, trees: trees, additional_properties: struct)

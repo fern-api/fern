@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/problem/types/TEST_CASE_ID"
+require_relative "test_case_id"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
         # @param hidden [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::TestCaseMetadata]
-        def initialze(id:, name:, hidden:, additional_properties: nil)
+        def initialize(id:, name:, hidden:, additional_properties: nil)
           # @type [V2::Problem::TEST_CASE_ID]
           @id = id
           # @type [String]

@@ -11,7 +11,7 @@ module SeedClient
       # @param contents [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::FileInfo]
-      def initialze(filename:, contents:, additional_properties: nil)
+      def initialize(filename:, contents:, additional_properties: nil)
         # @type [String]
         @filename = filename
         # @type [String]

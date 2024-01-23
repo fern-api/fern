@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "commons/types/MapValue"
-require_relative "commons/types/BinaryTreeValue"
-require_relative "commons/types/SinglyLinkedListValue"
-require_relative "commons/types/DoublyLinkedListValue"
+require "json"
+require_relative "map_value"
+require_relative "binary_tree_value"
+require_relative "singly_linked_list_value"
+require_relative "doubly_linked_list_value"
 
 module SeedClient
   module Commons
@@ -16,7 +16,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Commons::VariableValue]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]
@@ -44,6 +44,7 @@ module SeedClient
                    Commons::MapValue.from_json(json_object: json_object)
                  when "listValue"
                    json_object.value.map do |v|
+                     v = v.to_h.to_json
                      Commons::VariableValue.from_json(json_object: v)
                    end
                  when "binaryTreeValue"

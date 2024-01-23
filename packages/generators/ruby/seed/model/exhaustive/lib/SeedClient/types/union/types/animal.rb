@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "types/union/types/Dog"
-require_relative "types/union/types/Cat"
+require "json"
+require_relative "dog"
+require_relative "cat"
 
 module SeedClient
   module Types
@@ -15,7 +15,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [Types::Union::Animal]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]

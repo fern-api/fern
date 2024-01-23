@@ -9,7 +9,7 @@ module SeedClient
 
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Ast::ObjectValue]
-      def initialze(additional_properties: nil)
+      def initialize(additional_properties: nil)
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
       end

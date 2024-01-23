@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "commons/types/VariableValue"
+require "json"
+require_relative "../../commons/types/variable_value"
 
 module SeedClient
   module Problem
@@ -13,7 +13,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Problem::ProblemDescriptionBoard]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

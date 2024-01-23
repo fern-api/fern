@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/VariableType"
+require_relative "variable_type"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param is_fixed_length [Boolean] Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::ListType]
-      def initialze(value_type:, is_fixed_length: nil, additional_properties: nil)
+      def initialize(value_type:, is_fixed_length: nil, additional_properties: nil)
         # @type [Commons::VariableType]
         @value_type = value_type
         # @type [Boolean] Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.
@@ -27,7 +27,8 @@ module SeedClient
       # @return [Commons::ListType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        value_type = Commons::VariableType.from_json(json_object: struct.valueType)
+        value_type = struct.valueType.to_h.to_json
+        value_type = Commons::VariableType.from_json(json_object: value_type)
         is_fixed_length = struct.isFixedLength
         new(value_type: value_type, is_fixed_length: is_fixed_length, additional_properties: struct)
       end

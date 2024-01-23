@@ -10,7 +10,7 @@ module SeedClient
       # @param problem_version [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::UpdateProblemResponse]
-      def initialze(problem_version:, additional_properties: nil)
+      def initialize(problem_version:, additional_properties: nil)
         # @type [Integer]
         @problem_version = problem_version
         # @type [OpenStruct] Additional properties unmapped to the current class definition

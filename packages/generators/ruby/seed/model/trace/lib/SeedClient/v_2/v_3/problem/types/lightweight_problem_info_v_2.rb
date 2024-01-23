@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
+require_relative "../../../../commons/types/problem_id"
 require "set"
 require "json"
 
@@ -17,7 +17,7 @@ module SeedClient
           # @param variable_types [Set<Commons::VariableType>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::LightweightProblemInfoV2]
-          def initialze(problem_id:, problem_name:, problem_version:, variable_types:, additional_properties: nil)
+          def initialize(problem_id:, problem_name:, problem_version:, variable_types:, additional_properties: nil)
             # @type [Commons::PROBLEM_ID]
             @problem_id = problem_id
             # @type [String]
@@ -39,7 +39,8 @@ module SeedClient
             problem_id = struct.problemId
             problem_name = struct.problemName
             problem_version = struct.problemVersion
-            variable_types = Set.new(struct.variableTypes)
+            variable_types = struct.variableTypes.to_h.to_json
+            variable_types = Set.new(variable_types)
             new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
                 variable_types: variable_types, additional_properties: struct)
           end
@@ -48,8 +49,12 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "problemId": @problem_id, "problemName": @problem_name, "problemVersion": @problem_version,
-              "variableTypes": @variable_types.to_a }.to_json
+            {
+              "problemId": @problem_id,
+              "problemName": @problem_name,
+              "problemVersion": @problem_version,
+              "variableTypes": @variable_types
+            }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

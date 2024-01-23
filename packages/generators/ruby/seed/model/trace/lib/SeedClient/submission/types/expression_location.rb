@@ -11,7 +11,7 @@ module SeedClient
       # @param offset [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ExpressionLocation]
-      def initialze(start:, offset:, additional_properties: nil)
+      def initialize(start:, offset:, additional_properties: nil)
         # @type [Integer]
         @start = start
         # @type [Integer]

@@ -10,7 +10,6 @@ import { Yardoc } from "../Yardoc";
 export declare namespace Class_ {
     export interface Init extends AstNode.Init {
         classReference: ClassReference;
-        extendedClasses?: ClassReference[];
         properties?: Property[];
         functions?: Function_[];
         expressions?: Expression[];
@@ -24,7 +23,6 @@ export class Class_ extends AstNode {
     // The reference for the current class (e.g. self)
     // TODO: this should probably just be a name and not a reference
     public classReference: ClassReference;
-    public extendedClasses: ClassReference[];
 
     public properties: Property[];
     public functions: Function_[];
@@ -32,7 +30,6 @@ export class Class_ extends AstNode {
 
     constructor({
         classReference,
-        extendedClasses = [],
         properties = [],
         functions = [],
         expressions = [],
@@ -41,12 +38,11 @@ export class Class_ extends AstNode {
     }: Class_.Init) {
         super(rest);
         this.classReference = classReference;
-        this.extendedClasses = extendedClasses;
 
         this.properties = properties;
         if (includeInitializer) {
             const initializer = new Function_({
-                name: "initialze",
+                name: "initialize",
                 parameters: properties.map((prop) => prop.toParameter()),
                 returnValue: classReference,
                 functionBody: properties.map((prop) => {
@@ -68,14 +64,6 @@ export class Class_ extends AstNode {
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
-        this.addText({
-            stringContent:
-                this.extendedClasses.length > 0
-                    ? this.extendedClasses.map((cl) => cl.qualifiedName).join(", ")
-                    : undefined,
-            templateString: " < %s",
-            appendToLastString: true
-        });
         const classVariableAccessors =
             this.properties.length > 0
                 ? `attr_reader ${this.properties.map((prop) => prop.write()).join(", ")}`
@@ -93,7 +81,6 @@ export class Class_ extends AstNode {
 
     public getImports(): Set<Import> {
         let imports = new Set<Import>();
-        this.extendedClasses.forEach((ec) => (imports = new Set([...imports, ...ec.getImports()])));
         this.functions.forEach((fun) => (imports = new Set([...imports, ...fun.getImports()])));
         this.properties.forEach((prop) => (imports = new Set([...imports, ...prop.getImports()])));
         this.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));

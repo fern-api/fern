@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/ExceptionInfo"
-require_relative "submission/types/CodeExecutionUpdate"
-require_relative "submission/types/TerminatedResponse"
-require_relative "commons/types/PROBLEM_ID"
+require "json"
+require_relative "exception_info"
+require_relative "code_execution_update"
+require_relative "terminated_response"
+require_relative "../../commons/types/problem_id"
 
 module SeedClient
   module Submission
@@ -16,7 +16,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::SubmissionResponse]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

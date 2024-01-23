@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "ast/types/FieldValue"
+require "json"
+require_relative "field_value"
 
 module SeedClient
   module Ast
@@ -13,7 +13,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Ast::ContainerValue]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]
@@ -29,12 +29,14 @@ module SeedClient
         member = case struct.type
                  when "list"
                    json_object.value.map do |v|
+                     v = v.to_h.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end
                  when "optional"
                    Ast::FieldValue.from_json(json_object: json_object.value)
                  else
                    json_object.map do |v|
+                     v = v.to_h.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end
                  end

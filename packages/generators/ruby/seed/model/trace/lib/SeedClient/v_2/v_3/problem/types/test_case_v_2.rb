@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/TestCaseMetadata"
-require_relative "v_2/v_3/problem/types/TestCaseImplementationReference"
-require_relative "v_2/v_3/problem/types/TestCaseExpects"
+require_relative "test_case_metadata"
+require_relative "test_case_implementation_reference"
+require_relative "test_case_expects"
 require "json"
 
 module SeedClient
@@ -18,7 +18,7 @@ module SeedClient
           # @param expects [V2::V3::Problem::TestCaseExpects]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::TestCaseV2]
-          def initialze(metadata:, implementation:, arguments:, expects: nil, additional_properties: nil)
+          def initialize(metadata:, implementation:, arguments:, expects: nil, additional_properties: nil)
             # @type [V2::V3::Problem::TestCaseMetadata]
             @metadata = metadata
             # @type [V2::V3::Problem::TestCaseImplementationReference]
@@ -37,10 +37,13 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            metadata = V2::V3::Problem::TestCaseMetadata.from_json(json_object: struct.metadata)
-            implementation = V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: struct.implementation)
+            metadata = struct.metadata.to_h.to_json
+            metadata = V2::V3::Problem::TestCaseMetadata.from_json(json_object: metadata)
+            implementation = struct.implementation.to_h.to_json
+            implementation = V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
             arguments = struct.arguments
-            expects = V2::V3::Problem::TestCaseExpects.from_json(json_object: struct.expects)
+            expects = struct.expects.to_h.to_json
+            expects = V2::V3::Problem::TestCaseExpects.from_json(json_object: expects)
             new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
                 additional_properties: struct)
           end
@@ -49,8 +52,12 @@ module SeedClient
           #
           # @return [JSON]
           def to_json(*_args)
-            { "metadata": @metadata, "implementation": @implementation, "arguments": @arguments,
-              "expects": @expects }.to_json
+            {
+              "metadata": @metadata,
+              "implementation": @implementation,
+              "arguments": @arguments,
+              "expects": @expects
+            }.to_json
           end
 
           # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

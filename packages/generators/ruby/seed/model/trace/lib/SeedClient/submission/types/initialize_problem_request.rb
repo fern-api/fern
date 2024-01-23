@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param problem_version [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::InitializeProblemRequest]
-      def initialze(problem_id:, problem_version: nil, additional_properties: nil)
+      def initialize(problem_id:, problem_version: nil, additional_properties: nil)
         # @type [Commons::PROBLEM_ID]
         @problem_id = problem_id
         # @type [Integer]

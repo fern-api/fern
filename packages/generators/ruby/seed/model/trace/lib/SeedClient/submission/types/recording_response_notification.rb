@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
-require_relative "submission/types/LightweightStackframeInformation"
-require_relative "submission/types/TracedFile"
+require_relative "submission_id"
+require_relative "lightweight_stackframe_information"
+require_relative "traced_file"
 require "json"
 
 module SeedClient
@@ -18,8 +18,8 @@ module SeedClient
       # @param traced_file [Submission::TracedFile]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::RecordingResponseNotification]
-      def initialze(submission_id:, line_number:, lightweight_stack_info:, test_case_id: nil, traced_file: nil,
-                    additional_properties: nil)
+      def initialize(submission_id:, line_number:, lightweight_stack_info:, test_case_id: nil, traced_file: nil,
+                     additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [String]
@@ -43,8 +43,10 @@ module SeedClient
         submission_id = struct.submissionId
         test_case_id = struct.testCaseId
         line_number = struct.lineNumber
-        lightweight_stack_info = Submission::LightweightStackframeInformation.from_json(json_object: struct.lightweightStackInfo)
-        traced_file = Submission::TracedFile.from_json(json_object: struct.tracedFile)
+        lightweight_stack_info = struct.lightweightStackInfo.to_h.to_json
+        lightweight_stack_info = Submission::LightweightStackframeInformation.from_json(json_object: lightweight_stack_info)
+        traced_file = struct.tracedFile.to_h.to_json
+        traced_file = Submission::TracedFile.from_json(json_object: traced_file)
         new(submission_id: submission_id, test_case_id: test_case_id, line_number: line_number,
             lightweight_stack_info: lightweight_stack_info, traced_file: traced_file, additional_properties: struct)
       end
@@ -53,8 +55,13 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "submissionId": @submission_id, "testCaseId": @test_case_id, "lineNumber": @line_number,
-          "lightweightStackInfo": @lightweight_stack_info, "tracedFile": @traced_file }.to_json
+        {
+          "submissionId": @submission_id,
+          "testCaseId": @test_case_id,
+          "lineNumber": @line_number,
+          "lightweightStackInfo": @lightweight_stack_info,
+          "tracedFile": @traced_file
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

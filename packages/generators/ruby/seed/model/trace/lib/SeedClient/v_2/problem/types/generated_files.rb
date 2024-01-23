@@ -13,7 +13,7 @@ module SeedClient
         # @param other [Hash{LANGUAGE => LANGUAGE}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::GeneratedFiles]
-        def initialze(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
+        def initialize(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
           # @type [Hash{LANGUAGE => LANGUAGE}]
           @generated_test_case_files = generated_test_case_files
           # @type [Hash{LANGUAGE => LANGUAGE}]
@@ -30,13 +30,16 @@ module SeedClient
         # @return [V2::Problem::GeneratedFiles]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          generated_test_case_files = struct.generatedTestCaseFiles.transform_values do |v|
+          generated_test_case_files = struct.generatedTestCaseFiles.transform_values do |_k, v|
+            v = v.to_h.to_json
             LANGUAGE.key(v)
           end
-          generated_template_files = struct.generatedTemplateFiles.transform_values do |v|
+          generated_template_files = struct.generatedTemplateFiles.transform_values do |_k, v|
+            v = v.to_h.to_json
             LANGUAGE.key(v)
           end
-          other = struct.other.transform_values do |v|
+          other = struct.other.transform_values do |_k, v|
+            v = v.to_h.to_json
             LANGUAGE.key(v)
           end
           new(generated_test_case_files: generated_test_case_files, generated_template_files: generated_template_files,
@@ -47,13 +50,11 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { "generatedTestCaseFiles": @generated_test_case_files.transform_values do |v|
-                                        LANGUAGE.key(v)
-                                      end, "generatedTemplateFiles": @generated_template_files.transform_values do |v|
-                                                                       LANGUAGE.key(v)
-                                                                     end, "other": @other.transform_values do |v|
-                                                                                     LANGUAGE.key(v)
-                                                                                   end }.to_json
+          {
+            "generatedTestCaseFiles": @generated_test_case_files,
+            "generatedTemplateFiles": @generated_template_files,
+            "other": @other
+          }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

@@ -13,7 +13,7 @@ module SeedClient
           # @param imports [String]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::FunctionImplementation]
-          def initialze(impl:, imports: nil, additional_properties: nil)
+          def initialize(impl:, imports: nil, additional_properties: nil)
             # @type [String]
             @impl = impl
             # @type [String]

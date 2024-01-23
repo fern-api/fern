@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/PROBLEM_ID"
-require_relative "problem/types/ProblemDescription"
+require_relative "../../../commons/types/problem_id"
+require_relative "../../../problem/types/problem_description"
 require "set"
-require_relative "v_2/problem/types/CustomFiles"
-require_relative "v_2/problem/types/GeneratedFiles"
-require_relative "v_2/problem/types/TestCaseTemplate"
-require_relative "v_2/problem/types/TestCaseV2"
+require_relative "custom_files"
+require_relative "generated_files"
+require_relative "test_case_template"
+require_relative "test_case_v_2"
 require "json"
 
 module SeedClient
@@ -28,8 +28,8 @@ module SeedClient
         # @param is_public [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::ProblemInfoV2]
-        def initialze(problem_id:, problem_description:, problem_name:, problem_version:, supported_languages:,
-                      custom_files:, generated_files:, custom_test_case_templates:, testcases:, is_public:, additional_properties: nil)
+        def initialize(problem_id:, problem_description:, problem_name:, problem_version:, supported_languages:,
+                       custom_files:, generated_files:, custom_test_case_templates:, testcases:, is_public:, additional_properties: nil)
           # @type [Commons::PROBLEM_ID]
           @problem_id = problem_id
           # @type [Problem::ProblemDescription]
@@ -61,16 +61,22 @@ module SeedClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           problem_id = struct.problemId
-          problem_description = Problem::ProblemDescription.from_json(json_object: struct.problemDescription)
+          problem_description = struct.problemDescription.to_h.to_json
+          problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
           problem_name = struct.problemName
           problem_version = struct.problemVersion
-          supported_languages = Set.new(struct.supportedLanguages)
-          custom_files = V2::Problem::CustomFiles.from_json(json_object: struct.customFiles)
-          generated_files = V2::Problem::GeneratedFiles.from_json(json_object: struct.generatedFiles)
+          supported_languages = struct.supportedLanguages.to_h.to_json
+          supported_languages = Set.new(supported_languages)
+          custom_files = struct.customFiles.to_h.to_json
+          custom_files = V2::Problem::CustomFiles.from_json(json_object: custom_files)
+          generated_files = struct.generatedFiles.to_h.to_json
+          generated_files = V2::Problem::GeneratedFiles.from_json(json_object: generated_files)
           custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
+            v = v.to_h.to_json
             V2::Problem::TestCaseTemplate.from_json(json_object: v)
           end
           testcases = struct.testcases.map do |v|
+            v = v.to_h.to_json
             V2::Problem::TestCaseV2.from_json(json_object: v)
           end
           is_public = struct.isPublic
@@ -82,8 +88,18 @@ module SeedClient
         #
         # @return [JSON]
         def to_json(*_args)
-          { "problemId": @problem_id, "problemDescription": @problem_description, "problemName": @problem_name,
-            "problemVersion": @problem_version, "supportedLanguages": @supported_languages.to_a, "customFiles": @custom_files, "generatedFiles": @generated_files, "customTestCaseTemplates": @custom_test_case_templates, "testcases": @testcases, "isPublic": @is_public }.to_json
+          {
+            "problemId": @problem_id,
+            "problemDescription": @problem_description,
+            "problemName": @problem_name,
+            "problemVersion": @problem_version,
+            "supportedLanguages": @supported_languages,
+            "customFiles": @custom_files,
+            "generatedFiles": @generated_files,
+            "customTestCaseTemplates": @custom_test_case_templates,
+            "testcases": @testcases,
+            "isPublic": @is_public
+          }.to_json
         end
 
         # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

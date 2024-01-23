@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NODE_ID"
-require_relative "commons/types/BinaryTreeValue"
+require_relative "node_id"
+require_relative "binary_tree_value"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param full_tree [Commons::BinaryTreeValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::BinaryTreeNodeAndTreeValue]
-      def initialze(node_id:, full_tree:, additional_properties: nil)
+      def initialize(node_id:, full_tree:, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @node_id = node_id
         # @type [Commons::BinaryTreeValue]
@@ -29,7 +29,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         node_id = struct.nodeId
-        full_tree = Commons::BinaryTreeValue.from_json(json_object: struct.fullTree)
+        full_tree = struct.fullTree.to_h.to_json
+        full_tree = Commons::BinaryTreeValue.from_json(json_object: full_tree)
         new(node_id: node_id, full_tree: full_tree, additional_properties: struct)
       end
 

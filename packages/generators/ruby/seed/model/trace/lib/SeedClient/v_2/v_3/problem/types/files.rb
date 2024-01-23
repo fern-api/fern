@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/FileInfoV2"
+require_relative "file_info_v_2"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
           # @param files [Array<V2::V3::Problem::FileInfoV2>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::Files]
-          def initialze(files:, additional_properties: nil)
+          def initialize(files:, additional_properties: nil)
             # @type [Array<V2::V3::Problem::FileInfoV2>]
             @files = files
             # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -27,6 +27,7 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             files = struct.files.map do |v|
+              v = v.to_h.to_json
               V2::V3::Problem::FileInfoV2.from_json(json_object: v)
             end
             new(files: files, additional_properties: struct)

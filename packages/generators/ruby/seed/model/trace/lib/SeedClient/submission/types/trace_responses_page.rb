@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/TraceResponse"
+require_relative "trace_response"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param trace_responses [Array<Submission::TraceResponse>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TraceResponsesPage]
-      def initialze(trace_responses:, offset: nil, additional_properties: nil)
+      def initialize(trace_responses:, offset: nil, additional_properties: nil)
         # @type [Integer] If present, use this to load subseqent pages. The offset is the id of the next trace response to load.
         @offset = offset
         # @type [Array<Submission::TraceResponse>]
@@ -29,6 +29,7 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         offset = struct.offset
         trace_responses = struct.traceResponses.map do |v|
+          v = v.to_h.to_json
           Submission::TraceResponse.from_json(json_object: v)
         end
         new(offset: offset, trace_responses: trace_responses, additional_properties: struct)

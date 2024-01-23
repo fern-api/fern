@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/TestCase"
-require_relative "commons/types/VariableValue"
+require_relative "test_case"
+require_relative "variable_value"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param expected_result [Commons::VariableValue]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::TestCaseWithExpectedResult]
-      def initialze(test_case:, expected_result:, additional_properties: nil)
+      def initialize(test_case:, expected_result:, additional_properties: nil)
         # @type [Commons::TestCase]
         @test_case = test_case
         # @type [Commons::VariableValue]
@@ -28,8 +28,10 @@ module SeedClient
       # @return [Commons::TestCaseWithExpectedResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        test_case = Commons::TestCase.from_json(json_object: struct.testCase)
-        expected_result = Commons::VariableValue.from_json(json_object: struct.expectedResult)
+        test_case = struct.testCase.to_h.to_json
+        test_case = Commons::TestCase.from_json(json_object: test_case)
+        expected_result = struct.expectedResult.to_h.to_json
+        expected_result = Commons::VariableValue.from_json(json_object: expected_result)
         new(test_case: test_case, expected_result: expected_result, additional_properties: struct)
       end
 

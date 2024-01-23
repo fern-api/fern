@@ -11,7 +11,7 @@ module SeedClient
       # @param actual_language [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::UnexpectedLanguageError]
-      def initialze(expected_language:, actual_language:, additional_properties: nil)
+      def initialize(expected_language:, actual_language:, additional_properties: nil)
         # @type [Hash{String => String}]
         @expected_language = expected_language
         # @type [Hash{String => String}]
@@ -35,7 +35,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "expectedLanguage": @expected_language.fetch, "actualLanguage": @actual_language.fetch }.to_json
+        { "expectedLanguage": @expected_language, "actualLanguage": @actual_language }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

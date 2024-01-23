@@ -1,3 +1,4 @@
+import { AbsoluteFilePath, relative } from "@fern-api/fs-utils";
 import { AstNode } from "./core/AstNode";
 
 export declare namespace Import {
@@ -22,5 +23,17 @@ export class Import extends AstNode {
             templateString: this.isExternal ? 'require "%s"' : 'require_relative "%s"',
             startingTabSpaces
         });
+    }
+
+    public writeRelative(startingTabSpaces: number, startingLocation: AbsoluteFilePath): string {
+        const importDirective = relative(startingLocation, AbsoluteFilePath.of("/" + this.from));
+        this.addText({
+            stringContent: this.isExternal ? this.from : importDirective,
+            templateString: this.isExternal ? 'require "%s"' : 'require_relative "%s"',
+            startingTabSpaces
+        });
+        const text = this.text.join("\n");
+        this.text = [];
+        return text;
     }
 }

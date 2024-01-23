@@ -11,7 +11,7 @@ module SeedClient
       # @param rating [Float]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Imdb::CreateMovieRequest]
-      def initialze(title:, rating:, additional_properties: nil)
+      def initialize(title:, rating:, additional_properties: nil)
         # @type [String]
         @title = title
         # @type [Float]

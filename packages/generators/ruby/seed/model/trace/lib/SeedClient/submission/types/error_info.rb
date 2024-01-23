@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/CompileError"
-require_relative "submission/types/RuntimeError"
-require_relative "submission/types/InternalError"
+require "json"
+require_relative "compile_error"
+require_relative "runtime_error"
+require_relative "internal_error"
 
 module SeedClient
   module Submission
@@ -15,7 +15,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::ErrorInfo]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

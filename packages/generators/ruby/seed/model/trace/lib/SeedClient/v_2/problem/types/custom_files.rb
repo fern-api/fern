@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "v_2/problem/types/BasicCustomFiles"
+require "json"
+require_relative "basic_custom_files"
 
 module SeedClient
   module V2
@@ -14,7 +14,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [V2::Problem::CustomFiles]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]
@@ -31,7 +31,8 @@ module SeedClient
                    when "basic"
                      V2::Problem::BasicCustomFiles.from_json(json_object: json_object)
                    when "custom"
-                     json_object.value.transform_values do |v|
+                     json_object.value.transform_values do |_k, v|
+                       v = v.to_h.to_json
                        LANGUAGE.key(v)
                      end
                    else

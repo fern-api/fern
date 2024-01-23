@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "submission/types/ErrorInfo"
-require_relative "submission/types/WorkspaceRunDetails"
+require "json"
+require_relative "error_info"
+require_relative "workspace_run_details"
 
 module SeedClient
   module Submission
@@ -14,7 +14,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Submission::WorkspaceSubmissionStatus]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "commons/types/types/Metadata"
-require_relative "commons/types/types/TAG"
+require "json"
+require_relative "metadata"
+require_relative "tag"
 
 module SeedClient
   module Commons
@@ -15,7 +15,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [Commons::Types::EventInfo]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]

@@ -11,7 +11,7 @@ module SeedClient
         # @param bar_property [UUID]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [FolderC::Common::Foo]
-        def initialze(bar_property:, additional_properties: nil)
+        def initialize(bar_property:, additional_properties: nil)
           # @type [UUID]
           @bar_property = bar_property
           # @type [OpenStruct] Additional properties unmapped to the current class definition

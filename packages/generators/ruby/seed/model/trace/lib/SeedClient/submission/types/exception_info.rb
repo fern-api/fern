@@ -12,7 +12,7 @@ module SeedClient
       # @param exception_stacktrace [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ExceptionInfo]
-      def initialze(exception_type:, exception_message:, exception_stacktrace:, additional_properties: nil)
+      def initialize(exception_type:, exception_message:, exception_stacktrace:, additional_properties: nil)
         # @type [String]
         @exception_type = exception_type
         # @type [String]
@@ -40,8 +40,11 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "exceptionType": @exception_type, "exceptionMessage": @exception_message,
-          "exceptionStacktrace": @exception_stacktrace }.to_json
+        {
+          "exceptionType": @exception_type,
+          "exceptionMessage": @exception_message,
+          "exceptionStacktrace": @exception_stacktrace
+        }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

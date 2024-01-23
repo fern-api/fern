@@ -13,7 +13,7 @@ module SeedClient
         # @param json_string [String]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [Commons::Types::Metadata]
-        def initialze(id:, data: nil, json_string: nil, additional_properties: nil)
+        def initialize(id:, data: nil, json_string: nil, additional_properties: nil)
           # @type [String]
           @id = id
           # @type [Hash{String => String}]

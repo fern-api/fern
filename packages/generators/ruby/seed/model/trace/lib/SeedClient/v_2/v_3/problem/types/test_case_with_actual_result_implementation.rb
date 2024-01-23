@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/NonVoidFunctionDefinition"
-require_relative "v_2/v_3/problem/types/AssertCorrectnessCheck"
+require_relative "non_void_function_definition"
+require_relative "assert_correctness_check"
 require "json"
 
 module SeedClient
@@ -15,7 +15,7 @@ module SeedClient
           # @param assert_correctness_check [V2::V3::Problem::AssertCorrectnessCheck]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::TestCaseWithActualResultImplementation]
-          def initialze(get_actual_result:, assert_correctness_check:, additional_properties: nil)
+          def initialize(get_actual_result:, assert_correctness_check:, additional_properties: nil)
             # @type [V2::V3::Problem::NonVoidFunctionDefinition]
             @get_actual_result = get_actual_result
             # @type [V2::V3::Problem::AssertCorrectnessCheck]
@@ -30,8 +30,10 @@ module SeedClient
           # @return [V2::V3::Problem::TestCaseWithActualResultImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            get_actual_result = V2::V3::Problem::NonVoidFunctionDefinition.from_json(json_object: struct.getActualResult)
-            assert_correctness_check = V2::V3::Problem::AssertCorrectnessCheck.from_json(json_object: struct.assertCorrectnessCheck)
+            get_actual_result = struct.getActualResult.to_h.to_json
+            get_actual_result = V2::V3::Problem::NonVoidFunctionDefinition.from_json(json_object: get_actual_result)
+            assert_correctness_check = struct.assertCorrectnessCheck.to_h.to_json
+            assert_correctness_check = V2::V3::Problem::AssertCorrectnessCheck.from_json(json_object: assert_correctness_check)
             new(get_actual_result: get_actual_result, assert_correctness_check: assert_correctness_check,
                 additional_properties: struct)
           end

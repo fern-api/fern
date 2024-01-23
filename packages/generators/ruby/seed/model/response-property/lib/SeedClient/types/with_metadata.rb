@@ -9,7 +9,7 @@ module SeedClient
     # @param metadata [Hash{String => String}]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [WithMetadata]
-    def initialze(metadata:, additional_properties: nil)
+    def initialize(metadata:, additional_properties: nil)
       # @type [Hash{String => String}]
       @metadata = metadata
       # @type [OpenStruct] Additional properties unmapped to the current class definition

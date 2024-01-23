@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "types/types/File"
+require_relative "file"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param directories [Array<Types::Directory>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Types::Directory]
-      def initialze(name:, files: nil, directories: nil, additional_properties: nil)
+      def initialize(name:, files: nil, directories: nil, additional_properties: nil)
         # @type [String]
         @name = name
         # @type [Array<Types::File>]
@@ -32,9 +32,11 @@ module SeedClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
         files = struct.files.map do |v|
+          v = v.to_h.to_json
           Types::File.from_json(json_object: v)
         end
         directories = struct.directories.map do |v|
+          v = v.to_h.to_json
           Types::Directory.from_json(json_object: v)
         end
         new(name: name, files: files, directories: directories, additional_properties: struct)

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/NODE_ID"
+require_relative "node_id"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
       # @param left [Commons::NODE_ID]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::BinaryTreeNodeValue]
-      def initialze(node_id:, val:, right: nil, left: nil, additional_properties: nil)
+      def initialize(node_id:, val:, right: nil, left: nil, additional_properties: nil)
         # @type [Commons::NODE_ID]
         @node_id = node_id
         # @type [Float]

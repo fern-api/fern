@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/WorkspaceSubmissionUpdate"
+require_relative "workspace_submission_update"
 require "json"
 
 module SeedClient
@@ -11,7 +11,7 @@ module SeedClient
       # @param updates [Array<Submission::WorkspaceSubmissionUpdate>]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceSubmissionStatusV2]
-      def initialze(updates:, additional_properties: nil)
+      def initialize(updates:, additional_properties: nil)
         # @type [Array<Submission::WorkspaceSubmissionUpdate>]
         @updates = updates
         # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -25,6 +25,7 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         updates = struct.updates.map do |v|
+          v = v.to_h.to_json
           Submission::WorkspaceSubmissionUpdate.from_json(json_object: v)
         end
         new(updates: updates, additional_properties: struct)

@@ -10,7 +10,7 @@ module SeedClient
       # @param message [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Errors::PropertyBasedErrorTestBody]
-      def initialze(message:, additional_properties: nil)
+      def initialize(message:, additional_properties: nil)
         # @type [String]
         @message = message
         # @type [OpenStruct] Additional properties unmapped to the current class definition

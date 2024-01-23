@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "types/TYPE_ID"
+require_relative "type_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
     # @param name [String]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Type]
-    def initialze(id:, name:, additional_properties: nil)
+    def initialize(id:, name:, additional_properties: nil)
       # @type [TYPE_ID]
       @id = id
       # @type [String]

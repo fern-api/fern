@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
-require_relative "submission/types/WorkspaceRunDetails"
+require_relative "submission_id"
+require_relative "workspace_run_details"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
       # @param run_details [Submission::WorkspaceRunDetails]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceRanResponse]
-      def initialze(submission_id:, run_details:, additional_properties: nil)
+      def initialize(submission_id:, run_details:, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [Submission::WorkspaceRunDetails]
@@ -29,7 +29,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
-        run_details = Submission::WorkspaceRunDetails.from_json(json_object: struct.runDetails)
+        run_details = struct.runDetails.to_h.to_json
+        run_details = Submission::WorkspaceRunDetails.from_json(json_object: run_details)
         new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
       end
 

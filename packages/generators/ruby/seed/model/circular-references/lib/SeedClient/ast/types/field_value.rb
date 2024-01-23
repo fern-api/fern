@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "ast/types/ObjectValue"
-require_relative "ast/types/ContainerValue"
+require "json"
+require_relative "object_value"
+require_relative "container_value"
 
 module SeedClient
   module Ast
@@ -14,7 +14,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Ast::FieldValue]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

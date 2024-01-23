@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/Parameter"
+require_relative "parameter"
 require "json"
 
 module SeedClient
@@ -13,7 +13,7 @@ module SeedClient
           # @param parameters [Array<V2::V3::Problem::Parameter>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::VoidFunctionSignature]
-          def initialze(parameters:, additional_properties: nil)
+          def initialize(parameters:, additional_properties: nil)
             # @type [Array<V2::V3::Problem::Parameter>]
             @parameters = parameters
             # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -27,6 +27,7 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parameters = struct.parameters.map do |v|
+              v = v.to_h.to_json
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
             new(parameters: parameters, additional_properties: struct)

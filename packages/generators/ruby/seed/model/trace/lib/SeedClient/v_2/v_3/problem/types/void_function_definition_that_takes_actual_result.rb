@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/Parameter"
-require_relative "v_2/v_3/problem/types/FunctionImplementationForMultipleLanguages"
+require_relative "parameter"
+require_relative "function_implementation_for_multiple_languages"
 require "json"
 
 module SeedClient
@@ -16,7 +16,7 @@ module SeedClient
           # @param code [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::VoidFunctionDefinitionThatTakesActualResult]
-          def initialze(additional_parameters:, code:, additional_properties: nil)
+          def initialize(additional_parameters:, code:, additional_properties: nil)
             # @type [Array<V2::V3::Problem::Parameter>]
             @additional_parameters = additional_parameters
             # @type [V2::V3::Problem::FunctionImplementationForMultipleLanguages]
@@ -32,9 +32,11 @@ module SeedClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             additional_parameters = struct.additionalParameters.map do |v|
+              v = v.to_h.to_json
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
-            code = V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: struct.code)
+            code = struct.code.to_h.to_json
+            code = V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
             new(additional_parameters: additional_parameters, code: code, additional_properties: struct)
           end
 

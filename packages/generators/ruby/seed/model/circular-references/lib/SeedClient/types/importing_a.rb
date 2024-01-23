@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "a/types/A"
+require_relative "../a/types/a"
 require "json"
 
 module SeedClient
@@ -10,7 +10,7 @@ module SeedClient
     # @param a [A::A]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [ImportingA]
-    def initialze(a: nil, additional_properties: nil)
+    def initialize(a: nil, additional_properties: nil)
       # @type [A::A]
       @a = a
       # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -23,7 +23,8 @@ module SeedClient
     # @return [ImportingA]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      a = A::A.from_json(json_object: struct.a)
+      a = struct.a.to_h.to_json
+      a = A::A.from_json(json_object: a)
       new(a: a, additional_properties: struct)
     end
 

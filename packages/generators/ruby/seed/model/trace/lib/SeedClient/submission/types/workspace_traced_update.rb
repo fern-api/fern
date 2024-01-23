@@ -10,7 +10,7 @@ module SeedClient
       # @param trace_responses_size [Integer]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceTracedUpdate]
-      def initialze(trace_responses_size:, additional_properties: nil)
+      def initialize(trace_responses_size:, additional_properties: nil)
         # @type [Integer]
         @trace_responses_size = trace_responses_size
         # @type [OpenStruct] Additional properties unmapped to the current class definition

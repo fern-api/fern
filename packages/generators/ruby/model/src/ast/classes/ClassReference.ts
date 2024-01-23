@@ -44,7 +44,6 @@ export declare namespace ClassReference {
         name: string;
         typeHint?: string;
         import_?: Import;
-        location?: string;
         moduleBreadcrumbs?: string[];
     }
 }
@@ -54,11 +53,9 @@ export class ClassReference extends AstNode {
     public typeHint: string;
     public qualifiedName: string;
     public import_: Import | undefined;
-    public location: string | undefined;
 
     constructor({ name, typeHint, import_, location, moduleBreadcrumbs, ...rest }: ClassReference.Init) {
         super(rest);
-        this.location = location;
         this.name = name;
         this.import_ = import_;
 
@@ -68,10 +65,6 @@ export class ClassReference extends AstNode {
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: this.qualifiedName, startingTabSpaces });
-    }
-
-    public toJson(_variable: Variable | string): FunctionInvocation | undefined {
-        return;
     }
 
     public fromJson(_variable: Variable | string): FunctionInvocation | undefined {
@@ -109,7 +102,10 @@ export class ClassReference extends AstNode {
 
 export const OpenStructClassReference = new ClassReference({ name: RubyClass.OPENSTRUCT });
 export const GenericClassReference = new ClassReference({ name: RubyClass.OBJECT });
-export const JsonClassReference = new ClassReference({ name: RubyClass.JSON });
+export const JsonClassReference = new ClassReference({
+    name: RubyClass.JSON,
+    import_: new Import({ from: "json", isExternal: true })
+});
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
@@ -159,13 +155,11 @@ export class SerializableObjectReference extends ClassReference {
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
         // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
         // are written to a "types" subdirectory
-        const crName = declaredTypeName.name.pascalCase.safeName;
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
         return new SerializableObjectReference({
-            name: crName,
-            import_: new Import({ from: `${location}/${crName}` }),
-            location,
+            name: declaredTypeName.name.pascalCase.safeName,
+            import_: new Import({ from: location }),
             moduleBreadcrumbs
         });
     }
@@ -187,10 +181,6 @@ export class AliasReference extends ClassReference {
         return this.aliasOf.fromJson(variable);
     }
 
-    public toJson(variable: string | Variable): FunctionInvocation | undefined {
-        return this.aliasOf.toJson(variable);
-    }
-
     public validateRaw(variable: string | Variable, isOptional?: boolean): FunctionInvocation | Expression {
         return this.aliasOf.validateRaw(variable, isOptional);
     }
@@ -198,14 +188,12 @@ export class AliasReference extends ClassReference {
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName, aliasOf: ClassReference): ClassReference {
         // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
         // are written to a "types" subdirectory
-        const crName = declaredTypeName.name.screamingSnakeCase.safeName;
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
         return new AliasReference({
             aliasOf,
-            name: crName,
-            import_: new Import({ from: `${location}/${crName}` }),
-            location,
+            name: declaredTypeName.name.screamingSnakeCase.safeName,
+            import_: new Import({ from: location }),
             moduleBreadcrumbs
         });
     }
@@ -242,21 +230,17 @@ export class ArrayReference extends ClassReference {
                   onObject: variable,
                   block: {
                       arguments: "v",
-                      expressions: [new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })]
-                  }
-              })
-            : undefined;
-    }
-
-    public toJson(variable: string | Variable): FunctionInvocation | undefined {
-        const valueToJsonFunction = this.innerType instanceof ClassReference ? this.innerType.toJson("v") : undefined;
-        return valueToJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "map", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "v",
-                      expressions: [new Expression({ rightSide: valueToJsonFunction, isAssignment: false })]
+                      expressions: [
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                      ]
                   }
               })
             : undefined;
@@ -310,22 +294,18 @@ export class HashReference extends ClassReference {
                   baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
                   onObject: variable,
                   block: {
-                      arguments: "v",
-                      expressions: [new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })]
-                  }
-              })
-            : undefined;
-    }
-
-    public toJson(variable: string | Variable): FunctionInvocation | undefined {
-        const valueToJsonFunction = this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
-        return valueToJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "v",
-                      expressions: [new Expression({ rightSide: valueToJsonFunction, isAssignment: false })]
+                      arguments: "k, v",
+                      expressions: [
+                          new Expression({
+                              leftSide: "v",
+                              rightSide: new FunctionInvocation({
+                                  onObject: "v",
+                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                              }),
+                              isAssignment: true
+                          }),
+                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                      ]
                   }
               })
             : undefined;
@@ -376,13 +356,6 @@ export class EnumReference extends HashReference {
         super({ name, keyType: "String", valueType: "String" });
     }
 
-    public toJson(variable: Variable | string): FunctionInvocation | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "fetch", functionBody: [] }),
-            onObject: variable
-        });
-    }
-
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "key", functionBody: [] }),
@@ -392,13 +365,11 @@ export class EnumReference extends HashReference {
     }
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): EnumReference {
-        const crName = declaredTypeName.name.screamingSnakeCase.safeName;
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
         return new EnumReference({
-            name: crName,
-            import_: new Import({ from: `${location}/${crName}` }),
-            location,
+            name: declaredTypeName.name.screamingSnakeCase.safeName,
+            import_: new Import({ from: location }),
             moduleBreadcrumbs
         });
     }
@@ -423,13 +394,6 @@ export class SetReference extends ClassReference {
         });
     }
 
-    public toJson(variable: Variable | string): FunctionInvocation | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "to_a", functionBody: [] }),
-            onObject: variable
-        });
-    }
-
     public fromJson(variable: Variable | string): FunctionInvocation | undefined {
         return new FunctionInvocation({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
@@ -450,6 +414,32 @@ export class SetInstance extends AstNode {
         this.addText({
             stringContent: this.contents.length > 0 ? this.contents.join(", ") : undefined,
             templateString: "Set[%s]"
+        });
+    }
+}
+
+export declare namespace DateReference {
+    export interface DateTimeInit extends AstNode.Init {
+        readonly type: "DateTime";
+    }
+    export interface DateInit extends AstNode.Init {
+        readonly type: "Date";
+    }
+}
+export class DateReference extends ClassReference {
+    constructor({ type, ...rest }: DateReference.DateTimeInit | DateReference.DateInit) {
+        super({
+            name: type === "Date" ? RubyClass.DATE : RubyClass.DATETIME,
+            import_: new Import({ from: "date", isExternal: true }),
+            ...rest
+        });
+    }
+
+    public fromJson(variable: Variable | string): FunctionInvocation | undefined {
+        return new FunctionInvocation({
+            baseFunction: new Function_({ name: "parse", functionBody: [] }),
+            onObject: this,
+            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
         });
     }
 }
@@ -519,8 +509,8 @@ export class ClassReferenceFactory {
             string: () => StringClassReference,
             boolean: () => BooleanClassReference,
             long: () => new ClassReference({ name: RubyClass.LONG }),
-            dateTime: () => new ClassReference({ name: RubyClass.DATETIME }),
-            date: () => new ClassReference({ name: RubyClass.DATE }),
+            dateTime: () => new DateReference({ type: "DateTime" }),
+            date: () => new DateReference({ type: "Date" }),
             uuid: () => new ClassReference({ name: RubyClass.UUID }),
             base64: () => new ClassReference({ name: RubyClass.BASE64 }),
             _other: () => {

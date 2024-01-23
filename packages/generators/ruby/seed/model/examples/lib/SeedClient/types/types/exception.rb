@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "types/types/ExceptionInfo"
+require "json"
+require_relative "exception_info"
 
 module SeedClient
   module Types
@@ -13,7 +13,7 @@ module SeedClient
       # @param member [Object]
       # @param discriminant [String]
       # @return [Types::Exception]
-      def initialze(member:, discriminant:)
+      def initialize(member:, discriminant:)
         # @type [Object]
         @member = member
         # @type [String]

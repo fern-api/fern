@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "set"
-require_relative "json"
+require "json"
 
 module SeedClient
   module Types
@@ -15,7 +15,7 @@ module SeedClient
       # @param extra [Hash{String => String}]
       # @param tags [Set<String>]
       # @return [Types::Metadata]
-      def initialze(member:, discriminant:, extra:, tags:)
+      def initialize(member:, discriminant:, extra:, tags:)
         # @type [Object]
         @member = member
         # @type [String]

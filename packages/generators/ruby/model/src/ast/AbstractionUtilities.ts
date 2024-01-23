@@ -3,8 +3,10 @@ import {
     AliasTypeDeclaration,
     DeclaredTypeName,
     EnumTypeDeclaration,
+    ObjectProperty,
     ObjectTypeDeclaration,
     TypeDeclaration,
+    TypeId,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
     UnionTypeDeclaration
@@ -85,13 +87,12 @@ function isTypeOptional(typeReference: TypeReference): boolean {
 
 export function generateSerializableObjectFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
+    propertyOverrides: Map<TypeId, ObjectProperty[]>,
+    typeId: TypeId,
     objectTypeDeclaration: ObjectTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): SerializableObject {
-    const extendedClasses = objectTypeDeclaration.extends.map((extendedType) =>
-        classReferenceFactory.fromDeclaredTypeName(extendedType)
-    );
-    const properties = objectTypeDeclaration.properties.map(
+    const properties = (propertyOverrides.get(typeId) ?? objectTypeDeclaration.properties).map(
         (property) =>
             new Property({
                 name: property.name.name.snakeCase.safeName,
@@ -105,7 +106,6 @@ export function generateSerializableObjectFromTypeDeclaration(
     const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
     return new SerializableObject({
         classReference,
-        extendedClasses,
         properties,
         documentation: typeDeclaration.docs
     });
@@ -113,13 +113,12 @@ export function generateSerializableObjectFromTypeDeclaration(
 
 export function generateUnionFromTypeDeclaration(
     classReferenceFactory: ClassReferenceFactory,
+    propertyOverrides: Map<TypeId, ObjectProperty[]>,
+    typeId: TypeId,
     unionTypeDeclaration: UnionTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): DiscriminatedUnion {
-    const extendedClasses = unionTypeDeclaration.extends.map((extendedType) =>
-        classReferenceFactory.fromDeclaredTypeName(extendedType)
-    );
-    const properties = unionTypeDeclaration.baseProperties.map(
+    const properties = (propertyOverrides.get(typeId) ?? unionTypeDeclaration.baseProperties).map(
         (property) =>
             new Property({
                 name: property.name.name.snakeCase.safeName,
@@ -140,7 +139,6 @@ export function generateUnionFromTypeDeclaration(
     const classReference = classReferenceFactory.fromDeclaredTypeName(typeDeclaration.name);
     return new DiscriminatedUnion({
         classReference,
-        extendedClasses,
         discriminantField: unionTypeDeclaration.discriminant.wireValue,
         namedSubclasses,
         defaultSubclassReference: namedSubclasses[0]?.classReference,
@@ -165,7 +163,8 @@ export function generateUndiscriminatedUnionFromTypeDeclaration(
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        TYPES_DIRECTORY
+        TYPES_DIRECTORY,
+        declaredTypeName.name.snakeCase.safeName
     ].join("/");
 }
 
@@ -178,7 +177,7 @@ export function generateGemspec(
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        entityName: `${gemName}.gemspec`,
+        name: `${gemName}.gemspec`,
         isConfigurationFile: true
     });
 }
@@ -218,6 +217,6 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        entityName: "gemconfig.rb"
+        name: "gemconfig.rb"
     });
 }

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/FileInfoV2"
-require_relative "commons/types/VariableType"
+require_relative "file_info_v_2"
+require_relative "../../../../commons/types/variable_type"
 require "json"
 
 module SeedClient
@@ -15,7 +15,7 @@ module SeedClient
           # @param related_types [Array<Commons::VariableType>]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::DefaultProvidedFile]
-          def initialze(file:, related_types:, additional_properties: nil)
+          def initialize(file:, related_types:, additional_properties: nil)
             # @type [V2::V3::Problem::FileInfoV2]
             @file = file
             # @type [Array<Commons::VariableType>]
@@ -30,8 +30,10 @@ module SeedClient
           # @return [V2::V3::Problem::DefaultProvidedFile]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            file = V2::V3::Problem::FileInfoV2.from_json(json_object: struct.file)
+            file = struct.file.to_h.to_json
+            file = V2::V3::Problem::FileInfoV2.from_json(json_object: file)
             related_types = struct.relatedTypes.map do |v|
+              v = v.to_h.to_json
               Commons::VariableType.from_json(json_object: v)
             end
             new(file: file, related_types: related_types, additional_properties: struct)

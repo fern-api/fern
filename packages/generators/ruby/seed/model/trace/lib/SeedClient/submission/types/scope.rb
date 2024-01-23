@@ -10,7 +10,7 @@ module SeedClient
       # @param variables [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::Scope]
-      def initialze(variables:, additional_properties: nil)
+      def initialize(variables:, additional_properties: nil)
         # @type [Hash{String => String}]
         @variables = variables
         # @type [OpenStruct] Additional properties unmapped to the current class definition

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "commons/metadata/types/Metadata"
+require_relative "../commons/metadata/types/metadata"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
     # @param metadata [Commons::Metadata::Metadata]
     # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
     # @return [Node]
-    def initialze(id:, label: nil, metadata: nil, additional_properties: nil)
+    def initialize(id:, label: nil, metadata: nil, additional_properties: nil)
       # @type [String]
       @id = id
       # @type [String]
@@ -31,7 +31,8 @@ module SeedClient
       struct = JSON.parse(json_object, object_class: OpenStruct)
       id = struct.id
       label = struct.label
-      metadata = Commons::Metadata::Metadata.from_json(json_object: struct.metadata)
+      metadata = struct.metadata.to_h.to_json
+      metadata = Commons::Metadata::Metadata.from_json(json_object: metadata)
       new(id: id, label: label, metadata: metadata, additional_properties: struct)
     end
 

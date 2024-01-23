@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "v_2/v_3/problem/types/PARAMETER_ID"
-require_relative "commons/types/VariableType"
+require_relative "parameter_id"
+require_relative "../../../../commons/types/variable_type"
 require "json"
 
 module SeedClient
@@ -16,7 +16,7 @@ module SeedClient
           # @param variable_type [Commons::VariableType]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::Parameter]
-          def initialze(parameter_id:, name:, variable_type:, additional_properties: nil)
+          def initialize(parameter_id:, name:, variable_type:, additional_properties: nil)
             # @type [V2::V3::Problem::PARAMETER_ID]
             @parameter_id = parameter_id
             # @type [String]
@@ -35,7 +35,8 @@ module SeedClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parameter_id = struct.parameterId
             name = struct.name
-            variable_type = Commons::VariableType.from_json(json_object: struct.variableType)
+            variable_type = struct.variableType.to_h.to_json
+            variable_type = Commons::VariableType.from_json(json_object: variable_type)
             new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
           end
 

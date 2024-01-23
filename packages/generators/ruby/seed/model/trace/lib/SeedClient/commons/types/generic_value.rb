@@ -11,7 +11,7 @@ module SeedClient
       # @param stringified_value [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Commons::GenericValue]
-      def initialze(stringified_value:, stringified_type: nil, additional_properties: nil)
+      def initialize(stringified_value:, stringified_type: nil, additional_properties: nil)
         # @type [String]
         @stringified_type = stringified_type
         # @type [String]

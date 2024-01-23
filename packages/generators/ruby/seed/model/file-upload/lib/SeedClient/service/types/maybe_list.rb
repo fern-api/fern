@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "json"
+require "json"
 
 module SeedClient
   module Service
@@ -9,7 +9,7 @@ module SeedClient
       alias kind_of? is_a?
       # @param member [Object]
       # @return [Service::MaybeList]
-      def initialze(member:)
+      def initialize(member:)
         # @type [Object]
         @member = member
       end
@@ -51,10 +51,11 @@ module SeedClient
         begin
           struct.is_a?(Array) != false || raise("Passed value for field struct is not the expected type, validation failed.")
           member = json_object
-          new(member: member)
+          return new(member: member)
         rescue StandardError
           # noop
         end
+        new(member: struct)
       end
 
       # For Union Types, to_json functionality is delegated to the wrapped member.

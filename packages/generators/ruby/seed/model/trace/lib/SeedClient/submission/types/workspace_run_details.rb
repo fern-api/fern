@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/ExceptionV2"
-require_relative "submission/types/ExceptionInfo"
+require_relative "exception_v_2"
+require_relative "exception_info"
 require "json"
 
 module SeedClient
@@ -14,7 +14,7 @@ module SeedClient
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceRunDetails]
-      def initialze(stdout:, exception_v_2: nil, exception: nil, additional_properties: nil)
+      def initialize(stdout:, exception_v_2: nil, exception: nil, additional_properties: nil)
         # @type [Submission::ExceptionV2]
         @exception_v_2 = exception_v_2
         # @type [Submission::ExceptionInfo]
@@ -31,8 +31,10 @@ module SeedClient
       # @return [Submission::WorkspaceRunDetails]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_v_2 = Submission::ExceptionV2.from_json(json_object: struct.exceptionV2)
-        exception = Submission::ExceptionInfo.from_json(json_object: struct.exception)
+        exception_v_2 = struct.exceptionV2.to_h.to_json
+        exception_v_2 = Submission::ExceptionV2.from_json(json_object: exception_v_2)
+        exception = struct.exception.to_h.to_json
+        exception = Submission::ExceptionInfo.from_json(json_object: exception)
         stdout = struct.stdout
         new(exception_v_2: exception_v_2, exception: exception, stdout: stdout, additional_properties: struct)
       end

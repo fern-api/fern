@@ -12,7 +12,7 @@ module SeedClient
       # @param info [Hash{String => String}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [File::File]
-      def initialze(name:, contents:, info:, additional_properties: nil)
+      def initialize(name:, contents:, info:, additional_properties: nil)
         # @type [String]
         @name = name
         # @type [String]
@@ -39,7 +39,7 @@ module SeedClient
       #
       # @return [JSON]
       def to_json(*_args)
-        { "name": @name, "contents": @contents, "info": @info.fetch }.to_json
+        { "name": @name, "contents": @contents, "info": @info }.to_json
       end
 
       # Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.

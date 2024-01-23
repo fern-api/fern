@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/StackFrame"
+require_relative "stack_frame"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param top_stack_frame [Submission::StackFrame]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::StackInformation]
-      def initialze(num_stack_frames:, top_stack_frame: nil, additional_properties: nil)
+      def initialize(num_stack_frames:, top_stack_frame: nil, additional_properties: nil)
         # @type [Integer]
         @num_stack_frames = num_stack_frames
         # @type [Submission::StackFrame]
@@ -28,7 +28,8 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         num_stack_frames = struct.numStackFrames
-        top_stack_frame = Submission::StackFrame.from_json(json_object: struct.topStackFrame)
+        top_stack_frame = struct.topStackFrame.to_h.to_json
+        top_stack_frame = Submission::StackFrame.from_json(json_object: top_stack_frame)
         new(num_stack_frames: num_stack_frames, top_stack_frame: top_stack_frame, additional_properties: struct)
       end
 

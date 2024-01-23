@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/SUBMISSION_ID"
+require_relative "submission_id"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::StdoutResponse]
-      def initialze(submission_id:, stdout:, additional_properties: nil)
+      def initialize(submission_id:, stdout:, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
         # @type [String]

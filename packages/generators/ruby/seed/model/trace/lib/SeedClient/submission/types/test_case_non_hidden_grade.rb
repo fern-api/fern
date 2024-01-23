@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "commons/types/VariableValue"
-require_relative "submission/types/ExceptionV2"
+require_relative "../../commons/types/variable_value"
+require_relative "exception_v_2"
 require "json"
 
 module SeedClient
@@ -15,7 +15,7 @@ module SeedClient
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestCaseNonHiddenGrade]
-      def initialze(passed:, stdout:, actual_result: nil, exception: nil, additional_properties: nil)
+      def initialize(passed:, stdout:, actual_result: nil, exception: nil, additional_properties: nil)
         # @type [Boolean]
         @passed = passed
         # @type [Commons::VariableValue]
@@ -35,8 +35,10 @@ module SeedClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         passed = struct.passed
-        actual_result = Commons::VariableValue.from_json(json_object: struct.actualResult)
-        exception = Submission::ExceptionV2.from_json(json_object: struct.exception)
+        actual_result = struct.actualResult.to_h.to_json
+        actual_result = Commons::VariableValue.from_json(json_object: actual_result)
+        exception = struct.exception.to_h.to_json
+        exception = Submission::ExceptionV2.from_json(json_object: exception)
         stdout = struct.stdout
         new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
             additional_properties: struct)

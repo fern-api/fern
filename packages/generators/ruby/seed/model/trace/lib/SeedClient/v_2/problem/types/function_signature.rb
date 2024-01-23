@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "v_2/problem/types/VoidFunctionSignature"
-require_relative "v_2/problem/types/NonVoidFunctionSignature"
-require_relative "v_2/problem/types/VoidFunctionSignatureThatTakesActualResult"
+require "json"
+require_relative "void_function_signature"
+require_relative "non_void_function_signature"
+require_relative "void_function_signature_that_takes_actual_result"
 
 module SeedClient
   module V2
@@ -16,7 +16,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [V2::Problem::FunctionSignature]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]

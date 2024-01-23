@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "json"
-require_relative "v_2/problem/types/DeepEqualityCorrectnessCheck"
-require_relative "v_2/problem/types/VoidFunctionDefinitionThatTakesActualResult"
+require "json"
+require_relative "deep_equality_correctness_check"
+require_relative "void_function_definition_that_takes_actual_result"
 
 module SeedClient
   module V2
@@ -15,7 +15,7 @@ module SeedClient
         # @param member [Object]
         # @param discriminant [String]
         # @return [V2::Problem::AssertCorrectnessCheck]
-        def initialze(member:, discriminant:)
+        def initialize(member:, discriminant:)
           # @type [Object]
           @member = member
           # @type [String]

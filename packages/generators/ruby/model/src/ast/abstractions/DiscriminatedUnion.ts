@@ -14,7 +14,6 @@ import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { CaseStatement } from "./CaseStatement";
@@ -110,7 +109,7 @@ export class DiscriminatedUnion extends Class_ {
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
-                    onObject: new ClassReference({ name: "JSON", import_: new Import({ from: "json" }) }),
+                    onObject: JsonClassReference,
                     baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
@@ -152,7 +151,7 @@ export class DiscriminatedUnion extends Class_ {
                 ]
             })
         ];
-        const parameters = [new Parameter({ name: "json_object", type: JsonClassReference })];
+        const parameters = [new Parameter({ name: jsonObjectParamName, type: JsonClassReference })];
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${unionClassReference.name}`;
         return new Function_({
             name: "from_json",

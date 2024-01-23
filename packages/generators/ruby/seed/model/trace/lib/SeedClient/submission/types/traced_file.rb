@@ -11,7 +11,7 @@ module SeedClient
       # @param directory [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TracedFile]
-      def initialze(filename:, directory:, additional_properties: nil)
+      def initialize(filename:, directory:, additional_properties: nil)
         # @type [String]
         @filename = filename
         # @type [String]

@@ -12,7 +12,7 @@ module SeedClient
       # @param stacktrace [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Problem::GenericCreateProblemError]
-      def initialze(message:, type:, stacktrace:, additional_properties: nil)
+      def initialize(message:, type:, stacktrace:, additional_properties: nil)
         # @type [String]
         @message = message
         # @type [String]

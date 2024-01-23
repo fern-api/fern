@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/TestCaseResult"
+require_relative "test_case_result"
 require "json"
 
 module SeedClient
@@ -12,7 +12,7 @@ module SeedClient
       # @param stdout [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::TestCaseResultWithStdout]
-      def initialze(result:, stdout:, additional_properties: nil)
+      def initialize(result:, stdout:, additional_properties: nil)
         # @type [Submission::TestCaseResult]
         @result = result
         # @type [String]
@@ -27,7 +27,8 @@ module SeedClient
       # @return [Submission::TestCaseResultWithStdout]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result = Submission::TestCaseResult.from_json(json_object: struct.result)
+        result = struct.result.to_h.to_json
+        result = Submission::TestCaseResult.from_json(json_object: result)
         stdout = struct.stdout
         new(result: result, stdout: stdout, additional_properties: struct)
       end

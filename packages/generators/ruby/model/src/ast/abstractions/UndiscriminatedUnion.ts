@@ -11,7 +11,6 @@ import { Class_ } from "../classes/Class_";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
-import { Import } from "../Import";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { RescueStatement } from "./RescueStatement";
@@ -53,7 +52,7 @@ export class UndiscriminatedUnion extends Class_ {
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
-                    onObject: new ClassReference({ name: "JSON", import_: new Import({ from: "json" }) }),
+                    onObject: JsonClassReference,
                     baseFunction: new Function_({ name: "parse", functionBody: [] }),
                     arguments_: [
                         new Argument({
@@ -95,7 +94,15 @@ export class UndiscriminatedUnion extends Class_ {
                         ],
                         rescue: [new Expression({ rightSide: "# noop", isAssignment: false })]
                     })
-            )
+            ),
+            new Expression({
+                leftSide: "return",
+                rightSide: new FunctionInvocation({
+                    baseFunction: new Function_({ name: "new", functionBody: [] }),
+                    arguments_: [memberProperty.toArgument("struct", true)]
+                }),
+                isAssignment: false
+            })
         ];
 
         const fromJsonDocumentation = `Deserialize a JSON object to an instance of ${classReference.name}`;

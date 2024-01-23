@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative "submission/types/ExceptionInfo"
+require_relative "exception_info"
 require "json"
 
 module SeedClient
@@ -11,7 +11,7 @@ module SeedClient
       # @param exception_info [Submission::ExceptionInfo]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::InternalError]
-      def initialze(exception_info:, additional_properties: nil)
+      def initialize(exception_info:, additional_properties: nil)
         # @type [Submission::ExceptionInfo]
         @exception_info = exception_info
         # @type [OpenStruct] Additional properties unmapped to the current class definition
@@ -24,7 +24,8 @@ module SeedClient
       # @return [Submission::InternalError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_info = Submission::ExceptionInfo.from_json(json_object: struct.exceptionInfo)
+        exception_info = struct.exceptionInfo.to_h.to_json
+        exception_info = Submission::ExceptionInfo.from_json(json_object: exception_info)
         new(exception_info: exception_info, additional_properties: struct)
       end
 
