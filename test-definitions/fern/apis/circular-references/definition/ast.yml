@@ -4,13 +4,29 @@ types:
       primitive_value: PrimitiveValue
       object_value: ObjectValue
       container_value: ContainerValue
+      undiscriminated_container_value: UndiscriminatedContainerValue
+  
   ContainerValue:
     union:
       list: list<FieldValue>
       optional: optional<FieldValue>
+  
+  UndiscriminatedContainerValue: 
+    discriminated: false
+    union: 
+      - list<FieldValue>
+      - optional<FieldValue>
+
   PrimitiveValue:
     enum:
       - STRING
       - NUMBER
+  
   ObjectValue:
-    properties: {}
+    properties:
+      properties: map<string, FieldValue>
+  
+  ObjectValueV2: 
+    extends: ObjectValue
+    properties: 
+      bar: FieldValue

@@ -15,7 +15,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern-openapi": "./dist/bundle.cjs"
+    "fern-openapi-cli": "./dist/bundle.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",

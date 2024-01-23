@@ -6,10 +6,12 @@
   "private": true,
   "workspaces": [
     "packages/**",
-    "generators/**",
     "!packages/**/lib",
     "!packages/**/dist",
-    "!packages/**/generated"
+    "!packages/**/generated",
+    "generators/**",
+    "!generators/**/lib",
+    "!generators/**/dist"
   ],
   "scripts": {
     "clean": "yarn workspace @fern-api/compile-root run clean",

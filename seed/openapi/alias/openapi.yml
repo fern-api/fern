@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: alias
+  version: ''
+paths: {}
+components:
+  schemas:
+    TypeId:
+      title: TypeId
+      type: string
+      description: An alias for type IDs.
+    Type:
+      title: Type
+      type: object
+      description: A simple type with just a name.
+      properties:
+        id:
+          $ref: '#/components/schemas/TypeId'
+        name:
+          type: string
+          example: foo
+      required:
+        - id
+        - name
+    Object:
+      title: Object
+      $ref: '#/components/schemas/Type'
+      description: Object is an alias for a type.
+  securitySchemes: {}

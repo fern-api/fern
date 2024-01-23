@@ -1,6 +1,6 @@
 {
   "type": "cli",
-  "cliName": "fern-openapi",
+  "cliName": "fern-openapi-cli",
   "environment": {
     "environments": {
       "prod": {
