@@ -5,7 +5,6 @@ const { chmod, writeFile, mkdir } = require("fs/promises");
 
 const packageJson = require("./package.json");
 
-
 main();
 
 async function main() {
@@ -20,10 +19,11 @@ async function main() {
         define: {
             "process.env.CLI_NAME": JSON.stringify("fern-postman"),
             "process.env.CLI_VERSION": JSON.stringify(packageJson.version),
-"process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/postman-generator"),}
-    };    
+            "process.env.CLI_PACKAGE_NAME": JSON.stringify("@fern-api/postman-generator")
+        }
+    };
 
-await build(options).catch(() => process.exit(1));
+    await build(options).catch(() => process.exit(1));
 
     process.chdir(path.join(__dirname, "dist"));
 
@@ -36,7 +36,6 @@ require("./bundle.cjs");`
     );
     await chmod("cli.cjs", "755");
 
-        
     // write cli's package.json
     await writeFile(
         "package.json",
@@ -46,13 +45,13 @@ require("./bundle.cjs");`
                 version: packageJson.version,
                 repository: packageJson.repository,
                 files: ["bundle.cjs", "cli.cjs"],
-                bin: { "fern-postman": "cli.cjs" },
+                bin: { "fern-postman": "cli.cjs" }
             },
             undefined,
             2
         )
     );
-    
+
     // write empty yarn.lock so yarn doesn't try to associate this package with the monorepo
     await writeFile("yarn.lock", "");
 
@@ -64,6 +63,5 @@ require("./bundle.cjs");`
             console.error(error);
             process.exit(1);
         }
-    })
-    
+    });
 }

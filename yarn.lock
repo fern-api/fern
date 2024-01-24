@@ -1917,12 +1917,12 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/venus-api-sdk": 0.0.36
     "@types/jest": ^29.0.3
-    "@types/jsonwebtoken": ^9.0.0
+    "@types/jsonwebtoken": ^9.0.5
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
-    jsonwebtoken: ^9.0.0
+    jsonwebtoken: ^9.0.2
     jwks-rsa: ^3.0.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -1985,7 +1985,7 @@ __metadata:
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     immer: ^9.0.15
     is-ci: ^3.0.1
     jest: ^29.7.0
@@ -2053,7 +2053,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2070,7 +2070,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2087,7 +2087,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/ua-parser-js": ^0.7.36
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2107,7 +2107,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2127,7 +2127,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
@@ -2147,7 +2147,7 @@ __metadata:
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     dockerode: ^3.3.1
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2170,7 +2170,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
@@ -2199,7 +2199,7 @@ __metadata:
     "@types/uuid": ^9.0.7
     cors: ^2.8.5
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     express: ^4.18.2
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
@@ -2221,7 +2221,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     next-mdx-remote: ^4.4.1
     organize-imports-cli: ^0.10.0
@@ -2243,7 +2243,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     execa: ^5.1.1
     jest: ^29.7.0
     js-yaml: ^4.1.0
@@ -2283,7 +2283,7 @@ __metadata:
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2304,7 +2304,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2320,7 +2320,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     json-stream-stringify: ^3.0.1
     organize-imports-cli: ^0.10.0
@@ -2343,7 +2343,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2362,7 +2362,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2386,7 +2386,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     immer: ^9.0.15
     jest: ^29.7.0
     js-yaml: ^4.1.0
@@ -2419,7 +2419,7 @@ __metadata:
     axios: ^0.27.2
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     fs-extra: ^11.1.1
     jest: ^29.7.0
     js-yaml: ^4.1.0
@@ -2452,7 +2452,7 @@ __metadata:
     "@types/prettier": ^2.7.1
     "@types/url-join": ^4.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     jest-specific-snapshot: ^8.0.0
     lodash-es: ^4.17.21
@@ -2497,7 +2497,7 @@ __metadata:
     "@fern-fern/ir-v26-sdk": 0.0.1
     "@fern-fern/ir-v27-sdk": 0.0.1
     "@fern-fern/ir-v28-sdk": 0.0.3
-    "@fern-fern/ir-v29-sdk": 0.0.1
+    "@fern-fern/ir-v29-sdk": 0.0.6
     "@fern-fern/ir-v3-model": 0.0.4
     "@fern-fern/ir-v30-sdk": 0.0.1
     "@fern-fern/ir-v31-sdk": 0.0.5
@@ -2511,7 +2511,7 @@ __metadata:
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2530,7 +2530,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/prettier": ^2.7.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2548,7 +2548,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2571,14 +2571,14 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.472
-    "@types/decompress": ^4.2.4
+    "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
     chalk: ^5.0.1
     decompress: ^4.2.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2596,7 +2596,7 @@ __metadata:
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2612,7 +2612,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     execa: ^5.1.1
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
@@ -2639,7 +2639,7 @@ __metadata:
     boxen: ^7.0.0
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     inquirer: ^9.2.11
     jest: ^29.7.0
     open: ^8.4.0
@@ -2660,7 +2660,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -2682,7 +2682,7 @@ __metadata:
     "@types/qs": 6.9.8
     "@types/url-join": ^4.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     express: ^4.18.2
     get-port: 7.0.0
     jest: ^29.7.0
@@ -2713,7 +2713,7 @@ __metadata:
     endent: ^2.1.0
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2744,7 +2744,7 @@ __metadata:
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2771,7 +2771,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/swagger2openapi": ^7.0.4
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
     lodash-es: ^4.17.21
@@ -2794,7 +2794,7 @@ __metadata:
     "@types/node": ^18.7.18
     "@types/uuid": ^9.0.7
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     posthog-node: ^3.1.2
@@ -2823,7 +2823,7 @@ __metadata:
     endent: ^2.1.0
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2848,7 +2848,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     find-up: ^6.3.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
@@ -2873,7 +2873,7 @@ __metadata:
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
@@ -2900,7 +2900,7 @@ __metadata:
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -2930,7 +2930,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/ir-sdk": 0.0.3277
-    "@types/decompress": ^4.2.4
+    "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.4
@@ -2940,7 +2940,7 @@ __metadata:
     chalk: ^5.0.1
     decompress: ^4.2.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     form-data: ^4.0.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
@@ -2969,7 +2969,7 @@ __metadata:
     chalk: ^5.0.1
     depcheck: ^1.4.6
     esbuild: ^0.15.7
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     execa: ^5.1.1
     immer: ^9.0.15
     jest: ^29.7.0
@@ -3011,7 +3011,7 @@ __metadata:
     depcheck: ^1.4.6
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     find-up: ^6.3.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
@@ -3033,7 +3033,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -3050,7 +3050,7 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -3075,7 +3075,7 @@ __metadata:
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
@@ -3122,7 +3122,7 @@ __metadata:
     "@types/tar": ^6.1.7
     axios: ^0.27.2
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     glob: ^7.2.0
     glob-promise: ^4.2.2
     jest: ^29.7.0
@@ -3151,7 +3151,7 @@ __metadata:
     "@types/prettier": ^2.7.1
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
@@ -3176,7 +3176,7 @@ __metadata:
     "@types/node": ^18.7.18
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     find-up: ^6.3.0
     glob: ^7.2.0
     glob-promise: ^4.2.2
@@ -3204,7 +3204,7 @@ __metadata:
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
-    eslint: ^8.26.0
+    eslint: ^8.56.0
     jest: ^29.7.0
     js-yaml: ^4.1.0
     organize-imports-cli: ^0.10.0
@@ -3410,10 +3410,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/ir-v29-sdk@npm:0.0.1":
-  version: 0.0.1
-  resolution: "@fern-fern/ir-v29-sdk@npm:0.0.1"
-  checksum: 432bb6c0d2a8435dd9239606027bd950ffbc1d2b887759a0774fb3219002611340c6d84edcec6d633f4d49718da92256b991102668f10d7575a0838251e10d47
+"@fern-fern/ir-v29-sdk@npm:0.0.6":
+  version: 0.0.6
+  resolution: "@fern-fern/ir-v29-sdk@npm:0.0.6"
+  checksum: caf9585be63ef48b70ec4c76d41dad166f30b96983f82eaff2c15394f175fa25fb466312c0f0df7482215c9c8ecc68494545c49cc52a3e58be03d3de86d682b2
   languageName: node
   linkType: hard
 
@@ -4329,12 +4329,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/decompress@npm:^4.2.4":
-  version: 4.2.4
-  resolution: "@types/decompress@npm:4.2.4"
+"@types/decompress@npm:^4.2.7":
+  version: 4.2.7
+  resolution: "@types/decompress@npm:4.2.7"
   dependencies:
     "@types/node": "*"
-  checksum: e47960f863148ef3afe9060a0c8dfd11d671322a47a341a3bd7128bbdea5b57c10117d76db0cfebf533b695ca81a4ffd4a3e6f338a149a5547052d4f63af9f76
+  checksum: f2fcc588e0bbeed4f3897e25980d3a5cceba334b900f83c9ad91b9885e3b25b50bdc283a6d684b73442368f9f12f34b4eabfc7f422067c6a882591ed844aa65b
   languageName: node
   linkType: hard
 
@@ -4635,12 +4635,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jsonwebtoken@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "@types/jsonwebtoken@npm:9.0.0"
+"@types/jsonwebtoken@npm:^9.0.5":
+  version: 9.0.5
+  resolution: "@types/jsonwebtoken@npm:9.0.5"
   dependencies:
     "@types/node": "*"
-  checksum: c7791354ba895759524c18ba609ea04efdc576e2b660bd6f80d5b917db8dc4b01acd4d1bc115a62d35406a82e627067973d475c4b36035dabaa27862b141ae49
+  checksum: 07ab6fee602e5bd3fb5c6dfe4ec400769dc20f1d7fce901feecb4c3af5f5f08323b03ea55de3e49b1aa41e171a59008f6f4318738a735588c5268a63eba25337
   languageName: node
   linkType: hard
 
@@ -8242,7 +8242,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.14.0, eslint@npm:^8.23.1":
+"eslint@npm:^8.14.0":
   version: 8.26.0
   resolution: "eslint@npm:8.26.0"
   dependencies:
@@ -8291,7 +8291,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"eslint@npm:^8.26.0":
+"eslint@npm:^8.56.0":
   version: 8.56.0
   resolution: "eslint@npm:8.56.0"
   dependencies:
@@ -8729,7 +8729,7 @@ env-cmd@toddbluhm/env-cmd:
     "@typescript-eslint/parser": ^5.27.1
     chalk: ^5.0.1
     depcheck: ^1.4.6
-    eslint: ^8.23.1
+    eslint: ^8.56.0
     eslint-plugin-deprecation: ^1.3.2
     eslint-plugin-import: ^2.29.0
     eslint-plugin-jest: ^27.0.4
@@ -8913,12 +8913,12 @@ env-cmd@toddbluhm/env-cmd:
   linkType: hard
 
 "follow-redirects@npm:^1.14.9, follow-redirects@npm:^1.15.0":
-  version: 1.15.2
-  resolution: "follow-redirects@npm:1.15.2"
+  version: 1.15.5
+  resolution: "follow-redirects@npm:1.15.5"
   peerDependenciesMeta:
     debug:
       optional: true
-  checksum: faa66059b66358ba65c234c2f2a37fcec029dc22775f35d9ad6abac56003268baf41e55f9ee645957b32c7d9f62baf1f0b906e68267276f54ec4b4c597c2b190
+  checksum: 5ca49b5ce6f44338cbfc3546823357e7a70813cecc9b7b768158a1d32c1e62e7407c944402a918ea8c38ae2e78266312d617dc68783fac502cbb55e1047b34ec
   languageName: node
   linkType: hard
 
@@ -11031,15 +11031,21 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"jsonwebtoken@npm:^9.0.0":
-  version: 9.0.0
-  resolution: "jsonwebtoken@npm:9.0.0"
+"jsonwebtoken@npm:^9.0.2":
+  version: 9.0.2
+  resolution: "jsonwebtoken@npm:9.0.2"
   dependencies:
     jws: ^3.2.2
-    lodash: ^4.17.21
+    lodash.includes: ^4.3.0
+    lodash.isboolean: ^3.0.3
+    lodash.isinteger: ^4.0.4
+    lodash.isnumber: ^3.0.3
+    lodash.isplainobject: ^4.0.6
+    lodash.isstring: ^4.0.1
+    lodash.once: ^4.0.0
     ms: ^2.1.1
-    semver: ^7.3.8
-  checksum: b9181cecf9df99f1dc0253f91ba000a1aa4d91f5816d1608c0dba61a5623726a0bfe200b51df25de18c1a6000825d231ad7ce2788aa54fd48dcb760ad9eb9514
+    semver: ^7.5.4
+  checksum: fc739a6a8b33f1974f9772dca7f8493ca8df4cc31c5a09dcfdb7cff77447dcf22f4236fb2774ef3fe50df0abeb8e1c6f4c41eba82f500a804ab101e2fbc9d61a
   languageName: node
   linkType: hard
 
@@ -11293,6 +11299,20 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"lodash.includes@npm:^4.3.0":
+  version: 4.3.0
+  resolution: "lodash.includes@npm:4.3.0"
+  checksum: 71092c130515a67ab3bd928f57f6018434797c94def7f46aafa417771e455ce3a4834889f4267b17887d7f75297dfabd96231bf704fd2b8c5096dc4a913568b6
+  languageName: node
+  linkType: hard
+
+"lodash.isboolean@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "lodash.isboolean@npm:3.0.3"
+  checksum: b70068b4a8b8837912b54052557b21fc4774174e3512ed3c5b94621e5aff5eb6c68089d0a386b7e801d679cd105d2e35417978a5e99071750aa2ed90bffd0250
+  languageName: node
+  linkType: hard
+
 "lodash.isequal@npm:^4.5.0":
   version: 4.5.0
   resolution: "lodash.isequal@npm:4.5.0"
@@ -11300,10 +11320,45 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"lodash.isinteger@npm:^4.0.4":
+  version: 4.0.4
+  resolution: "lodash.isinteger@npm:4.0.4"
+  checksum: 6034821b3fc61a2ffc34e7d5644bb50c5fd8f1c0121c554c21ac271911ee0c0502274852845005f8651d51e199ee2e0cfebfe40aaa49c7fe617f603a8a0b1691
+  languageName: node
+  linkType: hard
+
+"lodash.isnumber@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "lodash.isnumber@npm:3.0.3"
+  checksum: 913784275b565346255e6ae6a6e30b760a0da70abc29f3e1f409081585875105138cda4a429ff02577e1bc0a7ae2a90e0a3079a37f3a04c3d6c5aaa532f4cab2
+  languageName: node
+  linkType: hard
+
+"lodash.isplainobject@npm:^4.0.6":
+  version: 4.0.6
+  resolution: "lodash.isplainobject@npm:4.0.6"
+  checksum: 29c6351f281e0d9a1d58f1a4c8f4400924b4c79f18dfc4613624d7d54784df07efaff97c1ff2659f3e085ecf4fff493300adc4837553104cef2634110b0d5337
+  languageName: node
+  linkType: hard
+
+"lodash.isstring@npm:^4.0.1":
+  version: 4.0.1
+  resolution: "lodash.isstring@npm:4.0.1"
+  checksum: eaac87ae9636848af08021083d796e2eea3d02e80082ab8a9955309569cb3a463ce97fd281d7dc119e402b2e7d8c54a23914b15d2fc7fff56461511dc8937ba0
+  languageName: node
+  linkType: hard
+
 "lodash.merge@npm:^4.6.2":
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash.once@npm:^4.0.0":
+  version: 4.1.1
+  resolution: "lodash.once@npm:4.1.1"
+  checksum: d768fa9f9b4e1dc6453be99b753906f58990e0c45e7b2ca5a3b40a33111e5d17f6edf2f768786e2716af90a8e78f8f91431ab8435f761fef00f9b0c256f6d245
   languageName: node
   linkType: hard
 
@@ -14508,7 +14563,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"semver@npm:^7.0.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7, semver@npm:^7.3.8":
+"semver@npm:^7.0.0, semver@npm:^7.3.2, semver@npm:^7.3.4, semver@npm:^7.3.5, semver@npm:^7.3.7":
   version: 7.3.8
   resolution: "semver@npm:7.3.8"
   dependencies:
