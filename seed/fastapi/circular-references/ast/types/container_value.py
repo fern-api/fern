@@ -59,8 +59,6 @@ class ContainerValue(pydantic.BaseModel):
 
 
 from .field_value import FieldValue  # noqa: E402
-from .object_value import ObjectValue  # noqa: E402
-from .undiscriminated_container_value import UndiscriminatedContainerValue  # noqa: E402
 
 
 class _ContainerValue:
@@ -73,16 +71,6 @@ class _ContainerValue:
         value: typing.Optional[FieldValue]
 
 
-_ContainerValue.List.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
-_ContainerValue.Optional.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
+_ContainerValue.List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+_ContainerValue.Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
 ContainerValue.update_forward_refs()

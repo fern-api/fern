@@ -6,6 +6,7 @@ import typing
 
 import typing_extensions
 
+from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
 try:
@@ -31,36 +32,7 @@ class FieldValue_ContainerValue(pydantic.BaseModel):
     value: ContainerValue
 
 
-class FieldValue_UndiscriminatedContainerValue(pydantic.BaseModel):
-    type: typing_extensions.Literal["undiscriminated_container_value"]
-    value: UndiscriminatedContainerValue
-
-
-FieldValue = typing.Union[
-    FieldValue_PrimitiveValue,
-    FieldValue_ObjectValue,
-    FieldValue_ContainerValue,
-    FieldValue_UndiscriminatedContainerValue,
-]
+FieldValue = typing.Union[FieldValue_PrimitiveValue, FieldValue_ObjectValue, FieldValue_ContainerValue]
 from .container_value import ContainerValue  # noqa: E402
-from .object_value import ObjectValue  # noqa: E402
-from .undiscriminated_container_value import UndiscriminatedContainerValue  # noqa: E402
 
-FieldValue_ObjectValue.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
-FieldValue_ContainerValue.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
-FieldValue_UndiscriminatedContainerValue.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
+FieldValue_ContainerValue.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)

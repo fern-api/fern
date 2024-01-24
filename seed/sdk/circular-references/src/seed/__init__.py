@@ -10,11 +10,8 @@ from .ast import (
     FieldValue_ContainerValue,
     FieldValue_ObjectValue,
     FieldValue_PrimitiveValue,
-    FieldValue_UndiscriminatedContainerValue,
     ObjectValue,
-    ObjectValueV2,
     PrimitiveValue,
-    UndiscriminatedContainerValue,
 )
 from .importing_a import ImportingA
 from .root_type import RootType
@@ -28,13 +25,10 @@ __all__ = [
     "FieldValue_ContainerValue",
     "FieldValue_ObjectValue",
     "FieldValue_PrimitiveValue",
-    "FieldValue_UndiscriminatedContainerValue",
     "ImportingA",
     "ObjectValue",
-    "ObjectValueV2",
     "PrimitiveValue",
     "RootType",
-    "UndiscriminatedContainerValue",
     "a",
     "ast",
 ]

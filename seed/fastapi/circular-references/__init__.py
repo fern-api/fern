@@ -2,19 +2,7 @@
 
 from . import a, ast
 from .a import A
-from .ast import ContainerValue, FieldValue, ObjectValue, ObjectValueV2, PrimitiveValue, UndiscriminatedContainerValue
+from .ast import ContainerValue, FieldValue, ObjectValue, PrimitiveValue
 from .types import ImportingA, RootType
 
-__all__ = [
-    "A",
-    "ContainerValue",
-    "FieldValue",
-    "ImportingA",
-    "ObjectValue",
-    "ObjectValueV2",
-    "PrimitiveValue",
-    "RootType",
-    "UndiscriminatedContainerValue",
-    "a",
-    "ast",
-]
+__all__ = ["A", "ContainerValue", "FieldValue", "ImportingA", "ObjectValue", "PrimitiveValue", "RootType", "a", "ast"]

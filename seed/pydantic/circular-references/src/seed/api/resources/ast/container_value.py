@@ -6,6 +6,7 @@ import typing
 
 import typing_extensions
 
+from .object_value import ObjectValue
 from .primitive_value import PrimitiveValue
 
 try:
@@ -26,18 +27,6 @@ class ContainerValue_Optional(pydantic.BaseModel):
 
 ContainerValue = typing.Union[ContainerValue_List, ContainerValue_Optional]
 from .field_value import FieldValue  # noqa: E402
-from .object_value import ObjectValue  # noqa: E402
-from .undiscriminated_container_value import UndiscriminatedContainerValue  # noqa: E402
 
-ContainerValue_List.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
-ContainerValue_Optional.update_forward_refs(
-    ContainerValue=ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ObjectValue,
-    UndiscriminatedContainerValue=UndiscriminatedContainerValue,
-)
+ContainerValue_List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
+ContainerValue_Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)

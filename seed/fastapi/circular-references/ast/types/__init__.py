@@ -3,15 +3,6 @@
 from .container_value import ContainerValue
 from .field_value import FieldValue
 from .object_value import ObjectValue
-from .object_value_v_2 import ObjectValueV2
 from .primitive_value import PrimitiveValue
-from .undiscriminated_container_value import UndiscriminatedContainerValue
 
-__all__ = [
-    "ContainerValue",
-    "FieldValue",
-    "ObjectValue",
-    "ObjectValueV2",
-    "PrimitiveValue",
-    "UndiscriminatedContainerValue",
-]
+__all__ = ["ContainerValue", "FieldValue", "ObjectValue", "PrimitiveValue"]

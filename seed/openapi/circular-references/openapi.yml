@@ -60,16 +60,6 @@ components:
               $ref: '#/components/schemas/ContainerValue'
           required:
             - type
-        - type: object
-          properties:
-            type:
-              type: string
-              enum:
-                - undiscriminated_container_value
-            value:
-              $ref: '#/components/schemas/UndiscriminatedContainerValue'
-          required:
-            - type
     ContainerValue:
       title: ContainerValue
       oneOf:
@@ -96,14 +86,6 @@ components:
               nullable: true
           required:
             - type
-    UndiscriminatedContainerValue:
-      title: UndiscriminatedContainerValue
-      oneOf:
-        - type: array
-          items:
-            $ref: '#/components/schemas/FieldValue'
-        - $ref: '#/components/schemas/FieldValue'
-          nullable: true
     PrimitiveValue:
       title: PrimitiveValue
       type: string
@@ -113,21 +95,5 @@ components:
     ObjectValue:
       title: ObjectValue
       type: object
-      properties:
-        properties:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/FieldValue'
-      required:
-        - properties
-    ObjectValueV2:
-      title: ObjectValueV2
-      type: object
-      properties:
-        bar:
-          $ref: '#/components/schemas/FieldValue'
-      required:
-        - bar
-      allOf:
-        - $ref: '#/components/schemas/ObjectValue'
+      properties: {}
   securitySchemes: {}

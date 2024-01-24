@@ -8,6 +8,7 @@ import typing
 import typing_extensions
 
 from ...core.datetime_utils import serialize_datetime
+from .object_value import ObjectValue as ast_types_object_value_ObjectValue
 from .primitive_value import PrimitiveValue as ast_types_primitive_value_PrimitiveValue
 
 try:
@@ -28,25 +29,13 @@ class _Factory:
     def container_value(self, value: ast_types_container_value_ContainerValue) -> FieldValue:
         return FieldValue(__root__=_FieldValue.ContainerValue(type="container_value", value=value))
 
-    def undiscriminated_container_value(
-        self, value: ast_types_undiscriminated_container_value_UndiscriminatedContainerValue
-    ) -> FieldValue:
-        return FieldValue(
-            __root__=_FieldValue.UndiscriminatedContainerValue(type="undiscriminated_container_value", value=value)
-        )
-
 
 class FieldValue(pydantic.BaseModel):
     factory: typing.ClassVar[_Factory] = _Factory()
 
     def get_as_union(
         self,
-    ) -> typing.Union[
-        _FieldValue.PrimitiveValue,
-        _FieldValue.ObjectValue,
-        _FieldValue.ContainerValue,
-        _FieldValue.UndiscriminatedContainerValue,
-    ]:
+    ) -> typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue]:
         return self.__root__
 
     def visit(
@@ -54,9 +43,6 @@ class FieldValue(pydantic.BaseModel):
         primitive_value: typing.Callable[[ast_types_primitive_value_PrimitiveValue], T_Result],
         object_value: typing.Callable[[ast_types_object_value_ObjectValue], T_Result],
         container_value: typing.Callable[[ast_types_container_value_ContainerValue], T_Result],
-        undiscriminated_container_value: typing.Callable[
-            [ast_types_undiscriminated_container_value_UndiscriminatedContainerValue], T_Result
-        ],
     ) -> T_Result:
         if self.__root__.type == "primitive_value":
             return primitive_value(self.__root__.value)
@@ -66,16 +52,9 @@ class FieldValue(pydantic.BaseModel):
             )
         if self.__root__.type == "container_value":
             return container_value(self.__root__.value)
-        if self.__root__.type == "undiscriminated_container_value":
-            return undiscriminated_container_value(self.__root__.value)
 
     __root__: typing_extensions.Annotated[
-        typing.Union[
-            _FieldValue.PrimitiveValue,
-            _FieldValue.ObjectValue,
-            _FieldValue.ContainerValue,
-            _FieldValue.UndiscriminatedContainerValue,
-        ],
+        typing.Union[_FieldValue.PrimitiveValue, _FieldValue.ObjectValue, _FieldValue.ContainerValue],
         pydantic.Field(discriminator="type"),
     ]
 
@@ -93,10 +72,6 @@ class FieldValue(pydantic.BaseModel):
 
 
 from .container_value import ContainerValue as ast_types_container_value_ContainerValue  # noqa: E402
-from .object_value import ObjectValue as ast_types_object_value_ObjectValue  # noqa: E402
-from .undiscriminated_container_value import (
-    UndiscriminatedContainerValue as ast_types_undiscriminated_container_value_UndiscriminatedContainerValue,
-)  # noqa: E402
 
 
 class _FieldValue:
@@ -114,27 +89,8 @@ class _FieldValue:
         type: typing_extensions.Literal["container_value"]
         value: ast_types_container_value_ContainerValue
 
-    class UndiscriminatedContainerValue(pydantic.BaseModel):
-        type: typing_extensions.Literal["undiscriminated_container_value"]
-        value: ast_types_undiscriminated_container_value_UndiscriminatedContainerValue
 
-
-_FieldValue.ObjectValue.update_forward_refs(
-    ContainerValue=ast_types_container_value_ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ast_types_object_value_ObjectValue,
-    UndiscriminatedContainerValue=ast_types_undiscriminated_container_value_UndiscriminatedContainerValue,
-)
 _FieldValue.ContainerValue.update_forward_refs(
-    ContainerValue=ast_types_container_value_ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ast_types_object_value_ObjectValue,
-    UndiscriminatedContainerValue=ast_types_undiscriminated_container_value_UndiscriminatedContainerValue,
-)
-_FieldValue.UndiscriminatedContainerValue.update_forward_refs(
-    ContainerValue=ast_types_container_value_ContainerValue,
-    FieldValue=FieldValue,
-    ObjectValue=ast_types_object_value_ObjectValue,
-    UndiscriminatedContainerValue=ast_types_undiscriminated_container_value_UndiscriminatedContainerValue,
+    ContainerValue=ast_types_container_value_ContainerValue, FieldValue=FieldValue
 )
 FieldValue.update_forward_refs()
