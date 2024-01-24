@@ -1,0 +1,25 @@
+name: blog-post-api
+display-name: Blog Post API
+auth: apiKey
+docs: |
+  These are my docs.
+  ## Welcome to my title
+  More docs with [links](http://localhost.com)
+auth-schemes:
+  apiKey:
+    header: X-API-Key
+    type: optional<string>
+    name: apiKey
+headers:
+  Authorization:
+    type: optional<string>
+    name: token
+error-discrimination:
+  strategy: property
+  property-name: error
+default-environment: PROD
+environments:
+  PROD: prod.fern.com
+  STAGING:
+    url: staging.fern.com
+    docs: i'm staging

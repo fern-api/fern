@@ -1,0 +1,43 @@
+imports:
+  commons: commons.yml
+types:
+  PetId: uuid
+  PetPost:
+    docs: A pet
+    properties:
+      id: PetId
+      type: commons.PetType
+      name: string
+      owner: string
+      description: string
+  PetNotFoundErrorBody:
+    properties:
+      id: PetId
+errors:
+  PetNotFoundError:
+    status-code: 400
+    type: PetNotFoundErrorBody
+service:
+  auth: false
+  headers:
+    x-service-header: string
+  base-path: /
+  endpoints:
+    createPet:
+      docs: Creates a pet and returns pet id.
+      display-name: Create Pet
+      method: POST
+      path: /create
+      request:
+        name: CreatePetRequest
+        body:
+          properties:
+            type: commons.PetType
+            name: string
+            owner: string
+            description: string
+        headers:
+          x-endpoint-header:
+            docs: I'm a header!
+            type: string
+      response: PetId

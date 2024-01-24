@@ -1,0 +1,584 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`convertToPostman any-auth 1`] = `
+"{
+  \\"info\\": {
+    \\"name\\": \\"Any Auth\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\",
+    \\"description\\": null
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"username\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"password\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"headerAuth\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"auth\\": {
+    \\"type\\": \\"basic\\",
+    \\"basic\\": [
+      {
+        \\"key\\": \\"username\\",
+        \\"value\\": \\"{{username}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"password\\",
+        \\"value\\": \\"{{password}}\\",
+        \\"type\\": \\"string\\"
+      }
+    ]
+  },
+  \\"item\\": [
+    {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
+      \\"name\\": \\"Blog\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"endpoint\\",
+          \\"name\\": \\"Create Post\\",
+          \\"request\\": {
+            \\"description\\": null,
+            \\"url\\": {
+              \\"raw\\": \\"{{baseUrl}}/create\\",
+              \\"host\\": [
+                \\"{{baseUrl}}\\"
+              ],
+              \\"path\\": [
+                \\"create\\"
+              ],
+              \\"query\\": [],
+              \\"variable\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"My-Header\\",
+                \\"value\\": \\"{{headerAuth}}\\",
+                \\"type\\": \\"string\\",
+                \\"description\\": null
+              }
+            ],
+            \\"method\\": \\"POST\\",
+            \\"auth\\": null,
+            \\"body\\": {
+              \\"mode\\": \\"raw\\",
+              \\"raw\\": \\"{\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
+              \\"options\\": {
+                \\"raw\\": {
+                  \\"language\\": \\"json\\"
+                }
+              }
+            }
+          },
+          \\"response\\": []
+        },
+        {
+          \\"_type\\": \\"endpoint\\",
+          \\"name\\": \\"Get Post\\",
+          \\"request\\": {
+            \\"description\\": null,
+            \\"url\\": {
+              \\"raw\\": \\"{{baseUrl}}/:postId\\",
+              \\"host\\": [
+                \\"{{baseUrl}}\\"
+              ],
+              \\"path\\": [
+                \\":postId\\"
+              ],
+              \\"query\\": [],
+              \\"variable\\": [
+                {
+                  \\"key\\": \\"postId\\",
+                  \\"value\\": \\"\\",
+                  \\"description\\": null
+                }
+              ]
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"My-Header\\",
+                \\"value\\": \\"{{headerAuth}}\\",
+                \\"type\\": \\"string\\",
+                \\"description\\": null
+              }
+            ],
+            \\"method\\": \\"GET\\",
+            \\"auth\\": null,
+            \\"body\\": null
+          },
+          \\"response\\": []
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`convertToPostman loop-test-api 1`] = `
+"{
+  \\"info\\": {
+    \\"name\\": \\"Loop API\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\",
+    \\"description\\": null
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"prod.fern.com\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"apiKey\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"auth\\": {
+    \\"type\\": \\"apikey\\",
+    \\"apikey\\": [
+      {
+        \\"key\\": \\"value\\",
+        \\"value\\": \\"{{apiKey}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"key\\",
+        \\"value\\": \\"X-API-Key\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"in\\",
+        \\"value\\": \\"header\\",
+        \\"type\\": \\"string\\"
+      }
+    ]
+  },
+  \\"item\\": [
+    {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
+      \\"name\\": \\"Orders\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"Pet\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"endpoint\\",
+              \\"name\\": \\"Create Pet\\",
+              \\"request\\": {
+                \\"description\\": \\"Creates a pet and returns pet id.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}/create\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [
+                    \\"create\\"
+                  ],
+                  \\"query\\": [],
+                  \\"variable\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  },
+                  {
+                    \\"key\\": \\"x-endpoint-header\\",
+                    \\"description\\": \\"I'm a header!\\",
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"POST\\",
+                \\"auth\\": null,
+                \\"body\\": {
+                  \\"mode\\": \\"raw\\",
+                  \\"raw\\": \\"{\\\\n    \\\\\\"type\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"CAT\\\\\\",\\\\n        \\\\\\"friends\\\\\\": [\\\\n            null\\\\n        ]\\\\n    },\\\\n    \\\\\\"name\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"owner\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"description\\\\\\": \\\\\\"example\\\\\\"\\\\n}\\",
+                  \\"options\\": {
+                    \\"raw\\": {
+                      \\"language\\": \\"json\\"
+                    }
+                  }
+                }
+              },
+              \\"response\\": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}"
+`;
+
+exports[`convertToPostman test-api 1`] = `
+"{
+  \\"info\\": {
+    \\"name\\": \\"Blog Post API\\",
+    \\"schema\\": \\"https://schema.getpostman.com/json/collection/v2.1.0/collection.json\\",
+    \\"description\\": \\"These are my docs.\\\\n## Welcome to my title\\\\nMore docs with [links](http://localhost.com)\\\\n\\"
+  },
+  \\"variable\\": [
+    {
+      \\"key\\": \\"baseUrl\\",
+      \\"value\\": \\"prod.fern.com\\",
+      \\"type\\": \\"string\\"
+    },
+    {
+      \\"key\\": \\"apiKey\\",
+      \\"value\\": \\"\\",
+      \\"type\\": \\"string\\"
+    }
+  ],
+  \\"auth\\": {
+    \\"type\\": \\"apikey\\",
+    \\"apikey\\": [
+      {
+        \\"key\\": \\"value\\",
+        \\"value\\": \\"{{apiKey}}\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"key\\",
+        \\"value\\": \\"X-API-Key\\",
+        \\"type\\": \\"string\\"
+      },
+      {
+        \\"key\\": \\"in\\",
+        \\"value\\": \\"header\\",
+        \\"type\\": \\"string\\"
+      }
+    ]
+  },
+  \\"item\\": [
+    {
+      \\"_type\\": \\"container\\",
+      \\"description\\": \\"I'm some docs about MyFolder\\",
+      \\"name\\": \\"My Folder\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"My Folder\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"container\\",
+              \\"description\\": null,
+              \\"name\\": \\"Nested\\",
+              \\"item\\": [
+                {
+                  \\"_type\\": \\"endpoint\\",
+                  \\"name\\": \\"Get\\",
+                  \\"request\\": {
+                    \\"description\\": null,
+                    \\"url\\": {
+                      \\"raw\\": \\"{{baseUrl}}\\",
+                      \\"host\\": [
+                        \\"{{baseUrl}}\\"
+                      ],
+                      \\"path\\": [],
+                      \\"query\\": [],
+                      \\"variable\\": []
+                    },
+                    \\"header\\": [
+                      {
+                        \\"key\\": \\"X-API-Key\\",
+                        \\"value\\": \\"{{apiKey}}\\",
+                        \\"type\\": \\"string\\",
+                        \\"description\\": null
+                      },
+                      {
+                        \\"key\\": \\"x-service-header\\",
+                        \\"description\\": null,
+                        \\"type\\": \\"text\\",
+                        \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                      }
+                    ],
+                    \\"method\\": \\"GET\\",
+                    \\"auth\\": null,
+                    \\"body\\": null
+                  },
+                  \\"response\\": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          \\"_type\\": \\"container\\",
+          \\"description\\": null,
+          \\"name\\": \\"Nested\\",
+          \\"item\\": [
+            {
+              \\"_type\\": \\"endpoint\\",
+              \\"name\\": \\"Get\\",
+              \\"request\\": {
+                \\"description\\": null,
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [],
+                  \\"query\\": [],
+                  \\"variable\\": []
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
+              },
+              \\"response\\": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      \\"_type\\": \\"container\\",
+      \\"description\\": null,
+      \\"name\\": \\"Blog Service\\",
+      \\"item\\": [
+        {
+          \\"_type\\": \\"endpoint\\",
+          \\"name\\": \\"Create Blog Post\\",
+          \\"request\\": {
+            \\"description\\": \\"Creates a blog post and returns blog post id.\\",
+            \\"url\\": {
+              \\"raw\\": \\"{{baseUrl}}/create\\",
+              \\"host\\": [
+                \\"{{baseUrl}}\\"
+              ],
+              \\"path\\": [
+                \\"create\\"
+              ],
+              \\"query\\": [],
+              \\"variable\\": []
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"X-API-Key\\",
+                \\"value\\": \\"{{apiKey}}\\",
+                \\"type\\": \\"string\\",
+                \\"description\\": null
+              },
+              {
+                \\"key\\": \\"x-service-header\\",
+                \\"description\\": null,
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+              },
+              {
+                \\"key\\": \\"x-endpoint-header\\",
+                \\"description\\": \\"I'm a header!\\",
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"example\\\\\\"\\"
+              }
+            ],
+            \\"method\\": \\"POST\\",
+            \\"auth\\": null,
+            \\"body\\": {
+              \\"mode\\": \\"raw\\",
+              \\"raw\\": \\"{\\\\n    \\\\\\"title\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"author\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"name\\\\\\",\\\\n        \\\\\\"value\\\\\\": \\\\\\"George Washington\\\\\\"\\\\n    },\\\\n    \\\\\\"content\\\\\\": \\\\\\"example\\\\\\",\\\\n    \\\\\\"postType\\\\\\": \\\\\\"LONG\\\\\\"\\\\n}\\",
+              \\"options\\": {
+                \\"raw\\": {
+                  \\"language\\": \\"json\\"
+                }
+              }
+            }
+          },
+          \\"response\\": []
+        },
+        {
+          \\"_type\\": \\"endpoint\\",
+          \\"name\\": \\"Get Post\\",
+          \\"request\\": {
+            \\"description\\": \\"Gets a blog post.\\",
+            \\"url\\": {
+              \\"raw\\": \\"{{baseUrl}}/:postId\\",
+              \\"host\\": [
+                \\"{{baseUrl}}\\"
+              ],
+              \\"path\\": [
+                \\":postId\\"
+              ],
+              \\"query\\": [],
+              \\"variable\\": [
+                {
+                  \\"key\\": \\"postId\\",
+                  \\"description\\": null,
+                  \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
+                }
+              ]
+            },
+            \\"header\\": [
+              {
+                \\"key\\": \\"X-API-Key\\",
+                \\"value\\": \\"{{apiKey}}\\",
+                \\"type\\": \\"string\\",
+                \\"description\\": null
+              },
+              {
+                \\"key\\": \\"x-service-header\\",
+                \\"description\\": null,
+                \\"type\\": \\"text\\",
+                \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+              },
+              {
+                \\"type\\": \\"text\\",
+                \\"key\\": \\"Content-Type\\",
+                \\"value\\": \\"application/json\\"
+              }
+            ],
+            \\"method\\": \\"GET\\",
+            \\"auth\\": null,
+            \\"body\\": null
+          },
+          \\"response\\": [
+            {
+              \\"name\\": \\"Success\\",
+              \\"status\\": \\"OK\\",
+              \\"code\\": 200,
+              \\"originalRequest\\": {
+                \\"description\\": \\"Gets a blog post.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}/:postId\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [
+                    \\":postId\\"
+                  ],
+                  \\"query\\": [],
+                  \\"variable\\": [
+                    {
+                      \\"key\\": \\"postId\\",
+                      \\"description\\": null,
+                      \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
+                    }
+                  ]
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+                  },
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"key\\": \\"Content-Type\\",
+                    \\"value\\": \\"application/json\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
+              },
+              \\"description\\": null,
+              \\"body\\": \\"{\\\\n    \\\\\\"writtenDate\\\\\\": \\\\\\"2022-12-15T22:06:28+00:00\\\\\\",\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\",\\\\n    \\\\\\"type\\\\\\": \\\\\\"LONG\\\\\\",\\\\n    \\\\\\"title\\\\\\": \\\\\\"My Post\\\\\\",\\\\n    \\\\\\"author\\\\\\": {\\\\n        \\\\\\"type\\\\\\": \\\\\\"anonymous\\\\\\"\\\\n    },\\\\n    \\\\\\"content\\\\\\": \\\\\\"I'm a blog post\\\\\\"\\\\n}\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            },
+            {
+              \\"name\\": \\"Post Not Found Error\\",
+              \\"status\\": \\"Post Not Found Error\\",
+              \\"code\\": 400,
+              \\"originalRequest\\": {
+                \\"description\\": \\"Gets a blog post.\\",
+                \\"url\\": {
+                  \\"raw\\": \\"{{baseUrl}}/:postId\\",
+                  \\"host\\": [
+                    \\"{{baseUrl}}\\"
+                  ],
+                  \\"path\\": [
+                    \\":postId\\"
+                  ],
+                  \\"query\\": [],
+                  \\"variable\\": [
+                    {
+                      \\"key\\": \\"postId\\",
+                      \\"description\\": null,
+                      \\"value\\": \\"123e4567-e89b-12d3-a456-426614174000\\"
+                    }
+                  ]
+                },
+                \\"header\\": [
+                  {
+                    \\"key\\": \\"X-API-Key\\",
+                    \\"value\\": \\"{{apiKey}}\\",
+                    \\"type\\": \\"string\\",
+                    \\"description\\": null
+                  },
+                  {
+                    \\"key\\": \\"x-service-header\\",
+                    \\"description\\": null,
+                    \\"type\\": \\"text\\",
+                    \\"value\\": \\"\\\\\\"I'm a service header!\\\\\\"\\"
+                  },
+                  {
+                    \\"type\\": \\"text\\",
+                    \\"key\\": \\"Content-Type\\",
+                    \\"value\\": \\"application/json\\"
+                  }
+                ],
+                \\"method\\": \\"GET\\",
+                \\"auth\\": null,
+                \\"body\\": null
+              },
+              \\"description\\": null,
+              \\"body\\": \\"{\\\\n    \\\\\\"id\\\\\\": \\\\\\"123e4567-e89b-12d3-a456-426614174000\\\\\\"\\\\n}\\",
+              \\"_postman_previewlanguage\\": \\"json\\"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}"
+`;

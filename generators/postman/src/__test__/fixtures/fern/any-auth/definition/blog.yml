@@ -1,0 +1,29 @@
+types:
+  PostId: string
+  BlogPost:
+    docs: A blog post
+    properties:
+      id: PostId
+      title: string
+      content: string
+service:
+  auth: true
+  base-path: /
+  endpoints:
+    createPost:
+      method: POST
+      path: /create
+      request:
+        name: CreatePostRequest
+        body:
+          properties:
+            title: string
+            content: string
+      response: PostId
+    getPost:
+      method: GET
+      auth: false
+      path: /{postId}
+      path-parameters:
+        postId: PostId
+      response: BlogPost

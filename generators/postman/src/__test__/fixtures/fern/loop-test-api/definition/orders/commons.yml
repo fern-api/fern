@@ -1,0 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+types:
+  Animal:
+    enum: 
+      - CAT
+      - DOG
+  PetType:
+    properties:
+      type: Animal
+      friends:
+        docs: A list of other pet types that are friends
+        type: optional<list<PetType>>

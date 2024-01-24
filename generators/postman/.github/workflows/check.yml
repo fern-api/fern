@@ -1,0 +1,43 @@
+name: ci
+
+on: 
+  push: 
+  workflow_call:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      
+      - name: Install
+        run: yarn install
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Format
+        run: yarn format:check
+
+      - name: Check dependencies
+        run: yarn depcheck
+
+      - name: Compile
+        run: yarn compile
+
+      - name: Run tests
+        run: | 
+          npm install -g fern-api
+          yarn test --ci
+      
+      - name: Build docker
+        run: yarn dockerTagLocal
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff

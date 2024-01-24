@@ -1,0 +1,44 @@
+name: publish
+
+on:
+  push:
+    tags:
+      - '*'
+    branches: 
+      - main
+
+jobs:
+  check:
+    uses: ./.github/workflows/check.yml
+  publish: 
+    needs: check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
+      
+      - name: Install
+        run: yarn install
+      
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+      
+      - name: Compile
+        run: yarn compile
+
+      - name: Publish fern-openapi docker
+        run: |
+          projectVersion="$(./scripts/git-version.sh)"
+          yarn dockerTagVersion "$projectVersion"
+          docker tag fern-postman:"$projectVersion" fernapi/fern-postman:"$projectVersion"
+          docker push fernapi/fern-postman:"$projectVersion"
+      
+    
