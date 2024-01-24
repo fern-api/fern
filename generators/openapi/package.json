@@ -6,6 +6,7 @@
     "url": "https://github.com/fern-api/fern.git",
     "directory": "generators/openapi"
   },
+  "private": true,
   "files": [
     "lib"
   ],
@@ -15,7 +16,7 @@
   "types": "lib/index.d.ts",
   "sideEffects": false,
   "bin": {
-    "fern-openapi": "./dist/bundle.cjs"
+    "fern-openapi-cli": "./dist/bundle.cjs"
   },
   "scripts": {
     "clean": "rm -rf ./lib && tsc --build --clean",
@@ -29,7 +30,9 @@
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli": "yarn compile && node build.cjs",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish"
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish",
+    "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:latest .",
+    "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-openapi:${0} ."
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",

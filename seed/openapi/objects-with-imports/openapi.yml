@@ -1,0 +1,87 @@
+openapi: 3.0.1
+info:
+  title: objects-with-imports
+  version: ''
+paths: {}
+components:
+  schemas:
+    Node:
+      title: Node
+      type: object
+      properties:
+        id:
+          type: string
+          example: node-8dvgfja2
+        label:
+          type: string
+          nullable: true
+        metadata:
+          $ref: '#/components/schemas/commonsMetadata'
+          nullable: true
+      required:
+        - id
+    Tree:
+      title: Tree
+      type: object
+      properties:
+        nodes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Node'
+          nullable: true
+    commonsMetadata:
+      title: commonsMetadata
+      type: object
+      properties:
+        id:
+          type: string
+          example: metadata-js8dg24b
+        data:
+          type: object
+          additionalProperties:
+            type: string
+          nullable: true
+      required:
+        - id
+    File:
+      title: File
+      type: object
+      properties:
+        name:
+          type: string
+          example: file.txt
+        contents:
+          type: string
+          example: ...
+        info:
+          $ref: '#/components/schemas/FileInfo'
+      required:
+        - name
+        - contents
+        - info
+    FileInfo:
+      title: FileInfo
+      type: string
+      enum:
+        - REGULAR
+        - DIRECTORY
+    fileDirectory:
+      title: fileDirectory
+      type: object
+      properties:
+        name:
+          type: string
+          example: root
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/File'
+          nullable: true
+        directories:
+          type: array
+          items:
+            $ref: '#/components/schemas/fileDirectory'
+          nullable: true
+      required:
+        - name
+  securitySchemes: {}

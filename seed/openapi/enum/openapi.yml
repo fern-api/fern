@@ -1,0 +1,26 @@
+openapi: 3.0.1
+info:
+  title: enum
+  version: ''
+paths: {}
+components:
+  schemas:
+    Enum:
+      title: Enum
+      type: string
+      enum:
+        - ONE
+        - TWO
+        - THREE
+    One:
+      title: One
+      type: string
+      enum:
+        - one
+        - One
+        - ONe
+        - ONE
+      description: |-
+        Represents a variety of casing conventions that
+        could collide without special care.
+  securitySchemes: {}

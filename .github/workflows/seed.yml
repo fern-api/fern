@@ -1,0 +1,147 @@
+name: seed
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      generators_changed: ${{ steps.filter.outputs.changes }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            seed: 
+              - 'packages/seed/**'
+              - 'test-definitions/**'
+            ruby: 'packages/generators/ruby/**'
+            openapi: 'generators/openapi/**'
+            python: 'generators/python/**'
+
+  ruby-model:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} ||
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Install Seed
+        run: npm install -g @fern-api/seed-cli
+
+      - name: Seed Test
+        run: |
+          cd packages/generators/ruby
+          yarn install
+          seed test --workspace model --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  pydantic-model:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Seed Test
+        run: |
+          yarn seed:local test --workspace pydantic --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  python-sdk:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Seed Test
+        run: |
+          yarn seed:local test --workspace sdk --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  fastapi:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Seed Test
+        run: |
+          yarn seed:local test --workspace fastapi --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  openapi:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Seed Test
+        run: |
+          yarn seed:local test --workspace openapi --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
