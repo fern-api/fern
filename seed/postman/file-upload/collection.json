@@ -1,0 +1,141 @@
+{
+  "info": {
+    "name": "File Upload",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Post",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"maybeString\": \"example\",\n    \"integer\": 0,\n    \"maybeInteger\": 0,\n    \"listOfStrings\": [\n        \"example\"\n    ],\n    \"setOfStrings\": [\n        \"example\"\n    ],\n    \"optionalListOfStrings\": [\n        \"example\"\n    ],\n    \"optionalSetOfStrings\": [\n        \"example\"\n    ],\n    \"maybeList\": \"example\",\n    \"maybeListOrSet\": \"example\",\n    \"listOfObjects\": [\n        {\n            \"foo\": \"example\"\n        }\n    ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Just File",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/just-file",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "just-file"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Just File With Query Params",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/just-file-with-query-params?maybeString=&integer=&maybeInteger=&listOfStrings=&optionalListOfStrings=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "just-file-with-query-params"
+              ],
+              "query": [
+                {
+                  "key": "maybeString",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "integer",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "maybeInteger",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "listOfStrings",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "optionalListOfStrings",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

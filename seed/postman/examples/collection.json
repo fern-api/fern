@@ -1,0 +1,708 @@
+{
+  "info": {
+    "name": "Examples",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://production.com/api",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "File",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Notification",
+          "item": [
+            {
+              "_type": "container",
+              "description": null,
+              "name": "Service",
+              "item": [
+                {
+                  "_type": "endpoint",
+                  "name": "Get Exception",
+                  "request": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/file/notification/:notificationId",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "file",
+                        "notification",
+                        ":notificationId"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "notificationId",
+                          "description": null,
+                          "value": "notification-hsy129x"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "response": [
+                    {
+                      "name": "Success",
+                      "status": "OK",
+                      "code": 200,
+                      "originalRequest": {
+                        "description": null,
+                        "url": {
+                          "raw": "{{baseUrl}}/file/notification/:notificationId",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "file",
+                            "notification",
+                            ":notificationId"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "key": "notificationId",
+                              "description": null,
+                              "value": "notification-hsy129x"
+                            }
+                          ]
+                        },
+                        "header": [
+                          {
+                            "type": "text",
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "method": "GET",
+                        "auth": null,
+                        "body": null
+                      },
+                      "description": null,
+                      "body": "{\n    \"type\": \"generic\",\n    \"exceptionType\": \"Unavailable\",\n    \"exceptionMessage\": \"This component is unavailable!\",\n    \"exceptionStacktrace\": \"<logs>\"\n}",
+                      "_postman_previewlanguage": "json"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Service",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get File",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/file/:filename",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "file",
+                    ":filename"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "filename",
+                      "description": null,
+                      "value": "file.txt"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "X-File-API-Version",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"0.0.2\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Not Found Error",
+                  "status": "Not Found Error",
+                  "code": 404,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/file/:filename",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "file",
+                        ":filename"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "filename",
+                          "description": null,
+                          "value": "file.txt"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "key": "X-File-API-Version",
+                        "description": null,
+                        "type": "text",
+                        "value": "\"0.0.2\""
+                      },
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "\"A file with that name was not found!\"",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Health",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Service",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Check",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/check/:id",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "check",
+                    ":id"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "id",
+                      "description": null,
+                      "value": "id-2sdx82h"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/check/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "check",
+                        ":id"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "description": null,
+                          "value": "id-2sdx82h"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            },
+            {
+              "_type": "endpoint",
+              "name": "Ping",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/ping",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "ping"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": [
+                {
+                  "name": "Success",
+                  "status": "OK",
+                  "code": 200,
+                  "originalRequest": {
+                    "description": null,
+                    "url": {
+                      "raw": "{{baseUrl}}/ping",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "ping"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "type": "text",
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null,
+                    "body": null
+                  },
+                  "description": null,
+                  "body": "true",
+                  "_postman_previewlanguage": "json"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Movie",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie/:movieId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie",
+                ":movieId"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "movieId",
+                  "description": null,
+                  "value": "movie-c06a4ad7"
+                }
+              ]
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/movie/:movieId",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movie",
+                    ":movieId"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "key": "movieId",
+                      "description": null,
+                      "value": "movie-c06a4ad7"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Create Movie",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/movie",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "movie"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"movie-c06a4ad7\",\n    \"title\": \"The Boy and the Heron\",\n    \"from\": \"Hayao Miyazaki\",\n    \"rating\": 8,\n    \"type\": \"movie\",\n    \"tag\": \"tag-wf9as23d\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "description": null,
+              "body": "\"movie-c06a4ad7\"",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Metadata",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/metadata?shallow=false&tag=development",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "metadata"
+              ],
+              "query": [
+                {
+                  "key": "shallow",
+                  "description": null,
+                  "value": "false"
+                },
+                {
+                  "key": "tag",
+                  "description": null,
+                  "value": "development"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-API-Version",
+                "description": null,
+                "type": "text",
+                "value": "\"0.0.1\""
+              },
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": [
+            {
+              "name": "Success",
+              "status": "OK",
+              "code": 200,
+              "originalRequest": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}/metadata?shallow=false&tag=development",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "metadata"
+                  ],
+                  "query": [
+                    {
+                      "key": "shallow",
+                      "description": null,
+                      "value": "false"
+                    },
+                    {
+                      "key": "tag",
+                      "description": null,
+                      "value": "development"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "X-API-Version",
+                    "description": null,
+                    "type": "text",
+                    "value": "\"0.0.1\""
+                  },
+                  {
+                    "type": "text",
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "description": null,
+              "body": "{\n    \"type\": \"html\",\n    \"extra\": {\n        \"version\": \"0.0.1\",\n        \"tenancy\": \"test\"\n    },\n    \"tags\": [\n        \"development\",\n        \"public\"\n    ],\n    \"value\": \"<head>...</head>\"\n}",
+              "_postman_previewlanguage": "json"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "endpoint",
+      "name": "Echo",
+      "request": {
+        "description": null,
+        "url": {
+          "raw": "{{baseUrl}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [],
+          "query": [],
+          "variable": []
+        },
+        "header": [
+          {
+            "type": "text",
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "method": "POST",
+        "auth": null,
+        "body": {
+          "mode": "raw",
+          "raw": "\"Hello world!\"",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "response": [
+        {
+          "name": "Success",
+          "status": "OK",
+          "code": 200,
+          "originalRequest": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "type": "text",
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"Hello world!\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "description": null,
+          "body": "\"Hello world!\"",
+          "_postman_previewlanguage": "json"
+        }
+      ]
+    }
+  ]
+}

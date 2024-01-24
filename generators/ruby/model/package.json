@@ -54,7 +54,7 @@
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "typescript": "4.6.4",
-    "webpack": "^5.76.0",
+    "webpack": "^5.88.2",
     "webpack-cli": "5.1.4"
   }
 }
