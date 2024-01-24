@@ -2263,9 +2263,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model":
+"@fern-api/fern-ruby-model@workspace:generators/ruby/model":
   version: 0.0.0-use.local
-  resolution: "@fern-api/fern-ruby-model@workspace:packages/generators/ruby/model"
+  resolution: "@fern-api/fern-ruby-model@workspace:generators/ruby/model"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-cli": "workspace:*"
@@ -2275,33 +2275,42 @@ __metadata:
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
-    simple-progress-webpack-plugin: ^2.0.0
     ts-loader: ^9.3.1
     typescript: 4.6.4
     webpack: ^5.76.0
     webpack-cli: 5.1.4
     zod: ^3.22.3
+  bin:
+    fern-ruby-model: ./dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
-"@fern-api/fern-ruby-sdk@workspace:packages/generators/ruby/sdk":
+"@fern-api/fern-ruby-sdk@workspace:generators/ruby/sdk":
   version: 0.0.0-use.local
-  resolution: "@fern-api/fern-ruby-sdk@workspace:packages/generators/ruby/sdk"
+  resolution: "@fern-api/fern-ruby-sdk@workspace:generators/ruby/sdk"
   dependencies:
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     typescript: 4.6.4
+  bin:
+    fern-ruby-sdk: ./dist/bundle.cjs
   languageName: unknown
   linkType: soft
 
@@ -2323,9 +2332,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:packages/generators/cli":
+"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:generators/cli":
   version: 0.0.0-use.local
-  resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
+  resolution: "@fern-api/generator-cli@workspace:generators/cli"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
@@ -2345,9 +2354,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-commons@workspace:*, @fern-api/generator-commons@workspace:packages/generators/commons":
+"@fern-api/generator-commons@workspace:*, @fern-api/generator-commons@workspace:generators/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
+  resolution: "@fern-api/generator-commons@workspace:generators/commons"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -6465,16 +6474,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:4.1.x, chalk@npm:^4.0.0, chalk@npm:^4.1.0":
-  version: 4.1.2
-  resolution: "chalk@npm:4.1.2"
-  dependencies:
-    ansi-styles: "npm:^4.1.0"
-    supports-color: "npm:^7.1.0"
-  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
-  languageName: node
-  linkType: hard
-
 "chalk@npm:^2.0.0, chalk@npm:^2.4.2":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
@@ -6483,6 +6482,16 @@ __metadata:
     escape-string-regexp: "npm:^1.0.5"
     supports-color: "npm:^5.3.0"
   checksum: ec3661d38fe77f681200f878edbd9448821924e0f93a9cefc0e26a33b145f1027a2084bf19967160d11e1f03bfe4eaffcabf5493b89098b2782c3fe0b03d80c2
+  languageName: node
+  linkType: hard
+
+"chalk@npm:^4.0.0, chalk@npm:^4.1.0":
+  version: 4.1.2
+  resolution: "chalk@npm:4.1.2"
+  dependencies:
+    ansi-styles: "npm:^4.1.0"
+    supports-color: "npm:^7.1.0"
+  checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
   languageName: node
   linkType: hard
 
@@ -8708,15 +8717,6 @@ env-cmd@toddbluhm/env-cmd:
     node-domexception: ^1.0.0
     web-streams-polyfill: ^3.0.3
   checksum: f19bc28a2a0b9626e69fd7cf3a05798706db7f6c7548da657cbf5026a570945f5eeaedff52007ea35c8bcd3d237c58a20bf1543bc568ab2422411d762dd3d5bf
-  languageName: node
-  linkType: hard
-
-"figures@npm:3.2.x":
-  version: 3.2.0
-  resolution: "figures@npm:3.2.0"
-  dependencies:
-    escape-string-regexp: ^1.0.5
-  checksum: 85a6ad29e9aca80b49b817e7c89ecc4716ff14e3779d9835af554db91bac41c0f289c418923519392a1e582b4d10482ad282021330cd045bb7b80c84152f2a2b
   languageName: node
   linkType: hard
 
@@ -11322,7 +11322,7 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"log-update@npm:4.0.x, log-update@npm:^4.0.0":
+"log-update@npm:^4.0.0":
   version: 4.0.0
   resolution: "log-update@npm:4.0.0"
   dependencies:
@@ -14638,19 +14638,6 @@ env-cmd@toddbluhm/env-cmd:
   version: 3.0.7
   resolution: "signal-exit@npm:3.0.7"
   checksum: a2f098f247adc367dffc27845853e9959b9e88b01cb301658cfe4194352d8d2bb32e18467c786a7fe15f1d44b233ea35633d076d5e737870b7139949d1ab6318
-  languageName: node
-  linkType: hard
-
-"simple-progress-webpack-plugin@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "simple-progress-webpack-plugin@npm:2.0.0"
-  dependencies:
-    chalk: 4.1.x
-    figures: 3.2.x
-    log-update: 4.0.x
-  peerDependencies:
-    webpack: ">=2.0.0"
-  checksum: 6e51960c9ecf6686220a13b98783c863ac3393bf1ca5fb439c7e61b9ac1b2ec6b680ac50fea14be2a003b09eb805c7ce725d4f78adede3c60b30d205f8e9c246
   languageName: node
   linkType: hard
 
