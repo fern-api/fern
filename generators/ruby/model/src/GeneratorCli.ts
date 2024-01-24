@@ -1,15 +1,22 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext } from "@fern-api/generator-commons";
+import {
+    generateBinDir,
+    GeneratedFile,
+    generateGemConfig,
+    generateGemfile,
+    generateGemspec,
+    generateGitignore,
+    generateReadme,
+    generateRubocopConfig
+} from "@fern-api/ruby-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
 import { camelCase, upperFirst } from "lodash-es";
-import { generateGemConfig, generateGemspec } from "./ast/AbstractionUtilities";
 import { parseCustomConfig, RubyModelCustomConfig } from "./CustomConfig";
-import { generateBinDir, generateGemfile, generateGitignore, generateReadme, generateRubocopConfig } from "./GemFiles";
-import { GeneratedFile } from "./utils/GeneratedFile";
-import { TypesGenerator } from "./utils/TypesGenerator";
+import { TypesGenerator } from "./TypesGenerator";
 
 export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomConfig> {
     // TODO: This will probably be used across CLIs (e.g. storing and then writing these files)
