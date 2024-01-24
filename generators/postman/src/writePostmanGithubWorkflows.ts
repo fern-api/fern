@@ -15,7 +15,7 @@ export async function writePostmanGithubWorkflows({
     if (githubOutputMode.publishInfo == null) {
         return;
     }
-    if (githubOutputMode.publishInfo.type != "postman") {
+    if (githubOutputMode.publishInfo.type !== "postman") {
         throw new Error(
             `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
         );

@@ -172,11 +172,13 @@ async function publishCollection({
     publishConfig: PublishConfigSchema;
     collectionDefinition: CollectionDefinition;
 }) {
+    // eslint-disable-next-line no-console
     console.log("Publishing postman collection...");
     const postman = new FernPostmanClient({
         apiKey: publishConfig.apiKey
     });
     const workspace = publishConfig.workspaceId != null ? publishConfig.workspaceId : undefined;
+    // eslint-disable-next-line no-console
     console.log(`Workspace id is ${workspace}`);
     const getCollectionMetadataResponse = await postman.collection.getAllCollectionMetadata({
         workspace
@@ -185,6 +187,7 @@ async function publishCollection({
         return collectionMetadata.name === collectionDefinition.info?.name;
     });
     if (collectionsToUpdate.length === 0) {
+        // eslint-disable-next-line no-console
         console.log("Creating new postman collection!");
         await postman.collection.createCollection({
             workspace,
@@ -193,6 +196,7 @@ async function publishCollection({
     } else {
         await Promise.all(
             collectionsToUpdate.map(async (collectionMetadata) => {
+                // eslint-disable-next-line no-console
                 console.log("Updating postman collection!");
                 await postman.collection.updateCollection(collectionMetadata.uid, {
                     collection: new Collection(collectionDefinition)

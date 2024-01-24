@@ -34,7 +34,7 @@ export function getMockBodyFromTypeReference({
     }
     return TypeReference._visit(typeReference, {
         primitive: (primitive) =>
-            PrimitiveType._visit<any>(primitive, {
+            PrimitiveType._visit<unknown>(primitive, {
                 integer: () => 0,
                 double: () => 0.0,
                 string: () => "example",
@@ -49,7 +49,7 @@ export function getMockBodyFromTypeReference({
                 }
             }),
         container: (container) =>
-            ContainerType._visit<any>(container, {
+            ContainerType._visit<unknown>(container, {
                 list: (value) => [getMockBodyFromTypeReference({ typeReference: value, allTypes, visitedTypes })],
                 map: (value) => {
                     const result: Record<string, unknown> = {};
@@ -89,14 +89,14 @@ function getMockBodyFromType(
     type: TypeDeclaration,
     allTypes: TypeDeclaration[],
     visitedTypes: Set<string> | undefined
-): any {
+): unknown {
     if (type.examples[0] != null) {
         return type.examples[0].jsonExample;
     }
-    return Type._visit<any>(type.shape, {
+    return Type._visit<unknown>(type.shape, {
         object: (objectDeclaration) => {
             return {
-                ...objectDeclaration.properties.reduce<Record<string, any>>(
+                ...objectDeclaration.properties.reduce<Record<string, unknown>>(
                     (combined, objectProperty) => ({
                         ...combined,
                         [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
@@ -107,13 +107,13 @@ function getMockBodyFromType(
                     }),
                     {}
                 ),
-                ...objectDeclaration.extends.reduce<Record<string, any>>(
-                    (combined, extension) => ({
+                ...objectDeclaration.extends.reduce<Record<string, unknown>>((combined, extension) => {
+                    const mockBody = getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes);
+                    return {
                         ...combined,
-                        ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes)
-                    }),
-                    {}
-                )
+                        ...(typeof mockBody === "object" ? mockBody : {})
+                    };
+                }, {})
             };
         },
         alias: ({ aliasOf }) => getMockBodyFromTypeReference({ typeReference: aliasOf, allTypes, visitedTypes }),
@@ -136,14 +136,15 @@ function getMockBodyFromType(
 
             return SingleUnionTypeProperties._visit(firstUnionType.shape, {
                 samePropertiesAsObject: (value) => {
+                    // TODO this doesn't support named aliases of primitive types
+                    const mockBody = getMockBodyFromTypeReference({
+                        typeReference: TypeReference.named(value),
+                        allTypes,
+                        visitedTypes
+                    });
                     return {
                         ...discriminantProperties,
-                        // TODO this doesn't support named aliases of primitive types
-                        ...(getMockBodyFromTypeReference({
-                            typeReference: TypeReference.named(value),
-                            allTypes,
-                            visitedTypes
-                        }) as any)
+                        ...(typeof mockBody === "object" ? mockBody : {})
                     };
                 },
                 singleProperty: (value: SingleUnionTypeProperty) => {
@@ -203,7 +204,7 @@ export function getMockRequestBody({
 }): unknown {
     return HttpRequestBody._visit<unknown>(requestBody, {
         inlinedRequestBody: (inlinedRequestBody) => ({
-            ...inlinedRequestBody.properties.reduce<Record<string, any>>(
+            ...inlinedRequestBody.properties.reduce<Record<string, unknown>>(
                 (combined, objectProperty) => ({
                     ...combined,
                     [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
@@ -214,13 +215,13 @@ export function getMockRequestBody({
                 }),
                 {}
             ),
-            ...inlinedRequestBody.extends.reduce<Record<string, any>>(
-                (combined, extension) => ({
+            ...inlinedRequestBody.extends.reduce<Record<string, unknown>>((combined, extension) => {
+                const mockBody = getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes);
+                return {
                     ...combined,
-                    ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes)
-                }),
-                {}
-            )
+                    ...(typeof mockBody === "object" ? mockBody : {})
+                };
+            }, {})
         }),
         reference: ({ requestBodyType }) =>
             getMockBodyFromTypeReference({ typeReference: requestBodyType, allTypes, visitedTypes }),

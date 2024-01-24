@@ -2699,30 +2699,25 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/generator-exec-client": ^0.0.6
     "@fern-fern/ir-sdk": 0.0.2828
-    "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
-    "@types/lodash": ^4.14.199
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
-    endent: ^2.1.0
     env-cmd: toddbluhm/env-cmd
     esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
-    lodash: ^4.17.21
+    js-yaml: ^4.1.0
+    lodash-es: ^4.17.21
+    openapi-types: ^12.1.3
     organize-imports-cli: ^0.10.0
-    postman-collection: ^4.3.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    webpack: ^5.88.2
-    webpack-cli: 5.1.4
-    zod: ^3.22.3
+    url-join: ^5.0.0
   bin:
     fern-openapi-cli: ./dist/bundle.cjs
   languageName: unknown
@@ -2808,14 +2803,11 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
-    "@fern-api/config-management-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.472
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
-    "@types/js-yaml": ^4.0.8
     "@types/lodash": ^4.14.199
-    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@types/postman-collection": ^3.5.7
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
@@ -2830,8 +2822,6 @@ __metadata:
     postman-collection: ^4.3.0
     prettier: ^2.7.1
     typescript: 4.6.4
-    webpack: ^5.88.2
-    webpack-cli: 5.1.4
     zod: ^3.22.3
   bin:
     fern-postman-cli: ./dist/bundle.cjs
@@ -3236,6 +3226,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fern-fern/generator-exec-client@npm:^0.0.6":
+  version: 0.0.6
+  resolution: "@fern-fern/generator-exec-client@npm:0.0.6"
+  dependencies:
+    "@fern-typescript/service-utils": 0.0.184
+    "@types/url-join": 4.0.1
+    url-join: 4.0.1
+  checksum: 84e55406af4393b5d3f8127a93f0fefed202c9681efb83388e191725b097cbf2eed8f2a966fce12943ffe8dce13a8f55d20df1223c133998eeb4e0c50cf69440
+  languageName: node
+  linkType: hard
+
 "@fern-fern/generator-exec-sdk@npm:^0.0.472":
   version: 0.0.472
   resolution: "@fern-fern/generator-exec-sdk@npm:0.0.472"
@@ -3509,6 +3510,17 @@ __metadata:
   version: 0.0.15
   resolution: "@fern-fern/seed-config@npm:0.0.15"
   checksum: 522500dcd3a33e9d74ee0c64950183cc65d847b7a5ddcfc1724fa858816a9afef015a124be97a72714d358c1b8846542c7407cd198cc51885e6dcce5bf4ccee7
+  languageName: node
+  linkType: hard
+
+"@fern-typescript/service-utils@npm:0.0.184":
+  version: 0.0.184
+  resolution: "@fern-typescript/service-utils@npm:0.0.184"
+  dependencies:
+    axios: ^0.27.2
+    basic-auth: ^2.0.1
+    js-base64: ^3.7.2
+  checksum: 173877b5eb6412e65f577cf7f2ce90317e81e5348bbba0cb6c1b272d10b44c0ad74f1bafb16428f88b42a1af51343f45b82d2664728d5d7f1cf00e987bd3f6be
   languageName: node
   linkType: hard
 
