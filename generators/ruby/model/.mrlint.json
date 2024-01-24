@@ -1,0 +1,28 @@
+{
+  "type": "cli",
+  "cliName": "fern-ruby-model",
+  "environment": {
+    "environments": {
+      "prod": {
+        "cliName": "fern-ruby-model",
+        "cliPackageName": "@fern-api/fern-ruby-model"
+      }
+    }
+  },
+  "rules": {
+    "depcheck": {
+      "ignores": ["webpack", "webpack-cli", "ts-loader", "@fern-fern/ir-sdk"],
+      "ignore-patterns": ["docker/bundle.js"]
+    },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    },
+    "package-json": {
+      "scripts": {
+        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:latest ../../..",
+        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-model:${0} ../../.."
+      }
+    }
+  },
+  "private": false
+}

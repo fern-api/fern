@@ -1,9 +1,9 @@
 # syntax = edrevo/dockerfile-plus
 INCLUDE+ packages/generators/docker/Dockerfile.base
 
-COPY packages/generators/ruby/model/docker/dist/bundle.js /bundle.js
+COPY generators/ruby/model/dist /dist
 
 # Install Ruby and Rubocop for formatting
 RUN apk --no-cache add ruby && gem install rubocop
 
-ENTRYPOINT ["node", "/bundle.js"]
+ENTRYPOINT ["node", "/dist/cli.cjs", "ruby-model"]

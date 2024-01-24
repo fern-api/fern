@@ -19,7 +19,7 @@ jobs:
             seed: 
               - 'packages/seed/**'
               - 'test-definitions/**'
-            ruby: 'packages/generators/ruby/**'
+            ruby: 'generators/ruby/**'
             openapi: 'generators/openapi/**'
             python: 'generators/python/**'
             postman: 'generators/postman/**'
@@ -27,7 +27,7 @@ jobs:
   ruby-model:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} ||
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -37,11 +37,12 @@ jobs:
       - name: Install Seed
         run: npm install -g @fern-api/seed-cli
 
+      - name: Yarn Install
+        run: yarn install
+
       - name: Seed Test
         run: |
-          cd packages/generators/ruby
-          yarn install
-          seed test --workspace model --parallel 8
+          yarn seed:local test --workspace ruby-model --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
