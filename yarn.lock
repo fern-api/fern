@@ -2564,7 +2564,7 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.472
-    "@types/decompress": ^4.2.4
+    "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/tmp": ^0.2.4
@@ -2886,7 +2886,7 @@ __metadata:
     "@fern-fern/docs-config": 0.0.53
     "@fern-fern/fiddle-sdk": ^0.0.386
     "@fern-fern/ir-sdk": 0.0.3277
-    "@types/decompress": ^4.2.4
+    "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/mime-types": ^2.1.4
@@ -4296,12 +4296,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/decompress@npm:^4.2.4":
-  version: 4.2.4
-  resolution: "@types/decompress@npm:4.2.4"
+"@types/decompress@npm:^4.2.7":
+  version: 4.2.7
+  resolution: "@types/decompress@npm:4.2.7"
   dependencies:
     "@types/node": "*"
-  checksum: e47960f863148ef3afe9060a0c8dfd11d671322a47a341a3bd7128bbdea5b57c10117d76db0cfebf533b695ca81a4ffd4a3e6f338a149a5547052d4f63af9f76
+  checksum: f2fcc588e0bbeed4f3897e25980d3a5cceba334b900f83c9ad91b9885e3b25b50bdc283a6d684b73442368f9f12f34b4eabfc7f422067c6a882591ed844aa65b
   languageName: node
   linkType: hard
 

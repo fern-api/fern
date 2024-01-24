@@ -4362,7 +4362,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.472"],\
-            ["@types/decompress", "npm:4.2.4"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
             ["@types/tmp", "npm:0.2.4"],\
@@ -4708,7 +4708,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.386"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3277"],\
-            ["@types/decompress", "npm:4.2.4"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/mime-types", "npm:2.1.4"],\
@@ -6307,10 +6307,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@types/decompress", [\
-        ["npm:4.2.4", {\
-          "packageLocation": "./.yarn/cache/@types-decompress-npm-4.2.4-b2bc0638c0-e47960f863.zip/node_modules/@types/decompress/",\
+        ["npm:4.2.7", {\
+          "packageLocation": "./.yarn/cache/@types-decompress-npm-4.2.7-8d638f0648-f2fcc588e0.zip/node_modules/@types/decompress/",\
           "packageDependencies": [\
-            ["@types/decompress", "npm:4.2.4"],\
+            ["@types/decompress", "npm:4.2.7"],\
             ["@types/node", "npm:18.7.18"]\
           ],\
           "linkType": "HARD"\
