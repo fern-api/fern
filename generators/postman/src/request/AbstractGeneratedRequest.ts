@@ -5,7 +5,7 @@ import {
     PostmanRawRequestBodyLanguage,
     PostmanRequest,
     PostmanRequestBodyMode,
-    PostmanUrlVariable,
+    PostmanUrlVariable
 } from "@fern-fern/postman-sdk/api";
 import { getMockBodyFromTypeReference } from "../getMockBody";
 import { getReferenceToVariable, ORIGIN_VARIABLE_NAME } from "../utils";
@@ -52,7 +52,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
                 host: hostArr,
                 path: pathArr,
                 query: queryParams,
-                variable: this.getPathParams(),
+                variable: this.getPathParams()
             },
             header: [...this.authHeaders, ...this.getHeaders()],
             method: this.convertHttpMethod(this.httpEndpoint.method),
@@ -65,10 +65,10 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
                           raw: JSON.stringify(requestBody, undefined, 4),
                           options: {
                               raw: {
-                                  language: PostmanRawRequestBodyLanguage.Json,
-                              },
-                          },
-                      },
+                                  language: PostmanRawRequestBodyLanguage.Json
+                              }
+                          }
+                      }
         };
     }
 
@@ -79,7 +79,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             key: header.name.wireValue,
             description: header.docs ?? undefined,
             type: "text",
-            value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : "",
+            value: valueOrDefault != null ? JSON.stringify(valueOrDefault) : ""
         };
     }
 
@@ -92,7 +92,7 @@ export abstract class AbstractGeneratedRequest implements GeneratedRequest {
             delete: () => PostmanMethod.Delete,
             _other: () => {
                 throw new Error("Unexpected httpMethod: " + httpMethod);
-            },
+            }
         });
     }
 

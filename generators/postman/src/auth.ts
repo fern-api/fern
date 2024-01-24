@@ -15,14 +15,14 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                     {
                         key: "username",
                         value: getReferenceToVariable(BASIC_AUTH_USERNAME_VARIABLE),
-                        type: "string",
+                        type: "string"
                     },
                     {
                         key: "password",
                         value: getReferenceToVariable(BASIC_AUTH_PASSWORD_VARIABLE),
-                        type: "string",
-                    },
-                ],
+                        type: "string"
+                    }
+                ]
             }),
             bearer: () => ({
                 type: "bearer",
@@ -30,9 +30,9 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                     {
                         key: "token",
                         value: getReferenceToVariable(BEARER_AUTH_TOKEN_VARIABLE),
-                        type: "string",
-                    },
-                ],
+                        type: "string"
+                    }
+                ]
             }),
             header: (header) => {
                 return {
@@ -41,24 +41,24 @@ export function convertAuth(schemes: AuthScheme[]): PostmanRequestAuth | undefin
                         {
                             key: "value",
                             value: getReferenceToVariable(getVariableForAuthHeader(header)),
-                            type: "string",
+                            type: "string"
                         },
                         {
                             key: "key",
                             value: header.name.wireValue,
-                            type: "string",
+                            type: "string"
                         },
                         {
                             key: "in",
                             value: "header",
-                            type: "string",
-                        },
-                    ],
+                            type: "string"
+                        }
+                    ]
                 };
             },
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
-            },
+            }
         });
 
         if (auth != null) {
@@ -79,12 +79,12 @@ export function getAuthHeaders(schemes: AuthScheme[]): PostmanHeader[] {
                     key: header.name.wireValue,
                     value: getReferenceToVariable(getVariableForAuthHeader(header)),
                     type: "string",
-                    description: header.docs ?? undefined,
-                },
+                    description: header.docs ?? undefined
+                }
             ],
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
-            },
+            }
         })
     );
 }
@@ -95,31 +95,31 @@ export function getVariablesForAuthScheme(scheme: AuthScheme): PostmanVariable[]
             {
                 key: BASIC_AUTH_USERNAME_VARIABLE,
                 value: "",
-                type: "string",
+                type: "string"
             },
             {
                 key: BASIC_AUTH_PASSWORD_VARIABLE,
                 value: "",
-                type: "string",
-            },
+                type: "string"
+            }
         ],
         bearer: () => [
             {
                 key: BEARER_AUTH_TOKEN_VARIABLE,
                 value: "",
-                type: "string",
-            },
+                type: "string"
+            }
         ],
         header: (header) => [
             {
                 key: getVariableForAuthHeader(header),
                 value: "",
-                type: "string",
-            },
+                type: "string"
+            }
         ],
         _other: () => {
             throw new Error("Unknown auth scheme: " + scheme.type);
-        },
+        }
     });
 }
 

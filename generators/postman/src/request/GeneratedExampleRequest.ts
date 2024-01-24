@@ -3,7 +3,7 @@ import {
     ExampleHeader,
     ExamplePathParameter,
     HttpHeader,
-    PathParameter,
+    PathParameter
 } from "@fern-fern/ir-sdk/api";
 import { PostmanHeader, PostmanUrlVariable } from "@fern-fern/postman-sdk/api";
 import { AbstractGeneratedRequest } from "./AbstractGeneratedRequest";
@@ -36,7 +36,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 value:
                     typeof exampleQueryParameter.value.jsonExample !== "string"
                         ? JSON.stringify(exampleQueryParameter.value.jsonExample)
-                        : exampleQueryParameter.value.jsonExample,
+                        : exampleQueryParameter.value.jsonExample
             };
         });
     }
@@ -45,18 +45,18 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         return [
             ...this.getPathParamsFromExamples({
                 pathParameters: this.httpService.pathParameters,
-                examples: this.example.servicePathParameters,
+                examples: this.example.servicePathParameters
             }),
             ...this.getPathParamsFromExamples({
                 pathParameters: this.httpEndpoint.pathParameters,
-                examples: this.example.endpointPathParameters,
-            }),
+                examples: this.example.endpointPathParameters
+            })
         ];
     }
 
     private getPathParamsFromExamples({
         pathParameters,
-        examples,
+        examples
     }: {
         pathParameters: PathParameter[];
         examples: ExamplePathParameter[];
@@ -74,7 +74,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
                 value:
                     typeof examplePathParameter.value.jsonExample !== "string"
                         ? JSON.stringify(examplePathParameter.value.jsonExample)
-                        : examplePathParameter.value.jsonExample,
+                        : examplePathParameter.value.jsonExample
             };
         });
     }
@@ -83,25 +83,25 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
         return [
             ...this.getHeadersFromExamples({
                 headers: this.httpService.headers,
-                examples: this.example.serviceHeaders,
+                examples: this.example.serviceHeaders
             }),
             ...this.getHeadersFromExamples({
                 headers: this.httpEndpoint.headers,
-                examples: this.example.endpointHeaders,
+                examples: this.example.endpointHeaders
             }),
             ...[
                 {
                     type: "text",
                     key: "Content-Type",
-                    value: "application/json",
-                },
-            ],
+                    value: "application/json"
+                }
+            ]
         ];
     }
 
     private getHeadersFromExamples({
         headers,
-        examples,
+        examples
     }: {
         headers: HttpHeader[];
         examples: ExampleHeader[];
@@ -113,7 +113,7 @@ export class GeneratedExampleRequest extends AbstractGeneratedRequest {
             }
             return this.convertHeader({
                 header: headerDeclaration,
-                value: exampleHeader.value.jsonExample,
+                value: exampleHeader.value.jsonExample
             });
         });
     }

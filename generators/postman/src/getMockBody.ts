@@ -8,7 +8,7 @@ import {
     SingleUnionTypeProperty,
     Type,
     TypeDeclaration,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { noop } from "lodash";
 
@@ -20,7 +20,7 @@ const BASE_64 = "SGVsbG8gV29ybGQ=";
 export function getMockBodyFromTypeReference({
     typeReference,
     allTypes,
-    visitedTypes = new Set(),
+    visitedTypes = new Set()
 }: {
     typeReference: TypeReference;
     allTypes: TypeDeclaration[];
@@ -46,7 +46,7 @@ export function getMockBodyFromTypeReference({
                 base64: () => BASE_64,
                 _other: () => {
                     throw new Error("Encountered unknown primtiveType: " + primitive);
-                },
+                }
             }),
         container: (container) =>
             ContainerType._visit<any>(container, {
@@ -56,12 +56,12 @@ export function getMockBodyFromTypeReference({
                     const mockKey = getMockBodyFromTypeReference({
                         typeReference: value.keyType,
                         allTypes,
-                        visitedTypes,
+                        visitedTypes
                     }) as string | number;
                     const mockValue = getMockBodyFromTypeReference({
                         typeReference: value.valueType,
                         allTypes,
-                        visitedTypes,
+                        visitedTypes
                     });
                     result[mockKey] = mockValue;
                     return result;
@@ -73,7 +73,7 @@ export function getMockBodyFromTypeReference({
                 },
                 literal: () => {
                     throw new Error("Literals are unsupported!");
-                },
+                }
             }),
         named: (typeName) => {
             return getMockBodyFromType(getType(typeName, allTypes), allTypes, visitedTypes);
@@ -81,7 +81,7 @@ export function getMockBodyFromTypeReference({
         unknown: () => "UNKNOWN",
         _other: () => {
             throw new Error("Encountered unknown type reference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -102,18 +102,18 @@ function getMockBodyFromType(
                         [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
                             typeReference: objectProperty.valueType,
                             allTypes,
-                            visitedTypes,
-                        }),
+                            visitedTypes
+                        })
                     }),
                     {}
                 ),
                 ...objectDeclaration.extends.reduce<Record<string, any>>(
                     (combined, extension) => ({
                         ...combined,
-                        ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes),
+                        ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes)
                     }),
                     {}
-                ),
+                )
             };
         },
         alias: ({ aliasOf }) => getMockBodyFromTypeReference({ typeReference: aliasOf, allTypes, visitedTypes }),
@@ -131,7 +131,7 @@ function getMockBodyFromType(
             }
 
             const discriminantProperties: Record<string, string> = {
-                [unionDeclaration.discriminant.wireValue]: firstUnionType.discriminantValue.wireValue,
+                [unionDeclaration.discriminant.wireValue]: firstUnionType.discriminantValue.wireValue
             };
 
             return SingleUnionTypeProperties._visit(firstUnionType.shape, {
@@ -142,8 +142,8 @@ function getMockBodyFromType(
                         ...(getMockBodyFromTypeReference({
                             typeReference: TypeReference.named(value),
                             allTypes,
-                            visitedTypes,
-                        }) as any),
+                            visitedTypes
+                        }) as any)
                     };
                 },
                 singleProperty: (value: SingleUnionTypeProperty) => {
@@ -152,18 +152,18 @@ function getMockBodyFromType(
                         [value.name.wireValue]: getMockBodyFromTypeReference({
                             typeReference: value.type,
                             allTypes,
-                            visitedTypes,
-                        }),
+                            visitedTypes
+                        })
                     };
                 },
                 noProperties: () => {
                     return {
-                        ...discriminantProperties,
+                        ...discriminantProperties
                     };
                 },
                 _other: () => {
                     throw new Error("Encountered unknown typeReference: " + firstUnionType.shape.propertiesType);
-                },
+                }
             });
         },
         undiscriminatedUnion: (unionDeclaration) => {
@@ -175,12 +175,12 @@ function getMockBodyFromType(
             return getMockBodyFromTypeReference({
                 typeReference: firstUnionType.type,
                 allTypes,
-                visitedTypes,
+                visitedTypes
             });
         },
         _other: () => {
             throw new Error("Unknown type: " + type.shape.type);
-        },
+        }
     });
 }
 
@@ -195,7 +195,7 @@ function getType(declaredTypeName: DeclaredTypeName, allTypes: TypeDeclaration[]
 export function getMockRequestBody({
     requestBody,
     allTypes,
-    visitedTypes = new Set(),
+    visitedTypes = new Set()
 }: {
     requestBody: HttpRequestBody;
     allTypes: TypeDeclaration[];
@@ -209,18 +209,18 @@ export function getMockRequestBody({
                     [objectProperty.name.wireValue]: getMockBodyFromTypeReference({
                         typeReference: objectProperty.valueType,
                         allTypes,
-                        visitedTypes,
-                    }),
+                        visitedTypes
+                    })
                 }),
                 {}
             ),
             ...inlinedRequestBody.extends.reduce<Record<string, any>>(
                 (combined, extension) => ({
                     ...combined,
-                    ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes),
+                    ...getMockBodyFromType(getType(extension, allTypes), allTypes, visitedTypes)
                 }),
                 {}
-            ),
+            )
         }),
         reference: ({ requestBodyType }) =>
             getMockBodyFromTypeReference({ typeReference: requestBodyType, allTypes, visitedTypes }),
@@ -232,12 +232,12 @@ export function getMockRequestBody({
                         obj[bodyProperty.name.wireValue] = getMockBodyFromTypeReference({
                             typeReference: bodyProperty.valueType,
                             allTypes,
-                            visitedTypes,
+                            visitedTypes
                         });
                     },
                     _other: () => {
                         throw new Error("Unknown FileUploadRequestProperty: " + property.type);
-                    },
+                    }
                 });
                 return obj;
             }, {});
@@ -247,6 +247,6 @@ export function getMockRequestBody({
         },
         _other: () => {
             throw new Error("Unknown HttpRequestBody: " + requestBody.type);
-        },
+        }
     });
 }

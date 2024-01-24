@@ -7,7 +7,7 @@ export class GeneratedDummyRequest extends AbstractGeneratedRequest {
         return this.httpEndpoint.queryParameters.map((queryParam) => ({
             key: queryParam.name.wireValue,
             value: "",
-            description: queryParam.docs ?? undefined,
+            description: queryParam.docs ?? undefined
         }));
     }
 
@@ -15,7 +15,7 @@ export class GeneratedDummyRequest extends AbstractGeneratedRequest {
         return [...this.httpService.pathParameters, ...this.httpEndpoint.pathParameters].map((pathParam) => ({
             key: pathParam.name.originalName,
             value: "",
-            description: pathParam.docs ?? undefined,
+            description: pathParam.docs ?? undefined
         }));
     }
 
@@ -31,7 +31,7 @@ export class GeneratedDummyRequest extends AbstractGeneratedRequest {
         }
         return getMockRequestBody({
             requestBody: this.httpEndpoint.requestBody,
-            allTypes: this.allTypes,
+            allTypes: this.allTypes
         });
     }
 }

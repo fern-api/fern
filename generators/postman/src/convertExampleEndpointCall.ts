@@ -3,7 +3,7 @@ import {
     ExampleEndpointCall,
     HttpEndpoint,
     HttpService,
-    TypeDeclaration,
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { PostmanExampleResponse, PostmanHeader } from "@fern-fern/postman-sdk/api";
 import { isEqual, startCase } from "lodash";
@@ -15,7 +15,7 @@ export function convertExampleEndpointCall({
     httpService,
     example,
     allErrors,
-    allTypes,
+    allTypes
 }: {
     authHeaders: PostmanHeader[];
     httpEndpoint: HttpEndpoint;
@@ -29,7 +29,7 @@ export function convertExampleEndpointCall({
         httpEndpoint,
         httpService,
         example,
-        allTypes,
+        allTypes
     }).get();
 
     return {
@@ -40,13 +40,13 @@ export function convertExampleEndpointCall({
             example.response.body?.jsonExample != null
                 ? JSON.stringify(example.response.body.jsonExample, undefined, 4)
                 : "",
-        postmanPreviewlanguage: "json",
+        postmanPreviewlanguage: "json"
     };
 }
 
 function getNameAndStatus({
     example,
-    allErrors,
+    allErrors
 }: {
     example: ExampleEndpointCall;
     allErrors: ErrorDeclaration[];
@@ -55,7 +55,7 @@ function getNameAndStatus({
         return {
             name: "Success",
             status: "OK",
-            code: 200,
+            code: 200
         };
     } else {
         const errorName = example.response.error;
@@ -68,7 +68,7 @@ function getNameAndStatus({
         return {
             name: errorDisplayName,
             status: errorDisplayName,
-            code: errorDeclaration.statusCode,
+            code: errorDeclaration.statusCode
         };
     }
 }

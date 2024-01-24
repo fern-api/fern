@@ -6,13 +6,13 @@ import {
     HttpService,
     IntermediateRepresentation,
     Package,
-    TypeDeclaration,
+    TypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import {
     PostmanCollectionEndpointItem,
     PostmanCollectionItem,
     PostmanCollectionSchema,
-    PostmanHeader,
+    PostmanHeader
 } from "@fern-fern/postman-sdk/api";
 import { startCase } from "lodash";
 import { convertAuth, getAuthHeaders, getVariablesForAuthScheme } from "./auth";
@@ -31,18 +31,18 @@ export function convertToPostmanCollection(ir: IntermediateRepresentation): Post
         info: {
             name: ir.apiDisplayName ?? startCase(id.originalName),
             schema: "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-            description: ir.apiDocs ?? undefined,
+            description: ir.apiDocs ?? undefined
         },
         variable: [
             {
                 key: ORIGIN_VARIABLE_NAME,
                 value: getOriginaVariableValue(ir),
-                type: "string",
+                type: "string"
             },
-            ...authSchemes.flatMap(getVariablesForAuthScheme),
+            ...authSchemes.flatMap(getVariablesForAuthScheme)
         ],
         auth: convertAuth(authSchemes),
-        item: getCollectionItems({ ir, authHeaders }),
+        item: getCollectionItems({ ir, authHeaders })
     };
 }
 
@@ -85,14 +85,14 @@ function filterAuthSchemes(auth: ApiAuth): AuthScheme[] {
             header: () => true,
             _other: () => {
                 throw new Error("Unknown auth scheme: " + scheme.type);
-            },
+            }
         });
     });
 }
 
 function getCollectionItems({
     ir,
-    authHeaders,
+    authHeaders
 }: {
     ir: IntermediateRepresentation;
     authHeaders: PostmanHeader[];
@@ -118,7 +118,7 @@ function getCollectionItemsForPackage(
                 type: "container",
                 description: subpackage.docs ?? undefined,
                 name: service?.displayName ?? startCase(subpackage.name.originalName),
-                item: getCollectionItemsForPackage(subpackage, ir, authHeaders),
+                item: getCollectionItemsForPackage(subpackage, ir, authHeaders)
             });
         }
     }
@@ -137,8 +137,8 @@ function getCollectionItemsForPackage(
                         httpEndpoint,
                         httpService: service,
                         allTypes: Object.values(ir.types),
-                        allErrors: Object.values(ir.errors),
-                    }),
+                        allErrors: Object.values(ir.errors)
+                    })
                 })
             )
         );
@@ -152,7 +152,7 @@ function convertEndpoint({
     httpEndpoint,
     httpService,
     allTypes,
-    allErrors,
+    allErrors
 }: {
     authHeaders: PostmanHeader[];
     httpEndpoint: HttpEndpoint;
@@ -171,6 +171,6 @@ function convertEndpoint({
         request: generatedRequest.get(),
         response: httpEndpoint.examples.map((example) =>
             convertExampleEndpointCall({ authHeaders, httpService, httpEndpoint, allTypes, allErrors, example })
-        ),
+        )
     };
 }

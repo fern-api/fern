@@ -6,8 +6,8 @@ export const PostmanGeneratorConfigSchema = z.union([
     z.undefined(),
     z.strictObject({
         publishing: PublishConfigSchema.optional(),
-        filename: z.string().optional(),
-    }),
+        filename: z.string().optional()
+    })
 ]);
 
 export type PostmanGeneratorConfigSchema = z.infer<typeof PostmanGeneratorConfigSchema>;
