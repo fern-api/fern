@@ -2332,9 +2332,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:generators/cli":
+"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:packages/generators/cli":
   version: 0.0.0-use.local
-  resolution: "@fern-api/generator-cli@workspace:generators/cli"
+  resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
@@ -2354,9 +2354,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/generator-commons@workspace:*, @fern-api/generator-commons@workspace:generators/commons":
+"@fern-api/generator-commons@workspace:*, @fern-api/generator-commons@workspace:packages/generators/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-api/generator-commons@workspace:generators/commons"
+  resolution: "@fern-api/generator-commons@workspace:packages/generators/commons"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"

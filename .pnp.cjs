@@ -16,14 +16,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:."\
       },\
       {\
-        "name": "@fern-api/generator-cli",\
-        "reference": "workspace:generators/cli"\
-      },\
-      {\
-        "name": "@fern-api/generator-commons",\
-        "reference": "workspace:generators/commons"\
-      },\
-      {\
         "name": "@fern-api/openapi-generator",\
         "reference": "workspace:generators/openapi"\
       },\
@@ -192,6 +184,14 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:packages/core"\
       },\
       {\
+        "name": "@fern-api/generator-cli",\
+        "reference": "workspace:packages/generators/cli"\
+      },\
+      {\
+        "name": "@fern-api/generator-commons",\
+        "reference": "workspace:packages/generators/commons"\
+      },\
+      {\
         "name": "@fern-api/scripts",\
         "reference": "workspace:packages/scripts"\
       },\
@@ -218,8 +218,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/fern-ruby-model", ["workspace:generators/ruby/model"]],\
       ["@fern-api/fern-ruby-sdk", ["workspace:generators/ruby/sdk"]],\
       ["@fern-api/fs-utils", ["workspace:packages/commons/fs-utils"]],\
-      ["@fern-api/generator-cli", ["workspace:generators/cli"]],\
-      ["@fern-api/generator-commons", ["workspace:generators/commons"]],\
+      ["@fern-api/generator-cli", ["workspace:packages/generators/cli"]],\
+      ["@fern-api/generator-commons", ["workspace:packages/generators/commons"]],\
       ["@fern-api/generators-configuration", ["workspace:packages/cli/config-management/generators-configuration"]],\
       ["@fern-api/init", ["workspace:packages/cli/init"]],\
       ["@fern-api/ir-generator", ["workspace:packages/cli/generation/ir-generator"]],\
@@ -4044,8 +4044,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/fern-ruby-model", "workspace:generators/ruby/model"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-cli", "workspace:generators/cli"],\
-            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/generator-cli", "workspace:packages/generators/cli"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.472"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3277"],\
             ["@types/jest", "npm:29.0.3"],\
@@ -4110,12 +4110,12 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/generator-cli", [\
-        ["workspace:generators/cli", {\
-          "packageLocation": "./generators/cli/",\
+        ["workspace:packages/generators/cli", {\
+          "packageLocation": "./packages/generators/cli/",\
           "packageDependencies": [\
-            ["@fern-api/generator-cli", "workspace:generators/cli"],\
+            ["@fern-api/generator-cli", "workspace:packages/generators/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.472"],\
@@ -4134,10 +4134,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-api/generator-commons", [\
-        ["workspace:generators/commons", {\
-          "packageLocation": "./generators/commons/",\
+        ["workspace:packages/generators/commons", {\
+          "packageLocation": "./packages/generators/commons/",\
           "packageDependencies": [\
-            ["@fern-api/generator-commons", "workspace:generators/commons"],\
+            ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\

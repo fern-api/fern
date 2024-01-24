@@ -3,8 +3,8 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
-    { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/generators/cli" },
-    { "path": "../../../packages/generators/commons" }
+    { "path": "../../cli/logger" },
+    { "path": "../../commons/fs-utils" },
+    { "path": "../../commons/logging-execa" }
   ]
 }

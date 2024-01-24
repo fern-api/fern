@@ -1,5 +1,5 @@
 # syntax = edrevo/dockerfile-plus
-INCLUDE+ generators/docker/Dockerfile.base
+INCLUDE+ packages/generators/docker/Dockerfile.base
 
 COPY generators/ruby/model/dist /dist
 
