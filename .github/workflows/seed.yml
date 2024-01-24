@@ -22,6 +22,7 @@ jobs:
             ruby: 'packages/generators/ruby/**'
             openapi: 'generators/openapi/**'
             python: 'generators/python/**'
+            postman: 'generators/postman/**'
 
   ruby-model:
     runs-on: ubuntu-latest
@@ -48,7 +49,7 @@ jobs:
   pydantic-model:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'python') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -75,7 +76,7 @@ jobs:
   python-sdk:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'python') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -102,7 +103,7 @@ jobs:
   fastapi:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'python') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -129,7 +130,7 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     needs: changes
-    if: ${{ contains(needs.changes.outputs.generators_changed, 'ruby') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'openapi') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -142,6 +143,26 @@ jobs:
       - name: Seed Test
         run: |
           yarn seed:local test --workspace openapi --parallel 8
+
+      - name: Ensure no changes to git-tracked files
+        run: git --no-pager diff --exit-code
+
+  postman:
+    runs-on: ubuntu-latest
+    needs: changes
+    if: ${{ contains(needs.changes.outputs.generators_changed, 'postman') }} || ${{ contains(needs.changes.outputs.generators_changed, 'seed') }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+
+      - name: Yarn Install
+        run: yarn install
+
+      - name: Seed Test
+        run: |
+          yarn seed:local test --workspace postman --parallel 8
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code

@@ -1,5 +1,4 @@
-import { validateSchema } from "@fern-api/config-management-commons";
-import { GeneratorConfig, GithubOutputMode } from "@fern-fern/generator-exec-sdk/resources";
+import { GeneratorConfig, GithubOutputMode } from "@fern-fern/generator-exec-sdk/api";
 import endent from "endent";
 import { mkdir, writeFile } from "fs/promises";
 import path from "path";
@@ -7,25 +6,26 @@ import { PostmanGeneratorConfigSchema } from "./config/schemas/PostmanGeneratorC
 import { getCollectionOutputFilename } from "./writePostmanCollection";
 
 export async function writePostmanGithubWorkflows({
-  config,
-  githubOutputMode,
+    config,
+    githubOutputMode
 }: {
-  config: GeneratorConfig;
-  githubOutputMode: GithubOutputMode;
+    config: GeneratorConfig;
+    githubOutputMode: GithubOutputMode;
 }): Promise<void> {
-  if (githubOutputMode.publishInfo == null) {
-    return;
-  }
-  if (githubOutputMode.publishInfo.type != "postman") {
-    throw new Error(
-      `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
-    );
-  }
+    if (githubOutputMode.publishInfo == null) {
+        return;
+    }
+    if (githubOutputMode.publishInfo.type != "postman") {
+        throw new Error(
+            `Expected to receive npm publish info but received ${githubOutputMode.publishInfo.type} instead`
+        );
+    }
 
-  const postmanGeneratorConfig = await validateSchema(PostmanGeneratorConfigSchema, config.customConfig);
-  const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const postmanGeneratorConfig = config.customConfig as any as PostmanGeneratorConfigSchema;
+    const collectionOutputFilename = getCollectionOutputFilename(postmanGeneratorConfig);
 
-  const workflowYaml = endent`name: ci
+    const workflowYaml = endent`name: ci
     on: [push]
     
     jobs:
@@ -44,7 +44,7 @@ export async function writePostmanGithubWorkflows({
               api-key: \${{ secrets.${githubOutputMode.publishInfo.apiKeyEnvironmentVariable} }}
               workspace-id: \${{ secrets.${githubOutputMode.publishInfo.workspaceIdEnvironmentVariable} }}
               collection-path: ${collectionOutputFilename}`;
-  const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
-  await mkdir(githubWorkflowsDir, { recursive: true });
-  await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
+    const githubWorkflowsDir = path.join(config.output.path, ".github", "workflows");
+    await mkdir(githubWorkflowsDir, { recursive: true });
+    await writeFile(`${githubWorkflowsDir}/ci.yml`, workflowYaml);
 }

@@ -1,13 +1,1 @@
-{
-  "ignores": [
-    "@types/jest",
-    "@types/node",
-    "@fern-typescript/testing-utils",
-    "lint-staged",
-    "webpack",
-    "webpack-cli",
-    "ts-loader", 
-    "simple-progress-webpack-plugin"
-  ],
-  "ignore-patterns": ["lib"]
-}
+{"ignores":["@types/jest","@types/node","esbuild","@yarnpkg/esbuild-plugin-pnp","webpack","webpack-cli","ts-loader","@fern-fern/ir-sdk"],"ignore-patterns":["lib","dist","docker/bundle.js"]}

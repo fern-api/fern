@@ -1,9 +1,0 @@
-name: any-auth
-auth:
-  any:
-    - basic
-    - bearer
-    - HeaderAuth
-auth-schemes:
-  HeaderAuth:
-    header: My-Header
