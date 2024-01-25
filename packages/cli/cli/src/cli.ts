@@ -344,10 +344,10 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     default: false,
                     description: "Prevent auto-deletion of the Docker containers."
                 })
-                .option("irVersion", {
+                .option("irVersionOverride", {
                     string: true,
                     default: undefined,
-                    description: "The version for the intermediate representation (IR)"
+                    description: "The version for the intermediate representation (IR) to override"
                 }),
         async (argv) => {
             if (argv.api != null && argv.docs != null) {
@@ -364,7 +364,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    irVersion: argv.irVersion
+                    irVersion: argv.irVersionOverride
                 });
             } else if (argv.docs != null) {
                 if (argv.group != null) {
@@ -399,7 +399,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
                     shouldLogS3Url: argv.printZipUrl,
                     keepDocker: argv.keepDocker,
                     useLocalDocker: argv.local,
-                    irVersion: argv.irVersion
+                    irVersion: argv.irVersionOverride
                 });
             }
         }
