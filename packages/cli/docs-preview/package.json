@@ -29,13 +29,13 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/docs-configuration": "workspace:*",
-    "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
+    "@fern-api/fdr-sdk": "0.46.1-5-g04b7a07",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/ir-generator": "workspace:*",
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/docs-config": "0.0.53",
+    "@fern-fern/docs-config": "0.0.65",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "uuid": "^9.0.1"

@@ -286,7 +286,7 @@ async function convertDocsConfiguration({
                     : undefined
         },
         navbarLinks: parsedDocsConfig.navbarLinks,
-        typography: convertDocsTypographyConfiguration({
+        typographyV2: convertDocsTypographyConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
             parsedDocsConfig,
             uploadUrls,
@@ -484,11 +484,11 @@ function convertDocsTypographyConfiguration({
     parsedDocsConfig: ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): DocsV1Write.DocsTypographyConfig | undefined {
+}): DocsV1Write.DocsTypographyConfigV2 | undefined {
     if (typographyConfiguration == null) {
         return;
     }
-    const result: DocsV1Write.DocsTypographyConfig = {
+    return {
         headingsFont: convertFont({
             font: typographyConfiguration.headingsFont,
             context,
@@ -511,7 +511,6 @@ function convertDocsTypographyConfiguration({
             uploadUrls
         })
     };
-    return result;
 }
 
 function convertFont({
@@ -526,12 +525,16 @@ function convertFont({
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
     label: string;
-}): DocsV1Write.FontConfig | undefined {
+}): DocsV1Write.FontConfigV2 | undefined {
     if (font == null) {
         return;
     }
 
-    const filepath = convertAbsoluteFilepathToFdrFilepath(font.absolutePath, parsedDocsConfig);
+    if (font.variants[0] == null) {
+        return;
+    }
+
+    const filepath = convertAbsoluteFilepathToFdrFilepath(font.variants[0].absolutePath, parsedDocsConfig);
 
     const file = uploadUrls[filepath];
     if (file == null) {
@@ -539,8 +542,23 @@ function convertFont({
     }
 
     return {
+        type: "custom",
         name: font.name ?? `font:${label}:${file.fileId}`,
-        fontFile: file.fileId
+        variants: font.variants.map((variant) => {
+            const filepath = convertAbsoluteFilepathToFdrFilepath(variant.absolutePath, parsedDocsConfig);
+            const file = uploadUrls[filepath];
+            if (file == null) {
+                return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
+            }
+            return {
+                fontFile: file.fileId,
+                weight: variant.weight,
+                style: variant.style != null ? [variant.style] : undefined
+            };
+        }),
+        display: font.display,
+        fallback: font.fallback,
+        fontVariationSettings: font.fontVariationSettings
     };
 }
 
@@ -705,15 +723,17 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 
     const typographyConfiguration = parsedDocsConfig.typography;
 
-    if (typographyConfiguration?.headingsFont != null) {
-        filepaths.push(typographyConfiguration.headingsFont.absolutePath);
-    }
-    if (typographyConfiguration?.bodyFont != null) {
-        filepaths.push(typographyConfiguration.bodyFont.absolutePath);
-    }
-    if (typographyConfiguration?.codeFont != null) {
-        filepaths.push(typographyConfiguration.codeFont.absolutePath);
-    }
+    typographyConfiguration?.headingsFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
+
+    typographyConfiguration?.bodyFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
+
+    typographyConfiguration?.codeFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
 
     return filepaths;
 }

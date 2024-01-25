@@ -113,9 +113,9 @@ types:
 
   DocsTypographyConfig:
     properties:
-      headingsFont: optional<FontConfigUnion>
-      bodyFont: optional<FontConfigUnion>
-      codeFont: optional<FontConfigUnion>
+      headingsFont: optional<FontConfig>
+      bodyFont: optional<FontConfig>
+      codeFont: optional<FontConfig>
 
   LayoutConfig:
     properties:
@@ -160,13 +160,13 @@ types:
           - `{number}rem`
           - `{number}px`
 
-      "searchbar-position":
+      "searchbar-placement":
         type: optional<SidebarOrHeaderPlacement>
         docs: |
           Sets the placement of the searchbar.
           If `searchbar-position` is not set, the default value is `sidebar`.
 
-      "tabs-position":
+      "tabs-placement":
         type: optional<SidebarOrHeaderPlacement>
         docs: |
           Set the placement of the tabs.
@@ -177,32 +177,67 @@ types:
       - header
       - sidebar
 
-  FontConfigUnion:
-    discriminated: false
-    union:
-      - FontConfig
-      - list<FontConfig>
-
   FontConfig:
     properties:
-      path:
-        type: FontConfigPath
-        docs: The relative path of the font file.
       name:
         type: optional<string>
         docs: |
           If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
+      path:
+        type: optional<string>
+        docs: The relative path of the font file. To define multiple weight and style varations of the same font, use `paths` instead.
       weight:
         type: optional<string>
         docs: |
-          If the `weight` is not supplied, Fern will default it to `100 900`.
+          @default: `100 900`.
+      style:
+        type: optional<FontStyle>
+        docs: |
+          @default: `normal`.
+      paths:
+        type: optional<list<FontConfigPath>>
+        docs: |
+          Use this instead of `path` if you want to specify multiple font files for different font weights and styles.
+      display:
+        type: optional<FontDisplay>
+        docs: |
+          @default: `swap`.
+      fallback:
+        type: optional<list<string>>
+        docs: |
+          Define fallback fonts in case the custom font fails to load.
       "font-variation-settings": optional<string>
+
+  FontStyle:
+    enum:
+      - normal
+      - italic
+
+  FontDisplay:
+    enum:
+      - auto
+      - block
+      - swap
+      - fallback
+      - optional
 
   FontConfigPath:
     discriminated: false
     union:
       - string
-      - list<string>
+      - FontConfigVariant
+
+  FontConfigVariant:
+    properties:
+      path: string
+      weight:
+        type: optional<string>
+        docs: |
+          @default: `100 900`.
+      style:
+        type: optional<FontStyle>
+        docs: |
+          @default: `normal`.
 
   PageConfiguration:
     properties:

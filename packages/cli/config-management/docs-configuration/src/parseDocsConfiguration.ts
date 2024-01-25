@@ -19,6 +19,7 @@ import {
     UntabbedDocsNavigation,
     VersionInfo
 } from "./ParsedDocsConfiguration";
+
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
@@ -41,7 +42,8 @@ export async function parseDocsConfiguration({
         title,
         typography,
         tabs,
-        versions
+        versions,
+        layout
     } = rawDocsConfiguration;
     const convertedColors = convertColorsConfiguration(colors ?? {}, context);
 
@@ -133,8 +135,52 @@ export async function parseDocsConfiguration({
                       rawTypography: typography,
                       absoluteFilepathToDocsConfig
                   })
-                : undefined
+                : undefined,
+        layout: convert(layout)
     };
+}
+
+function convert(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfiguration["layout"] {
+    if (layout == null) {
+        return undefined;
+    }
+
+    return {
+        pageWidth:
+            layout.pageWidth?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout.pageWidth),
+        contentWidth: parseSizeConfig(layout.contentWidth),
+        sidebarWidth: parseSizeConfig(layout.sidebarWidth),
+        headerHeight: parseSizeConfig(layout.headerHeight),
+
+        sidebarPosition: undefined,
+        tabsPosition: undefined
+    };
+}
+
+function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConfig | undefined {
+    if (sizeAsString == null) {
+        return undefined;
+    }
+
+    const sizeAsStringClean = sizeAsString.trim().toLowerCase();
+
+    const pxMatch = sizeAsStringClean.match(/^(\d+)px$/);
+    if (pxMatch != null && pxMatch[1] != null) {
+        return {
+            type: "px",
+            value: parseFloat(pxMatch[1])
+        };
+    }
+
+    const remMatch = sizeAsStringClean.match(/^(\d+)rem$/);
+    if (remMatch != null && remMatch[1] != null) {
+        return {
+            type: "rem",
+            value: parseFloat(remMatch[1])
+        };
+    }
+
+    return undefined;
 }
 
 async function getNavigationConfiguration({
@@ -225,11 +271,67 @@ async function convertFontConfig({
 }): Promise<FontConfig> {
     return {
         name: rawFontConfig.name,
-        absolutePath: await resolveFilepath({
-            absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawFontConfig.path
-        })
+        variants: await constructVariants(rawFontConfig, absoluteFilepathToDocsConfig),
+        display: rawFontConfig.display,
+        fallback: rawFontConfig.fallback,
+        fontVariationSettings: rawFontConfig.fontVariationSettings
     };
+}
+
+function constructVariants(
+    rawFontConfig: RawDocs.FontConfig,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<FontConfig["variants"]> {
+    const variants: RawDocs.FontConfigVariant[] = [];
+
+    if (rawFontConfig.path != null) {
+        variants.push({
+            path: rawFontConfig.path,
+            weight: rawFontConfig.weight,
+            style: rawFontConfig.style
+        });
+    }
+
+    rawFontConfig.paths?.forEach((rawVariant) => {
+        if (typeof rawVariant === "string") {
+            variants.push({
+                path: rawVariant,
+                weight: rawFontConfig.weight,
+                style: rawFontConfig.style
+            });
+        } else {
+            variants.push({
+                path: rawVariant.path,
+                weight: rawVariant.weight ?? rawFontConfig.weight,
+                style: rawVariant.style ?? rawFontConfig.style
+            });
+        }
+    });
+
+    return Promise.all(
+        variants.map(async (rawVariant) => ({
+            absolutePath: await resolveFilepath({
+                absolutePath: absoluteFilepathToDocsConfig,
+                rawUnresolvedFilepath: rawVariant.path
+            }),
+            weight: parseWeight(rawVariant.weight),
+            style: rawVariant.style
+        }))
+    );
+}
+
+function parseWeight(weight: string | undefined): string[] | undefined {
+    if (weight == null) {
+        return undefined;
+    }
+
+    const weights = weight
+        .split(/\D+/)
+        .filter(
+            (item) => item !== "" && ["100", "200", "300", "400", "500", "600", "700", "800", "900"].includes(item)
+        );
+
+    return weights;
 }
 
 async function convertNavigationConfiguration({
