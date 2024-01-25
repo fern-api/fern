@@ -1951,6 +1951,7 @@ __metadata:
     "@fern-api/login": "workspace:*"
     "@fern-api/manage-generator": "workspace:*"
     "@fern-api/mock": "workspace:*"
+    "@fern-api/openapi-ir-to-fern": "workspace:*"
     "@fern-api/posthog-manager": "workspace:*"
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/project-loader": "workspace:*"
