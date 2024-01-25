@@ -261,17 +261,27 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Put Version in Env
+      - name: Build CLI
+        working-directory: ./generators/ruby/model
+        run: yarn dist:cli
+
+      - name: Print Version
         run: |
-          projectVersion=$(cat generators/ruby/sdk/VERSION)
+          projectVersion=$(cat generators/ruby/model/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-      - name: Build and push Ruby Model Docker image
-        run: |
-          projectVersion=${{ env.VERSION }}
-          yarn workspace @fern-api/fern-ruby-model dockerTagVersion "$projectVersion"
-          docker push fernapi/fern-ruby-model:"$projectVersion"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/ruby/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-ruby-model:${{env.VERSION}}
 
   ruby-sdk:
     runs-on: ubuntu-latest
@@ -292,14 +302,24 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
-      - name: Put Version in Env
+      - name: Build CLI
+        working-directory: ./generators/ruby/sdk
+        run: yarn dist:cli
+
+      - name: Print Version
         run: |
           projectVersion=$(cat generators/ruby/sdk/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
 
-      - name: Build and push Ruby SDK Docker image
-        run: |
-          projectVersion=${{ env.VERSION }}
-          yarn workspace @fern-api/fern-ruby-sdk dockerTagVersion "$projectVersion"
-          docker push fernapi/fern-ruby-sdk:"$projectVersion"
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./generators/ruby/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-ruby-sdk:${{env.VERSION}}
