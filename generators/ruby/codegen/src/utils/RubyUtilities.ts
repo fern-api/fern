@@ -1,17 +1,56 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { DeclaredTypeName, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { camelCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
 import { ExternalDependency } from "../ast/ExternalDependency";
 import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
-import { TYPES_DIRECTORY } from "./RubyConstants";
+import { SERVICES_DIRECTORY, TYPES_DIRECTORY } from "./RubyConstants";
+
+export function getGemName(
+    intermediateRepresentation: IntermediateRepresentation,
+    config: FernGeneratorExec.GeneratorConfig,
+    clientClassName?: string,
+    gemName?: string
+): string {
+    return gemName ?? getClientName(intermediateRepresentation, config, clientClassName);
+}
+
+export function getClientName(
+    intermediateRepresentation: IntermediateRepresentation,
+    config: FernGeneratorExec.GeneratorConfig,
+    clientClassName?: string
+): string {
+    return (
+        clientClassName ??
+        upperFirst(camelCase(config.organization)) +
+            upperFirst(camelCase(intermediateRepresentation.apiName.camelCase.safeName)) +
+            "Client"
+    );
+}
 
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
     return [
         ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
         TYPES_DIRECTORY,
+        declaredTypeName.name.snakeCase.safeName
+    ].join("/");
+}
+
+export function getLocationForServiceDeclaration(declaredTypeName: DeclaredTypeName): string {
+    return [
+        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
+        SERVICES_DIRECTORY,
+        declaredTypeName.name.snakeCase.safeName
+    ].join("/");
+}
+
+export function getLocationForPackageDeclaration(declaredTypeName: DeclaredTypeName): string {
+    return [
+        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
         declaredTypeName.name.snakeCase.safeName
     ].join("/");
 }

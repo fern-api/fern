@@ -10,12 +10,13 @@ import {
     generateGemspec,
     generateGitignore,
     generateReadme,
-    generateRubocopConfig
+    generateRubocopConfig,
+    getClientName,
+    getGemName
 } from "@fern-api/ruby-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
-import { camelCase, upperFirst } from "lodash-es";
 import { parseCustomConfig, RubySdkCustomConfig } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfig> {
@@ -25,20 +26,18 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         return parseCustomConfig(customConfig);
     }
 
-    private getGemName(config: FernGeneratorExec.GeneratorConfig, customConfig: RubySdkCustomConfig): string {
-        return customConfig.gemName ?? this.getClientName(config, customConfig);
-    }
-
-    private getClientName(config: FernGeneratorExec.GeneratorConfig, customConfig: RubySdkCustomConfig): string {
-        return customConfig.clientClassName ?? upperFirst(camelCase(config.organization)) + "Client";
-    }
-
     private generateRepositoryBoilerPlate(
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig
+        customConfig: RubySdkCustomConfig,
+        intermediateRepresentation: IntermediateRepresentation
     ) {
-        const gemName = this.getGemName(config, customConfig);
-        const clientName = this.getClientName(config, customConfig);
+        const gemName = getGemName(
+            intermediateRepresentation,
+            config,
+            customConfig.clientClassName,
+            customConfig.gemName
+        );
+        const clientName = getClientName(intermediateRepresentation, config, customConfig.clientClassName);
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateGitignore());
@@ -59,7 +58,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            RelativeFilePath.of(this.getClientName(config, customConfig)),
+            RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
             generatorContext,
             intermediateRepresentation
         ).generateFiles();
@@ -73,7 +72,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            RelativeFilePath.of(this.getClientName(config, customConfig)),
+            RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
             generatorContext,
             intermediateRepresentation
         ).generateFiles();
@@ -87,7 +86,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         generatorContext.logger.debug("Generating boilerplate");
-        this.generateRepositoryBoilerPlate(config, customConfig);
+        this.generateRepositoryBoilerPlate(config, customConfig, intermediateRepresentation);
         generatorContext.logger.debug("Generating types");
         this.generateTypes(config, customConfig, generatorContext, intermediateRepresentation);
         generatorContext.logger.debug("Generating clients");
