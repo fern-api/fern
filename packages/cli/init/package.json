@@ -36,7 +36,7 @@
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-formatter": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/docs-config": "0.0.66",
+    "@fern-fern/docs-config": "0.0.70",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "fs-extra": "^11.1.1",

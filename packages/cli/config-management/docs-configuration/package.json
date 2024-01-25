@@ -32,7 +32,7 @@
     "@fern-api/fdr-sdk": "0.46.1-7-ge796a1c",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.66",
+    "@fern-fern/docs-config": "0.0.70",
     "js-yaml": "^4.1.0"
   },
   "devDependencies": {

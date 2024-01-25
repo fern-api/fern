@@ -203,62 +203,9 @@ function createEditThisPageUrl(
         return undefined;
     }
 
-    const githubExtracted = extractOrgRepoAndBranchFromGithubUrl(editThisPage.github, undefined);
+    const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
 
-    if (githubExtracted == null) {
-        return undefined;
-    }
-
-    const { org, repo, branch = "main" } = githubExtracted;
-
-    return `https://github.com/${org}/${repo}/blob/${branch}/fern/${pageFilepath}`;
-}
-
-function extractOrgRepoAndBranchFromGithubUrl(
-    githubUrl: string,
-    branch: string | undefined
-): { org: string; repo: string; branch?: string } | undefined {
-    // githubUrl could be in any of the following formats:
-    // {org}/{repo}
-    // https://github.com/{org}/{repo}
-    // https://github.com/{org}/{repo}/blob/{branch}/{path}
-    // https://github.com/{org}/{repo}/
-    // github.com/{org}/{repo}
-    // www.github.com/{org}/{repo}
-
-    githubUrl = githubUrl.trim();
-
-    // next check if githubUrl starts with github.com or https://github.com or https://www.github.com
-    if (githubUrl.startsWith("https://")) {
-        githubUrl = githubUrl.slice("https://".length);
-    }
-
-    if (githubUrl.startsWith("www.")) {
-        githubUrl = githubUrl.slice("www.".length);
-    }
-
-    if (githubUrl.startsWith("github.com/")) {
-        githubUrl = githubUrl.slice("github.com/".length);
-    }
-
-    // first check if githubUrl is just {org}/{repo}
-    const githubUrlParts = githubUrl.split("/");
-    if (
-        githubUrlParts.length >= 2 &&
-        githubUrlParts[0] != null &&
-        githubUrlParts[1] != null &&
-        githubUrlParts[0].trim().length > 0 &&
-        githubUrlParts[1].trim().length > 0 &&
-        !githubUrlParts[1].includes("github.com")
-    ) {
-        return {
-            org: githubUrlParts[0],
-            repo: githubUrlParts[1],
-            branch: branch ?? (githubUrlParts[2] === "blob" ? githubUrlParts[3] : undefined)
-        };
-    }
-
-    return;
+    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
 }
 
 async function convertDocsConfiguration({
@@ -820,5 +767,5 @@ function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsed
 }
 
 function wrapWithHttps(url: string): string {
-    return url.startsWith("https://") ? url : `https://${url}`;
+    return url.startsWith("https://") || url.startsWith("http://") ? url : `https://${url}`;
 }

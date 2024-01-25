@@ -35,7 +35,7 @@
     "@fern-api/register": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/docs-config": "0.0.66",
+    "@fern-fern/docs-config": "0.0.70",
     "cors": "^2.8.5",
     "express": "^4.18.2",
     "uuid": "^9.0.1"
