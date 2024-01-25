@@ -41,27 +41,27 @@ types:
   AudiencesConfig:
     discriminated: false
     docs: |
-      The `audiences` config is used to restrict the entities that are generated in the docs site.
-      If `audiences` is not set, all entities will be included in the docs site.
+      Restricts the API endpoints and webhooks that are included in the docs site.
+      If `audiences` is not set, only entities marked as "external" will be included.
     union:
       - string
       - list<string>
-      - AudiencesRuleConfig
+      # - AudiencesRuleConfig
 
-  AudiencesRuleConfig:
-    properties:
-      include:
-        type: optional<list<string>>
-        docs: |
-          If `include` is set, only entities that match the given audiences will be included in the site.
-      exclude:
-        type: optional<list<string>>
-        docs: |
-          If `exclude` is set, entities that match the given audiences will be excluded from the site.
-      exclude-no-audience:
-        type: optional<boolean>
-        docs: |
-          If `exclude-no-audience` is set to true, entities that do not have an audience will be excluded from the site.
+  # AudiencesRuleConfig:
+  #   properties:
+  #     include:
+  #       type: optional<list<string>>
+  #       docs: |
+  #         If `include` is set, only entities that match the given audiences will be included in the site.
+  #     exclude:
+  #       type: optional<list<string>>
+  #       docs: |
+  #         If `exclude` is set, entities that match the given audiences will be excluded from the site.
+  #     exclude-no-audience:
+  #       type: optional<boolean>
+  #       docs: |
+  #         If `exclude-no-audience` is set to true, entities that do not have an audience will be excluded from the site.
 
   VersionConfig:
     properties:
