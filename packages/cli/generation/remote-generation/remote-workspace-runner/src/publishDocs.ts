@@ -16,6 +16,7 @@ import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernDocsConfig } from "@fern-fern/docs-config";
 import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import axios from "axios";
 import chalk from "chalk";
@@ -32,7 +33,8 @@ export async function publishDocs({
     fernWorkspaces,
     context,
     version,
-    preview
+    preview,
+    editThisPage
 }: {
     token: FernToken;
     organization: string;
@@ -43,6 +45,9 @@ export async function publishDocs({
     context: TaskContext;
     version: string | undefined;
     preview: boolean;
+    // TODO: implement audience support in generateIR
+    audiences: FernDocsConfig.AudiencesConfig | undefined;
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
 
@@ -121,7 +126,8 @@ export async function publishDocs({
         context,
         token,
         uploadUrls,
-        version
+        version,
+        editThisPage
     });
     context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
@@ -152,7 +158,8 @@ async function constructRegisterDocsRequest({
     context,
     token,
     uploadUrls,
-    version
+    version,
+    editThisPage
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     organization: string;
@@ -161,13 +168,17 @@ async function constructRegisterDocsRequest({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
     return {
         docsDefinition: {
             pages: entries(parsedDocsConfig.pages).reduce(
                 (pages, [pageFilepath, pageContents]) => ({
                     ...pages,
-                    [pageFilepath]: { markdown: pageContents }
+                    [pageFilepath]: {
+                        markdown: pageContents,
+                        editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
+                    }
                 }),
                 {}
             ),
@@ -182,6 +193,72 @@ async function constructRegisterDocsRequest({
             })
         }
     };
+}
+
+function createEditThisPageUrl(
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined,
+    pageFilepath: string
+): string | undefined {
+    if (editThisPage?.github == null) {
+        return undefined;
+    }
+
+    const githubExtracted = extractOrgRepoAndBranchFromGithubUrl(editThisPage.github, undefined);
+
+    if (githubExtracted == null) {
+        return undefined;
+    }
+
+    const { org, repo, branch = "main" } = githubExtracted;
+
+    return `https://github.com/${org}/${repo}/blob/${branch}/fern/${pageFilepath}`;
+}
+
+function extractOrgRepoAndBranchFromGithubUrl(
+    githubUrl: string,
+    branch: string | undefined
+): { org: string; repo: string; branch?: string } | undefined {
+    // githubUrl could be in any of the following formats:
+    // {org}/{repo}
+    // https://github.com/{org}/{repo}
+    // https://github.com/{org}/{repo}/blob/{branch}/{path}
+    // https://github.com/{org}/{repo}/
+    // github.com/{org}/{repo}
+    // www.github.com/{org}/{repo}
+
+    githubUrl = githubUrl.trim();
+
+    // next check if githubUrl starts with github.com or https://github.com or https://www.github.com
+    if (githubUrl.startsWith("https://")) {
+        githubUrl = githubUrl.slice("https://".length);
+    }
+
+    if (githubUrl.startsWith("www.")) {
+        githubUrl = githubUrl.slice("www.".length);
+    }
+
+    if (githubUrl.startsWith("github.com/")) {
+        githubUrl = githubUrl.slice("github.com/".length);
+    }
+
+    // first check if githubUrl is just {org}/{repo}
+    const githubUrlParts = githubUrl.split("/");
+    if (
+        githubUrlParts.length >= 2 &&
+        githubUrlParts[0] != null &&
+        githubUrlParts[1] != null &&
+        githubUrlParts[0].trim().length > 0 &&
+        githubUrlParts[1].trim().length > 0 &&
+        !githubUrlParts[1].includes("github.com")
+    ) {
+        return {
+            org: githubUrlParts[0],
+            repo: githubUrlParts[1],
+            branch: branch ?? (githubUrlParts[2] === "blob" ? githubUrlParts[3] : undefined)
+        };
+    }
+
+    return;
 }
 
 async function convertDocsConfiguration({

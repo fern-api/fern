@@ -152,8 +152,14 @@ function convert(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfigurat
         sidebarWidth: parseSizeConfig(layout.sidebarWidth),
         headerHeight: parseSizeConfig(layout.headerHeight),
 
-        sidebarPosition: undefined,
-        tabsPosition: undefined
+        searchbarPlacement:
+            layout.searchbarPlacement === "header"
+                ? DocsV1Write.SidebarOrHeaderPlacement.Header
+                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+        tabsPlacement:
+            layout.tabsPlacement === "header"
+                ? DocsV1Write.SidebarOrHeaderPlacement.Header
+                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar
     };
 }
 

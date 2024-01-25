@@ -38,7 +38,7 @@
     "@fern-api/semver-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/yaml-schema": "workspace:*",
-    "@fern-fern/docs-config": "0.0.65",
+    "@fern-fern/docs-config": "0.0.66",
     "@fern-fern/fiddle-sdk": "^0.0.386",
     "@fern-fern/openapi-ir-model": "0.0.152",
     "axios": "^0.27.2",

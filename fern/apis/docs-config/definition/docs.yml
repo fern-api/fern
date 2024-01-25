@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
 types:
   DocsConfiguration:
     properties:
@@ -19,7 +21,9 @@ types:
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
-      layout: optional<LayoutConfig>
+      layout:
+        type: optional<LayoutConfig>
+        availability: in-development
 
   TabId: string
 
@@ -32,11 +36,37 @@ types:
     properties:
       url: string
       "custom-domain": optional<string>
-      audiences: optional<AudiencesConfig>
+      audiences:
+        type: optional<AudiencesConfig>
+        availability: in-development
       private:
         type: optional<boolean>
         docs: |
           If `private` is set to true, Fern will protect the docs site with SSO.
+        availability: in-development
+      "edit-this-page":
+        type: optional<EditThisPageConfig>
+        docs: |
+          If `edit-this-page` is set, Fern will add an "Edit this page" link to the bottom of each page that links to the given GitHub repository.
+        availability: in-development
+
+  # this is a partial object in case we want to add more options in the future
+  EditThisPageConfig:
+    properties:
+      github: optional<GithubEditThisPageConfig>
+
+  GithubEditThisPageConfig:
+    properties:
+      host:
+        type: optional<string>
+        docs: |
+          @default: `github.com`
+      owner: string
+      repo: string
+      branch:
+        type: optional<string>
+        docs: |
+          @default: `main`
 
   AudiencesConfig:
     discriminated: false
@@ -190,23 +220,30 @@ types:
         type: optional<string>
         docs: |
           @default: `100 900`.
+        availability: in-development
       style:
         type: optional<FontStyle>
         docs: |
           @default: `normal`.
+        availability: in-development
       paths:
         type: optional<list<FontConfigPath>>
         docs: |
           Use this instead of `path` if you want to specify multiple font files for different font weights and styles.
+        availability: in-development
       display:
         type: optional<FontDisplay>
         docs: |
           @default: `swap`.
+        availability: in-development
       fallback:
         type: optional<list<string>>
         docs: |
           Define fallback fonts in case the custom font fails to load.
-      "font-variation-settings": optional<string>
+        availability: in-development
+      "font-variation-settings":
+        type: optional<string>
+        availability: in-development
 
   FontStyle:
     enum:

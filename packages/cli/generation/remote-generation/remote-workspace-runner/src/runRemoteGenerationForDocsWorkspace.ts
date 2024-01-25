@@ -39,7 +39,9 @@ export async function runRemoteGenerationForDocsWorkspace({
                 context,
                 fernWorkspaces,
                 version: "",
-                preview
+                preview,
+                audiences: instance.audiences,
+                editThisPage: instance.editThisPage
             });
         });
         return;
@@ -67,7 +69,9 @@ export async function runRemoteGenerationForDocsWorkspace({
             context,
             fernWorkspaces,
             version: "",
-            preview
+            preview,
+            audiences: maybeInstance.audiences,
+            editThisPage: maybeInstance.editThisPage
         });
     });
     return;
