@@ -19,6 +19,7 @@ types:
       colors: optional<ColorsConfiguration>
       "navbar-links": optional<list<NavbarLink>>
       typography: optional<DocsTypographyConfig>
+      layout: optional<LayoutConfig>
 
   TabId: string
 
@@ -31,6 +32,33 @@ types:
     properties:
       url: string
       "custom-domain": optional<string>
+      audiences: optional<AudiencesConfig>
+      private:
+        type: optional<boolean>
+        docs: |
+          If `private` is set to true, Fern will protect the docs site with SSO.
+
+  AudiencesConfig:
+    discriminated: false
+    docs: |
+      The `audiences` config is used to restrict the entities that are generated in the docs site.
+      If `audiences` is not set, all entities will be included in the docs site.
+    union:
+      - string
+      - list<string>
+      - AudiencesRuleConfig
+
+  AudiencesRuleConfig:
+    properties:
+      include:
+        type: optional<list<string>>
+        docs: |
+          If `include` is set, only entities that match the given audiences will be included in the site.
+      exclude:
+        type: optional<list<string>>
+        docs: |
+          If `exclude` is set, entities that match the given audiences will be excluded from the site.
+      exclude-no-audience: optional<boolean>
 
   VersionConfig:
     properties:
@@ -85,6 +113,60 @@ types:
       headingsFont: optional<FontConfig>
       bodyFont: optional<FontConfig>
       codeFont: optional<FontConfig>
+
+  LayoutConfig:
+    properties:
+      pageWidth:
+        type: optional<string>
+        docs: |
+          Sets the maximum width of the docs layout, including the sidebar and content.
+          If `pageWidth` is not set, the default value is 88rem (1408px).
+
+          Valid options are:
+          - `{number}rem`
+          - `{number}px`
+          - `full` (100% of the viewport width)
+      contentWidth:
+        type: optional<string>
+        docs: |
+          Sets the maximum width of the markdown article content.
+          If `contentWidth` is not set, the default value is 44rem (704px).
+
+          Valid options are:
+          - `{number}rem`
+          - `{number}px`
+      sidebarWidth:
+        type: optional<string>
+        docs: |
+          Sets the width of the sidebar in desktop mode.
+          If `sidebarWidth` is not set, the default value is 18rem (288px).
+
+          Valid options are:
+          - `{number}rem`
+          - `{number}px`
+      headerHeight:
+        type: optional<string>
+        docs: |
+          Sets the height of the header.
+          If `headerHeight` is not set, the default value is 4rem (64px).
+
+          Valid options are:
+          - `{number}rem`
+          - `{number}px`
+      searchbarPosition:
+        type: SearchbarPosition
+        docs: |
+          The `searchbarPosition` config is used to set the position of the searchbar.
+          If `searchbarPosition` is not set, the default value is `sidebar`.
+
+          Valid options are:
+          - `header`
+          - `sidebar`
+
+  SearchbarPosition:
+    enum:
+      - header
+      - sidebar
 
   FontConfig:
     properties:
