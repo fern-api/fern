@@ -42,12 +42,7 @@ func (c *Client) Create(
 	}
 	endpointURL := baseURL + "/" + "users"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*user.User
 	if err := c.caller.Call(
@@ -81,12 +76,7 @@ func (c *Client) List(
 	}
 	endpointURL := baseURL + "/" + "users"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*user.User
 	if err := c.caller.Call(
@@ -120,12 +110,7 @@ func (c *Client) Update(
 	}
 	endpointURL := baseURL + "/" + "users/update"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response bool
 	if err := c.caller.Call(

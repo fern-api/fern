@@ -7,10 +7,8 @@ import (
 )
 
 type CreatePaymentRequest struct {
-	IdempotencyKey        string   `json:"-"`
-	IdempotencyExpiration int      `json:"-"`
-	Amount                int      `json:"amount"`
-	Currency              Currency `json:"currency,omitempty"`
+	Amount   int      `json:"amount"`
+	Currency Currency `json:"currency,omitempty"`
 }
 
 type Currency string

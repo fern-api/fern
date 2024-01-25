@@ -38,15 +38,15 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (c *RequestOptions) ToHeader() http.Header {
-	header := c.cloneHeader()
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
 	header.Set("X-API-Header", fmt.Sprintf("%v", "api header value"))
 	header.Set("X-API-Test", fmt.Sprintf("%v", false))
 	return header
 }
 
-func (c *RequestOptions) cloneHeader() http.Header {
-	headers := c.HTTPHeader.Clone()
+func (r *RequestOptions) cloneHeader() http.Header {
+	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/literal-headers/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")

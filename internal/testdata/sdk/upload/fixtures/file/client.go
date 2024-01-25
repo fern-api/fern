@@ -46,12 +46,7 @@ func (c *Client) Upload(
 	}
 	endpointURL := baseURL + "/" + "file/upload"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)
@@ -110,12 +105,7 @@ func (c *Client) UploadSimple(
 	}
 	endpointURL := baseURL + "/" + "file/upload-simple"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)
@@ -170,12 +160,7 @@ func (c *Client) UploadMultiple(
 	}
 	endpointURL := baseURL + "/" + "file/upload-multi"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	requestBuffer := bytes.NewBuffer(nil)

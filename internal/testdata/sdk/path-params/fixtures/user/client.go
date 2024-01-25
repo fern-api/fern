@@ -41,12 +41,7 @@ func (c *Client) GetUser(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
@@ -80,12 +75,7 @@ func (c *Client) GetUserV2(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info", userId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
@@ -120,12 +110,7 @@ func (c *Client) GetUserV3(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/get/%v/info/%v", userId, infoId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(

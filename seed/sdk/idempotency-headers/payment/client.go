@@ -30,9 +30,9 @@ func NewClient(opts ...option.RequestOption) *Client {
 func (c *Client) Create(
 	ctx context.Context,
 	request *fern.CreatePaymentRequest,
-	opts ...option.RequestOption,
+	opts ...option.IdempotentRequestOption,
 ) (uuid.UUID, error) {
-	options := core.NewRequestOptions(opts...)
+	options := core.NewIdempotentRequestOptions(opts...)
 
 	baseURL := ""
 	if c.baseURL != "" {
@@ -43,14 +43,7 @@ func (c *Client) Create(
 	}
 	endpointURL := baseURL + "/" + "payment"
 
-	headers := c.header.Clone()
-	headers.Add("Idempotency-Key", fmt.Sprintf("%v", request.IdempotencyKey))
-	headers.Add("Idempotency-Expiration", fmt.Sprintf("%v", request.IdempotencyExpiration))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response uuid.UUID
 	if err := c.caller.Call(
@@ -85,12 +78,7 @@ func (c *Client) Delete(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"payment/%v", paymentId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	if err := c.caller.Call(
 		ctx,

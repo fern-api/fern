@@ -42,15 +42,10 @@ func (c *Client) Get(
 	}
 	endpointURL := baseURL + "/" + "with-non-literal-headers"
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("nonLiteralEndpointHeader", fmt.Sprintf("%v", request.NonLiteralEndpointHeader))
 	headers.Add("literalEndpointHeader", fmt.Sprintf("%v", "endpoint header"))
 	headers.Add("trueEndpointHeader", fmt.Sprintf("%v", true))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	if err := c.caller.Call(
 		ctx,

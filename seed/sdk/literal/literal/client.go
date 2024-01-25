@@ -41,12 +41,7 @@ func (c *Client) CreateOptions(
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.CreateOptionsResponse
 	if err := c.caller.Call(
@@ -81,12 +76,7 @@ func (c *Client) GetOptions(
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.Options
 	if err := c.caller.Call(
@@ -121,12 +111,7 @@ func (c *Client) GetUndiscriminatedOptions(
 	}
 	endpointURL := baseURL + "/" + "options"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.UndiscriminatedOptions
 	if err := c.caller.Call(

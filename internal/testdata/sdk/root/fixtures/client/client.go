@@ -49,12 +49,7 @@ func (c *Client) GetFoo(
 	}
 	endpointURL := baseURL + "/" + "foo"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
@@ -88,12 +83,7 @@ func (c *Client) PostFoo(
 	}
 	endpointURL := baseURL + "/" + "foo"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -155,12 +145,7 @@ func (c *Client) GetFooFooId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -215,12 +200,7 @@ func (c *Client) PatchFooFooId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -289,12 +269,7 @@ func (c *Client) DeleteFooFooId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v", fooId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -346,12 +321,7 @@ func (c *Client) PostFooFooIdRun(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"foo/%v/run", fooId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -412,12 +382,7 @@ func (c *Client) PostFooBatchCreate(
 	}
 	endpointURL := baseURL + "/" + "foo/batch-create"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -493,12 +458,7 @@ func (c *Client) PostFooBatchDelete(
 	}
 	endpointURL := baseURL + "/" + "foo/batch-delete"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

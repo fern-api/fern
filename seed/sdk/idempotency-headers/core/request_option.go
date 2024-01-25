@@ -38,16 +38,16 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (c *RequestOptions) ToHeader() http.Header {
-	header := c.cloneHeader()
-	if c.Token != "" {
-		header.Set("Authorization", "Bearer "+c.Token)
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
 	}
 	return header
 }
 
-func (c *RequestOptions) cloneHeader() http.Header {
-	headers := c.HTTPHeader.Clone()
+func (r *RequestOptions) cloneHeader() http.Header {
+	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/idempotency-headers/fern")
 	headers.Set("X-Fern-SDK-Version", "0.0.1")
@@ -63,12 +63,20 @@ func (b *BaseURLOption) applyRequestOptions(opts *RequestOptions) {
 	opts.BaseURL = b.BaseURL
 }
 
+func (b *BaseURLOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.BaseURL = b.BaseURL
+}
+
 // HTTPClientOption implements the RequestOption interface.
 type HTTPClientOption struct {
 	HTTPClient HTTPClient
 }
 
 func (h *HTTPClientOption) applyRequestOptions(opts *RequestOptions) {
+	opts.HTTPClient = h.HTTPClient
+}
+
+func (h *HTTPClientOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.HTTPClient = h.HTTPClient
 }
 
@@ -81,11 +89,19 @@ func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
 }
 
+func (h *HTTPHeaderOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.HTTPHeader = h.HTTPHeader
+}
+
 // TokenOption implements the RequestOption interface.
 type TokenOption struct {
 	Token string
 }
 
 func (t *TokenOption) applyRequestOptions(opts *RequestOptions) {
+	opts.Token = t.Token
+}
+
+func (t *TokenOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.Token = t.Token
 }

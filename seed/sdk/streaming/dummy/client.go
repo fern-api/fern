@@ -41,12 +41,7 @@ func (c *Client) GenerateStream(
 	}
 	endpointURL := baseURL + "/" + "generate-stream"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	streamer := core.NewStreamer[v2.StreamResponse](c.caller)
 	return streamer.Stream(

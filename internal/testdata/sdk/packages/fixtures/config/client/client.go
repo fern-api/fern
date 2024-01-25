@@ -42,12 +42,7 @@ func (c *Client) CreateConfig(
 	}
 	endpointURL := baseURL + "/" + "config"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *config.Config
 	if err := c.caller.Call(
@@ -81,12 +76,7 @@ func (c *Client) GetConfig(
 	}
 	endpointURL := baseURL + "/" + "config"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*config.Config
 	if err := c.caller.Call(

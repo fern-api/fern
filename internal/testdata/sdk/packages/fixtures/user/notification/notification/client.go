@@ -42,12 +42,7 @@ func (c *Client) List(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/notifications", userId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*notification.Notification
 	if err := c.caller.Call(

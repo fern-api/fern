@@ -39,12 +39,7 @@ func (c *Client) GetAuth(
 	}
 	endpointURL := baseURL + "/" + "auth"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
@@ -77,12 +72,7 @@ func (c *Client) ListAuth(
 	}
 	endpointURL := baseURL + "/" + "auth/list"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []string
 	if err := c.caller.Call(
@@ -115,12 +105,7 @@ func (c *Client) ListPlants(
 	}
 	endpointURL := baseURL + "/" + "auth/plants"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []string
 	if err := c.caller.Call(

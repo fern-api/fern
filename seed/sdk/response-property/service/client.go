@@ -41,12 +41,7 @@ func (c *Client) GetMovie(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -81,12 +76,7 @@ func (c *Client) GetMovieDocs(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -121,12 +111,7 @@ func (c *Client) GetMovieName(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.StringResponse
 	if err := c.caller.Call(
@@ -161,12 +146,7 @@ func (c *Client) GetMovieMetadata(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -201,12 +181,7 @@ func (c *Client) GetOptionalMovie(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *fern.Response
 	if err := c.caller.Call(
@@ -242,12 +217,7 @@ func (c *Client) GetOptionalMovieDocs(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response fern.OptionalWithDocs
 	if err := c.caller.Call(
@@ -282,12 +252,7 @@ func (c *Client) GetOptionalMovieName(
 	}
 	endpointURL := baseURL + "/" + "movie"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response fern.OptionalStringResponse
 	if err := c.caller.Call(

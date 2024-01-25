@@ -52,13 +52,8 @@ func (c *Client) GetName(
 		endpointURL += "?" + queryParams.Encode()
 	}
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response string
 	if err := c.caller.Call(

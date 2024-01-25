@@ -44,12 +44,7 @@ func (c *Client) SetName(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
@@ -85,12 +80,7 @@ func (c *Client) SetNameV2(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v2", userId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(
@@ -126,13 +116,8 @@ func (c *Client) SetNameV3(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response *fixtures.SetNameRequestV3Body
 	if err := c.caller.Call(
@@ -168,13 +153,8 @@ func (c *Client) SetNameV3Optional(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v3-optional", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response *fixtures.SetNameRequestV3Body
 	if err := c.caller.Call(
@@ -211,13 +191,8 @@ func (c *Client) SetNameV4(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v4", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response string
 	if err := c.caller.Call(
@@ -253,13 +228,8 @@ func (c *Client) SetNameV5(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name-v5", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response string
 	if err := c.caller.Call(
@@ -304,12 +274,7 @@ func (c *Client) Update(
 		endpointURL += "?" + queryParams.Encode()
 	}
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response string
 	if err := c.caller.Call(

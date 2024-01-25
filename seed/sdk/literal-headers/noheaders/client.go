@@ -39,12 +39,7 @@ func (c *Client) Get(
 	}
 	endpointURL := baseURL + "/" + "no-headers"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	if err := c.caller.Call(
 		ctx,

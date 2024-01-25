@@ -43,12 +43,7 @@ func (c *Client) Download(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"file/%v/download", filename)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	response := bytes.NewBuffer(nil)
 	if err := c.caller.Call(

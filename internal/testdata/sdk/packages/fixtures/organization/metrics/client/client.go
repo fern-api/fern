@@ -47,12 +47,7 @@ func (c *Client) CreateMetricsTag(
 	}
 	endpointURL := baseURL + "/" + "metrics"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *metrics.Tag
 	if err := c.caller.Call(
@@ -87,12 +82,7 @@ func (c *Client) GetMetricsTag(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"metrics/%v", id)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response *metrics.Tag
 	if err := c.caller.Call(

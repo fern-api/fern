@@ -38,16 +38,16 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (c *RequestOptions) ToHeader() http.Header {
-	header := c.cloneHeader()
-	if c.Token != "" {
-		header.Set("Authorization", "Bearer "+c.Token)
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	if r.Token != "" {
+		header.Set("Authorization", "Bearer "+r.Token)
 	}
 	return header
 }
 
-func (c *RequestOptions) cloneHeader() http.Header {
-	headers := c.HTTPHeader.Clone()
+func (r *RequestOptions) cloneHeader() http.Header {
+	headers := r.HTTPHeader.Clone()
 	headers.Set("X-Fern-Language", "Go")
 	headers.Set("X-Fern-SDK-Name", "github.com/acme/acme-go")
 	headers.Set("X-Fern-SDK-Version", "v1.0.0")

@@ -269,7 +269,14 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			ir.Errors,
 			g.coordinator,
 		)
-		if err := writer.WriteRequestOptionsDefinition(ir.Auth, ir.Headers, ir.SdkConfig, g.config.ModuleConfig, g.config.Version); err != nil {
+		if err := writer.WriteRequestOptionsDefinition(
+			ir.Auth,
+			ir.Headers,
+			ir.IdempotencyHeaders,
+			ir.SdkConfig,
+			g.config.ModuleConfig,
+			g.config.Version,
+		); err != nil {
 			return nil, err
 		}
 		file, err := writer.File()
@@ -277,7 +284,6 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
-
 		if ir.Environments != nil {
 			// Generate the core environments file.
 			fileInfo, useCore := fileInfoForEnvironments(ir.ApiName, generatedNames, generatedPackages)
@@ -318,6 +324,42 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			return nil, err
 		}
 		files = append(files, file)
+		if len(ir.IdempotencyHeaders) > 0 {
+			fileInfo = fileInfoForIdempotentRequestOptionsDefinition()
+			writer = newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+				ir.Errors,
+				g.coordinator,
+			)
+			if err := writer.WriteIdempotentRequestOptionsDefinition(ir.IdempotencyHeaders); err != nil {
+				return nil, err
+			}
+			file, err = writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+			fileInfo = fileInfoForIdempotentRequestOptions()
+			writer = newFileWriter(
+				fileInfo.filename,
+				fileInfo.packageName,
+				g.config.ImportPath,
+				ir.Types,
+				ir.Errors,
+				g.coordinator,
+			)
+			if err := writer.WriteIdempotentRequestOptions(ir.IdempotencyHeaders); err != nil {
+				return nil, err
+			}
+			file, err = writer.File()
+			if err != nil {
+				return nil, err
+			}
+			files = append(files, file)
+		}
 		if g.config.IncludeLegacyClientOptions {
 			// Generate the legacy client option helper functions (for backwards compatibility).
 			fileInfo = fileInfoForLegacyClientOptions()
@@ -329,7 +371,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				ir.Errors,
 				g.coordinator,
 			)
-			if err = writer.WriteLegacyClientOptions(ir.Auth, ir.Headers); err != nil {
+			if err = writer.WriteLegacyClientOptions(ir.Auth, ir.Headers, ir.IdempotencyHeaders); err != nil {
 				return nil, err
 			}
 			file, err = writer.File()
@@ -804,9 +846,23 @@ func fileInfoForRequestOptionsDefinition() *fileInfo {
 	}
 }
 
+func fileInfoForIdempotentRequestOptionsDefinition() *fileInfo {
+	return &fileInfo{
+		filename:    "core/idempotent_request_option.go",
+		packageName: "core",
+	}
+}
+
 func fileInfoForRequestOptions() *fileInfo {
 	return &fileInfo{
 		filename:    "option/request_option.go",
+		packageName: "option",
+	}
+}
+
+func fileInfoForIdempotentRequestOptions() *fileInfo {
+	return &fileInfo{
+		filename:    "option/idempotent_request_option.go",
 		packageName: "option",
 	}
 }
@@ -1151,6 +1207,38 @@ func stringSetToSortedSlice(set map[string]struct{}) []string {
 	}
 	sort.Slice(sorted, func(i, j int) bool { return sorted[i] < sorted[j] })
 	return sorted
+}
+
+// zeroValueForTypeReference returns the zero value for the given type reference.
+func zeroValueForTypeReference(typeReference *fernir.TypeReference) string {
+	if typeReference.Container != nil && typeReference.Container.Literal != nil {
+		switch typeReference.Container.Literal.Type {
+		case "string":
+			return `""`
+		case "boolean":
+			return "false"
+		}
+	}
+	if typeReference.Primitive != "" {
+		return zeroValueForPrimitive(typeReference.Primitive)
+	}
+	return "nil"
+}
+
+func zeroValueForPrimitive(primitive fernir.PrimitiveType) string {
+	switch primitive {
+	case fernir.PrimitiveTypeString:
+		return `""`
+	case fernir.PrimitiveTypeInteger, fernir.PrimitiveTypeDouble, fernir.PrimitiveTypeLong:
+		return "0"
+	case fernir.PrimitiveTypeBoolean:
+		return "false"
+	case fernir.PrimitiveTypeDateTime, fernir.PrimitiveTypeDate:
+		return "time.Time{}"
+	case fernir.PrimitiveTypeUuid, fernir.PrimitiveTypeBase64:
+		return "nil"
+	}
+	return "nil"
 }
 
 // pointerFunctionNames enumerates all of the pointer function names.

@@ -45,12 +45,7 @@ func (c *Client) GetTasks(
 	}
 	endpointURL := baseURL + "/" + "tasks"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Task
 	if err := c.caller.Call(
@@ -84,12 +79,7 @@ func (c *Client) PostTasks(
 	}
 	endpointURL := baseURL + "/" + "tasks"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -152,12 +142,7 @@ func (c *Client) GetTasksTaskId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -213,12 +198,7 @@ func (c *Client) PatchTasksTaskId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -288,12 +268,7 @@ func (c *Client) DeleteTasksTaskId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v", taskId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -347,12 +322,7 @@ func (c *Client) PostTasksTaskIdRun(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"tasks/%v/run", taskId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -417,12 +387,7 @@ func (c *Client) PostTasksBatchCreate(
 	}
 	endpointURL := baseURL + "/" + "tasks/batch-create"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -502,12 +467,7 @@ func (c *Client) PostTasksBatchDelete(
 	}
 	endpointURL := baseURL + "/" + "tasks/batch-delete"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -566,12 +526,7 @@ func (c *Client) GetSchedules(
 	}
 	endpointURL := baseURL + "/" + "schedules"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Schedule
 	if err := c.caller.Call(
@@ -605,12 +560,7 @@ func (c *Client) PostSchedules(
 	}
 	endpointURL := baseURL + "/" + "schedules"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -666,12 +616,7 @@ func (c *Client) GetSchedulesScheduleId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -727,12 +672,7 @@ func (c *Client) PatchSchedulesScheduleId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -795,12 +735,7 @@ func (c *Client) DeleteSchedulesScheduleId(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v", scheduleId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)
@@ -853,12 +788,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"schedules/%v/tasks", scheduleId)
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

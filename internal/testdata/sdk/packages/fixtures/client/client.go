@@ -54,12 +54,7 @@ func (c *Client) GetFoo(
 	}
 	endpointURL := baseURL + "/" + "foo"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	var response []*fixtures.Foo
 	if err := c.caller.Call(
@@ -93,12 +88,7 @@ func (c *Client) PostFoo(
 	}
 	endpointURL := baseURL + "/" + "foo"
 
-	headers := c.header.Clone()
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 
 	errorDecoder := func(statusCode int, body io.Reader) error {
 		raw, err := io.ReadAll(body)

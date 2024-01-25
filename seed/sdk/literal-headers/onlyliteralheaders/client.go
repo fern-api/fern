@@ -40,14 +40,9 @@ func (c *Client) Get(
 	}
 	endpointURL := baseURL + "/" + "only-literal-headers"
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("literalEndpointHeader", fmt.Sprintf("%v", "endpoint header"))
 	headers.Add("falseEndpointHeader", fmt.Sprintf("%v", false))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	if err := c.caller.Call(
 		ctx,

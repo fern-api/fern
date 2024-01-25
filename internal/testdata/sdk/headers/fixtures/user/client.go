@@ -45,7 +45,7 @@ func (c *Client) SetName(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/set-name", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
 	headers.Add("X-Endpoint-ID-Header", fmt.Sprintf("%v", request.XEndpointIdHeader))
 	headers.Add("X-Endpoint-Date-Header", fmt.Sprintf("%v", request.XEndpointDateHeader.Format("2006-01-02")))
@@ -67,11 +67,6 @@ func (c *Client) SetName(
 		headers.Add("X-Endpoint-Optional-Bytes-Header", fmt.Sprintf("%v", base64.StdEncoding.EncodeToString(*request.XEndpointOptionalBytesHeader)))
 	}
 	headers.Add("X-Endpoint-Fern-Header", fmt.Sprintf("%v", "fern"))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response string
 	if err := c.caller.Call(
@@ -93,9 +88,9 @@ func (c *Client) UpdateName(
 	ctx context.Context,
 	userId string,
 	request *fixtures.UpdateNameRequest,
-	opts ...option.RequestOption,
+	opts ...option.IdempotentRequestOption,
 ) (string, error) {
-	options := core.NewRequestOptions(opts...)
+	options := core.NewIdempotentRequestOptions(opts...)
 
 	baseURL := ""
 	if c.baseURL != "" {
@@ -106,14 +101,8 @@ func (c *Client) UpdateName(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update-name", userId)
 
-	headers := c.header.Clone()
+	headers := core.MergeHeaders(c.header.Clone(), options.ToHeader())
 	headers.Add("X-Endpoint-Header", fmt.Sprintf("%v", request.XEndpointHeader))
-	headers.Add("Idempotency-Key", fmt.Sprintf("%v", request.IdempotencyKey))
-	for key, values := range options.HTTPHeader {
-		for _, value := range values {
-			headers.Add(key, value)
-		}
-	}
 
 	var response string
 	if err := c.caller.Call(

@@ -22,6 +22,21 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
+// MergeHeaders merges the given headers together, where the right
+// takes precedence over the left.
+func MergeHeaders(left, right http.Header) http.Header {
+	for key, values := range right {
+		if len(values) > 1 {
+			left[key] = values
+			continue
+		}
+		if value := right.Get(key); value != "" {
+			left.Set(key, value)
+		}
+	}
+	return left
+}
+
 // WriteMultipartJSON writes the given value as a JSON part.
 // This is used to serialize non-primitive multipart properties
 // (i.e. lists, objects, etc).

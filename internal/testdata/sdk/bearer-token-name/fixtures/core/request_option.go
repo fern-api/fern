@@ -38,16 +38,16 @@ func NewRequestOptions(opts ...RequestOption) *RequestOptions {
 
 // ToHeader maps the configured request options into a http.Header used
 // for the request(s).
-func (c *RequestOptions) ToHeader() http.Header {
-	header := c.cloneHeader()
-	if c.ApiKey != "" {
-		header.Set("Authorization", "Bearer "+c.ApiKey)
+func (r *RequestOptions) ToHeader() http.Header {
+	header := r.cloneHeader()
+	if r.ApiKey != "" {
+		header.Set("Authorization", "Bearer "+r.ApiKey)
 	}
 	return header
 }
 
-func (c *RequestOptions) cloneHeader() http.Header {
-	return c.HTTPHeader.Clone()
+func (r *RequestOptions) cloneHeader() http.Header {
+	return r.HTTPHeader.Clone()
 }
 
 // BaseURLOption implements the RequestOption interface.

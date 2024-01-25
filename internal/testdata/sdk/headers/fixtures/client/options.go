@@ -80,3 +80,8 @@ func WithXApiOptionalDate(xApiOptionalDate *time.Time) *core.XApiOptionalDateOpt
 func WithXApiOptionalBytes(xApiOptionalBytes *[]byte) *core.XApiOptionalBytesOption {
 	return option.WithXApiOptionalBytes(xApiOptionalBytes)
 }
+
+// WithIdempotencyKey sets the idempotencyKey request header.
+func WithIdempotencyKey(idempotencyKey string) *core.IdempotencyKeyOption {
+	return option.WithIdempotencyKey(idempotencyKey)
+}
