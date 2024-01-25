@@ -88,8 +88,8 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         if not self._are_any_properties_optional():
             return None
 
-        optional_properties = []
-        required_properties = []
+        optional_properties: List[ir_types.InlinedRequestBodyProperty] = []
+        required_properties: List[ir_types.InlinedRequestBodyProperty] = []
         for body_property in self._get_all_properties_for_inlined_request_body():
             type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
                 body_property.value_type
@@ -109,9 +109,14 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 writer.write_line("{")
                 with writer.indent():
                     for required_property in required_properties:
-                        writer.write_line(
-                            f'"{required_property.name.wire_value}": {self._get_property_name(required_property)},'
-                        )
+                        if self.is_enum(reference=required_property.value_type):
+                            writer.write_line(
+                                f'"{required_property.name.wire_value}": {self._get_property_name(required_property)}.value,'
+                            )
+                        else:
+                            writer.write_line(
+                                f'"{required_property.name.wire_value}": {self._get_property_name(required_property)},'
+                            )
                 writer.write_line("}")
 
             for optional_property in optional_properties:
@@ -119,9 +124,14 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     f"if {self._get_property_name(optional_property)} is not {DEFAULT_BODY_PARAMETER_VALUE}:"
                 )
                 with writer.indent():
-                    writer.write_line(
-                        f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
-                    )
+                    if self.is_enum(reference=optional_property.value_type):
+                        writer.write_line(
+                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value'
+                        )
+                    else:
+                        writer.write_line(
+                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}'
+                        )
 
         return AST.CodeWriter(write)
 
