@@ -58,7 +58,10 @@ types:
         type: optional<list<string>>
         docs: |
           If `exclude` is set, entities that match the given audiences will be excluded from the site.
-      exclude-no-audience: optional<boolean>
+      exclude-no-audience:
+        type: optional<boolean>
+        docs: |
+          If `exclude-no-audience` is set to true, entities that do not have an audience will be excluded from the site.
 
   VersionConfig:
     properties:
