@@ -210,46 +210,46 @@ func (o *Options) String() string {
 }
 
 type UndiscriminatedOptions struct {
-	typeName        string
-	stringLiteral   string
-	unknownLiteral  bool
-	StringStringMap map[string]string
+	typeName             string
+	optionsStringLiteral string
+	trueBoolLiteral      bool
+	StringStringMap      map[string]string
 }
 
-func NewUndiscriminatedOptionsWithStringLiteral() *UndiscriminatedOptions {
-	return &UndiscriminatedOptions{typeName: "stringLiteral", stringLiteral: "options"}
+func NewUndiscriminatedOptionsWithOptionsStringLiteral() *UndiscriminatedOptions {
+	return &UndiscriminatedOptions{typeName: "optionsStringLiteral", optionsStringLiteral: "options"}
 }
 
-func NewUndiscriminatedOptionsWithUnknownLiteral() *UndiscriminatedOptions {
-	return &UndiscriminatedOptions{typeName: "unknownLiteral", unknownLiteral: true}
+func NewUndiscriminatedOptionsWithTrueBoolLiteral() *UndiscriminatedOptions {
+	return &UndiscriminatedOptions{typeName: "trueBoolLiteral", trueBoolLiteral: true}
 }
 
 func NewUndiscriminatedOptionsFromStringStringMap(value map[string]string) *UndiscriminatedOptions {
 	return &UndiscriminatedOptions{typeName: "stringStringMap", StringStringMap: value}
 }
 
-func (u *UndiscriminatedOptions) StringLiteral() string {
-	return u.stringLiteral
+func (u *UndiscriminatedOptions) OptionsStringLiteral() string {
+	return u.optionsStringLiteral
 }
 
-func (u *UndiscriminatedOptions) UnknownLiteral() bool {
-	return u.unknownLiteral
+func (u *UndiscriminatedOptions) TrueBoolLiteral() bool {
+	return u.trueBoolLiteral
 }
 
 func (u *UndiscriminatedOptions) UnmarshalJSON(data []byte) error {
-	var valueStringLiteral string
-	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
-		if valueStringLiteral == "options" {
-			u.typeName = "stringLiteral"
-			u.stringLiteral = valueStringLiteral
+	var valueOptionsStringLiteral string
+	if err := json.Unmarshal(data, &valueOptionsStringLiteral); err == nil {
+		if valueOptionsStringLiteral == "options" {
+			u.typeName = "optionsStringLiteral"
+			u.optionsStringLiteral = valueOptionsStringLiteral
 			return nil
 		}
 	}
-	var valueUnknownLiteral bool
-	if err := json.Unmarshal(data, &valueUnknownLiteral); err == nil {
-		if valueUnknownLiteral == true {
-			u.typeName = "unknownLiteral"
-			u.unknownLiteral = valueUnknownLiteral
+	var valueTrueBoolLiteral bool
+	if err := json.Unmarshal(data, &valueTrueBoolLiteral); err == nil {
+		if valueTrueBoolLiteral == true {
+			u.typeName = "trueBoolLiteral"
+			u.trueBoolLiteral = valueTrueBoolLiteral
 			return nil
 		}
 	}
@@ -266,9 +266,9 @@ func (u UndiscriminatedOptions) MarshalJSON() ([]byte, error) {
 	switch u.typeName {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
-	case "stringLiteral":
+	case "optionsStringLiteral":
 		return json.Marshal("options")
-	case "unknownLiteral":
+	case "trueBoolLiteral":
 		return json.Marshal(true)
 	case "stringStringMap":
 		return json.Marshal(u.StringStringMap)
@@ -276,8 +276,8 @@ func (u UndiscriminatedOptions) MarshalJSON() ([]byte, error) {
 }
 
 type UndiscriminatedOptionsVisitor interface {
-	VisitStringLiteral(string) error
-	VisitUnknownLiteral(bool) error
+	VisitOptionsStringLiteral(string) error
+	VisitTrueBoolLiteral(bool) error
 	VisitStringStringMap(map[string]string) error
 }
 
@@ -285,10 +285,10 @@ func (u *UndiscriminatedOptions) Accept(visitor UndiscriminatedOptionsVisitor) e
 	switch u.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
-	case "stringLiteral":
-		return visitor.VisitStringLiteral(u.stringLiteral)
-	case "unknownLiteral":
-		return visitor.VisitUnknownLiteral(u.unknownLiteral)
+	case "optionsStringLiteral":
+		return visitor.VisitOptionsStringLiteral(u.optionsStringLiteral)
+	case "trueBoolLiteral":
+		return visitor.VisitTrueBoolLiteral(u.trueBoolLiteral)
 	case "stringStringMap":
 		return visitor.VisitStringStringMap(u.StringStringMap)
 	}

@@ -398,6 +398,19 @@
                             }
                         },
                         "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "literal",
+                                "literal": {
+                                    "type": "string",
+                                    "string": "another"
+                                }
+                            }
+                        },
+                        "docs": null
                     }
                 ]
             },

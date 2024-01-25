@@ -1124,8 +1124,10 @@ func unknownToGoType(_ any) string {
 // undiscriminated union.
 func literalToUndiscriminatedUnionField(literal *ir.Literal) string {
 	switch literal.Type {
+	case "boolean":
+		return fmt.Sprintf("%vBool", literal.Boolean)
 	case "string":
-		return "string"
+		return fmt.Sprintf("%sString", literal.String)
 	default:
 		return "unknown"
 	}

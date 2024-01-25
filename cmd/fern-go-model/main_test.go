@@ -177,14 +177,14 @@ func TestUndiscriminatedUnion(t *testing.T) {
 	require.NoError(t, json.Unmarshal([]byte(`{"body": "something"}`), request))
 
 	assert.Equal(t, "something", request.Body.String)
-	assert.Empty(t, request.Body.StringLiteral())
+	assert.Empty(t, request.Body.FernStringLiteral())
 
 	unionLiteral := new(undiscriminated.Union)
 	require.NoError(t, json.Unmarshal([]byte(`"fern"`), unionLiteral))
 
 	// Test that the string takes precedence over the literal because
 	// they aren't specified in the correct order.
-	assert.Empty(t, unionLiteral.StringLiteral())
+	assert.Empty(t, unionLiteral.FernStringLiteral())
 	assert.Equal(t, "fern", unionLiteral.String)
 
 	unionWithLiteral := new(undiscriminated.UnionWithLiteral)
@@ -192,7 +192,7 @@ func TestUndiscriminatedUnion(t *testing.T) {
 
 	// Test that the literal is used as long as it's actually observed
 	// on the wire.
-	assert.Equal(t, "fern", unionWithLiteral.StringLiteral())
+	assert.Equal(t, "fern", unionWithLiteral.FernStringLiteral())
 	assert.Empty(t, unionWithLiteral.String)
 }
 

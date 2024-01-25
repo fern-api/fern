@@ -9,26 +9,26 @@ import (
 )
 
 type AnotherUnion struct {
-	typeName      string
-	String        string
-	stringLiteral string
-	Foo           *Foo
+	typeName          string
+	String            string
+	fernStringLiteral string
+	Foo               *Foo
 }
 
 func NewAnotherUnionFromString(value string) *AnotherUnion {
 	return &AnotherUnion{typeName: "string", String: value}
 }
 
-func NewAnotherUnionWithStringLiteral() *AnotherUnion {
-	return &AnotherUnion{typeName: "stringLiteral", stringLiteral: "fern"}
+func NewAnotherUnionWithFernStringLiteral() *AnotherUnion {
+	return &AnotherUnion{typeName: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
 func NewAnotherUnionFromFoo(value *Foo) *AnotherUnion {
 	return &AnotherUnion{typeName: "foo", Foo: value}
 }
 
-func (a *AnotherUnion) StringLiteral() string {
-	return a.stringLiteral
+func (a *AnotherUnion) FernStringLiteral() string {
+	return a.fernStringLiteral
 }
 
 func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
@@ -38,11 +38,11 @@ func (a *AnotherUnion) UnmarshalJSON(data []byte) error {
 		a.String = valueString
 		return nil
 	}
-	var valueStringLiteral string
-	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
-		if valueStringLiteral == "fern" {
-			a.typeName = "stringLiteral"
-			a.stringLiteral = valueStringLiteral
+	var valueFernStringLiteral string
+	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		if valueFernStringLiteral == "fern" {
+			a.typeName = "fernStringLiteral"
+			a.fernStringLiteral = valueFernStringLiteral
 			return nil
 		}
 	}
@@ -61,7 +61,7 @@ func (a AnotherUnion) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("invalid type %s in %T", a.typeName, a)
 	case "string":
 		return json.Marshal(a.String)
-	case "stringLiteral":
+	case "fernStringLiteral":
 		return json.Marshal("fern")
 	case "foo":
 		return json.Marshal(a.Foo)
@@ -70,7 +70,7 @@ func (a AnotherUnion) MarshalJSON() ([]byte, error) {
 
 type AnotherUnionVisitor interface {
 	VisitString(string) error
-	VisitStringLiteral(string) error
+	VisitFernStringLiteral(string) error
 	VisitFoo(*Foo) error
 }
 
@@ -80,8 +80,8 @@ func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
 		return fmt.Errorf("invalid type %s in %T", a.typeName, a)
 	case "string":
 		return visitor.VisitString(a.String)
-	case "stringLiteral":
-		return visitor.VisitStringLiteral(a.stringLiteral)
+	case "fernStringLiteral":
+		return visitor.VisitFernStringLiteral(a.fernStringLiteral)
 	case "foo":
 		return visitor.VisitFoo(a.Foo)
 	}
@@ -121,17 +121,18 @@ func (f *Foo) String() string {
 }
 
 type Union struct {
-	typeName         string
-	Foo              *Foo
-	Bar              *Bar
-	Baz              *Baz
-	String           string
-	IntegerOptional  *int
-	StringBooleanMap map[string]bool
-	StringList       []string
-	StringListList   [][]string
-	DoubleSet        []float64
-	stringLiteral    string
+	typeName             string
+	Foo                  *Foo
+	Bar                  *Bar
+	Baz                  *Baz
+	String               string
+	IntegerOptional      *int
+	StringBooleanMap     map[string]bool
+	StringList           []string
+	StringListList       [][]string
+	DoubleSet            []float64
+	fernStringLiteral    string
+	anotherStringLiteral string
 }
 
 func NewUnionFromFoo(value *Foo) *Union {
@@ -170,12 +171,20 @@ func NewUnionFromDoubleSet(value []float64) *Union {
 	return &Union{typeName: "doubleSet", DoubleSet: value}
 }
 
-func NewUnionWithStringLiteral() *Union {
-	return &Union{typeName: "stringLiteral", stringLiteral: "fern"}
+func NewUnionWithFernStringLiteral() *Union {
+	return &Union{typeName: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
-func (u *Union) StringLiteral() string {
-	return u.stringLiteral
+func NewUnionWithAnotherStringLiteral() *Union {
+	return &Union{typeName: "anotherStringLiteral", anotherStringLiteral: "another"}
+}
+
+func (u *Union) FernStringLiteral() string {
+	return u.fernStringLiteral
+}
+
+func (u *Union) AnotherStringLiteral() string {
+	return u.anotherStringLiteral
 }
 
 func (u *Union) UnmarshalJSON(data []byte) error {
@@ -233,11 +242,19 @@ func (u *Union) UnmarshalJSON(data []byte) error {
 		u.DoubleSet = valueDoubleSet
 		return nil
 	}
-	var valueStringLiteral string
-	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
-		if valueStringLiteral == "fern" {
-			u.typeName = "stringLiteral"
-			u.stringLiteral = valueStringLiteral
+	var valueFernStringLiteral string
+	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		if valueFernStringLiteral == "fern" {
+			u.typeName = "fernStringLiteral"
+			u.fernStringLiteral = valueFernStringLiteral
+			return nil
+		}
+	}
+	var valueAnotherStringLiteral string
+	if err := json.Unmarshal(data, &valueAnotherStringLiteral); err == nil {
+		if valueAnotherStringLiteral == "another" {
+			u.typeName = "anotherStringLiteral"
+			u.anotherStringLiteral = valueAnotherStringLiteral
 			return nil
 		}
 	}
@@ -266,8 +283,10 @@ func (u Union) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.StringListList)
 	case "doubleSet":
 		return json.Marshal(u.DoubleSet)
-	case "stringLiteral":
+	case "fernStringLiteral":
 		return json.Marshal("fern")
+	case "anotherStringLiteral":
+		return json.Marshal("another")
 	}
 }
 
@@ -281,7 +300,8 @@ type UnionVisitor interface {
 	VisitStringList([]string) error
 	VisitStringListList([][]string) error
 	VisitDoubleSet([]float64) error
-	VisitStringLiteral(string) error
+	VisitFernStringLiteral(string) error
+	VisitAnotherStringLiteral(string) error
 }
 
 func (u *Union) Accept(visitor UnionVisitor) error {
@@ -306,35 +326,37 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 		return visitor.VisitStringListList(u.StringListList)
 	case "doubleSet":
 		return visitor.VisitDoubleSet(u.DoubleSet)
-	case "stringLiteral":
-		return visitor.VisitStringLiteral(u.stringLiteral)
+	case "fernStringLiteral":
+		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
+	case "anotherStringLiteral":
+		return visitor.VisitAnotherStringLiteral(u.anotherStringLiteral)
 	}
 }
 
 type UnionWithLiteral struct {
-	typeName      string
-	stringLiteral string
-	String        string
+	typeName          string
+	fernStringLiteral string
+	String            string
 }
 
-func NewUnionWithLiteralWithStringLiteral() *UnionWithLiteral {
-	return &UnionWithLiteral{typeName: "stringLiteral", stringLiteral: "fern"}
+func NewUnionWithLiteralWithFernStringLiteral() *UnionWithLiteral {
+	return &UnionWithLiteral{typeName: "fernStringLiteral", fernStringLiteral: "fern"}
 }
 
 func NewUnionWithLiteralFromString(value string) *UnionWithLiteral {
 	return &UnionWithLiteral{typeName: "string", String: value}
 }
 
-func (u *UnionWithLiteral) StringLiteral() string {
-	return u.stringLiteral
+func (u *UnionWithLiteral) FernStringLiteral() string {
+	return u.fernStringLiteral
 }
 
 func (u *UnionWithLiteral) UnmarshalJSON(data []byte) error {
-	var valueStringLiteral string
-	if err := json.Unmarshal(data, &valueStringLiteral); err == nil {
-		if valueStringLiteral == "fern" {
-			u.typeName = "stringLiteral"
-			u.stringLiteral = valueStringLiteral
+	var valueFernStringLiteral string
+	if err := json.Unmarshal(data, &valueFernStringLiteral); err == nil {
+		if valueFernStringLiteral == "fern" {
+			u.typeName = "fernStringLiteral"
+			u.fernStringLiteral = valueFernStringLiteral
 			return nil
 		}
 	}
@@ -351,7 +373,7 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 	switch u.typeName {
 	default:
 		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
-	case "stringLiteral":
+	case "fernStringLiteral":
 		return json.Marshal("fern")
 	case "string":
 		return json.Marshal(u.String)
@@ -359,7 +381,7 @@ func (u UnionWithLiteral) MarshalJSON() ([]byte, error) {
 }
 
 type UnionWithLiteralVisitor interface {
-	VisitStringLiteral(string) error
+	VisitFernStringLiteral(string) error
 	VisitString(string) error
 }
 
@@ -367,8 +389,8 @@ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 	switch u.typeName {
 	default:
 		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
-	case "stringLiteral":
-		return visitor.VisitStringLiteral(u.stringLiteral)
+	case "fernStringLiteral":
+		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
 	case "string":
 		return visitor.VisitString(u.String)
 	}

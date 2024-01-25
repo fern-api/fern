@@ -13,6 +13,7 @@ types:
       - list<list<string>>
       - set<double>
       - literal<"fern">
+      - literal<"another">
 
   AnotherUnion:
     discriminated: false
