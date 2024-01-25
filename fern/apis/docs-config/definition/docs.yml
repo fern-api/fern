@@ -113,9 +113,9 @@ types:
 
   DocsTypographyConfig:
     properties:
-      headingsFont: optional<FontConfig>
-      bodyFont: optional<FontConfig>
-      codeFont: optional<FontConfig>
+      headingsFont: optional<FontConfigUnion>
+      bodyFont: optional<FontConfigUnion>
+      codeFont: optional<FontConfigUnion>
 
   LayoutConfig:
     properties:
@@ -177,15 +177,32 @@ types:
       - header
       - sidebar
 
+  FontConfigUnion:
+    discriminated: false
+    union:
+      - FontConfigV1
+      - list<FontConfigV1>
+
   FontConfig:
     properties:
       path:
-        type: string
+        type: FontConfigPath
         docs: The relative path of the font file.
       name:
         type: optional<string>
         docs: |
           If the `name` is not supplied, Fern will default it to a generated name that will be used to reference your custom font in the eventually injected CSS in the docs.
+      weight:
+        type: optional<string>
+        docs: |
+          If the `weight` is not supplied, Fern will default it to `100 900`.
+      "font-variation-settings": optional<string>
+
+  FontConfigPath:
+    discriminated: false
+    union:
+      - string
+      - list<string>
 
   PageConfiguration:
     properties:
