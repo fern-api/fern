@@ -139,6 +139,8 @@ navigation:
             path: ./docs/pages/docs/writing-content.mdx
       - section: Configurations
         contents: 
+          - page: Overview
+            path: ./docs/pages/docs/configurations-overview.mdx
           - page: Custom Domain
             path: ./docs/pages/docs/custom-domain.mdx
           - page: Pull Request Previews

@@ -293,7 +293,7 @@ export function buildEnumTypeDeclaration(schema: EnumSchema): ConvertedTypeDecla
                 };
             }
             const enumValueDeclaration: RawSchemas.EnumValueSchema = {
-                name: enumValue.nameOverride ?? enumValue.generatedName,
+                name,
                 value: enumValue.value
             };
             if (enumValue.description != null) {
