@@ -184,19 +184,27 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
 }
 
 function isExamplePrimitive(example: FullExample): boolean {
-    if (example.type === "primitive" || example.type === "enum" || example.type === "literal") {
-        return true;
-    } else if (example.type === "oneOf") {
-        switch (example.oneOf.type) {
-            case "discriminated":
-                return false;
-            case "undisciminated":
-                return isExamplePrimitive(example.oneOf.undisciminated);
-            default:
-                assertNever(example.oneOf);
-        }
-    } else if (example.type === "unknown") {
-        return isExamplePrimitive(example.unknown);
+    switch (example.type) {
+        case "primitive":
+        case "enum":
+        case "literal":
+            return true;
+        case "unknown":
+            return isExamplePrimitive(example.unknown);
+        case "array":
+        case "object":
+        case "map":
+            return false;
+        case "oneOf":
+            switch (example.oneOf.type) {
+                case "discriminated":
+                    return false;
+                case "undisciminated":
+                    return isExamplePrimitive(example.oneOf.undisciminated);
+                default:
+                    return false;
+            }
+        default:
+            assertNever(example);
     }
-    return false;
 }
