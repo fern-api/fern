@@ -1,4 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
+import { FullExample } from "@fern-fern/openapi-ir-model/example";
 import {
     EndpointExample,
     HeaderExample,
@@ -73,8 +75,7 @@ export class ExampleEndpointFactory {
                 example: undefined,
                 parameter: true
             });
-            // If the path parameter is not a primitive or enum, we set to null
-            if (example?.type !== "primitive" && example?.type !== "enum") {
+            if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;
             }
             if (required && example == null) {
@@ -96,8 +97,7 @@ export class ExampleEndpointFactory {
                 example: undefined,
                 parameter: true
             });
-            // If the query parameter is not a primitive or enum, we set to null
-            if (example?.type !== "primitive" && example?.type !== "enum") {
+            if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;
             }
             if (required && example == null) {
@@ -119,8 +119,7 @@ export class ExampleEndpointFactory {
                 example: undefined,
                 parameter: true
             });
-            // If the header is not a primitive or enum, we set to null
-            if (example?.type !== "primitive" && example?.type !== "enum") {
+            if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;
             }
             if (required && example == null) {
@@ -182,4 +181,22 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
         return { type: "unsupported" };
     }
     return { type: "present", schema: response.schema, example: response.fullExamples?.[0] ?? undefined };
+}
+
+function isExamplePrimitive(example: FullExample): boolean {
+    if (example.type === "primitive" || example.type === "enum" || example.type === "literal") {
+        return true;
+    } else if (example.type === "oneOf") {
+        switch (example.oneOf.type) {
+            case "discriminated":
+                return false;
+            case "undisciminated":
+                return isExamplePrimitive(example.oneOf.undisciminated);
+            default:
+                assertNever(example.oneOf);
+        }
+    } else if (example.type === "unknown") {
+        return isExamplePrimitive(example.unknown);
+    }
+    return false;
 }

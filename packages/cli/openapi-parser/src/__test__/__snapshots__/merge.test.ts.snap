@@ -423,10 +423,40 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
             {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
               "name": "order_by",
               "value": {
                 "enum": "-remote_created_at",
                 "type": "enum",
+              },
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -1009,7 +1039,38 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "account_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1275,7 +1336,18 @@ exports[`open api parser merge parse open api 1`] = `
             },
           ],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1719,7 +1791,18 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -10903,7 +10986,28 @@ exports[`open api parser merge parse open api 1`] = `
             },
           ],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -11346,7 +11450,28 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -12829,7 +12954,28 @@ exports[`open api parser merge parse open api 1`] = `
             },
           ],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -13287,7 +13433,28 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "location_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -16162,7 +16329,18 @@ exports[`open api parser merge parse open api 1`] = `
             },
           ],
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "parent_team",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -16578,7 +16756,18 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "parent_team",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -17976,10 +18165,40 @@ exports[`open api parser merge parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
               "name": "policy_type",
               "value": {
                 "enum": "BEREAVEMENT",
                 "type": "enum",
+              },
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
+                "type": "literal",
               },
             },
           ],
@@ -18505,7 +18724,38 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "expand",
+              "value": {
+                "literal": {
+                  "string": "employee",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "remote_fields",
+              "value": {
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "show_enum_origins",
+              "value": {
+                "literal": {
+                  "string": "policy_type",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {

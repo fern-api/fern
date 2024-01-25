@@ -845,6 +845,16 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
+              "name": "include",
+              "value": {
+                "literal": {
+                  "string": "block",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
               "name": "userIdentifier",
               "value": {
                 "primitive": {

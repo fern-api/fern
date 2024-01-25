@@ -66,7 +66,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -286,7 +289,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -622,7 +628,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -1154,7 +1163,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -1416,7 +1428,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2063,7 +2078,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2998,7 +3016,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -3329,6 +3350,9 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
+                  "dir": "asc",
+                  "include": "data",
+                  "order_by": "last_attempt_at",
                   "status": "SCHEDULED",
                 },
                 "request": undefined,
@@ -4220,6 +4244,8 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
                   "type": "delivery",
                 },
                 "request": undefined,
@@ -4527,9 +4553,13 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
+                  "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
                   "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
                   "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                  "order_by": "created_at",
+                  "status": "OPENED",
+                  "type": "delivery",
                 },
                 "request": undefined,
                 "response": {
@@ -4578,9 +4608,13 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
+                  "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
                   "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
                   "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                  "order_by": "created_at",
+                  "status": "OPENED",
+                  "type": "delivery",
                 },
                 "request": undefined,
                 "response": {
@@ -4856,6 +4890,9 @@ exports[`open api parser hookdeck simple 1`] = `
                   "id": "string",
                 },
                 "query-parameters": {
+                  "dir": "asc",
+                  "include": "data",
+                  "order_by": "last_attempt_at",
                   "status": "SCHEDULED",
                 },
                 "request": undefined,
@@ -4942,7 +4979,10 @@ exports[`open api parser hookdeck simple 1`] = `
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5031,6 +5071,9 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
+                  "dir": "asc",
+                  "include": "data",
+                  "order_by": "ingested_at",
                   "rejection_cause": "SOURCE_ARCHIVED",
                   "status": "accepted",
                 },
@@ -5388,7 +5431,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -5802,7 +5848,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6206,7 +6255,11 @@ exports[`open api parser hookdeck simple 1`] = `
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "log_level": "debug",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
@@ -6278,7 +6331,10 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": undefined,
+                "query-parameters": {
+                  "dir": "asc",
+                  "order_by": "created_at",
+                },
                 "request": undefined,
                 "response": {
                   "body": {
