@@ -1,4 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { generateEnumNameFromValue, VALID_ENUM_NAME_REGEX } from "@fern-api/openapi-parser";
 import { FERN_PACKAGE_MARKER_FILENAME } from "@fern-api/project-configuration";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { QueryParameter, Schema } from "@fern-fern/openapi-ir-model/finalIr";
@@ -96,17 +97,24 @@ function getQueryParameterTypeReference({
             };
         } else if (resolvedSchema.type === "oneOf" && resolvedSchema.oneOf.type === "undisciminated") {
             // Try to generated enum from literal values
-            const literalValues = [];
+            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, schema] of Object.entries(resolvedSchema.oneOf.schemas)) {
                 if (schema.type === "literal" && schema.value.type === "string") {
-                    literalValues.push(schema.value.string);
+                    if (VALID_ENUM_NAME_REGEX.test(schema.value.string)) {
+                        potentialEnumValues.push(schema.value.string);
+                    } else {
+                        potentialEnumValues.push({
+                            value: schema.value.string,
+                            name: generateEnumNameFromValue(schema.value.string)
+                        });
+                    }
                 }
             }
 
-            if (literalValues.length > 0) {
+            if (potentialEnumValues.length > 0) {
                 context.builder.addType(fileContainingReference, {
                     name: schema.generatedName,
-                    schema: { enum: literalValues }
+                    schema: { enum: potentialEnumValues }
                 });
                 return {
                     value: schema.generatedName,
@@ -165,17 +173,24 @@ function getQueryParameterTypeReference({
             };
         } else if (schema.value.type === "oneOf" && schema.value.oneOf.type === "undisciminated") {
             // Try to generated enum from literal values
-            const literalValues = [];
+            const potentialEnumValues: (string | RawSchemas.EnumValueSchema)[] = [];
             for (const [_, oneOfSchema] of Object.entries(schema.value.oneOf.schemas)) {
                 if (oneOfSchema.type === "literal" && oneOfSchema.value.type === "string") {
-                    literalValues.push(oneOfSchema.value.string);
+                    if (VALID_ENUM_NAME_REGEX.test(oneOfSchema.value.string)) {
+                        potentialEnumValues.push(oneOfSchema.value.string);
+                    } else {
+                        potentialEnumValues.push({
+                            value: oneOfSchema.value.string,
+                            name: generateEnumNameFromValue(oneOfSchema.value.string)
+                        });
+                    }
                 }
             }
 
-            if (literalValues.length > 0) {
+            if (potentialEnumValues.length > 0) {
                 context.builder.addType(fileContainingReference, {
-                    name: schema.value.oneOf.generatedName,
-                    schema: { enum: literalValues }
+                    name: schema.generatedName,
+                    schema: { enum: potentialEnumValues }
                 });
                 return {
                     value: `optional<${schema.value.oneOf.generatedName}>`,
