@@ -67,12 +67,16 @@ export class ExampleEndpointFactory {
         const pathParameters: PathParameterExample[] = [];
         for (const pathParameter of endpoint.pathParameters) {
             const required = this.isSchemaRequired(pathParameter.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: pathParameter.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            // If the path parameter is not a primitive or enum, we set to null
+            if (example?.type !== "primitive" && example?.type !== "enum") {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -86,12 +90,16 @@ export class ExampleEndpointFactory {
         const queryParameters: QueryParameterExample[] = [];
         for (const queryParameter of endpoint.queryParameters) {
             const required = this.isSchemaRequired(queryParameter.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            // If the query parameter is not a primitive or enum, we set to null
+            if (example?.type !== "primitive" && example?.type !== "enum") {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -105,12 +113,16 @@ export class ExampleEndpointFactory {
         const headers: HeaderExample[] = [];
         for (const header of endpoint.headers) {
             const required = this.isSchemaRequired(header.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            // If the header is not a primitive or enum, we set to null
+            if (example?.type !== "primitive" && example?.type !== "enum") {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
