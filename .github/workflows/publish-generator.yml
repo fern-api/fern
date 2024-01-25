@@ -1,0 +1,237 @@
+name: publish-generators
+
+on:
+  push:
+    branches:
+      - main
+      paths:
+        - "generators/openapi/VERSION"
+        - 'generators/python/sdk/VERSION'
+        - 'generators/python/fastapi/VERSION'
+        - 'generators/python/pydantic/VERSION'
+        - 'generators/postman/VERSION'
+
+jobs:
+  versions-changed:
+    runs-on: ubuntu-latest
+    outputs:
+      openapi: ${{ steps.filter.outputs.openapi }}
+      python-sdk: ${{ steps.filter.outputs.python-sdk }}
+      fastapi: ${{ steps.filter.outputs.fastapi }}
+      pydantic: ${{ steps.filter.outputs.pydantic }}
+      postman: ${{ steps.filter.outputs.postman }}
+    steps:
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            openapi: 'generators/openapi/VERSION'
+            python-sdk: 'generators/python/sdk/VERSION'
+            fastapi: 'generators/python/fastapi/VERSION'
+            pydantic: 'generators/python/pydantic/VERSION'
+            postman: 'generators/postman/VERSION'
+
+  pydantic-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.changes.outputs.pydantic == 'true'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/python/pydantic/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/python
+          file: ./generators/python/pydantic/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-pydantic-model:${{env.VERSION}}
+
+  fastapi:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.changes.outputs.fastapi == 'true'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/python/fastapi/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/python
+          file: ./generators/python/fastapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-fastapi-server:${{env.VERSION}}
+
+  python-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.changes.outputs.python-sdk == 'true'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/python/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/python
+          file: ./generators/python/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-python-sdk:${{env.VERSION}}
+
+  openapi:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.changes.outputs.openapi == 'true'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/openapi
+        run: yarn dist:cli
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/openapi/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/openapi
+          file: ./generators/openapi/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-openapi:${{env.VERSION}}
+
+  postman:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.changes.outputs.postman == 'true'}}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build CLI
+        working-directory: ./generators/postman
+        run: yarn dist:cli
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/postman/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/postman
+          file: ./generators/postman/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-postman:${{env.VERSION}}
