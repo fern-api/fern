@@ -41,7 +41,7 @@ jobs:
   pydantic-model:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.pydantic == 'true'}}
+    if: ${{ needs.versions-changed.outputs.pydantic == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -80,7 +80,7 @@ jobs:
   fastapi:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.fastapi == 'true'}}
+    if: ${{ needs.versions-changed.outputs.fastapi == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -119,7 +119,7 @@ jobs:
   python-sdk:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.python-sdk == 'true'}}
+    if: ${{ needs.versions-changed.outputs.python-sdk == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -158,7 +158,7 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.openapi == 'true'}}
+    if: ${{ needs.versions-changed.outputs.openapi == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -202,7 +202,7 @@ jobs:
   postman:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.postman == 'true'}}
+    if: ${{ needs.versions-changed.outputs.postman == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -246,7 +246,7 @@ jobs:
   ruby-model:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.ruby-model == 'true'}}
+    if: ${{ needs.versions-changed.outputs.ruby-model == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -287,7 +287,7 @@ jobs:
   ruby-sdk:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.ruby-sdk == 'true'}}
+    if: ${{ needs.versions-changed.outputs.ruby-sdk == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
