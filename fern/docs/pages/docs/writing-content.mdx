@@ -49,6 +49,38 @@ navigation:
 ```
 </CodeBlock>
 
+### Nested Sections
+If you'd like a section to toggle into more sections and pages, you can nest sections within sections. Here's an example of how it's done.
+<CodeBlock title="docs.yml">
+```mdx
+navigation:
+  - tab: guides
+    layout:
+      - section: Learn
+        contents: 
+          - section: Key Concepts
+            contents: 
+              - page: Embeddings
+                path: ./docs/pages/embeddings.mdx
+              - page: Prompt Engineering
+                path: ./docs/pages/prompts.mdx
+              - page: Tokens
+                path: ./docs/pages/tokens.mdx
+          - section: Generation
+            contents: 
+              - page: Command Nightly
+                path: ./docs/pages/command.mdx
+              - page: Likelihood
+                path: ./docs/pages/likelihood.mdx
+              - page: Number of generations
+                path: ./docs/pages/generation.mdx
+              - page: Temperature
+                path: ./docs/pages/temperature.mdx
+```
+</CodeBlock>
+
+![Result of above docs.yml example](https://private-user-images.githubusercontent.com/83524670/297957632-6dc55e8c-0b7b-4ef0-ab13-2b48a5dbf424.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MDYyMDI3ODcsIm5iZiI6MTcwNjIwMjQ4NywicGF0aCI6Ii84MzUyNDY3MC8yOTc5NTc2MzItNmRjNTVlOGMtMGI3Yi00ZWYwLWFiMTMtMmI0OGE1ZGJmNDI0LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDAxMjUlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwMTI1VDE3MDgwN1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTIzN2JjNjljNDUyYTg5MzlkZDQ2MzcyMzNiZDE1YjVlN2ZlZWU3OTE1YzNkNTJhMzUyNTA0YjA4YjU1MzdkOWEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.7zYsugnrdFoXSiXJ-3TIbXEOZ5YYYwaEIKOO6kCOvsw)
+
 ### API Reference
 
 A key benefit of using Fern Docs is that you get your API Reference with just one line. 
