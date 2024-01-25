@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .payment._client import AsyncPaymentClient, PaymentClient
+from .resources.payment.client import AsyncPaymentClient, PaymentClient
 
 
 class SeedIdempotencyHeaders:

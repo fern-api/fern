@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .imdb._client import AsyncImdbClient, ImdbClient
+from .resources.imdb.client import AsyncImdbClient, ImdbClient
 
 
 class SeedApi:

@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .literal._client import AsyncLiteralClient, LiteralClient
+from .resources.literal.client import AsyncLiteralClient, LiteralClient
 
 
 class SeedLiteral:
