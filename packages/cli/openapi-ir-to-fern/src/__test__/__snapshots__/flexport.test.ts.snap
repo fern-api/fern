@@ -8624,7 +8624,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "f.buyer_entity_ref": "id-54321",
                   "f.buyer_ref": "amazon-us",
                   "f.name": "PO-123456",
-                  "f.roles": "buyer",
                   "f.seller_entity_ref": "id-12345",
                   "f.seller_ref": "amazon-us",
                   "f.shipment.id": 1,

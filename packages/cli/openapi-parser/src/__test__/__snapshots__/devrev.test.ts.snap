@@ -1285,18 +1285,6 @@ disabled.
                 "type": "enum",
               },
             },
-            {
-              "name": "state",
-              "value": {
-                "array": [
-                  {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
           ],
           "request": undefined,
           "response": {
@@ -1859,18 +1847,6 @@ used.
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "capability",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],
@@ -4605,44 +4581,7 @@ used.
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -5064,46 +5003,10 @@ organizations.
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "mode",
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],

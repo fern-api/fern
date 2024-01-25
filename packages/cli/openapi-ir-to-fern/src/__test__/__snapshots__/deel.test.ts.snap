@@ -194,10 +194,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": {
-                  "entities": "individual",
-                  "statuses": "pending",
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -283,11 +280,8 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "currencies": "USD",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "entities": "individual",
-                  "statuses": "paid",
                 },
                 "request": undefined,
                 "response": {
@@ -2134,12 +2128,8 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "countries": "US",
-                  "currencies": "USD",
                   "order_direction": "asc",
                   "sort_by": "contract_title",
-                  "statuses": "new",
-                  "types": "ongoing_time_based",
                 },
                 "request": undefined,
                 "response": {
@@ -3038,10 +3028,8 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "contract_types": "ongoing_time_based",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "types": "accrued_holiday",
                 },
                 "request": undefined,
                 "response": {
@@ -3175,10 +3163,8 @@ exports[`open api parser deel simple 1`] = `
                   "contract_id": "string",
                 },
                 "query-parameters": {
-                  "contract_types": "ongoing_time_based",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "types": "accrued_holiday",
                 },
                 "request": undefined,
                 "response": {
@@ -5976,10 +5962,8 @@ exports[`open api parser deel simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "contract_types": "ongoing_time_based",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "statuses": "approved",
                 },
                 "request": undefined,
                 "response": {
@@ -6103,10 +6087,8 @@ exports[`open api parser deel simple 1`] = `
                   "contract_id": "string",
                 },
                 "query-parameters": {
-                  "contract_types": "ongoing_time_based",
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
-                  "statuses": "approved",
                 },
                 "request": undefined,
                 "response": {

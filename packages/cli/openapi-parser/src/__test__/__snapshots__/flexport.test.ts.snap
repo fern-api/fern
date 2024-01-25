@@ -44779,18 +44779,6 @@ Other details about this invoice",
               },
             },
             {
-              "name": "f.roles",
-              "value": {
-                "array": [
-                  {
-                    "enum": "buyer",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "f.shipment.id",
               "value": {
                 "primitive": {

@@ -16,18 +16,6 @@ exports[`open api parser hume parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "status",
-              "value": {
-                "array": [
-                  {
-                    "enum": "QUEUED",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "when",
               "value": {
                 "enum": "created_before",
