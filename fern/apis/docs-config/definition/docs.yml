@@ -180,8 +180,8 @@ types:
   FontConfigUnion:
     discriminated: false
     union:
-      - FontConfigV1
-      - list<FontConfigV1>
+      - FontConfig
+      - list<FontConfig>
 
   FontConfig:
     properties:
