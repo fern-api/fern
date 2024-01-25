@@ -286,7 +286,7 @@ jobs:
   ruby-sdk:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.changes.outputs.ruby-model == 'true'}}
+    if: ${{ needs.changes.outputs.ruby-sdk == 'true'}}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
