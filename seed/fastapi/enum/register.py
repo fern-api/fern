@@ -13,9 +13,9 @@ from fastapi import params
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
-from .inlined_request.service.service import AbstractInlinedRequestService
-from .path_param.service.service import AbstractPathParamService
-from .query_param.service.service import AbstractQueryParamService
+from .resources.inlined_request.service.service import AbstractInlinedRequestService
+from .resources.path_param.service.service import AbstractPathParamService
+from .resources.query_param.service.service import AbstractQueryParamService
 
 
 def register(

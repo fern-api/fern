@@ -5,9 +5,9 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .inlined_request._client import AsyncInlinedRequestClient, InlinedRequestClient
-from .path_param._client import AsyncPathParamClient, PathParamClient
-from .query_param._client import AsyncQueryParamClient, QueryParamClient
+from .resources.inlined_request.client import AsyncInlinedRequestClient, InlinedRequestClient
+from .resources.path_param.client import AsyncPathParamClient, PathParamClient
+from .resources.query_param.client import AsyncQueryParamClient, QueryParamClient
 
 
 class SeedEnum:

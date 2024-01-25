@@ -1,6 +1,9 @@
 name: seed
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     branches:
       - main
@@ -54,7 +57,7 @@ jobs:
   pydantic-model:
     runs-on: ubuntu-latest
     needs: changes
-    if:  ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
+    if: ${{ needs.changes.outputs.python == 'true' ||  needs.changes.outputs.seed == 'true' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
