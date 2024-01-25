@@ -19,6 +19,7 @@ jobs:
       python: ${{ steps.filter.outputs.python }}
       postman: ${{ steps.filter.outputs.postman }}
     steps:
+      - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
         id: filter
         with:
