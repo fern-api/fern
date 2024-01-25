@@ -1510,9 +1510,7 @@ exports[`open api parser hathora simple 1`] = `
                   "appId": "string",
                   "processId": "string",
                 },
-                "query-parameters": {
-                  "metrics": "cpu",
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {

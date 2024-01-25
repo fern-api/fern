@@ -689,54 +689,7 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "uid",
-              "value": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "transitions",
-              "value": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            {
-              "name": "version",
-              "value": {
-                "primitive": {
-                  "double": 1.1,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "userIdentifier",
-              "value": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BlockTransitionsRequest",
       "headers": [],
       "internal": undefined,
@@ -889,16 +842,6 @@ exports[`open api parser dopt parse open api 1`] = `
                   "type": "double",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "include",
-              "value": {
-                "literal": {
-                  "string": "block",
-                  "type": "string",
-                },
-                "type": "literal",
               },
             },
             {

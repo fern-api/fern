@@ -25,26 +25,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
             },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
           ],
           "request": undefined,
           "response": {
@@ -2076,28 +2056,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -2613,28 +2572,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -4394,28 +4332,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -6655,36 +6572,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "value": {
                 "enum": "SCHEDULED",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "include",
-              "value": {
-                "literal": {
-                  "string": "data",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "last_attempt_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
               },
             },
           ],
@@ -9414,61 +9301,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "dir": {
-                    "literal": {
-                      "string": "asc",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "include": {
-                    "literal": {
-                      "string": "data",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "order_by": {
-                    "literal": {
-                      "string": "last_attempt_at",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "status": {
-                    "enum": "SCHEDULED",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -14307,20 +14140,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "status": {
-                    "enum": "SCHEDULED",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {},
@@ -16339,35 +16159,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -17789,15 +17581,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {},
-                "type": "object",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {},
@@ -19611,26 +19395,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
             {
-              "name": "type",
-              "value": {
-                "literal": {
-                  "string": "delivery",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "status",
-              "value": {
-                "literal": {
-                  "string": "OPENED",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
               "name": "merged_with",
               "value": {
                 "primitive": {
@@ -19638,38 +19402,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "aggregation_keys",
-              "value": {
-                "properties": {
-                  "error_code": {
-                    "enum": "TIMEOUT",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
               },
             },
           ],
@@ -21348,26 +21080,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
             {
-              "name": "type",
-              "value": {
-                "literal": {
-                  "string": "delivery",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "status",
-              "value": {
-                "literal": {
-                  "string": "OPENED",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
               "name": "merged_with",
               "value": {
                 "primitive": {
@@ -21375,38 +21087,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "aggregation_keys",
-              "value": {
-                "properties": {
-                  "error_code": {
-                    "enum": "TIMEOUT",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
               },
             },
           ],
@@ -23305,36 +22985,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "value": {
                 "enum": "SOURCE_ARCHIVED",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "include",
-              "value": {
-                "literal": {
-                  "string": "data",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "ingested_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
               },
             },
           ],
@@ -25526,36 +25176,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
             },
-            {
-              "name": "include",
-              "value": {
-                "literal": {
-                  "string": "data",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "last_attempt_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
           ],
           "request": undefined,
           "response": {
@@ -27659,28 +27279,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -28073,65 +27672,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "dir": {
-                    "literal": {
-                      "string": "asc",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "include": {
-                    "literal": {
-                      "string": "data",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "order_by": {
-                    "literal": {
-                      "string": "ingested_at",
-                      "type": "string",
-                    },
-                    "type": "literal",
-                  },
-                  "rejection_cause": {
-                    "enum": "SOURCE_ARCHIVED",
-                    "type": "enum",
-                  },
-                  "status": {
-                    "enum": "accepted",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -32153,24 +31694,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "query",
-              "value": {
-                "properties": {
-                  "rejection_cause": {
-                    "enum": "SOURCE_ARCHIVED",
-                    "type": "enum",
-                  },
-                  "status": {
-                    "enum": "accepted",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {},
@@ -33787,28 +33311,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -36069,28 +35572,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -38196,28 +37678,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -39976,38 +39437,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [
-            {
-              "name": "log_level",
-              "value": {
-                "literal": {
-                  "string": "debug",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -41015,28 +40445,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "order_by",
-              "value": {
-                "literal": {
-                  "string": "created_at",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
-              "name": "dir",
-              "value": {
-                "literal": {
-                  "string": "asc",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {

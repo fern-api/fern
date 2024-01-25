@@ -12675,30 +12675,6 @@ If you try to access older information than what we can access, we will return a
               "root.PreconditionError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "headers": {
-                  "X-Belvo-Request-Mode": "async",
-                },
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "fields": "link,balance,account",
-                  "omit": "link,balance",
-                },
-                "request": {
-                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
-                  "date_from": "2020-08-05",
-                  "date_to": "2020-10-05",
-                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "token": "1234ab",
-                },
-                "response": {
-                  "body": {
-                    "request_id": "b5d0106ac9cc43d5b36199fe831f6bbe",
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/api/transactions",
             "request": {

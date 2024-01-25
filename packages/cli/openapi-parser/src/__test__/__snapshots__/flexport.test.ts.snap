@@ -26366,16 +26366,6 @@ we still recommend setting the Content-Type header to the value \`application/js
               },
             },
             {
-              "name": "sort",
-              "value": {
-                "literal": {
-                  "string": "due_date",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
               "name": "direction",
               "value": {
                 "enum": "asc",
@@ -44715,16 +44705,6 @@ Other details about this invoice",
               },
             },
             {
-              "name": "sort",
-              "value": {
-                "literal": {
-                  "string": "id",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
               "name": "direction",
               "value": {
                 "enum": "asc",
@@ -44776,18 +44756,6 @@ Other details about this invoice",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "f.roles",
-              "value": {
-                "array": [
-                  {
-                    "enum": "buyer",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
             {
