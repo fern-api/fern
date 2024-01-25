@@ -22,8 +22,8 @@ jobs:
       fastapi: ${{ steps.filter.outputs.fastapi }}
       pydantic: ${{ steps.filter.outputs.pydantic }}
       postman: ${{ steps.filter.outputs.postman }}
-      ruby-model: ${{ steps.filter.outputs.postman }}
-      ruby-sdk: ${{ steps.filter.outputs.postman }}
+      ruby-model: ${{ steps.filter.outputs.ruby-model }}
+      ruby-sdk: ${{ steps.filter.outputs.ruby-sdk }}
     steps:
       - uses: dorny/paths-filter@v2
         id: filter
