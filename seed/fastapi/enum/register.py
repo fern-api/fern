@@ -13,9 +13,22 @@ from fastapi import params
 from .core.abstract_fern_service import AbstractFernService
 from .core.exceptions import default_exception_handler, fern_http_exception_handler, http_exception_handler
 from .core.exceptions.fern_http_exception import FernHTTPException
+from .inlined_request.service.service import AbstractInlinedRequestService
+from .path_param.service.service import AbstractPathParamService
+from .query_param.service.service import AbstractQueryParamService
 
 
-def register(_app: fastapi.FastAPI, *, dependencies: typing.Optional[typing.Sequence[params.Depends]] = None) -> None:
+def register(
+    _app: fastapi.FastAPI,
+    *,
+    inlined_request: AbstractInlinedRequestService,
+    path_param: AbstractPathParamService,
+    query_param: AbstractQueryParamService,
+    dependencies: typing.Optional[typing.Sequence[params.Depends]] = None
+) -> None:
+    _app.include_router(__register_service(inlined_request), dependencies=dependencies)
+    _app.include_router(__register_service(path_param), dependencies=dependencies)
+    _app.include_router(__register_service(query_param), dependencies=dependencies)
 
     _app.add_exception_handler(FernHTTPException, fern_http_exception_handler)
     _app.add_exception_handler(starlette.exceptions.HTTPException, http_exception_handler)

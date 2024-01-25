@@ -2,5 +2,5 @@
 
 module SeedClient
   # @type [Hash{String => String}]
-  ONE = { one: "ONE", o_ne: "ONe" }.frozen
+  OPERAND = { greater_than: ">", equal_to: "=", less_than: "less_than" }.frozen
 end
