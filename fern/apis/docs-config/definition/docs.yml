@@ -119,54 +119,60 @@ types:
 
   LayoutConfig:
     properties:
-      pageWidth:
+      "page-width":
         type: optional<string>
         docs: |
           Sets the maximum width of the docs layout, including the sidebar and content.
-          If `pageWidth` is not set, the default value is 88rem (1408px).
+          If `page-width` is not set, the default value is 88rem (1408px).
 
           Valid options are:
           - `{number}rem`
           - `{number}px`
           - `full` (100% of the viewport width)
-      contentWidth:
+
+      "content-width":
         type: optional<string>
         docs: |
           Sets the maximum width of the markdown article content.
-          If `contentWidth` is not set, the default value is 44rem (704px).
+          If `content-width` is not set, the default value is 44rem (704px).
 
           Valid options are:
           - `{number}rem`
           - `{number}px`
-      sidebarWidth:
+
+      "sidebar-width":
         type: optional<string>
         docs: |
           Sets the width of the sidebar in desktop mode.
-          If `sidebarWidth` is not set, the default value is 18rem (288px).
+          If `sidebar-width` is not set, the default value is 18rem (288px).
 
           Valid options are:
           - `{number}rem`
           - `{number}px`
-      headerHeight:
+
+      "header-height":
         type: optional<string>
         docs: |
           Sets the height of the header.
-          If `headerHeight` is not set, the default value is 4rem (64px).
+          If `header-height` is not set, the default value is 4rem (64px).
 
           Valid options are:
           - `{number}rem`
           - `{number}px`
-      searchbarPosition:
-        type: SearchbarPosition
+
+      "searchbar-position":
+        type: optional<SidebarOrHeaderPlacement>
         docs: |
-          The `searchbarPosition` config is used to set the position of the searchbar.
-          If `searchbarPosition` is not set, the default value is `sidebar`.
+          Sets the placement of the searchbar.
+          If `searchbar-position` is not set, the default value is `sidebar`.
 
-          Valid options are:
-          - `header`
-          - `sidebar`
+      "tabs-position":
+        type: optional<SidebarOrHeaderPlacement>
+        docs: |
+          Set the placement of the tabs.
+          If `tabs-position` is not set, the default value is `sidebar`.
 
-  SearchbarPosition:
+  SidebarOrHeaderPlacement:
     enum:
       - header
       - sidebar
