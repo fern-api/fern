@@ -2,6 +2,16 @@
 
 from . import commons, folder_a, folder_b, folder_c, foo
 from .commons import Imported
-from .foo import ImportingType, OptionalString
+from .foo import FilteredType, ImportingType, OptionalString
 
-__all__ = ["Imported", "ImportingType", "OptionalString", "commons", "folder_a", "folder_b", "folder_c", "foo"]
+__all__ = [
+    "FilteredType",
+    "Imported",
+    "ImportingType",
+    "OptionalString",
+    "commons",
+    "folder_a",
+    "folder_b",
+    "folder_c",
+    "foo",
+]

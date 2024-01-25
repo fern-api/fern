@@ -3,20 +3,12 @@
 import typing
 from json.decoder import JSONDecodeError
 
-<<<<<<< HEAD:seed/sdk/audiences/src/seed/foo/_client.py
-from ..core.api_error import ApiError
-from ..core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from ..core.jsonable_encoder import jsonable_encoder
-from ..core.remove_none_from_dict import remove_none_from_dict
-from .importing_type import ImportingType
-from .optional_string import OptionalString
-=======
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
 from .types.importing_type import ImportingType
 from .types.optional_string import OptionalString
->>>>>>> parent of 8e57f682d (feature: reduce import length by getting rid of `resources` directory (#467)):seed/sdk/audiences/src/seed/resources/foo/client.py
 
 try:
     import pydantic.v1 as pydantic  # type: ignore

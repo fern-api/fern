@@ -143,7 +143,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
 
     def is_enum_or_optional_enum(self, *, reference: ir_types.TypeReference) -> bool:
         reference_union = reference.get_as_union()
-        while True:
+        while reference_union.type == "named" or reference_union.type == "container":
             if reference_union.type == "named":
                 declaration = self._context.pydantic_generator_context.get_declaration_for_type_id(
                     reference_union.type_id
