@@ -67,7 +67,7 @@ export async function visitDocsConfigFileYamlAst(
         });
     }
 
-    if (contents.typography?.codeFont != null) {
+    if (contents.typography?.codeFont?.path != null) {
         await visitFilepath({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.typography.codeFont.path,
@@ -75,20 +75,49 @@ export async function visitDocsConfigFileYamlAst(
             nodePath: ["typography", "codeFont"]
         });
     }
-    if (contents.typography?.bodyFont != null) {
+
+    for (const path of contents.typography?.codeFont?.paths ?? []) {
         await visitFilepath({
             absoluteFilepathToConfiguration,
-            rawUnresolvedFilepath: contents.typography.bodyFont.path,
+            rawUnresolvedFilepath: typeof path === "string" ? path : path.path,
             visitor,
             nodePath: ["typography", "codeFont"]
         });
     }
-    if (contents.typography?.headingsFont != null) {
+
+    if (contents.typography?.bodyFont?.path != null) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: contents.typography.bodyFont.path,
+            visitor,
+            nodePath: ["typography", "bodyFont"]
+        });
+    }
+
+    for (const path of contents.typography?.bodyFont?.paths ?? []) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: typeof path === "string" ? path : path.path,
+            visitor,
+            nodePath: ["typography", "bodyFont"]
+        });
+    }
+
+    if (contents.typography?.headingsFont?.path != null) {
         await visitFilepath({
             absoluteFilepathToConfiguration,
             rawUnresolvedFilepath: contents.typography.headingsFont.path,
             visitor,
-            nodePath: ["typography", "codeFont"]
+            nodePath: ["typography", "headingsFont"]
+        });
+    }
+
+    for (const path of contents.typography?.headingsFont?.paths ?? []) {
+        await visitFilepath({
+            absoluteFilepathToConfiguration,
+            rawUnresolvedFilepath: typeof path === "string" ? path : path.path,
+            visitor,
+            nodePath: ["typography", "headingsFont"]
         });
     }
 
