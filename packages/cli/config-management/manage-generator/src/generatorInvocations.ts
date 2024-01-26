@@ -50,7 +50,11 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.6.0"
+        version: "0.8.1",
+        output: {
+            location: "local-file-system",
+            path: "../generated/python"
+        }
     },
     [GeneratorName.GO_FIBER]: {
         version: "0.9.0"
