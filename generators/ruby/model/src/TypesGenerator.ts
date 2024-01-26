@@ -112,7 +112,7 @@ export class TypesGenerator {
             aliasTypeDeclaration,
             typeDeclaration
         );
-        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, aliasExpression);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, aliasExpression, typeDeclaration.name);
         return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateEnumFile(
@@ -120,7 +120,7 @@ export class TypesGenerator {
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
         const enumExpression = generateEnumDefinitionFromTypeDeclaration(enumTypeDeclaration, typeDeclaration);
-        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, enumExpression);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, enumExpression, typeDeclaration.name);
         return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateObjectFile(
@@ -135,7 +135,7 @@ export class TypesGenerator {
             objectTypeDeclaration,
             typeDeclaration
         );
-        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, serializableObject);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, serializableObject, typeDeclaration.name);
         return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUnionFile(
@@ -150,7 +150,7 @@ export class TypesGenerator {
             unionTypeDeclaration,
             typeDeclaration
         );
-        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, unionObject, typeDeclaration.name);
         return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUndiscriminatedUnionFile(
@@ -162,7 +162,7 @@ export class TypesGenerator {
             undiscriminatedUnionTypeDeclaration,
             typeDeclaration
         );
-        const rootNode = Module_.wrapInModules(this.directoryPrefix, typeDeclaration.name, unionObject);
+        const rootNode = Module_.wrapInModules(this.directoryPrefix, unionObject, typeDeclaration.name);
         return new GeneratedRubyFile({ rootNode, directoryPrefix: this.directoryPrefix, name: typeDeclaration.name });
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {

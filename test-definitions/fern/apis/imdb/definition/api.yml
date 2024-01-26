@@ -1,4 +1,10 @@
 name: api
+environments: 
+  Production:
+    urls: 
+      ServerA: https://api.buildwithfern.com
+      ServerB: https://api2.buildwithfern.com
+default-environment: Production
 error-discrimination:
   strategy: status-code
 auth: bearer

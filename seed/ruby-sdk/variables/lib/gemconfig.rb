@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SeedClient
+module SeedVariablesClient
   module Gemconfig
     VERSION = ""
     AUTHORS = [""].freeze

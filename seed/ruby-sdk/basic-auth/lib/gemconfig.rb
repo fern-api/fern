@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module SeedClient
+module SeedBasicAuthClient
   module Gemconfig
     VERSION = ""
     AUTHORS = [""].freeze

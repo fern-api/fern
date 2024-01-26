@@ -109,6 +109,7 @@ export const JsonClassReference = new ClassReference({
 export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
+export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {

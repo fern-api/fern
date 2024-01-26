@@ -8,7 +8,7 @@ import { getLocationForTypeDeclaration } from "./RubyUtilities";
 
 export declare namespace GeneratedRubyFile {
     export interface Init {
-        rootNode: AstNode;
+        rootNode: AstNode | AstNode[];
         directoryPrefix: RelativeFilePath;
         name: string | DeclaredTypeName;
         isTestFile?: boolean;
@@ -16,7 +16,7 @@ export declare namespace GeneratedRubyFile {
     }
 }
 export class GeneratedRubyFile extends GeneratedFile {
-    public rootNode: AstNode;
+    public rootNode: AstNode[];
 
     constructor({
         rootNode,
@@ -34,12 +34,15 @@ export class GeneratedRubyFile extends GeneratedFile {
         const fileName = path.parse(filePathFull).base;
         const filePath = path.parse(filePathFull).dir;
 
+        const nodesToWrite = rootNode instanceof Array ? rootNode : [rootNode];
+
         super(
             fileName,
             join(RelativeFilePath.of(updatedPrefix), directoryPrefix, RelativeFilePath.of(filePath)),
-            FROZEN_STRING_PREFIX + rootNode.write(0, AbsoluteFilePath.of("/" + filePath))
+            FROZEN_STRING_PREFIX +
+                nodesToWrite.map((node) => node.write(0, AbsoluteFilePath.of("/" + filePath))).join("\n")
         );
 
-        this.rootNode = rootNode;
+        this.rootNode = nodesToWrite;
     }
 }

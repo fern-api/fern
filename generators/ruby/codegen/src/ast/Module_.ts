@@ -30,8 +30,12 @@ export class Module_ extends AstNode {
     }
 
     // TODO: make this take into account the core client name
-    static wrapInModules<T extends AstNode>(rootModule: string, childName: DeclaredTypeName, child: T): Module_ | T {
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(childName);
+    static wrapInModules<T extends AstNode | AstNode[]>(
+        rootModule: string,
+        child: T,
+        childName?: DeclaredTypeName
+    ): Module_ | T {
+        const moduleBreadcrumbs = childName ? Module_.getModulePathFromTypeName(childName) : [];
         let moduleWrappedItem: Module_ | T = child;
         [rootModule, ...moduleBreadcrumbs].reverse().forEach(
             (mod) =>

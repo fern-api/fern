@@ -17,6 +17,8 @@ import {
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
+import { ClientsGenerator } from "./ClientsGenerator";
+import { getSdkVersion } from "./ConfigUtilities";
 import { parseCustomConfig, RubySdkCustomConfig } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfig> {
@@ -71,12 +73,14 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const generatedTypeFiles = new TypesGenerator(
+        const sdkVersion = getSdkVersion(config);
+        const generatedClientFiles = new ClientsGenerator(
             RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
             generatorContext,
-            intermediateRepresentation
+            intermediateRepresentation,
+            sdkVersion
         ).generateFiles();
-        this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
+        this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
     }
 
     private generateProject(
