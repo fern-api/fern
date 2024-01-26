@@ -1702,11 +1702,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -2283,11 +2280,8 @@ organization.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -3024,11 +3018,8 @@ and a logical concept denoted by the tag's name.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -3969,11 +3960,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -4508,11 +4496,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],

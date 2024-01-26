@@ -952,11 +952,8 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "response": {
             "properties": {
               "items": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
+                "map": [],
+                "type": "map",
               },
               "limit": {
                 "primitive": {
