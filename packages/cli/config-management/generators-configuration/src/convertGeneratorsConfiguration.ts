@@ -192,6 +192,8 @@ async function convertOutputMode({
                     coordinate: generator.output["package-name"]
                 })
             );
+        case "nuget":
+            throw new Error("Nuget is not supported");
         default:
             assertNever(generator.output);
     }
@@ -270,6 +272,8 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                               password: output.password ?? ""
                           }
             });
+        case "nuget":
+            throw new Error("Nuget is not supported");
         default:
             assertNever(output);
     }
