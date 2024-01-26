@@ -1,7 +1,7 @@
 By default, Fern employs an exponential backoff strategy with a maximum of two retries for each client. Users of the SDK can easily customize this behavior by adjusting the `maxRetries` parameter within the `config` section of the `generators.yml` file. Below is an illustrative example:
 
 <CodeBlock title="generators.yml">
-  ```mdx
+  ```yml
   groups:
   branch-python:
     generators:
@@ -12,4 +12,5 @@ By default, Fern employs an exponential backoff strategy with a maximum of two r
           mode: pull-request
         config:
           maxRetries: 6
+  ```
 </CodeBlock>
