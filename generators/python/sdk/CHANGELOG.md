@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.8.1] - 2024-01-26
+= Feature: If the auth scheme has environment variables specified, 
+  the generated python client will scan those environment variables. 
+
+  For example, for the following Fern Definition 
+  ```
+  auth: APIKey
+  auth-schemes:
+    APIKey:
+      header: X-FERN-API-KEY
+      type: string
+      env: FERN_API_KEY
+  ```
+  the generated client will look like
+  ```python
+  import os
+
+  class Client: 
+     
+    def __init__(self, *, apiKey: str = os.getenv("FERN_API_KEY"))
+  ```
+
 ## [0.8.0] - 2024-01-25
 = Fix: Enums in inlined requests send the appropriate value.
   ```python
