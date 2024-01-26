@@ -8,17 +8,17 @@ are some examples of what the Fern compiler can output:
 - A TypeScript Node.js SDK
 - FastAPI server boilerplate
 - A Postman Collection
-- An OpenAPI Specification
+- An OpenAPI Description
 
 To support the long and growing list of outputs, we've built the Fern Compiler
-to be **modular.** The core compiler is responsible for parsing and validating
+to be **modular**. The core compiler is responsible for parsing and validating
 your API definition and producing the intermediate representation.
 
-The remaining work is handled by **generators.** A Fern generator is a program
+The remaining work is handled by **generators**. A Fern generator is a program
 that takes in an intermediate representation and outputs... something. Generators can be written in any language.
 
-specify which generators you want the compiler to run using the special file
-`generators.yml`. You can view the list of available generators [here](generators).
+Specify which generators you want the compiler to run using the special file
+`generators.yml`. For a list of available generators, see [Generators](https://docs.buildwithfern.com/overview/welcome/generators).
 
 ## Generator schema 
 
