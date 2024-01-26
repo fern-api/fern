@@ -113,6 +113,8 @@ navigation:
     layout:
       - section: Generators
         contents:
+          - page: Retry Logic
+            path: ./docs/pages/sdks/retry.mdx
           - page: TypeScript Node.js SDK
             path: ./docs/pages/sdks/node-sdk.mdx
           - page: TypeScript Browser SDK
