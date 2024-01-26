@@ -6,7 +6,7 @@ import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 import { getObjectPropertiesFromRawObjectSchema } from "../type-declarations/convertObjectTypeDeclaration";
 
-export function convertHttpResponse({
+export async function convertHttpResponse({
     endpoint,
     file,
     typeResolver
@@ -14,7 +14,7 @@ export function convertHttpResponse({
     endpoint: RawSchemas.HttpEndpointSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): HttpResponse | undefined {
+}): Promise<HttpResponse | undefined> {
     const { response, ["response-stream"]: responseStream } = endpoint;
 
     if (response != null) {
@@ -30,7 +30,7 @@ export function convertHttpResponse({
                 docs
             });
         } else {
-            return convertJsonResponse(response, docs, file, typeResolver);
+            return await convertJsonResponse(response, docs, file, typeResolver);
         }
     }
 
@@ -57,12 +57,12 @@ function constructStreamingResponseChunkType(
     }
 }
 
-function convertJsonResponse(
+async function convertJsonResponse(
     response: RawSchemas.HttpResponseSchema | string,
     docs: string | undefined,
     file: FernFileContext,
     typeResolver: TypeResolver
-): HttpResponse {
+): Promise<HttpResponse> {
     const responseBodyType = file.parseTypeReference(response);
     const resolvedType = typeResolver.resolveTypeOrThrow({
         type: typeof response !== "string" ? response.type : response,
@@ -74,7 +74,12 @@ function convertJsonResponse(
             JsonResponse.nestedPropertyAsResponse({
                 docs,
                 responseBodyType,
-                responseProperty: getObjectPropertyFromResolvedType(resolvedType, responseProperty, file, typeResolver)
+                responseProperty: await getObjectPropertyFromResolvedType(
+                    resolvedType,
+                    responseProperty,
+                    file,
+                    typeResolver
+                )
             })
         );
     }
@@ -86,21 +91,26 @@ function convertJsonResponse(
     );
 }
 
-function getObjectPropertyFromResolvedType(
+async function getObjectPropertyFromResolvedType(
     resolvedType: ResolvedType,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): ObjectProperty {
+): Promise<ObjectProperty> {
     switch (resolvedType._type) {
         case "container":
             if (resolvedType.container._type === "optional") {
-                return getObjectPropertyFromResolvedType(resolvedType.container.itemType, property, file, typeResolver);
+                return await getObjectPropertyFromResolvedType(
+                    resolvedType.container.itemType,
+                    property,
+                    file,
+                    typeResolver
+                );
             }
             break;
         case "named":
             if (isRawObjectDefinition(resolvedType.declaration)) {
-                return getObjectPropertyFromObjectSchema(
+                return await getObjectPropertyFromObjectSchema(
                     resolvedType.declaration,
                     property,
                     resolvedType.file,
@@ -117,24 +127,25 @@ function getObjectPropertyFromResolvedType(
     throw new Error("Internal error; response must be an object in order to return a property as a response");
 }
 
-function getObjectPropertyFromObjectSchema(
+async function getObjectPropertyFromObjectSchema(
     objectSchema: RawSchemas.ObjectSchema,
     property: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): ObjectProperty {
-    const properties = getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
+): Promise<ObjectProperty> {
+    const properties = await getAllPropertiesForRawObjectSchema(objectSchema, file, typeResolver);
     const objectProperty = properties[property];
     if (objectProperty == null) {
         throw new Error(`Response does not have a property named ${property}.`);
     }
     return objectProperty;
 }
-function getAllPropertiesForRawObjectSchema(
+
+async function getAllPropertiesForRawObjectSchema(
     objectSchema: RawSchemas.ObjectSchema,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Record<string, ObjectProperty> {
+): Promise<Record<string, ObjectProperty>> {
     let extendedTypes: string[] = [];
     if (typeof objectSchema.extends === "string") {
         extendedTypes = [objectSchema.extends];
@@ -144,30 +155,31 @@ function getAllPropertiesForRawObjectSchema(
 
     const properties: Record<string, ObjectProperty> = {};
     for (const extendedType of extendedTypes) {
-        const extendedProperties = getAllPropertiesForExtendedType(extendedType, file, typeResolver);
+        const extendedProperties = await getAllPropertiesForExtendedType(extendedType, file, typeResolver);
         Object.entries(extendedProperties).map(([propertyKey, objectProperty]) => {
             properties[propertyKey] = objectProperty;
         });
     }
 
-    const objectProperties = getObjectPropertiesFromRawObjectSchema(objectSchema, file);
+    const objectProperties = await getObjectPropertiesFromRawObjectSchema(objectSchema, file);
     objectProperties.forEach((objectProperty) => {
         properties[objectProperty.name.name.originalName] = objectProperty;
     });
 
     return properties;
 }
-function getAllPropertiesForExtendedType(
+
+async function getAllPropertiesForExtendedType(
     extendedType: string,
     file: FernFileContext,
     typeResolver: TypeResolver
-): Record<string, ObjectProperty> {
+): Promise<Record<string, ObjectProperty>> {
     const resolvedType = typeResolver.resolveNamedTypeOrThrow({
         referenceToNamedType: extendedType,
         file
     });
     if (resolvedType._type === "named" && isRawObjectDefinition(resolvedType.declaration)) {
-        return getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
+        return await getAllPropertiesForRawObjectSchema(resolvedType.declaration, file, typeResolver);
     }
     // This should be unreachable; extended types must be named objects.
     throw new Error(`Extended type ${extendedType} must be another named type`);

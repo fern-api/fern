@@ -24,10 +24,12 @@ export interface RawAsyncAPIFile {
 export async function parse({
     absolutePathToAsyncAPI,
     absolutePathToOpenAPI,
+    absolutePathToOpenAPIOverrides,
     taskContext
 }: {
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
     absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     taskContext: TaskContext;
 }): Promise<OpenAPIIntermediateRepresentation> {
     let asyncAPISchemas: Record<SchemaId, Schema> = {};
@@ -36,7 +38,11 @@ export async function parse({
         asyncAPISchemas = generateSchemasFromAsyncAPI(asyncAPI, taskContext);
     }
 
-    const openApiDocument = await loadOpenAPI(absolutePathToOpenAPI);
+    const openApiDocument = await loadOpenAPI({
+        absolutePathToOpenAPI,
+        context: taskContext,
+        absolutePathToOpenAPIOverrides
+    });
     let openApiIr: OpenAPIIntermediateRepresentation | undefined = undefined;
     if (isOpenApiV3(openApiDocument)) {
         openApiIr = generateIrFromV3(openApiDocument, taskContext);

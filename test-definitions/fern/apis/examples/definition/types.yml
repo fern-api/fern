@@ -33,6 +33,40 @@ types:
           rating: 8.0
           type: movie
           tag: $commons.Tag.One
+  
+  CastMember: 
+    discriminated: false
+    union: 
+      - Actor
+      - Actress
+      - StuntDouble
+    examples: 
+      - name: Example0
+        value: 
+          id: actor_123
+          name: "Brad Pitt"
+      - name: Example1
+        value: $Actress.Example0
+          
+  Actor: 
+    properties: 
+      name: string
+      id: string
+  
+  Actress: 
+    properties: 
+      name: string
+      id: string
+    examples: 
+      - name: Example0
+        value: 
+          name: Jennifer Lawrence
+          id: actor_456
+  
+  StuntDouble: 
+    properties: 
+      name: string
+      actorOrActressId: string
 
   ExtendedMovie:
     extends: Movie

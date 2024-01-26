@@ -5,6 +5,7 @@ import { createMockTaskContext } from "@fern-api/task-context";
 import { APIWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import path from "path";
+// import * as prettier from "prettier";
 import { generateIntermediateRepresentation } from "../generateIntermediateRepresentation";
 
 require("jest-specific-snapshot");

@@ -1,9 +1,14 @@
 import SwaggerParser from "@apidevtools/swagger-parser";
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, dirname, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { TaskContext } from "@fern-api/task-context";
 import { bundle, Config } from "@redocly/openapi-core";
 import { Plugin } from "@redocly/openapi-core/lib/config";
 import { NodeType } from "@redocly/openapi-core/lib/types";
+import { readFile } from "fs/promises";
+import yaml from "js-yaml";
+import { merge } from "lodash-es";
 import { OpenAPI } from "openapi-types";
+import { FernOpenAPIExtension } from "./v3/extensions/fernExtensions";
 
 const XFernStreaming: NodeType = {
     properties: {
@@ -34,7 +39,15 @@ const FERN_TYPE_EXTENSIONS: Plugin = {
     }
 };
 
-export async function loadOpenAPI(absoluteFilePathToOpenAPI: AbsoluteFilePath): Promise<OpenAPI.Document> {
+export async function loadOpenAPI({
+    absolutePathToOpenAPI,
+    absolutePathToOpenAPIOverrides,
+    context
+}: {
+    absolutePathToOpenAPI: AbsoluteFilePath;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
+    context: TaskContext;
+}): Promise<OpenAPI.Document> {
     const result = await bundle({
         config: new Config(
             {
@@ -48,11 +61,39 @@ export async function loadOpenAPI(absoluteFilePathToOpenAPI: AbsoluteFilePath): 
             },
             undefined
         ),
-        ref: absoluteFilePathToOpenAPI,
+        ref: absolutePathToOpenAPI,
         dereference: false,
         removeUnusedComponents: false,
         keepUrlRefs: true
     });
+    const parsed = await SwaggerParser.parse(result.bundle.parsed);
 
-    return await SwaggerParser.parse(result.bundle.parsed);
+    let overridesFilepath = undefined;
+    if (absolutePathToOpenAPIOverrides != null) {
+        overridesFilepath = absolutePathToOpenAPIOverrides;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } else if (typeof parsed === "object" && (parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH] != null) {
+        overridesFilepath = join(
+            dirname(absolutePathToOpenAPI),
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            RelativeFilePath.of((parsed as any)[FernOpenAPIExtension.OPENAPI_OVERIDES_FILEPATH])
+        );
+    }
+
+    if (overridesFilepath != null) {
+        let parsedOverrides = null;
+        try {
+            const contents = (await readFile(overridesFilepath, "utf8")).toString();
+            try {
+                parsedOverrides = JSON.parse(contents);
+            } catch (err) {
+                parsedOverrides = yaml.load(contents, { json: true });
+            }
+        } catch (err) {
+            return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
+        }
+        const merged = merge({}, parsed, parsedOverrides) as OpenAPI.Document;
+        return merged;
+    }
+    return parsed;
 }

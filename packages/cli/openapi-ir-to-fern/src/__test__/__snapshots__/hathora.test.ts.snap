@@ -3,720 +3,6 @@
 exports[`open api parser hathora simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "errors": {
-        "BadRequestError": {
-          "status-code": 400,
-          "type": "string",
-        },
-        "InternalServerError": {
-          "status-code": 500,
-          "type": "string",
-        },
-        "NotFoundError": {
-          "status-code": 404,
-          "type": "string",
-        },
-        "TooManyRequestsError": {
-          "status-code": 429,
-          "type": "string",
-        },
-        "UnauthorizedError": {
-          "status-code": 401,
-          "type": "string",
-        },
-        "UnprocessableEntityError": {
-          "status-code": 422,
-          "type": "string",
-        },
-      },
-      "service": undefined,
-      "types": {
-        "ActiveConnectionInfo": {
-          "docs": undefined,
-          "properties": {
-            "host": "string",
-            "port": "double",
-            "roomId": {
-              "docs": undefined,
-              "type": "RoomId",
-            },
-            "transportType": {
-              "docs": undefined,
-              "type": "TransportType",
-            },
-          },
-        },
-        "AppConfig": {
-          "docs": undefined,
-          "properties": {
-            "appName": "string",
-            "authConfiguration": {
-              "docs": undefined,
-              "type": "AppConfigAuthConfiguration",
-            },
-          },
-        },
-        "AppConfigAuthConfiguration": {
-          "docs": undefined,
-          "properties": {
-            "anonymous": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-            "google": {
-              "docs": undefined,
-              "type": "optional<AppConfigAuthConfigurationGoogle>",
-            },
-            "nickname": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-          },
-        },
-        "AppConfigAuthConfigurationGoogle": {
-          "docs": undefined,
-          "properties": {
-            "clientId": "string",
-          },
-        },
-        "AppId": "string",
-        "Application": {
-          "docs": undefined,
-          "properties": {
-            "appId": "string",
-            "appName": "string",
-            "appSecret": "string",
-            "authConfiguration": {
-              "docs": undefined,
-              "type": "ApplicationAuthConfiguration",
-            },
-            "createdAt": "datetime",
-            "createdBy": "string",
-            "deletedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "deletedBy": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "orgId": {
-              "docs": undefined,
-              "type": "OrgId",
-            },
-          },
-        },
-        "ApplicationAuthConfiguration": {
-          "docs": undefined,
-          "properties": {
-            "anonymous": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-            "google": {
-              "docs": undefined,
-              "type": "optional<ApplicationAuthConfigurationGoogle>",
-            },
-            "nickname": {
-              "docs": undefined,
-              "type": "optional<RecordStringNever>",
-            },
-          },
-        },
-        "ApplicationAuthConfigurationGoogle": {
-          "docs": undefined,
-          "properties": {
-            "clientId": "string",
-          },
-        },
-        "ApplicationWithDeployment": {
-          "docs": undefined,
-          "extends": [
-            "Application",
-          ],
-          "properties": {
-            "deployment": {
-              "docs": undefined,
-              "type": "Deployment",
-            },
-          },
-        },
-        "Build": {
-          "docs": undefined,
-          "properties": {
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "buildId": {
-              "docs": undefined,
-              "type": "BuildId",
-            },
-            "createdAt": "datetime",
-            "createdBy": "string",
-            "deletedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "finishedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "imageSize": "double",
-            "regionalContainerTags": {
-              "docs": undefined,
-              "type": "list<BuildRegionalContainerTagsItem>",
-            },
-            "startedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "status": {
-              "docs": undefined,
-              "type": "BuildStatus",
-            },
-          },
-        },
-        "BuildId": "double",
-        "BuildRegionalContainerTagsItem": {
-          "docs": undefined,
-          "properties": {
-            "containerTag": "string",
-            "region": {
-              "docs": undefined,
-              "type": "Region",
-            },
-          },
-        },
-        "BuildStatus": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "created",
-              "value": "created",
-            },
-            {
-              "docs": undefined,
-              "name": "running",
-              "value": "running",
-            },
-            {
-              "docs": undefined,
-              "name": "succeeded",
-              "value": "succeeded",
-            },
-            {
-              "docs": undefined,
-              "name": "failed",
-              "value": "failed",
-            },
-          ],
-        },
-        "ConnectionInfo": {
-          "base-properties": {},
-          "discriminant": "status",
-          "docs": undefined,
-          "union": {
-            "active": {
-              "docs": undefined,
-              "type": "ActiveConnectionInfo",
-            },
-            "starting": {
-              "docs": undefined,
-              "type": "StartingConnectionInfo",
-            },
-          },
-        },
-        "CreateLobbyRequestVisibility": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "public",
-              "value": "public",
-            },
-            {
-              "docs": undefined,
-              "name": "private",
-              "value": "private",
-            },
-            {
-              "docs": undefined,
-              "name": "local",
-              "value": "local",
-            },
-          ],
-        },
-        "Deployment": {
-          "docs": undefined,
-          "extends": [
-            "DeploymentConfig",
-          ],
-          "properties": {
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "buildId": {
-              "docs": undefined,
-              "type": "BuildId",
-            },
-            "createdAt": "datetime",
-            "createdBy": "string",
-            "deploymentId": {
-              "docs": undefined,
-              "type": "DeploymentId",
-            },
-            "requestedCPU": "double",
-            "requestedMemoryMB": "double",
-          },
-        },
-        "DeploymentConfig": {
-          "docs": undefined,
-          "properties": {
-            "containerPort": "integer",
-            "env": {
-              "docs": undefined,
-              "type": "list<DeploymentConfigEnvItem>",
-            },
-            "planName": {
-              "docs": undefined,
-              "type": "PlanName",
-            },
-            "roomsPerProcess": "integer",
-            "transportType": {
-              "docs": undefined,
-              "type": "TransportType",
-            },
-          },
-        },
-        "DeploymentConfigEnvItem": {
-          "docs": undefined,
-          "properties": {
-            "name": "string",
-            "value": "string",
-          },
-        },
-        "DeploymentId": "double",
-        "DiscoveryResponse": {
-          "docs": undefined,
-          "type": "list<DiscoveryResponseItem>",
-        },
-        "DiscoveryResponseItem": {
-          "docs": undefined,
-          "properties": {
-            "host": "string",
-            "port": "double",
-            "region": {
-              "docs": undefined,
-              "type": "Region",
-            },
-          },
-        },
-        "Lobby": {
-          "docs": undefined,
-          "properties": {
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "createdAt": "datetime",
-            "createdBy": "string",
-            "initialConfig": {
-              "docs": undefined,
-              "type": "map<string, unknown>",
-            },
-            "local": "boolean",
-            "region": {
-              "docs": undefined,
-              "type": "Region",
-            },
-            "roomId": {
-              "docs": undefined,
-              "type": "RoomId",
-            },
-            "state": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-            "visibility": {
-              "docs": undefined,
-              "type": "LobbyVisibility",
-            },
-          },
-        },
-        "LobbyVisibility": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "private",
-              "value": "private",
-            },
-            {
-              "docs": undefined,
-              "name": "public",
-              "value": "public",
-            },
-            {
-              "docs": undefined,
-              "name": "local",
-              "value": "local",
-            },
-          ],
-        },
-        "LoginAnonymousResponse": {
-          "docs": undefined,
-          "properties": {
-            "token": "string",
-          },
-        },
-        "LoginGoogleResponse": {
-          "docs": undefined,
-          "properties": {
-            "token": "string",
-          },
-        },
-        "LoginNicknameResponse": {
-          "docs": undefined,
-          "properties": {
-            "token": "string",
-          },
-        },
-        "MetricName": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "cpu",
-              "value": "cpu",
-            },
-            {
-              "docs": undefined,
-              "name": "memory",
-              "value": "memory",
-            },
-            {
-              "docs": undefined,
-              "name": "rate_egress",
-              "value": "rate_egress",
-            },
-            {
-              "docs": undefined,
-              "name": "total_egress",
-              "value": "total_egress",
-            },
-          ],
-        },
-        "MetricValue": {
-          "docs": undefined,
-          "properties": {
-            "timestamp": "double",
-            "value": "double",
-          },
-        },
-        "MetricsResponse": {
-          "docs": undefined,
-          "type": "RecordPartialMetricNameMetricValueArray",
-        },
-        "OmitRoomAllocations": {
-          "docs": "Construct a type with the properties of T except for those in type K.",
-          "type": "PickRoomExcludeKeyofRoomAllocations",
-        },
-        "OrgId": "string",
-        "PickRoomExcludeKeyofRoomAllocations": {
-          "docs": "From T, pick a set of properties whose keys are in the union K",
-          "properties": {
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "currentAllocation": {
-              "docs": undefined,
-              "type": "optional<RoomAllocation>",
-            },
-            "roomId": {
-              "docs": undefined,
-              "type": "RoomId",
-            },
-            "status": {
-              "docs": undefined,
-              "type": "RoomStatus",
-            },
-          },
-        },
-        "PlanName": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "tiny",
-              "value": "tiny",
-            },
-            {
-              "docs": undefined,
-              "name": "small",
-              "value": "small",
-            },
-            {
-              "docs": undefined,
-              "name": "medium",
-              "value": "medium",
-            },
-            {
-              "docs": undefined,
-              "name": "large",
-              "value": "large",
-            },
-          ],
-        },
-        "Process": {
-          "docs": undefined,
-          "properties": {
-            "activeConnections": "double",
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "deploymentId": {
-              "docs": undefined,
-              "type": "DeploymentId",
-            },
-            "draining": "boolean",
-            "egressedBytes": "double",
-            "host": "string",
-            "idleSince": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "port": "double",
-            "processId": {
-              "docs": undefined,
-              "type": "ProcessId",
-            },
-            "region": {
-              "docs": undefined,
-              "type": "Region",
-            },
-            "roomSlotsAvailable": "double",
-            "roomsPerProcess": "double",
-            "startedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "startingAt": "datetime",
-            "stoppingAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "terminatedAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "ProcessId": "string",
-        "ProcessWithRooms": {
-          "docs": undefined,
-          "extends": [
-            "Process",
-          ],
-          "properties": {
-            "rooms": {
-              "docs": undefined,
-              "type": "list<RoomWithoutAllocations>",
-            },
-            "totalRooms": "double",
-          },
-        },
-        "RecordPartialMetricNameMetricValueArray": {
-          "docs": "Construct a type with a set of properties K of type T",
-          "properties": {
-            "cpu": {
-              "docs": undefined,
-              "type": "optional<list<MetricValue>>",
-            },
-            "memory": {
-              "docs": undefined,
-              "type": "optional<list<MetricValue>>",
-            },
-            "rate_egress": {
-              "docs": undefined,
-              "type": "optional<list<MetricValue>>",
-            },
-            "total_egress": {
-              "docs": undefined,
-              "type": "optional<list<MetricValue>>",
-            },
-          },
-        },
-        "RecordStringNever": {
-          "docs": "Construct a type with a set of properties K of type T",
-          "properties": {},
-        },
-        "Region": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "Seattle",
-              "value": "Seattle",
-            },
-            {
-              "docs": undefined,
-              "name": "Washington_DC",
-              "value": "Washington_DC",
-            },
-            {
-              "docs": undefined,
-              "name": "Chicago",
-              "value": "Chicago",
-            },
-            {
-              "docs": undefined,
-              "name": "London",
-              "value": "London",
-            },
-            {
-              "docs": undefined,
-              "name": "Frankfurt",
-              "value": "Frankfurt",
-            },
-            {
-              "docs": undefined,
-              "name": "Mumbai",
-              "value": "Mumbai",
-            },
-            {
-              "docs": undefined,
-              "name": "Singapore",
-              "value": "Singapore",
-            },
-            {
-              "docs": undefined,
-              "name": "Tokyo",
-              "value": "Tokyo",
-            },
-            {
-              "docs": undefined,
-              "name": "Sydney",
-              "value": "Sydney",
-            },
-            {
-              "docs": undefined,
-              "name": "Sao_Paulo",
-              "value": "Sao_Paulo",
-            },
-          ],
-        },
-        "Room": {
-          "docs": undefined,
-          "properties": {
-            "allocations": {
-              "docs": undefined,
-              "type": "list<RoomAllocation>",
-            },
-            "appId": {
-              "docs": undefined,
-              "type": "AppId",
-            },
-            "currentAllocation": {
-              "docs": undefined,
-              "type": "optional<RoomAllocation>",
-            },
-            "roomId": {
-              "docs": undefined,
-              "type": "RoomId",
-            },
-            "status": {
-              "docs": undefined,
-              "type": "RoomStatus",
-            },
-          },
-        },
-        "RoomAllocation": {
-          "docs": undefined,
-          "properties": {
-            "processId": {
-              "docs": undefined,
-              "type": "ProcessId",
-            },
-            "roomAllocationId": {
-              "docs": undefined,
-              "type": "RoomAllocationId",
-            },
-            "scheduledAt": "datetime",
-            "unscheduledAt": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "RoomAllocationId": "string",
-        "RoomId": "string",
-        "RoomStatus": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "scheduling",
-              "value": "scheduling",
-            },
-            {
-              "docs": undefined,
-              "name": "active",
-              "value": "active",
-            },
-            {
-              "docs": undefined,
-              "name": "suspended",
-              "value": "suspended",
-            },
-            {
-              "docs": undefined,
-              "name": "destroyed",
-              "value": "destroyed",
-            },
-          ],
-        },
-        "RoomWithoutAllocations": {
-          "docs": undefined,
-          "type": "OmitRoomAllocations",
-        },
-        "StartingConnectionInfo": {
-          "docs": undefined,
-          "properties": {
-            "roomId": {
-              "docs": undefined,
-              "type": "RoomId",
-            },
-          },
-        },
-        "TailLines": "integer",
-        "TransportType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "tcp",
-              "value": "tcp",
-            },
-            {
-              "docs": undefined,
-              "name": "udp",
-              "value": "udp",
-            },
-            {
-              "docs": undefined,
-              "name": "tls",
-              "value": "tls",
-            },
-          ],
-        },
-      },
-    },
     "appV1.yml": {
       "imports": {
         "root": "__package__.yml",
@@ -732,13 +18,44 @@ exports[`open api parser hathora simple 1`] = `
               "root.UnprocessableEntityError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "appName": "string",
+                  "authConfiguration": {
+                    "anonymous": {},
+                    "google": {
+                      "clientId": "string",
+                    },
+                    "nickname": {},
+                  },
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "appName": "string",
+                    "appSecret": "string",
+                    "authConfiguration": {
+                      "anonymous": {},
+                      "google": {
+                        "clientId": "string",
+                      },
+                      "nickname": {},
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "orgId": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/apps/v1/create",
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AppConfig",
-              },
+              "body": "root.AppConfig",
             },
             "response": {
               "docs": "",
@@ -756,7 +73,7 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -766,10 +83,7 @@ exports[`open api parser hathora simple 1`] = `
             "method": "DELETE",
             "path": "/apps/v1/delete/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
           },
           "GetAppInfo": {
@@ -778,13 +92,37 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "appName": "string",
+                    "appSecret": "string",
+                    "authConfiguration": {
+                      "anonymous": {},
+                      "google": {
+                        "clientId": "string",
+                      },
+                      "nickname": {},
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "orgId": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/apps/v1/info/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -794,7 +132,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetApps": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -802,7 +139,42 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "appName": "string",
+                      "appSecret": "string",
+                      "authConfiguration": {
+                        "anonymous": {},
+                        "google": {
+                          "clientId": "string",
+                        },
+                        "nickname": {},
+                      },
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "string",
+                      "deployment": {
+                        "appId": "string",
+                        "buildId": 1.1,
+                        "containerPort": 1,
+                        "createdAt": "2024-01-15T09:30:00Z",
+                        "createdBy": "string",
+                        "deploymentId": 1.1,
+                        "env": [
+                          {
+                            "name": "string",
+                            "value": "string",
+                          },
+                        ],
+                        "planName": "tiny",
+                        "requestedCPU": 1.1,
+                        "requestedMemoryMB": 1.1,
+                        "roomsPerProcess": 1,
+                        "transportType": "tcp",
+                      },
+                      "orgId": "string",
+                    },
+                  ],
                 },
               },
             ],
@@ -820,19 +192,49 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "appName": "string",
+                  "authConfiguration": {
+                    "anonymous": {},
+                    "google": {
+                      "clientId": "string",
+                    },
+                    "nickname": {},
+                  },
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "appName": "string",
+                    "appSecret": "string",
+                    "authConfiguration": {
+                      "anonymous": {},
+                      "google": {
+                        "clientId": "string",
+                      },
+                      "nickname": {},
+                    },
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "orgId": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/apps/v1/update/{appId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.AppConfig",
-              },
+              "body": "root.AppConfig",
             },
             "response": {
               "docs": "Ok",
@@ -856,17 +258,29 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "token": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/anonymous",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginAnonymousResponse",
+              "type": "LoginAnonymousResponse",
             },
           },
           "LoginGoogle": {
@@ -876,13 +290,27 @@ exports[`open api parser hathora simple 1`] = `
               "root.UnauthorizedError",
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "idToken": "string",
+                },
+                "response": {
+                  "body": {
+                    "token": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/google",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -896,7 +324,7 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginGoogleResponse",
+              "type": "LoginGoogleResponse",
             },
           },
           "LoginNickname": {
@@ -905,13 +333,27 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "nickname": "string",
+                },
+                "response": {
+                  "body": {
+                    "token": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/auth/v1/{appId}/login/nickname",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
@@ -925,8 +367,28 @@ exports[`open api parser hathora simple 1`] = `
             },
             "response": {
               "docs": "Ok",
-              "type": "root.LoginNicknameResponse",
+              "type": "LoginNicknameResponse",
             },
+          },
+        },
+      },
+      "types": {
+        "LoginAnonymousResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginGoogleResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
+          },
+        },
+        "LoginNicknameResponse": {
+          "docs": undefined,
+          "properties": {
+            "token": "string",
           },
         },
       },
@@ -947,13 +409,36 @@ exports[`open api parser hathora simple 1`] = `
               "root.UnprocessableEntityError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "buildId": 1.1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "imageSize": 1.1,
+                    "regionalContainerTags": [
+                      {
+                        "containerTag": "string",
+                        "region": "Seattle",
+                      },
+                    ],
+                    "status": "created",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/builds/v1/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "",
@@ -972,7 +457,7 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                   "buildId": 1.1,
                 },
                 "query-parameters": undefined,
@@ -983,14 +468,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "DELETE",
             "path": "/builds/v1/{appId}/delete/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
           },
           "GetBuildInfo": {
@@ -999,17 +478,38 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "buildId": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "buildId": 1.1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "imageSize": 1.1,
+                    "regionalContainerTags": [
+                      {
+                        "containerTag": "string",
+                        "region": "Seattle",
+                      },
+                    ],
+                    "status": "created",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/builds/v1/{appId}/info/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "response": {
               "docs": "Ok",
@@ -1026,22 +526,34 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "buildId": 1.1,
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "string",
+                      "imageSize": 1.1,
+                      "regionalContainerTags": [
+                        {
+                          "containerTag": "string",
+                          "region": "Seattle",
+                        },
+                      ],
+                      "status": "created",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/builds/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -1051,18 +563,11 @@ exports[`open api parser hathora simple 1`] = `
           "RunBuild": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "POST",
             "path": "/builds/v1/{appId}/run/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "request": {
               "body": {
@@ -1098,23 +603,57 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "buildId": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "containerPort": 1,
+                  "env": [
+                    {
+                      "name": "string",
+                      "value": "string",
+                    },
+                  ],
+                  "planName": "tiny",
+                  "roomsPerProcess": 1,
+                  "transportType": "tcp",
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "buildId": 1.1,
+                    "containerPort": 1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "deploymentId": 1.1,
+                    "env": [
+                      {
+                        "name": "string",
+                        "value": "string",
+                      },
+                    ],
+                    "planName": "tiny",
+                    "requestedCPU": 1.1,
+                    "requestedMemoryMB": 1.1,
+                    "roomsPerProcess": 1,
+                    "transportType": "tcp",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/deployments/v1/{appId}/create/{buildId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "buildId": {
-                "docs": undefined,
-                "type": "root.BuildId",
-              },
+              "appId": "root.AppId",
+              "buildId": "root.BuildId",
             },
             "request": {
-              "body": {
-                "docs": undefined,
-                "type": "root.DeploymentConfig",
-              },
+              "body": "root.DeploymentConfig",
             },
             "response": {
               "docs": "",
@@ -1127,17 +666,43 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "deploymentId": 1.1,
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "buildId": 1.1,
+                    "containerPort": 1,
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "deploymentId": 1.1,
+                    "env": [
+                      {
+                        "name": "string",
+                        "value": "string",
+                      },
+                    ],
+                    "planName": "tiny",
+                    "requestedCPU": 1.1,
+                    "requestedMemoryMB": 1.1,
+                    "roomsPerProcess": 1,
+                    "transportType": "tcp",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/deployments/v1/{appId}/info/{deploymentId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "deploymentId": {
-                "docs": undefined,
-                "type": "root.DeploymentId",
-              },
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
             },
             "response": {
               "docs": "Ok",
@@ -1154,22 +719,39 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "buildId": 1.1,
+                      "containerPort": 1,
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "string",
+                      "deploymentId": 1.1,
+                      "env": [
+                        {
+                          "name": "string",
+                          "value": "string",
+                        },
+                      ],
+                      "planName": "tiny",
+                      "requestedCPU": 1.1,
+                      "requestedMemoryMB": 1.1,
+                      "roomsPerProcess": 1,
+                      "transportType": "tcp",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/deployments/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "response": {
               "docs": "Ok",
@@ -1190,7 +772,6 @@ exports[`open api parser hathora simple 1`] = `
           "GetPingServiceEndpoints": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -1198,7 +779,13 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "host": "string",
+                      "port": 1.1,
+                      "region": "Seattle",
+                    },
+                  ],
                 },
               },
             ],
@@ -1230,34 +817,39 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/private",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePrivateLobbyDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1275,34 +867,39 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": {
+                  "region": "Seattle",
+                },
+                "request": undefined,
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v1/{appId}/create/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePublicLobbyDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1320,48 +917,49 @@ exports[`open api parser hathora simple 1`] = `
             "examples": [
               {
                 "headers": {
-                  "Authorization": "authorization",
+                  "Authorization": "string",
                 },
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "string",
+                      "initialConfig": {
+                        "string": {},
+                      },
+                      "local": true,
+                      "region": "Seattle",
+                      "roomId": "string",
+                      "visibility": "private",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/lobby/v1/{appId}/list",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "ListActivePublicLobbiesDeprecatedRequest",
               "query-parameters": {
-                "local": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "local": "optional<boolean>",
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1390,45 +988,60 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "initialConfig": {
+                    "string": {},
+                  },
+                  "region": "Seattle",
+                  "visibility": "public",
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
-                  "visibility": {
-                    "docs": undefined,
-                    "type": "root.CreateLobbyRequestVisibility",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
+                  "visibility": "CreateLobbyRequestVisibility",
                 },
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreateLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -1446,41 +1059,58 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "initialConfig": {
+                    "string": {},
+                  },
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/local",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreateLocalLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -1498,41 +1128,58 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "initialConfig": {
+                    "string": {},
+                  },
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/private",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePrivateLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -1550,41 +1197,58 @@ exports[`open api parser hathora simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": {
+                  "Authorization": "string",
+                },
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "initialConfig": {
+                    "string": {},
+                  },
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/create/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "initialConfig": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "initialConfig": "map<string, unknown>",
+                  "region": "root.Region",
                 },
               },
               "headers": {
                 "Authorization": {
-                  "docs": undefined,
                   "name": "authorization",
                   "type": "string",
                 },
               },
               "name": "CreatePublicLobbyRequest",
               "query-parameters": {
-                "roomId": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.RoomId>",
-                },
+                "roomId": "optional<root.RoomId>",
               },
             },
             "response": {
@@ -1598,17 +1262,36 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "roomId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/lobby/v2/{appId}/info/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -1618,38 +1301,43 @@ exports[`open api parser hathora simple 1`] = `
           "ListActivePublicLobbies": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "createdAt": "2024-01-15T09:30:00Z",
+                      "createdBy": "string",
+                      "initialConfig": {
+                        "string": {},
+                      },
+                      "local": true,
+                      "region": "Seattle",
+                      "roomId": "string",
+                      "visibility": "private",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/lobby/v2/{appId}/list/public",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "ListActivePublicLobbiesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1664,25 +1352,45 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.UnprocessableEntityError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "roomId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "state": {
+                    "string": {},
+                  },
+                },
+                "response": {
+                  "body": {
+                    "appId": "string",
+                    "createdAt": "2024-01-15T09:30:00Z",
+                    "createdBy": "string",
+                    "initialConfig": {
+                      "string": {},
+                    },
+                    "local": true,
+                    "region": "Seattle",
+                    "roomId": "string",
+                    "visibility": "private",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lobby/v2/{appId}/setState/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "state": {
-                    "docs": undefined,
-                    "type": "map<string, unknown>",
-                  },
+                  "state": "map<string, unknown>",
                 },
               },
               "headers": undefined,
@@ -1694,6 +1402,15 @@ exports[`open api parser hathora simple 1`] = `
               "type": "root.Lobby",
             },
           },
+        },
+      },
+      "types": {
+        "CreateLobbyRequestVisibility": {
+          "enum": [
+            "public",
+            "private",
+            "local",
+          ],
         },
       },
     },
@@ -1708,33 +1425,17 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForApp": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/all",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetLogsForAppRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "region": "optional<root.Region>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response-stream": {
@@ -1745,32 +1446,17 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForDeployment": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/deployment/{deploymentId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "deploymentId": {
-                "docs": undefined,
-                "type": "root.DeploymentId",
-              },
+              "appId": "root.AppId",
+              "deploymentId": "root.DeploymentId",
             },
             "request": {
               "name": "GetLogsForDeploymentRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response": {
@@ -1781,32 +1467,17 @@ exports[`open api parser hathora simple 1`] = `
           "GetLogsForProcess": {
             "auth": true,
             "docs": undefined,
-            "errors": [],
             "method": "GET",
             "path": "/logs/v1/{appId}/process/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "request": {
               "name": "GetLogsForProcessRequest",
               "query-parameters": {
-                "follow": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<boolean>",
-                },
-                "tailLines": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.TailLines>",
-                },
+                "follow": "optional<boolean>",
+                "tailLines": "optional<root.TailLines>",
               },
             },
             "response-stream": {
@@ -1836,53 +1507,57 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
-                  "processId": "process-id",
+                  "appId": "string",
+                  "processId": "string",
                 },
-                "query-parameters": {
-                  "metrics": "cpu",
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {},
+                  "body": {
+                    "cpu": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "memory": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "rate_egress": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                    "total_egress": [
+                      {
+                        "timestamp": 1.1,
+                        "value": 1.1,
+                      },
+                    ],
+                  },
                 },
               },
             ],
             "method": "GET",
             "path": "/metrics/v1/{appId}/process/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "request": {
               "name": "GetMetricsRequest",
               "query-parameters": {
-                "end": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
+                "end": "optional<integer>",
                 "metrics": {
                   "allow-multiple": true,
-                  "docs": undefined,
                   "type": "optional<root.MetricName>",
                 },
-                "start": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
-                "step": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<integer>",
-                },
+                "start": "optional<integer>",
+                "step": "optional<integer>",
               },
             },
             "response": {
@@ -1907,17 +1582,38 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "processId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "activeConnections": 1.1,
+                    "appId": "string",
+                    "deploymentId": 1.1,
+                    "draining": true,
+                    "egressedBytes": 1.1,
+                    "host": "string",
+                    "port": 1.1,
+                    "processId": "string",
+                    "region": "Seattle",
+                    "roomSlotsAvailable": 1.1,
+                    "roomsPerProcess": 1.1,
+                    "startingAt": "2024-01-15T09:30:00Z",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/processes/v1/{appId}/info/{processId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -1934,33 +1630,54 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "activeConnections": 1.1,
+                      "appId": "string",
+                      "deploymentId": 1.1,
+                      "draining": true,
+                      "egressedBytes": 1.1,
+                      "host": "string",
+                      "port": 1.1,
+                      "processId": "string",
+                      "region": "Seattle",
+                      "roomSlotsAvailable": 1.1,
+                      "rooms": [
+                        {
+                          "appId": "string",
+                          "currentAllocation": {
+                            "processId": "string",
+                            "roomAllocationId": "string",
+                            "scheduledAt": "2024-01-15T09:30:00Z",
+                          },
+                          "roomId": "string",
+                          "status": "scheduling",
+                        },
+                      ],
+                      "roomsPerProcess": 1.1,
+                      "startingAt": "2024-01-15T09:30:00Z",
+                      "totalRooms": 1.1,
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/running",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetRunningProcessesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -1978,33 +1695,41 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
+                  "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "activeConnections": 1.1,
+                      "appId": "string",
+                      "deploymentId": 1.1,
+                      "draining": true,
+                      "egressedBytes": 1.1,
+                      "host": "string",
+                      "port": 1.1,
+                      "processId": "string",
+                      "region": "Seattle",
+                      "roomSlotsAvailable": 1.1,
+                      "roomsPerProcess": 1.1,
+                      "startingAt": "2024-01-15T09:30:00Z",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/processes/v1/{appId}/list/stopped",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "name": "GetStoppedProcessesRequest",
               "query-parameters": {
-                "region": {
-                  "allow-multiple": undefined,
-                  "docs": undefined,
-                  "type": "optional<root.Region>",
-                },
+                "region": "optional<root.Region>",
               },
             },
             "response": {
@@ -2030,21 +1755,30 @@ exports[`open api parser hathora simple 1`] = `
               "root.NotFoundError",
               "root.InternalServerError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                },
+                "query-parameters": undefined,
+                "request": {
+                  "region": "Seattle",
+                },
+                "response": {
+                  "body": "string",
+                },
+              },
+            ],
             "method": "POST",
             "path": "/rooms/v1/{appId}/create",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
+              "appId": "root.AppId",
             },
             "request": {
               "body": {
                 "properties": {
-                  "region": {
-                    "docs": undefined,
-                    "type": "root.Region",
-                  },
+                  "region": "root.Region",
                 },
               },
               "headers": undefined,
@@ -2067,8 +1801,8 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
-                  "roomId": "room-id",
+                  "appId": "string",
+                  "roomId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2078,14 +1812,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/rooms/v1/{appId}/destroy/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
           },
           "GetActiveRoomsForProcess": {
@@ -2098,27 +1826,32 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
-                  "processId": "process-id",
+                  "appId": "string",
+                  "processId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "currentAllocation": {
+                        "processId": "string",
+                        "roomAllocationId": "string",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                      "roomId": "string",
+                      "status": "scheduling",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/active",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -2136,14 +1869,8 @@ exports[`open api parser hathora simple 1`] = `
             "method": "GET",
             "path": "/rooms/v1/{appId}/connectioninfo/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -2160,27 +1887,32 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
-                  "processId": "process-id",
+                  "appId": "string",
+                  "processId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "appId": "string",
+                      "currentAllocation": {
+                        "processId": "string",
+                        "roomAllocationId": "string",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                      "roomId": "string",
+                      "status": "scheduling",
+                    },
+                  ],
                 },
               },
             ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/list/{processId}/inactive",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "processId": {
-                "docs": undefined,
-                "type": "root.ProcessId",
-              },
+              "appId": "root.AppId",
+              "processId": "root.ProcessId",
             },
             "response": {
               "docs": "Ok",
@@ -2193,17 +1925,41 @@ exports[`open api parser hathora simple 1`] = `
             "errors": [
               "root.NotFoundError",
             ],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "appId": "string",
+                  "roomId": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "allocations": [
+                      {
+                        "processId": "string",
+                        "roomAllocationId": "string",
+                        "scheduledAt": "2024-01-15T09:30:00Z",
+                      },
+                    ],
+                    "appId": "string",
+                    "currentAllocation": {
+                      "processId": "string",
+                      "roomAllocationId": "string",
+                      "scheduledAt": "2024-01-15T09:30:00Z",
+                    },
+                    "roomId": "string",
+                    "status": "scheduling",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/rooms/v1/{appId}/info/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
             "response": {
               "docs": "Ok",
@@ -2221,8 +1977,8 @@ exports[`open api parser hathora simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": {
-                  "appId": "app-id",
-                  "roomId": "room-id",
+                  "appId": "string",
+                  "roomId": "string",
                 },
                 "query-parameters": undefined,
                 "request": undefined,
@@ -2232,28 +1988,370 @@ exports[`open api parser hathora simple 1`] = `
             "method": "POST",
             "path": "/rooms/v1/{appId}/suspend/{roomId}",
             "path-parameters": {
-              "appId": {
-                "docs": undefined,
-                "type": "root.AppId",
-              },
-              "roomId": {
-                "docs": undefined,
-                "type": "root.RoomId",
-              },
+              "appId": "root.AppId",
+              "roomId": "root.RoomId",
             },
           },
         },
       },
     },
   },
+  "packageMarkerFile": {
+    "errors": {
+      "BadRequestError": {
+        "status-code": 400,
+        "type": "string",
+      },
+      "InternalServerError": {
+        "status-code": 500,
+        "type": "string",
+      },
+      "NotFoundError": {
+        "status-code": 404,
+        "type": "string",
+      },
+      "TooManyRequestsError": {
+        "status-code": 429,
+        "type": "string",
+      },
+      "UnauthorizedError": {
+        "status-code": 401,
+        "type": "string",
+      },
+      "UnprocessableEntityError": {
+        "status-code": 422,
+        "type": "string",
+      },
+    },
+    "types": {
+      "ActiveConnectionInfo": {
+        "docs": undefined,
+        "properties": {
+          "host": "string",
+          "port": "double",
+          "roomId": "RoomId",
+          "transportType": "TransportType",
+        },
+      },
+      "AppConfig": {
+        "docs": undefined,
+        "properties": {
+          "appName": "string",
+          "authConfiguration": "AppConfigAuthConfiguration",
+        },
+      },
+      "AppConfigAuthConfiguration": {
+        "docs": undefined,
+        "properties": {
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<AppConfigAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
+        },
+      },
+      "AppConfigAuthConfigurationGoogle": {
+        "docs": undefined,
+        "properties": {
+          "clientId": "string",
+        },
+      },
+      "AppId": "string",
+      "Application": {
+        "docs": undefined,
+        "properties": {
+          "appId": "string",
+          "appName": "string",
+          "appSecret": "string",
+          "authConfiguration": "ApplicationAuthConfiguration",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deletedAt": "optional<datetime>",
+          "deletedBy": "optional<string>",
+          "orgId": "OrgId",
+        },
+      },
+      "ApplicationAuthConfiguration": {
+        "docs": undefined,
+        "properties": {
+          "anonymous": "optional<RecordStringNever>",
+          "google": "optional<ApplicationAuthConfigurationGoogle>",
+          "nickname": "optional<RecordStringNever>",
+        },
+      },
+      "ApplicationAuthConfigurationGoogle": {
+        "docs": undefined,
+        "properties": {
+          "clientId": "string",
+        },
+      },
+      "ApplicationWithDeployment": {
+        "docs": undefined,
+        "extends": [
+          "Application",
+        ],
+        "properties": {
+          "deployment": "Deployment",
+        },
+      },
+      "Build": {
+        "docs": undefined,
+        "properties": {
+          "appId": "AppId",
+          "buildId": "BuildId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deletedAt": "optional<datetime>",
+          "finishedAt": "optional<datetime>",
+          "imageSize": "double",
+          "regionalContainerTags": "list<BuildRegionalContainerTagsItem>",
+          "startedAt": "optional<datetime>",
+          "status": "BuildStatus",
+        },
+      },
+      "BuildId": "double",
+      "BuildRegionalContainerTagsItem": {
+        "docs": undefined,
+        "properties": {
+          "containerTag": "string",
+          "region": "Region",
+        },
+      },
+      "BuildStatus": {
+        "enum": [
+          "created",
+          "running",
+          "succeeded",
+          "failed",
+        ],
+      },
+      "ConnectionInfo": {
+        "base-properties": {},
+        "discriminant": "status",
+        "docs": undefined,
+        "union": {
+          "active": "ActiveConnectionInfo",
+          "starting": "StartingConnectionInfo",
+        },
+      },
+      "Deployment": {
+        "docs": undefined,
+        "extends": [
+          "DeploymentConfig",
+        ],
+        "properties": {
+          "appId": "AppId",
+          "buildId": "BuildId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "deploymentId": "DeploymentId",
+          "requestedCPU": "double",
+          "requestedMemoryMB": "double",
+        },
+      },
+      "DeploymentConfig": {
+        "docs": undefined,
+        "properties": {
+          "containerPort": "integer",
+          "env": "list<DeploymentConfigEnvItem>",
+          "planName": "PlanName",
+          "roomsPerProcess": "integer",
+          "transportType": "TransportType",
+        },
+      },
+      "DeploymentConfigEnvItem": {
+        "docs": undefined,
+        "properties": {
+          "name": "string",
+          "value": "string",
+        },
+      },
+      "DeploymentId": "double",
+      "DiscoveryResponse": "list<DiscoveryResponseItem>",
+      "DiscoveryResponseItem": {
+        "docs": undefined,
+        "properties": {
+          "host": "string",
+          "port": "double",
+          "region": "Region",
+        },
+      },
+      "Lobby": {
+        "docs": undefined,
+        "properties": {
+          "appId": "AppId",
+          "createdAt": "datetime",
+          "createdBy": "string",
+          "initialConfig": "map<string, unknown>",
+          "local": "boolean",
+          "region": "Region",
+          "roomId": "RoomId",
+          "state": "optional<map<string, unknown>>",
+          "visibility": "LobbyVisibility",
+        },
+      },
+      "LobbyVisibility": {
+        "enum": [
+          "private",
+          "public",
+          "local",
+        ],
+      },
+      "MetricName": {
+        "enum": [
+          "cpu",
+          "memory",
+          "rate_egress",
+          "total_egress",
+        ],
+      },
+      "MetricValue": {
+        "docs": undefined,
+        "properties": {
+          "timestamp": "double",
+          "value": "double",
+        },
+      },
+      "MetricsResponse": "RecordPartialMetricNameMetricValueArray",
+      "OmitRoomAllocations": {
+        "docs": "Construct a type with the properties of T except for those in type K.",
+        "type": "PickRoomExcludeKeyofRoomAllocations",
+      },
+      "OrgId": "string",
+      "PickRoomExcludeKeyofRoomAllocations": {
+        "docs": "From T, pick a set of properties whose keys are in the union K",
+        "properties": {
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
+        },
+      },
+      "PlanName": {
+        "enum": [
+          "tiny",
+          "small",
+          "medium",
+          "large",
+        ],
+      },
+      "Process": {
+        "docs": undefined,
+        "properties": {
+          "activeConnections": "double",
+          "appId": "AppId",
+          "deploymentId": "DeploymentId",
+          "draining": "boolean",
+          "egressedBytes": "double",
+          "host": "string",
+          "idleSince": "optional<datetime>",
+          "port": "double",
+          "processId": "ProcessId",
+          "region": "Region",
+          "roomSlotsAvailable": "double",
+          "roomsPerProcess": "double",
+          "startedAt": "optional<datetime>",
+          "startingAt": "datetime",
+          "stoppingAt": "optional<datetime>",
+          "terminatedAt": "optional<datetime>",
+        },
+      },
+      "ProcessId": "string",
+      "ProcessWithRooms": {
+        "docs": undefined,
+        "extends": [
+          "Process",
+        ],
+        "properties": {
+          "rooms": "list<RoomWithoutAllocations>",
+          "totalRooms": "double",
+        },
+      },
+      "RecordPartialMetricNameMetricValueArray": {
+        "docs": "Construct a type with a set of properties K of type T",
+        "properties": {
+          "cpu": "optional<list<MetricValue>>",
+          "memory": "optional<list<MetricValue>>",
+          "rate_egress": "optional<list<MetricValue>>",
+          "total_egress": "optional<list<MetricValue>>",
+        },
+      },
+      "RecordStringNever": {
+        "docs": "Construct a type with a set of properties K of type T",
+        "properties": {},
+      },
+      "Region": {
+        "enum": [
+          "Seattle",
+          "Washington_DC",
+          "Chicago",
+          "London",
+          "Frankfurt",
+          "Mumbai",
+          "Singapore",
+          "Tokyo",
+          "Sydney",
+          "Sao_Paulo",
+        ],
+      },
+      "Room": {
+        "docs": undefined,
+        "properties": {
+          "allocations": "list<RoomAllocation>",
+          "appId": "AppId",
+          "currentAllocation": "optional<RoomAllocation>",
+          "roomId": "RoomId",
+          "status": "RoomStatus",
+        },
+      },
+      "RoomAllocation": {
+        "docs": undefined,
+        "properties": {
+          "processId": "ProcessId",
+          "roomAllocationId": "RoomAllocationId",
+          "scheduledAt": "datetime",
+          "unscheduledAt": "optional<datetime>",
+        },
+      },
+      "RoomAllocationId": "string",
+      "RoomId": "string",
+      "RoomStatus": {
+        "enum": [
+          "scheduling",
+          "active",
+          "suspended",
+          "destroyed",
+        ],
+      },
+      "RoomWithoutAllocations": "OmitRoomAllocations",
+      "StartingConnectionInfo": {
+        "docs": undefined,
+        "properties": {
+          "roomId": "RoomId",
+        },
+      },
+      "TailLines": "integer",
+      "TransportType": {
+        "enum": [
+          "tcp",
+          "udp",
+          "tls",
+        ],
+      },
+    },
+  },
   "rootApiFile": {
-    "auth": "bearer",
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
+    "default-environment": "Default",
     "display-name": "Hathora Cloud API",
+    "environments": {
+      "Default": "https://api.hathora.dev",
+    },
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

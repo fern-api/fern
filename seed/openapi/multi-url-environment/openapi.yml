@@ -1,0 +1,65 @@
+openapi: 3.0.1
+info:
+  title: multi-url-environment
+  version: ''
+paths:
+  /ec2/boot:
+    post:
+      operationId: ec2_bootInstance
+      tags:
+        - Ec2
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      servers:
+        - url: https://ec2.aws.com
+        - url: https://staging.ec2.aws.com
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                size:
+                  type: string
+              required:
+                - size
+  /s3/presigned-url:
+    post:
+      operationId: s3_getPresignedUrl
+      tags:
+        - S3
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      servers:
+        - url: https://s3.aws.com
+        - url: https://staging.s3.aws.com
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                s3Key:
+                  type: string
+              required:
+                - s3Key
+components:
+  schemas: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

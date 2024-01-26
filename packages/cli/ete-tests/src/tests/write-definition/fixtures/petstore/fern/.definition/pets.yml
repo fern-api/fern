@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+
+imports:
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    listPets:
+      path: /v1/pets
+      method: GET
+      auth: false
+      display-name: List all pets
+      request:
+        name: ListPetsRequest
+        query-parameters:
+          limit:
+            type: optional<integer>
+            docs: How many items to return at one time (max 100)
+      response:
+        docs: A paged array of pets
+        type: root.Pets
+      examples:
+        - response:
+            body:
+              - id: 1
+                name: string
+
+    createPets:
+      path: /v1/pets
+      method: POST
+      auth: false
+      display-name: Create a pet
+      examples:
+        - {}
+
+    showPetById:
+      path: /v1/pets/{petId}
+      method: GET
+      auth: false
+      path-parameters:
+        petId:
+          type: string
+          docs: The id of the pet to retrieve
+      display-name: Info for a specific pet
+      response:
+        docs: Expected response to a valid request
+        type: root.Pet
+      examples:
+        - path-parameters:
+            petId: string
+          response:
+            body:
+              id: 1
+              name: string

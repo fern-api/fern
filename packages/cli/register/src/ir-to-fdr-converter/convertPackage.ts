@@ -77,14 +77,22 @@ function convertService(
                 (queryParameter): APIV1Write.QueryParameter => ({
                     description: queryParameter.docs ?? undefined,
                     key: queryParameter.name.wireValue,
-                    type: convertTypeReference(queryParameter.valueType)
+                    type: convertTypeReference(queryParameter.valueType),
+                    availability:
+                        queryParameter.availability != null
+                            ? convertIrAvailability({ availability: queryParameter.availability })
+                            : undefined
                 })
             ),
             headers: [...irService.headers, ...irEndpoint.headers].map(
                 (header): APIV1Write.Header => ({
                     description: header.docs ?? undefined,
                     key: header.name.wireValue,
-                    type: convertTypeReference(header.valueType)
+                    type: convertTypeReference(header.valueType),
+                    availability:
+                        header.availability != null
+                            ? convertIrAvailability({ availability: header.availability })
+                            : undefined
                 })
             ),
             request: irEndpoint.requestBody != null ? convertRequestBody(irEndpoint.requestBody) : undefined,
@@ -96,7 +104,7 @@ function convertService(
     );
 }
 
-function convertIrAvailability({
+export function convertIrAvailability({
     availability
 }: {
     availability: Ir.Availability;

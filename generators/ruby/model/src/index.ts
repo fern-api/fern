@@ -1,0 +1,1 @@
+export { RubyModelGeneratorCli } from "./GeneratorCli";

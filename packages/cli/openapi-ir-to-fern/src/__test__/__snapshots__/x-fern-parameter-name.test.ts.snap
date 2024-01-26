@@ -1,0 +1,60 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "get_user": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "headers": {},
+              "path-parameters": undefined,
+              "query-parameters": {
+                "foo": "string",
+              },
+              "request": undefined,
+              "response": {
+                "body": "string",
+              },
+            },
+          ],
+          "method": "GET",
+          "path": "/user",
+          "request": {
+            "name": "GetUserRequest",
+            "query-parameters": {
+              "foo": {
+                "name": "bar",
+                "type": "string",
+              },
+            },
+          },
+          "response": {
+            "docs": "Success!",
+            "type": "string",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-parameter-name\` for parameters.",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "headers": {
+      "X-API-Version": {
+        "name": "version",
+        "type": "string",
+      },
+    },
+    "name": "api",
+  },
+}
+`;

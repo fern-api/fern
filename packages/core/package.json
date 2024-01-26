@@ -27,15 +27,15 @@
     "depcheck": "depcheck"
   },
   "dependencies": {
-    "@fern-api/fdr-sdk": "0.39.0-5-g77b7d2c",
+    "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
     "@fern-api/venus-api-sdk": "0.0.36",
-    "@fern-fern/fiddle-sdk": "^0.0.351"
+    "@fern-fern/fiddle-sdk": "^0.0.386"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "eslint": "^8.26.0",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

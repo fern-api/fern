@@ -16,60 +16,84 @@ export function convertSchemaWithExampleToSchema(schema: SchemaWithExample): Sch
                 allOfPropertyConflicts: schema.allOfPropertyConflicts,
                 description: schema.description,
                 generatedName: schema.generatedName,
-                nameOverride: schema.nameOverride
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "array":
             return Schema.array({
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "enum":
             return Schema.enum({
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                values: schema.values
+                values: schema.values,
+                groupName: schema.groupName
             });
         case "literal":
             return Schema.literal({
                 description: schema.description,
-                value: schema.value
+                value: schema.value,
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "nullable":
             return Schema.nullable({
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "optional":
             return Schema.optional({
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
                 description: schema.description,
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                groupName: schema.groupName
             });
         case "primitive":
             return Schema.primitive({
                 description: schema.description,
-                schema: convertToPrimitiveSchemaValue(schema.schema)
+                schema: convertToPrimitiveSchemaValue(schema.schema),
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "map":
             return Schema.map({
                 description: schema.description,
                 key: Schema.primitive({
                     description: schema.key.description,
-                    schema: convertToPrimitiveSchemaValue(schema.key.schema)
+                    schema: convertToPrimitiveSchemaValue(schema.key.schema),
+                    generatedName: schema.key.generatedName,
+                    nameOverride: schema.key.nameOverride,
+                    groupName: schema.groupName
                 }),
-                value: convertSchemaWithExampleToSchema(schema.value)
+                value: convertSchemaWithExampleToSchema(schema.value),
+                generatedName: schema.generatedName,
+                nameOverride: schema.nameOverride,
+                groupName: schema.groupName
             });
         case "reference":
             return Schema.reference({
                 description: schema.description,
                 generatedName: schema.generatedName,
                 nameOverride: schema.nameOverride,
-                schema: schema.schema
+                schema: schema.schema,
+                groupName: schema.groupName
             });
         case "oneOf":
             return Schema.oneOf(convertToOneOf(schema.oneOf));
         case "unknown":
-            return Schema.unknown();
+            return Schema.unknown({ nameOverride: schema.nameOverride, generatedName: schema.generatedName });
         default:
             assertNever(schema);
     }
@@ -94,7 +118,8 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                     Object.entries(oneOfSchema.schemas).map(([discriminantValue, schemaWithExample]) => {
                         return [discriminantValue, convertSchemaWithExampleToSchema(schemaWithExample)];
                     })
-                )
+                ),
+                groupName: oneOfSchema.groupName
             };
         case "undisciminated":
             return {
@@ -102,7 +127,8 @@ function convertToOneOf(oneOfSchema: OneOfSchemaWithExample): OneOfSchema {
                 description: oneOfSchema.description,
                 generatedName: oneOfSchema.generatedName,
                 nameOverride: oneOfSchema.nameOverride,
-                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema))
+                schemas: oneOfSchema.schemas.map((oneOfSchema) => convertSchemaWithExampleToSchema(oneOfSchema)),
+                groupName: oneOfSchema.groupName
             };
         default:
             assertNever(oneOfSchema);
@@ -142,6 +168,7 @@ function convertToObjectProperty(objectProperty: ObjectPropertyWithExample): Obj
         conflict: objectProperty.conflict,
         generatedName: objectProperty.generatedName,
         key: objectProperty.key,
-        schema: convertSchemaWithExampleToSchema(objectProperty.schema)
+        schema: convertSchemaWithExampleToSchema(objectProperty.schema),
+        audiences: objectProperty.audiences
     };
 }

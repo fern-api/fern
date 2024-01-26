@@ -15,7 +15,8 @@ import { GeneratorOutputSchema } from "./schemas/GeneratorOutputSchema";
 import {
     ASYNC_API_LOCATION_KEY,
     GeneratorsConfigurationSchema,
-    OPENAPI_LOCATION_KEY
+    OPENAPI_LOCATION_KEY,
+    OPENAPI_OVERRIDES_LOCATION_KEY
 } from "./schemas/GeneratorsConfigurationSchema";
 import { GithubLicenseSchema } from "./schemas/GithubLicenseSchema";
 
@@ -28,6 +29,7 @@ export async function convertGeneratorsConfiguration({
 }): Promise<GeneratorsConfiguration> {
     const pathToOpenAPI = rawGeneratorsConfiguration[OPENAPI_LOCATION_KEY];
     const pathToAsyncAPI = rawGeneratorsConfiguration[ASYNC_API_LOCATION_KEY];
+    const pathToOpenAPIOverrides = rawGeneratorsConfiguration[OPENAPI_OVERRIDES_LOCATION_KEY];
     return {
         absolutePathToConfiguration: absolutePathToGeneratorsConfiguration,
         absolutePathToAsyncAPI:
@@ -37,6 +39,10 @@ export async function convertGeneratorsConfiguration({
         absolutePathToOpenAPI:
             pathToOpenAPI != null
                 ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPI))
+                : undefined,
+        absolutePathToOpenAPIOverrides:
+            pathToOpenAPIOverrides != null
+                ? join(dirname(absolutePathToGeneratorsConfiguration), RelativeFilePath.of(pathToOpenAPIOverrides))
                 : undefined,
         rawConfiguration: rawGeneratorsConfiguration,
         defaultGroup: rawGeneratorsConfiguration["default-group"],
@@ -102,19 +108,50 @@ async function convertOutputMode({
 }): Promise<FernFiddle.OutputMode> {
     if (generator.github != null) {
         const indexOfFirstSlash = generator.github.repository.indexOf("/");
-        return FernFiddle.OutputMode.github({
-            owner: generator.github.repository.slice(0, indexOfFirstSlash),
-            repo: generator.github.repository.slice(indexOfFirstSlash + 1),
-            makePr: generator.github.mode === "pull-request",
-            license:
-                generator.github.license != null
-                    ? await getGithubLicense({
-                          absolutePathToGeneratorsConfiguration,
-                          githubLicense: generator.github.license
-                      })
-                    : undefined,
-            publishInfo: generator.output != null ? getGithubPublishInfo(generator.output) : undefined
-        });
+        const owner = generator.github.repository.slice(0, indexOfFirstSlash);
+        const repo = generator.github.repository.slice(indexOfFirstSlash + 1);
+        const publishInfo = generator.output != null ? getGithubPublishInfo(generator.output) : undefined;
+        const license =
+            generator.github.license != null
+                ? await getGithubLicense({
+                      absolutePathToGeneratorsConfiguration,
+                      githubLicense: generator.github.license
+                  })
+                : undefined;
+        const mode = generator.github.mode ?? "release";
+        switch (mode) {
+            case "commit":
+            case "release":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.commitAndRelease({
+                        owner,
+                        repo,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "pull-request":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.pullRequest({
+                        owner,
+                        repo,
+                        license,
+                        publishInfo
+                    })
+                );
+            case "push":
+                return FernFiddle.OutputMode.githubV2(
+                    FernFiddle.GithubOutputModeV2.push({
+                        owner,
+                        repo,
+                        branch: generator.github.mode === "push" ? generator.github.branch : undefined,
+                        license,
+                        publishInfo
+                    })
+                );
+            default:
+                assertNever(mode);
+        }
     }
     if (generator.output == null) {
         return FernFiddle.remoteGen.OutputMode.publish({ registryOverrides: {} });
@@ -170,9 +207,13 @@ async function getGithubLicense({
     if (typeof githubLicense === "string") {
         switch (githubLicense) {
             case "MIT":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Mit);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Mit
+                });
             case "Apache-2.0":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Apache2);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Apache2
+                });
             default:
                 assertNever(githubLicense);
         }
@@ -182,7 +223,9 @@ async function getGithubLicense({
         RelativeFilePath.of(githubLicense.custom)
     );
     const licenseContent = await readFile(absolutePathToLicense);
-    return FernFiddle.GithubLicense.file(licenseContent.toString());
+    return FernFiddle.GithubLicense.custom({
+        contents: licenseContent.toString()
+    });
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
@@ -244,6 +287,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     }
     if (generatorName.includes("go")) {
         return GenerationLanguage.GO;
+    }
+    if (generatorName.includes("ruby")) {
+        return GenerationLanguage.RUBY;
     }
     return undefined;
 }

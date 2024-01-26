@@ -1,13 +1,13 @@
 Use `fern generate` to run the Fern compiler for creating SDKs or documentation for your API. By default, Fern runs generators in the cloud
 in isolated, containerized environments.
 
-## Command flags 
+## Command flags
 
 ### For SDKs
 
 <CodeBlock title = "SDK Generation Command">
 ```bash
-$ fern generate [--group <group>] [--version <version>] [--local] [--keepDocker] [--log-level debug]
+fern generate [--group <group>] [--version <version>] [--local] [--keepDocker] [--log-level debug]
 ```
 </CodeBlock>
 
@@ -15,11 +15,11 @@ $ fern generate [--group <group>] [--version <version>] [--local] [--keepDocker]
 
 <CodeBlock title = "Documentation Generation Command">
 ```bash
-$ fern generate [--docs <instance-url>] [--log-level debug]
+fern generate [--docs <instance-url>] [--preview] [--log-level debug]
 ```
 </CodeBlock>
 
-## Command flags explained 
+## Command flags explained
 
 ### Group
 
@@ -35,11 +35,13 @@ $ fern generate --group internal
 ### Version
 
 **Type**: `string`
-**Description:** Specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.     
+**Description:** Specify a version for SDKs and documentation. Adherance to [semantic versioning](https://semver.org/) is advised.
 
 **Example**
+
 ```bash
-$ fern generate --version 2.1.1
+$ fern generate --version
+2.1.1
 ```
 
 ### Local
@@ -50,7 +52,7 @@ $ fern generate --version 2.1.1
 **Description**: Use the `--local` option to generate code locally. This downloads the Docker Image and runs it on your machine.
 
 ```bash
-$ fern generate --local
+fern generate --local
 ```
 
 Running a Docker locally supports outputting files. It does not support publishing to package managers.
@@ -63,16 +65,25 @@ Running a Docker locally supports outputting files. It does not support publishi
 **Description**: Use the `--keepDocker` option to keep the Docker container running after the generation is complete. This is useful for debugging.
 
 ```bash
-$ fern generate --local --keepDocker
+fern generate --local --keepDocker
 ```
 
-### Instance URL 
+### Instance URL
 
 **Type**: `string`
 **Description**: Use the `instance` option to specify an instance URL to generate documentation for. This is useful if you have multiple instances of your API.
 
 ```bash
-$ fern generate --docs --instance instance your-organization.docs.buildwithfern.com
+fern generate --docs --instance instance your-organization.docs.buildwithfern.com
+```
+
+### Preview
+
+**Type**: `string`
+**Description**: Use the `preview` option along with the `--docs` flag to preview updates to your documentation before publishing changes to your production site. 
+
+```bash
+fern generate --docs --preview
 ```
 
 ## Debugging logs
@@ -80,10 +91,10 @@ $ fern generate --docs --instance instance your-organization.docs.buildwithfern.
 **Type**: `choices` "debug", "info", "warn", "error"
 **Default**: `info`
 
-To see more information about what Fern is doing, use the `--log-level` option. 
+To see more information about what Fern is doing, use the `--log-level` option.
 
 ```bash
-$ fern generate --log-level debug 
+fern generate --log-level debug
 ```
 
 - **info**: Informational messages, warnings, and errors are logged.

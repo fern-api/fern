@@ -1,8 +1,7 @@
-import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
-import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
 export function validateExampleEndpointCallParameters<T>({
     allDeclarations = {},
@@ -35,9 +34,10 @@ export function validateExampleEndpointCallParameters<T>({
             });
 
             const isOptional =
-                resolvedType != null &&
-                resolvedType._type === "container" &&
-                resolvedType.container._type === "optional";
+                (resolvedType != null &&
+                    resolvedType._type === "container" &&
+                    resolvedType.container._type === "optional") ||
+                resolvedType?._type === "unknown";
 
             if (!isOptional) {
                 acc.push(key);
@@ -71,13 +71,15 @@ export function validateExampleEndpointCallParameters<T>({
                 // this will be caught by another rule
                 if (rawType != null) {
                     violations.push(
-                        ...validateTypeReferenceExample({
+                        ...ExampleValidators.validateTypeReferenceExample({
                             rawTypeReference: rawType.rawType,
                             example: exampleParameter,
                             file: rawType.file,
                             workspace,
                             typeResolver,
                             exampleResolver
+                        }).map((val): RuleViolation => {
+                            return { severity: "error", message: val.message };
                         })
                     );
                 }

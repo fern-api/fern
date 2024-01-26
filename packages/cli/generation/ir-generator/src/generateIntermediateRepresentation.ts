@@ -11,6 +11,7 @@ import {
     ResponseErrors,
     ServiceId,
     ServiceTypeReferenceInfo,
+    Type,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { mapValues, pickBy } from "lodash-es";
@@ -28,6 +29,7 @@ import { convertTypeDeclaration } from "./converters/type-declarations/convertTy
 import { constructFernFileContext, constructRootApiFileContext, FernFileContext } from "./FernFileContext";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IrGraph } from "./filtered-ir/IrGraph";
+import { formatDocs } from "./formatDocs";
 import { IdGenerator } from "./IdGenerator";
 import { PackageTreeGenerator } from "./PackageTreeGenerator";
 import { ErrorResolverImpl } from "./resolvers/ErrorResolver";
@@ -72,21 +74,25 @@ export async function generateIntermediateRepresentation({
     const intermediateRepresentation: Omit<IntermediateRepresentation, "sdkConfig" | "subpackages" | "rootPackage"> = {
         apiName: casingsGenerator.generateName(workspace.name),
         apiDisplayName: workspace.definition.rootApiFile.contents["display-name"],
-        apiDocs: workspace.definition.rootApiFile.contents.docs,
+        apiDocs: await formatDocs(workspace.definition.rootApiFile.contents.docs),
         auth: convertApiAuth({
             rawApiFileSchema: workspace.definition.rootApiFile.contents,
             file: rootApiFileContext
         }),
         headers:
             workspace.definition.rootApiFile.contents.headers != null
-                ? Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
-                      convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                ? await Promise.all(
+                      Object.entries(workspace.definition.rootApiFile.contents.headers).map(([headerKey, header]) =>
+                          convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                      )
                   )
                 : [],
         idempotencyHeaders:
             workspace.definition.rootApiFile.contents["idempotency-headers"] != null
-                ? Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
-                      ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                ? await Promise.all(
+                      Object.entries(workspace.definition.rootApiFile.contents["idempotency-headers"]).map(
+                          ([headerKey, header]) => convertHttpHeader({ headerKey, header, file: rootApiFileContext })
+                      )
                   )
                 : [],
         types: {},
@@ -105,7 +111,7 @@ export async function generateIntermediateRepresentation({
             workspace.definition.rootApiFile.contents["base-path"] != null
                 ? constructHttpPath(workspace.definition.rootApiFile.contents["base-path"])
                 : undefined,
-        pathParameters: convertPathParameters({
+        pathParameters: await convertPathParameters({
             pathParameters: workspace.definition.rootApiFile.contents["path-parameters"],
             file: rootApiFileContext,
             location: PathParameterLocation.Root,
@@ -140,18 +146,19 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            types: (types) => {
+            types: async (types) => {
                 if (types == null) {
                     return;
                 }
 
                 for (const [typeName, typeDeclaration] of Object.entries(types)) {
-                    const convertedTypeDeclarationWithFilepaths = convertTypeDeclaration({
+                    const convertedTypeDeclarationWithFilepaths = await convertTypeDeclaration({
                         typeName,
                         typeDeclaration,
                         file,
                         typeResolver,
-                        exampleResolver
+                        exampleResolver,
+                        workspace
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
                     const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
@@ -160,11 +167,13 @@ export async function generateIntermediateRepresentation({
                     intermediateRepresentation.types[typeId] = convertedTypeDeclaration;
                     packageTreeGenerator.addType(typeId, convertedTypeDeclaration);
 
-                    irGraph.addType(
-                        convertedTypeDeclaration.name,
-                        convertedTypeDeclaration.referencedTypes,
-                        subpackageFilepaths
-                    );
+                    irGraph.addType({
+                        declaredTypeName: convertedTypeDeclaration.name,
+                        descendantTypeIds: convertedTypeDeclaration.referencedTypes,
+                        descendantTypeIdsByAudience: {},
+                        propertiesByAudience: convertedTypeDeclarationWithFilepaths.propertiesByAudience,
+                        descendantFilepaths: subpackageFilepaths
+                    });
                     irGraph.markTypeForAudiences(convertedTypeDeclaration.name, getAudiences(typeDeclaration));
                 }
             },
@@ -192,12 +201,12 @@ export async function generateIntermediateRepresentation({
                 }
             },
 
-            service: (service) => {
+            service: async (service) => {
                 if (service == null) {
                     return;
                 }
 
-                const convertedHttpService = convertHttpService({
+                const convertedHttpService = await convertHttpService({
                     rootPathParameters: intermediateRepresentation.pathParameters,
                     serviceDefinition: service,
                     file,
@@ -205,7 +214,8 @@ export async function generateIntermediateRepresentation({
                     typeResolver,
                     exampleResolver,
                     globalErrors,
-                    variableResolver
+                    variableResolver,
+                    workspace
                 });
 
                 const serviceId = IdGenerator.generateServiceId(convertedHttpService.name);
@@ -214,7 +224,8 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
-                    irGraph.addEndpoint(convertedHttpService, httpEndpoint);
+                    const rawEndpointSchema = service.endpoints[httpEndpoint.name.originalName];
+                    irGraph.addEndpoint(convertedHttpService, httpEndpoint, rawEndpointSchema);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
                 });
                 if (service.audiences != null) {
@@ -235,12 +246,12 @@ export async function generateIntermediateRepresentation({
                     }
                 });
             },
-            webhooks: (webhooks) => {
+            webhooks: async (webhooks) => {
                 if (webhooks == null) {
                     return;
                 }
                 const webhookGroupId = IdGenerator.generateWebhookGroupId(file.fernFilepath);
-                const convertedWebhookGroup = convertWebhookGroup({ webhooks, file });
+                const convertedWebhookGroup = await convertWebhookGroup({ webhooks, file });
                 intermediateRepresentation.webhookGroups[webhookGroupId] = convertedWebhookGroup;
                 packageTreeGenerator.addWebhookGroup(webhookGroupId, file.fernFilepath);
             }
@@ -363,15 +374,56 @@ function filterIntermediateRepresentationForAudiences(
     if (filteredIr == null) {
         return intermediateRepresentation;
     }
+    const filteredTypes = pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type));
+    const filteredTypesAndProperties = Object.fromEntries(
+        Object.entries(filteredTypes).map(([typeId, typeDeclaration]) => {
+            const filteredProperties = [];
+            if (typeDeclaration.shape.type === "object") {
+                for (const property of typeDeclaration.shape.properties) {
+                    const hasProperty = filteredIr.hasProperty(typeId, property.name.wireValue);
+                    if (hasProperty) {
+                        filteredProperties.push(property);
+                    }
+                }
+                return [
+                    typeId,
+                    {
+                        ...typeDeclaration,
+                        shape: Type.object({
+                            ...typeDeclaration.shape,
+                            properties: filteredProperties
+                        })
+                    }
+                ];
+            }
+            return [typeId, typeDeclaration];
+        })
+    );
+
     return {
         ...intermediateRepresentation,
-        types: pickBy(intermediateRepresentation.types, (type) => filteredIr.hasType(type)),
+        types: filteredTypesAndProperties,
         errors: pickBy(intermediateRepresentation.errors, (error) => filteredIr.hasError(error)),
         services: mapValues(
             pickBy(intermediateRepresentation.services, (httpService) => filteredIr.hasService(httpService)),
             (httpService) => ({
                 ...httpService,
-                endpoints: httpService.endpoints.filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
+                endpoints: httpService.endpoints
+                    .filter((httpEndpoint) => filteredIr.hasEndpoint(httpEndpoint))
+                    .map((httpEndpoint) => {
+                        if (httpEndpoint.requestBody?.type === "inlinedRequestBody") {
+                            return {
+                                ...httpEndpoint,
+                                requestBody: {
+                                    ...httpEndpoint.requestBody,
+                                    properties: httpEndpoint.requestBody.properties.filter((property) => {
+                                        return filteredIr.hasRequestProperty(httpEndpoint.id, property.name.wireValue);
+                                    })
+                                }
+                            };
+                        }
+                        return httpEndpoint;
+                    })
             })
         ),
         serviceTypeReferenceInfo: filterServiceTypeReferenceInfoForAudiences(

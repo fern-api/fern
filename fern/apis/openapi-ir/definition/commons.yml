@@ -1,3 +1,6 @@
+imports: 
+  finalIr: finalIr.yml
+
 types: 
   WithDescription:
     properties:
@@ -32,7 +35,7 @@ types:
   SecuritySchemeId:
     type: string
     docs: The name of the security scheme.
-
+  
   SecurityScheme:
     union:
       basic: BasicSecurityScheme
@@ -41,6 +44,8 @@ types:
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
+      oauth: 
+        type: OauthSecurityScheme
 
   BearerSecurityScheme:
     properties:
@@ -60,6 +65,10 @@ types:
   QuerySecurityScheme:
     properties:
       queryParameterName: string
+  
+  OauthSecurityScheme: 
+    properties: 
+      scopesEnum: optional<finalIr.EnumSchema>
 
   StatusCode:
     type: integer
@@ -71,3 +80,11 @@ types:
         type: optional<string>
         docs: Populated by `X-Server-Name`
       url: string
+  
+  SdkGroupName: 
+    type: string
+    docs: This is populated by `x-fern-sdk-method-name`
+
+  WithSdkGroupName:   
+    properties: 
+      groupName: optional<SdkGroupName>

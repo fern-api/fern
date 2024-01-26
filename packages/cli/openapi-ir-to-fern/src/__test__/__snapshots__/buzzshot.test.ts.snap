@@ -3,539 +3,6 @@
 exports[`open api parser buzzshot simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "errors": {},
-      "service": undefined,
-      "types": {
-        "Game": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "complete": {
-              "docs": undefined,
-              "type": "GameComplete",
-            },
-            "date": "string",
-            "extra_fields": {
-              "docs": undefined,
-              "type": "list<GameExtraFieldsItem>",
-            },
-            "group": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "photos": {
-              "docs": undefined,
-              "type": "optional<list<GamePhotosItem>>",
-            },
-            "room": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "start_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "time": "string",
-            "updated_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "GameComplete": {
-          "docs": undefined,
-          "properties": {
-            "completed_at": "datetime",
-            "completion_time": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "did_win": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "hints": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "score": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-          },
-        },
-        "GameExtraFieldsItem": {
-          "docs": undefined,
-          "properties": {
-            "key": "string",
-            "label": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "present": "boolean",
-            "value": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-          },
-        },
-        "GamePhotosItem": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "photo": "string",
-            "processed_image": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "ready": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-          },
-        },
-        "Group": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "date": "string",
-            "games": {
-              "docs": undefined,
-              "type": "optional<list<GroupGamesItem>>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "is_event": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "photos": {
-              "docs": undefined,
-              "type": "optional<list<GroupPhotosItem>>",
-            },
-            "players": {
-              "docs": undefined,
-              "type": "list<GroupPlayersItem>",
-            },
-            "start_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "time": "string",
-            "updated_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "GroupGamesItem": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "complete": {
-              "docs": undefined,
-              "type": "GroupGamesItemComplete",
-            },
-            "date": "string",
-            "extra_fields": {
-              "docs": undefined,
-              "type": "list<GroupGamesItemExtraFieldsItem>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "room": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "start_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "time": "string",
-            "updated_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "GroupGamesItemComplete": {
-          "docs": undefined,
-          "properties": {
-            "completed_at": "datetime",
-            "completion_time": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "did_win": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "hints": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "score": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-          },
-        },
-        "GroupGamesItemExtraFieldsItem": {
-          "docs": undefined,
-          "properties": {
-            "key": "string",
-            "label": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "present": "boolean",
-            "value": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-          },
-        },
-        "GroupPhotosItem": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "game": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "photo": "string",
-            "processed_image": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "ready": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-          },
-        },
-        "GroupPlayersItem": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "email": "string",
-            "extra_fields": {
-              "docs": undefined,
-              "type": "list<GroupPlayersItemExtraFieldsItem>",
-            },
-            "first_name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "last_name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "phone": "string",
-            "player": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "signature": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "updated_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "GroupPlayersItemExtraFieldsItem": {
-          "docs": undefined,
-          "properties": {
-            "key": "string",
-            "label": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "present": "boolean",
-            "value": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-          },
-        },
-        "ListAccountsResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Room>>",
-            },
-          },
-        },
-        "ListGamesResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Game>>",
-            },
-          },
-        },
-        "ListGroupsResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Group>>",
-            },
-          },
-        },
-        "ListLocationsResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Room>>",
-            },
-          },
-        },
-        "ListPhotosResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Photo>>",
-            },
-          },
-        },
-        "ListPlayersResponse": {
-          "docs": undefined,
-          "properties": {
-            "count": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "next": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "previous": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "results": {
-              "docs": undefined,
-              "type": "optional<list<Player>>",
-            },
-          },
-        },
-        "Photo": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "original_image": "string",
-            "processed": {
-              "docs": undefined,
-              "type": "list<PhotoProcessedItem>",
-            },
-          },
-        },
-        "PhotoProcessedItem": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "game": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "group": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "photo": "string",
-            "processed_image": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "ready": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-          },
-        },
-        "Player": {
-          "docs": undefined,
-          "properties": {
-            "added_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-            "email": "string",
-            "extra_fields": {
-              "docs": undefined,
-              "type": "list<PlayerExtraFieldsItem>",
-            },
-            "first_name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "last_name": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "marketing_email_allowed": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "phone": "string",
-            "updated_at": {
-              "docs": undefined,
-              "type": "optional<datetime>",
-            },
-          },
-        },
-        "PlayerExtraFieldsItem": {
-          "docs": undefined,
-          "properties": {
-            "key": "string",
-            "label": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "present": "boolean",
-            "value": {
-              "docs": undefined,
-              "type": "optional<map<string, unknown>>",
-            },
-          },
-        },
-        "Room": {
-          "docs": undefined,
-          "properties": {
-            "hidden": {
-              "docs": undefined,
-              "type": "optional<boolean>",
-            },
-            "id": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "name": "string",
-          },
-        },
-      },
-    },
     "api.yml": {
       "imports": {
         "root": "__package__.yml",
@@ -547,7 +14,6 @@ exports[`open api parser buzzshot simple 1`] = `
           "listAccounts": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -556,9 +22,14 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "name": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -569,7 +40,6 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listAccountsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -577,13 +47,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListAccountsResponse",
+              "type": "ListAccountsResponse",
             },
           },
           "listGames": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -592,9 +61,29 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "complete": {
+                          "completed_at": "2024-01-15T09:30:00Z",
+                        },
+                        "date": "string",
+                        "extra_fields": [
+                          {
+                            "key": "string",
+                            "present": true,
+                          },
+                        ],
+                        "photos": [
+                          {
+                            "photo": "string",
+                          },
+                        ],
+                        "time": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -605,27 +94,22 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listGamesRequest",
               "query-parameters": {
                 "after": {
-                  "allow-multiple": undefined,
                   "docs": "After",
                   "type": "optional<string>",
                 },
                 "before": {
-                  "allow-multiple": undefined,
                   "docs": "Before",
                   "type": "optional<string>",
                 },
                 "complete": {
-                  "allow-multiple": undefined,
                   "docs": "complete",
                   "type": "optional<string>",
                 },
                 "date": {
-                  "allow-multiple": undefined,
                   "docs": "Date",
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -633,13 +117,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListGamesResponse",
+              "type": "ListGamesResponse",
             },
           },
           "listGroups": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -648,9 +131,47 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "date": "string",
+                        "games": [
+                          {
+                            "complete": {
+                              "completed_at": "2024-01-15T09:30:00Z",
+                            },
+                            "date": "string",
+                            "extra_fields": [
+                              {
+                                "key": "string",
+                                "present": true,
+                              },
+                            ],
+                            "time": "string",
+                          },
+                        ],
+                        "photos": [
+                          {
+                            "photo": "string",
+                          },
+                        ],
+                        "players": [
+                          {
+                            "email": "string",
+                            "extra_fields": [
+                              {
+                                "key": "string",
+                                "present": true,
+                              },
+                            ],
+                            "phone": "string",
+                          },
+                        ],
+                        "time": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -661,17 +182,14 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listGroupsRequest",
               "query-parameters": {
                 "complete": {
-                  "allow-multiple": undefined,
                   "docs": "complete",
                   "type": "optional<string>",
                 },
                 "is_event": {
-                  "allow-multiple": undefined,
                   "docs": "is_event",
                   "type": "optional<string>",
                 },
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -679,13 +197,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListGroupsResponse",
+              "type": "ListGroupsResponse",
             },
           },
           "listLocations": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -694,9 +211,14 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "name": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -707,7 +229,6 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listLocationsRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -715,13 +236,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListLocationsResponse",
+              "type": "ListLocationsResponse",
             },
           },
           "listPhotos": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -730,9 +250,19 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "original_image": "string",
+                        "processed": [
+                          {
+                            "photo": "string",
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -743,7 +273,6 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listPhotosRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -751,13 +280,12 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListPhotosResponse",
+              "type": "ListPhotosResponse",
             },
           },
           "listPlayers": {
             "auth": false,
             "docs": "",
-            "errors": [],
             "examples": [
               {
                 "headers": undefined,
@@ -766,9 +294,21 @@ exports[`open api parser buzzshot simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [
+                      {
+                        "email": "string",
+                        "extra_fields": [
+                          {
+                            "key": "string",
+                            "present": true,
+                          },
+                        ],
+                        "phone": "string",
+                      },
+                    ],
                   },
                 },
               },
@@ -779,7 +319,6 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "listPlayersRequest",
               "query-parameters": {
                 "page": {
-                  "allow-multiple": undefined,
                   "docs": "A page number within the paginated result set.",
                   "type": "optional<integer>",
                 },
@@ -787,13 +326,27 @@ exports[`open api parser buzzshot simple 1`] = `
             },
             "response": {
               "docs": "",
-              "type": "root.ListPlayersResponse",
+              "type": "ListPlayersResponse",
             },
           },
           "retrieveAccount": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "name": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
@@ -810,7 +363,36 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGame": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "complete": {
+                      "completed_at": "2024-01-15T09:30:00Z",
+                    },
+                    "date": "string",
+                    "extra_fields": [
+                      {
+                        "key": "string",
+                        "present": true,
+                      },
+                    ],
+                    "photos": [
+                      {
+                        "photo": "string",
+                      },
+                    ],
+                    "time": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/games/{id}",
             "path-parameters": {
@@ -823,22 +405,18 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "retrieveGameRequest",
               "query-parameters": {
                 "after": {
-                  "allow-multiple": undefined,
                   "docs": "After",
                   "type": "optional<string>",
                 },
                 "before": {
-                  "allow-multiple": undefined,
                   "docs": "Before",
                   "type": "optional<string>",
                 },
                 "complete": {
-                  "allow-multiple": undefined,
                   "docs": "complete",
                   "type": "optional<string>",
                 },
                 "date": {
-                  "allow-multiple": undefined,
                   "docs": "Date",
                   "type": "optional<string>",
                 },
@@ -852,7 +430,54 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGroup": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "date": "string",
+                    "games": [
+                      {
+                        "complete": {
+                          "completed_at": "2024-01-15T09:30:00Z",
+                        },
+                        "date": "string",
+                        "extra_fields": [
+                          {
+                            "key": "string",
+                            "present": true,
+                          },
+                        ],
+                        "time": "string",
+                      },
+                    ],
+                    "photos": [
+                      {
+                        "photo": "string",
+                      },
+                    ],
+                    "players": [
+                      {
+                        "email": "string",
+                        "extra_fields": [
+                          {
+                            "key": "string",
+                            "present": true,
+                          },
+                        ],
+                        "phone": "string",
+                      },
+                    ],
+                    "time": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
@@ -865,12 +490,10 @@ exports[`open api parser buzzshot simple 1`] = `
               "name": "retrieveGroupRequest",
               "query-parameters": {
                 "complete": {
-                  "allow-multiple": undefined,
                   "docs": "complete",
                   "type": "optional<string>",
                 },
                 "is_event": {
-                  "allow-multiple": undefined,
                   "docs": "is_event",
                   "type": "optional<string>",
                 },
@@ -884,7 +507,21 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveLocation": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "name": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
@@ -901,7 +538,26 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePhoto": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "photo_id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "original_image": "string",
+                    "processed": [
+                      {
+                        "photo": "string",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
@@ -918,7 +574,28 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePlayer": {
             "auth": false,
             "docs": "",
-            "errors": [],
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "email": "string",
+                    "extra_fields": [
+                      {
+                        "key": "string",
+                        "present": true,
+                      },
+                    ],
+                    "phone": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/players/{id}",
             "path-parameters": {
@@ -934,16 +611,257 @@ exports[`open api parser buzzshot simple 1`] = `
           },
         },
       },
+      "types": {
+        "ListAccountsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Room>>",
+          },
+        },
+        "ListGamesResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Game>>",
+          },
+        },
+        "ListGroupsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Group>>",
+          },
+        },
+        "ListLocationsResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Room>>",
+          },
+        },
+        "ListPhotosResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Photo>>",
+          },
+        },
+        "ListPlayersResponse": {
+          "docs": undefined,
+          "properties": {
+            "count": "optional<integer>",
+            "next": "optional<string>",
+            "previous": "optional<string>",
+            "results": "optional<list<root.Player>>",
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Game": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "complete": "GameComplete",
+          "date": "string",
+          "extra_fields": "list<GameExtraFieldsItem>",
+          "group": "optional<string>",
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "photos": "optional<list<GamePhotosItem>>",
+          "room": "optional<string>",
+          "start_at": "optional<datetime>",
+          "time": "string",
+          "updated_at": "optional<datetime>",
+        },
+      },
+      "GameComplete": {
+        "docs": undefined,
+        "properties": {
+          "completed_at": "datetime",
+          "completion_time": "optional<integer>",
+          "did_win": "optional<boolean>",
+          "hints": "optional<integer>",
+          "score": "optional<integer>",
+        },
+      },
+      "GameExtraFieldsItem": {
+        "docs": undefined,
+        "properties": {
+          "key": "string",
+          "label": "optional<string>",
+          "present": "boolean",
+          "value": "optional<map<string, unknown>>",
+        },
+      },
+      "GamePhotosItem": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "photo": "string",
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
+        },
+      },
+      "Group": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "date": "string",
+          "games": "optional<list<GroupGamesItem>>",
+          "id": "optional<integer>",
+          "is_event": "optional<boolean>",
+          "name": "optional<string>",
+          "photos": "optional<list<GroupPhotosItem>>",
+          "players": "list<GroupPlayersItem>",
+          "start_at": "optional<datetime>",
+          "time": "string",
+          "updated_at": "optional<datetime>",
+        },
+      },
+      "GroupGamesItem": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "complete": "GroupGamesItemComplete",
+          "date": "string",
+          "extra_fields": "list<GroupGamesItemExtraFieldsItem>",
+          "id": "optional<integer>",
+          "name": "optional<string>",
+          "room": "optional<string>",
+          "start_at": "optional<datetime>",
+          "time": "string",
+          "updated_at": "optional<datetime>",
+        },
+      },
+      "GroupGamesItemComplete": {
+        "docs": undefined,
+        "properties": {
+          "completed_at": "datetime",
+          "completion_time": "optional<integer>",
+          "did_win": "optional<boolean>",
+          "hints": "optional<integer>",
+          "score": "optional<integer>",
+        },
+      },
+      "GroupGamesItemExtraFieldsItem": {
+        "docs": undefined,
+        "properties": {
+          "key": "string",
+          "label": "optional<string>",
+          "present": "boolean",
+          "value": "optional<map<string, unknown>>",
+        },
+      },
+      "GroupPhotosItem": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "game": "optional<string>",
+          "photo": "string",
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
+        },
+      },
+      "GroupPlayersItem": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "email": "string",
+          "extra_fields": "list<GroupPlayersItemExtraFieldsItem>",
+          "first_name": "optional<string>",
+          "last_name": "optional<string>",
+          "phone": "string",
+          "player": "optional<string>",
+          "signature": "optional<string>",
+          "updated_at": "optional<datetime>",
+        },
+      },
+      "GroupPlayersItemExtraFieldsItem": {
+        "docs": undefined,
+        "properties": {
+          "key": "string",
+          "label": "optional<string>",
+          "present": "boolean",
+          "value": "optional<map<string, unknown>>",
+        },
+      },
+      "Photo": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "id": "optional<string>",
+          "original_image": "string",
+          "processed": "list<PhotoProcessedItem>",
+        },
+      },
+      "PhotoProcessedItem": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "game": "optional<string>",
+          "group": "optional<string>",
+          "photo": "string",
+          "processed_image": "optional<string>",
+          "ready": "optional<string>",
+        },
+      },
+      "Player": {
+        "docs": undefined,
+        "properties": {
+          "added_at": "optional<datetime>",
+          "email": "string",
+          "extra_fields": "list<PlayerExtraFieldsItem>",
+          "first_name": "optional<string>",
+          "id": "optional<integer>",
+          "last_name": "optional<string>",
+          "marketing_email_allowed": "optional<boolean>",
+          "phone": "string",
+          "updated_at": "optional<datetime>",
+        },
+      },
+      "PlayerExtraFieldsItem": {
+        "docs": undefined,
+        "properties": {
+          "key": "string",
+          "label": "optional<string>",
+          "present": "boolean",
+          "value": "optional<map<string, unknown>>",
+        },
+      },
+      "Room": {
+        "docs": undefined,
+        "properties": {
+          "hidden": "optional<boolean>",
+          "id": "optional<integer>",
+          "name": "string",
+        },
+      },
     },
   },
   "rootApiFile": {
-    "auth": "bearer",
+    "auth": "BearerAuthScheme",
+    "auth-schemes": {
+      "BearerAuthScheme": {
+        "scheme": "bearer",
+      },
+    },
     "display-name": "",
     "error-discrimination": {
       "strategy": "status-code",
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

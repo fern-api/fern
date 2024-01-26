@@ -5,7 +5,9 @@ exports[`formatDefinitionFile headers/file-header-with-newline.yml 1`] = `
 
 # i'm a file header
 
+
 types:
+
   MovieId: string
 "
 `;
@@ -15,7 +17,9 @@ exports[`formatDefinitionFile headers/file-header-without-newline.yml 1`] = `
 
 # i'm a file header
 
+
 types:
+
   MovieId: string
 "
 `;
@@ -23,7 +27,9 @@ types:
 exports[`formatDefinitionFile lang-server/with-lang-server.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+
 types:
+
   MyAlias: string
 "
 `;
@@ -31,7 +37,9 @@ types:
 exports[`formatDefinitionFile lang-server/without-lang-server.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+
 types:
+
   MyAlias: string
 "
 `;
@@ -39,7 +47,9 @@ types:
 exports[`formatDefinitionFile lots-of-newlines.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+
 types:
+
   MovieId: string
 
   Movie:
@@ -87,6 +97,7 @@ service:
         - MovieDoesNotExistError
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId
@@ -96,10 +107,12 @@ errors:
 exports[`formatDefinitionFile no-newlines.yml 1`] = `
 "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
 
+
 imports:
   foo: foo.yml
 
 types:
+
   MovieId: string
 
   Movie:
@@ -147,6 +160,7 @@ service:
         - MovieDoesNotExistError
 
 errors:
+
   MovieDoesNotExistError:
     status-code: 404
     type: MovieId

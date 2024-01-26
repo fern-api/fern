@@ -1,5 +1,5 @@
 import { Audiences } from "@fern-api/config-management-commons";
-import { AbsoluteFilePath, streamObjectToFile } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { generateIntermediateRepresentation } from "@fern-api/ir-generator";
 import {
@@ -9,6 +9,7 @@ import {
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import chalk from "chalk";
+import { writeFile } from "fs/promises";
 import os from "os";
 import path from "path";
 import tmp, { DirectoryResult } from "tmp-promise";
@@ -48,6 +49,7 @@ export async function runLocalGenerationForWorkspace({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride: undefined,
+                        outputVersionOverride: undefined,
                         writeSnippets: false
                     });
                     interactiveTaskContext.logger.info(
@@ -69,7 +71,8 @@ export async function runLocalGenerationForSeed({
     generatorGroup,
     keepDocker,
     context,
-    irVersionOverride
+    irVersionOverride,
+    outputVersionOverride
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -77,6 +80,7 @@ export async function runLocalGenerationForSeed({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputVersionOverride: string | undefined;
 }): Promise<void> {
     const workspaceTempDir = await getWorkspaceTempDir();
 
@@ -98,9 +102,8 @@ export async function runLocalGenerationForSeed({
                         keepDocker,
                         context: interactiveTaskContext,
                         irVersionOverride,
-
-                        // TODO: For now, we only write the snippet.json for non-typescript generators.
-                        writeSnippets: !generatorInvocation.name.includes("typescript")
+                        outputVersionOverride,
+                        writeSnippets: true
                     });
                     interactiveTaskContext.logger.info(
                         chalk.green("Wrote files to " + generatorInvocation.absolutePathToLocalOutput)
@@ -134,6 +137,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker,
     context,
     irVersionOverride,
+    outputVersionOverride,
     writeSnippets
 }: {
     organization: string;
@@ -145,6 +149,7 @@ async function writeFilesToDiskAndRunGenerator({
     keepDocker: boolean;
     context: TaskContext;
     irVersionOverride: string | undefined;
+    outputVersionOverride: string | undefined;
     writeSnippets: boolean;
 }): Promise<void> {
     const absolutePathToIr = await writeIrToFile({
@@ -185,6 +190,7 @@ async function writeFilesToDiskAndRunGenerator({
         absolutePathToWriteConfigJson,
         workspaceName: workspace.name,
         organization,
+        outputVersion: outputVersionOverride,
         keepDocker,
         generatorInvocation
     });
@@ -218,6 +224,7 @@ async function writeIrToFile({
         audiences,
         generationLanguage: generatorInvocation.language
     });
+    context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =
         irVersionOverride != null
             ? await migrateIntermediateRepresentationThroughVersion({
@@ -233,11 +240,12 @@ async function writeIrToFile({
                       version: generatorInvocation.version
                   }
               });
-
+    context.logger.debug("Migrated IR");
     const irFile = await tmp.file({
         tmpdir: workspaceTempDir.path
     });
     const absolutePathToIr = AbsoluteFilePath.of(irFile.path);
-    await streamObjectToFile(absolutePathToIr, migratedIntermediateRepresentation, { pretty: true });
+    await writeFile(absolutePathToIr, JSON.stringify(migratedIntermediateRepresentation, undefined, 4));
+    context.logger.debug(`Wrote IR to ${absolutePathToIr}`);
     return absolutePathToIr;
 }

@@ -1,0 +1,195 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
+imports:
+  workspace: workspace.yml
+
+types:
+  CollectionId: string
+
+  PostmanCollectionSchema:
+    properties:
+      info: PostmanCollectionInfo
+      item: list<PostmanCollectionItem>
+      auth: optional<PostmanRequestAuth>
+      variable: list<PostmanVariable>
+
+  PostmanVariable:
+    properties:
+      key: string
+      value: string
+      type: string
+
+  PostmanCollectionInfo:
+    properties:
+      name: string
+      schema: string
+      description: optional<string>
+
+  PostmanCollectionItem:
+    discriminant:
+      value: _type
+      name: type
+    union:
+      container: PostmanCollectionContainerItem
+      endpoint: PostmanCollectionEndpointItem
+
+  PostmanCollectionContainerItem:
+    properties:
+      description: optional<string>
+      name: string
+      item: list<PostmanCollectionItem>
+
+  PostmanCollectionEndpointItem:
+    properties:
+      name: string
+      request: PostmanRequest
+      response: list<PostmanExampleResponse>
+
+  PostmanUrl:
+    properties:
+      raw: string
+      host: list<string>
+      path: list<string>
+      query: list<PostmanUrlVariable>
+      variable: list<PostmanUrlVariable>
+
+  PostmanUrlVariable:
+    properties:
+      key: string
+      value: string
+      description: optional<string>
+
+  PostmanRequest:
+    properties:
+      url: PostmanUrl
+      method: PostmanMethod
+      description: optional<string>
+      header: list<PostmanHeader>
+      auth: optional<PostmanRequestAuth>
+      body: optional<PostmanRequestBody>
+
+  PostmanRequestAuth:
+    discriminant: type
+    union:
+      basic:
+        type: list<PostmanAuthParam>
+        key: basic
+      bearer:
+        type: list<PostmanAuthParam>
+        key: bearer
+      apikey:
+        type: list<PostmanAuthParam>
+        key: apikey
+
+  PostmanAuthParam:
+    properties:
+      key: string
+      value: string
+      type: string
+
+  PostmanExampleResponse:
+    properties:
+      description: optional<string>
+      name: string
+      originalRequest: PostmanRequest
+      code: integer
+      status: string
+      body: string
+      "_postman_previewlanguage": optional<string>
+
+  PostmanMethod:
+    enum:
+      - POST
+      - PUT
+      - GET
+      - DELETE
+      - PATCH
+
+  PostmanHeader:
+    properties:
+      key: string
+      value: string
+      type: string
+      description: optional<string>
+
+  PostmanRequestBody:
+    properties:
+      mode: PostmanRequestBodyMode
+      raw: string
+      options: PostmanRequestBodyOptions
+
+  PostmanRequestBodyMode:
+    enum:
+      - raw
+
+  PostmanRequestBodyOptions:
+    properties:
+      raw: PostmanRawRequestBodyOptions
+
+  PostmanRawRequestBodyOptions:
+    properties:
+      language: PostmanRawRequestBodyLanguage
+
+  PostmanRawRequestBodyLanguage:
+    enum:
+      - json
+
+  PostmanCollection:
+    properties:
+      collection: unknown
+
+  GetAllCollectionMetadataResponse:
+    properties:
+      collections: list<CollectionMetadata>
+
+  CollectionMetadata:
+    properties:
+      id: CollectionId
+      name: string
+      owner: string
+      createdAt: datetime
+      updatedAt: datetime
+      uid: string
+      isPublic: boolean
+      forkInfo: optional<CollectionForkInfo>
+
+  CollectionForkInfo:
+    properties:
+      label: string
+      createdAt: datetime
+      from: string
+
+service:
+  auth: true
+  base-path: /collections
+  endpoints:
+    createCollection:
+      method: POST
+      path: ""
+      request:
+        name: CreateCollectionRequest
+        body: PostmanCollection
+        query-parameters:
+          workspace: optional<workspace.WorkspaceId>
+
+    getCollection:
+      method: GET
+      path: /{collectionId}
+      path-parameters:
+        collectionId: CollectionId
+      response: PostmanCollection
+
+    getAllCollectionMetadata:
+      method: GET
+      path: ""
+      request:
+        name: GetAllCollectionMetadataRequest
+        query-parameters:
+          workspace: optional<workspace.WorkspaceId>
+      response: GetAllCollectionMetadataResponse
+
+    updateCollection:
+      method: PUT
+      path: /{collectionId}
+      path-parameters:
+        collectionId: CollectionId
+      request: PostmanCollection

@@ -15,10 +15,14 @@ import { convertPathItem } from "./converters/convertPathItem";
 import { convertSchema } from "./converters/convertSchemas";
 import { convertSecurityScheme } from "./converters/convertSecurityScheme";
 import { convertServer } from "./converters/convertServer";
+import { ERROR_NAMES } from "./converters/convertToHttpError";
 import { ExampleEndpointFactory } from "./converters/example/ExampleEndpointFactory";
+import { FernOpenAPIExtension } from "./extensions/fernExtensions";
+import { getExtension } from "./extensions/getExtension";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
 import { convertSchemaWithExampleToSchema } from "./utils/convertSchemaWithExampleToSchema";
+import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
@@ -78,9 +82,29 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     });
 
     const schemasWithExample: Record<string, SchemaWithExample> = Object.fromEntries(
-        Object.entries(openApi.components?.schemas ?? {}).map(([key, schema]) => {
-            return [key, convertSchema(schema, false, context, [key])];
-        })
+        Object.entries(openApi.components?.schemas ?? {})
+            .map(([key, schema]) => {
+                if (!isReferenceObject(schema)) {
+                    const ignoreSchema = getExtension<boolean>(schema, FernOpenAPIExtension.IGNORE);
+                    if (ignoreSchema != null && ignoreSchema) {
+                        return [];
+                    }
+                    if (ERROR_NAMES.has(key)) {
+                        return [
+                            key,
+                            convertSchema(
+                                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                                { ...schema, "x-fern-type-name": `${key}Body` } as any as OpenAPIV3.SchemaObject,
+                                false,
+                                context,
+                                [key]
+                            )
+                        ];
+                    }
+                }
+                return [key, convertSchema(schema, false, context, [key])];
+            })
+            .filter((entry) => entry.length > 0)
     );
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
@@ -107,7 +131,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return {
                     description: queryParameter.description,
                     name: queryParameter.name,
-                    schema: convertSchemaWithExampleToSchema(queryParameter.schema)
+                    schema: convertSchemaWithExampleToSchema(queryParameter.schema),
+                    parameterNameOverride: queryParameter.parameterNameOverride
                 };
             }),
             pathParameters: endpointWithExample.pathParameters.map((pathParameter) => {
@@ -122,7 +147,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                 return {
                     description: header.description,
                     name: header.name,
-                    schema: convertSchemaWithExampleToSchema(header.schema)
+                    schema: convertSchemaWithExampleToSchema(header.schema),
+                    parameterNameOverride: header.parameterNameOverride
                 };
             }),
             examples: endpointExample == null ? [] : [endpointExample]
@@ -132,7 +158,8 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     const schemas: Record<string, Schema> = Object.fromEntries(
         Object.entries(schemasWithExample).map(([key, schemaWithExample]) => {
             taskContext.logger.debug(`Converting schema ${key}`);
-            return [key, convertSchemaWithExampleToSchema(schemaWithExample)];
+            const schema = convertSchemaWithExampleToSchema(schemaWithExample);
+            return [key, schema];
         })
     );
 
@@ -140,11 +167,14 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
         title: openApi.info.title,
         description: openApi.info.description,
         servers: (openApi.servers ?? []).map((server) => convertServer(server)),
-        tags: Object.fromEntries(
-            (openApi.tags ?? []).map((tag) => {
-                return [tag.name, { id: tag.name, description: tag.description }];
-            })
-        ),
+        tags: {
+            tagsById: Object.fromEntries(
+                (openApi.tags ?? []).map((tag) => {
+                    return [tag.name, { id: tag.name, description: tag.description }];
+                })
+            ),
+            orderedTagIds: openApi.tags?.map((tag) => tag.name)
+        },
         endpoints,
         webhooks,
         schemas: maybeRemoveDiscriminantsFromSchemas(schemas, context),

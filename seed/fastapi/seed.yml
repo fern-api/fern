@@ -1,0 +1,28 @@
+irVersion: v31
+docker: fernapi/fern-fastapi-server:latest
+dockerCommand: docker build -f ./generators/python/fastapi/Dockerfile -t fernapi/fern-fastapi-server:latest ./generators/python
+language: python
+generatorType: Server
+defaultOutputMode: local_files
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        skip_formatting: True
+      outputFolder: skip-formatting
+    - customConfig:
+        pydantic_config: 
+          version: v1
+      outputFolder: pydantic-v1
+    - customConfig:
+        pydantic_config: 
+          version: v2
+      outputFolder: pydantic-v2
+allowedFailures: 
+  - bytes
+  - file-download
+  - file-upload
+  - literal-headers
+  - response-property
+  - streaming

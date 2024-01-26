@@ -1,0 +1,15 @@
+openapi: 3.0.0
+info:
+  title: User API
+  version: 1.0.0
+x-fern-overrides-filepath: overrides.yml
+paths:
+  /users:
+    get:
+      summary: Get a list of users
+      description: Retrieve a list of users from the system.
+      responses:
+        '200':
+          description: Successful response
+        '500':
+          description: Internal Server Error

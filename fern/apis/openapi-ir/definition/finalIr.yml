@@ -8,7 +8,7 @@ types:
       title: optional<string>
       description: optional<string>
       servers: list<commons.Server>
-      tags: map<commons.TagId, commons.Tag>
+      tags: Tags
       hasEndpointsMarkedInternal: boolean
       endpoints: list<Endpoint>
       webhooks: list<Webhook>
@@ -19,6 +19,11 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
+
+  Tags:
+    properties:
+      tagsById: map<commons.TagId, commons.Tag>
+      orderedTagIds: optional<list<commons.TagId>>
 
   HttpError:
     extends:
@@ -116,7 +121,7 @@ types:
   EndpointSdkName:
     properties:
       groupName:
-        type: list<string>
+        type: list<commons.SdkGroupName>
         docs: This is populated by `x-fern-sdk-method-name`
       methodName:
         type: string
@@ -145,12 +150,20 @@ types:
     properties:
       name: string
       schema: Schema
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   Header:
     extends: commons.WithDescription
     properties:
       name: string
       schema: Schema
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   Request:
     union:
@@ -207,6 +220,7 @@ types:
     extends: commons.WithDescription
     properties:
       schema: Schema
+      responseProperty: optional<string>
 
   Schema:
     union:
@@ -220,10 +234,13 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: {}
+      unknown: commons.WithName
 
   PrimitiveSchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValue
 
@@ -245,7 +262,10 @@ types:
       maxLength: optional<integer>
 
   LiteralSchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       value: LiteralSchemaValue
 
@@ -258,6 +278,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       allOf: list<ReferencedSchema>
       properties: list<ObjectProperty>
@@ -287,29 +308,42 @@ types:
         type: string
         docs: |
           A unique name for the property.
+      audiences: list<string>
 
   ObjectPropertyConflictInfo:
     properties:
       differentSchema: boolean
 
   ArraySchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 
   MapSchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 
   NullableSchema:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       value: Schema
 
@@ -317,6 +351,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       values: list<EnumValue>
 
@@ -338,6 +373,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schema: commons.SchemaId
 
@@ -350,6 +386,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       discriminantProperty: string
       commonProperties: list<CommonProperty>
@@ -364,5 +401,6 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schemas: list<Schema>

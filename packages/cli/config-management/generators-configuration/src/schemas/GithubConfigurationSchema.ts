@@ -1,10 +1,12 @@
 import { z } from "zod";
-import { GithubLicenseSchema } from "./GithubLicenseSchema";
+import { GithubCommitAndReleaseSchema } from "./GithubCommitAndReleaseSchema";
+import { GithubPullRequestSchema } from "./GithubPullRequestSchema";
+import { GithubPushSchema } from "./GithubPushSchema";
 
-export const GithubConfigurationSchema = z.strictObject({
-    repository: z.string(),
-    license: z.optional(GithubLicenseSchema),
-    mode: z.optional(z.enum(["pull-request", "commit"]))
-});
+export const GithubConfigurationSchema = z.union([
+    GithubCommitAndReleaseSchema,
+    GithubPullRequestSchema,
+    GithubPushSchema
+]);
 
 export type GithubConfigurationSchema = z.infer<typeof GithubConfigurationSchema>;

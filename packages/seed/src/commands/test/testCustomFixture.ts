@@ -1,8 +1,6 @@
-import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { LogLevel } from "@fern-api/logger";
-import { FERN_DIRECTORY } from "@fern-api/project-configuration";
-import { GeneratorType } from "@fern-fern/seed-config/api";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
@@ -16,18 +14,14 @@ export async function testCustomFixture({
     irVersion,
     language,
     docker,
-    generatorType,
-    compileCommand,
     logLevel,
     numDockers
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
-    generatorType: GeneratorType;
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     docker: ParsedDockerName;
-    compileCommand: string | undefined;
     logLevel: LogLevel;
     numDockers: number;
 }): Promise<void> {
@@ -39,17 +33,20 @@ export async function testCustomFixture({
     const taskContext = taskContextFactory.create(`${workspace.workspaceName}:${"custom"} -`);
 
     const result = await acquireLocksAndRunTest({
-        absolutePathToWorkspace: join(pathToFixture, RelativeFilePath.of(FERN_DIRECTORY)),
+        absolutePathToWorkspace: join(pathToFixture),
         lock,
-        generatorType,
         irVersion,
+        outputVersion: undefined,
         language,
         fixture: "custom",
         docker,
-        compileCommand,
+        scripts: undefined,
         customConfig: {},
         taskContext,
-        outputDir: absolutePathToOutput
+        outputDir: absolutePathToOutput,
+        outputMode: "github",
+        outputFolder: "custom",
+        id: "custom"
     });
 
     if (result.type === "failure") {

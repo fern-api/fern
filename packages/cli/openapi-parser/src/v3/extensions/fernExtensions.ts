@@ -12,6 +12,14 @@ export const FernOpenAPIExtension = {
     SERVER_NAME_V2: "x-fern-server-name",
 
     /**
+     * Filepath that contains any OpenAPI overrides
+     * that you wan't Fern to add on top of your existing spec.
+     *
+     * x-fern-overrides-filepath: relative/path/to/file
+     */
+    OPENAPI_OVERIDES_FILEPATH: "x-fern-overrides-filepath",
+
+    /**
      * Used to override the type with fern's type syntax
      * Bar:
      *  properties:
@@ -96,6 +104,19 @@ export const FernOpenAPIExtension = {
     SDK_VARIABLE: "x-fern-sdk-variable",
 
     /**
+     * Used to customize the name of the parameter used for a header.
+     * Example usage:
+     * paths:
+     *   /path/to/my/endpoint/{id}:
+     *     parameters:
+     *       - in: header
+     *         name: X-Fern-Version
+     *         type: string
+     *         x-fern-parameter-name: version
+     */
+    PARAMETER_NAME: "x-fern-parameter-name",
+
+    /**
      * securitySchemes:
      *   Basic:
      *     scheme: http
@@ -166,7 +187,17 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-availability: ga # or beta, generally-available, deprecated,
      */
-    AVAILABILITY: "x-fern-availability"
+    AVAILABILITY: "x-fern-availability",
+
+    /**
+     * Used to signal that the SDK should return a specific property on the response.
+     *
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-sdk-return-value: data
+     */
+    RESPONSE_PROPERTY: "x-fern-sdk-return-value"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

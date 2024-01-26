@@ -1,0 +1,15 @@
+imports: 
+  root: __package__.yml
+
+service:
+  auth: false
+  base-path: ""
+  endpoints:
+    send:
+      path: /path-param/{value}
+      method: POST
+      path-parameters: 
+        value: root.Operand
+      examples: 
+        - path-parameters:
+            value: $root.Operand.GreaterThan

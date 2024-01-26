@@ -10,8 +10,13 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   "schemas": {
     "BaseUser": {
       "description": undefined,
+      "generatedName": "BaseUser",
+      "groupName": undefined,
       "key": {
         "description": undefined,
+        "generatedName": "BaseUser",
+        "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -19,9 +24,13 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
         },
         "type": "primitive",
       },
+      "nameOverride": undefined,
       "type": "map",
       "value": {
         "description": undefined,
+        "generatedName": "BaseUser",
+        "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -33,7 +42,10 @@ exports[`x-fern-type x-fern-type parse open api 1`] = `
   },
   "securitySchemes": {},
   "servers": [],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Test extension \`x-fern-type\`",
   "variables": {},
   "webhooks": [],

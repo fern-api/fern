@@ -20,6 +20,8 @@
     { "path": "../init" },
     { "path": "../logger" },
     { "path": "../login" },
+    { "path": "../mock" },
+    { "path": "../openapi-ir-to-fern" },
     { "path": "../posthog-manager" },
     { "path": "../project-loader" },
     { "path": "../register" },

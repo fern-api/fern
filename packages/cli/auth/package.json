@@ -32,15 +32,15 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/venus-api-sdk": "0.0.36",
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.2",
     "jwks-rsa": "^3.0.0"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/jsonwebtoken": "^9.0.0",
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^18.7.18",
     "depcheck": "^1.4.6",
-    "eslint": "^8.26.0",
+    "eslint": "^8.56.0",
     "jest": "^29.7.0",
     "organize-imports-cli": "^0.10.0",
     "prettier": "^2.7.1",

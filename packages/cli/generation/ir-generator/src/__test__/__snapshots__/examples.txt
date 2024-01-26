@@ -275,10 +275,15 @@ exports[`generate IR 1`] = `
       "type_commons/types:EventInfo",
       "type_commons/types:Data",
       "type_types:Exception",
+      "type_file/service:Filename",
       "type_types:File",
       "type_types:MovieId",
       "type_types:Movie",
       "type_types:Metadata",
+      "type_types:CastMember",
+      "type_types:Actor",
+      "type_types:Actress",
+      "type_types:StuntDouble",
       "type_types:ExtendedMovie",
       "type_types:Moment",
       "type_types:Directory",
@@ -3308,7 +3313,7 @@ exports[`generate IR 1`] = `
               "rootPathParameters": [],
               "serviceHeaders": [],
               "servicePathParameters": [],
-              "url": "//movie/$types.MovieId.One",
+              "url": "//movie/movie-c06a4ad7",
             },
           ],
           "fullPath": {
@@ -6041,7 +6046,9 @@ exports[`generate IR 1`] = `
       "navigationConfig": null,
       "service": "service_file/service",
       "subpackages": [],
-      "types": [],
+      "types": [
+        "type_file/service:Filename",
+      ],
       "webhooks": null,
     },
     "subpackage_health": {
@@ -6377,6 +6384,10 @@ exports[`generate IR 1`] = `
       "types": [
         "type_types:MovieId",
         "type_types:Movie",
+        "type_types:CastMember",
+        "type_types:Actor",
+        "type_types:Actress",
+        "type_types:StuntDouble",
         "type_types:ExtendedMovie",
         "type_types:Moment",
         "type_types:File",
@@ -8631,6 +8642,1584 @@ exports[`generate IR 1`] = `
           "_type": "primitive",
           "primitive": "STRING",
         },
+      },
+    },
+    "type_file/service:Filename": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": "file.txt",
+          "name": {
+            "camelCase": {
+              "safeName": "example0",
+              "unsafeName": "example0",
+            },
+            "originalName": "Example0",
+            "pascalCase": {
+              "safeName": "Example0",
+              "unsafeName": "Example0",
+            },
+            "screamingSnakeCase": {
+              "safeName": "EXAMPLE_0",
+              "unsafeName": "EXAMPLE_0",
+            },
+            "snakeCase": {
+              "safeName": "example_0",
+              "unsafeName": "example_0",
+            },
+          },
+          "shape": {
+            "type": "alias",
+            "value": {
+              "jsonExample": "file.txt",
+              "shape": {
+                "primitive": {
+                  "string": {
+                    "original": "file.txt",
+                  },
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+              "originalName": "file",
+              "pascalCase": {
+                "safeName": "File",
+                "unsafeName": "File",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FILE",
+                "unsafeName": "FILE",
+              },
+              "snakeCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+            },
+            {
+              "camelCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+              "originalName": "service",
+              "pascalCase": {
+                "safeName": "Service",
+                "unsafeName": "Service",
+              },
+              "screamingSnakeCase": {
+                "safeName": "SERVICE",
+                "unsafeName": "SERVICE",
+              },
+              "snakeCase": {
+                "safeName": "service",
+                "unsafeName": "service",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+            "originalName": "service",
+            "pascalCase": {
+              "safeName": "Service",
+              "unsafeName": "Service",
+            },
+            "screamingSnakeCase": {
+              "safeName": "SERVICE",
+              "unsafeName": "SERVICE",
+            },
+            "snakeCase": {
+              "safeName": "service",
+              "unsafeName": "service",
+            },
+          },
+          "packagePath": [
+            {
+              "camelCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+              "originalName": "file",
+              "pascalCase": {
+                "safeName": "File",
+                "unsafeName": "File",
+              },
+              "screamingSnakeCase": {
+                "safeName": "FILE",
+                "unsafeName": "FILE",
+              },
+              "snakeCase": {
+                "safeName": "file",
+                "unsafeName": "file",
+              },
+            },
+          ],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "filename",
+            "unsafeName": "filename",
+          },
+          "originalName": "Filename",
+          "pascalCase": {
+            "safeName": "Filename",
+            "unsafeName": "Filename",
+          },
+          "screamingSnakeCase": {
+            "safeName": "FILENAME",
+            "unsafeName": "FILENAME",
+          },
+          "snakeCase": {
+            "safeName": "filename",
+            "unsafeName": "filename",
+          },
+        },
+        "typeId": "type_file/service:Filename",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "alias",
+        "aliasOf": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+        "resolvedType": {
+          "_type": "primitive",
+          "primitive": "STRING",
+        },
+      },
+    },
+    "type_types:Actor": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "actor",
+            "unsafeName": "actor",
+          },
+          "originalName": "Actor",
+          "pascalCase": {
+            "safeName": "Actor",
+            "unsafeName": "Actor",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ACTOR",
+            "unsafeName": "ACTOR",
+          },
+          "snakeCase": {
+            "safeName": "actor",
+            "unsafeName": "actor",
+          },
+        },
+        "typeId": "type_types:Actor",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+    "type_types:Actress": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "id": "actor_456",
+            "name": "Jennifer Lawrence",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "example0",
+              "unsafeName": "example0",
+            },
+            "originalName": "Example0",
+            "pascalCase": {
+              "safeName": "Example0",
+              "unsafeName": "Example0",
+            },
+            "screamingSnakeCase": {
+              "safeName": "EXAMPLE_0",
+              "unsafeName": "EXAMPLE_0",
+            },
+            "snakeCase": {
+              "safeName": "example_0",
+              "unsafeName": "example_0",
+            },
+          },
+          "shape": {
+            "properties": [
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                    "originalName": "name",
+                    "pascalCase": {
+                      "safeName": "Name",
+                      "unsafeName": "Name",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "NAME",
+                      "unsafeName": "NAME",
+                    },
+                    "snakeCase": {
+                      "safeName": "name",
+                      "unsafeName": "name",
+                    },
+                  },
+                  "wireValue": "name",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                    "originalName": "Actress",
+                    "pascalCase": {
+                      "safeName": "Actress",
+                      "unsafeName": "Actress",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ACTRESS",
+                      "unsafeName": "ACTRESS",
+                    },
+                    "snakeCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                  },
+                  "typeId": "type_types:Actress",
+                },
+                "value": {
+                  "jsonExample": "Jennifer Lawrence",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "Jennifer Lawrence",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+              {
+                "name": {
+                  "name": {
+                    "camelCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                    "originalName": "id",
+                    "pascalCase": {
+                      "safeName": "Id",
+                      "unsafeName": "Id",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ID",
+                      "unsafeName": "ID",
+                    },
+                    "snakeCase": {
+                      "safeName": "id",
+                      "unsafeName": "id",
+                    },
+                  },
+                  "wireValue": "id",
+                },
+                "originalTypeDeclaration": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                    "originalName": "Actress",
+                    "pascalCase": {
+                      "safeName": "Actress",
+                      "unsafeName": "Actress",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ACTRESS",
+                      "unsafeName": "ACTRESS",
+                    },
+                    "snakeCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                  },
+                  "typeId": "type_types:Actress",
+                },
+                "value": {
+                  "jsonExample": "actor_456",
+                  "shape": {
+                    "primitive": {
+                      "string": {
+                        "original": "actor_456",
+                      },
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+              },
+            ],
+            "type": "object",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "actress",
+            "unsafeName": "actress",
+          },
+          "originalName": "Actress",
+          "pascalCase": {
+            "safeName": "Actress",
+            "unsafeName": "Actress",
+          },
+          "screamingSnakeCase": {
+            "safeName": "ACTRESS",
+            "unsafeName": "ACTRESS",
+          },
+          "snakeCase": {
+            "safeName": "actress",
+            "unsafeName": "actress",
+          },
+        },
+        "typeId": "type_types:Actress",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+                "originalName": "id",
+                "pascalCase": {
+                  "safeName": "Id",
+                  "unsafeName": "Id",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ID",
+                  "unsafeName": "ID",
+                },
+                "snakeCase": {
+                  "safeName": "id",
+                  "unsafeName": "id",
+                },
+              },
+              "wireValue": "id",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+        ],
+      },
+    },
+    "type_types:CastMember": {
+      "availability": null,
+      "docs": null,
+      "examples": [
+        {
+          "docs": null,
+          "jsonExample": {
+            "id": "actor_123",
+            "name": "Brad Pitt",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "example0",
+              "unsafeName": "example0",
+            },
+            "originalName": "Example0",
+            "pascalCase": {
+              "safeName": "Example0",
+              "unsafeName": "Example0",
+            },
+            "screamingSnakeCase": {
+              "safeName": "EXAMPLE_0",
+              "unsafeName": "EXAMPLE_0",
+            },
+            "snakeCase": {
+              "safeName": "example_0",
+              "unsafeName": "example_0",
+            },
+          },
+          "shape": {
+            "index": 0,
+            "singleUnionType": {
+              "jsonExample": {
+                "id": "actor_123",
+                "name": "Brad Pitt",
+              },
+              "shape": {
+                "shape": {
+                  "properties": [
+                    {
+                      "name": {
+                        "name": {
+                          "camelCase": {
+                            "safeName": "id",
+                            "unsafeName": "id",
+                          },
+                          "originalName": "id",
+                          "pascalCase": {
+                            "safeName": "Id",
+                            "unsafeName": "Id",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ID",
+                            "unsafeName": "ID",
+                          },
+                          "snakeCase": {
+                            "safeName": "id",
+                            "unsafeName": "id",
+                          },
+                        },
+                        "wireValue": "id",
+                      },
+                      "originalTypeDeclaration": {
+                        "fernFilepath": {
+                          "allParts": [
+                            {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                          ],
+                          "file": {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "actor",
+                            "unsafeName": "actor",
+                          },
+                          "originalName": "Actor",
+                          "pascalCase": {
+                            "safeName": "Actor",
+                            "unsafeName": "Actor",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ACTOR",
+                            "unsafeName": "ACTOR",
+                          },
+                          "snakeCase": {
+                            "safeName": "actor",
+                            "unsafeName": "actor",
+                          },
+                        },
+                        "typeId": "type_types:Actor",
+                      },
+                      "value": {
+                        "jsonExample": "actor_123",
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "actor_123",
+                            },
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    {
+                      "name": {
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
+                        "wireValue": "name",
+                      },
+                      "originalTypeDeclaration": {
+                        "fernFilepath": {
+                          "allParts": [
+                            {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                          ],
+                          "file": {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "actor",
+                            "unsafeName": "actor",
+                          },
+                          "originalName": "Actor",
+                          "pascalCase": {
+                            "safeName": "Actor",
+                            "unsafeName": "Actor",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ACTOR",
+                            "unsafeName": "ACTOR",
+                          },
+                          "snakeCase": {
+                            "safeName": "actor",
+                            "unsafeName": "actor",
+                          },
+                        },
+                        "typeId": "type_types:Actor",
+                      },
+                      "value": {
+                        "jsonExample": "Brad Pitt",
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "Brad Pitt",
+                            },
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+                "type": "named",
+                "typeName": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "actor",
+                      "unsafeName": "actor",
+                    },
+                    "originalName": "Actor",
+                    "pascalCase": {
+                      "safeName": "Actor",
+                      "unsafeName": "Actor",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ACTOR",
+                      "unsafeName": "ACTOR",
+                    },
+                    "snakeCase": {
+                      "safeName": "actor",
+                      "unsafeName": "actor",
+                    },
+                  },
+                  "typeId": "type_types:Actor",
+                },
+              },
+            },
+            "type": "undiscriminatedUnion",
+          },
+        },
+        {
+          "docs": null,
+          "jsonExample": {
+            "id": "actor_456",
+            "name": "Jennifer Lawrence",
+          },
+          "name": {
+            "camelCase": {
+              "safeName": "example1",
+              "unsafeName": "example1",
+            },
+            "originalName": "Example1",
+            "pascalCase": {
+              "safeName": "Example1",
+              "unsafeName": "Example1",
+            },
+            "screamingSnakeCase": {
+              "safeName": "EXAMPLE_1",
+              "unsafeName": "EXAMPLE_1",
+            },
+            "snakeCase": {
+              "safeName": "example_1",
+              "unsafeName": "example_1",
+            },
+          },
+          "shape": {
+            "index": 1,
+            "singleUnionType": {
+              "jsonExample": {
+                "id": "actor_456",
+                "name": "Jennifer Lawrence",
+              },
+              "shape": {
+                "shape": {
+                  "properties": [
+                    {
+                      "name": {
+                        "name": {
+                          "camelCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                          "originalName": "name",
+                          "pascalCase": {
+                            "safeName": "Name",
+                            "unsafeName": "Name",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "NAME",
+                            "unsafeName": "NAME",
+                          },
+                          "snakeCase": {
+                            "safeName": "name",
+                            "unsafeName": "name",
+                          },
+                        },
+                        "wireValue": "name",
+                      },
+                      "originalTypeDeclaration": {
+                        "fernFilepath": {
+                          "allParts": [
+                            {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                          ],
+                          "file": {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "actress",
+                            "unsafeName": "actress",
+                          },
+                          "originalName": "Actress",
+                          "pascalCase": {
+                            "safeName": "Actress",
+                            "unsafeName": "Actress",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ACTRESS",
+                            "unsafeName": "ACTRESS",
+                          },
+                          "snakeCase": {
+                            "safeName": "actress",
+                            "unsafeName": "actress",
+                          },
+                        },
+                        "typeId": "type_types:Actress",
+                      },
+                      "value": {
+                        "jsonExample": "Jennifer Lawrence",
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "Jennifer Lawrence",
+                            },
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                    {
+                      "name": {
+                        "name": {
+                          "camelCase": {
+                            "safeName": "id",
+                            "unsafeName": "id",
+                          },
+                          "originalName": "id",
+                          "pascalCase": {
+                            "safeName": "Id",
+                            "unsafeName": "Id",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ID",
+                            "unsafeName": "ID",
+                          },
+                          "snakeCase": {
+                            "safeName": "id",
+                            "unsafeName": "id",
+                          },
+                        },
+                        "wireValue": "id",
+                      },
+                      "originalTypeDeclaration": {
+                        "fernFilepath": {
+                          "allParts": [
+                            {
+                              "camelCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                              "originalName": "types",
+                              "pascalCase": {
+                                "safeName": "Types",
+                                "unsafeName": "Types",
+                              },
+                              "screamingSnakeCase": {
+                                "safeName": "TYPES",
+                                "unsafeName": "TYPES",
+                              },
+                              "snakeCase": {
+                                "safeName": "types",
+                                "unsafeName": "types",
+                              },
+                            },
+                          ],
+                          "file": {
+                            "camelCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                            "originalName": "types",
+                            "pascalCase": {
+                              "safeName": "Types",
+                              "unsafeName": "Types",
+                            },
+                            "screamingSnakeCase": {
+                              "safeName": "TYPES",
+                              "unsafeName": "TYPES",
+                            },
+                            "snakeCase": {
+                              "safeName": "types",
+                              "unsafeName": "types",
+                            },
+                          },
+                          "packagePath": [],
+                        },
+                        "name": {
+                          "camelCase": {
+                            "safeName": "actress",
+                            "unsafeName": "actress",
+                          },
+                          "originalName": "Actress",
+                          "pascalCase": {
+                            "safeName": "Actress",
+                            "unsafeName": "Actress",
+                          },
+                          "screamingSnakeCase": {
+                            "safeName": "ACTRESS",
+                            "unsafeName": "ACTRESS",
+                          },
+                          "snakeCase": {
+                            "safeName": "actress",
+                            "unsafeName": "actress",
+                          },
+                        },
+                        "typeId": "type_types:Actress",
+                      },
+                      "value": {
+                        "jsonExample": "actor_456",
+                        "shape": {
+                          "primitive": {
+                            "string": {
+                              "original": "actor_456",
+                            },
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    },
+                  ],
+                  "type": "object",
+                },
+                "type": "named",
+                "typeName": {
+                  "fernFilepath": {
+                    "allParts": [
+                      {
+                        "camelCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                        "originalName": "types",
+                        "pascalCase": {
+                          "safeName": "Types",
+                          "unsafeName": "Types",
+                        },
+                        "screamingSnakeCase": {
+                          "safeName": "TYPES",
+                          "unsafeName": "TYPES",
+                        },
+                        "snakeCase": {
+                          "safeName": "types",
+                          "unsafeName": "types",
+                        },
+                      },
+                    ],
+                    "file": {
+                      "camelCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                      "originalName": "types",
+                      "pascalCase": {
+                        "safeName": "Types",
+                        "unsafeName": "Types",
+                      },
+                      "screamingSnakeCase": {
+                        "safeName": "TYPES",
+                        "unsafeName": "TYPES",
+                      },
+                      "snakeCase": {
+                        "safeName": "types",
+                        "unsafeName": "types",
+                      },
+                    },
+                    "packagePath": [],
+                  },
+                  "name": {
+                    "camelCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                    "originalName": "Actress",
+                    "pascalCase": {
+                      "safeName": "Actress",
+                      "unsafeName": "Actress",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "ACTRESS",
+                      "unsafeName": "ACTRESS",
+                    },
+                    "snakeCase": {
+                      "safeName": "actress",
+                      "unsafeName": "actress",
+                    },
+                  },
+                  "typeId": "type_types:Actress",
+                },
+              },
+            },
+            "type": "undiscriminatedUnion",
+          },
+        },
+      ],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "castMember",
+            "unsafeName": "castMember",
+          },
+          "originalName": "CastMember",
+          "pascalCase": {
+            "safeName": "CastMember",
+            "unsafeName": "CastMember",
+          },
+          "screamingSnakeCase": {
+            "safeName": "CAST_MEMBER",
+            "unsafeName": "CAST_MEMBER",
+          },
+          "snakeCase": {
+            "safeName": "cast_member",
+            "unsafeName": "cast_member",
+          },
+        },
+        "typeId": "type_types:CastMember",
+      },
+      "referencedTypes": [
+        "type_types:Actor",
+        "type_types:Actress",
+        "type_types:StuntDouble",
+      ],
+      "shape": {
+        "_type": "undiscriminatedUnion",
+        "members": [
+          {
+            "docs": null,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "actor",
+                  "unsafeName": "actor",
+                },
+                "originalName": "Actor",
+                "pascalCase": {
+                  "safeName": "Actor",
+                  "unsafeName": "Actor",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ACTOR",
+                  "unsafeName": "ACTOR",
+                },
+                "snakeCase": {
+                  "safeName": "actor",
+                  "unsafeName": "actor",
+                },
+              },
+              "typeId": "type_types:Actor",
+            },
+          },
+          {
+            "docs": null,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "actress",
+                  "unsafeName": "actress",
+                },
+                "originalName": "Actress",
+                "pascalCase": {
+                  "safeName": "Actress",
+                  "unsafeName": "Actress",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ACTRESS",
+                  "unsafeName": "ACTRESS",
+                },
+                "snakeCase": {
+                  "safeName": "actress",
+                  "unsafeName": "actress",
+                },
+              },
+              "typeId": "type_types:Actress",
+            },
+          },
+          {
+            "docs": null,
+            "type": {
+              "_type": "named",
+              "fernFilepath": {
+                "allParts": [
+                  {
+                    "camelCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                    "originalName": "types",
+                    "pascalCase": {
+                      "safeName": "Types",
+                      "unsafeName": "Types",
+                    },
+                    "screamingSnakeCase": {
+                      "safeName": "TYPES",
+                      "unsafeName": "TYPES",
+                    },
+                    "snakeCase": {
+                      "safeName": "types",
+                      "unsafeName": "types",
+                    },
+                  },
+                ],
+                "file": {
+                  "camelCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                  "originalName": "types",
+                  "pascalCase": {
+                    "safeName": "Types",
+                    "unsafeName": "Types",
+                  },
+                  "screamingSnakeCase": {
+                    "safeName": "TYPES",
+                    "unsafeName": "TYPES",
+                  },
+                  "snakeCase": {
+                    "safeName": "types",
+                    "unsafeName": "types",
+                  },
+                },
+                "packagePath": [],
+              },
+              "name": {
+                "camelCase": {
+                  "safeName": "stuntDouble",
+                  "unsafeName": "stuntDouble",
+                },
+                "originalName": "StuntDouble",
+                "pascalCase": {
+                  "safeName": "StuntDouble",
+                  "unsafeName": "StuntDouble",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "STUNT_DOUBLE",
+                  "unsafeName": "STUNT_DOUBLE",
+                },
+                "snakeCase": {
+                  "safeName": "stunt_double",
+                  "unsafeName": "stunt_double",
+                },
+              },
+              "typeId": "type_types:StuntDouble",
+            },
+          },
+        ],
       },
     },
     "type_types:Directory": {
@@ -18479,6 +20068,143 @@ exports[`generate IR 1`] = `
             },
             "valueType": {
               "_type": "unknown",
+            },
+          },
+        ],
+      },
+    },
+    "type_types:StuntDouble": {
+      "availability": null,
+      "docs": null,
+      "examples": [],
+      "name": {
+        "fernFilepath": {
+          "allParts": [
+            {
+              "camelCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+              "originalName": "types",
+              "pascalCase": {
+                "safeName": "Types",
+                "unsafeName": "Types",
+              },
+              "screamingSnakeCase": {
+                "safeName": "TYPES",
+                "unsafeName": "TYPES",
+              },
+              "snakeCase": {
+                "safeName": "types",
+                "unsafeName": "types",
+              },
+            },
+          ],
+          "file": {
+            "camelCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+            "originalName": "types",
+            "pascalCase": {
+              "safeName": "Types",
+              "unsafeName": "Types",
+            },
+            "screamingSnakeCase": {
+              "safeName": "TYPES",
+              "unsafeName": "TYPES",
+            },
+            "snakeCase": {
+              "safeName": "types",
+              "unsafeName": "types",
+            },
+          },
+          "packagePath": [],
+        },
+        "name": {
+          "camelCase": {
+            "safeName": "stuntDouble",
+            "unsafeName": "stuntDouble",
+          },
+          "originalName": "StuntDouble",
+          "pascalCase": {
+            "safeName": "StuntDouble",
+            "unsafeName": "StuntDouble",
+          },
+          "screamingSnakeCase": {
+            "safeName": "STUNT_DOUBLE",
+            "unsafeName": "STUNT_DOUBLE",
+          },
+          "snakeCase": {
+            "safeName": "stunt_double",
+            "unsafeName": "stunt_double",
+          },
+        },
+        "typeId": "type_types:StuntDouble",
+      },
+      "referencedTypes": [],
+      "shape": {
+        "_type": "object",
+        "extends": [],
+        "properties": [
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+                "originalName": "name",
+                "pascalCase": {
+                  "safeName": "Name",
+                  "unsafeName": "Name",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "NAME",
+                  "unsafeName": "NAME",
+                },
+                "snakeCase": {
+                  "safeName": "name",
+                  "unsafeName": "name",
+                },
+              },
+              "wireValue": "name",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
+            },
+          },
+          {
+            "availability": null,
+            "docs": null,
+            "name": {
+              "name": {
+                "camelCase": {
+                  "safeName": "actorOrActressId",
+                  "unsafeName": "actorOrActressId",
+                },
+                "originalName": "actorOrActressId",
+                "pascalCase": {
+                  "safeName": "ActorOrActressId",
+                  "unsafeName": "ActorOrActressId",
+                },
+                "screamingSnakeCase": {
+                  "safeName": "ACTOR_OR_ACTRESS_ID",
+                  "unsafeName": "ACTOR_OR_ACTRESS_ID",
+                },
+                "snakeCase": {
+                  "safeName": "actor_or_actress_id",
+                  "unsafeName": "actor_or_actress_id",
+                },
+              },
+              "wireValue": "actorOrActressId",
+            },
+            "valueType": {
+              "_type": "primitive",
+              "primitive": "STRING",
             },
           },
         ],

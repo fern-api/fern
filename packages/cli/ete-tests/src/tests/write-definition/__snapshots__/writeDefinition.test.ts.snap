@@ -10,32 +10,26 @@ types:
     properties:
       id: integer
       name: string
-      tag:
-        type: optional<string>
+      tag: optional<string>
 
-  Pets:
-    type: list<Pet>
+  Pets: list<Pet>
 
   Error:
     properties:
       code: integer
       message: string
-
-errors: {}
 ",
     "name": "__package__.yml",
     "type": "file",
   },
   {
-    "contents": "imports:
-  root: __package__.yml
-name: api
-display-name: Swagger Petstore
+    "contents": "name: api
 error-discrimination:
   strategy: status-code
-default-environment: default
+display-name: Swagger Petstore
 environments:
-  default: http://petstore.swagger.io/v1
+  Default: http://petstore.swagger.io
+default-environment: Default
 ",
     "name": "api.yml",
     "type": "file",
@@ -51,7 +45,7 @@ service:
   base-path: ""
   endpoints:
     listPets:
-      path: /pets
+      path: /v1/pets
       method: GET
       auth: false
       display-name: List all pets
@@ -59,38 +53,44 @@ service:
         name: ListPetsRequest
         query-parameters:
           limit:
-            docs: How many items to return at one time (max 100)
             type: optional<integer>
+            docs: How many items to return at one time (max 100)
       response:
         docs: A paged array of pets
         type: root.Pets
-      errors: []
       examples:
         - response:
-            body: []
+            body:
+              - id: 1
+                name: string
 
     createPets:
-      path: /pets
+      path: /v1/pets
       method: POST
       auth: false
       display-name: Create a pet
-      errors: []
       examples:
         - {}
 
     showPetById:
-      path: /pets/{petId}
+      path: /v1/pets/{petId}
       method: GET
       auth: false
       path-parameters:
         petId:
-          docs: The id of the pet to retrieve
           type: string
+          docs: The id of the pet to retrieve
       display-name: Info for a specific pet
       response:
         docs: Expected response to a valid request
         type: root.Pet
-      errors: []
+      examples:
+        - path-parameters:
+            petId: string
+          response:
+            body:
+              id: 1
+              name: string
 ",
     "name": "pets.yml",
     "type": "file",

@@ -8,6 +8,9 @@ tabs:
   overview:
     display-name: Overview
     icon: "fa-solid fa-globe"
+  api-definition:
+    display-name: API Definition
+    icon: "fa-solid fa-pen-to-square"    
   sdks:
     display-name: Generate SDKs
     icon: "fa-solid fa-code"
@@ -20,9 +23,6 @@ tabs:
   api-reference:
     display-name: API Reference
     icon: "fa-solid fa-file-contract"
-  api-definition:
-    display-name: API Definition
-    icon: "fa-solid fa-pen-to-square"
 
 navigation:
   - tab: overview
@@ -43,7 +43,7 @@ navigation:
             slug: generators
       - section: CLI
         contents:
-          - page: Overview
+          - page: CLI Overview
             path: ./docs/pages/cli/overview.mdx
             slug: cli
           - page: fern generate
@@ -54,7 +54,7 @@ navigation:
             path: ./docs/pages/cli/fern-add.mdx
           - page: fern init
             path: ./docs/pages/cli/fern-init.mdx
-          - page: fern write definition
+          - page: fern write-definition
             path: ./docs/pages/cli/fern-write-definition.mdx
           - page: fern upgrade
             path: ./docs/pages/cli/fern-upgrade.mdx
@@ -74,16 +74,6 @@ navigation:
         contents:
           - page: Publishing to Maven Central
             path: ./docs/pages/guides/publish-to-maven-central.mdx
-          # - page: Migrating an old SDK to a Fern SDK
-          #   path: ./pages/guides/migrate-old-sdk.mdx
-          # - page: Use a TypeScript SDK with React Query
-          #   path: ./pages/tutorials/typescript-sdk-react-query.mdx
-          # - page: Generate a TypeScript SDK for your FastAPI backend
-          #   path: ./pages/tutorials/fastapi-to-typescript-sdk.mdx
-          # - page: Use Fern in a monorepo
-          #   path: ./pages/tutorials/monorepo.mdx
-          # - page: Set up Fern with yarn-pnp
-          #   path: ./pages/tutorials/yarn-pnp.mdx
   - tab: api-definition
     layout:
       - section: OpenAPI Specification
@@ -91,13 +81,12 @@ navigation:
         contents:
           - page: Importing OpenAPI
             path: ./docs/pages/openapi/import.mdx
-            slug: import
           - page: OpenAPI Extensions
             path: ./docs/pages/openapi/extensions.mdx
-            slug: extensions
+          - page: OpenAPI Examples
+            path: ./docs/pages/openapi/examples.mdx
           - page: Exporting OpenAPI
             path: ./docs/pages/openapi/export.mdx
-            slug: export
       - section: Fern Definition
         contents:
           - page: Overview
@@ -112,9 +101,12 @@ navigation:
             path: ./docs/pages/fern-definition/imports.mdx
           - page: Examples
             path: ./docs/pages/fern-definition/examples.mdx
+          - page: Audiences
+            path: ./docs/pages/fern-definition/audiences.mdx
+          - page: Availability 
+            path: ./docs/pages/fern-definition/availability.mdx
           - page: api.yml reference
             path: ./docs/pages/fern-definition/api-yml.mdx
-            slug: api-yml-reference
           - page: Packages
             path: ./docs/pages/fern-definition/packages.mdx
   - tab: sdks
@@ -141,15 +133,24 @@ navigation:
     layout:
       - section: Overview
         contents:
-          - page: Configuration
-            path: ./docs/pages/docs/configuration.mdx
-            slug: configuration
-          - page: Custom domain
+          - page: Fern Docs Quickstart 
+            path: ./docs/pages/docs/quickstart.mdx
+          - page: Writing Content
+            path: ./docs/pages/docs/writing-content.mdx
+      - section: Configurations
+        contents: 
+          - page: Overview
+            path: ./docs/pages/docs/configurations-overview.mdx
+          - page: Custom Domain
             path: ./docs/pages/docs/custom-domain.mdx
-            slug: custom-domain
-          - page: Pull request previews
+          - page: Pull Request Previews
             path: ./docs/pages/docs/previews.mdx
-            slug: previews
+          - page: SDK Snippets
+            path: ./docs/pages/docs/snippets.mdx
+          - page: Audiences
+            path: ./docs/pages/docs/audiences.mdx
+          - page: Endpoint Errors
+            path: ./docs/pages/docs/endpoint-errors.mdx
       - section: Component Library
         contents:
           - page: Cards
@@ -174,6 +175,8 @@ navigation:
             path: ./docs/pages/server-boilerplate/spring.mdx
           - page: Go
             path: ./docs/pages/server-boilerplate/go.mdx
+          - page: DotNet
+            path: ./docs/pages/server-boilerplate/dotnet.mdx  
           - page: Ruby on Rails
             path: ./docs/pages/server-boilerplate/ruby-on-rails.mdx
           - page: Flask
@@ -192,6 +195,7 @@ navigation:
           - external
         snippets:
           python: fern-api
+          typescript: "@fern-api/node-sdk"
 
 navbar-links:
   - type: secondary
@@ -211,4 +215,4 @@ logo:
 background-image: ./docs/images/background.svg
 colors:
   accentPrimary: "#16EE9D"
-favicon: ./docs/images/favicon.png
+favicon: ./docs/images/favicon.ico

@@ -1,4 +1,5 @@
 export { loadAPIWorkspace } from "./loadAPIWorkspace";
+export { loadDependency } from "./loadDependency";
 export { loadDocsWorkspace } from "./loadDocsWorkspace";
 export { getValidAbsolutePathToOpenAPI as loadOpenAPIFile } from "./loadOpenAPIFile";
 export { type FernFile, type ParsedFernFile } from "./types/FernFile";
@@ -13,4 +14,7 @@ export {
     type Workspace
 } from "./types/Workspace";
 export * from "./utils";
-export { convertOpenApiWorkspaceToFernWorkspace } from "./utils/convertOpenApiWorkspaceToFernWorkspace";
+export {
+    convertOpenApiWorkspaceToFernWorkspace,
+    getOpenAPIIRFromOpenAPIWorkspace
+} from "./utils/convertOpenApiWorkspaceToFernWorkspace";

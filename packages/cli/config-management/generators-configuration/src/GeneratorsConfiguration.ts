@@ -7,6 +7,7 @@ import { GeneratorsConfigurationSchema } from "./schemas/GeneratorsConfiguration
 export interface GeneratorsConfiguration {
     absolutePathToConfiguration: AbsoluteFilePath;
     absolutePathToOpenAPI: AbsoluteFilePath | undefined;
+    absolutePathToOpenAPIOverrides: AbsoluteFilePath | undefined;
     absolutePathToAsyncAPI: AbsoluteFilePath | undefined;
     rawConfiguration: GeneratorsConfigurationSchema;
     defaultGroup: string | undefined;
@@ -32,7 +33,8 @@ export const GenerationLanguage = {
     TYPESCRIPT: "typescript",
     JAVA: "java",
     PYTHON: "python",
-    GO: "go"
+    GO: "go",
+    RUBY: "ruby"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

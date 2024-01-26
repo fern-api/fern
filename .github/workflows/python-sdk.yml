@@ -12,13 +12,10 @@ jobs:
   release:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup node
-        uses: actions/setup-node@v3
-
-      - name: Download Fern
+      - name: Install Fern
         run: npm install -g fern-api
 
       - name: Release Python SDK
@@ -26,4 +23,4 @@ jobs:
           FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
           NPM_TOKEN: ${{ secrets.PYPI_TOKEN }}
         run: |
-          fern generate --api public-api --group publish --version ${{ inputs.version }} --log-level debug
+          fern generate --api public-api --group python-sdk --version ${{ inputs.version }} --log-level debug

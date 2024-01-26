@@ -2,12 +2,15 @@ import { MultipartSchema, Request } from "@fern-fern/openapi-ir-model/finalIr";
 import { RequestWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
+import { getExtension } from "../../extensions/getExtension";
 import { convertSchemaWithExampleToSchema } from "../../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema, getSchemaIdFromReference, SCHEMA_REFERENCE_PREFIX } from "../convertSchemas";
+import { getApplicationJsonSchemaMediaObject } from "./getApplicationJsonSchema";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
-export const APPLICATION_JSON_UTF_8_CONTENT = "application/json; charset=utf-8";
+export const APPLICATION_JSON_REGEX = /^application.*json$/;
 
 export const MULTIPART_CONTENT = "multipart/form-data";
 
@@ -23,47 +26,6 @@ function getOctetStreamRequest(
     requestBody: OpenAPIV3.RequestBodyObject
 ): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
     return requestBody.content[OCTET_STREAM]?.schema;
-}
-
-interface ParsedApplicationJsonRequest {
-    schema: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject;
-    // populated if the content type is not application/json
-    overridenContentType?: string;
-}
-
-export function getApplicationJsonRequest(
-    requestBody: OpenAPIV3.RequestBodyObject
-): ParsedApplicationJsonRequest | undefined {
-    const applicationJsonSchema = getSchemaForContentType({
-        contentType: APPLICATION_JSON_CONTENT,
-        media: requestBody.content
-    });
-    if (applicationJsonSchema != null) {
-        return {
-            schema: applicationJsonSchema
-        };
-    }
-
-    const applicationJsonUtf8Schema = getSchemaForContentType({
-        contentType: APPLICATION_JSON_UTF_8_CONTENT,
-        media: requestBody.content
-    });
-    if (applicationJsonUtf8Schema != null) {
-        return {
-            schema: applicationJsonUtf8Schema
-        };
-    }
-    return undefined;
-}
-
-function getSchemaForContentType({
-    contentType,
-    media
-}: {
-    contentType: string;
-    media: Record<string, OpenAPIV3.MediaTypeObject>;
-}): OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined {
-    return media[contentType]?.schema;
 }
 
 function multipartRequestHasFile(
@@ -100,7 +62,7 @@ export function convertRequest({
 
     const multipartSchema = getMultipartFormDataRequest(resolvedRequestBody);
     const octetStreamSchema = getOctetStreamRequest(resolvedRequestBody);
-    const jsonSchema = getApplicationJsonRequest(resolvedRequestBody);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
 
     // convert as application/octet-stream
     if (octetStreamSchema != null) {
@@ -111,7 +73,7 @@ export function convertRequest({
 
     // convert as multipart request
     if (
-        (multipartSchema != null && jsonSchema == null) ||
+        (multipartSchema != null && jsonMediaObject == null) ||
         (multipartSchema != null && multipartRequestHasFile(multipartSchema, document))
     ) {
         const resolvedMultipartSchema = isReferenceObject(multipartSchema)
@@ -135,9 +97,11 @@ export function convertRequest({
                         description: undefined
                     };
                 }
-                const schemaWithExample = convertSchema(definition, false, context, []);
+                const schemaWithExample = convertSchema(definition, false, context, [...requestBreadcrumbs, key]);
+                const audiences = getExtension<string[]>(definition, FernOpenAPIExtension.AUDIENCES) ?? [];
                 return {
                     key,
+                    audiences,
                     schema: MultipartSchema.json(convertSchemaWithExampleToSchema(schemaWithExample)),
                     description: undefined
                 };
@@ -146,14 +110,15 @@ export function convertRequest({
     }
 
     // otherwise, convert as json request.
-    if (jsonSchema == null) {
+    if (jsonMediaObject == null) {
         return undefined;
     }
-    const requestSchema = convertSchema(jsonSchema.schema, false, context, requestBreadcrumbs, true);
+    const requestSchema = convertSchema(jsonMediaObject.schema, false, context, requestBreadcrumbs, true);
     return RequestWithExample.json({
         description: undefined,
         schema: requestSchema,
-        contentType: jsonSchema.overridenContentType
+        contentType: undefined,
+        fullExamples: jsonMediaObject.examples
     });
 }
 

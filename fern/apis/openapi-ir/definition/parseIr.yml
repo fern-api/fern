@@ -3,6 +3,11 @@ imports:
   finalIr: finalIr.yml
 
 types:
+  NamedFullExample: 
+    properties: 
+      name: optional<string>
+      value: unknown
+
   EndpointWithExample:
     extends: commons.WithDescription
     properties:
@@ -47,6 +52,7 @@ types:
     properties:
       schema: SchemaWithExample
       contentType: optional<string>
+      fullExamples: optional<list<NamedFullExample>>
 
   ResponseWithExample:
     union:
@@ -62,6 +68,8 @@ types:
     extends: commons.WithDescription
     properties:
       schema: SchemaWithExample
+      responseProperty: optional<string>
+      fullExamples: optional<list<NamedFullExample>>
 
   PathParameterWithExample:
     extends: commons.WithDescription
@@ -75,12 +83,20 @@ types:
     properties:
       name: string
       schema: SchemaWithExample
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   HeaderWithExample:
     extends: commons.WithDescription
     properties:
       name: string
       schema: SchemaWithExample
+      parameterNameOverride:
+        type: optional<string>
+        docs: |
+          Populated by `x-fern-parameter-name` on a parameter object.
 
   SchemaWithExample:
     union:
@@ -97,23 +113,35 @@ types:
       unknown: UnknownSchemaWithExample
 
   ArraySchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithName
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
   MapSchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithName
+      - commons.WithDescription
     properties:
       key: PrimitiveSchemaWithExample
       value: SchemaWithExample
 
   OptionalSchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithName
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
   NullableSchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithName
+      - commons.WithDescription
     properties:
       value: SchemaWithExample
 
@@ -121,12 +149,16 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       values: list<finalIr.EnumValue>
       example: optional<string>
 
   UnknownSchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithSdkGroupName
+      - commons.WithName
+      - commons.WithDescription
     properties:
       example: unknown
 
@@ -134,15 +166,18 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       allOf: list<finalIr.ReferencedSchema>
       properties: list<ObjectPropertyWithExample>
       allOfPropertyConflicts: list<finalIr.AllOfPropertyConflict>
+      fullExamples: optional<list<NamedFullExample>>
 
   ObjectPropertyWithExample:
     properties:
       key: string
       schema: SchemaWithExample
+      audiences: list<string>
       conflict:
         type: map<commons.SchemaId, finalIr.ObjectPropertyConflictInfo>
         docs: The schemas that conflict with this property
@@ -160,6 +195,7 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       discriminantProperty: string
       commonProperties: list<CommonPropertyWithExample>
@@ -174,11 +210,15 @@ types:
     extends:
       - commons.WithDescription
       - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schemas: list<SchemaWithExample>
 
   PrimitiveSchemaWithExample:
-    extends: commons.WithDescription
+    extends:
+      - commons.WithDescription
+      - commons.WithName
+      - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValueWithExample
 

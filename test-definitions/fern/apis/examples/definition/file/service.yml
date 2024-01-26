@@ -1,6 +1,13 @@
 imports:
   types: ../types.yml
 
+types:
+  Filename:
+    type: string
+    examples:
+      - name: Example0
+        value: file.txt
+
 service:
   auth: true
   base-path: /file
@@ -19,7 +26,7 @@ service:
         - types.NotFoundError
       examples:
         - path-parameters:
-            filename: file.txt
+            filename: $Filename.Example0
           headers:
             X-File-API-Version: 0.0.2
           response:

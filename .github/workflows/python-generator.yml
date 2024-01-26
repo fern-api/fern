@@ -1,0 +1,48 @@
+name: python
+
+on:
+  pull_request:
+    paths:
+      - "generators/python/**"
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Type check
+        working-directory: ./generators/python
+        run: poetry run mypy
+
+      - name: pre-commit
+        working-directory: ./generators/python
+        run: poetry run pre-commit run --all-files
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+
+      - name: Install Dependencies
+        working-directory: ./generators/python
+        run: poetry install
+
+      - name: Unit Test
+        working-directory: ./generators/python
+        run: poetry run pytest -sv

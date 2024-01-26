@@ -1,4 +1,4 @@
-name: nursery-api
+name: literal-headers
 
 headers:
   X-API-Header:

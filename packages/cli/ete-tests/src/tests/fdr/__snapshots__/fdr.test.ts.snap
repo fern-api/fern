@@ -662,6 +662,20 @@ exports[`fdr {"name":"simple"} 1`] = `
             "subpackage_imdb"
         ]
     },
-    "snippetsConfiguration": {}
+    "snippetsConfiguration": {},
+    "globalHeaders": [
+        {
+            "key": "X-API-VERSION",
+            "type": {
+                "type": "optional",
+                "itemType": {
+                    "type": "primitive",
+                    "value": {
+                        "type": "string"
+                    }
+                }
+            }
+        }
+    ]
 }"
 `;

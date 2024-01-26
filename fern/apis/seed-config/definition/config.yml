@@ -3,12 +3,23 @@ types:
     properties:
       irVersion: string
       language: optional<Language>
+      defaultOutputMode: OutputMode
       generatorType: GeneratorType
       docker: string
       dockerCommand: optional<string>
       fixtures:
         type: optional<map<string, list<FixtureConfigurations>>>
-      compileCommands: optional<list<string>>
+      scripts: optional<list<ScriptConfig>>
+      allowedFailures: 
+        type: optional<list<string>>
+        docs: | 
+          List any fixtures that are okay to fail. For normal fixtures 
+          just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
+
+  ScriptConfig:
+    properties:
+      docker: string
+      commands: list<string>
 
   Language:
     enum:
@@ -28,3 +39,13 @@ types:
     properties:
       customConfig: unknown
       outputFolder: string
+      outputVersion: optional<string>
+      outputMode: 
+        type: optional<OutputMode>
+        docs: Overrides the default output mode
+  
+  OutputMode: 
+    enum: 
+      - github
+      - local_files
+      - publish

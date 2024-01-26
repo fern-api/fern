@@ -1,8 +1,14 @@
 import { assertNever } from "@fern-api/core-utils";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
-import { FullExample, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
-import { PrimitiveSchemaValueWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
-import { isSchemaRequired } from "../../utils/isSchemaRequired";
+import { FullExample, KeyValuePair, PrimitiveExample } from "@fern-fern/openapi-ir-model/example";
+import {
+    EnumSchemaWithExample,
+    ObjectSchemaWithExample,
+    PrimitiveSchemaValueWithExample,
+    SchemaWithExample
+} from "@fern-fern/openapi-ir-model/parseIr";
+import { convertToFullExample } from "./convertToFullExample";
+import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
 export class ExampleTypeFactory {
     private schemas: Record<SchemaId, SchemaWithExample>;
@@ -11,63 +17,189 @@ export class ExampleTypeFactory {
         this.schemas = schemas;
     }
 
-    public buildExampleFromSchemaId(schemaId: SchemaId): FullExample | undefined {
-        const schema = this.schemas[schemaId];
-        if (schema != null) {
-            return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set(schemaId) });
-        }
-        return undefined;
+    public buildExample({
+        schema,
+        example,
+        isOptional = false,
+        /* If true, then we know that we are building an example for a query param, path param, or header */
+        parameter = false
+    }: {
+        schema: SchemaWithExample;
+        example: unknown | undefined;
+        isOptional: boolean;
+        parameter: boolean;
+    }): FullExample | undefined {
+        return this.buildExampleHelper({ schema, isOptional, visitedSchemaIds: new Set(), example, parameter });
     }
 
-    public buildExample(schema: SchemaWithExample): FullExample | undefined {
-        return this.buildExampleFromSchema({ schema, isOptional: false, visitedSchemaIds: new Set() });
-    }
-
-    private buildExampleFromSchema({
+    private buildExampleHelper({
+        example,
         schema,
         isOptional,
-        visitedSchemaIds
+        visitedSchemaIds,
+        parameter = false
     }: {
+        example: unknown | undefined;
         schema: SchemaWithExample;
         isOptional: boolean;
         visitedSchemaIds: Set<SchemaId>;
+        parameter: boolean;
     }): FullExample | undefined {
         switch (schema.type) {
             case "enum":
+                if (typeof example === "string" && enumContainsValue({ schema, value: example })) {
+                    return FullExample.enum(example);
+                }
                 return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable":
-                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true, visitedSchemaIds });
+                return this.buildExampleHelper({
+                    schema: schema.value,
+                    isOptional: true,
+                    visitedSchemaIds,
+                    example,
+                    parameter
+                });
             case "optional":
-                return this.buildExampleFromSchema({ schema: schema.value, isOptional: true, visitedSchemaIds });
+                return this.buildExampleHelper({
+                    schema: schema.value,
+                    isOptional: true,
+                    visitedSchemaIds,
+                    example,
+                    parameter
+                });
             case "primitive": {
-                const primitiveExample = this.buildExampleFromPrimitive(schema.schema);
+                const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, isOptional });
                 return primitiveExample != null ? FullExample.primitive(primitiveExample) : undefined;
             }
             case "reference": {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
                 if (referencedSchemaWithExample != null && !visitedSchemaIds.has(schema.schema)) {
                     visitedSchemaIds.add(schema.schema);
-                    const example = this.buildExampleFromSchema({
+                    const referencedExample = this.buildExampleHelper({
+                        example,
                         schema: referencedSchemaWithExample,
                         isOptional,
-                        visitedSchemaIds
+                        visitedSchemaIds,
+                        parameter
                     });
                     visitedSchemaIds.delete(schema.schema);
-                    return example;
+                    return referencedExample;
                 }
                 return undefined;
             }
             case "oneOf":
+                switch (schema.oneOf.type) {
+                    case "discriminated": {
+                        const result: Record<string, FullExample> = {};
+
+                        let allProperties: Record<string, SchemaWithExample> = {};
+                        let requiredProperties: Record<string, SchemaWithExample> = {};
+
+                        const fullExample = getFullExampleAsObject(example);
+                        const exampleDiscriminant = fullExample?.[schema.oneOf.discriminantProperty];
+                        const exampleUnionVariantSchema = schema.oneOf.schemas[exampleDiscriminant];
+
+                        const firstUnionVariant = Object.entries(schema.oneOf.schemas)[0];
+                        if (
+                            exampleDiscriminant != null &&
+                            exampleUnionVariantSchema != null &&
+                            exampleUnionVariantSchema.type === "object"
+                        ) {
+                            allProperties = this.getAllProperties(exampleUnionVariantSchema);
+                            requiredProperties = this.getAllRequiredProperties(exampleUnionVariantSchema);
+                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                                PrimitiveExample.string(exampleDiscriminant)
+                            );
+                        } else if (firstUnionVariant != null && firstUnionVariant[1].type === "object") {
+                            allProperties = this.getAllProperties(firstUnionVariant[1]);
+                            requiredProperties = this.getAllRequiredProperties(firstUnionVariant[1]);
+                            result[schema.oneOf.discriminantProperty] = FullExample.primitive(
+                                PrimitiveExample.string(firstUnionVariant[0])
+                            );
+                        } else {
+                            return undefined;
+                        }
+
+                        for (const commonProperty of schema.oneOf.commonProperties) {
+                            allProperties[commonProperty.key] = commonProperty.schema;
+                            const resolvedSchema = this.getResolvedSchema(commonProperty.schema);
+                            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+                                requiredProperties[commonProperty.key] = commonProperty.schema;
+                            }
+                        }
+
+                        for (const [property, schema] of Object.entries(allProperties)) {
+                            const required = property in requiredProperties;
+                            if (required && fullExample?.[property] != null) {
+                                const propertyExample = this.buildExampleHelper({
+                                    schema,
+                                    example: fullExample[property],
+                                    isOptional: !required,
+                                    visitedSchemaIds,
+                                    parameter
+                                });
+                                if (propertyExample != null) {
+                                    result[property] = propertyExample;
+                                } else {
+                                    return undefined;
+                                }
+                            } else {
+                                const propertyExample = this.buildExampleHelper({
+                                    schema,
+                                    example: fullExample?.[property],
+                                    isOptional: !required,
+                                    visitedSchemaIds,
+                                    parameter
+                                });
+                                if (propertyExample != null) {
+                                    result[property] = propertyExample;
+                                } else if (required) {
+                                    return undefined;
+                                }
+                            }
+                        }
+                        return FullExample.oneOf({
+                            type: "discriminated",
+                            discriminated: result
+                        });
+                    }
+                    case "undisciminated": {
+                        if (schema.oneOf.schemas[0] != null) {
+                            // TODO (we should select the oneOf schema based on the example)
+                            return this.buildExampleHelper({
+                                example,
+                                schema: schema.oneOf.schemas[0],
+                                isOptional,
+                                visitedSchemaIds,
+                                parameter
+                            });
+                        }
+                        break;
+                    }
+                }
                 return undefined;
             case "unknown":
-                return undefined;
+                if (example != null) {
+                    const fullExample = convertToFullExample(example);
+                    if (fullExample != null) {
+                        return FullExample.unknown(fullExample);
+                    }
+                }
+                if (isOptional) {
+                    return undefined;
+                } else if (parameter) {
+                    return FullExample.primitive(PrimitiveExample.string("string"));
+                }
+                return FullExample.map([]);
             case "array": {
-                const itemExample = this.buildExampleFromSchema({
+                const itemExample = this.buildExampleHelper({
+                    example: getFullExampleAsArray(example)?.[0],
                     schema: schema.value,
                     isOptional: true,
-                    visitedSchemaIds
+                    visitedSchemaIds,
+                    parameter
                 });
                 if (isOptional) {
                     return itemExample != null ? FullExample.array([itemExample]) : undefined;
@@ -75,11 +207,42 @@ export class ExampleTypeFactory {
                 return itemExample != null ? FullExample.array([itemExample]) : FullExample.array([]);
             }
             case "map": {
-                const keyExample = this.buildExampleFromPrimitive(schema.key.schema);
-                const valueExample = this.buildExampleFromSchema({
+                const objectExample = getFullExampleAsObject(example);
+                if (objectExample != null && Object.entries(objectExample).length > 0) {
+                    const kvs: KeyValuePair[] = [];
+                    for (const [key, value] of Object.entries(objectExample)) {
+                        const keyExample = this.buildExampleFromPrimitive({
+                            schema: schema.key.schema,
+                            example: key,
+                            isOptional
+                        });
+                        const valueExample = this.buildExampleHelper({
+                            example: value,
+                            schema: schema.value,
+                            isOptional,
+                            visitedSchemaIds,
+                            parameter
+                        });
+                        if (keyExample != null && valueExample != null) {
+                            kvs.push({
+                                key: keyExample,
+                                value: valueExample
+                            });
+                        }
+                    }
+                    return FullExample.map(kvs);
+                }
+                const keyExample = this.buildExampleFromPrimitive({
+                    schema: schema.key.schema,
+                    example: undefined,
+                    isOptional
+                });
+                const valueExample = this.buildExampleHelper({
+                    example: undefined,
                     schema: schema.value,
-                    isOptional: true,
-                    visitedSchemaIds
+                    isOptional,
+                    visitedSchemaIds,
+                    parameter
                 });
                 if (keyExample != null && valueExample != null) {
                     return FullExample.map([
@@ -92,90 +255,211 @@ export class ExampleTypeFactory {
                 return isOptional ? undefined : FullExample.map([]);
             }
             case "object": {
-                let properties: Record<PropertyKey, FullExample> = {};
-                for (const referencedAllOf of schema.allOf) {
-                    const allOfSchemaWithExample = this.schemas[referencedAllOf.schema];
-                    if (allOfSchemaWithExample == null) {
-                        return undefined;
-                    }
-                    const allOfExample = this.buildExampleFromSchema({
-                        schema: allOfSchemaWithExample,
-                        isOptional: false,
-                        visitedSchemaIds: new Set()
-                    });
-                    if (allOfExample?.type === "object") {
-                        properties = {
-                            ...properties,
-                            ...allOfExample.properties
-                        };
+                const result: Record<string, FullExample> = {};
+                const fullExample =
+                    getFullExampleAsObject(example) ??
+                    (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0]) : {}) ??
+                    {};
+                const allProperties = this.getAllProperties(schema);
+                const requiredProperties = this.getAllRequiredProperties(schema);
+                for (const [property, schema] of Object.entries(allProperties)) {
+                    const required = property in requiredProperties;
+                    if (required && fullExample[property] != null) {
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds,
+                            parameter
+                        });
+                        if (propertyExample != null) {
+                            result[property] = propertyExample;
+                        } else {
+                            return undefined;
+                        }
                     } else {
-                        return undefined;
+                        const propertyExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            isOptional: !required,
+                            visitedSchemaIds,
+                            parameter
+                        });
+                        if (propertyExample != null) {
+                            result[property] = propertyExample;
+                        } else if (required) {
+                            return undefined;
+                        }
                     }
                 }
-                for (const objPropertyWithExample of schema.properties) {
-                    const propertyExample = this.buildExampleFromSchema({
-                        schema: objPropertyWithExample.schema,
-                        isOptional: false,
-                        visitedSchemaIds
-                    });
-                    if (isSchemaRequired(objPropertyWithExample.schema) && propertyExample == null) {
-                        return undefined;
-                    } else if (propertyExample != null) {
-                        properties[objPropertyWithExample.key] = propertyExample;
-                    }
-                }
-                schema.properties.forEach((objPropertyWithExample) => {
-                    const propertyExample = this.buildExampleFromSchema({
-                        schema: objPropertyWithExample.schema,
-                        isOptional: false,
-                        visitedSchemaIds
-                    });
-                    if (propertyExample != null) {
-                        properties[objPropertyWithExample.key] = propertyExample;
-                    }
+                return FullExample.object({
+                    properties: result
                 });
-                if (isOptional) {
-                    return Object.keys(properties).length > 0
-                        ? FullExample.object({
-                              properties
-                          })
-                        : undefined;
-                }
-                return Object.keys(properties).length > 0
-                    ? FullExample.object({
-                          properties
-                      })
-                    : FullExample.object({
-                          properties: {}
-                      });
             }
             default:
                 assertNever(schema);
         }
     }
 
-    private buildExampleFromPrimitive(primitiveSchema: PrimitiveSchemaValueWithExample): PrimitiveExample | undefined {
-        switch (primitiveSchema.type) {
+    private getAllProperties(object: ObjectSchemaWithExample): Record<string, SchemaWithExample> {
+        let properties: Record<string, SchemaWithExample> = {};
+        for (const property of object.properties) {
+            properties[property.key] = property.schema;
+        }
+        for (const allOf of object.allOf) {
+            const allOfSchema = this.schemas[allOf.schema];
+            if (allOfSchema == null) {
+                continue;
+            }
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
+                continue;
+            }
+            properties = {
+                ...this.getAllProperties(resolvedAllOfSchema),
+                ...properties
+            };
+        }
+        return properties;
+    }
+
+    private getAllRequiredProperties(object: ObjectSchemaWithExample): Record<string, SchemaWithExample> {
+        let requiredProperties: Record<string, SchemaWithExample> = {};
+        for (const property of object.properties) {
+            const resolvedSchema = this.getResolvedSchema(property.schema);
+            if (resolvedSchema.type !== "optional" && resolvedSchema.type !== "nullable") {
+                requiredProperties[property.key] = property.schema;
+            }
+        }
+        for (const allOf of object.allOf) {
+            const allOfSchema = this.schemas[allOf.schema];
+            if (allOfSchema == null) {
+                continue;
+            }
+            const resolvedAllOfSchema = this.getResolvedSchema(allOfSchema);
+            if (resolvedAllOfSchema.type !== "object") {
+                continue;
+            }
+            requiredProperties = {
+                ...this.getAllRequiredProperties(resolvedAllOfSchema),
+                ...requiredProperties
+            };
+        }
+        return requiredProperties;
+    }
+
+    private getResolvedSchema(schema: SchemaWithExample) {
+        while (schema.type === "reference") {
+            const resolvedSchema = this.schemas[schema.schema];
+            if (resolvedSchema == null) {
+                throw new Error(`Unexpected error: Failed to resolve schema reference: ${schema.schema}`);
+            }
+            schema = resolvedSchema;
+        }
+        return schema;
+    }
+
+    private buildExampleFromPrimitive({
+        isOptional,
+        example,
+        schema
+    }: {
+        isOptional: boolean;
+        example: unknown | undefined;
+        schema: PrimitiveSchemaValueWithExample;
+    }): PrimitiveExample | undefined {
+        switch (schema.type) {
             case "string":
-                return primitiveSchema.example != null ? PrimitiveExample.string(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "string") {
+                    return PrimitiveExample.string(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.string(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.string("string");
+                }
+                return undefined;
             case "base64":
-                return primitiveSchema.example != null ? PrimitiveExample.base64(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "string") {
+                    return PrimitiveExample.base64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.base64(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.base64("SGVsbG8gd29ybGQh");
+                }
+                return undefined;
             case "boolean":
-                return primitiveSchema.example != null ? PrimitiveExample.boolean(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "boolean") {
+                    return PrimitiveExample.boolean(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.boolean(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.boolean(true);
+                }
+                return undefined;
             case "date":
-                return primitiveSchema.example != null ? PrimitiveExample.date(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "string") {
+                    return PrimitiveExample.date(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.date(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.date("2023-01-15");
+                }
+                return undefined;
             case "datetime":
-                return primitiveSchema.example != null ? PrimitiveExample.datetime(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "string") {
+                    return PrimitiveExample.datetime(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.datetime(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
+                }
+                return undefined;
             case "double":
-                return primitiveSchema.example != null ? PrimitiveExample.double(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.double(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.double(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.double(1.1);
+                }
+                return undefined;
             case "float":
-                return primitiveSchema.example != null ? PrimitiveExample.float(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.float(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.float(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.float(1.1);
+                }
+                return undefined;
             case "int":
-                return primitiveSchema.example != null ? PrimitiveExample.int(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.int(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.int(1);
+                } else if (!isOptional) {
+                    return PrimitiveExample.int(1);
+                }
+                return undefined;
             case "int64":
-                return primitiveSchema.example != null ? PrimitiveExample.int64(primitiveSchema.example) : undefined;
+                if (example != null && typeof example === "number") {
+                    return PrimitiveExample.int64(example);
+                } else if (schema.example != null) {
+                    return PrimitiveExample.int64(schema.example);
+                } else if (!isOptional) {
+                    return PrimitiveExample.int64(1000000);
+                }
+                return undefined;
             default:
-                assertNever(primitiveSchema);
+                assertNever(schema);
         }
     }
+}
+
+function enumContainsValue({ schema, value }: { schema: EnumSchemaWithExample; value: string }): boolean {
+    return schema.values
+        .map((enumValue) => {
+            return enumValue.value;
+        })
+        .includes(value);
 }

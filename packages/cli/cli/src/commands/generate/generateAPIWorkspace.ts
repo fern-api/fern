@@ -29,6 +29,11 @@ export async function generateWorkspace({
     useLocalDocker: boolean;
     keepDocker: boolean;
 }): Promise<void> {
+    if (workspace.generatorsConfiguration == null) {
+        context.logger.warn("This workspaces has no generators.yml");
+        return;
+    }
+
     if (workspace.generatorsConfiguration.groups.length === 0) {
         context.logger.warn(`This workspaces has no groups specified in ${GENERATORS_CONFIGURATION_FILENAME}`);
         return;
@@ -48,7 +53,7 @@ export async function generateWorkspace({
         return context.failAndThrow(`Group '${groupNameOrDefault}' does not exist.`);
     }
 
-    await validateAPIWorkspaceAndLogIssues(workspace, context);
+    await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
 
     if (useLocalDocker) {
         await runLocalGenerationForWorkspace({

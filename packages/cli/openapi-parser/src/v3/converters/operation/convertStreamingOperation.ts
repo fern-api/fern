@@ -5,8 +5,10 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { FernStreamingExtension, StreamConditionEndpoint } from "../../extensions/getFernStreamingExtension";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { OperationContext } from "../contexts";
-import { getApplicationJsonRequest } from "../endpoint/convertRequest";
+import { getApplicationJsonSchemaMediaObject } from "../endpoint/getApplicationJsonSchema";
 import { convertHttpOperation } from "./convertHttpOperation";
+
+const STREAM_SUFFIX = "stream";
 
 export interface StreamingEndpoints {
     streaming: EndpointWithExample;
@@ -48,16 +50,23 @@ export function convertStreamingOperation({
             const streamingOperation = convertHttpOperation({
                 operationContext: {
                     ...operationContext,
+                    sdkMethodName:
+                        operationContext.sdkMethodName != null
+                            ? {
+                                  groupName: operationContext.sdkMethodName.groupName,
+                                  methodName: operationContext.sdkMethodName.methodName + "_" + STREAM_SUFFIX
+                              }
+                            : undefined,
                     operation: {
                         ...operationContext.operation,
                         requestBody: streamingRequestBody,
                         responses: streamingResponses
                     },
-                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, "stream"]
+                    baseBreadcrumbs: [...operationContext.baseBreadcrumbs, STREAM_SUFFIX]
                 },
                 context,
                 streamingResponse: true,
-                suffix: "stream"
+                suffix: STREAM_SUFFIX
             });
 
             const nonStreamingRequestBody = getRequestBody({
@@ -111,15 +120,15 @@ function getRequestBody({
         ? context.resolveRequestBodyReference(operation.requestBody)
         : operation.requestBody;
 
-    const applicationJsonRequest = getApplicationJsonRequest(resolvedRequestBody);
+    const jsonMediaObject = getApplicationJsonSchemaMediaObject(resolvedRequestBody.content);
 
-    if (applicationJsonRequest == null) {
+    if (jsonMediaObject == null) {
         return undefined;
     }
 
-    const resolvedRequstBodySchema = isReferenceObject(applicationJsonRequest.schema)
-        ? context.resolveSchemaReference(applicationJsonRequest.schema)
-        : applicationJsonRequest.schema;
+    const resolvedRequstBodySchema = isReferenceObject(jsonMediaObject.schema)
+        ? context.resolveSchemaReference(jsonMediaObject.schema)
+        : jsonMediaObject.schema;
 
     if (resolvedRequstBodySchema.allOf == null && resolvedRequstBodySchema.properties == null) {
         return undefined; // not an object

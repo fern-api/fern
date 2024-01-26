@@ -358,8 +358,7 @@ exports[`generate IR 1`] = `
     },
     "type_:Type": {
       "availability": null,
-      "docs": "Exercises all of the built-in types.
-",
+      "docs": "Exercises all of the built-in types.",
       "examples": [
         {
           "docs": null,

@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-audiences x-fern-audiences simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "service": {
+      "auth": false,
+      "base-path": "",
+      "endpoints": {
+        "getV1Users": {
+          "auth": false,
+          "docs": undefined,
+          "examples": [
+            {
+              "headers": undefined,
+              "path-parameters": undefined,
+              "query-parameters": undefined,
+              "request": {},
+              "response": undefined,
+            },
+          ],
+          "method": "GET",
+          "path": "/v1/users",
+          "request": {
+            "body": {
+              "properties": {
+                "private_property": "optional<string>",
+                "public_property": {
+                  "audiences": [
+                    "public",
+                  ],
+                  "docs": undefined,
+                  "type": "optional<string>",
+                },
+              },
+            },
+            "headers": undefined,
+            "name": "GetV1UsersRequest",
+            "query-parameters": undefined,
+          },
+        },
+      },
+    },
+    "types": {
+      "BaseUser": {
+        "docs": undefined,
+        "properties": {
+          "id": {
+            "audiences": [
+              "public",
+            ],
+            "type": "optional<string>",
+          },
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-audiences\`",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

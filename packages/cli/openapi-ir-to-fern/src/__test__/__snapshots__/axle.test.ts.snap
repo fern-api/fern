@@ -3,176 +3,431 @@
 exports[`open api parser axle simple 1`] = `
 {
   "definitionFiles": {
-    "__package__.yml": {
-      "errors": {},
-      "service": undefined,
+    "accounts.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetAccount": {
+            "auth": false,
+            "display-name": "Get Account",
+            "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "carrier": "string",
+                      "createdAt": "string",
+                      "firstName": "string",
+                      "id": "string",
+                      "lastName": "string",
+                      "modifiedAt": "string",
+                      "policies": [],
+                      "refreshedAt": "string",
+                    },
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/accounts/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "GetAccountRequest",
+              "query-parameters": {
+                "expand": {
+                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GetAccountResponse",
+            },
+          },
+        },
+      },
       "types": {
-        "Account": {
-          "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
-          "properties": {
-            "carrier": "string",
-            "createdAt": "string",
-            "email": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "firstName": "string",
-            "id": "string",
-            "lastName": "string",
-            "modifiedAt": "string",
-            "phone": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "policies": {
-              "docs": undefined,
-              "type": "list<string>",
-            },
-            "refreshedAt": "string",
-          },
-        },
-        "Address": {
+        "GetAccountResponse": {
           "docs": undefined,
           "properties": {
-            "addressLine1": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "addressLine2": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "city": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "country": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "postalCode": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "state": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
+            "data": "optional<root.Account>",
+            "success": "optional<root.Success>",
           },
         },
-        "Carrier": {
-          "docs": undefined,
-          "properties": {
-            "address": {
-              "docs": undefined,
-              "type": "Address",
+      },
+    },
+    "carriers.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetCarrier": {
+            "auth": false,
+            "display-name": "Get Carrier",
+            "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "address": {},
+                      "domain": "string",
+                      "id": "string",
+                      "modifiedAt": "string",
+                      "name": "example-1",
+                      "phone": "string",
+                    },
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/carriers/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as \`carrier\`.",
+                "type": "string",
+              },
             },
-            "domain": "string",
-            "id": "string",
-            "logoUrl": {
-              "docs": undefined,
-              "type": "optional<string>",
+            "response": {
+              "docs": "",
+              "type": "GetCarrierResponse",
             },
-            "modifiedAt": "string",
-            "name": "string",
-            "phone": "string",
           },
-        },
-        "Coverage": {
-          "docs": undefined,
-          "properties": {
-            "code": {
-              "docs": undefined,
-              "type": "CoverageCode",
-            },
-            "deductible": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "label": "string",
-            "limitPerAccident": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "limitPerPerson": {
-              "docs": undefined,
-              "type": "optional<integer>",
-            },
-            "property": {
-              "docs": undefined,
-              "type": "optional<string>",
+          "GetCarriers": {
+            "auth": false,
+            "display-name": "Get Carriers",
+            "docs": "The Get Carriers method returns an array of Carrier objects.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": [
+                      {
+                        "address": {},
+                        "domain": "string",
+                        "id": "string",
+                        "modifiedAt": "string",
+                        "name": "example-1",
+                        "phone": "string",
+                      },
+                    ],
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/carriers",
+            "response": {
+              "docs": "",
+              "type": "GetCarriersResponse",
             },
           },
         },
-        "CoverageCode": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "BI",
-              "value": "BI",
-            },
-            {
-              "docs": undefined,
-              "name": "PD",
-              "value": "PD",
-            },
-            {
-              "docs": undefined,
-              "name": "UMBI",
-              "value": "UMBI",
-            },
-            {
-              "docs": undefined,
-              "name": "UMPD",
-              "value": "UMPD",
-            },
-            {
-              "docs": undefined,
-              "name": "UIMBI",
-              "value": "UIMBI",
-            },
-            {
-              "docs": undefined,
-              "name": "UIMPD",
-              "value": "UIMPD",
-            },
-            {
-              "docs": undefined,
-              "name": "COLL",
-              "value": "COLL",
-            },
-            {
-              "docs": undefined,
-              "name": "COMP",
-              "value": "COMP",
-            },
-          ],
-        },
-        "Error": {
+      },
+      "types": {
+        "GetCarrierResponse": {
           "docs": undefined,
           "properties": {
-            "message": {
-              "docs": "Provides a reason for why the operation failed, if available.",
-              "type": "optional<string>",
+            "data": "optional<root.Carrier>",
+            "success": "optional<root.Success>",
+          },
+        },
+        "GetCarriersResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<list<root.Carrier>>",
+            "success": "optional<root.Success>",
+          },
+        },
+      },
+    },
+    "ignition.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "StartIgnition": {
+            "auth": false,
+            "display-name": "Start Ignition",
+            "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "redirectUri": "https://example.com/redirect",
+                  "user": {
+                    "id": "string",
+                  },
+                  "webhookUri": "https://example.com/webhook",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "ignitionToken": "ur7EPeAa0km4wRlDrPJ4Z",
+                      "ignitionUri": "https://ignition.dev.axle.insure/?token=ur7EPeAa0km4wRlDrPJ4Z",
+                    },
+                    "success": true,
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/ignition",
+            "request": {
+              "body": {
+                "properties": {
+                  "metadata": {
+                    "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
+                    "type": "optional<map<string, unknown>>",
+                  },
+                  "redirectUri": {
+                    "docs": "The URI we should direct the user to after authenticating successfully.",
+                    "type": "optional<string>",
+                  },
+                  "user": "optional<root.User>",
+                  "webhookUri": {
+                    "docs": "The URI we should send updates about this session or the resulting account to.",
+                    "type": "optional<string>",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "StartIgnitionRequest",
+              "query-parameters": undefined,
             },
-            "success": {
-              "docs": undefined,
-              "type": "optional<Success>",
+            "response": {
+              "docs": "",
+              "type": "StartIgnitionResponse",
             },
           },
         },
+      },
+      "types": {
+        "StartIgnitionResponse": {
+          "docs": "",
+          "properties": {
+            "data": "StartIgnitionResponseData",
+            "success": "root.Success",
+          },
+        },
+        "StartIgnitionResponseData": {
+          "docs": undefined,
+          "properties": {
+            "ignitionToken": {
+              "docs": "The unique ID for the ignition session.",
+              "type": "string",
+            },
+            "ignitionUri": {
+              "docs": "The url you should direct the user to to link their account.",
+              "type": "string",
+            },
+          },
+        },
+      },
+    },
+    "policies.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "GetPolicy": {
+            "auth": false,
+            "display-name": "Get Policy",
+            "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {
+                    "data": {
+                      "account": "string",
+                      "address": {},
+                      "carrier": "string",
+                      "coverages": [
+                        {
+                          "code": "BI",
+                          "label": "string",
+                        },
+                      ],
+                      "createdAt": "string",
+                      "effectiveDate": "string",
+                      "expirationDate": "string",
+                      "id": "string",
+                      "insureds": [
+                        {
+                          "firstName": "string",
+                          "lastName": "string",
+                        },
+                      ],
+                      "isActive": true,
+                      "modifiedAt": "string",
+                      "policyNumber": "string",
+                      "properties": [
+                        {
+                          "data": {
+                            "make": "string",
+                            "model": "string",
+                            "vin": "string",
+                            "year": "string",
+                          },
+                          "id": "string",
+                          "type": "vehicle",
+                        },
+                      ],
+                      "refreshedAt": "string",
+                      "thirdParties": [
+                        {
+                          "address": {},
+                          "name": "string",
+                          "type": "lienholder",
+                        },
+                      ],
+                      "type": "auto",
+                    },
+                  },
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/policies/{id}",
+            "path-parameters": {
+              "id": {
+                "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
+                "type": "string",
+              },
+            },
+            "request": {
+              "name": "GetPolicyRequest",
+              "query-parameters": {
+                "expand": {
+                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
+                  "type": "optional<boolean>",
+                },
+              },
+            },
+            "response": {
+              "docs": "",
+              "type": "GetPolicyResponse",
+            },
+          },
+        },
+      },
+      "types": {
+        "GetPolicyResponse": {
+          "docs": undefined,
+          "properties": {
+            "data": "optional<root.Policy>",
+            "success": "optional<root.Success>",
+          },
+        },
+      },
+    },
+    "tokens.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "ExchangeToken": {
+            "auth": false,
+            "display-name": "Exchange Token",
+            "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
+
+Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
+            "examples": [
+              {
+                "headers": {},
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": {
+                  "authCode": "string",
+                },
+                "response": {
+                  "body": {
+                    "data": {
+                      "accessToken": "string",
+                      "account": "string",
+                      "policies": [],
+                    },
+                    "success": true,
+                  },
+                },
+              },
+            ],
+            "method": "POST",
+            "path": "/token/exchange",
+            "request": {
+              "body": {
+                "properties": {
+                  "authCode": {
+                    "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
+                    "type": "string",
+                  },
+                },
+              },
+              "headers": undefined,
+              "name": "ExchangeTokenRequest",
+              "query-parameters": undefined,
+            },
+            "response": {
+              "docs": "",
+              "type": "ExchangeTokenResponse",
+            },
+          },
+        },
+      },
+      "types": {
         "ExchangeTokenResponse": {
           "docs": "",
           "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "ExchangeTokenResponseData",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "Success",
-            },
+            "data": "ExchangeTokenResponseData",
+            "success": "root.Success",
           },
         },
         "ExchangeTokenResponseData": {
@@ -192,518 +447,196 @@ exports[`open api parser axle simple 1`] = `
             },
           },
         },
-        "GetAccountResponse": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "optional<Account>",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "optional<Success>",
-            },
-          },
-        },
-        "GetCarrierResponse": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "optional<Carrier>",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "optional<Success>",
-            },
-          },
-        },
-        "GetCarriersResponse": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "optional<list<Carrier>>",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "optional<Success>",
-            },
-          },
-        },
-        "GetPolicyResponse": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "optional<Policy>",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "optional<Success>",
-            },
-          },
-        },
-        "Insured": {
-          "docs": undefined,
-          "properties": {
-            "dateOfBirth": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "dateOfBirthYear": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "firstName": "string",
-            "lastName": "string",
-            "licenseNo": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "licenseState": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "licenseStatus": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "property": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-          },
-        },
-        "Policy": {
-          "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
-          "properties": {
-            "account": "string",
-            "address": {
-              "docs": undefined,
-              "type": "Address",
-            },
-            "carrier": "string",
-            "coverages": {
-              "docs": "",
-              "type": "list<Coverage>",
-            },
-            "createdAt": "string",
-            "effectiveDate": "string",
-            "expirationDate": "string",
-            "id": "string",
-            "insureds": {
-              "docs": "",
-              "type": "list<Insured>",
-            },
-            "isActive": "boolean",
-            "modifiedAt": "string",
-            "policyNumber": "string",
-            "properties": {
-              "docs": "",
-              "type": "list<Property>",
-            },
-            "refreshedAt": "string",
-            "thirdParties": {
-              "docs": "",
-              "type": "list<ThirdParty>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "PolicyType",
-            },
-          },
-        },
-        "PolicyType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "auto",
-              "value": "auto",
-            },
-            {
-              "docs": undefined,
-              "name": "motorcycle",
-              "value": "motorcycle",
-            },
-          ],
-        },
-        "Property": {
-          "docs": undefined,
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "Vehicle",
-            },
-            "id": "string",
-            "type": "literal<"vehicle">",
-          },
-        },
-        "StartIgnitionResponse": {
-          "docs": "",
-          "properties": {
-            "data": {
-              "docs": undefined,
-              "type": "StartIgnitionResponseData",
-            },
-            "success": {
-              "docs": undefined,
-              "type": "Success",
-            },
-          },
-        },
-        "StartIgnitionResponseData": {
-          "docs": undefined,
-          "properties": {
-            "ignitionToken": {
-              "docs": "The unique ID for the ignition session.",
-              "type": "string",
-            },
-            "ignitionUri": {
-              "docs": "The url you should direct the user to to link their account.",
-              "type": "string",
-            },
-          },
-        },
-        "Success": {
-          "docs": "Indicates whether the operation was performed successfully.",
-          "type": "boolean",
-        },
-        "ThirdParty": {
-          "docs": undefined,
-          "properties": {
-            "address": {
-              "docs": undefined,
-              "type": "optional<Address>",
-            },
-            "name": "string",
-            "property": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "type": {
-              "docs": undefined,
-              "type": "ThirdPartyType",
-            },
-          },
-        },
-        "ThirdPartyType": {
-          "docs": undefined,
-          "enum": [
-            {
-              "docs": undefined,
-              "name": "lienholder",
-              "value": "lienholder",
-            },
-            {
-              "docs": undefined,
-              "name": "lessor",
-              "value": "lessor",
-            },
-            {
-              "docs": undefined,
-              "name": "interest",
-              "value": "interest",
-            },
-          ],
-        },
-        "User": {
-          "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
-          "properties": {
-            "email": {
-              "docs": "User's email address.",
-              "type": "optional<string>",
-            },
-            "firstName": {
-              "docs": "User's first name.",
-              "type": "optional<string>",
-            },
-            "id": {
-              "docs": "Your application's unique user id.",
-              "type": "string",
-            },
-            "lastName": {
-              "docs": "User's last name.",
-              "type": "optional<string>",
-            },
-            "phone": {
-              "docs": "User's phone number in E.164 format.",
-              "type": "optional<string>",
-            },
-          },
-        },
-        "Vehicle": {
-          "docs": undefined,
-          "properties": {
-            "bodyStyle": {
-              "docs": undefined,
-              "type": "optional<string>",
-            },
-            "make": "string",
-            "model": "string",
-            "vin": "string",
-            "year": "string",
-          },
-        },
       },
     },
-    "accounts.yml": {
-      "imports": {
-        "root": "__package__.yml",
+  },
+  "packageMarkerFile": {
+    "types": {
+      "Account": {
+        "docs": "An Account represents an account with an insurance carrier and includes high-level account information (e.g. name) and any Policy objects associated with the Account.",
+        "properties": {
+          "carrier": "string",
+          "createdAt": "string",
+          "email": "optional<string>",
+          "firstName": "string",
+          "id": "string",
+          "lastName": "string",
+          "modifiedAt": "string",
+          "phone": "optional<string>",
+          "policies": "list<string>",
+          "refreshedAt": "string",
+        },
       },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "GetAccount": {
-            "auth": false,
-            "display-name": "Get Account",
-            "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/accounts/{id}",
-            "path-parameters": {
-              "id": {
-                "docs": "The unique ID for the requested account. Returned as part of the Token Exchange flow in exchangeToken.",
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "GetAccountRequest",
-              "query-parameters": {
-                "expand": {
-                  "allow-multiple": undefined,
-                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                  "type": "optional<boolean>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "root.GetAccountResponse",
-            },
+      "Address": {
+        "docs": undefined,
+        "properties": {
+          "addressLine1": "optional<string>",
+          "addressLine2": "optional<string>",
+          "city": "optional<string>",
+          "country": "optional<string>",
+          "postalCode": "optional<string>",
+          "state": "optional<string>",
+        },
+      },
+      "Carrier": {
+        "docs": undefined,
+        "properties": {
+          "address": "Address",
+          "domain": "string",
+          "id": "string",
+          "logoUrl": "optional<string>",
+          "modifiedAt": "string",
+          "name": "string",
+          "phone": "string",
+        },
+      },
+      "Coverage": {
+        "docs": undefined,
+        "properties": {
+          "code": "CoverageCode",
+          "deductible": "optional<integer>",
+          "label": "string",
+          "limitPerAccident": "optional<integer>",
+          "limitPerPerson": "optional<integer>",
+          "property": "optional<string>",
+        },
+      },
+      "CoverageCode": {
+        "enum": [
+          "BI",
+          "PD",
+          "UMBI",
+          "UMPD",
+          "UIMBI",
+          "UIMPD",
+          "COLL",
+          "COMP",
+        ],
+      },
+      "Error": {
+        "docs": undefined,
+        "properties": {
+          "message": {
+            "docs": "Provides a reason for why the operation failed, if available.",
+            "type": "optional<string>",
+          },
+          "success": "optional<Success>",
+        },
+      },
+      "Insured": {
+        "docs": undefined,
+        "properties": {
+          "dateOfBirth": "optional<string>",
+          "dateOfBirthYear": "optional<string>",
+          "firstName": "string",
+          "lastName": "string",
+          "licenseNo": "optional<string>",
+          "licenseState": "optional<string>",
+          "licenseStatus": "optional<string>",
+          "property": "optional<string>",
+          "type": "optional<string>",
+        },
+      },
+      "Policy": {
+        "docs": "A Policy represents a specific policy associated with an Account and includes high-level policy information (e.g. policy number) and any children objects (e.g., coverages) associated with the policy.",
+        "properties": {
+          "account": "string",
+          "address": "Address",
+          "carrier": "string",
+          "coverages": {
+            "docs": "",
+            "type": "list<Coverage>",
+          },
+          "createdAt": "string",
+          "effectiveDate": "string",
+          "expirationDate": "string",
+          "id": "string",
+          "insureds": {
+            "docs": "",
+            "type": "list<Insured>",
+          },
+          "isActive": "boolean",
+          "modifiedAt": "string",
+          "policyNumber": "string",
+          "properties": {
+            "docs": "",
+            "type": "list<Property>",
+          },
+          "refreshedAt": "string",
+          "thirdParties": {
+            "docs": "",
+            "type": "list<ThirdParty>",
+          },
+          "type": "PolicyType",
+        },
+      },
+      "PolicyType": {
+        "enum": [
+          "auto",
+          "motorcycle",
+        ],
+      },
+      "Property": {
+        "docs": undefined,
+        "properties": {
+          "data": "Vehicle",
+          "id": "string",
+          "type": "literal<"vehicle">",
+        },
+      },
+      "Success": {
+        "docs": "Indicates whether the operation was performed successfully.",
+        "type": "boolean",
+      },
+      "ThirdParty": {
+        "docs": undefined,
+        "properties": {
+          "address": "optional<Address>",
+          "name": "string",
+          "property": "optional<string>",
+          "type": "ThirdPartyType",
+        },
+      },
+      "ThirdPartyType": {
+        "enum": [
+          "lienholder",
+          "lessor",
+          "interest",
+        ],
+      },
+      "User": {
+        "docs": "User to attach to Ignition session. If user is set, unique \`id\` must be provided.",
+        "properties": {
+          "email": {
+            "docs": "User's email address.",
+            "type": "optional<string>",
+          },
+          "firstName": {
+            "docs": "User's first name.",
+            "type": "optional<string>",
+          },
+          "id": {
+            "docs": "Your application's unique user id.",
+            "type": "string",
+          },
+          "lastName": {
+            "docs": "User's last name.",
+            "type": "optional<string>",
+          },
+          "phone": {
+            "docs": "User's phone number in E.164 format.",
+            "type": "optional<string>",
           },
         },
       },
-    },
-    "carriers.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "GetCarrier": {
-            "auth": false,
-            "display-name": "Get Carrier",
-            "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/carriers/{id}",
-            "path-parameters": {
-              "id": {
-                "docs": "The unique ID for the requested carrier. Returned in Account and Policy objects as \`carrier\`.",
-                "type": "string",
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "root.GetCarrierResponse",
-            },
-          },
-          "GetCarriers": {
-            "auth": false,
-            "display-name": "Get Carriers",
-            "docs": "The Get Carriers method returns an array of Carrier objects.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/carriers",
-            "response": {
-              "docs": "",
-              "type": "root.GetCarriersResponse",
-            },
-          },
-        },
-      },
-    },
-    "ignition.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "StartIgnition": {
-            "auth": false,
-            "display-name": "Start Ignition",
-            "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
-            "errors": [],
-            "method": "POST",
-            "path": "/ignition",
-            "request": {
-              "body": {
-                "properties": {
-                  "metadata": {
-                    "docs": "Optional object to store ephermeral information about the session, such as \`reservationTime\`. Will be returned in webhook events.",
-                    "type": "optional<map<string, unknown>>",
-                  },
-                  "redirectUri": {
-                    "docs": "The URI we should direct the user to after authenticating successfully.",
-                    "type": "optional<string>",
-                  },
-                  "user": {
-                    "docs": undefined,
-                    "type": "optional<root.User>",
-                  },
-                  "webhookUri": {
-                    "docs": "The URI we should send updates about this session or the resulting account to.",
-                    "type": "optional<string>",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "StartIgnitionRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "root.StartIgnitionResponse",
-            },
-          },
-        },
-      },
-    },
-    "policies.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "GetPolicy": {
-            "auth": false,
-            "display-name": "Get Policy",
-            "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
-            "errors": [],
-            "examples": [
-              {
-                "headers": {},
-                "path-parameters": {
-                  "id": "id",
-                },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": {
-                  "body": {},
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/policies/{id}",
-            "path-parameters": {
-              "id": {
-                "docs": "The unique ID for the requested policy. Returned by Get Account for each Policy associated with the Account.",
-                "type": "string",
-              },
-            },
-            "request": {
-              "name": "GetPolicyRequest",
-              "query-parameters": {
-                "expand": {
-                  "allow-multiple": undefined,
-                  "docs": "Set to *true* if you would like to expand related entities (e.g., account, policy). Defaults to *false*.",
-                  "type": "optional<boolean>",
-                },
-              },
-            },
-            "response": {
-              "docs": "",
-              "type": "root.GetPolicyResponse",
-            },
-          },
-        },
-      },
-    },
-    "tokens.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
-      "service": {
-        "auth": false,
-        "base-path": "",
-        "endpoints": {
-          "ExchangeToken": {
-            "auth": false,
-            "display-name": "Exchange Token",
-            "docs": "Exchange an authorization code for an access token. Ignition returns an authCode as a query parameter at the redirectUrl upon successful completion of the Ignition flow.
-
-Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
-            "errors": [],
-            "method": "POST",
-            "path": "/token/exchange",
-            "request": {
-              "body": {
-                "properties": {
-                  "authCode": {
-                    "docs": "The authorization code obtained after a user successfully links their account via Ignition. Returned as a query parameter at the redirectUri.",
-                    "type": "string",
-                  },
-                },
-              },
-              "headers": undefined,
-              "name": "ExchangeTokenRequest",
-              "query-parameters": undefined,
-            },
-            "response": {
-              "docs": "",
-              "type": "root.ExchangeTokenResponse",
-            },
-          },
+      "Vehicle": {
+        "docs": undefined,
+        "properties": {
+          "bodyStyle": "optional<string>",
+          "make": "string",
+          "model": "string",
+          "vin": "string",
+          "year": "string",
         },
       },
     },
@@ -738,9 +671,6 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "name": "clientSecret",
         "type": "string",
       },
-    },
-    "imports": {
-      "root": "__package__.yml",
     },
     "name": "api",
   },

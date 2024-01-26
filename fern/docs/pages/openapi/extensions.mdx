@@ -1,9 +1,5 @@
 Fern supports different OpenAPI extensions so that you can generate higher-quality SDKs.
 
-<Callout intent="info">
-Tip: If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new).
-</Callout>
-
 ## SDK method names
 
 By default, Fern uses the `tag` and `operationId` fields to generate the SDK method. So an endpoint with a
@@ -18,7 +14,7 @@ The OpenAPI below will `client.users.create()`:
 
 ```yaml openapi.yaml
 paths:
-  /users
+  /users:
     post:
       x-fern-sdk-group-name: users
       x-fern-sdk-method-name: create
@@ -51,7 +47,7 @@ components:
         - diamonds
         - hearts
         - spades
-      x-fern-enum: # <------
+      x-fern-enum: # <----
         clubs:
           description: Some docs about clubs
         spades:
@@ -104,7 +100,7 @@ components:
         cast:
           type: array
           items:
-            type: object # <---------- Inline Type
+            type: object # <---- Inline Type
             properties:
               firstName:
                 type: string
@@ -144,7 +140,7 @@ components:
           type: array
           items:
             type: object
-            x-fern-type-name: Person # <----------
+            x-fern-type-name: Person # <----
             properties:
               firstName:
                 type: string
@@ -162,24 +158,77 @@ export interface Movie {
     cast?: Person[]
 }
 
-export interface Person  { # <----- Overridden name
+export interface Person  { # <---- Overridden name
     firstName?: string;
     lastName?: string;
     age?: integer;
 }
 ```
 
+## Parameter Names 
+
+The `x-fern-parameter-name` extension allows you to customize the variable name of OpenAPI 
+parameters. 
+
+For example, if you have a header `X-API-Version`, you may want the parameter 
+in code to be called `version`. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+paths:
+  "/user":
+    get:
+      operationId: get_user
+      parameters:
+        - in: header
+          name: X-API-Version
+          x-fern-parameter-name: version # <---- specify the parameter name
+          schema:
+            type: string
+          required: true
+      ...
+```
+</CodeBlock>
+
+## Server names
+
+The `x-fern-server-name` extension is used to name your servers. 
+
+<CodeBlock title="openapi.yml">
+```yaml
+servers:
+- url: https://api.example.com
+  x-fern-server-name: Production
+- url: https://sandbox.example.com
+  x-fern-server-name: Sandbox
+```
+</CodeBlock>
+
+In a generated TypeScript SDK, you'd see:
+
+<CodeBlock title="environment.ts">
+```yaml
+export const ExampleEnvironment = {
+    Production: "https://api.example.com",
+} as const;
+
+export type ExampleEnvironment = typeof ExampleEnvironment.Production;
+```
+</CodeBlock>
+
 ## Audiences
 
 The `x-fern-audiences` extension is used to mark endpoints with a particular audience
 so that you can filter your SDKs and Docs as you would like in Fern.  
+
+In the example below, we have marked the `POST /users` endpoint with the `public` audience. 
 
 <CodeBlock title="openapi.yml">
 ```yaml
 paths: 
   /users: 
     post: 
-      x-fern-audiences: # <------- mark with the public audience
+      x-fern-audiences: # <---- mark with the public audience
         - public
       operationId: users_create
       ...
@@ -190,19 +239,33 @@ paths:
 ```
 </CodeBlock>
 
-In the example above, we have marked the `POST /users` endpoint with public audience. 
-To filter to the public audience, update your generators.yml
+### Audiences with SDKs
+
+To filter to the public audience when generating code, update your `generators.yml` configuration to include:
 
 <CodeBlock title="generators.yml">
 ```yaml
 groups: 
   sdks: 
-    audiences: # <------------- the generators will now be filtered to the public audience
+    audiences: # <---- the generators will now be filtered to the public audience
       - public 
     generators: 
       - name: fernapi/fern-tyepscript-node-sdk
         version: 0.8.8
         ...
+```
+</CodeBlock>
+
+### Audiences with Docs
+
+If generating Fern Docs, you'll need to update your `docs.yml` configuration to include:
+
+<CodeBlock title="docs.yml">
+```yaml
+navigation:
+  - api: API Reference
+    audiences: # <---- the API Reference will now be filtered to the public audience
+      - public
 ```
 </CodeBlock>
 
@@ -293,3 +356,92 @@ In the example above, a property named `stream` is sent as `true` for the stream
 and sent as `false` for the non-streaming variant. Additionally, a stream of the `Log` type
 is returned in the streaming variant, whereas the `Logs` array is returned in the non-streaming
 variant.
+
+## Ignoring Schemas or endpoints
+
+If you want Fern to skip reading any endpoint or schemas, you can use the 
+`x-fern-ignore` extension. 
+
+To skip an endpoint, you must add `x-fern-ignore: true` at the operation 
+level. 
+
+```yaml openapi.yml 
+paths:
+  /users: 
+    get: 
+      x-fern-ignore: true # <-----------
+      ...
+```
+
+To skip a schema, you msut add `x-fern-ignore: true` at the schema level. 
+
+```yaml openapi.yml 
+components: 
+  schemas: 
+    SchemaToSkip: 
+      x-fern-ignore: true # <-----------
+      ...
+```
+
+## Overlaying extensions 
+
+Because of the number of tools that use OpenAPI, it may be more convenient to 
+"overlay" your fern specific OpenAPI extensions onto your original definition. \
+In order to do this you can use the `x-fern-overrides-filepath` extension.
+
+Below is an example of how someone can overlay the extensions `x-fern-sdk-method-name` and 
+`x-fern-sdk-group-name` without polluting their original OpenAPI. The combined result is 
+shown in the third tab. 
+
+<CodeBlocks>
+    <CodeBlock title="openapi.yml">
+    ```yaml
+    openapi: 3.0.0
+    info:
+      title: User API
+      version: 1.0.0
+    x-fern-overrides-filepath: overrides.yml # <--------- 
+    paths:
+      /users:
+        get:
+          summary: Get a list of users
+          description: Retrieve a list of users from the system.
+          responses:
+            '200':
+              description: Successful response
+            '500':
+              description: Internal Server Error
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="overrides.yml">
+    ```yaml
+    paths:
+      /users:
+        get:
+          x-fern-sdk-group-name: users
+          x-fern-sdk-method-name: get
+    ```
+    </CodeBlock>
+
+    <CodeBlock title="Overlayed OpenAPI">
+    ```yaml
+    paths:
+      /users:
+        get:
+          x-fern-sdk-group-name: users # <---------------
+          x-fern-sdk-method-name: get  # <---------------
+          summary: Get a list of users
+          description: Retrieve a list of users from the system.
+          responses:
+            '200':
+              description: Successful response
+            '500':
+              description: Internal Server Error
+    ```
+    </CodeBlock>
+</CodeBlocks>
+
+## Request an OpenAPI extension 
+
+If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new) to start a discussion about it.

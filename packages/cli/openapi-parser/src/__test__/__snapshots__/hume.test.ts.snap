@@ -16,18 +16,6 @@ exports[`open api parser hume parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "status",
-              "value": {
-                "array": [
-                  {
-                    "enum": "QUEUED",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "when",
               "value": {
                 "enum": "created_before",
@@ -67,11 +55,18 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The maximum number of jobs to include in the response.",
           "name": "limit",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestLimit",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ListJobsRequestLimit",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -82,15 +77,23 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Include only jobs with these statuses.",
           "name": "status",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestStatus",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ListJobsRequestStatus",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
                 "generatedName": "ListJobsRequestStatusItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "Status",
                 "type": "reference",
@@ -101,12 +104,17 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Include only jobs that were created before or after \`timestamp_ms\`.",
           "name": "when",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestWhen",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "ListJobsRequestWhen",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "When",
               "type": "reference",
@@ -116,11 +124,18 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "Defaults to the current date and time. See \`when\`.",
           "name": "timestamp_ms",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ListJobsRequestTimestampMs",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -131,12 +146,17 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The job timestamp to sort by.",
           "name": "sort_by",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestSortBy",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "ListJobsRequestSortBy",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "SortBy",
               "type": "reference",
@@ -146,12 +166,17 @@ exports[`open api parser hume parse open api 1`] = `
         {
           "description": "The sort direction.",
           "name": "direction",
+          "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListJobsRequestDirection",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
               "generatedName": "ListJobsRequestDirection",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Direction",
               "type": "reference",
@@ -163,12 +188,18 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "ListJobsResponse",
+          "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
             "generatedName": "ListJobsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Job_Request",
             "type": "reference",
@@ -189,7 +220,74 @@ exports[`open api parser hume parse open api 1`] = `
       "availability": undefined,
       "description": "Start a new batch job.",
       "errorStatusCode": [],
-      "examples": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "models": {
+                "properties": {
+                  "face": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "language": {
+                    "properties": {
+                      "granularity": {
+                        "enum": "word",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "ner": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "prosody": {
+                    "properties": {
+                      "granularity": {
+                        "enum": "word",
+                        "type": "enum",
+                      },
+                      "window": {
+                        "properties": {},
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "transcription": {
+                "properties": {
+                  "language": {
+                    "enum": "zh",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "job_id": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "StartJobRequest",
       "headers": [],
       "internal": undefined,
@@ -201,9 +299,11 @@ exports[`open api parser hume parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "StartJobRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BaseRequest",
           "type": "reference",
@@ -213,9 +313,12 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "StartJobResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "JobId",
           "type": "reference",
@@ -243,7 +346,7 @@ exports[`open api parser hume parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -270,6 +373,9 @@ exports[`open api parser hume parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "GetJobPredictionsRequestId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -285,12 +391,18 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetJobPredictionsResponse",
+          "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
             "generatedName": "GetJobPredictionsResponseItem",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "SourceResult",
             "type": "reference",
@@ -324,6 +436,9 @@ exports[`open api parser hume parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "GetJobArtifactsRequestId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -367,6 +482,9 @@ exports[`open api parser hume parse open api 1`] = `
           "name": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "GetJobRequestId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -382,9 +500,12 @@ exports[`open api parser hume parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "GetJobResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Job_Request",
           "type": "reference",
@@ -467,18 +588,24 @@ exports[`open api parser hume parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BaseRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestModels",
           "key": "models",
           "schema": {
             "description": undefined,
+            "generatedName": "baseRequestModels",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BaseRequestModels",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Models",
               "type": "reference",
@@ -486,15 +613,20 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestTranscription",
           "key": "transcription",
           "schema": {
             "description": undefined,
+            "generatedName": "baseRequestTranscription",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "BaseRequestTranscription",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Transcription",
               "type": "reference",
@@ -502,19 +634,29 @@ exports[`open api parser hume parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestUrls",
           "key": "urls",
           "schema": {
             "description": undefined,
+            "generatedName": "baseRequestUrls",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+              "generatedName": "BaseRequestUrls",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "BaseRequestUrlsItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -526,14 +668,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestCallbackUrl",
           "key": "callback_url",
           "schema": {
             "description": undefined,
+            "generatedName": "baseRequestCallbackUrl",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
+              "generatedName": "BaseRequestCallbackUrl",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -544,14 +693,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseRequestNotify",
           "key": "notify",
           "schema": {
             "description": undefined,
+            "generatedName": "baseRequestNotify",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to send an email notification to the user upon job failure.",
+              "generatedName": "BaseRequestNotify",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -565,6 +721,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Bcp47Tag": {
       "description": undefined,
       "generatedName": "Bcp47Tag",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -749,14 +906,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": "A bounding box around a face.",
       "generatedName": "BoundingBox",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxX",
           "key": "x",
           "schema": {
             "description": "x-coordinate of bounding box top left corner.",
+            "generatedName": "BoundingBoxX",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -764,11 +926,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxY",
           "key": "y",
           "schema": {
             "description": "y-coordinate of bounding box top left corner.",
+            "generatedName": "BoundingBoxY",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -776,11 +942,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxW",
           "key": "w",
           "schema": {
             "description": "Bounding box width.",
+            "generatedName": "BoundingBoxW",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -788,11 +958,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "boundingBoxH",
           "key": "h",
           "schema": {
             "description": "Bounding box height.",
+            "generatedName": "BoundingBoxH",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -807,30 +981,38 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BurstPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionTime",
           "key": "time",
           "schema": {
             "description": undefined,
             "generatedName": "BurstPredictionTime",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TimeInterval",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "BurstPredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "BurstPredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -838,15 +1020,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "burstPredictionDescriptions",
           "key": "descriptions",
           "schema": {
             "description": "Modality-specific descriptive features and their scores.",
+            "generatedName": "BurstPredictionDescriptions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "BurstPredictionDescriptionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "DescriptionsScore",
               "type": "reference",
@@ -861,14 +1048,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Completed",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "schema": {
             "description": "When this job was created (Unix timestamp in milliseconds).",
+            "generatedName": "CompletedCreatedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -876,11 +1068,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedStartedTimestampMs",
           "key": "started_timestamp_ms",
           "schema": {
             "description": "When this job started (Unix timestamp in milliseconds).",
+            "generatedName": "CompletedStartedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -888,11 +1084,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedEndedTimestampMs",
           "key": "ended_timestamp_ms",
           "schema": {
             "description": "When this job ended (Unix timestamp in milliseconds).",
+            "generatedName": "CompletedEndedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -900,11 +1100,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedNumPredictions",
           "key": "num_predictions",
           "schema": {
             "description": "The number of predictions that were generated by this job.",
+            "generatedName": "CompletedNumPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -912,11 +1116,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "completedNumErrors",
           "key": "num_errors",
           "schema": {
             "description": "The number of errors that occurred while running this job.",
+            "generatedName": "CompletedNumErrors",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -931,14 +1139,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "DescriptionsScore",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "descriptionsScoreName",
           "key": "name",
           "schema": {
             "description": "Name of the descriptive feature being expressed.",
+            "generatedName": "DescriptionsScoreName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -948,11 +1161,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "descriptionsScoreScore",
           "key": "score",
           "schema": {
             "description": "Embedding value for the descriptive feature being expressed.",
+            "generatedName": "DescriptionsScoreScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -967,6 +1184,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Direction": {
       "description": undefined,
       "generatedName": "Direction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -989,14 +1207,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "EmotionScore",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emotionScoreName",
           "key": "name",
           "schema": {
             "description": "Name of the emotion being expressed.",
+            "generatedName": "EmotionScoreName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1006,11 +1229,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "emotionScoreScore",
           "key": "score",
           "schema": {
             "description": "Embedding value for the emotion being expressed.",
+            "generatedName": "EmotionScoreScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1024,8 +1251,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
     "Empty": {
       "description": "To include predictions for this model type, set this field to \`{}\`. It is currently not configurable further.",
+      "generatedName": "Empty",
+      "groupName": undefined,
       "key": {
         "description": undefined,
+        "generatedName": "EmptyKey",
+        "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -1033,8 +1265,11 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         },
         "type": "primitive",
       },
+      "nameOverride": undefined,
       "type": "map",
       "value": {
+        "generatedName": "EmptyValue",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -1043,14 +1278,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Error",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "errorMessage",
           "key": "message",
           "schema": {
             "description": "An error message.",
+            "generatedName": "ErrorMessage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1060,11 +1300,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "errorFile",
           "key": "file",
           "schema": {
             "description": "A file path relative to the top level source URL or file.",
+            "generatedName": "ErrorFile",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1081,17 +1325,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Face",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceFpsPred",
           "key": "fps_pred",
           "schema": {
             "description": undefined,
+            "generatedName": "faceFpsPred",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Number of frames per second to process. Other frames will be omitted from the response. Set to \`0\` to process every frame.",
+              "generatedName": "FaceFpsPred",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -1100,14 +1352,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceProbThreshold",
           "key": "prob_threshold",
           "schema": {
             "description": undefined,
+            "generatedName": "faceProbThreshold",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Face detection probability threshold. Faces detected with a probability less than this threshold will be omitted from the response.",
+              "generatedName": "FaceProbThreshold",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -1116,14 +1375,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceIdentifyFaces",
           "key": "identify_faces",
           "schema": {
             "description": undefined,
+            "generatedName": "faceIdentifyFaces",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to return identifiers for faces across frames. If \`true\`, unique identifiers will be assigned to face bounding boxes to differentiate different faces. If \`false\`, all faces will be tagged with an \`unknown\` ID.",
+              "generatedName": "FaceIdentifyFaces",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1132,14 +1398,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceMinFaceSize",
           "key": "min_face_size",
           "schema": {
             "description": undefined,
+            "generatedName": "faceMinFaceSize",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Minimum bounding box side length in pixels to treat as a face. Faces detected with a bounding box side length in pixels less than this threshold will be omitted from the response.",
+              "generatedName": "FaceMinFaceSize",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -1148,15 +1421,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceFacs",
           "key": "facs",
           "schema": {
             "description": undefined,
+            "generatedName": "faceFacs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FaceFacs",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -1164,15 +1442,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceDescriptions",
           "key": "descriptions",
           "schema": {
             "description": undefined,
+            "generatedName": "faceDescriptions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "FaceDescriptions",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -1180,14 +1463,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "faceSaveFaces",
           "key": "save_faces",
           "schema": {
             "description": undefined,
+            "generatedName": "faceSaveFaces",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to extract and save the detected faces in the artifacts zip created by each job.",
+              "generatedName": "FaceSaveFaces",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1203,14 +1493,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "FacePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionFrame",
           "key": "frame",
           "schema": {
             "description": "Frame number",
+            "generatedName": "FacePredictionFrame",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1218,11 +1513,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionTime",
           "key": "time",
           "schema": {
             "description": "Time in seconds when face detection occurred.",
+            "generatedName": "FacePredictionTime",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1230,11 +1529,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionProb",
           "key": "prob",
           "schema": {
             "description": "The predicted probability that a detected face was actually a face.",
+            "generatedName": "FacePredictionProb",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1242,27 +1545,34 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionBox",
           "key": "box",
           "schema": {
             "description": undefined,
             "generatedName": "FacePredictionBox",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "BoundingBox",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "FacePredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "FacePredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -1270,18 +1580,26 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionFacs",
           "key": "facs",
           "schema": {
             "description": undefined,
+            "generatedName": "facePredictionFacs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "FACS 2.0 features and their scores.",
+              "generatedName": "FacePredictionFacs",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
                 "generatedName": "FacePredictionFacsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "FacsScore",
                 "type": "reference",
@@ -1290,18 +1608,26 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facePredictionDescriptions",
           "key": "descriptions",
           "schema": {
             "description": undefined,
+            "generatedName": "facePredictionDescriptions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Modality-specific descriptive features and their scores.",
+              "generatedName": "FacePredictionDescriptions",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
                 "generatedName": "FacePredictionDescriptionsItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "DescriptionsScore",
                 "type": "reference",
@@ -1317,18 +1643,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "FacemeshPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facemeshPredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "FacemeshPredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "FacemeshPredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -1343,14 +1675,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "FacsScore",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facsScoreName",
           "key": "name",
           "schema": {
             "description": "Name of the FACS 2.0 feature being expressed.",
+            "generatedName": "FacsScoreName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1360,11 +1697,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "facsScoreScore",
           "key": "score",
           "schema": {
             "description": "Embedding value for the FACS 2.0 feature being expressed.",
+            "generatedName": "FacsScoreScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1381,14 +1722,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Failed",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "schema": {
             "description": "When this job was created (Unix timestamp in milliseconds).",
+            "generatedName": "FailedCreatedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1396,11 +1742,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedStartedTimestampMs",
           "key": "started_timestamp_ms",
           "schema": {
             "description": "When this job started (Unix timestamp in milliseconds).",
+            "generatedName": "FailedStartedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1408,11 +1758,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedEndedTimestampMs",
           "key": "ended_timestamp_ms",
           "schema": {
             "description": "When this job ended (Unix timestamp in milliseconds).",
+            "generatedName": "FailedEndedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1420,11 +1774,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "failedMessage",
           "key": "message",
           "schema": {
             "description": "An error message.",
+            "generatedName": "FailedMessage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1441,17 +1799,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "File",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileFilename",
           "key": "filename",
           "schema": {
             "description": undefined,
+            "generatedName": "fileFilename",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The name of the file.",
+              "generatedName": "FileFilename",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1462,14 +1828,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileContentType",
           "key": "content_type",
           "schema": {
             "description": undefined,
+            "generatedName": "fileContentType",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The content type of the file.",
+              "generatedName": "FileContentType",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1480,11 +1853,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "fileMd5Sum",
           "key": "md5sum",
           "schema": {
             "description": "The MD5 checksum of the file.",
+            "generatedName": "FileMd5Sum",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1499,6 +1876,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Granularity": {
       "description": "The granularity at which to generate predictions. \`utterance\` corresponds to a natural pause or break in conversation, while \`conversational_turn\` corresponds to a change in speaker.",
       "generatedName": "Granularity",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -1533,14 +1911,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsBurstPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsBurstPredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1550,15 +1933,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsBurstPredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsBurstPredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsBurstPredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "BurstPrediction",
               "type": "reference",
@@ -1573,14 +1961,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsFacePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsFacePredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1590,15 +1983,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacePredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsFacePredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsFacePredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "FacePrediction",
               "type": "reference",
@@ -1613,14 +2011,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsFacemeshPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsFacemeshPredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1630,15 +2033,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsFacemeshPredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsFacemeshPredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsFacemeshPredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "FacemeshPrediction",
               "type": "reference",
@@ -1653,14 +2061,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsLanguagePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsLanguagePredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1670,15 +2083,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsLanguagePredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsLanguagePredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsLanguagePredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "LanguagePrediction",
               "type": "reference",
@@ -1693,14 +2111,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsNerPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsNerPredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1710,15 +2133,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsNerPredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsNerPredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsNerPredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "NerPrediction",
               "type": "reference",
@@ -1733,14 +2161,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "GroupedPredictionsProsodyPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionId",
           "key": "id",
           "schema": {
             "description": "An automatically generated label to identify individuals in your media file. Will be \`unknown\` if you have chosen to disable identification, or if the model is unable to distinguish between individuals.",
+            "generatedName": "GroupedPredictionsProsodyPredictionId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1750,15 +2183,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "groupedPredictionsProsodyPredictionPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "GroupedPredictionsProsodyPredictionPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "GroupedPredictionsProsodyPredictionPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "ProsodyPrediction",
               "type": "reference",
@@ -1773,14 +2211,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "InProgress",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "inProgressCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "schema": {
             "description": "When this job was created (Unix timestamp in milliseconds).",
+            "generatedName": "InProgressCreatedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1788,11 +2231,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "inProgressStartedTimestampMs",
           "key": "started_timestamp_ms",
           "schema": {
             "description": "When this job started (Unix timestamp in milliseconds).",
+            "generatedName": "InProgressStartedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -1807,14 +2254,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "JobId",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobIdJobId",
           "key": "job_id",
           "schema": {
             "description": "The ID of the started job.",
+            "generatedName": "JobIdJobId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1831,14 +2283,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "JobRequest",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestUserId",
           "key": "user_id",
           "schema": {
             "description": "Your user ID.",
+            "generatedName": "JobRequestUserId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1848,11 +2305,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestJobId",
           "key": "job_id",
           "schema": {
             "description": "The ID associated with this job.",
+            "generatedName": "JobRequestJobId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1862,24 +2323,28 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestRequest",
           "key": "request",
           "schema": {
             "description": undefined,
             "generatedName": "JobRequestRequest",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Request",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "jobRequestState",
           "key": "state",
           "schema": {
             "description": undefined,
             "generatedName": "JobRequestState",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "State",
             "type": "reference",
@@ -1893,18 +2358,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Language",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageGranularity",
           "key": "granularity",
           "schema": {
             "description": undefined,
+            "generatedName": "languageGranularity",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageGranularity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Granularity",
               "type": "reference",
@@ -1912,14 +2383,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageIdentifySpeakers",
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
+            "generatedName": "languageIdentifySpeakers",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+              "generatedName": "LanguageIdentifySpeakers",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1928,15 +2406,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageSentiment",
           "key": "sentiment",
           "schema": {
             "description": undefined,
+            "generatedName": "languageSentiment",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageSentiment",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -1944,15 +2427,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languageToxicity",
           "key": "toxicity",
           "schema": {
             "description": undefined,
+            "generatedName": "languageToxicity",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguageToxicity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -1967,14 +2455,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "LanguagePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionText",
           "key": "text",
           "schema": {
             "description": "A segment of text (like a word or a sentence).",
+            "generatedName": "LanguagePredictionText",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1984,27 +2477,34 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionPosition",
           "key": "position",
           "schema": {
             "description": undefined,
             "generatedName": "LanguagePredictionPosition",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PositionInterval",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionTime",
           "key": "time",
           "schema": {
             "description": undefined,
+            "generatedName": "languagePredictionTime",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "LanguagePredictionTime",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TimeInterval",
               "type": "reference",
@@ -2012,14 +2512,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionConfidence",
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "languagePredictionConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+              "generatedName": "LanguagePredictionConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2028,14 +2535,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "languagePredictionSpeakerConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+              "generatedName": "LanguagePredictionSpeakerConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2044,15 +2558,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "LanguagePredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "LanguagePredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -2060,20 +2579,28 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionSentiment",
           "key": "sentiment",
           "schema": {
             "description": undefined,
+            "generatedName": "languagePredictionSentiment",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Sentiment predictions returned as a distribution. This model predicts the probability that a given text could be interpreted as having each sentiment level from \`1\` (negative) to \`9\` (positive).
 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
+              "generatedName": "LanguagePredictionSentiment",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
                 "generatedName": "LanguagePredictionSentimentItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "SentimentScore",
                 "type": "reference",
@@ -2082,18 +2609,26 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "languagePredictionToxicity",
           "key": "toxicity",
           "schema": {
             "description": undefined,
+            "generatedName": "languagePredictionToxicity",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
+              "generatedName": "LanguagePredictionToxicity",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
                 "generatedName": "LanguagePredictionToxicityItem",
+                "groupName": undefined,
                 "nameOverride": undefined,
                 "schema": "ToxicityScore",
                 "type": "reference",
@@ -2109,18 +2644,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Models",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsFace",
           "key": "face",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsFace",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsFace",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Face",
               "type": "reference",
@@ -2128,15 +2669,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsBurst",
           "key": "burst",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsBurst",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsBurst",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -2144,15 +2690,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsProsody",
           "key": "prosody",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsProsody",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsProsody",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Prosody",
               "type": "reference",
@@ -2160,15 +2711,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsLanguage",
           "key": "language",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsLanguage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsLanguage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Language",
               "type": "reference",
@@ -2176,15 +2732,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsNer",
           "key": "ner",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsNer",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsNer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Ner",
               "type": "reference",
@@ -2192,15 +2753,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsFacemesh",
           "key": "facemesh",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsFacemesh",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsFacemesh",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Empty",
               "type": "reference",
@@ -2215,18 +2781,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ModelsPredictions",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsFace",
           "key": "face",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsFace",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsFace",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_Null_FacePrediction",
               "type": "reference",
@@ -2234,15 +2806,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsBurst",
           "key": "burst",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsBurst",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsBurst",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_Null_BurstPrediction",
               "type": "reference",
@@ -2250,15 +2827,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsProsody",
           "key": "prosody",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsProsody",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsProsody",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_TranscriptionMetadata_ProsodyPrediction",
               "type": "reference",
@@ -2266,15 +2848,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsLanguage",
           "key": "language",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsLanguage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsLanguage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_TranscriptionMetadata_LanguagePrediction",
               "type": "reference",
@@ -2282,15 +2869,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsNer",
           "key": "ner",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsNer",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsNer",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_TranscriptionMetadata_NerPrediction",
               "type": "reference",
@@ -2298,15 +2890,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "modelsPredictionsFacemesh",
           "key": "facemesh",
           "schema": {
             "description": undefined,
+            "generatedName": "modelsPredictionsFacemesh",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ModelsPredictionsFacemesh",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Predictions_optional_Null_FacemeshPrediction",
               "type": "reference",
@@ -2321,17 +2918,25 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Ner",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerIdentifySpeakers",
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
+            "generatedName": "nerIdentifySpeakers",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+              "generatedName": "NerIdentifySpeakers",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2347,14 +2952,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "NerPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEntity",
           "key": "entity",
           "schema": {
             "description": "The recognized topic or entity.",
+            "generatedName": "NerPredictionEntity",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2364,23 +2974,29 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionPosition",
           "key": "position",
           "schema": {
             "description": undefined,
             "generatedName": "NerPredictionPosition",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "PositionInterval",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEntityConfidence",
           "key": "entity_confidence",
           "schema": {
             "description": "Our NER model's relative confidence in the recognized topic or entity.",
+            "generatedName": "NerPredictionEntityConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -2388,11 +3004,15 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionSupport",
           "key": "support",
           "schema": {
             "description": "A measure of how often the entity is linked to by other entities.",
+            "generatedName": "NerPredictionSupport",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -2400,11 +3020,15 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionUri",
           "key": "uri",
           "schema": {
             "description": "A URL which provides more information about the recognized topic or entity.",
+            "generatedName": "NerPredictionUri",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2414,11 +3038,15 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionLinkWord",
           "key": "link_word",
           "schema": {
             "description": "The specific word to which the emotion predictions are linked.",
+            "generatedName": "NerPredictionLinkWord",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2428,15 +3056,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionTime",
           "key": "time",
           "schema": {
             "description": undefined,
+            "generatedName": "nerPredictionTime",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "NerPredictionTime",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TimeInterval",
               "type": "reference",
@@ -2444,14 +3077,21 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionConfidence",
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "nerPredictionConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+              "generatedName": "NerPredictionConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2460,14 +3100,21 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "nerPredictionSpeakerConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+              "generatedName": "NerPredictionSpeakerConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2476,15 +3123,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "nerPredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "NerPredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "NerPredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -2496,8 +3148,13 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
     },
     "Null": {
       "description": "No associated metadata for this model. Value will be \`null\`.",
+      "generatedName": "Null",
+      "groupName": undefined,
       "key": {
         "description": undefined,
+        "generatedName": "NullKey",
+        "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "maxLength": undefined,
           "minLength": undefined,
@@ -2505,8 +3162,11 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
         },
         "type": "primitive",
       },
+      "nameOverride": undefined,
       "type": "map",
       "value": {
+        "generatedName": "NullValue",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -2515,14 +3175,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": "Position of a segment of text within a larger document, measured in characters. Uses zero-based indexing. The beginning index is inclusive and the end index is exclusive.",
       "generatedName": "PositionInterval",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "positionIntervalBegin",
           "key": "begin",
           "schema": {
             "description": "The index of the first character in the text segment, inclusive.",
+            "generatedName": "PositionIntervalBegin",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -2530,11 +3195,15 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "positionIntervalEnd",
           "key": "end",
           "schema": {
             "description": "The index of the last character in the text segment, exclusive.",
+            "generatedName": "PositionIntervalEnd",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -2549,14 +3218,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Prediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionFile",
           "key": "file",
           "schema": {
             "description": "A file path relative to the top level source URL or file.",
+            "generatedName": "PredictionFile",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2566,12 +3240,14 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionModels",
           "key": "models",
           "schema": {
             "description": undefined,
             "generatedName": "PredictionModels",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "ModelsPredictions",
             "type": "reference",
@@ -2585,18 +3261,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalNullBurstPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalNullBurstPredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullBurstPredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Null",
               "type": "reference",
@@ -2604,15 +3286,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullBurstPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullBurstPredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_BurstPrediction",
               "type": "reference",
@@ -2627,18 +3314,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalNullFacePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalNullFacePredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacePredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Null",
               "type": "reference",
@@ -2646,15 +3339,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacePredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacePredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_FacePrediction",
               "type": "reference",
@@ -2669,18 +3367,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalNullFacemeshPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalNullFacemeshPredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacemeshPredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Null",
               "type": "reference",
@@ -2688,15 +3392,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalNullFacemeshPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalNullFacemeshPredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_FacemeshPrediction",
               "type": "reference",
@@ -2711,18 +3420,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptionMetadata",
               "type": "reference",
@@ -2730,15 +3445,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataLanguagePredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_LanguagePrediction",
               "type": "reference",
@@ -2753,18 +3473,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalTranscriptionMetadataNerPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptionMetadata",
               "type": "reference",
@@ -2772,15 +3498,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataNerPredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_NerPrediction",
               "type": "reference",
@@ -2795,18 +3526,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
           "key": "metadata",
           "schema": {
             "description": undefined,
+            "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionMetadata",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "TranscriptionMetadata",
               "type": "reference",
@@ -2814,15 +3551,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "predictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
           "key": "grouped_predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "PredictionsOptionalTranscriptionMetadataProsodyPredictionGroupedPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "GroupedPredictions_ProsodyPrediction",
               "type": "reference",
@@ -2837,18 +3579,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": "NOTE: the \`granularity\` field is ignored if transcription is not enabled or if the \`window\` field has been set.",
       "generatedName": "Prosody",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyGranularity",
           "key": "granularity",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyGranularity",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProsodyGranularity",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Granularity",
               "type": "reference",
@@ -2856,14 +3604,21 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyIdentifySpeakers",
           "key": "identify_speakers",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyIdentifySpeakers",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
+              "generatedName": "ProsodyIdentifySpeakers",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2872,15 +3627,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyWindow",
           "key": "window",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyWindow",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "ProsodyWindow",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Window",
               "type": "reference",
@@ -2895,17 +3655,25 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ProsodyPrediction",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionText",
           "key": "text",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyPredictionText",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "A segment of text (like a word or a sentence).",
+              "generatedName": "ProsodyPredictionText",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -2916,26 +3684,35 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionTime",
           "key": "time",
           "schema": {
             "description": undefined,
             "generatedName": "ProsodyPredictionTime",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "TimeInterval",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionConfidence",
           "key": "confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyPredictionConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
+              "generatedName": "ProsodyPredictionConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2944,14 +3721,21 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionSpeakerConfidence",
           "key": "speaker_confidence",
           "schema": {
             "description": undefined,
+            "generatedName": "prosodyPredictionSpeakerConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
+              "generatedName": "ProsodyPredictionSpeakerConfidence",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2960,15 +3744,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "prosodyPredictionEmotions",
           "key": "emotions",
           "schema": {
             "description": "A high-dimensional embedding in emotion space.",
+            "generatedName": "ProsodyPredictionEmotions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "ProsodyPredictionEmotionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "EmotionScore",
               "type": "reference",
@@ -2983,14 +3772,19 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Queued",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "queuedCreatedTimestampMs",
           "key": "created_timestamp_ms",
           "schema": {
             "description": "When this job was created (Unix timestamp in milliseconds).",
+            "generatedName": "QueuedCreatedTimestampMs",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -3005,18 +3799,24 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Request",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestModels",
           "key": "models",
           "schema": {
             "description": undefined,
+            "generatedName": "requestModels",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestModels",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Models",
               "type": "reference",
@@ -3024,15 +3824,20 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestTranscription",
           "key": "transcription",
           "schema": {
             "description": undefined,
+            "generatedName": "requestTranscription",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "RequestTranscription",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Transcription",
               "type": "reference",
@@ -3040,19 +3845,29 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestUrls",
           "key": "urls",
           "schema": {
             "description": undefined,
+            "generatedName": "requestUrls",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "URLs to the media files to be processed. Each must be a valid public URL to a media file (see recommended input filetypes) or an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`) of media files.
 
 If you wish to supply more than 100 URLs, consider providing them as an archive (\`.zip\`, \`.tar.gz\`, \`.tar.bz2\`, \`.tar.xz\`).",
+              "generatedName": "RequestUrls",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
+                "generatedName": "RequestUrlsItem",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -3064,14 +3879,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestCallbackUrl",
           "key": "callback_url",
           "schema": {
             "description": undefined,
+            "generatedName": "requestCallbackUrl",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "If provided, a \`POST\` request will be made to the URL with the generated predictions on completion or the error message on failure.",
+              "generatedName": "RequestCallbackUrl",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3082,14 +3904,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestNotify",
           "key": "notify",
           "schema": {
             "description": undefined,
+            "generatedName": "requestNotify",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to send an email notification to the user upon job completion/failure.",
+              "generatedName": "RequestNotify",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -3098,15 +3927,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "requestFiles",
           "key": "files",
           "schema": {
             "description": undefined,
+            "generatedName": "RequestFiles",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "RequestFilesItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "File",
               "type": "reference",
@@ -3121,18 +3955,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Results",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "resultsPredictions",
           "key": "predictions",
           "schema": {
             "description": undefined,
+            "generatedName": "ResultsPredictions",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "ResultsPredictionsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Prediction",
               "type": "reference",
@@ -3140,15 +3980,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "resultsErrors",
           "key": "errors",
           "schema": {
             "description": undefined,
+            "generatedName": "ResultsErrors",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
               "generatedName": "ResultsErrorsItem",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Error",
               "type": "reference",
@@ -3163,14 +4008,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SentimentScore",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sentimentScoreName",
           "key": "name",
           "schema": {
             "description": "Level of sentiment, ranging from \`1\` (negative) to \`9\` (positive)",
+            "generatedName": "SentimentScoreName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3180,11 +4030,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sentimentScoreScore",
           "key": "score",
           "schema": {
             "description": "Prediction for this level of sentiment",
+            "generatedName": "SentimentScoreScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3199,6 +4053,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "SortBy": {
       "description": undefined,
       "generatedName": "SortBy",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3228,11 +4083,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "description": undefined,
         "discriminantProperty": "type",
         "generatedName": "Source",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "file": {
             "description": undefined,
             "generatedName": "ComponentsSchemasSourceFile",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Source_File",
             "type": "reference",
@@ -3240,6 +4097,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "url": {
             "description": undefined,
             "generatedName": "ComponentsSchemasSourceUrl",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Source_Url",
             "type": "reference",
@@ -3254,30 +4112,38 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SourceResult",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultSource",
           "key": "source",
           "schema": {
             "description": undefined,
             "generatedName": "SourceResultSource",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "Source",
             "type": "reference",
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultResults",
           "key": "results",
           "schema": {
             "description": undefined,
+            "generatedName": "sourceResultResults",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "SourceResultResults",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Results",
               "type": "reference",
@@ -3285,14 +4151,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "sourceResultError",
           "key": "error",
           "schema": {
             "description": undefined,
+            "generatedName": "sourceResultError",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "An error message.",
+              "generatedName": "SourceResultError",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3310,6 +4183,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "File",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "File",
           "type": "reference",
@@ -3318,6 +4192,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SourceFile",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3327,6 +4202,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "Url",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Url",
           "type": "reference",
@@ -3335,6 +4211,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "SourceUrl",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3345,11 +4222,13 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         "description": undefined,
         "discriminantProperty": "status",
         "generatedName": "State",
+        "groupName": undefined,
         "nameOverride": undefined,
         "schemas": {
           "COMPLETED": {
             "description": undefined,
             "generatedName": "ComponentsSchemasStateCompleted",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "State_Completed",
             "type": "reference",
@@ -3357,6 +4236,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "FAILED": {
             "description": undefined,
             "generatedName": "ComponentsSchemasStateFailed",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "State_Failed",
             "type": "reference",
@@ -3364,6 +4244,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "IN_PROGRESS": {
             "description": undefined,
             "generatedName": "ComponentsSchemasStateInProgress",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "State_InProgress",
             "type": "reference",
@@ -3371,6 +4252,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           "QUEUED": {
             "description": undefined,
             "generatedName": "ComponentsSchemasStateQueued",
+            "groupName": undefined,
             "nameOverride": undefined,
             "schema": "State_Queued",
             "type": "reference",
@@ -3385,6 +4267,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "Completed",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Completed",
           "type": "reference",
@@ -3393,6 +4276,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StateCompleted",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3402,6 +4286,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "Failed",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Failed",
           "type": "reference",
@@ -3410,6 +4295,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StateFailed",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3419,6 +4305,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "InProgress",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "InProgress",
           "type": "reference",
@@ -3427,6 +4314,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StateInProgress",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3436,6 +4324,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
         {
           "description": undefined,
           "generatedName": "Queued",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "Queued",
           "type": "reference",
@@ -3444,6 +4333,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StateQueued",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [],
       "type": "object",
@@ -3451,6 +4341,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "Status": {
       "description": undefined,
       "generatedName": "Status",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3485,14 +4376,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": "A time range with a beginning and end, measured in seconds.",
       "generatedName": "TimeInterval",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeIntervalBegin",
           "key": "begin",
           "schema": {
             "description": "Beginning of time range in seconds.",
+            "generatedName": "TimeIntervalBegin",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -3500,11 +4396,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "timeIntervalEnd",
           "key": "end",
           "schema": {
             "description": "End of time range in seconds.",
+            "generatedName": "TimeIntervalEnd",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -3519,14 +4419,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "ToxicityScore",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "toxicityScoreName",
           "key": "name",
           "schema": {
             "description": "Category of toxicity.",
+            "generatedName": "ToxicityScoreName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3536,11 +4441,15 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "toxicityScoreScore",
           "key": "score",
           "schema": {
             "description": "Prediction for this category of toxicity",
+            "generatedName": "ToxicityScoreScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3557,18 +4466,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Transcription",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionLanguage",
           "key": "language",
           "schema": {
             "description": undefined,
+            "generatedName": "transcriptionLanguage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TranscriptionLanguage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Bcp47Tag",
               "type": "reference",
@@ -3583,14 +4498,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": "Transcription metadata for your media file.",
       "generatedName": "TranscriptionMetadata",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionMetadataConfidence",
           "key": "confidence",
           "schema": {
             "description": "Value between \`0.0\` and \`1.0\` indicating our transcription model’s relative confidence in the transcription of your media file.",
+            "generatedName": "TranscriptionMetadataConfidence",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -3598,15 +4518,20 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "transcriptionMetadataDetectedLanguage",
           "key": "detected_language",
           "schema": {
             "description": undefined,
+            "generatedName": "transcriptionMetadataDetectedLanguage",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
               "generatedName": "TranscriptionMetadataDetectedLanguage",
+              "groupName": undefined,
               "nameOverride": undefined,
               "schema": "Bcp47Tag",
               "type": "reference",
@@ -3621,14 +4546,19 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Url",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "urlUrl",
           "key": "url",
           "schema": {
             "description": "The URL of the source media file.",
+            "generatedName": "UrlUrl",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3643,6 +4573,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "When": {
       "description": undefined,
       "generatedName": "When",
+      "groupName": undefined,
       "nameOverride": undefined,
       "type": "enum",
       "values": [
@@ -3665,17 +4596,25 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "Window",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "windowLength",
           "key": "length",
           "schema": {
             "description": undefined,
+            "generatedName": "windowLength",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The length of the sliding window.",
+              "generatedName": "WindowLength",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3684,14 +4623,21 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "windowStep",
           "key": "step",
           "schema": {
             "description": undefined,
+            "generatedName": "windowStep",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The step size of the sliding window.",
+              "generatedName": "WindowStep",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3719,17 +4665,24 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     },
   ],
   "tags": {
-    "Get Job Predictions": {
-      "description": undefined,
-      "id": "Get Job Predictions",
-    },
-    "List Jobs": {
-      "description": undefined,
-      "id": "List Jobs",
-    },
-    "Start Job": {
-      "description": undefined,
-      "id": "Start Job",
+    "orderedTagIds": [
+      "Start Job",
+      "Get Job Predictions",
+      "List Jobs",
+    ],
+    "tagsById": {
+      "Get Job Predictions": {
+        "description": undefined,
+        "id": "Get Job Predictions",
+      },
+      "List Jobs": {
+        "description": undefined,
+        "id": "List Jobs",
+      },
+      "Start Job": {
+        "description": undefined,
+        "id": "Start Job",
+      },
     },
   },
   "title": "Hume AI Batch API",

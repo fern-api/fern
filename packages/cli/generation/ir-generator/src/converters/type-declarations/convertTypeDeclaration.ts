@@ -1,8 +1,11 @@
-import { RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import { isRawObjectDefinition, RawSchemas, visitRawTypeDeclaration } from "@fern-api/yaml-schema";
 import { ExampleType, FernFilepath, Type, TypeDeclaration } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
+import { AudienceId } from "../../filtered-ir/ids";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
 import { TypeResolver } from "../../resolvers/TypeResolver";
+import { getPropertiesForAudience } from "../../utils/getPropertiesForAudience";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";
 import { convertAliasTypeDeclaration } from "./convertAliasTypeDeclaration";
@@ -16,32 +19,42 @@ import { getReferencedTypesFromRawDeclaration } from "./getReferencedTypesFromRa
 export interface TypeDeclarationWithDescendantFilepaths {
     typeDeclaration: TypeDeclaration;
     descendantFilepaths: Set<FernFilepath>;
+    propertiesByAudience: Record<AudienceId, Set<string>>;
 }
 
-export function convertTypeDeclaration({
+export async function convertTypeDeclaration({
     typeName,
     typeDeclaration,
     file,
     typeResolver,
-    exampleResolver
+    exampleResolver,
+    workspace
 }: {
     typeName: string;
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
     exampleResolver: ExampleResolver;
-}): TypeDeclarationWithDescendantFilepaths {
-    const declaration = convertDeclaration(typeDeclaration);
+    workspace: FernWorkspace;
+}): Promise<TypeDeclarationWithDescendantFilepaths> {
+    const declaration = await convertDeclaration(typeDeclaration);
     const declaredTypeName = parseTypeName({
         typeName,
         file
     });
     const referencedTypes = getReferencedTypesFromRawDeclaration({ typeDeclaration, file, typeResolver });
+
+    let propertiesByAudience: Record<AudienceId, Set<string>> = {};
+    if (isRawObjectDefinition(typeDeclaration)) {
+        propertiesByAudience = getPropertiesForAudience(typeDeclaration.properties ?? {});
+    }
+
     return {
+        propertiesByAudience,
         typeDeclaration: {
             ...declaration,
             name: declaredTypeName,
-            shape: convertType({ typeDeclaration, file, typeResolver }),
+            shape: await convertType({ typeDeclaration, file, typeResolver }),
             referencedTypes: new Set(referencedTypes.map((referencedType) => referencedType.typeId)),
             examples:
                 typeof typeDeclaration !== "string" && typeDeclaration.examples != null
@@ -60,7 +73,8 @@ export function convertTypeDeclaration({
                                   exampleResolver,
                                   typeDeclaration,
                                   fileContainingType: file,
-                                  fileContainingExample: file
+                                  fileContainingExample: file,
+                                  workspace
                               })
                           })
                       )
@@ -70,7 +84,7 @@ export function convertTypeDeclaration({
     };
 }
 
-export function convertType({
+export async function convertType({
     typeDeclaration,
     file,
     typeResolver
@@ -78,8 +92,8 @@ export function convertType({
     typeDeclaration: RawSchemas.TypeDeclarationSchema;
     file: FernFileContext;
     typeResolver: TypeResolver;
-}): Type {
-    return visitRawTypeDeclaration<Type>(typeDeclaration, {
+}): Promise<Type> {
+    return await visitRawTypeDeclaration<Promise<Type> | Type>(typeDeclaration, {
         alias: (alias) => convertAliasTypeDeclaration({ alias, file, typeResolver }),
         object: (object) => convertObjectTypeDeclaration({ object, file }),
         discriminatedUnion: (union) => convertDiscriminatedUnionTypeDeclaration({ union, file, typeResolver }),

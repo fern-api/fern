@@ -1,9 +1,7 @@
-import { ExampleResolver, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
+import { ExampleResolver, ExampleValidators, FernFileContext, TypeResolver } from "@fern-api/ir-generator";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { RuleViolation } from "../../Rule";
-import { validateObjectExample } from "../valid-example-type/validateObjectExample";
-import { validateTypeReferenceExample } from "../valid-example-type/validateTypeReferenceExample";
 
 export function validateRequest({
     example,
@@ -33,7 +31,7 @@ export function validateRequest({
         }
     } else if (isInlineRequestBody(body)) {
         violations.push(
-            ...validateObjectExample({
+            ...ExampleValidators.validateObjectExample({
                 typeName: undefined,
                 typeNameForBreadcrumb: "<Inlined Request>",
                 rawObject: {
@@ -45,17 +43,21 @@ export function validateRequest({
                 exampleResolver,
                 workspace,
                 example
+            }).map((val): RuleViolation => {
+                return { severity: "error", message: val.message };
             })
         );
     } else {
         violations.push(
-            ...validateTypeReferenceExample({
+            ...ExampleValidators.validateTypeReferenceExample({
                 rawTypeReference: typeof body === "string" ? body : body.type,
                 example,
                 file,
                 workspace,
                 typeResolver,
                 exampleResolver
+            }).map((val): RuleViolation => {
+                return { severity: "error", message: val.message };
             })
         );
     }

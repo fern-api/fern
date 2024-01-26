@@ -8,7 +8,9 @@ import {
 } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { getParameterName } from "../../extensions/getParameterName";
 import { getVariableReference } from "../../extensions/getVariableReference";
+import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { convertSchema } from "../convertSchemas";
 import { getExamplesString } from "../example/getExample";
@@ -44,31 +46,40 @@ export function convertParameters({
 
         const isRequired = resolvedParameter.required ?? false;
 
+        const parameterBreadcrumbs = [...requestBreadcrumbs, resolvedParameter.name];
+        const generatedName = getGeneratedTypeName(parameterBreadcrumbs);
+
         let schema =
             resolvedParameter.schema != null
-                ? convertSchema(resolvedParameter.schema, !isRequired, context, [
-                      ...requestBreadcrumbs,
-                      resolvedParameter.name
-                  ])
+                ? convertSchema(resolvedParameter.schema, !isRequired, context, parameterBreadcrumbs)
                 : isRequired
                 ? SchemaWithExample.primitive({
+                      nameOverride: undefined,
+                      generatedName,
                       schema: PrimitiveSchemaValueWithExample.string({
                           minLength: undefined,
                           maxLength: undefined,
                           example: getExamplesString(resolvedParameter.example)
                       }),
-                      description: undefined
+                      description: undefined,
+                      groupName: undefined
                   })
                 : SchemaWithExample.optional({
+                      nameOverride: undefined,
+                      generatedName,
                       value: SchemaWithExample.primitive({
+                          nameOverride: undefined,
+                          generatedName,
                           schema: PrimitiveSchemaValueWithExample.string({
                               minLength: undefined,
                               maxLength: undefined,
                               example: getExamplesString(resolvedParameter.example)
                           }),
-                          description: undefined
+                          description: undefined,
+                          groupName: undefined
                       }),
-                      description: undefined
+                      description: undefined,
+                      groupName: undefined
                   });
         if (
             resolvedParameter.in === "header" &&
@@ -81,8 +92,11 @@ export function convertParameters({
             const defaultValue = (resolvedParameter.schema as any).default;
             if (typeof defaultValue === "string" && defaultValue.length > 0) {
                 schema = SchemaWithExample.literal({
+                    nameOverride: undefined,
+                    generatedName,
                     value: LiteralSchemaValue.string(defaultValue),
-                    description: undefined
+                    description: undefined,
+                    groupName: undefined
                 });
             }
         }
@@ -90,7 +104,8 @@ export function convertParameters({
         const convertedParameter = {
             name: resolvedParameter.name,
             schema,
-            description: resolvedParameter.description
+            description: resolvedParameter.description,
+            parameterNameOverride: getParameterName(resolvedParameter)
         };
         if (resolvedParameter.in === "query") {
             convertedParameters.queryParameters.push(convertedParameter);

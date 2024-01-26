@@ -50,7 +50,11 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.6.0"
+        version: "0.8.1",
+        output: {
+            location: "local-file-system",
+            path: "../generated/python"
+        }
     },
     [GeneratorName.GO_FIBER]: {
         version: "0.9.0"
@@ -66,6 +70,16 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         },
         config: {
             importPath: "go-mod-path/generated/go"
+        }
+    },
+    [GeneratorName.RUBY_MODEL]: {
+        version: "0.0.1"
+    },
+    [GeneratorName.RUBY_SDK]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../generated/ruby"
         }
     },
     [GeneratorName.OPENAPI]: {

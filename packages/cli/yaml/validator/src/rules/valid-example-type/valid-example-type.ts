@@ -1,7 +1,11 @@
-import { constructFernFileContext, ExampleResolverImpl, TypeResolverImpl } from "@fern-api/ir-generator";
+import {
+    constructFernFileContext,
+    ExampleResolverImpl,
+    ExampleValidators,
+    TypeResolverImpl
+} from "@fern-api/ir-generator";
 import { Rule } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { validateTypeExample } from "./validateTypeExample";
 
 export const ValidExampleTypeRule: Rule = {
     name: "valid-example-type",
@@ -15,7 +19,7 @@ export const ValidExampleTypeRule: Rule = {
                     { typeName, typeDeclaration, example },
                     { relativeFilepath, contents: definitionFile }
                 ) => {
-                    return validateTypeExample({
+                    const violations = ExampleValidators.validateTypeExample({
                         typeName,
                         typeDeclaration,
                         example: example.value,
@@ -28,6 +32,12 @@ export const ValidExampleTypeRule: Rule = {
                         typeResolver,
                         exampleResolver,
                         workspace
+                    });
+                    return violations.map((violation) => {
+                        return {
+                            severity: "error",
+                            message: violation.message
+                        };
                     });
                 }
             }

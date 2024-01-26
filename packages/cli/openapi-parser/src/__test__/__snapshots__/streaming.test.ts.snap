@@ -22,22 +22,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserStreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userStreamRequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userStreamRequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserStreamRequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -48,11 +57,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userStreamRequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserStreamRequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -68,9 +81,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserStreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BaseStreamUser",
           "type": "reference",
@@ -122,22 +137,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userRequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userRequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserRequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -148,11 +172,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userRequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserRequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -168,9 +196,12 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "BaseUser",
           "type": "reference",
@@ -200,22 +231,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2StreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2StreamRequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV2StreamRequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserV2StreamRequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -226,11 +266,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2StreamRequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserV2StreamRequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -246,9 +290,11 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserV2StreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "StreamUser",
           "type": "reference",
@@ -308,22 +354,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV2Request",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2RequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV2RequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserV2RequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -334,11 +389,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV2RequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserV2RequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -354,9 +413,12 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "description": undefined,
           "generatedName": "UserV2Response",
+          "groupName": undefined,
           "nameOverride": undefined,
           "schema": "User",
           "type": "reference",
@@ -386,22 +448,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3StreamRequest",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamRequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3StreamRequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserV3StreamRequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -412,11 +483,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamRequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserV3StreamRequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": true,
@@ -432,22 +507,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3StreamResponse",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3StreamResponseId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UserV3StreamResponseId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -458,14 +542,21 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseInline",
               "key": "inline",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3StreamResponseInline",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UserV3StreamResponseInline",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -474,14 +565,21 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3StreamResponseStreamed",
               "key": "streamed",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3StreamResponseStreamed",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UserV3StreamResponseStreamed",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -539,22 +637,31 @@ exports[`open api parser streaming parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3Request",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3RequestId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3RequestId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": "",
+                  "generatedName": "UserV3RequestId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -565,11 +672,15 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3RequestStream",
               "key": "stream",
               "schema": {
                 "description": undefined,
+                "generatedName": "UserV3RequestStream",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "boolean": false,
@@ -585,22 +696,32 @@ exports[`open api parser streaming parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
+        "responseProperty": undefined,
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
           "description": undefined,
           "generatedName": "UserV3Response",
+          "groupName": undefined,
           "nameOverride": undefined,
           "properties": [
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3ResponseId",
               "key": "id",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3ResponseId",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UserV3ResponseId",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -611,14 +732,21 @@ exports[`open api parser streaming parse open api 1`] = `
               },
             },
             {
+              "audiences": [],
               "conflict": {},
               "generatedName": "userV3ResponseInline",
               "key": "inline",
               "schema": {
                 "description": undefined,
+                "generatedName": "userV3ResponseInline",
+                "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "UserV3ResponseInline",
+                  "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -651,17 +779,25 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BaseStreamUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseStreamUserId",
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "baseStreamUserId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BaseStreamUserId",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -679,17 +815,25 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "BaseUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "baseUserId",
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "baseUserId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BaseUserId",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -707,17 +851,25 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "StreamUser",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserId",
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "streamUserId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "StreamUserId",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -728,14 +880,21 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserName",
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "streamUserName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "StreamUserName",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -746,14 +905,21 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "streamUserStreamed",
           "key": "streamed",
           "schema": {
             "description": undefined,
+            "generatedName": "streamUserStreamed",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "StreamUserStreamed",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "literal",
               "value": {
                 "boolean": true,
@@ -770,17 +936,25 @@ exports[`open api parser streaming parse open api 1`] = `
       "allOfPropertyConflicts": [],
       "description": undefined,
       "generatedName": "User",
+      "groupName": undefined,
       "nameOverride": undefined,
       "properties": [
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userId",
           "key": "id",
           "schema": {
             "description": undefined,
+            "generatedName": "userId",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserId",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -791,14 +965,21 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userName",
           "key": "name",
           "schema": {
             "description": undefined,
+            "generatedName": "userName",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserName",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -809,14 +990,21 @@ exports[`open api parser streaming parse open api 1`] = `
           },
         },
         {
+          "audiences": [],
           "conflict": {},
           "generatedName": "userStreamed",
           "key": "streamed",
           "schema": {
             "description": undefined,
+            "generatedName": "userStreamed",
+            "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "UserStreamed",
+              "groupName": undefined,
+              "nameOverride": undefined,
               "type": "literal",
               "value": {
                 "boolean": false,
@@ -831,7 +1019,10 @@ exports[`open api parser streaming parse open api 1`] = `
   },
   "securitySchemes": {},
   "servers": [],
-  "tags": {},
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
   "title": "Streaming API",
   "variables": {},
   "webhooks": [],

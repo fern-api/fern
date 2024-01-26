@@ -21,8 +21,11 @@ import { addGeneratorToWorkspaces } from "./commands/add-generator/addGeneratorT
 import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
+import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
+import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
+import { mockServer } from "./commands/mock/mockServer";
 import { previewDocsWorkspace } from "./commands/preview/previewDocsWorkspace";
 import { registerWorkspacesV1 } from "./commands/register/registerWorkspacesV1";
 import { registerWorkspacesV2 } from "./commands/register/registerWorkspacesV2";
@@ -128,6 +131,7 @@ async function tryRunCli(cliContext: CliContext) {
     addGenerateCommand(cli, cliContext);
     addIrCommand(cli, cliContext);
     addFdrCommand(cli, cliContext);
+    addOpenAPIIrCommand(cli, cliContext);
     addValidateCommand(cli, cliContext);
     addRegisterCommand(cli, cliContext);
     addRegisterV2Command(cli, cliContext);
@@ -135,6 +139,8 @@ async function tryRunCli(cliContext: CliContext) {
     addFormatCommand(cli, cliContext);
     addWriteDefinitionCommand(cli, cliContext);
     addPreviewCommand(cli, cliContext);
+    addMockCommand(cli, cliContext);
+    addWriteOverridesCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -400,7 +406,7 @@ function addGenerateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext)
 function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "ir <path-to-output>",
-        false, // hide from help message
+        "Generate IR (Intermediate Representation)",
         (yargs) =>
             yargs
                 .positional("path-to-output", {
@@ -437,6 +443,34 @@ function addIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                 generationLanguage: argv.language,
                 audiences: argv.audience.length > 0 ? { type: "select", audiences: argv.audience } : { type: "all" },
                 version: argv.version
+            });
+        }
+    );
+}
+
+function addOpenAPIIrCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "openapi-ir <path-to-output>",
+        false,
+        (yargs) =>
+            yargs
+                .positional("path-to-output", {
+                    type: "string",
+                    description: "Path to write intermediate representation (IR)",
+                    demandOption: true
+                })
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                }),
+        async (argv) => {
+            await generateOpenAPIIrForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                irFilepath: resolve(cwd(), argv.pathToOutput),
+                cliContext
             });
         }
     );
@@ -540,19 +574,26 @@ function addRegisterV2Command(cli: Argv<GlobalCliOptions>, cliContext: CliContex
 function addValidateCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
         "check",
-        "Validates your Fern Definition",
+        "Validates your Fern Definition. Logs errors.",
         (yargs) =>
-            yargs.option("api", {
-                string: true,
-                description: "Only run the command on the provided API"
-            }),
+            yargs
+                .option("api", {
+                    string: true,
+                    description: "Only run the command on the provided API"
+                })
+                .option("warnings", {
+                    boolean: true,
+                    description: "Log warnings in addition to errors.",
+                    default: false
+                }),
         async (argv) => {
             await validateWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,
                     defaultToAllApiWorkspaces: true
                 }),
-                cliContext
+                cliContext,
+                logWarnings: argv.warnings
             });
         }
     );
@@ -644,16 +685,73 @@ function addFormatCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     );
 }
 
-function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
     cli.command(
-        "write-definition",
-        false, // hide from help message
+        "mock",
+        "Starts a mock server for an API.",
+        (yargs) =>
+            yargs
+                .option("port", {
+                    number: true,
+                    description: "The port the server binds to."
+                })
+                .option("api", {
+                    string: true,
+                    description: "The API to mock."
+                }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern mock"
+            });
+            await mockServer({
+                cliContext,
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: false
+                }),
+                port: argv.port
+            });
+        }
+    );
+}
+
+function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-overrides",
+        "Generate a basic openapi overrides file.",
         (yargs) =>
             yargs.option("api", {
                 string: true,
                 description: "Only run the command on the provided API"
             }),
         async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern generate-overrides"
+            });
+            await writeOverridesForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true
+                }),
+                cliContext
+            });
+        }
+    );
+}
+
+function addWriteDefinitionCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-definition",
+        "Write underlying Fern Definition for OpenAPI specs and API Dependencies.",
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API"
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern write-definition"
+            });
             await writeDefinitionForWorkspaces({
                 project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
                     commandLineApiWorkspace: argv.api,

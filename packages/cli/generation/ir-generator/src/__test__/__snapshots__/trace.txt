@@ -5749,8 +5749,7 @@ exports[`generate IR 1`] = `
               "allowMultiple": false,
               "availability": null,
               "docs": "I'm a multiline
-description
-",
+description",
               "name": {
                 "name": {
                   "camelCase": {
@@ -31314,8 +31313,7 @@ The method name cannot include the following characters:
           },
           {
             "availability": null,
-            "docs": "The auto-generated session id. Formatted as a uuid.
-",
+            "docs": "The auto-generated session id. Formatted as a uuid.",
             "name": {
               "name": {
                 "camelCase": {
@@ -46363,8 +46361,7 @@ The method name cannot include the following characters:
           {
             "availability": null,
             "docs": "If present, use this to load subseqent pages.
-The offset is the id of the next trace response to load.
-",
+The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
@@ -46598,8 +46595,7 @@ The offset is the id of the next trace response to load.
           {
             "availability": null,
             "docs": "If present, use this to load subseqent pages.
-The offset is the id of the next trace response to load.
-",
+The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {

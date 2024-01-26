@@ -3,14 +3,14 @@ Use `fern token` to generate a `FERN_TOKEN` that is specific to your organizatio
 ## Usage
 
 ```bash
-$ fern token
+fern token
 ```
 
-## GitHub Actions 
+## GitHub Actions
 
 If using GitHub Actions as your CI, add the `FERN_TOKEN` as a GitHub Action secret in the repo where your Fern configuration is stored. Here are [instructions for how to create a secret](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions#creating-secrets-for-a-repository) for a repo.
 
-You can then reference the secret in your CI, for [example](https://github.com/fern-api/docs/blob/744bf283824025343a2bdcbbf2f3391a3144cc26/.github/workflows/publish-docs.yml#L25C26-L25C26):
+You can then reference the secret in your CI. Example:
 
 ```yaml
 - name: Generate and Publish Documentation with Fern
@@ -19,3 +19,4 @@ env:
 run: fern generate --docs
 ```
 
+See [the full example on GitHub](https://github.com/fern-api/fern/blob/main/.github/workflows/publish-docs.yml).

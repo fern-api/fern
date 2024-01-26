@@ -21,6 +21,7 @@ import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
 import * as mime from "mime-types";
+import terminalLink from "terminal-link";
 
 export async function publishDocs({
     token,
@@ -126,7 +127,8 @@ export async function publishDocs({
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
     if (registerDocsResponse.ok) {
         const url = wrapWithHttps(urlToOutput);
-        context.logger.info(chalk.green(`Published docs to ${url}`));
+        const link = terminalLink(url, url);
+        context.logger.info(chalk.green(`Published docs to ${link}`));
     } else {
         switch (registerDocsResponse.error.error) {
             case "UnauthorizedError":
