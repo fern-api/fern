@@ -4818,34 +4818,24 @@ To delete links in bulk, we recommend looping through the list of links you want
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "AccountsBankingChecking",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingChecking",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingCreditCard",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingCreditCard",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AcccountsBankingLoan",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingLoan",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingPension",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingPension",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingSavings",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingSavings",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -5473,34 +5463,24 @@ To delete links in bulk, we recommend looping through the list of links you want
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "AccountsBankingChecking",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingChecking",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingCreditCard",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingCreditCard",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AcccountsBankingLoan",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingLoan",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingPension",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingPension",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingSavings",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingSavings",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -6104,34 +6084,24 @@ To delete links in bulk, we recommend looping through the list of links you want
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "AccountsBankingChecking",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingCheckingDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingCreditCard",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingCreditCardDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AcccountsBankingLoan",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingLoanDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingPension",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingPensionDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "AccountsBankingSavings",
-            "value": {
-              "$ref": "#/components/examples/AccountsBankingSavingsDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -8858,22 +8828,16 @@ To delete links in bulk, we recommend looping through the list of links you want
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TransactionsCheckingPaginated",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCheckingPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsSavingsPaginated",
-            "value": {
-              "$ref": "#/components/examples/TransactionsSavingsPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsCreditCardPaginated",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCreditCardPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -9673,22 +9637,16 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "TransactionsChecking",
-            "value": {
-              "$ref": "#/components/examples/TransactionsChecking",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsSavings",
-            "value": {
-              "$ref": "#/components/examples/TransactionsSavings",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsCreditCard",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCreditCard",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -10701,22 +10659,16 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "TransactionsChecking",
-            "value": {
-              "$ref": "#/components/examples/TransactionsChecking",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsSavings",
-            "value": {
-              "$ref": "#/components/examples/TransactionsSavings",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsCreditCard",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCreditCard",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -11489,22 +11441,16 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TransactionsChecking",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCheckingDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsSavings",
-            "value": {
-              "$ref": "#/components/examples/TransactionsSavingsDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TransactionsCreditCard",
-            "value": {
-              "$ref": "#/components/examples/TransactionsCreditCardDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -13061,10 +13007,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "BalancesExamplePaginated",
-            "value": {
-              "$ref": "#/components/examples/BalancesExamplePaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -13704,10 +13648,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "BalancesExamplePaginated",
-            "value": {
-              "$ref": "#/components/examples/BalancesExample",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -14347,10 +14289,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "BalancesExamplePaginated",
-            "value": {
-              "$ref": "#/components/examples/BalancesExample",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -14966,10 +14906,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "BalancesExamplePaginated",
-            "value": {
-              "$ref": "#/components/examples/BalancesExampleDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -16862,10 +16800,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "OwnerBankingAccountPaginated",
-            "value": {
-              "$ref": "#/components/examples/OwnerBankingAccountPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -17113,10 +17049,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "OwnerBankingAccount",
-            "value": {
-              "$ref": "#/components/examples/OwnerBankingAccount",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -17385,10 +17319,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "OwnerBankingAccount",
-            "value": {
-              "$ref": "#/components/examples/OwnerBankingAccount",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -17633,10 +17565,8 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "OwnerBankingAccount",
-            "value": {
-              "$ref": "#/components/examples/OwnerBankingAccountDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -19397,34 +19327,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "InvoiceIngresso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceIngresoPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoicePago",
-            "value": {
-              "$ref": "#/components/examples/InvoicePagoPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceNomina",
-            "value": {
-              "$ref": "#/components/examples/InvoiceNominaPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceEgreso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceEgresoPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceTraslado",
-            "value": {
-              "$ref": "#/components/examples/InvoiceTrasladoPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -20170,34 +20090,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "InvoiceIngresso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceIngreso",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoicePago",
-            "value": {
-              "$ref": "#/components/examples/InvoicePago",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceNomina",
-            "value": {
-              "$ref": "#/components/examples/InvoiceNomina",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceEgreso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceEgreso",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceTraslado",
-            "value": {
-              "$ref": "#/components/examples/InvoiceTraslado",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -21699,34 +21609,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "InvoiceIngresso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceIngresoDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoicePago",
-            "value": {
-              "$ref": "#/components/examples/InvoicePagoDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceNomina",
-            "value": {
-              "$ref": "#/components/examples/InvoiceNominaDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceEgreso",
-            "value": {
-              "$ref": "#/components/examples/InvoiceEgresoDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "InvoiceTraslado",
-            "value": {
-              "$ref": "#/components/examples/InvoiceTrasladoDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -22651,34 +22551,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TaxReturnPersonal",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAE",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPaginatedPFAE",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAI",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPaginatedPFAI",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusiness",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessListPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusinessMonthly",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessListMonthlyPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -22969,34 +22859,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "TaxReturnPersonal",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAE",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAE",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAI",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAI",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusiness",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusinessMonthly",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessListMonthly",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -23237,34 +23117,24 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TaxReturnPersonal",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAE",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAEDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnPersonalMonthlyPFAI",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnPersonalListMonthlyPFAIDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusiness",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessListDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxReturnBusinessMonthly",
-            "value": {
-              "$ref": "#/components/examples/TaxReturnBusinessListMonthlyDetail",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -24207,16 +24077,12 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TaxStatusPersonalListPaginated",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusPersonalListPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxStatusBusinessListPaginated",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusBusinessListPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -24692,16 +24558,12 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok (when \`save_data=false\`)",
         "fullExamples": [
           {
-            "name": "TaxStatusPersonal",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusPersonalList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxStatusBusiness",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusBusinessList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -25193,16 +25055,12 @@ If you try to access older information than what we can access, we will return a
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "TaxStatusPersonal",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusPersonalList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "TaxStatusBusiness",
-            "value": {
-              "$ref": "#/components/examples/TaxStatusBusinessList",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -26543,11 +26401,8 @@ If you try to access older information than what we can access, we will return a
                                 "type": "primitive",
                               },
                               "last_income_description": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
+                                "map": [],
+                                "type": "map",
                               },
                               "lookback_periods": {
                                 "primitive": {
@@ -27122,11 +26977,8 @@ If you try to access older information than what we can access, we will return a
                         "type": "primitive",
                       },
                       "last_income_description": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
+                        "map": [],
+                        "type": "map",
                       },
                       "lookback_periods": {
                         "primitive": {
@@ -27548,11 +27400,8 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
+                            "map": [],
+                            "type": "map",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -27960,11 +27809,8 @@ If you try to access older information than what we can access, we will return a
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
+                            "map": [],
+                            "type": "map",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -42955,11 +42801,8 @@ If you need to know the currency of the account, just do a GET Details to the ac
                             "type": "primitive",
                           },
                           "last_income_description": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
+                            "map": [],
+                            "type": "map",
                           },
                           "lookback_periods": {
                             "primitive": {
@@ -43156,10 +42999,8 @@ If you need to know the currency of the account, just do a GET Details to the ac
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "EnrichedIncome",
-            "value": {
-              "$ref": "#/components/examples/IncomeVerificationEyod",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -43463,10 +43304,8 @@ If you need to know the currency of the account, just do a GET Details to the ac
         "description": "Ok",
         "fullExamples": [
           {
-            "name": "CategorizeTransactions",
-            "value": {
-              "$ref": "#/components/examples/CategorizationExample",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -43767,11 +43606,8 @@ For example:
                         "type": "primitive",
                       },
                       "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
+                        "map": [],
+                        "type": "map",
                       },
                       "url": {
                         "primitive": {
@@ -43912,11 +43748,8 @@ For example:
                     "type": "primitive",
                   },
                   "name": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
+                    "map": [],
+                    "type": "map",
                   },
                   "url": {
                     "primitive": {
@@ -44048,11 +43881,8 @@ For example:
                 "type": "primitive",
               },
               "name": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
+                "map": [],
+                "type": "map",
               },
               "url": {
                 "primitive": {
@@ -45487,22 +45317,16 @@ For example:
         "description": "OK",
         "fullExamples": [
           {
-            "name": "OfpiPixIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiIndividualPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixBusiness",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiBusinessPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerPseIndividualPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -45678,22 +45502,16 @@ For example:
         "description": undefined,
         "fullExamples": [
           {
-            "name": "OfpiPixIndividual",
-            "value": {
-              "$ref": "#/components/examples/CreateCustomerOfpiIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixBusiness",
-            "value": {
-              "$ref": "#/components/examples/CreateCustomerOfpiBusiness",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseIndividual",
-            "value": {
-              "$ref": "#/components/examples/CreateCustomerPseIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "schema": {
@@ -45731,22 +45549,16 @@ For example:
         "description": "OK (Created)",
         "fullExamples": [
           {
-            "name": "OfpiPixIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixBusiness",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiBusiness",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerPseIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -45920,22 +45732,16 @@ For example:
         "description": "OK",
         "fullExamples": [
           {
-            "name": "OfpiPixIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixBusiness",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerOfpiBusiness",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseIndividual",
-            "value": {
-              "$ref": "#/components/examples/ResponseCustomerPseIndividual",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -46625,22 +46431,16 @@ For example:
         "description": "OK",
         "fullExamples": [
           {
-            "name": "OfpiPixInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfoPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixKey",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKeyPaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPsePaginated",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -46848,22 +46648,16 @@ For example:
         "description": undefined,
         "fullExamples": [
           {
-            "name": "OfpiPixInfo",
-            "value": {
-              "$ref": "#/components/examples/CreateBankAccountOrganizationPixInfo",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixKey",
-            "value": {
-              "$ref": "#/components/examples/CreateBankAccountOrganizationPixKey",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseInfo",
-            "value": {
-              "$ref": "#/components/examples/CreateBankAccountOrganizationPse",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "schema": {
@@ -46901,22 +46695,16 @@ For example:
         "description": "OK (Created)",
         "fullExamples": [
           {
-            "name": "OfpiPixInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfo",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixKey",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKey",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPse",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -47102,22 +46890,16 @@ For example:
         "description": "OK",
         "fullExamples": [
           {
-            "name": "OfpiPixInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixInfo",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "OfpiPixKey",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPixKey",
-            },
+            "name": undefined,
+            "value": undefined,
           },
           {
-            "name": "PseInfo",
-            "value": {
-              "$ref": "#/components/examples/ResponseBankAccountOrganizationPse",
-            },
+            "name": undefined,
+            "value": undefined,
           },
         ],
         "responseProperty": undefined,
@@ -49400,11 +49182,8 @@ During the payment intent flow, you need to fill in the payment intent with requ
                               "type": "string",
                             },
                             "value": {
-                              "primitive": {
-                                "string": "string",
-                                "type": "string",
-                              },
-                              "type": "primitive",
+                              "map": [],
+                              "type": "map",
                             },
                           },
                         ],
@@ -50103,11 +49882,8 @@ During the payment intent flow, you need to fill in the payment intent with requ
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],

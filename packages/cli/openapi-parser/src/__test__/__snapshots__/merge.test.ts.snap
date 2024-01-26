@@ -9555,11 +9555,8 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -13802,11 +13799,8 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "primitive",
               },
               "response": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
+                "map": [],
+                "type": "map",
               },
               "response_type": {
                 "enum": "JSON",
@@ -15441,19 +15435,50 @@ exports[`open api parser merge parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "hris.Employee",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
-                              "string": "string",
+                              "string": "123e4567-e89b-12d3-a456-426655440000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "start_date",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "Started At",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "operator": {
                             "primitive": {
-                              "string": "string",
+                              "string": "GREATER_THAN_OR_EQUAL",
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "value": {
+                            "type": "unknown",
+                            "unknown": {
+                              "primitive": {
+                                "string": "2022-01-01T00:00:00Z",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
                         },
                         "type": "object",
@@ -15502,23 +15527,20 @@ exports[`open api parser merge parse open api 1`] = `
         "fullExamples": [
           {
             "name": "StartDateConditionExample",
-            "value": {
-              "summary": "Employees that started on or after January 1st, 2022",
-              "value": [
-                {
-                  "linked_account_conditions": [
-                    {
-                      "common_model": "hris.Employee",
-                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
-                      "field_name": "start_date",
-                      "native_name": "Started At",
-                      "operator": "GREATER_THAN_OR_EQUAL",
-                      "value": "2022-01-01T00:00:00Z",
-                    },
-                  ],
-                },
-              ],
-            },
+            "value": [
+              {
+                "linked_account_conditions": [
+                  {
+                    "common_model": "hris.Employee",
+                    "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                    "field_name": "start_date",
+                    "native_name": "Started At",
+                    "operator": "GREATER_THAN_OR_EQUAL",
+                    "value": "2022-01-01T00:00:00Z",
+                  },
+                ],
+              },
+            ],
           },
         ],
         "responseProperty": undefined,
@@ -15593,11 +15615,8 @@ exports[`open api parser merge parse open api 1`] = `
                                 "type": "primitive",
                               },
                               "value": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
+                                "map": [],
+                                "type": "map",
                               },
                             },
                             "type": "object",
@@ -15622,19 +15641,50 @@ exports[`open api parser merge parse open api 1`] = `
                     "array": [
                       {
                         "properties": {
+                          "common_model": {
+                            "primitive": {
+                              "string": "hris.Employee",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "condition_schema_id": {
                             "primitive": {
-                              "string": "string",
+                              "string": "123e4567-e89b-12d3-a456-426655440000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "field_name": {
+                            "primitive": {
+                              "string": "start_date",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "native_name": {
+                            "primitive": {
+                              "string": "Started At",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "operator": {
                             "primitive": {
-                              "string": "string",
+                              "string": "GREATER_THAN_OR_EQUAL",
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "value": {
+                            "type": "unknown",
+                            "unknown": {
+                              "primitive": {
+                                "string": "2022-01-01T00:00:00Z",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
                           },
                         },
                         "type": "object",
@@ -15683,16 +15733,13 @@ exports[`open api parser merge parse open api 1`] = `
           {
             "name": "StartDateConditionRequestExample",
             "value": {
-              "summary": "Employees that started on or after January 1st, 2022",
-              "value": {
-                "linked_account_conditons": [
-                  {
-                    "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
-                    "operator": "GREATER_THAN_OR_EQUAL",
-                    "value": "2022-01-01T00:00:00Z",
-                  },
-                ],
-              },
+              "linked_account_conditons": [
+                {
+                  "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                  "operator": "GREATER_THAN_OR_EQUAL",
+                  "value": "2022-01-01T00:00:00Z",
+                },
+              ],
             },
           },
         ],
@@ -15712,23 +15759,20 @@ exports[`open api parser merge parse open api 1`] = `
         "fullExamples": [
           {
             "name": "StartDateConditionExample",
-            "value": {
-              "summary": "Employees that started on or after January 1st, 2022",
-              "value": [
-                {
-                  "linked_account_conditions": [
-                    {
-                      "common_model": "hris.Employee",
-                      "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
-                      "field_name": "start_date",
-                      "native_name": "Started At",
-                      "operator": "GREATER_THAN_OR_EQUAL",
-                      "value": "2022-01-01T00:00:00Z",
-                    },
-                  ],
-                },
-              ],
-            },
+            "value": [
+              {
+                "linked_account_conditions": [
+                  {
+                    "common_model": "hris.Employee",
+                    "condition_schema_id": "123e4567-e89b-12d3-a456-426655440000",
+                    "field_name": "start_date",
+                    "native_name": "Started At",
+                    "operator": "GREATER_THAN_OR_EQUAL",
+                    "value": "2022-01-01T00:00:00Z",
+                  },
+                ],
+              },
+            ],
           },
         ],
         "responseProperty": undefined,
@@ -15799,13 +15843,41 @@ exports[`open api parser merge parse open api 1`] = `
                 "array": [
                   {
                     "properties": {
+                      "common_model": {
+                        "primitive": {
+                          "string": "hris.Employee",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "condition_type": {
-                        "enum": "BOOLEAN",
+                        "enum": "DATE_TIME",
                         "type": "enum",
+                      },
+                      "field_name": {
+                        "primitive": {
+                          "string": "start_date",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "id": {
                         "primitive": {
-                          "string": "string",
+                          "string": "123e4567-e89b-12d3-a456-426655440000",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "is_unique": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "native_name": {
+                        "primitive": {
+                          "string": "Started At",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -15813,7 +15885,22 @@ exports[`open api parser merge parse open api 1`] = `
                       "operators": {
                         "array": [
                           {
-                            "properties": {},
+                            "properties": {
+                              "is_unique": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                              "operator": {
+                                "primitive": {
+                                  "string": "GREATER_THAN_OR_EQUAL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
                             "type": "object",
                           },
                         ],
@@ -15935,31 +16022,28 @@ exports[`open api parser merge parse open api 1`] = `
           {
             "name": "PaginatedConditionSchemaListExample",
             "value": {
-              "summary": "Employees that started on or after January 1st, 2022",
-              "value": {
-                "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
-                "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
-                "results": [
-                  {
-                    "common_model": "hris.Employee",
-                    "condition_type": "DATE_TIME",
-                    "field_name": "start_date",
-                    "id": "123e4567-e89b-12d3-a456-426655440000",
-                    "is_unique": true,
-                    "native_name": "Started At",
-                    "operators": [
-                      {
-                        "is_unique": true,
-                        "operator": "GREATER_THAN_OR_EQUAL",
-                      },
-                      {
-                        "is_unique": true,
-                        "operator": "LESS_THAN_OR_EQUAL",
-                      },
-                    ],
-                  },
-                ],
-              },
+              "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
+              "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
+              "results": [
+                {
+                  "common_model": "hris.Employee",
+                  "condition_type": "DATE_TIME",
+                  "field_name": "start_date",
+                  "id": "123e4567-e89b-12d3-a456-426655440000",
+                  "is_unique": true,
+                  "native_name": "Started At",
+                  "operators": [
+                    {
+                      "is_unique": true,
+                      "operator": "GREATER_THAN_OR_EQUAL",
+                    },
+                    {
+                      "is_unique": true,
+                      "operator": "LESS_THAN_OR_EQUAL",
+                    },
+                  ],
+                },
+              ],
             },
           },
         ],
@@ -19429,11 +19513,8 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],

@@ -45,7 +45,7 @@ export class ExampleEndpointFactory {
                 schema: requestSchemaIdResponse.schema,
                 example: requestSchemaIdResponse.example?.value,
                 isOptional: !required,
-                parameter: true
+                parameter: false
             });
             if (required && requestExample == null) {
                 return undefined;
@@ -59,7 +59,7 @@ export class ExampleEndpointFactory {
                 schema: responseSchemaIdResponse.schema,
                 example: responseSchemaIdResponse.example?.value,
                 isOptional: !required,
-                parameter: true
+                parameter: false
             });
             if (required && responseExample == null) {
                 return undefined;

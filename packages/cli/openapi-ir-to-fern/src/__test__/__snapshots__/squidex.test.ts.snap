@@ -200,7 +200,7 @@ exports[`open api parser squidex simple 1`] = `
                     "name": "string",
                     "permissions": [],
                     "roleProperties": {
-                      "string": "string",
+                      "string": {},
                     },
                     "version": 1,
                   },
@@ -381,7 +381,7 @@ exports[`open api parser squidex simple 1`] = `
                         "numContributors": 1,
                         "permissions": [],
                         "properties": {
-                          "string": "string",
+                          "string": {},
                         },
                       },
                     ],
@@ -496,7 +496,7 @@ exports[`open api parser squidex simple 1`] = `
                     "name": "string",
                     "permissions": [],
                     "roleProperties": {
-                      "string": "string",
+                      "string": {},
                     },
                     "version": 1,
                   },
@@ -547,7 +547,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "name": "string",
                       "permissions": [],
                       "roleProperties": {
-                        "string": "string",
+                        "string": {},
                       },
                       "version": 1,
                     },
@@ -864,7 +864,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "numContributors": 1,
                         "permissions": [],
                         "properties": {
-                          "string": "string",
+                          "string": {},
                         },
                       },
                     ],
@@ -974,7 +974,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
                       "name": "string",
                       "permissions": [],
                       "roleProperties": {
-                        "string": "string",
+                        "string": {},
                       },
                       "version": 1,
                     },
@@ -1081,7 +1081,7 @@ You will be assigned as owner of the new app automatically.",
                     "name": "string",
                     "permissions": [],
                     "roleProperties": {
-                      "string": "string",
+                      "string": {},
                     },
                     "version": 1,
                   },
@@ -1363,7 +1363,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "numContributors": 1,
                         "permissions": [],
                         "properties": {
-                          "string": "string",
+                          "string": {},
                         },
                       },
                     ],
@@ -1498,7 +1498,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "name": "string",
                     "permissions": [],
                     "roleProperties": {
-                      "string": "string",
+                      "string": {},
                     },
                     "version": 1,
                   },
@@ -1568,7 +1568,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "name": "string",
                     "permissions": [],
                     "roleProperties": {
-                      "string": "string",
+                      "string": {},
                     },
                     "version": 1,
                   },
@@ -1898,7 +1898,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "numContributors": 1,
                         "permissions": [],
                         "properties": {
-                          "string": "string",
+                          "string": {},
                         },
                       },
                     ],
@@ -2361,7 +2361,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "lastModified": "2024-01-15T09:30:00Z",
                     "lastModifiedBy": "string",
                     "metadata": {
-                      "string": "string",
+                      "string": {},
                     },
                     "metadataText": "string",
                     "mimeType": "string",
@@ -2686,7 +2686,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "lastModified": "2024-01-15T09:30:00Z",
                         "lastModifiedBy": "string",
                         "metadata": {
-                          "string": "string",
+                          "string": {},
                         },
                         "metadataText": "string",
                         "mimeType": "string",
@@ -2795,7 +2795,7 @@ The client secret is auto generated on the server and returned. The client does 
                         "lastModified": "2024-01-15T09:30:00Z",
                         "lastModifiedBy": "string",
                         "metadata": {
-                          "string": "string",
+                          "string": {},
                         },
                         "metadataText": "string",
                         "mimeType": "string",
@@ -3060,7 +3060,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "lastModified": "2024-01-15T09:30:00Z",
                     "lastModifiedBy": "string",
                     "metadata": {
-                      "string": "string",
+                      "string": {},
                     },
                     "metadataText": "string",
                     "mimeType": "string",
@@ -3326,7 +3326,7 @@ The client secret is auto generated on the server and returned. The client does 
                     "lastModified": "2024-01-15T09:30:00Z",
                     "lastModifiedBy": "string",
                     "metadata": {
-                      "string": "string",
+                      "string": {},
                     },
                     "metadataText": "string",
                     "mimeType": "string",
@@ -4074,7 +4074,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4213,7 +4213,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4300,7 +4300,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4378,7 +4378,7 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
-                    "data": "string",
+                    "data": {},
                     "id": "string",
                     "isDeleted": true,
                     "lastModified": "2024-01-15T09:30:00Z",
@@ -4531,7 +4531,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4626,7 +4626,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4711,7 +4711,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4806,7 +4806,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4885,7 +4885,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": {
                   "string": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -4906,7 +4906,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -4978,7 +4978,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": {
                   "string": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -4999,7 +4999,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -5158,7 +5158,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": {
                   "string": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -5179,7 +5179,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -5267,7 +5267,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": {
                   "string": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -5288,7 +5288,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -5380,7 +5380,7 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                         "created": "2024-01-15T09:30:00Z",
                         "createdBy": "string",
-                        "data": "string",
+                        "data": {},
                         "id": "string",
                         "isDeleted": true,
                         "lastModified": "2024-01-15T09:30:00Z",
@@ -6567,7 +6567,7 @@ The client secret is auto generated on the server and returned. The client does 
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -6906,7 +6906,7 @@ The client secret is auto generated on the server and returned. The client does 
                     },
                     "items": [
                       {
-                        "event": "string",
+                        "event": {},
                         "eventId": "string",
                         "eventName": "string",
                         "skipReasons": [

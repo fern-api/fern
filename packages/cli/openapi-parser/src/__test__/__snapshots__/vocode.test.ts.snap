@@ -764,11 +764,8 @@ exports[`open api parser vocode parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "primitive": {
-              "string": "string",
-              "type": "string",
-            },
-            "type": "primitive",
+            "map": [],
+            "type": "map",
           },
         },
       ],

@@ -867,7 +867,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -1126,7 +1126,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -1469,7 +1469,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -1910,7 +1910,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -2170,7 +2170,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },

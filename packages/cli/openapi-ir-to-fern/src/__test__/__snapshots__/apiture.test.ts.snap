@@ -743,7 +743,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": "string",
+                    "items": {},
                     "limit": 1,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
