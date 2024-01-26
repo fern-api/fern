@@ -163,38 +163,7 @@ async function convertDocsConfiguration({
             context,
             apiCollector
         }),
-        colorsV2: {
-            accentPrimary:
-                parsedDocsConfig.colors?.accentPrimary != null
-                    ? parsedDocsConfig.colors.accentPrimary.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.accentPrimary.dark,
-                              light: parsedDocsConfig.colors.accentPrimary.light
-                          }
-                        : parsedDocsConfig.colors.accentPrimary.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.accentPrimary.color
-                          }
-                        : undefined
-                    : undefined,
-            background:
-                parsedDocsConfig.colors?.background != null
-                    ? parsedDocsConfig.colors.background.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.background.dark,
-                              light: parsedDocsConfig.colors.background.light
-                          }
-                        : parsedDocsConfig.colors.background.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.background.color
-                          }
-                        : undefined
-                    : undefined
-        },
+        colorsV3: parsedDocsConfig.colors,
         navbarLinks: parsedDocsConfig.navbarLinks,
         typography: undefined
     };

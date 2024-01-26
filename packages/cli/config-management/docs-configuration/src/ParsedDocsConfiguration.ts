@@ -3,7 +3,7 @@ import { DocsV1Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { DocsInstances, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 
-declare type WithoutQuestionMarks<T> = {
+export declare type WithoutQuestionMarks<T> = {
     [K in keyof Required<T>]: undefined extends T[K] ? T[K] | undefined : T[K];
 };
 
@@ -16,7 +16,7 @@ export interface ParsedDocsConfiguration {
     logo: Logo | undefined;
     favicon: ImageReference | undefined;
     backgroundImage: ImageReference | undefined;
-    colors: DocsColorsConfiguration | undefined;
+    colors: DocsV1Write.ColorsConfigV3 | undefined;
     navbarLinks: DocsV1Write.NavbarLink[] | undefined;
     typography: TypographyConfig | undefined;
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;

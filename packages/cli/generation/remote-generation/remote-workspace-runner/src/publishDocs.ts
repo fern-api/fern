@@ -9,7 +9,8 @@ import {
     ParsedDocsConfiguration,
     parseDocsConfiguration,
     TypographyConfig,
-    UnversionedNavigationConfiguration
+    UnversionedNavigationConfiguration,
+    WithoutQuestionMarks
 } from "@fern-api/docs-configuration";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
@@ -224,7 +225,7 @@ async function convertDocsConfiguration({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<DocsV1Write.DocsConfig> {
+}): Promise<Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">> {
     return {
         title: parsedDocsConfig.title,
         logoV2: {
@@ -277,45 +278,15 @@ async function convertDocsConfiguration({
             token,
             version
         }),
-        colorsV2: {
-            accentPrimary:
-                parsedDocsConfig.colors?.accentPrimary != null
-                    ? parsedDocsConfig.colors.accentPrimary.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.accentPrimary.dark,
-                              light: parsedDocsConfig.colors.accentPrimary.light
-                          }
-                        : parsedDocsConfig.colors.accentPrimary.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.accentPrimary.color
-                          }
-                        : undefined
-                    : undefined,
-            background:
-                parsedDocsConfig.colors?.background != null
-                    ? parsedDocsConfig.colors.background.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.background.dark,
-                              light: parsedDocsConfig.colors.background.light
-                          }
-                        : parsedDocsConfig.colors.background.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.background.color
-                          }
-                        : undefined
-                    : undefined
-        },
+        colorsV3: parsedDocsConfig.colors,
         navbarLinks: parsedDocsConfig.navbarLinks,
         typographyV2: convertDocsTypographyConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
             parsedDocsConfig,
             uploadUrls,
             context
-        })
+        }),
+        layout: parsedDocsConfig.layout
     };
 }
 
