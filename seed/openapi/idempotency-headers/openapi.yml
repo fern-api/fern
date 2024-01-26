@@ -1,0 +1,63 @@
+openapi: 3.0.1
+info:
+  title: idempotency-headers
+  version: ''
+paths:
+  /payment:
+    post:
+      operationId: payment_create
+      tags:
+        - Payment
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: integer
+                currency:
+                  $ref: '#/components/schemas/Currency'
+              required:
+                - amount
+                - currency
+  /payment/{paymentId}:
+    delete:
+      operationId: payment_delete
+      tags:
+        - Payment
+      parameters:
+        - name: paymentId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+      security:
+        - BearerAuth: []
+components:
+  schemas:
+    Currency:
+      title: Currency
+      type: string
+      enum:
+        - USD
+        - YEN
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

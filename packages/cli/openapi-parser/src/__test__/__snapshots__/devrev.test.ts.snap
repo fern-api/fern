@@ -1285,18 +1285,6 @@ disabled.
                 "type": "enum",
               },
             },
-            {
-              "name": "state",
-              "value": {
-                "array": [
-                  {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
           ],
           "request": undefined,
           "response": {
@@ -1714,11 +1702,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -1859,18 +1844,6 @@ used.
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "capability",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],
@@ -2307,11 +2280,8 @@ organization.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -3048,11 +3018,8 @@ and a logical concept denoted by the tag's name.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -3993,11 +3960,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -4532,11 +4496,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -4605,44 +4566,7 @@ used.
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -5064,46 +4988,10 @@ organizations.
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "mode",
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],

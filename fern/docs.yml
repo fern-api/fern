@@ -43,7 +43,7 @@ navigation:
             slug: generators
       - section: CLI
         contents:
-          - page: Overview
+          - page: CLI Overview
             path: ./docs/pages/cli/overview.mdx
             slug: cli
           - page: fern generate
@@ -54,7 +54,7 @@ navigation:
             path: ./docs/pages/cli/fern-add.mdx
           - page: fern init
             path: ./docs/pages/cli/fern-init.mdx
-          - page: fern write definition
+          - page: fern write-definition
             path: ./docs/pages/cli/fern-write-definition.mdx
           - page: fern upgrade
             path: ./docs/pages/cli/fern-upgrade.mdx
@@ -139,6 +139,8 @@ navigation:
             path: ./docs/pages/docs/writing-content.mdx
       - section: Configurations
         contents: 
+          - page: Overview
+            path: ./docs/pages/docs/configurations-overview.mdx
           - page: Custom Domain
             path: ./docs/pages/docs/custom-domain.mdx
           - page: Pull Request Previews
@@ -173,7 +175,7 @@ navigation:
             path: ./docs/pages/server-boilerplate/spring.mdx
           - page: Go
             path: ./docs/pages/server-boilerplate/go.mdx
-          - page: .NET
+          - page: DotNet
             path: ./docs/pages/server-boilerplate/dotnet.mdx  
           - page: Ruby on Rails
             path: ./docs/pages/server-boilerplate/ruby-on-rails.mdx

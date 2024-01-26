@@ -28,7 +28,7 @@ exports[`open api parser superagent simple 1`] = `
                   "type": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -71,7 +71,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -101,7 +101,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -126,7 +126,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -152,10 +152,10 @@ exports[`open api parser superagent simple 1`] = `
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "string": "string",
+                  "string": {},
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -188,11 +188,11 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "input": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -244,7 +244,7 @@ exports[`open api parser superagent simple 1`] = `
                   "description": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -281,7 +281,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -311,7 +311,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -336,7 +336,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -375,7 +375,7 @@ exports[`open api parser superagent simple 1`] = `
                   "password": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -414,7 +414,7 @@ exports[`open api parser superagent simple 1`] = `
                   "password": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -467,7 +467,7 @@ exports[`open api parser superagent simple 1`] = `
                   "url": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -510,7 +510,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -540,7 +540,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -565,7 +565,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -605,7 +605,7 @@ exports[`open api parser superagent simple 1`] = `
                   "template": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -644,7 +644,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -674,7 +674,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -699,7 +699,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -725,10 +725,10 @@ exports[`open api parser superagent simple 1`] = `
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "string": "string",
+                  "string": {},
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -773,7 +773,7 @@ exports[`open api parser superagent simple 1`] = `
                   "type": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -812,7 +812,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -842,7 +842,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -867,7 +867,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -897,7 +897,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -935,7 +935,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -960,7 +960,7 @@ exports[`open api parser superagent simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],

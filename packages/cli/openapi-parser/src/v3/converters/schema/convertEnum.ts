@@ -5,7 +5,7 @@ import { camelCase, upperFirst } from "lodash-es";
 import { FernEnumConfig } from "../../extensions/getFernEnum";
 import { replaceStartingNumber } from "../../utils/replaceStartingNumber";
 
-const VALID_NAME_REGEX = new RegExp("^[a-zA-Z][a-zA-Z0-9_]*$");
+export const VALID_ENUM_NAME_REGEX = /^[a-zA-Z][a-zA-Z0-9_]*$/;
 
 export function convertEnum({
     nameOverride,
@@ -31,7 +31,7 @@ export function convertEnum({
     const values = Array.from(uniqueValues).map((value, index) => {
         const fernEnumValue = fernEnum?.[value];
         const enumVarName = strippedEnumVarNames[index];
-        const valueIsValidName = VALID_NAME_REGEX.test(value);
+        const valueIsValidName = VALID_ENUM_NAME_REGEX.test(value);
         return {
             nameOverride: fernEnumValue?.name ?? enumVarName,
             generatedName: valueIsValidName ? value : generateEnumNameFromValue(value),
@@ -103,7 +103,7 @@ const HARDCODED_ENUM_NAMES: Record<string, string> = {
     '""': "EMPTY_STRING"
 };
 
-function generateEnumNameFromValue(value: string): string {
+export function generateEnumNameFromValue(value: string): string {
     const maybeParsedNumber = replaceStartingNumber(value);
     const maybeHardcodedEnumName = HARDCODED_ENUM_NAMES[value];
     if (maybeParsedNumber != null) {

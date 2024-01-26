@@ -1,0 +1,94 @@
+{
+  "info": {
+    "name": "Audiences API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Folder A",
+      "item": [
+        {
+          "_type": "container",
+          "description": null,
+          "name": "Service",
+          "item": [
+            {
+              "_type": "endpoint",
+              "name": "Get Direct Thread",
+              "request": {
+                "description": null,
+                "url": {
+                  "raw": "{{baseUrl}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [],
+                "method": "GET",
+                "auth": null,
+                "body": null
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Foo",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Find",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}?optionalString=",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [],
+              "query": [
+                {
+                  "key": "optionalString",
+                  "value": "",
+                  "description": null
+                }
+              ],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"publicProperty\": \"example\",\n    \"privateProperty\": 0\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

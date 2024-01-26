@@ -44,46 +44,152 @@ Here are some of the most used payload fields explained (you can find the full p
               "destinationAmountDetails": {
                 "properties": {
                   "country": {
-                    "enum": "AF",
+                    "enum": "IN",
                     "type": "enum",
                   },
                   "transactionAmount": {
                     "primitive": {
-                      "double": 1.1,
+                      "double": 68351.34,
                       "type": "double",
                     },
                     "type": "primitive",
                   },
                   "transactionCurrency": {
-                    "enum": "1INCH",
+                    "enum": "INR",
                     "type": "enum",
                   },
                 },
                 "type": "object",
               },
+              "destinationUserId": {
+                "primitive": {
+                  "string": "9350a2611e0771cba03310f74bf6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "deviceData": {
-                "properties": {},
+                "properties": {
+                  "appVersion": {
+                    "primitive": {
+                      "string": "1.1.0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "batteryLevel": {
+                    "primitive": {
+                      "double": 95,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceIdentifier": {
+                    "primitive": {
+                      "string": "3c49f915d04485e34caba",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLatitude": {
+                    "primitive": {
+                      "double": 13.0033,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLongitude": {
+                    "primitive": {
+                      "double": 76.1004,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceMaker": {
+                    "primitive": {
+                      "string": "ASUS",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceModel": {
+                    "primitive": {
+                      "string": "Zenphone M2 Pro Max",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceYear": {
+                    "primitive": {
+                      "string": "2018",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "ipAddress": {
+                    "primitive": {
+                      "string": "10.23.191.2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "operatingSystem": {
+                    "primitive": {
+                      "string": "Android 11.2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "vpnUsed": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
               "originAmountDetails": {
                 "properties": {
                   "country": {
-                    "enum": "AF",
+                    "enum": "DE",
                     "type": "enum",
                   },
                   "transactionAmount": {
                     "primitive": {
-                      "double": 1.1,
+                      "double": 800,
                       "type": "double",
                     },
                     "type": "primitive",
                   },
                   "transactionCurrency": {
-                    "enum": "1INCH",
+                    "enum": "EUR",
                     "type": "enum",
                   },
                 },
                 "type": "object",
+              },
+              "originUserId": {
+                "primitive": {
+                  "string": "8650a2611d0771cba03310f74bf6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "promotionCodeUsed": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "reference": {
+                "primitive": {
+                  "string": "loan repayment",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "tags": {
                 "array": [
@@ -91,14 +197,14 @@ Here are some of the most used payload fields explained (you can find the full p
                     "properties": {
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customKey",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "value": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customValue",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -111,14 +217,14 @@ Here are some of the most used payload fields explained (you can find the full p
               },
               "timestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1641654664000,
                   "type": "double",
                 },
                 "type": "primitive",
               },
               "transactionId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "7b80a539eea6e78acbd6d458e5971482",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -154,12 +260,12 @@ Here are some of the most used payload fields explained (you can find the full p
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -234,7 +340,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -248,7 +354,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -277,12 +383,12 @@ Here are some of the most used payload fields explained (you can find the full p
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -350,7 +456,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -364,7 +470,7 @@ Here are some of the most used payload fields explained (you can find the full p
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -377,7 +483,7 @@ Here are some of the most used payload fields explained (you can find the full p
               },
               "transactionId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "7b80a539eea6e78acbd6d458e5971482",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -451,57 +557,55 @@ Here are some of the most used payload fields explained (you can find the full p
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "destinationAmountDetails": {
-                  "country": "IN",
-                  "transactionAmount": 68351.34,
-                  "transactionCurrency": "INR",
-                },
-                "destinationPaymentDetails": {
-                  "3dsDone": true,
-                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                  "cardIssuedCountry": "IN",
-                  "method": "CARD",
-                  "transactionReferenceField": "Deposit",
-                },
-                "destinationUserId": "9350a2611e0771cba03310f74bf6",
-                "deviceData": {
-                  "appVersion": "1.1.0",
-                  "batteryLevel": 95,
-                  "deviceIdentifier": "3c49f915d04485e34caba",
-                  "deviceLatitude": 13.0033,
-                  "deviceLongitude": 76.1004,
-                  "deviceMaker": "ASUS",
-                  "deviceModel": "Zenphone M2 Pro Max",
-                  "deviceYear": "2018",
-                  "ipAddress": "10.23.191.2",
-                  "operatingSystem": "Android 11.2",
-                  "vpnUsed": false,
-                },
-                "originAmountDetails": {
-                  "country": "DE",
-                  "transactionAmount": 800,
-                  "transactionCurrency": "EUR",
-                },
-                "originPaymentDetails": {
-                  "3dsDone": true,
-                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                  "cardIssuedCountry": "US",
-                  "method": "CARD",
-                  "transactionReferenceField": "Deposit",
-                },
-                "originUserId": "8650a2611d0771cba03310f74bf6",
-                "promotionCodeUsed": true,
-                "reference": "loan repayment",
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
-                "timestamp": 1641654664000,
-                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              "destinationAmountDetails": {
+                "country": "IN",
+                "transactionAmount": 68351.34,
+                "transactionCurrency": "INR",
               },
+              "destinationPaymentDetails": {
+                "3dsDone": true,
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "IN",
+                "method": "CARD",
+                "transactionReferenceField": "Deposit",
+              },
+              "destinationUserId": "9350a2611e0771cba03310f74bf6",
+              "deviceData": {
+                "appVersion": "1.1.0",
+                "batteryLevel": 95,
+                "deviceIdentifier": "3c49f915d04485e34caba",
+                "deviceLatitude": 13.0033,
+                "deviceLongitude": 76.1004,
+                "deviceMaker": "ASUS",
+                "deviceModel": "Zenphone M2 Pro Max",
+                "deviceYear": "2018",
+                "ipAddress": "10.23.191.2",
+                "operatingSystem": "Android 11.2",
+                "vpnUsed": false,
+              },
+              "originAmountDetails": {
+                "country": "DE",
+                "transactionAmount": 800,
+                "transactionCurrency": "EUR",
+              },
+              "originPaymentDetails": {
+                "3dsDone": true,
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "US",
+                "method": "CARD",
+                "transactionReferenceField": "Deposit",
+              },
+              "originUserId": "8650a2611d0771cba03310f74bf6",
+              "promotionCodeUsed": true,
+              "reference": "loan repayment",
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue",
+                },
+              ],
+              "timestamp": 1641654664000,
+              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
             },
           },
         ],
@@ -522,26 +626,24 @@ Here are some of the most used payload fields explained (you can find the full p
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "executedRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleHit": true,
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "hitRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-              },
+              "executedRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleHit": true,
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
+                },
+              ],
+              "hitRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
+                },
+              ],
+              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
             },
           },
         ],
@@ -633,25 +735,110 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "destinationAmountDetails": {
                 "properties": {
                   "country": {
-                    "enum": "AF",
+                    "enum": "IN",
                     "type": "enum",
                   },
                   "transactionAmount": {
                     "primitive": {
-                      "double": 1.1,
+                      "double": 68351.34,
                       "type": "double",
                     },
                     "type": "primitive",
                   },
                   "transactionCurrency": {
-                    "enum": "1INCH",
+                    "enum": "INR",
                     "type": "enum",
                   },
                 },
                 "type": "object",
               },
+              "destinationUserId": {
+                "primitive": {
+                  "string": "9350a2611e0771cba03310f74bf6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "deviceData": {
-                "properties": {},
+                "properties": {
+                  "appVersion": {
+                    "primitive": {
+                      "string": "1.1.0",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "batteryLevel": {
+                    "primitive": {
+                      "double": 95,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceIdentifier": {
+                    "primitive": {
+                      "string": "3c49f915d04485e34caba",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLatitude": {
+                    "primitive": {
+                      "double": 13.0033,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLongitude": {
+                    "primitive": {
+                      "double": 76.1004,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceMaker": {
+                    "primitive": {
+                      "string": "ASUS",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceModel": {
+                    "primitive": {
+                      "string": "Zenphone M2 Pro Max",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceYear": {
+                    "primitive": {
+                      "string": "2018",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "ipAddress": {
+                    "primitive": {
+                      "string": "10.23.191.2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "operatingSystem": {
+                    "primitive": {
+                      "string": "Android 11.2",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "vpnUsed": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
               "executedRules": {
@@ -672,12 +859,12 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -752,7 +939,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -766,7 +953,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -795,12 +982,12 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -868,7 +1055,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -882,7 +1069,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -896,22 +1083,43 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "originAmountDetails": {
                 "properties": {
                   "country": {
-                    "enum": "AF",
+                    "enum": "DE",
                     "type": "enum",
                   },
                   "transactionAmount": {
                     "primitive": {
-                      "double": 1.1,
+                      "double": 800,
                       "type": "double",
                     },
                     "type": "primitive",
                   },
                   "transactionCurrency": {
-                    "enum": "1INCH",
+                    "enum": "EUR",
                     "type": "enum",
                   },
                 },
                 "type": "object",
+              },
+              "originUserId": {
+                "primitive": {
+                  "string": "8650a2611d0771cba03310f74bf6",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "promotionCodeUsed": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "reference": {
+                "primitive": {
+                  "string": "loan repayment",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "tags": {
                 "array": [
@@ -919,14 +1127,14 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "properties": {
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customKey",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "value": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customValue",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -939,14 +1147,14 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               },
               "timestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1641654664000,
                   "type": "double",
                 },
                 "type": "primitive",
               },
               "transactionId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "7b80a539eea6e78acbd6d458e5971482",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -998,74 +1206,72 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "destinationAmountDetails": {
-                  "country": "IN",
-                  "transactionAmount": 68351.34,
-                  "transactionCurrency": "INR",
-                },
-                "destinationPaymentDetails": {
-                  "3dsDone": true,
-                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                  "cardIssuedCountry": "IN",
-                  "method": "CARD",
-                  "transactionReferenceField": "Deposit",
-                },
-                "destinationUserId": "9350a2611e0771cba03310f74bf6",
-                "deviceData": {
-                  "appVersion": "1.1.0",
-                  "batteryLevel": 95,
-                  "deviceIdentifier": "3c49f915d04485e34caba",
-                  "deviceLatitude": 13.0033,
-                  "deviceLongitude": 76.1004,
-                  "deviceMaker": "ASUS",
-                  "deviceModel": "Zenphone M2 Pro Max",
-                  "deviceYear": "2018",
-                  "ipAddress": "10.23.191.2",
-                  "operatingSystem": "Android 11.2",
-                  "vpnUsed": false,
-                },
-                "executedRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleHit": true,
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "hitRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "originAmountDetails": {
-                  "country": "DE",
-                  "transactionAmount": 800,
-                  "transactionCurrency": "EUR",
-                },
-                "originPaymentDetails": {
-                  "3dsDone": true,
-                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                  "cardIssuedCountry": "US",
-                  "method": "CARD",
-                  "transactionReferenceField": "Deposit",
-                },
-                "originUserId": "8650a2611d0771cba03310f74bf6",
-                "promotionCodeUsed": true,
-                "reference": "loan repayment",
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
-                ],
-                "timestamp": 1641654664000,
-                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              "destinationAmountDetails": {
+                "country": "IN",
+                "transactionAmount": 68351.34,
+                "transactionCurrency": "INR",
               },
+              "destinationPaymentDetails": {
+                "3dsDone": true,
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "IN",
+                "method": "CARD",
+                "transactionReferenceField": "Deposit",
+              },
+              "destinationUserId": "9350a2611e0771cba03310f74bf6",
+              "deviceData": {
+                "appVersion": "1.1.0",
+                "batteryLevel": 95,
+                "deviceIdentifier": "3c49f915d04485e34caba",
+                "deviceLatitude": 13.0033,
+                "deviceLongitude": 76.1004,
+                "deviceMaker": "ASUS",
+                "deviceModel": "Zenphone M2 Pro Max",
+                "deviceYear": "2018",
+                "ipAddress": "10.23.191.2",
+                "operatingSystem": "Android 11.2",
+                "vpnUsed": false,
+              },
+              "executedRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleHit": true,
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
+                },
+              ],
+              "hitRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
+                },
+              ],
+              "originAmountDetails": {
+                "country": "DE",
+                "transactionAmount": 800,
+                "transactionCurrency": "EUR",
+              },
+              "originPaymentDetails": {
+                "3dsDone": true,
+                "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                "cardIssuedCountry": "US",
+                "method": "CARD",
+                "transactionReferenceField": "Deposit",
+              },
+              "originUserId": "8650a2611d0771cba03310f74bf6",
+              "promotionCodeUsed": true,
+              "reference": "loan repayment",
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue",
+                },
+              ],
+              "timestamp": 1641654664000,
+              "transactionId": "7b80a539eea6e78acbd6d458e5971482",
             },
           },
         ],
@@ -1122,26 +1328,76 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "queryParameters": [],
           "request": {
             "properties": {
+              "eventDescription": {
+                "primitive": {
+                  "string": "Transaction created",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "eventId": {
+                "primitive": {
+                  "string": "aaeeb166147a406b957dd9147a406b957",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "metaData": {
-                "properties": {},
+                "properties": {
+                  "batteryLevel": {
+                    "primitive": {
+                      "double": 76.3,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLatitude": {
+                    "primitive": {
+                      "double": 13.009711,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "deviceLongitude": {
+                    "primitive": {
+                      "double": 76.102898,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "ipAddress": {
+                    "primitive": {
+                      "string": "79.144.2.20",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "vpnUsed": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
               "timestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1431231244001,
                   "type": "double",
                 },
                 "type": "primitive",
               },
               "transactionId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "443dea26147a406b957d9ee3a1247b11",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "transactionState": {
-                "enum": "CREATED",
+                "enum": "SUCCESSFUL",
                 "type": "enum",
               },
               "updatedTransactionAttributes": {
@@ -1228,7 +1484,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "properties": {
               "eventId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "7b80a539eea6e78acbd6d458e5971482",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1251,12 +1507,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1331,7 +1587,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1345,7 +1601,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1374,12 +1630,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "type": "enum",
                       },
                       "ruleAction": {
-                        "enum": "ALLOW",
+                        "enum": "BLOCK",
                         "type": "enum",
                       },
                       "ruleDescription": {
                         "primitive": {
-                          "string": "string",
+                          "string": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1447,7 +1703,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "ruleId": {
                         "primitive": {
-                          "string": "string",
+                          "string": "R-1a",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1461,7 +1717,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       },
                       "ruleName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Proof of funds for high value transactions",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1477,46 +1733,152 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "destinationAmountDetails": {
                     "properties": {
                       "country": {
-                        "enum": "AF",
+                        "enum": "IN",
                         "type": "enum",
                       },
                       "transactionAmount": {
                         "primitive": {
-                          "double": 1.1,
+                          "double": 68351.34,
                           "type": "double",
                         },
                         "type": "primitive",
                       },
                       "transactionCurrency": {
-                        "enum": "1INCH",
+                        "enum": "INR",
                         "type": "enum",
                       },
                     },
                     "type": "object",
                   },
+                  "destinationUserId": {
+                    "primitive": {
+                      "string": "9350a2611e0771cba03310f74bf6",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "deviceData": {
-                    "properties": {},
+                    "properties": {
+                      "appVersion": {
+                        "primitive": {
+                          "string": "1.1.0",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "batteryLevel": {
+                        "primitive": {
+                          "double": 95,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceIdentifier": {
+                        "primitive": {
+                          "string": "3c49f915d04485e34caba",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceLatitude": {
+                        "primitive": {
+                          "double": 13.0033,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceLongitude": {
+                        "primitive": {
+                          "double": 76.1004,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceMaker": {
+                        "primitive": {
+                          "string": "ASUS",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceModel": {
+                        "primitive": {
+                          "string": "Zenphone M2 Pro Max",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceYear": {
+                        "primitive": {
+                          "string": "2018",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "ipAddress": {
+                        "primitive": {
+                          "string": "10.23.191.2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "operatingSystem": {
+                        "primitive": {
+                          "string": "Android 11.2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "vpnUsed": {
+                        "primitive": {
+                          "boolean": false,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
                     "type": "object",
                   },
                   "originAmountDetails": {
                     "properties": {
                       "country": {
-                        "enum": "AF",
+                        "enum": "DE",
                         "type": "enum",
                       },
                       "transactionAmount": {
                         "primitive": {
-                          "double": 1.1,
+                          "double": 800,
                           "type": "double",
                         },
                         "type": "primitive",
                       },
                       "transactionCurrency": {
-                        "enum": "1INCH",
+                        "enum": "EUR",
                         "type": "enum",
                       },
                     },
                     "type": "object",
+                  },
+                  "originUserId": {
+                    "primitive": {
+                      "string": "8650a2611d0771cba03310f74bf6",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "promotionCodeUsed": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "reference": {
+                    "primitive": {
+                      "string": "loan repayment",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "tags": {
                     "array": [
@@ -1524,14 +1886,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "properties": {
                           "key": {
                             "primitive": {
-                              "string": "string",
+                              "string": "customKey",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "value": {
                             "primitive": {
-                              "string": "string",
+                              "string": "customValue",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -1544,14 +1906,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   },
                   "timestamp": {
                     "primitive": {
-                      "double": 1.1,
+                      "double": 1641654664000,
                       "type": "double",
                     },
                     "type": "primitive",
                   },
                   "transactionId": {
                     "primitive": {
-                      "string": "string",
+                      "string": "7b80a539eea6e78acbd6d458e5971482",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1587,20 +1949,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           {
             "name": "example-2",
             "value": {
-              "value": {
-                "eventDescription": "Transaction created",
-                "eventId": "aaeeb166147a406b957dd9147a406b957",
-                "metaData": {
-                  "batteryLevel": 76.3,
-                  "deviceLatitude": 13.009711,
-                  "deviceLongitude": 76.102898,
-                  "ipAddress": "79.144.2.20",
-                  "vpnUsed": true,
-                },
-                "timestamp": 1431231244001,
-                "transactionId": "443dea26147a406b957d9ee3a1247b11",
-                "transactionState": "SUCCESSFUL",
+              "eventDescription": "Transaction created",
+              "eventId": "aaeeb166147a406b957dd9147a406b957",
+              "metaData": {
+                "batteryLevel": 76.3,
+                "deviceLatitude": 13.009711,
+                "deviceLongitude": 76.102898,
+                "ipAddress": "79.144.2.20",
+                "vpnUsed": true,
               },
+              "timestamp": 1431231244001,
+              "transactionId": "443dea26147a406b957d9ee3a1247b11",
+              "transactionState": "SUCCESSFUL",
             },
           },
         ],
@@ -1621,76 +1981,74 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "eventId": "7b80a539eea6e78acbd6d458e5971482",
-                "executedRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleHit": true,
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "hitRules": [
-                  {
-                    "ruleAction": "BLOCK",
-                    "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                    "ruleId": "R-1a",
-                    "ruleName": "Proof of funds for high value transactions",
-                  },
-                ],
-                "transaction": {
-                  "destinationAmountDetails": {
-                    "country": "IN",
-                    "transactionAmount": 68351.34,
-                    "transactionCurrency": "INR",
-                  },
-                  "destinationPaymentDetails": {
-                    "3dsDone": true,
-                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                    "cardIssuedCountry": "IN",
-                    "method": "CARD",
-                    "transactionReferenceField": "Deposit",
-                  },
-                  "destinationUserId": "9350a2611e0771cba03310f74bf6",
-                  "deviceData": {
-                    "appVersion": "1.1.0",
-                    "batteryLevel": 95,
-                    "deviceIdentifier": "3c49f915d04485e34caba",
-                    "deviceLatitude": 13.0033,
-                    "deviceLongitude": 76.1004,
-                    "deviceMaker": "ASUS",
-                    "deviceModel": "Zenphone M2 Pro Max",
-                    "deviceYear": "2018",
-                    "ipAddress": "10.23.191.2",
-                    "operatingSystem": "Android 11.2",
-                    "vpnUsed": false,
-                  },
-                  "originAmountDetails": {
-                    "country": "DE",
-                    "transactionAmount": 800,
-                    "transactionCurrency": "EUR",
-                  },
-                  "originPaymentDetails": {
-                    "3dsDone": true,
-                    "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
-                    "cardIssuedCountry": "US",
-                    "method": "CARD",
-                    "transactionReferenceField": "Deposit",
-                  },
-                  "originUserId": "8650a2611d0771cba03310f74bf6",
-                  "promotionCodeUsed": true,
-                  "reference": "loan repayment",
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "timestamp": 1641654664000,
-                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
+              "eventId": "7b80a539eea6e78acbd6d458e5971482",
+              "executedRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleHit": true,
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
                 },
+              ],
+              "hitRules": [
+                {
+                  "ruleAction": "BLOCK",
+                  "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
+                  "ruleId": "R-1a",
+                  "ruleName": "Proof of funds for high value transactions",
+                },
+              ],
+              "transaction": {
+                "destinationAmountDetails": {
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
+                },
+                "destinationPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "IN",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "deviceData": {
+                  "appVersion": "1.1.0",
+                  "batteryLevel": 95,
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "ipAddress": "10.23.191.2",
+                  "operatingSystem": "Android 11.2",
+                  "vpnUsed": false,
+                },
+                "originAmountDetails": {
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
+                },
+                "originPaymentDetails": {
+                  "3dsDone": true,
+                  "cardFingerprint": "20ac00fed8ef913aefb17cfae1097cce",
+                  "cardIssuedCountry": "US",
+                  "method": "CARD",
+                  "transactionReferenceField": "Deposit",
+                },
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
+                "tags": [
+                  {
+                    "key": "customKey",
+                    "value": "customValue",
+                  },
+                ],
+                "timestamp": 1641654664000,
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
               },
             },
           },
@@ -1751,26 +2109,44 @@ Each consumer User entity needs three mandatory fields:
                       {
                         "properties": {
                           "addressLines": {
-                            "array": [],
+                            "array": [
+                              {
+                                "type": "unknown",
+                                "unknown": {
+                                  "primitive": {
+                                    "string": "Klara-Franke Str 20",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
                             "type": "array",
                           },
                           "city": {
                             "primitive": {
-                              "string": "string",
+                              "string": "Berlin",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "country": {
                             "primitive": {
-                              "string": "string",
+                              "string": "Germany",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "postcode": {
                             "primitive": {
-                              "string": "string",
+                              "string": "10557",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "state": {
+                            "primitive": {
+                              "string": "Berlin",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -1781,14 +2157,14 @@ Each consumer User entity needs three mandatory fields:
                                 "properties": {
                                   "key": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "customKey",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "value": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "customValue",
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -1805,12 +2181,48 @@ Each consumer User entity needs three mandatory fields:
                     ],
                     "type": "array",
                   },
+                  "contactNumbers": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "+37112345432",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "emailIds": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "baran@flagright.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "websites": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "flagright.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                 },
                 "type": "object",
               },
               "createdTimestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1641654664000,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -1828,20 +2240,34 @@ Each consumer User entity needs three mandatory fields:
                 "array": [
                   {
                     "properties": {
+                      "documentExpirationDate": {
+                        "primitive": {
+                          "double": 1839939034000,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
                       "documentIssuedCountry": {
-                        "enum": "AF",
+                        "enum": "DE",
                         "type": "enum",
+                      },
+                      "documentIssuedDate": {
+                        "primitive": {
+                          "double": 1639939034000,
+                          "type": "double",
+                        },
+                        "type": "primitive",
                       },
                       "documentNumber": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Z9431P",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "documentType": {
                         "primitive": {
-                          "string": "string",
+                          "string": "passport",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1864,14 +2290,14 @@ Each consumer User entity needs three mandatory fields:
                             "properties": {
                               "key": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customerType",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "value": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "wallet",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -1915,14 +2341,14 @@ Each consumer User entity needs three mandatory fields:
                     "properties": {
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customKey",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "value": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customValue",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -3365,12 +3791,19 @@ Each consumer User entity needs three mandatory fields:
               "userDetails": {
                 "properties": {
                   "countryOfNationality": {
-                    "enum": "AF",
+                    "enum": "DE",
                     "type": "enum",
                   },
                   "countryOfResidence": {
-                    "enum": "AF",
+                    "enum": "US",
                     "type": "enum",
+                  },
+                  "dateOfBirth": {
+                    "primitive": {
+                      "string": "1991-01-01",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "gender": {
                     "enum": "M",
@@ -3380,7 +3813,21 @@ Each consumer User entity needs three mandatory fields:
                     "properties": {
                       "firstName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Baran",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "lastName": {
+                        "primitive": {
+                          "string": "Ozkan",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "middleName": {
+                        "primitive": {
+                          "string": "Realblood",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -3393,7 +3840,7 @@ Each consumer User entity needs three mandatory fields:
               },
               "userId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3657,7 +4104,7 @@ Each consumer User entity needs three mandatory fields:
               },
               "userId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3682,69 +4129,67 @@ Each consumer User entity needs three mandatory fields:
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "contactDetails": {
-                  "addresses": [
-                    {
-                      "addressLines": [
-                        "Klara-Franke Str 20",
-                      ],
-                      "city": "Berlin",
-                      "country": "Germany",
-                      "postcode": "10557",
-                      "state": "Berlin",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "contactNumbers": [
-                    "+37112345432",
-                  ],
-                  "emailIds": [
-                    "baran@flagright.com",
-                  ],
-                  "websites": [
-                    "flagright.com",
-                  ],
-                },
-                "createdTimestamp": 1641654664000,
-                "legalDocuments": [
+              "contactDetails": {
+                "addresses": [
                   {
-                    "documentExpirationDate": 1839939034000,
-                    "documentIssuedCountry": "DE",
-                    "documentIssuedDate": 1639939034000,
-                    "documentNumber": "Z9431P",
-                    "documentType": "passport",
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
                     "tags": [
                       {
-                        "key": "customerType",
-                        "value": "wallet",
+                        "key": "customKey",
+                        "value": "customValue",
                       },
                     ],
                   },
                 ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
+                "contactNumbers": [
+                  "+37112345432",
                 ],
-                "userDetails": {
-                  "countryOfNationality": "DE",
-                  "countryOfResidence": "US",
-                  "dateOfBirth": "1991-01-01",
-                  "name": {
-                    "firstName": "Baran",
-                    "lastName": "Ozkan",
-                    "middleName": "Realblood",
-                  },
-                },
-                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                "emailIds": [
+                  "baran@flagright.com",
+                ],
+                "websites": [
+                  "flagright.com",
+                ],
               },
+              "createdTimestamp": 1641654664000,
+              "legalDocuments": [
+                {
+                  "documentExpirationDate": 1839939034000,
+                  "documentIssuedCountry": "DE",
+                  "documentIssuedDate": 1639939034000,
+                  "documentNumber": "Z9431P",
+                  "documentType": "passport",
+                  "tags": [
+                    {
+                      "key": "customerType",
+                      "value": "wallet",
+                    },
+                  ],
+                },
+              ],
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue",
+                },
+              ],
+              "userDetails": {
+                "countryOfNationality": "DE",
+                "countryOfResidence": "US",
+                "dateOfBirth": "1991-01-01",
+                "name": {
+                  "firstName": "Baran",
+                  "lastName": "Ozkan",
+                  "middleName": "Realblood",
+                },
+              },
+              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             },
           },
         ],
@@ -3765,9 +4210,7 @@ Each consumer User entity needs three mandatory fields:
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              },
+              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             },
           },
         ],
@@ -3884,26 +4327,44 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       {
                         "properties": {
                           "addressLines": {
-                            "array": [],
+                            "array": [
+                              {
+                                "type": "unknown",
+                                "unknown": {
+                                  "primitive": {
+                                    "string": "Klara-Franke Str 20",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                            ],
                             "type": "array",
                           },
                           "city": {
                             "primitive": {
-                              "string": "string",
+                              "string": "Berlin",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "country": {
                             "primitive": {
-                              "string": "string",
+                              "string": "Germany",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "postcode": {
                             "primitive": {
-                              "string": "string",
+                              "string": "10557",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "state": {
+                            "primitive": {
+                              "string": "Berlin",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -3914,14 +4375,14 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                                 "properties": {
                                   "key": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "customKey",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "value": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "customValue",
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -3938,12 +4399,48 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     ],
                     "type": "array",
                   },
+                  "contactNumbers": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "+37112345432",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "emailIds": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "baran@flagright.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "websites": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "flagright.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                 },
                 "type": "object",
               },
               "createdTimestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1641654664000,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -3961,20 +4458,34 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                 "array": [
                   {
                     "properties": {
+                      "documentExpirationDate": {
+                        "primitive": {
+                          "double": 1839939034000,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
                       "documentIssuedCountry": {
-                        "enum": "AF",
+                        "enum": "DE",
                         "type": "enum",
+                      },
+                      "documentIssuedDate": {
+                        "primitive": {
+                          "double": 1639939034000,
+                          "type": "double",
+                        },
+                        "type": "primitive",
                       },
                       "documentNumber": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Z9431P",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "documentType": {
                         "primitive": {
-                          "string": "string",
+                          "string": "passport",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -3997,14 +4508,14 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                             "properties": {
                               "key": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customerType",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "value": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "wallet",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -4048,14 +4559,14 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "properties": {
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customKey",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "value": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customValue",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -5498,12 +6009,19 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
               "userDetails": {
                 "properties": {
                   "countryOfNationality": {
-                    "enum": "AF",
+                    "enum": "DE",
                     "type": "enum",
                   },
                   "countryOfResidence": {
-                    "enum": "AF",
+                    "enum": "US",
                     "type": "enum",
+                  },
+                  "dateOfBirth": {
+                    "primitive": {
+                      "string": "1991-01-01",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                   "gender": {
                     "enum": "M",
@@ -5513,7 +6031,21 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "properties": {
                       "firstName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Baran",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "lastName": {
+                        "primitive": {
+                          "string": "Ozkan",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "middleName": {
+                        "primitive": {
+                          "string": "Realblood",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -5526,7 +6058,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
               },
               "userId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5583,69 +6115,67 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "contactDetails": {
-                  "addresses": [
-                    {
-                      "addressLines": [
-                        "Klara-Franke Str 20",
-                      ],
-                      "city": "Berlin",
-                      "country": "Germany",
-                      "postcode": "10557",
-                      "state": "Berlin",
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "contactNumbers": [
-                    "+37112345432",
-                  ],
-                  "emailIds": [
-                    "baran@flagright.com",
-                  ],
-                  "websites": [
-                    "flagright.com",
-                  ],
-                },
-                "createdTimestamp": 1641654664000,
-                "legalDocuments": [
+              "contactDetails": {
+                "addresses": [
                   {
-                    "documentExpirationDate": 1839939034000,
-                    "documentIssuedCountry": "DE",
-                    "documentIssuedDate": 1639939034000,
-                    "documentNumber": "Z9431P",
-                    "documentType": "passport",
+                    "addressLines": [
+                      "Klara-Franke Str 20",
+                    ],
+                    "city": "Berlin",
+                    "country": "Germany",
+                    "postcode": "10557",
+                    "state": "Berlin",
                     "tags": [
                       {
-                        "key": "customerType",
-                        "value": "wallet",
+                        "key": "customKey",
+                        "value": "customValue",
                       },
                     ],
                   },
                 ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
-                  },
+                "contactNumbers": [
+                  "+37112345432",
                 ],
-                "userDetails": {
-                  "countryOfNationality": "DE",
-                  "countryOfResidence": "US",
-                  "dateOfBirth": "1991-01-01",
-                  "name": {
-                    "firstName": "Baran",
-                    "lastName": "Ozkan",
-                    "middleName": "Realblood",
-                  },
-                },
-                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
+                "emailIds": [
+                  "baran@flagright.com",
+                ],
+                "websites": [
+                  "flagright.com",
+                ],
               },
+              "createdTimestamp": 1641654664000,
+              "legalDocuments": [
+                {
+                  "documentExpirationDate": 1839939034000,
+                  "documentIssuedCountry": "DE",
+                  "documentIssuedDate": 1639939034000,
+                  "documentNumber": "Z9431P",
+                  "documentType": "passport",
+                  "tags": [
+                    {
+                      "key": "customerType",
+                      "value": "wallet",
+                    },
+                  ],
+                },
+              ],
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue",
+                },
+              ],
+              "userDetails": {
+                "countryOfNationality": "DE",
+                "countryOfResidence": "US",
+                "dateOfBirth": "1991-01-01",
+                "name": {
+                  "firstName": "Baran",
+                  "lastName": "Ozkan",
+                  "middleName": "Realblood",
+                },
+              },
+              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             },
           },
         ],
@@ -8089,7 +8619,7 @@ Each consumer Business entity needs three mandatory fields:
               },
               "userId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -8128,9 +8658,7 @@ Each consumer Business entity needs three mandatory fields:
           {
             "name": "example-1",
             "value": {
-              "value": {
-                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              },
+              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             },
           },
         ],
@@ -8251,7 +8779,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "createdTimestamp": {
                 "primitive": {
-                  "double": 1.1,
+                  "double": 1641654664000,
                   "type": "double",
                 },
                 "type": "primitive",
@@ -8267,26 +8795,44 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                               {
                                 "properties": {
                                   "addressLines": {
-                                    "array": [],
+                                    "array": [
+                                      {
+                                        "type": "unknown",
+                                        "unknown": {
+                                          "primitive": {
+                                            "string": "Klara-Franke Str 20",
+                                            "type": "string",
+                                          },
+                                          "type": "primitive",
+                                        },
+                                      },
+                                    ],
                                     "type": "array",
                                   },
                                   "city": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "Berlin",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "country": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "Germany",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "postcode": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "10557",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "state": {
+                                    "primitive": {
+                                      "string": "Berlin",
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -8297,14 +8843,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                         "properties": {
                                           "key": {
                                             "primitive": {
-                                              "string": "string",
+                                              "string": "customKey",
                                               "type": "string",
                                             },
                                             "type": "primitive",
                                           },
                                           "value": {
                                             "primitive": {
-                                              "string": "string",
+                                              "string": "customValue",
                                               "type": "string",
                                             },
                                             "type": "primitive",
@@ -8321,18 +8867,61 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             ],
                             "type": "array",
                           },
+                          "contactNumbers": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "+371 123132",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "emailIds": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "baran@flagright.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "websites": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "flagright.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
                         },
                         "type": "object",
                       },
                       "generalDetails": {
                         "properties": {
                           "countryOfNationality": {
-                            "enum": "AF",
+                            "enum": "DE",
                             "type": "enum",
                           },
                           "countryOfResidence": {
-                            "enum": "AF",
+                            "enum": "US",
                             "type": "enum",
+                          },
+                          "dateOfBirth": {
+                            "primitive": {
+                              "string": "1991-01-01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "gender": {
                             "enum": "M",
@@ -8342,7 +8931,21 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "properties": {
                               "firstName": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Baran",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "lastName": {
+                                "primitive": {
+                                  "string": "Ozkan",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "middleName": {
+                                "primitive": {
+                                  "string": "Realblood",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8357,20 +8960,34 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "array": [
                           {
                             "properties": {
+                              "documentExpirationDate": {
+                                "primitive": {
+                                  "double": 1839939034000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
                               "documentIssuedCountry": {
-                                "enum": "AF",
+                                "enum": "DE",
                                 "type": "enum",
+                              },
+                              "documentIssuedDate": {
+                                "primitive": {
+                                  "double": 1639939034000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
                               },
                               "documentNumber": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Z9431P",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "documentType": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "passport",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8393,14 +9010,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                     "properties": {
                                       "key": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "customerType",
                                           "type": "string",
                                         },
                                         "type": "primitive",
                                       },
                                       "value": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "wallet",
                                           "type": "string",
                                         },
                                         "type": "primitive",
@@ -8440,14 +9057,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "properties": {
                               "key": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customKey",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "value": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customValue",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8480,12 +9097,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "expectedTransactionAmountPerMonth": {
                         "properties": {
                           "amountCurrency": {
-                            "enum": "1INCH",
+                            "enum": "GBP",
                             "type": "enum",
                           },
                           "amountValue": {
                             "primitive": {
-                              "double": 1.1,
+                              "double": 800,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -8496,12 +9113,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "expectedTurnoverPerMonth": {
                         "properties": {
                           "amountCurrency": {
-                            "enum": "1INCH",
+                            "enum": "USD",
                             "type": "enum",
                           },
                           "amountValue": {
                             "primitive": {
-                              "double": 1.1,
+                              "double": 8000,
                               "type": "double",
                             },
                             "type": "primitive",
@@ -8538,12 +9155,36 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   },
                   "companyGeneralDetails": {
                     "properties": {
+                      "businessIndustry": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "Farming",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
                       "legalName": {
                         "primitive": {
-                          "string": "string",
+                          "string": "Ozkan Hazelnut Export JSC",
                           "type": "string",
                         },
                         "type": "primitive",
+                      },
+                      "mainProductsServicesSold": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "Hazelnut",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "tags": {
                         "array": [
@@ -8583,12 +9224,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   "companyRegistrationDetails": {
                     "properties": {
                       "registrationCountry": {
-                        "enum": "AF",
+                        "enum": "DE",
                         "type": "enum",
                       },
                       "registrationIdentifier": {
                         "primitive": {
-                          "string": "string",
+                          "string": "PSJ554342",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -8627,26 +9268,44 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           {
                             "properties": {
                               "addressLines": {
-                                "array": [],
+                                "array": [
+                                  {
+                                    "type": "unknown",
+                                    "unknown": {
+                                      "primitive": {
+                                        "string": "Klara-Franke Str 20",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                ],
                                 "type": "array",
                               },
                               "city": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Berlin",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "country": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Germany",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "postcode": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "10557",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "state": {
+                                "primitive": {
+                                  "string": "Berlin",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8657,14 +9316,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                     "properties": {
                                       "key": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "customKey",
                                           "type": "string",
                                         },
                                         "type": "primitive",
                                       },
                                       "value": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "customValue",
                                           "type": "string",
                                         },
                                         "type": "primitive",
@@ -8683,6 +9342,18 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       },
                     },
                     "type": "object",
+                  },
+                  "reasonForAccountOpening": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -8718,26 +9389,44 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                               {
                                 "properties": {
                                   "addressLines": {
-                                    "array": [],
+                                    "array": [
+                                      {
+                                        "type": "unknown",
+                                        "unknown": {
+                                          "primitive": {
+                                            "string": "Klara-Franke Str 20",
+                                            "type": "string",
+                                          },
+                                          "type": "primitive",
+                                        },
+                                      },
+                                    ],
                                     "type": "array",
                                   },
                                   "city": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "Berlin",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "country": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "Germany",
                                       "type": "string",
                                     },
                                     "type": "primitive",
                                   },
                                   "postcode": {
                                     "primitive": {
-                                      "string": "string",
+                                      "string": "10557",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "state": {
+                                    "primitive": {
+                                      "string": "Berlin",
                                       "type": "string",
                                     },
                                     "type": "primitive",
@@ -8748,14 +9437,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                         "properties": {
                                           "key": {
                                             "primitive": {
-                                              "string": "string",
+                                              "string": "customKey",
                                               "type": "string",
                                             },
                                             "type": "primitive",
                                           },
                                           "value": {
                                             "primitive": {
-                                              "string": "string",
+                                              "string": "customValue",
                                               "type": "string",
                                             },
                                             "type": "primitive",
@@ -8772,18 +9461,61 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             ],
                             "type": "array",
                           },
+                          "contactNumbers": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "+371 123132",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "emailIds": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "baran@flagright.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "websites": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "flagright.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
                         },
                         "type": "object",
                       },
                       "generalDetails": {
                         "properties": {
                           "countryOfNationality": {
-                            "enum": "AF",
+                            "enum": "DE",
                             "type": "enum",
                           },
                           "countryOfResidence": {
-                            "enum": "AF",
+                            "enum": "US",
                             "type": "enum",
+                          },
+                          "dateOfBirth": {
+                            "primitive": {
+                              "string": "1991-01-01",
+                              "type": "string",
+                            },
+                            "type": "primitive",
                           },
                           "gender": {
                             "enum": "M",
@@ -8793,7 +9525,21 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "properties": {
                               "firstName": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Baran",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "lastName": {
+                                "primitive": {
+                                  "string": "Ozkan",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "middleName": {
+                                "primitive": {
+                                  "string": "Realblood",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8808,20 +9554,34 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "array": [
                           {
                             "properties": {
+                              "documentExpirationDate": {
+                                "primitive": {
+                                  "double": 1839939034000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
                               "documentIssuedCountry": {
-                                "enum": "AF",
+                                "enum": "DE",
                                 "type": "enum",
+                              },
+                              "documentIssuedDate": {
+                                "primitive": {
+                                  "double": 1639939034000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
                               },
                               "documentNumber": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "Z9431P",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "documentType": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "passport",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8844,14 +9604,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                     "properties": {
                                       "key": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "customerType",
                                           "type": "string",
                                         },
                                         "type": "primitive",
                                       },
                                       "value": {
                                         "primitive": {
-                                          "string": "string",
+                                          "string": "wallet",
                                           "type": "string",
                                         },
                                         "type": "primitive",
@@ -8891,14 +9651,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                             "properties": {
                               "key": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customKey",
                                   "type": "string",
                                 },
                                 "type": "primitive",
                               },
                               "value": {
                                 "primitive": {
-                                  "string": "string",
+                                  "string": "customValue",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -8921,14 +9681,14 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "properties": {
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customKey",
                           "type": "string",
                         },
                         "type": "primitive",
                       },
                       "value": {
                         "primitive": {
-                          "string": "string",
+                          "string": "customValue",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -10370,7 +11130,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               },
               "userId": {
                 "primitive": {
-                  "string": "string",
+                  "string": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -10423,95 +11183,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           {
             "name": "example-2",
             "value": {
-              "value": {
-                "createdTimestamp": 1641654664000,
-                "directors": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                      "contactNumbers": [
-                        "+371 123132",
-                      ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                      ],
-                      "websites": [
-                        "flagright.com",
-                      ],
-                    },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
-                      {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
-                        "tags": [
-                          {
-                            "key": "customerType",
-                            "value": "wallet",
-                          },
-                        ],
-                      },
-                    ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
-                    ],
-                  },
-                ],
-                "legalEntity": {
-                  "companyFinancialDetails": {
-                    "expectedTransactionAmountPerMonth": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "expectedTurnoverPerMonth": {
-                      "amountCurrency": "USD",
-                      "amountValue": 8000,
-                    },
-                  },
-                  "companyGeneralDetails": {
-                    "businessIndustry": [
-                      "Farming",
-                    ],
-                    "legalName": "Ozkan Hazelnut Export JSC",
-                    "mainProductsServicesSold": [
-                      "Hazelnut",
-                    ],
-                  },
-                  "companyRegistrationDetails": {
-                    "registrationCountry": "DE",
-                    "registrationIdentifier": "PSJ554342",
-                  },
+              "createdTimestamp": 1641654664000,
+              "directors": [
+                {
                   "contactDetails": {
                     "addresses": [
                       {
@@ -10530,82 +11204,166 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         ],
                       },
                     ],
+                    "contactNumbers": [
+                      "+371 123132",
+                    ],
+                    "emailIds": [
+                      "baran@flagright.com",
+                    ],
+                    "websites": [
+                      "flagright.com",
+                    ],
                   },
-                  "reasonForAccountOpening": [
-                    "string",
-                  ],
-                },
-                "shareHolders": [
-                  {
-                    "contactDetails": {
-                      "addresses": [
+                  "generalDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
+                  },
+                  "legalDocuments": [
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "tags": [
                         {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
+                          "key": "customerType",
+                          "value": "wallet",
                         },
                       ],
-                      "contactNumbers": [
-                        "+371 123132",
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                },
+              ],
+              "legalEntity": {
+                "companyFinancialDetails": {
+                  "expectedTransactionAmountPerMonth": {
+                    "amountCurrency": "GBP",
+                    "amountValue": 800,
+                  },
+                  "expectedTurnoverPerMonth": {
+                    "amountCurrency": "USD",
+                    "amountValue": 8000,
+                  },
+                },
+                "companyGeneralDetails": {
+                  "businessIndustry": [
+                    "Farming",
+                  ],
+                  "legalName": "Ozkan Hazelnut Export JSC",
+                  "mainProductsServicesSold": [
+                    "Hazelnut",
+                  ],
+                },
+                "companyRegistrationDetails": {
+                  "registrationCountry": "DE",
+                  "registrationIdentifier": "PSJ554342",
+                },
+                "contactDetails": {
+                  "addresses": [
+                    {
+                      "addressLines": [
+                        "Klara-Franke Str 20",
                       ],
-                      "emailIds": [
-                        "baran@flagright.com",
-                      ],
-                      "websites": [
-                        "flagright.com",
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
+                      "tags": [
+                        {
+                          "key": "customKey",
+                          "value": "customValue",
+                        },
                       ],
                     },
-                    "generalDetails": {
-                      "countryOfNationality": "DE",
-                      "countryOfResidence": "US",
-                      "dateOfBirth": "1991-01-01",
-                      "name": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                    },
-                    "legalDocuments": [
+                  ],
+                },
+                "reasonForAccountOpening": [
+                  "string",
+                ],
+              },
+              "shareHolders": [
+                {
+                  "contactDetails": {
+                    "addresses": [
                       {
-                        "documentExpirationDate": 1839939034000,
-                        "documentIssuedCountry": "DE",
-                        "documentIssuedDate": 1639939034000,
-                        "documentNumber": "Z9431P",
-                        "documentType": "passport",
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
                         "tags": [
                           {
-                            "key": "customerType",
-                            "value": "wallet",
+                            "key": "customKey",
+                            "value": "customValue",
                           },
                         ],
                       },
                     ],
-                    "tags": [
-                      {
-                        "key": "customKey",
-                        "value": "customValue",
-                      },
+                    "contactNumbers": [
+                      "+371 123132",
+                    ],
+                    "emailIds": [
+                      "baran@flagright.com",
+                    ],
+                    "websites": [
+                      "flagright.com",
                     ],
                   },
-                ],
-                "tags": [
-                  {
-                    "key": "customKey",
-                    "value": "customValue",
+                  "generalDetails": {
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
+                    "name": {
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
+                    },
                   },
-                ],
-                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-              },
+                  "legalDocuments": [
+                    {
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
+                      "tags": [
+                        {
+                          "key": "customerType",
+                          "value": "wallet",
+                        },
+                      ],
+                    },
+                  ],
+                  "tags": [
+                    {
+                      "key": "customKey",
+                      "value": "customValue",
+                    },
+                  ],
+                },
+              ],
+              "tags": [
+                {
+                  "key": "customKey",
+                  "value": "customValue",
+                },
+              ],
+              "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
             },
           },
         ],

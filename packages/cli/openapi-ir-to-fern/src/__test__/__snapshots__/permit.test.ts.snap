@@ -1474,7 +1474,7 @@ allowed.",
                           "identities": [
                             {
                               "auth0_info": {
-                                "string": "string",
+                                "string": {},
                               },
                               "email": "string",
                               "email_verified": true,
@@ -1496,7 +1496,7 @@ allowed.",
                           "is_superuser": true,
                           "onboarding_step": "create_organization",
                           "settings": {
-                            "string": "string",
+                            "string": {},
                           },
                         },
                       ],

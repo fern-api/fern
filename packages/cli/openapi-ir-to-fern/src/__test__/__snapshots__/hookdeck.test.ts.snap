@@ -602,11 +602,7 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {
-                    "status": "SCHEDULED",
-                  },
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -635,12 +631,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
-                  "query": {
-                    "dir": "asc",
-                    "include": "data",
-                    "order_by": "last_attempt_at",
-                    "status": "SCHEDULED",
-                  },
                 },
                 "request": undefined,
                 "response": {
@@ -1147,9 +1137,7 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {},
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -1178,7 +1166,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
-                  "query": {},
                 },
                 "request": undefined,
                 "response": {
@@ -1415,12 +1402,7 @@ exports[`open api parser hookdeck simple 1`] = `
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": {
-                  "query": {
-                    "rejection_cause": "SOURCE_ARCHIVED",
-                    "status": "accepted",
-                  },
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {},
@@ -1449,13 +1431,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
-                  "query": {
-                    "dir": "asc",
-                    "include": "data",
-                    "order_by": "ingested_at",
-                    "rejection_cause": "SOURCE_ARCHIVED",
-                    "status": "accepted",
-                  },
                 },
                 "request": undefined,
                 "response": {
@@ -4578,9 +4553,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "aggregation_keys": {
-                    "error_code": "TIMEOUT",
-                  },
                   "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
                   "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
@@ -4636,9 +4608,6 @@ exports[`open api parser hookdeck simple 1`] = `
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "aggregation_keys": {
-                    "error_code": "TIMEOUT",
-                  },
                   "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
                   "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",

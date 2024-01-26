@@ -2,5 +2,10 @@
   "extends": "../../../shared/tsconfig.shared.json",
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
-  "references": [{ "path": "../../cli/logger" }, { "path": "../../commons/fs-utils" }, { "path": "../commons" }]
+  "references": [
+    { "path": "../../cli/logger" },
+    { "path": "../../commons/fs-utils" },
+    { "path": "../../commons/logging-execa" },
+    { "path": "../commons" }
+  ]
 }
