@@ -41,7 +41,8 @@ export async function runRemoteGenerationForDocsWorkspace({
                 version: "",
                 preview,
                 audiences: instance.audiences,
-                editThisPage: instance.editThisPage
+                editThisPage: instance.editThisPage,
+                isPrivate: instance.private
             });
         });
         return;
@@ -71,7 +72,8 @@ export async function runRemoteGenerationForDocsWorkspace({
             version: "",
             preview,
             audiences: maybeInstance.audiences,
-            editThisPage: maybeInstance.editThisPage
+            editThisPage: maybeInstance.editThisPage,
+            isPrivate: maybeInstance.private
         });
     });
     return;

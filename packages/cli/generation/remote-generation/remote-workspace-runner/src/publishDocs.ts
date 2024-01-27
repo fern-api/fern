@@ -35,7 +35,8 @@ export async function publishDocs({
     context,
     version,
     preview,
-    editThisPage
+    editThisPage,
+    isPrivate = false
 }: {
     token: FernToken;
     organization: string;
@@ -49,6 +50,7 @@ export async function publishDocs({
     // TODO: implement audience support in generateIR
     audiences: FernDocsConfig.AudiencesConfig | undefined;
     editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
+    isPrivate: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
 
@@ -81,6 +83,7 @@ export async function publishDocs({
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
             domain,
             customDomains,
+            authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
             apiId: "",
             orgId: organization,
             filepaths: relativeFilepathsToUpload
