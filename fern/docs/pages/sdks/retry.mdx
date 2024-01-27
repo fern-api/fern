@@ -6,9 +6,9 @@ By default, Fern employs an exponential backoff strategy with a maximum of two r
   branch-python:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.6.5
+        version: 0.8.0
         github:
-          repository: some-staging-repository
+          repository: imdb/imdb-python # replace imdb with your org & package name
           mode: pull-request
         config:
           maxRetries: 6
