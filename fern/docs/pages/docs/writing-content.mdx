@@ -49,6 +49,32 @@ navigation:
 ```
 </CodeBlock>
 
+### Nested Sections
+If you'd like a section to toggle into more sections and pages, you can nest sections within sections. Here's an example of how it's done.
+<CodeBlock title="docs.yml">
+```mdx
+navigation:
+  - tab: guides
+    layout:
+      - section: Learn
+        contents: 
+          - section: Key Concepts
+            contents: 
+              - page: Embeddings
+                path: ./docs/pages/embeddings.mdx
+              - page: Prompt Engineering
+                path: ./docs/pages/prompts.mdx
+          - section: Generation
+            contents: 
+              - page: Command Nightly
+                path: ./docs/pages/command.mdx
+              - page: Likelihood
+                path: ./docs/pages/likelihood.mdx
+```
+</CodeBlock>
+
+![Result of above docs.yml example](https://fern-image-hosting.s3.amazonaws.com/fern/nested-sections.png)
+
 ### API Reference
 
 A key benefit of using Fern Docs is that you get your API Reference with just one line. 
