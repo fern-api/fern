@@ -1,4 +1,4 @@
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../utils/RubyConstants";
 import { Class_ } from "./classes/Class_";
 import { AstNode } from "./core/AstNode";
@@ -29,13 +29,13 @@ export class Module_ extends AstNode {
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 
-    // TODO: make this take into account the core client name
     static wrapInModules<T extends AstNode | AstNode[]>(
         rootModule: string,
         child: T,
-        childName?: DeclaredTypeName
+        path?: FernFilepath,
+        includeFullPath = true
     ): Module_ | T {
-        const moduleBreadcrumbs = childName ? Module_.getModulePathFromTypeName(childName) : [];
+        const moduleBreadcrumbs = path ? Module_.getModulePathFromTypeName(path, includeFullPath) : [];
         let moduleWrappedItem: Module_ | T = child;
         [rootModule, ...moduleBreadcrumbs].reverse().forEach(
             (mod) =>
@@ -49,8 +49,10 @@ export class Module_ extends AstNode {
         return moduleWrappedItem;
     }
 
-    static getModulePathFromTypeName(typeName: DeclaredTypeName): string[] {
-        return typeName.fernFilepath.allParts.map((pathSegment) => pathSegment.pascalCase.safeName);
+    static getModulePathFromTypeName(path: FernFilepath, includeFullPath: boolean): string[] {
+        return (includeFullPath ? path.allParts : path.packagePath).map(
+            (pathSegment) => pathSegment.pascalCase.safeName
+        );
     }
 
     public getImports(): Set<Import> {

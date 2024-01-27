@@ -157,7 +157,7 @@ export class SerializableObjectReference extends ClassReference {
         // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
         // are written to a "types" subdirectory
         const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -190,7 +190,7 @@ export class AliasReference extends ClassReference {
         // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
         // are written to a "types" subdirectory
         const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -367,7 +367,7 @@ export class EnumReference extends HashReference {
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): EnumReference {
         const location = getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName);
+        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new EnumReference({
             name: declaredTypeName.name.screamingSnakeCase.safeName,
             import_: new Import({ from: location }),

@@ -7,6 +7,7 @@ export { UndiscriminatedUnion } from "./ast/abstractions/UndiscriminatedUnion";
 export { Argument } from "./ast/Argument";
 export * from "./ast/classes/ClassReference";
 export { Class_ } from "./ast/classes/Class_";
+export { AstNode } from "./ast/core/AstNode";
 export { EnvironmentVariable } from "./ast/EnvironmentVariable";
 export { Expression } from "./ast/expressions/Expression";
 export { RaiseException } from "./ast/expressions/RaiseException";

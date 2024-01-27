@@ -76,6 +76,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         const sdkVersion = getSdkVersion(config);
         const generatedClientFiles = new ClientsGenerator(
             RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
+            getGemName(intermediateRepresentation, config, customConfig.clientClassName, customConfig.gemName),
             generatorContext,
             intermediateRepresentation,
             sdkVersion

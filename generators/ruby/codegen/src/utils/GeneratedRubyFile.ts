@@ -1,16 +1,21 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredTypeName } from "@fern-fern/ir-sdk/api";
+import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
 import path from "path";
 import { AstNode } from "../ast/core/AstNode";
 import { GeneratedFile } from "./GeneratedFile";
 import { FROZEN_STRING_PREFIX } from "./RubyConstants";
-import { getLocationForTypeDeclaration } from "./RubyUtilities";
+import {
+    getLocationForServiceDeclaration,
+    getLocationForTypeDeclaration,
+    getLocationFromFernFilepath
+} from "./RubyUtilities";
 
 export declare namespace GeneratedRubyFile {
     export interface Init {
         rootNode: AstNode | AstNode[];
         directoryPrefix: RelativeFilePath;
-        name: string | DeclaredTypeName;
+        name: string | DeclaredTypeName | DeclaredServiceName;
+        location?: FernFilepath;
         isTestFile?: boolean;
         isConfigurationFile?: boolean;
     }
@@ -22,6 +27,7 @@ export class GeneratedRubyFile extends GeneratedFile {
         rootNode,
         directoryPrefix,
         name,
+        location,
         isTestFile = false,
         isConfigurationFile = false
     }: GeneratedRubyFile.Init) {
@@ -30,7 +36,14 @@ export class GeneratedRubyFile extends GeneratedFile {
         // lib/client_class_name.rb or request_client.rb or environment.rb or exception.rb OR
         // /lib/client_class_name/package_name/services/service_name.rb OR /lib/client_class_name/package_name/types/type_name.rb
         const updatedPrefix = isConfigurationFile ? "" : isTestFile ? "test" : "lib";
-        const filePathFull = typeof name === "string" ? name : `${getLocationForTypeDeclaration(name)}.rb`;
+        let filePathFull =
+            typeof name === "string"
+                ? name
+                : "name" in name
+                ? `${getLocationForTypeDeclaration(name)}.rb`
+                : `${getLocationForServiceDeclaration(name)}.rb`;
+        filePathFull =
+            location !== undefined ? `${getLocationFromFernFilepath(location)}/${filePathFull}` : filePathFull;
         const fileName = path.parse(filePathFull).base;
         const filePath = path.parse(filePathFull).dir;
 

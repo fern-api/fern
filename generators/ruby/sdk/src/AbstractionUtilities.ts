@@ -10,6 +10,7 @@ import {
     Function_,
     GeneratedRubyFile,
     GenericClassReference,
+    getLocationFromFernFilepath,
     HashInstance,
     HashReference,
     Import,
@@ -28,7 +29,8 @@ import {
     IntermediateRepresentation,
     MultipleBaseUrlsEnvironments,
     Name,
-    SingleBaseUrlEnvironments
+    SingleBaseUrlEnvironments,
+    Subpackage
 } from "@fern-fern/ir-sdk/api";
 import {
     getAdditionalHeaders,
@@ -39,11 +41,117 @@ import {
     getAuthHeadersAsProperties
 } from "./Auth";
 
-// export function generateMainClient(intermediateRepresentation: IntermediateRepresentation): GeneratedRubyFile {
-//     // Add Client class
-//     // Add Async Client class
-//     return;
-// }
+export function generateRootPackage(
+    gemName: string,
+    clientName: string,
+    intermediateRepresentation: IntermediateRepresentation,
+    crf: ClassReferenceFactory
+): GeneratedRubyFile {
+    const classReference = new ClassReference({
+        name: "Client",
+        import_: new Import({ from: gemName, isExternal: false })
+    });
+    const clientFunction = generateRequestClientInitializer(
+        false,
+        intermediateRepresentation,
+        crf,
+        classReference,
+        "",
+        ""
+    );
+
+    // Add Client class
+    const clientClass = new Class_({
+        classReference,
+        functions: [
+            new Function_({
+                name: "initialize",
+                functionBody: [
+                    new Expression({ leftSide: "request_client", rightSide: "TODO" })
+                    // TODO: per package
+                    // new Expression({})
+                ],
+                parameters: clientFunction.parameters
+            })
+            // TODO: If there's a root package then make those functions here
+        ],
+        includeInitializer: false
+    });
+    // Add Async Client class
+    const asyncClientClass = new Class_({
+        classReference: new ClassReference({
+            name: "AsyncClient",
+            import_: new Import({ from: gemName, isExternal: false })
+        }),
+        functions: [
+            new Function_({
+                name: "initialize",
+                functionBody: [
+                    new Expression({ leftSide: "request_client", rightSide: "TODO" })
+                    // Per package
+                    // new Expression({})
+                ],
+                parameters: clientFunction.parameters
+            })
+            // If there's a root package then make those functions here
+        ],
+        includeInitializer: false
+    });
+
+    const rootNode = Module_.wrapInModules(clientName, [clientClass, asyncClientClass]);
+    return new GeneratedRubyFile({ rootNode, directoryPrefix: RelativeFilePath.of("."), name: `${gemName}.rb` });
+}
+
+export function generateSubPackage(clientName: string, subpackage: Subpackage): GeneratedRubyFile {
+    const location = getLocationFromFernFilepath(subpackage.fernFilepath) + "_client";
+
+    // Add Client class
+    const clientClass = new Class_({
+        classReference: new ClassReference({
+            name: "Client",
+            import_: new Import({ from: location, isExternal: false })
+        }),
+        properties: [new Property({ name: "client", type: new ClassReference({ name: "TODOMERGECLIENT" }) })],
+        functions: [
+            new Function_({
+                name: "initialize",
+                functionBody: [
+                    // TODO: per package
+                    // new Expression({})
+                ],
+                parameters: [new Parameter({ name: "client", type: new ClassReference({ name: "TODOMERGECLIENT" }) })]
+            })
+        ],
+        includeInitializer: false
+    });
+    // Add Async Client class
+    const asyncClientClass = new Class_({
+        classReference: new ClassReference({
+            name: "AsyncClient",
+            import_: new Import({ from: location, isExternal: false })
+        }),
+        functions: [
+            new Function_({
+                name: "initialize",
+                functionBody: [
+                    // Per package
+                    // new Expression({})
+                ],
+                parameters: [new Parameter({ name: "client", type: new ClassReference({ name: "TODOMERGECLIENT" }) })]
+            })
+        ],
+        properties: [new Property({ name: "client", type: new ClassReference({ name: "TODOMERGECLIENT" }) })],
+        includeInitializer: false
+    });
+
+    const rootNode = Module_.wrapInModules(clientName, [clientClass, asyncClientClass], subpackage.fernFilepath);
+    return new GeneratedRubyFile({
+        rootNode,
+        directoryPrefix: RelativeFilePath.of(clientName),
+        location: subpackage.fernFilepath,
+        name: "_client.rb"
+    });
+}
 
 // Need to create the environment file and then reference back to them via default_env@specified_url
 // where specified_url is the single URL or the one specified for the service in multi-url envs
@@ -220,7 +328,6 @@ function generateRequestClientInitializer(
     return new Function_({
         name: "initialize",
         parameters: [
-            // TODO: default the environment parameter
             new Parameter({
                 name: "environment",
                 type: StringClassReference,

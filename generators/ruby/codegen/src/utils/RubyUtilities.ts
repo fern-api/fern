@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DeclaredTypeName, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { DeclaredServiceName, DeclaredTypeName, FernFilepath, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { camelCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
 import { ExternalDependency } from "../ast/ExternalDependency";
@@ -8,7 +8,7 @@ import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
-import { SERVICES_DIRECTORY, TYPES_DIRECTORY } from "./RubyConstants";
+import { TYPES_DIRECTORY } from "./RubyConstants";
 
 export function getGemName(
     intermediateRepresentation: IntermediateRepresentation,
@@ -40,19 +40,17 @@ export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName
     ].join("/");
 }
 
-export function getLocationForServiceDeclaration(declaredTypeName: DeclaredTypeName): string {
+export function getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
     return [
-        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        SERVICES_DIRECTORY,
-        declaredTypeName.name.snakeCase.safeName
+        ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
+        declaredServiceName.fernFilepath.file!.snakeCase.safeName,
+        "_client"
     ].join("/");
 }
 
-export function getLocationForPackageDeclaration(declaredTypeName: DeclaredTypeName): string {
-    return [
-        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        declaredTypeName.name.snakeCase.safeName
-    ].join("/");
+// Note: this assumes the file is in a directory of the same name
+export function getLocationFromFernFilepath(fernFilepath: FernFilepath): string {
+    return [...fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName)].join("/");
 }
 
 export function generateGemspec(
@@ -125,7 +123,7 @@ export function generateGitignore(): GeneratedFile {
 
 export function generateRubocopConfig(): GeneratedFile {
     const content = `AllCops:
-  TargetRubyVersion: 2.6
+  TargetRubyVersion: 2.7
   
 Style/StringLiterals:
   Enabled: true
