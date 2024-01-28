@@ -1,7 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { DeclaredServiceName, DeclaredTypeName, FernFilepath, IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import { camelCase, upperFirst } from "lodash-es";
+import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
 import { ExternalDependency } from "../ast/ExternalDependency";
 import { Gemspec } from "../ast/gem/Gemspec";
@@ -10,26 +9,12 @@ import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 import { TYPES_DIRECTORY } from "./RubyConstants";
 
-export function getGemName(
-    intermediateRepresentation: IntermediateRepresentation,
-    config: FernGeneratorExec.GeneratorConfig,
-    clientClassName?: string,
-    gemName?: string
-): string {
-    return gemName ?? getClientName(intermediateRepresentation, config, clientClassName);
+export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
+    return snakeCase(gemName ?? getClientName(organization, apiName, clientClassName));
 }
 
-export function getClientName(
-    intermediateRepresentation: IntermediateRepresentation,
-    config: FernGeneratorExec.GeneratorConfig,
-    clientClassName?: string
-): string {
-    return (
-        clientClassName ??
-        upperFirst(camelCase(config.organization)) +
-            upperFirst(camelCase(intermediateRepresentation.apiName.camelCase.safeName)) +
-            "Client"
-    );
+export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
+    return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
 export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
@@ -44,7 +29,7 @@ export function getLocationForServiceDeclaration(declaredServiceName: DeclaredSe
     return [
         ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
         declaredServiceName.fernFilepath.file!.snakeCase.safeName,
-        "_client"
+        "client"
     ].join("/");
 }
 
@@ -62,7 +47,8 @@ export function generateGemspec(
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        name: `${gemName}.gemspec`,
+        name: `${gemName}`,
+        fileExtension: "gemspec",
         isConfigurationFile: true
     });
 }
@@ -102,7 +88,7 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
-        name: "gemconfig.rb"
+        name: "gemconfig"
     });
 }
 

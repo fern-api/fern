@@ -34,12 +34,16 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const gemName = getGemName(
-            intermediateRepresentation,
-            config,
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName,
             customConfig.gemName
         );
-        const clientName = getClientName(intermediateRepresentation, config, customConfig.clientClassName);
+        const clientName = getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateGitignore());
@@ -60,7 +64,13 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
+            RelativeFilePath.of(
+                getClientName(
+                    config.organization,
+                    intermediateRepresentation.apiName.pascalCase.safeName,
+                    customConfig.clientClassName
+                )
+            ),
             generatorContext,
             intermediateRepresentation
         ).generateFiles();
@@ -75,8 +85,19 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     ) {
         const sdkVersion = getSdkVersion(config);
         const generatedClientFiles = new ClientsGenerator(
-            RelativeFilePath.of(getClientName(intermediateRepresentation, config, customConfig.clientClassName)),
-            getGemName(intermediateRepresentation, config, customConfig.clientClassName, customConfig.gemName),
+            RelativeFilePath.of(
+                getClientName(
+                    config.organization,
+                    intermediateRepresentation.apiName.pascalCase.safeName,
+                    customConfig.clientClassName
+                )
+            ),
+            getGemName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName,
+                customConfig.gemName
+            ),
             generatorContext,
             intermediateRepresentation,
             sdkVersion

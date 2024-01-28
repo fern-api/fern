@@ -15,12 +15,7 @@ module SeedLiteralHeadersClient
     # @return [RequestClient]
     def initialize(api_header:, api_test:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = environment
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedLiteralHeadersClient",
-        "X-API-Header": "api_header",
-        "X-API-Test": "api_test"
-      }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
         faraday.request :json
         faraday.request :retry, { max: max_retries }
@@ -40,12 +35,7 @@ module SeedLiteralHeadersClient
     # @return [AsyncRequestClient]
     def initialize(api_header:, api_test:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @base_url = environment
-      @headers = {
-        "X-Fern-Language": "Ruby",
-        "X-Fern-SDK-Name": "SeedLiteralHeadersClient",
-        "X-API-Header": "api_header",
-        "X-API-Test": "api_test"
-      }
+      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
         faraday.request :json
         faraday.request :retry, { max: max_retries }

@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
+import { ClassReferenceFactory, Class_, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
 import {
     HttpService,
     IntermediateRepresentation,
@@ -12,10 +12,13 @@ import {
 import {
     generateEnvironmentConstants,
     generateRequestClients,
+    generateRequestOptionsClass,
     generateRootPackage,
-    generateSubPackage
+    generateSubPackage,
+    getDefaultEnvironmentUrl
 } from "./AbstractionUtilities";
 import { ServiceClass } from "./ast/ServiceClass";
+import { HeadersGenerator } from "./HeadersGenerator";
 
 // interface FernEnvironment {
 //     id: string;
@@ -34,6 +37,10 @@ export class ClientsGenerator {
     private sdkVersion: string | undefined;
     private intermediateRepresentation: IntermediateRepresentation;
     private crf: ClassReferenceFactory;
+    private headersGenerator: HeadersGenerator;
+
+    // TODO: should this be an object instead of a string
+    private defaultEnvironment: string | undefined;
 
     constructor(
         directoryPrefix: RelativeFilePath,
@@ -57,8 +64,14 @@ export class ClientsGenerator {
         }
 
         this.services = new Map(Object.entries(intermediateRepresentation.services));
-
         this.crf = new ClassReferenceFactory(this.types);
+        this.headersGenerator = new HeadersGenerator(
+            this.intermediateRepresentation.headers,
+            this.crf,
+            this.intermediateRepresentation.auth
+        );
+
+        this.defaultEnvironment = getDefaultEnvironmentUrl(this.intermediateRepresentation.environments);
     }
 
     private generateService(service: HttpService, subpackage: Subpackage): GeneratedRubyFile {
@@ -73,17 +86,44 @@ export class ClientsGenerator {
 
     public generateFiles(): GeneratedRubyFile[] {
         const clientFiles: GeneratedRubyFile[] = [];
+        const requestOptionsClass = generateRequestOptionsClass(this.headersGenerator);
+        const [syncClientClass, asyncClientClass] = generateRequestClients(
+            this.intermediateRepresentation.sdkConfig,
+            this.clientName,
+            this.sdkVersion,
+            this.headersGenerator,
+            this.defaultEnvironment
+        );
+        const requestsModule = Module_.wrapInModules(this.clientName, [
+            syncClientClass,
+            asyncClientClass,
+            requestOptionsClass
+        ]);
+        clientFiles.push(
+            new GeneratedRubyFile({
+                rootNode: requestsModule,
+                directoryPrefix: RelativeFilePath.of("."),
+                name: "requests"
+            })
+        );
+
         // 1. Generate main file, this is what people import while leveraging the gem.
         // TODO: this should also exist in some form for the model gen to consolidate imports
-        clientFiles.push(generateRootPackage(this.gemName, this.clientName, this.intermediateRepresentation, this.crf));
+        clientFiles.push(
+            generateRootPackage(this.gemName, this.clientName, requestOptionsClass, this.defaultEnvironment)
+        );
+        let environmentClass: Class_ | undefined;
         if (this.intermediateRepresentation.environments !== undefined) {
+            environmentClass = generateEnvironmentConstants(this.intermediateRepresentation.environments);
+            const environmentsModule = Module_.wrapInModules(this.clientName, environmentClass);
             clientFiles.push(
-                generateEnvironmentConstants(this.clientName, this.intermediateRepresentation.environments)
+                new GeneratedRubyFile({
+                    rootNode: environmentsModule,
+                    directoryPrefix: RelativeFilePath.of("."),
+                    name: "environment"
+                })
             );
         }
-        clientFiles.push(
-            generateRequestClients(this.intermediateRepresentation, this.crf, this.clientName, this.sdkVersion)
-        );
 
         // 2. Generate package-level files, this exists just to get dot-access functional.
         // These classes just hold instance variables of instantiated service clients.
@@ -102,7 +142,14 @@ export class ClientsGenerator {
                 // We create these subpackage files to support dot access for service clients,
                 // if the package has no services then this isn't necessary.
                 if (package_.hasEndpointsInTree) {
-                    clientFiles.push(generateSubPackage(this.clientName, package_));
+                    clientFiles.push(
+                        generateSubPackage(
+                            this.clientName,
+                            package_,
+                            syncClientClass.classReference,
+                            asyncClientClass.classReference
+                        )
+                    );
                 }
             }
         });

@@ -1,5 +1,6 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { snakeCase } from "lodash-es";
 import path from "path";
 import { AstNode } from "../ast/core/AstNode";
 import { GeneratedFile } from "./GeneratedFile";
@@ -18,6 +19,7 @@ export declare namespace GeneratedRubyFile {
         location?: FernFilepath;
         isTestFile?: boolean;
         isConfigurationFile?: boolean;
+        fileExtension?: string;
     }
 }
 export class GeneratedRubyFile extends GeneratedFile {
@@ -29,7 +31,8 @@ export class GeneratedRubyFile extends GeneratedFile {
         name,
         location,
         isTestFile = false,
-        isConfigurationFile = false
+        isConfigurationFile = false,
+        fileExtension = "rb"
     }: GeneratedRubyFile.Init) {
         // Path needs lib or test, if test: test/ is relative path
         // otherwise, relative path is:
@@ -40,11 +43,12 @@ export class GeneratedRubyFile extends GeneratedFile {
             typeof name === "string"
                 ? name
                 : "name" in name
-                ? `${getLocationForTypeDeclaration(name)}.rb`
-                : `${getLocationForServiceDeclaration(name)}.rb`;
+                ? getLocationForTypeDeclaration(name)
+                : getLocationForServiceDeclaration(name);
         filePathFull =
             location !== undefined ? `${getLocationFromFernFilepath(location)}/${filePathFull}` : filePathFull;
-        const fileName = path.parse(filePathFull).base;
+        // Make sure the filename is snakecase
+        const fileName = `${snakeCase(path.parse(filePathFull).base)}.${fileExtension}`;
         const filePath = path.parse(filePathFull).dir;
 
         const nodesToWrite = rootNode instanceof Array ? rootNode : [rootNode];

@@ -63,7 +63,7 @@ module SeedExamplesClient
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @return [RequestOptions]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil, additional_headers: nil,
+    def initialize(token:, max_retries: nil, timeout_in_seconds: nil, additional_headers: nil,
                    additional_query_parameters: nil, additional_body_parameters: nil)
       # @type [Long] The number of times to retry a failed request, defaults to 2.
       @max_retries = max_retries
