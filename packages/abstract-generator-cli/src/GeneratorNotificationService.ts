@@ -35,6 +35,7 @@ export class GeneratorNotificationServiceImpl implements GeneratorNotificationSe
     private async flush(): Promise<void> {
         try {
             await this.client.logging.sendUpdate(this.taskId, this.buffer);
+            this.buffer = [];
         } catch (e) {
             // eslint-disable-next-line no-console
             console.warn("Encountered error when sending update", e);
