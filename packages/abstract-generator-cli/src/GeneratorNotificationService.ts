@@ -1,31 +1,43 @@
 import { FernGeneratorExec, FernGeneratorExecClient } from "@fern-fern/generator-exec-sdk";
 
 export interface GeneratorNotificationService {
-    sendUpdateOrThrow: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
-    sendUpdateAndSwallowError: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
+    bufferUpdate: (update: FernGeneratorExec.GeneratorUpdate) => void;
+    sendUpdate: (update: FernGeneratorExec.GeneratorUpdate) => Promise<void>;
 }
 
 export class GeneratorNotificationServiceImpl implements GeneratorNotificationService {
     private client: FernGeneratorExecClient;
     private taskId: FernGeneratorExec.TaskId;
+    private buffer: FernGeneratorExec.GeneratorUpdate[] = [];
 
     constructor(environment: FernGeneratorExec.RemoteGeneratorEnvironment) {
         this.client = new FernGeneratorExecClient({
             environment: environment.coordinatorUrlV2,
         });
         this.taskId = environment.id;
+        // Every 2 seconds we flush the buffer
+        setInterval(async () => {
+            if (this.buffer.length > 0) {
+                await this.flush();
+            }
+        }, 2000);
     }
 
-    public async sendUpdateAndSwallowError(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
+    public bufferUpdate(update: FernGeneratorExec.GeneratorUpdate): void {
+        this.buffer.push(update);
+    }
+
+    public async sendUpdate(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
+        this.buffer.push(update);
+        await this.flush();
+    }
+
+    private async flush(): Promise<void> {
         try {
-            await this.sendUpdateOrThrow(update);
+            await this.client.logging.sendUpdate(this.taskId, this.buffer);
         } catch (e) {
             // eslint-disable-next-line no-console
             console.warn("Encountered error when sending update", e);
         }
-    }
-
-    public sendUpdateOrThrow(update: FernGeneratorExec.GeneratorUpdate): Promise<void> {
-        return this.client.logging.sendUpdate(this.taskId, [update]);
     }
 }

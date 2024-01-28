@@ -26,9 +26,7 @@ export async function publishPackage({
         version: npmPackage.version,
     });
 
-    await generatorNotificationService?.sendUpdateAndSwallowError(
-        FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate)
-    );
+    await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.publishing(packageCoordinate));
 
     await typescriptProject.publish({
         logger,
@@ -36,7 +34,5 @@ export async function publishPackage({
         publishInfo: npmPackage.publishInfo,
     });
 
-    await generatorNotificationService?.sendUpdateAndSwallowError(
-        FernGeneratorExec.GeneratorUpdate.published(packageCoordinate)
-    );
+    await generatorNotificationService?.sendUpdate(FernGeneratorExec.GeneratorUpdate.published(packageCoordinate));
 }

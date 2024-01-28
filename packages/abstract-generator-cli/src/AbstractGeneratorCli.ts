@@ -54,7 +54,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 CONSOLE_LOGGER.log(level, ...message);
 
                 // kick off log, but don't wait for it
-                void generatorNotificationService?.sendUpdateAndSwallowError(
+                generatorNotificationService?.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
                         level: LOG_LEVEL_CONVERSIONS[level],
@@ -67,7 +67,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 isPackagePrivate: this.isPackagePrivate(customConfig),
             });
 
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
                         npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
@@ -134,7 +134,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 },
             });
 
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.successful({
                         zipFilename: OUTPUT_ZIP_FILENAME,
@@ -142,7 +142,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 )
             );
         } catch (e) {
-            await generatorNotificationService?.sendUpdateOrThrow(
+            await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
                         message: e instanceof Error ? e.message : "Encountered error",

@@ -278,7 +278,7 @@ config:
 
 _Note: This only applies when publishing to Github._
 
-You can use `extraDevDependencies` to specify extra dev dependencies in the generated package.json. 
+You can use `extraDevDependencies` to specify extra dev dependencies in the generated package.json.
 
 ```yaml
 # generators.yml
