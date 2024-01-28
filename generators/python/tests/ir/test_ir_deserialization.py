@@ -24,3 +24,9 @@ def test_ir_deserialization() -> None:
     )
 
     IntermediateRepresentation.parse_file(path_to_ir)
+
+# This test fails because "maximum recursion depth is exceeded"
+# when parsing endpoint response examples. 
+def test_ir_deserialization_with_examples() -> None:
+    path_to_ir = os.path.join(os.path.dirname(__file__), "ir.json")
+    IntermediateRepresentation.parse_file(path_to_ir)
