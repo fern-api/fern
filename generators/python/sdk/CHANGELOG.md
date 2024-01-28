@@ -7,8 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <!-- ## Unreleased -->
 
+## [0.9.0-rc0] - 2024-01-28
+- Fix: The Python SDK better handles cyclical references. In particular, 
+  cyclical references are tracked for undiscriminated unions, 
+  and update_forward_refs is always called with object references.
+  ```
+
+
 ## [0.8.1] - 2024-01-26
-= Feature: If the auth scheme has environment variables specified, 
+- Feature: If the auth scheme has environment variables specified, 
   the generated python client will scan those environment variables. 
 
   For example, for the following Fern Definition 
@@ -30,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   ```
 
 ## [0.8.0] - 2024-01-25
-= Fix: Enums in inlined requests send the appropriate value.
+- Fix: Enums in inlined requests send the appropriate value.
   ```python
   class Operand(str, Enum):
     greater_than = ">"
