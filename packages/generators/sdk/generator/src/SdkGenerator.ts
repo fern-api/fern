@@ -270,10 +270,15 @@ export class SdkGenerator {
 
     public async generate(): Promise<TypescriptProject> {
         this.generateTypeDeclarations();
+        this.context.logger.debug("Generated types");
         this.generateErrorDeclarations();
+        this.context.logger.debug("Generated errors");
         this.generateServiceDeclarations();
+        this.context.logger.debug("Generated services");
         this.generateEnvironments();
+        this.context.logger.debug("Generated environments");
         this.generateRequestWrappers();
+        this.context.logger.debug("Generated request wrappers");
 
         if (this.config.neverThrowErrors) {
             this.generateEndpointErrorUnion();
@@ -289,10 +294,11 @@ export class SdkGenerator {
             this.generateTypeSchemas();
             this.generateEndpointTypeSchemas();
             this.generateInlinedRequestBodySchemas();
+            this.context.logger.debug("Generated serde layer.");
         }
-
         this.coreUtilitiesManager.finalize(this.exportsManager, this.dependencyManager);
         this.exportsManager.writeExportsToProject(this.rootDirectory);
+        this.context.logger.debug("Generated exports");
 
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
@@ -304,8 +310,8 @@ export class SdkGenerator {
                 this.config.snippetFilepath,
                 JSON.stringify(await FernGeneratorExecSerializers.Snippets.jsonOrThrow(snippets), undefined, 4)
             );
+            this.context.logger.debug("Generated snippets");
         }
-
         return this.config.shouldBundle
             ? new BundledTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -457,6 +463,7 @@ export class SdkGenerator {
     }
 
     private generateServiceDeclarations() {
+        this.context.logger.debug("Generating service declarations...");
         for (const packageId of this.getAllPackageIds()) {
             const package_ = this.packageResolver.resolvePackage(packageId);
             if (!package_.hasEndpointsInTree) {
