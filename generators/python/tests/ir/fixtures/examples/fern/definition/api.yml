@@ -1,0 +1,11 @@
+name: api
+error-discrimination:
+  strategy: status-code
+display-name: Superagent
+environments:
+  Default: https://api.beta.superagent.sh
+default-environment: Default
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+auth: BearerAuthScheme
