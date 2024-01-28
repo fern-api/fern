@@ -15,7 +15,7 @@ fern generate [--group <group>] [--version <version>] [--local] [--keepDocker] [
 
 <CodeBlock title = "Documentation Generation Command">
 ```bash
-fern generate [--docs <instance-url>] [--log-level debug]
+fern generate [--docs <instance-url>] [--preview] [--log-level debug]
 ```
 </CodeBlock>
 
@@ -75,6 +75,15 @@ fern generate --local --keepDocker
 
 ```bash
 fern generate --docs --instance instance your-organization.docs.buildwithfern.com
+```
+
+### Preview
+
+**Type**: `string`
+**Description**: Use the `preview` option along with the `--docs` flag to preview updates to your documentation before publishing changes to your production site. 
+
+```bash
+fern generate --docs --preview
 ```
 
 ## Debugging logs

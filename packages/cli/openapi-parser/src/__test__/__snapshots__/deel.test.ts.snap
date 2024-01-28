@@ -3626,60 +3626,6 @@ exports[`open api parser deel parse open api 1`] = `
               },
             },
             {
-              "name": "types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "ongoing_time_based",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "statuses",
-              "value": {
-                "array": [
-                  {
-                    "enum": "new",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "countries",
-              "value": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "US",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "currencies",
-              "value": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "USD",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "sort_by",
               "value": {
                 "enum": "contract_title",
@@ -7513,33 +7459,6 @@ exports[`open api parser deel parse open api 1`] = `
             },
           ],
           "queryParameters": [
-            {
-              "name": "contract_types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "ongoing_time_based",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "statuses",
-              "value": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "approved",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
             {
               "name": "date_from",
               "value": {
@@ -12179,33 +12098,6 @@ exports[`open api parser deel parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "contract_types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "ongoing_time_based",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "statuses",
-              "value": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "approved",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "date_from",
               "value": {
                 "primitive": {
@@ -13668,30 +13560,6 @@ exports[`open api parser deel parse open api 1`] = `
           ],
           "queryParameters": [
             {
-              "name": "contract_types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "ongoing_time_based",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "accrued_holiday",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "date_from",
               "value": {
                 "primitive": {
@@ -14226,30 +14094,6 @@ exports[`open api parser deel parse open api 1`] = `
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
-            {
-              "name": "contract_types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "ongoing_time_based",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "types",
-              "value": {
-                "array": [
-                  {
-                    "enum": "accrued_holiday",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
             {
               "name": "date_from",
               "value": {
@@ -18432,32 +18276,7 @@ exports[`open api parser deel parse open api 1`] = `
         {
           "headers": [],
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "statuses",
-              "value": {
-                "array": [
-                  {
-                    "enum": "pending",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "entities",
-              "value": {
-                "array": [
-                  {
-                    "enum": "individual",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -19004,45 +18823,6 @@ exports[`open api parser deel parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "currencies",
-              "value": {
-                "array": [
-                  {
-                    "primitive": {
-                      "string": "USD",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "statuses",
-              "value": {
-                "array": [
-                  {
-                    "enum": "paid",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "entities",
-              "value": {
-                "array": [
-                  {
-                    "enum": "individual",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],

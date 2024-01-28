@@ -79,10 +79,24 @@ Creates a new document index.",
                 "request": {
                   "environment": "DEVELOPMENT",
                   "indexing_config": {
-                    "string": "string",
+                    "chunking": {
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5,
+                      },
+                      "chunker_name": "sentence-chunker",
+                    },
+                    "vectorizer": {
+                      "config": {
+                        "instruction_document_text_type": "plain_text",
+                        "instruction_domain": "",
+                        "instruction_query_text_type": "plain_text",
+                      },
+                      "model_name": "hkunlp/instructor-xl",
+                    },
                   },
-                  "label": "string",
-                  "name": "string",
+                  "label": "My Document Index",
+                  "name": "my-document-index",
                   "status": "ACTIVE",
                 },
                 "response": {
@@ -91,7 +105,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "string",
                     "indexing_config": {
-                      "string": "string",
+                      "string": {},
                     },
                     "label": "string",
                     "name": "string",
@@ -298,7 +312,7 @@ Compiles the prompt backing the model version using the provided input values.",
                 "query-parameters": undefined,
                 "request": {
                   "input_values": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -622,10 +636,12 @@ or overwritten with default values.",
                           "text": "string",
                         },
                       ],
-                      "key": "string",
+                      "key": "var_1",
                       "type": "TEXT",
+                      "value": "Hello, world!",
                     },
                   ],
+                  "label": "Scenario 1",
                   "metric_input_params": {
                     "params": {},
                   },
@@ -748,14 +764,14 @@ or overwritten with default values.",
                 "request": {
                   "evaluation_params": {},
                   "input_values": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
                   "body": {
                     "evaluation_params": {},
                     "input_values": {
-                      "string": "string",
+                      "string": {},
                     },
                   },
                 },
@@ -901,7 +917,7 @@ Generate a completion using a previously defined deployment.
                       },
                     ],
                     "input_values": {
-                      "string": "string",
+                      "string": {},
                     },
                   },
                 ],

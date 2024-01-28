@@ -235,7 +235,13 @@ function convertEndpointExamples({
     context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema[] {
     return endpointExamples.map((endpointExample) => {
-        return buildEndpointExample({ endpointExample, context });
+        try {
+            return buildEndpointExample({ endpointExample, context });
+        } catch (e) {
+            // eslint-disable-next-line no-console
+            console.error(`Error building endpoint example: ${e}`);
+            throw e;
+        }
     });
 }
 

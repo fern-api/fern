@@ -1196,32 +1196,6 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "transcript_id": "string",
-                },
-                "query-parameters": {
-                  "words": undefined,
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "id": "string",
-                    "matches": [
-                      {
-                        "count": 1,
-                        "indexes": [],
-                        "text": "string",
-                        "timestamps": [],
-                      },
-                    ],
-                    "total_count": 1,
-                  },
-                },
-              },
-            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/word-search",
             "path-parameters": {

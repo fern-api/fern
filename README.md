@@ -164,16 +164,16 @@ For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfe
 
 ## Generators
 
-Generators are process that take your OpenAPI or Fern Definition as input and output artifacts (generated SDKs, server 
-boilerplate, postman collections, etc.). Below you can find a list of all of Fern's generators. 
+Generators are process that take your OpenAPI or Fern Definition as input and output artifacts (generated SDKs, server
+boilerplate, postman collections, etc.). Below you can find a list of all of Fern's generators.
 
-| Generator ID                  | Description                  | Latest Version  | Changelog                                                   | Entrypoint
-| ----------------------------- | ---------------------------- | --------------- | ----------------------------------------------------------- | ---------------
-| fernapi/fern-python-sdk       | Generate a Python SDK        | 0.7.7           | [CHANGELOG.md](./generators/python/pydantic//CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)
-| fernapi/fern-pydantic-model   | Generate Pydantic Models     | 0.7.7           | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)        | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)
-| fernapi/fern-fastapi-server   | Generate FastAPI boilerplate | 0.7.7           | [CHANGELOG.md](./generators/python/fastapi//CHANGELOG.md)   | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)
-| fernapi/fern-openapi          | Fern Definition -> OpenAPI   | 0.0.30          | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)           | [cli.ts](./generators/openapi/src/cli.ts)
-
+| Generator ID                | Description                  | Latest Version | Changelog                                                 | Entrypoint                                                          |
+| --------------------------- | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------- |
+| fernapi/fern-python-sdk     | Generate a Python SDK        | 0.8.0          | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
+| fernapi/fern-pydantic-model | Generate Pydantic Models     | 0.7.7          | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
+| fernapi/fern-fastapi-server | Generate FastAPI boilerplate | 0.7.7          | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
+| fernapi/fern-openapi        | Fern Definition -> OpenAPI   | 0.0.30         | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                           |
+| fernapi/fern-ruby-model     | Generate Ruby Models         | 0.0.6          | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                        |
 
 ## Customer Showcase
 

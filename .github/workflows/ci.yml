@@ -5,6 +5,7 @@ on:
     paths:
       - "packages/**"
       - "generators/openapi/**"
+      - "generators/postman/**"
     branches:
       - main
 

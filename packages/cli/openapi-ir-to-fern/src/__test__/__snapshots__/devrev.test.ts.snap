@@ -712,7 +712,6 @@ organization.
                 "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
-                  "state": "active",
                 },
                 "request": undefined,
                 "response": {
@@ -868,7 +867,7 @@ used.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -940,7 +939,6 @@ used.
                 "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
-                  "type": "capability",
                 },
                 "request": undefined,
                 "response": {
@@ -1128,7 +1126,7 @@ records.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -1471,7 +1469,7 @@ permitted.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -1912,7 +1910,7 @@ response.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -2172,7 +2170,7 @@ won't receive any object events until successfully verified.
                 },
                 "response": {
                   "body": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
               },
@@ -2212,11 +2210,7 @@ won't receive any object events until successfully verified.
               {
                 "headers": undefined,
                 "path-parameters": undefined,
-                "query-parameters": {
-                  "issue.priority": "p0",
-                  "ticket.severity": "blocker",
-                  "type": "issue",
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {
@@ -2335,10 +2329,7 @@ organizations.
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "issue.priority": "p0",
                   "mode": "after",
-                  "ticket.severity": "blocker",
-                  "type": "issue",
                 },
                 "request": undefined,
                 "response": {

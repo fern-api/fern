@@ -48,45 +48,62 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   "allowedPaymentMethods": [
                     "ACH",
                   ],
-                  "createdTimestamp": 1.1,
+                  "createdTimestamp": 1641654664000,
                   "directors": [
                     {
                       "contactDetails": {
                         "addresses": [
                           {
-                            "addressLines": [],
-                            "city": "string",
-                            "country": "string",
-                            "postcode": "string",
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
                             "tags": [
                               {
-                                "key": "string",
-                                "value": "string",
+                                "key": "customKey",
+                                "value": "customValue",
                               },
                             ],
                           },
                         ],
+                        "contactNumbers": [
+                          "+371 123132",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                        ],
                       },
                       "generalDetails": {
-                        "countryOfNationality": "AF",
-                        "countryOfResidence": "AF",
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
                         "gender": "M",
                         "name": {
-                          "firstName": "string",
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
                         },
                       },
                       "legalDocuments": [
                         {
-                          "documentIssuedCountry": "AF",
-                          "documentNumber": "string",
-                          "documentType": "string",
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
                           "nameOnDocument": {
                             "firstName": "string",
                           },
                           "tags": [
                             {
-                              "key": "string",
-                              "value": "string",
+                              "key": "customerType",
+                              "value": "wallet",
                             },
                           ],
                         },
@@ -98,8 +115,8 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       ],
                       "tags": [
                         {
-                          "key": "string",
-                          "value": "string",
+                          "key": "customKey",
+                          "value": "customValue",
                         },
                       ],
                     },
@@ -110,12 +127,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                   "legalEntity": {
                     "companyFinancialDetails": {
                       "expectedTransactionAmountPerMonth": {
-                        "amountCurrency": "1INCH",
-                        "amountValue": 1.1,
+                        "amountCurrency": "GBP",
+                        "amountValue": 800,
                       },
                       "expectedTurnoverPerMonth": {
-                        "amountCurrency": "1INCH",
-                        "amountValue": 1.1,
+                        "amountCurrency": "USD",
+                        "amountValue": 8000,
                       },
                       "tags": [
                         {
@@ -125,7 +142,13 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       ],
                     },
                     "companyGeneralDetails": {
-                      "legalName": "string",
+                      "businessIndustry": [
+                        "Farming",
+                      ],
+                      "legalName": "Ozkan Hazelnut Export JSC",
+                      "mainProductsServicesSold": [
+                        "Hazelnut",
+                      ],
                       "tags": [
                         {
                           "key": "string",
@@ -136,8 +159,8 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
-                      "registrationCountry": "AF",
-                      "registrationIdentifier": "string",
+                      "registrationCountry": "DE",
+                      "registrationIdentifier": "PSJ554342",
                       "tags": [
                         {
                           "key": "string",
@@ -148,19 +171,25 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "contactDetails": {
                       "addresses": [
                         {
-                          "addressLines": [],
-                          "city": "string",
-                          "country": "string",
-                          "postcode": "string",
+                          "addressLines": [
+                            "Klara-Franke Str 20",
+                          ],
+                          "city": "Berlin",
+                          "country": "Germany",
+                          "postcode": "10557",
+                          "state": "Berlin",
                           "tags": [
                             {
-                              "key": "string",
-                              "value": "string",
+                              "key": "customKey",
+                              "value": "customValue",
                             },
                           ],
                         },
                       ],
                     },
+                    "reasonForAccountOpening": [
+                      "string",
+                    ],
                   },
                   "linkedEntities": {},
                   "mccDetails": {
@@ -172,39 +201,56 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "contactDetails": {
                         "addresses": [
                           {
-                            "addressLines": [],
-                            "city": "string",
-                            "country": "string",
-                            "postcode": "string",
+                            "addressLines": [
+                              "Klara-Franke Str 20",
+                            ],
+                            "city": "Berlin",
+                            "country": "Germany",
+                            "postcode": "10557",
+                            "state": "Berlin",
                             "tags": [
                               {
-                                "key": "string",
-                                "value": "string",
+                                "key": "customKey",
+                                "value": "customValue",
                               },
                             ],
                           },
                         ],
+                        "contactNumbers": [
+                          "+371 123132",
+                        ],
+                        "emailIds": [
+                          "baran@flagright.com",
+                        ],
+                        "websites": [
+                          "flagright.com",
+                        ],
                       },
                       "generalDetails": {
-                        "countryOfNationality": "AF",
-                        "countryOfResidence": "AF",
+                        "countryOfNationality": "DE",
+                        "countryOfResidence": "US",
+                        "dateOfBirth": "1991-01-01",
                         "gender": "M",
                         "name": {
-                          "firstName": "string",
+                          "firstName": "Baran",
+                          "lastName": "Ozkan",
+                          "middleName": "Realblood",
                         },
                       },
                       "legalDocuments": [
                         {
-                          "documentIssuedCountry": "AF",
-                          "documentNumber": "string",
-                          "documentType": "string",
+                          "documentExpirationDate": 1839939034000,
+                          "documentIssuedCountry": "DE",
+                          "documentIssuedDate": 1639939034000,
+                          "documentNumber": "Z9431P",
+                          "documentType": "passport",
                           "nameOnDocument": {
                             "firstName": "string",
                           },
                           "tags": [
                             {
-                              "key": "string",
-                              "value": "string",
+                              "key": "customerType",
+                              "value": "wallet",
                             },
                           ],
                         },
@@ -216,16 +262,16 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       ],
                       "tags": [
                         {
-                          "key": "string",
-                          "value": "string",
+                          "key": "customKey",
+                          "value": "customValue",
                         },
                       ],
                     },
                   ],
                   "tags": [
                     {
-                      "key": "string",
-                      "value": "string",
+                      "key": "customKey",
+                      "value": "customValue",
                     },
                   ],
                   "transactionLimits": {
@@ -607,7 +653,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       },
                     },
                   },
-                  "userId": "string",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userStateDetails": {
                     "state": "UNACCEPTABLE",
                   },
@@ -651,19 +697,32 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
               "response": {
                 "body": {
                   "destinationAmountDetails": {
-                    "country": "AF",
-                    "transactionAmount": 1.1,
-                    "transactionCurrency": "1INCH",
+                    "country": "IN",
+                    "transactionAmount": 68351.34,
+                    "transactionCurrency": "INR",
                   },
-                  "deviceData": {},
+                  "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                  "deviceData": {
+                    "appVersion": "1.1.0",
+                    "batteryLevel": 95,
+                    "deviceIdentifier": "3c49f915d04485e34caba",
+                    "deviceLatitude": 13.0033,
+                    "deviceLongitude": 76.1004,
+                    "deviceMaker": "ASUS",
+                    "deviceModel": "Zenphone M2 Pro Max",
+                    "deviceYear": "2018",
+                    "ipAddress": "10.23.191.2",
+                    "operatingSystem": "Android 11.2",
+                    "vpnUsed": false,
+                  },
                   "executedRules": [
                     {
                       "labels": [
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
@@ -681,9 +740,9 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
@@ -692,8 +751,8 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
                           "confidenceScore": 1.1,
@@ -710,24 +769,27 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "originAmountDetails": {
-                    "country": "AF",
-                    "transactionAmount": 1.1,
-                    "transactionCurrency": "1INCH",
+                    "country": "DE",
+                    "transactionAmount": 800,
+                    "transactionCurrency": "EUR",
                   },
+                  "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "promotionCodeUsed": true,
+                  "reference": "loan repayment",
                   "tags": [
                     {
-                      "key": "string",
-                      "value": "string",
+                      "key": "customKey",
+                      "value": "customValue",
                     },
                   ],
-                  "timestamp": 1.1,
-                  "transactionId": "string",
+                  "timestamp": 1641654664000,
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                   "transactionState": "CREATED",
                   "type": "DEPOSIT",
                 },
@@ -773,35 +835,49 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                   "contactDetails": {
                     "addresses": [
                       {
-                        "addressLines": [],
-                        "city": "string",
-                        "country": "string",
-                        "postcode": "string",
+                        "addressLines": [
+                          "Klara-Franke Str 20",
+                        ],
+                        "city": "Berlin",
+                        "country": "Germany",
+                        "postcode": "10557",
+                        "state": "Berlin",
                         "tags": [
                           {
-                            "key": "string",
-                            "value": "string",
+                            "key": "customKey",
+                            "value": "customValue",
                           },
                         ],
                       },
                     ],
+                    "contactNumbers": [
+                      "+37112345432",
+                    ],
+                    "emailIds": [
+                      "baran@flagright.com",
+                    ],
+                    "websites": [
+                      "flagright.com",
+                    ],
                   },
-                  "createdTimestamp": 1.1,
+                  "createdTimestamp": 1641654664000,
                   "kycStatusDetails": {
                     "status": "SUCCESSFUL",
                   },
                   "legalDocuments": [
                     {
-                      "documentIssuedCountry": "AF",
-                      "documentNumber": "string",
-                      "documentType": "string",
+                      "documentExpirationDate": 1839939034000,
+                      "documentIssuedCountry": "DE",
+                      "documentIssuedDate": 1639939034000,
+                      "documentNumber": "Z9431P",
+                      "documentType": "passport",
                       "nameOnDocument": {
                         "firstName": "string",
                       },
                       "tags": [
                         {
-                          "key": "string",
-                          "value": "string",
+                          "key": "customerType",
+                          "value": "wallet",
                         },
                       ],
                     },
@@ -814,8 +890,8 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                   "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
-                      "key": "string",
-                      "value": "string",
+                      "key": "customKey",
+                      "value": "customValue",
                     },
                   ],
                   "transactionLimits": {
@@ -1198,14 +1274,17 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     },
                   },
                   "userDetails": {
-                    "countryOfNationality": "AF",
-                    "countryOfResidence": "AF",
+                    "countryOfNationality": "DE",
+                    "countryOfResidence": "US",
+                    "dateOfBirth": "1991-01-01",
                     "gender": "M",
                     "name": {
-                      "firstName": "string",
+                      "firstName": "Baran",
+                      "lastName": "Ozkan",
+                      "middleName": "Realblood",
                     },
                   },
-                  "userId": "string",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userSegment": "RETAIL",
                   "userStateDetails": {
                     "state": "UNACCEPTABLE",
@@ -1884,7 +1963,7 @@ Each consumer Business entity needs three mandatory fields:
                       "ruleName": "string",
                     },
                   ],
-                  "userId": "string",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -3208,24 +3287,40 @@ Here are some of the most used payload fields explained (you can find the full p
               "query-parameters": undefined,
               "request": {
                 "destinationAmountDetails": {
-                  "country": "AF",
-                  "transactionAmount": 1.1,
-                  "transactionCurrency": "1INCH",
+                  "country": "IN",
+                  "transactionAmount": 68351.34,
+                  "transactionCurrency": "INR",
                 },
-                "deviceData": {},
+                "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                "deviceData": {
+                  "appVersion": "1.1.0",
+                  "batteryLevel": 95,
+                  "deviceIdentifier": "3c49f915d04485e34caba",
+                  "deviceLatitude": 13.0033,
+                  "deviceLongitude": 76.1004,
+                  "deviceMaker": "ASUS",
+                  "deviceModel": "Zenphone M2 Pro Max",
+                  "deviceYear": "2018",
+                  "ipAddress": "10.23.191.2",
+                  "operatingSystem": "Android 11.2",
+                  "vpnUsed": false,
+                },
                 "originAmountDetails": {
-                  "country": "AF",
-                  "transactionAmount": 1.1,
-                  "transactionCurrency": "1INCH",
+                  "country": "DE",
+                  "transactionAmount": 800,
+                  "transactionCurrency": "EUR",
                 },
+                "originUserId": "8650a2611d0771cba03310f74bf6",
+                "promotionCodeUsed": true,
+                "reference": "loan repayment",
                 "tags": [
                   {
-                    "key": "string",
-                    "value": "string",
+                    "key": "customKey",
+                    "value": "customValue",
                   },
                 ],
-                "timestamp": 1.1,
-                "transactionId": "string",
+                "timestamp": 1641654664000,
+                "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 "transactionState": "CREATED",
                 "type": "DEPOSIT",
               },
@@ -3237,8 +3332,8 @@ Here are some of the most used payload fields explained (you can find the full p
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
@@ -3256,9 +3351,9 @@ Here are some of the most used payload fields explained (you can find the full p
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
@@ -3267,8 +3362,8 @@ Here are some of the most used payload fields explained (you can find the full p
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
                           "confidenceScore": 1.1,
@@ -3285,12 +3380,12 @@ Here are some of the most used payload fields explained (you can find the full p
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
-                  "transactionId": "string",
+                  "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
             },
@@ -3347,35 +3442,49 @@ Each consumer User entity needs three mandatory fields:
                 "contactDetails": {
                   "addresses": [
                     {
-                      "addressLines": [],
-                      "city": "string",
-                      "country": "string",
-                      "postcode": "string",
+                      "addressLines": [
+                        "Klara-Franke Str 20",
+                      ],
+                      "city": "Berlin",
+                      "country": "Germany",
+                      "postcode": "10557",
+                      "state": "Berlin",
                       "tags": [
                         {
-                          "key": "string",
-                          "value": "string",
+                          "key": "customKey",
+                          "value": "customValue",
                         },
                       ],
                     },
                   ],
+                  "contactNumbers": [
+                    "+37112345432",
+                  ],
+                  "emailIds": [
+                    "baran@flagright.com",
+                  ],
+                  "websites": [
+                    "flagright.com",
+                  ],
                 },
-                "createdTimestamp": 1.1,
+                "createdTimestamp": 1641654664000,
                 "kycStatusDetails": {
                   "status": "SUCCESSFUL",
                 },
                 "legalDocuments": [
                   {
-                    "documentIssuedCountry": "AF",
-                    "documentNumber": "string",
-                    "documentType": "string",
+                    "documentExpirationDate": 1839939034000,
+                    "documentIssuedCountry": "DE",
+                    "documentIssuedDate": 1639939034000,
+                    "documentNumber": "Z9431P",
+                    "documentType": "passport",
                     "nameOnDocument": {
                       "firstName": "string",
                     },
                     "tags": [
                       {
-                        "key": "string",
-                        "value": "string",
+                        "key": "customerType",
+                        "value": "wallet",
                       },
                     ],
                   },
@@ -3388,8 +3497,8 @@ Each consumer User entity needs three mandatory fields:
                 "riskLevel": "VERY_HIGH",
                 "tags": [
                   {
-                    "key": "string",
-                    "value": "string",
+                    "key": "customKey",
+                    "value": "customValue",
                   },
                 ],
                 "transactionLimits": {
@@ -3772,14 +3881,17 @@ Each consumer User entity needs three mandatory fields:
                   },
                 },
                 "userDetails": {
-                  "countryOfNationality": "AF",
-                  "countryOfResidence": "AF",
+                  "countryOfNationality": "DE",
+                  "countryOfResidence": "US",
+                  "dateOfBirth": "1991-01-01",
                   "gender": "M",
                   "name": {
-                    "firstName": "string",
+                    "firstName": "Baran",
+                    "lastName": "Ozkan",
+                    "middleName": "Realblood",
                   },
                 },
-                "userId": "string",
+                "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 "userSegment": "RETAIL",
                 "userStateDetails": {
                   "state": "UNACCEPTABLE",
@@ -3846,7 +3958,7 @@ Each consumer User entity needs three mandatory fields:
                       "ruleName": "string",
                     },
                   ],
-                  "userId": "string",
+                  "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
             },
@@ -3896,10 +4008,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "path-parameters": undefined,
               "query-parameters": undefined,
               "request": {
-                "metaData": {},
-                "timestamp": 1.1,
-                "transactionId": "string",
-                "transactionState": "CREATED",
+                "eventDescription": "Transaction created",
+                "eventId": "aaeeb166147a406b957dd9147a406b957",
+                "metaData": {
+                  "batteryLevel": 76.3,
+                  "deviceLatitude": 13.009711,
+                  "deviceLongitude": 76.102898,
+                  "ipAddress": "79.144.2.20",
+                  "vpnUsed": true,
+                },
+                "timestamp": 1431231244001,
+                "transactionId": "443dea26147a406b957d9ee3a1247b11",
+                "transactionState": "SUCCESSFUL",
                 "updatedTransactionAttributes": {
                   "destinationAmountDetails": {
                     "country": "AF",
@@ -3923,15 +4043,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               },
               "response": {
                 "body": {
-                  "eventId": "string",
+                  "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
                       "labels": [
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
@@ -3949,9 +4069,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
@@ -3960,8 +4080,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "UNEXPECTED_BEHAVIOR",
                       ],
                       "nature": "AML",
-                      "ruleAction": "ALLOW",
-                      "ruleDescription": "string",
+                      "ruleAction": "BLOCK",
+                      "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHitMeta": {
                         "falsePositiveDetails": {
                           "confidenceScore": 1.1,
@@ -3978,31 +4098,47 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                           },
                         ],
                       },
-                      "ruleId": "string",
+                      "ruleId": "R-1a",
                       "ruleInstanceId": "string",
-                      "ruleName": "string",
+                      "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "transaction": {
                     "destinationAmountDetails": {
-                      "country": "AF",
-                      "transactionAmount": 1.1,
-                      "transactionCurrency": "1INCH",
+                      "country": "IN",
+                      "transactionAmount": 68351.34,
+                      "transactionCurrency": "INR",
                     },
-                    "deviceData": {},
+                    "destinationUserId": "9350a2611e0771cba03310f74bf6",
+                    "deviceData": {
+                      "appVersion": "1.1.0",
+                      "batteryLevel": 95,
+                      "deviceIdentifier": "3c49f915d04485e34caba",
+                      "deviceLatitude": 13.0033,
+                      "deviceLongitude": 76.1004,
+                      "deviceMaker": "ASUS",
+                      "deviceModel": "Zenphone M2 Pro Max",
+                      "deviceYear": "2018",
+                      "ipAddress": "10.23.191.2",
+                      "operatingSystem": "Android 11.2",
+                      "vpnUsed": false,
+                    },
                     "originAmountDetails": {
-                      "country": "AF",
-                      "transactionAmount": 1.1,
-                      "transactionCurrency": "1INCH",
+                      "country": "DE",
+                      "transactionAmount": 800,
+                      "transactionCurrency": "EUR",
                     },
+                    "originUserId": "8650a2611d0771cba03310f74bf6",
+                    "promotionCodeUsed": true,
+                    "reference": "loan repayment",
                     "tags": [
                       {
-                        "key": "string",
-                        "value": "string",
+                        "key": "customKey",
+                        "value": "customValue",
                       },
                     ],
-                    "timestamp": 1.1,
-                    "transactionId": "string",
+                    "timestamp": 1641654664000,
+                    "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                     "transactionState": "CREATED",
                     "type": "DEPOSIT",
                   },

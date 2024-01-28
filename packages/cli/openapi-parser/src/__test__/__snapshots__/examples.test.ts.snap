@@ -1,0 +1,509 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`examples examples parse open api 1`] = `
+{
+  "description": undefined,
+  "endpoints": [
+    {
+      "audiences": [],
+      "authed": false,
+      "availability": undefined,
+      "description": undefined,
+      "errorStatusCode": [],
+      "examples": [
+        {
+          "headers": [],
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "array": [
+              {
+                "properties": {
+                  "building_name": {
+                    "primitive": {
+                      "string": "The Main Building",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "building_name_alias": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "Main Building",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "city": {
+                    "primitive": {
+                      "string": "San Francisco",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "123",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "lat": {
+                    "primitive": {
+                      "double": 37.789,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "lon": {
+                    "primitive": {
+                      "double": -122.395,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "number_units": {
+                    "primitive": {
+                      "double": 100,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "state": {
+                    "primitive": {
+                      "string": "CA",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address": {
+                    "primitive": {
+                      "string": "123 Main St",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "street_address_alias": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "123 Main Street",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "year_built": {
+                    "primitive": {
+                      "double": 2010,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
+                  "zip_code": {
+                    "primitive": {
+                      "string": "94105",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
+            "type": "array",
+          },
+        },
+      ],
+      "generatedRequestName": "SearchRequest",
+      "headers": [],
+      "internal": undefined,
+      "method": "GET",
+      "operationId": "Search",
+      "path": "/property/search",
+      "pathParameters": [],
+      "queryParameters": [],
+      "request": undefined,
+      "requestNameOverride": undefined,
+      "response": {
+        "description": "A simplified list of properties.",
+        "fullExamples": [
+          {
+            "name": "Example 1",
+            "value": [
+              {
+                "building_name": "The Main Building",
+                "building_name_alias": [
+                  "Main Building",
+                ],
+                "city": "San Francisco",
+                "id": "123",
+                "lat": 37.789,
+                "lon": -122.395,
+                "number_units": 100,
+                "state": "CA",
+                "street_address": "123 Main St",
+                "street_address_alias": [
+                  "123 Main Street",
+                ],
+                "year_built": 2010,
+                "zip_code": "94105",
+              },
+            ],
+          },
+        ],
+        "responseProperty": undefined,
+        "schema": {
+          "description": undefined,
+          "generatedName": "SearchResponse",
+          "groupName": undefined,
+          "nameOverride": undefined,
+          "type": "array",
+          "value": {
+            "description": undefined,
+            "generatedName": "SearchResponseItem",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": "PropertySearchResponse",
+            "type": "reference",
+          },
+        },
+        "type": "json",
+      },
+      "sdkName": undefined,
+      "server": [],
+      "summary": undefined,
+      "tags": [],
+    },
+  ],
+  "errors": {},
+  "hasEndpointsMarkedInternal": false,
+  "nonRequestReferencedSchemas": [
+    "PropertySearchResponse",
+  ],
+  "schemas": {
+    "PropertySearchResponse": {
+      "allOf": [],
+      "allOfPropertyConflicts": [],
+      "description": "The PropertySearchResponse object is returned by the /properties/search endpoint.
+It is a very simple property object that can then be used to query the /properties/:id endpoint",
+      "generatedName": "PropertySearchResponse",
+      "groupName": undefined,
+      "nameOverride": undefined,
+      "properties": [
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseId",
+          "key": "id",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseId",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseLat",
+          "key": "lat",
+          "schema": {
+            "description": undefined,
+            "generatedName": "propertySearchResponseLat",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseLat",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseLon",
+          "key": "lon",
+          "schema": {
+            "description": undefined,
+            "generatedName": "propertySearchResponseLon",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseLon",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseBuildingName",
+          "key": "building_name",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseBuildingName",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "nullable",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseBuildingName",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseBuildingNameAlias",
+          "key": "building_name_alias",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseBuildingNameAlias",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseBuildingNameAliasItem",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseStreetAddress",
+          "key": "street_address",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseStreetAddress",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseStreetAddressAlias",
+          "key": "street_address_alias",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseStreetAddressAlias",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "array",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseStreetAddressAliasItem",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "maxLength": undefined,
+                "minLength": undefined,
+                "type": "string",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseCity",
+          "key": "city",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseCity",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseState",
+          "key": "state",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseState",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseZipCode",
+          "key": "zip_code",
+          "schema": {
+            "description": undefined,
+            "generatedName": "PropertySearchResponseZipCode",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "schema": {
+              "maxLength": undefined,
+              "minLength": undefined,
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseNumberUnits",
+          "key": "number_units",
+          "schema": {
+            "description": undefined,
+            "generatedName": "propertySearchResponseNumberUnits",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseNumberUnits",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "nullable",
+              "value": {
+                "description": undefined,
+                "generatedName": "PropertySearchResponseNumberUnits",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseYearBuilt",
+          "key": "year_built",
+          "schema": {
+            "description": undefined,
+            "generatedName": "propertySearchResponseYearBuilt",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseYearBuilt",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "type": "nullable",
+              "value": {
+                "description": undefined,
+                "generatedName": "PropertySearchResponseYearBuilt",
+                "groupName": undefined,
+                "nameOverride": undefined,
+                "schema": {
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          },
+        },
+        {
+          "audiences": [],
+          "conflict": {},
+          "generatedName": "propertySearchResponseScore",
+          "key": "score",
+          "schema": {
+            "description": undefined,
+            "generatedName": "propertySearchResponseScore",
+            "groupName": undefined,
+            "nameOverride": undefined,
+            "type": "optional",
+            "value": {
+              "description": undefined,
+              "generatedName": "PropertySearchResponseScore",
+              "groupName": undefined,
+              "nameOverride": undefined,
+              "schema": {
+                "type": "double",
+              },
+              "type": "primitive",
+            },
+          },
+        },
+      ],
+      "type": "object",
+    },
+  },
+  "securitySchemes": {},
+  "servers": [],
+  "tags": {
+    "orderedTagIds": undefined,
+    "tagsById": {},
+  },
+  "title": "Test spec for \`examples\` keys",
+  "variables": {},
+  "webhooks": [],
+}
+`;

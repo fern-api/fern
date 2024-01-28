@@ -75,34 +75,10 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "pathParameters": [],
           "queryParameters": [
             {
-              "name": "productType",
-              "value": {
-                "array": [
-                  {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
               "name": "location",
               "value": {
                 "enum": "internal",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "allows",
-              "value": {
-                "array": [
-                  {
-                    "enum": "billPay",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],
@@ -803,57 +779,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
         403,
         422,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "allows",
-              "value": {
-                "array": [
-                  {
-                    "enum": "billPay",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "secCode",
-              "value": {
-                "enum": "arc",
-                "type": "enum",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": {
-            "properties": {
-              "items": {
-                "array": [],
-                "type": "array",
-              },
-              "limit": {
-                "primitive": {
-                  "int": 1,
-                  "type": "int",
-                },
-                "type": "primitive",
-              },
-              "nextPage_url": {
-                "primitive": {
-                  "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-            "type": "object",
-          },
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "AccountsListEligibleAchAccountsRequest",
       "headers": [],
       "internal": undefined,
@@ -1026,11 +952,8 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "response": {
             "properties": {
               "items": {
-                "primitive": {
-                  "string": "string",
-                  "type": "string",
-                },
-                "type": "primitive",
+                "map": [],
+                "type": "map",
               },
               "limit": {
                 "primitive": {
@@ -2499,32 +2422,7 @@ The default response lists only recent transactions. Normally, this is transacti
               },
             },
           ],
-          "queryParameters": [
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "balance",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "subtype",
-              "value": {
-                "array": [
-                  {
-                    "enum": "check",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {

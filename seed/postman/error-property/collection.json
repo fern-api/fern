@@ -1,0 +1,47 @@
+{
+  "info": {
+    "name": "Error Property",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Property Based Error",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Throw Error",
+          "request": {
+            "description": "GET request that always throws an error",
+            "url": {
+              "raw": "{{baseUrl}}/property-based-error",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "property-based-error"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

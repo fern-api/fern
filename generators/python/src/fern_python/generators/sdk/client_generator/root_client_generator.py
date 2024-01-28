@@ -31,6 +31,7 @@ from .generated_root_client import GeneratedRootClient
 class RootClientConstructorParameter:
     constructor_parameter_name: str
     type_hint: AST.TypeHint
+    validation_check: typing.Optional[AST.Expression] = None
     private_member_name: typing.Optional[str] = None
     initializer: Optional[AST.Expression] = None
     exclude_from_wrapper_construction: Optional[bool] = False
@@ -170,7 +171,9 @@ class RootClientGenerator:
                 signature=AST.FunctionSignature(
                     named_parameters=named_parameters,
                 ),
-                body=AST.CodeWriter(self._get_write_constructor_body(is_async=is_async)),
+                body=AST.CodeWriter(
+                    self._get_write_constructor_body(is_async=is_async, constructor_parameters=constructor_parameters)
+                ),
             ),
         )
 
@@ -284,10 +287,36 @@ class RootClientGenerator:
             generated_environment=self._generated_environment,
         )
         for param in client_wrapper_generator._get_constructor_info().constructor_parameters:
+            parm_type_hint = param.type_hint
+            add_validation = False
+            if param.environment_variable is not None and not param.type_hint.is_optional:
+                add_validation = True
+                parm_type_hint = AST.TypeHint.optional(parm_type_hint)
             parameters.append(
                 RootClientConstructorParameter(
                     constructor_parameter_name=param.constructor_parameter_name,
-                    type_hint=param.type_hint,
+                    type_hint=parm_type_hint,
+                    initializer=AST.Expression(
+                        AST.FunctionInvocation(
+                            function_definition=AST.Reference(
+                                import_=AST.ReferenceImport(module=AST.Module.built_in(("os",))),
+                                qualified_name_excluding_import=("getenv",),
+                            ),
+                            args=[AST.Expression(f'"{param.environment_variable}"')],
+                        )
+                    )
+                    if param.environment_variable is not None
+                    else None,
+                    validation_check=AST.Expression(
+                        AST.CodeWriter(
+                            self._get_paramter_validation_writer(
+                                param_name=param.constructor_parameter_name,
+                                environment_variable=param.environment_variable,
+                            )
+                        )
+                    )
+                    if add_validation and param.environment_variable is not None
+                    else None,
                 )
             )
 
@@ -315,8 +344,37 @@ class RootClientGenerator:
     def _environment_is_enum(self) -> bool:
         return self._context.ir.environments is not None
 
-    def _get_write_constructor_body(self, *, is_async: bool) -> CodeWriterFunction:
+    def _get_paramter_validation_writer(self, *, param_name: str, environment_variable: str) -> CodeWriterFunction:
+        def _write_parameter_validation(writer: AST.NodeWriter) -> None:
+            writer.write_line(f"if {param_name} is None:")
+            writer.indent()
+            writer.write("raise ")
+            writer.write_node(
+                AST.ClassInstantiation(
+                    class_=self._context.core_utilities.get_reference_to_api_error(),
+                    kwargs=[
+                        (
+                            "message",
+                            AST.Expression(
+                                f'"The client must be instantiated be either passing in {param_name} or setting {environment_variable}"'
+                            ),
+                        )
+                    ],
+                )
+            )
+            writer.outdent()
+            writer.write_newline_if_last_line_not()
+
+        return _write_parameter_validation
+
+    def _get_write_constructor_body(
+        self, *, is_async: bool, constructor_parameters: List[RootClientConstructorParameter]
+    ) -> CodeWriterFunction:
         def _write_constructor_body(writer: AST.NodeWriter) -> None:
+            for param in constructor_parameters:
+                if param.validation_check is not None:
+                    writer.write_node(param.validation_check)
+
             client_wrapper_generator = ClientWrapperGenerator(
                 context=self._context,
                 generated_environment=self._generated_environment,

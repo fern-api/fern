@@ -3,7 +3,7 @@
 
 **Latest version**: `0.8.13`
 
-The Express generator generates types and networking logic for your Express server. This saves you time and add compile-time safety that you are serving the exact API that you specified in your API Definition.
+The Express generator generates types and networking logic for your Express server. This saves you time and adds compile-time safety by guaranteeing that you are serving the exact API that you specified in your API Definition.
 
 Available on the open source plan.
 
@@ -30,7 +30,7 @@ Available on the open source plan.
 Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when using this generator.
 </Callout>
 
-## Demo Video
+## Demo video
 
 <div style={{ position: "relative", paddingBottom: "62.5%", height: "0" }}>
     <iframe 
@@ -44,25 +44,25 @@ Make sure to enable `allowSyntheticDefaultImports` in your `tsconfig.json` when 
 </div>
 
 
-## Express Configurations
+## Express configurations
 
 The following options are supported when generating an Express backend:
 
-### Use Branded String Aliases
+### `useBrandedStringAliases`
 
-See [useBrandedStringAliases](https://docs.buildwithfern.com/sdks/typescript-node#use-branded-string-aliases) under SDK Configuration
+See TypeScript Node.js SDK Configuration options: [useBrandedStringAliases](/generate-sd-ks/generators/type-script-node-js-sdk#use-branded-string-aliases).
 
 #### `treatUnknownAsAny`
 
-See [treatUnknownAsAny](https://docs.buildwithfern.com/sdks/typescript-node#treat-unknown-as-any) under SDK Configuration
+See TypeScript Node.js SDK Configuration options: [treatUnknownAsAny](/generate-sd-ks/generators/type-script-node-js-sdk#treat-unknown-as-any).
 
 #### `noSerdeLayer`
 
-See [noSerdeLayer](https://docs.buildwithfern.com/sdks/typescript-node#no-serde-layer) under SDK Configuration
+See TypeScript Node.js SDK Configuration options: [noSerdeLayer](/generate-sd-ks/generators/type-script-node-js-sdk#no-serde-layer).
 
 #### `outputSourceFiles`
 
-See [outputSourceFiles](https://docs.buildwithfern.com/sdks/typescript-node#output-source-files) under SDK Configuration
+See TypeScript Node.js SDK Configuration options: [outputSourceFiles](/generate-sd-ks/generators/type-script-node-js-sdk#output-source-files).
 
 #### `areImplementationsOptional`
 
@@ -73,7 +73,7 @@ By default, the generated `register()` will require an implementatiion for every
 service defined in your Fern Definition.
 
 If `areImplementationsOptional` is enabled, then `register()` won't require any
-implementations. Note that this is mildly dangerous, if you forget to include
+implementations. Note that this is mildly dangerous: if you forget to include
 an implementation, then your server behavior may drift from your docs and clients.
 
 #### ✨ `doNotHandleUnrecognizedErrors`
@@ -95,4 +95,4 @@ The generated TypeScript code has the following dependencies:
 - [axios](https://www.npmjs.com/package/axios)
 - [js-base64](https://www.npmjs.com/package/js-base64)
 
-If you are packaging your code manually, make sure to include them in your `package.json`.
+If you are packaging your code manually, make sure to include these dependencies in your `package.json`.

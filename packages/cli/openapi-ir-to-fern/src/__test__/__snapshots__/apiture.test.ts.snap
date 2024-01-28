@@ -195,9 +195,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
-                  "allows": "billPay",
                   "location": "internal",
-                  "productType": "savings",
                 },
                 "request": undefined,
                 "response": {
@@ -254,24 +252,6 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
               "root.UnauthorizedError",
               "root.ForbiddenError",
               "root.UnprocessableEntityError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": {
-                  "allows": "billPay",
-                  "secCode": "arc",
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "items": [],
-                    "limit": 1,
-                    "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/banking/achEligibleAccounts",
@@ -763,7 +743,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 "request": undefined,
                 "response": {
                   "body": {
-                    "items": "string",
+                    "items": {},
                     "limit": 1,
                     "maximumOverdraftAccounts": 1,
                     "nextPage_url": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8/eligibleOverdraftAccounts?start=74f96e77c3aafcb9fe85?limit=100",
@@ -942,10 +922,7 @@ The default response lists only recent transactions. Normally, this is transacti
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": {
-                  "subtype": "check",
-                  "type": "balance",
-                },
+                "query-parameters": undefined,
                 "request": undefined,
                 "response": {
                   "body": {

@@ -1,0 +1,116 @@
+{
+  "info": {
+    "name": "Custom Auth",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "customAuthScheme",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "value",
+        "value": "{{customAuthScheme}}",
+        "type": "string"
+      },
+      {
+        "key": "key",
+        "value": "X-API-KEY",
+        "type": "string"
+      },
+      {
+        "key": "in",
+        "value": "header",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Custom Auth",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With Custom Auth",
+          "request": {
+            "description": "GET request with custom auth scheme",
+            "url": {
+              "raw": "{{baseUrl}}/custom-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "custom-auth"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{customAuthScheme}}",
+                "type": "string",
+                "description": null
+              }
+            ],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Post With Custom Auth",
+          "request": {
+            "description": "POST request with custom auth scheme",
+            "url": {
+              "raw": "{{baseUrl}}/custom-auth",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "custom-auth"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "X-API-KEY",
+                "value": "{{customAuthScheme}}",
+                "type": "string",
+                "description": null
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"UNKNOWN\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
