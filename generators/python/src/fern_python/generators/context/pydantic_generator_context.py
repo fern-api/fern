@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from abc import ABC, abstractmethod
-from typing import Callable, List, Optional
+from typing import Callable, List, Optional, Set
 
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources import GeneratorConfig
@@ -31,6 +31,9 @@ class PydanticGeneratorContext(ABC):
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]] = None,
+        check_is_circular_reference: Optional[
+            Callable[[ir_types.DeclaredTypeName, ir_types.DeclaredTypeName], bool]
+        ] = None,
     ) -> AST.TypeHint:
         ...
 
@@ -55,7 +58,7 @@ class PydanticGeneratorContext(ABC):
         ...
 
     @abstractmethod
-    def get_referenced_types(self, type_id: ir_types.TypeId) -> List[ir_types.TypeId]:
+    def get_referenced_types(self, type_id: ir_types.TypeId) -> Set[ir_types.TypeId]:
         ...
 
     @abstractmethod
@@ -69,15 +72,15 @@ class PydanticGeneratorContext(ABC):
     @abstractmethod
     def get_referenced_types_of_type_declaration(
         self, type_declaration: ir_types.TypeDeclaration
-    ) -> List[ir_types.TypeId]:
+    ) -> Set[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
+    def get_referenced_types_of_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         ...
 
     @abstractmethod
-    def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> List[ir_types.TypeId]:
+    def get_type_names_in_type_reference(self, type_reference: ir_types.TypeReference) -> Set[ir_types.TypeId]:
         ...
 
     @abstractmethod

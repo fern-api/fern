@@ -21,7 +21,24 @@ class TypeReferenceToTypeHintConverter:
         self,
         type_reference: ir_types.TypeReference,
         must_import_after_current_declaration: Optional[Callable[[ir_types.DeclaredTypeName], bool]],
+        check_is_circular_reference: Optional[
+            Callable[[ir_types.DeclaredTypeName, ir_types.DeclaredTypeName], bool]
+        ] = None,
     ) -> AST.TypeHint:
+        def must_import_after_current_declaration_inner(
+            type_name: ir_types.DeclaredTypeName,
+        ) -> Optional[Callable[[ir_types.DeclaredTypeName], bool]]:
+            if must_import_after_current_declaration:
+                return must_import_after_current_declaration
+            elif check_is_circular_reference is not None:
+                # This is an odd work around to get typing to accept that the function isn't none
+                check_is_circular_reference_not_none: Callable[
+                    [ir_types.DeclaredTypeName, ir_types.DeclaredTypeName], bool
+                ] = check_is_circular_reference
+                return lambda other_type_name: check_is_circular_reference_not_none(other_type_name, type_name)
+            else:
+                return None
+
         return type_reference.visit(
             container=lambda container: self._get_type_hint_for_container(
                 container=container,
@@ -29,7 +46,7 @@ class TypeReferenceToTypeHintConverter:
             ),
             named=lambda type_name: self._get_type_hint_for_named(
                 type_name=type_name,
-                must_import_after_current_declaration=must_import_after_current_declaration,
+                must_import_after_current_declaration=must_import_after_current_declaration_inner(type_name),
             ),
             primitive=self._get_type_hint_for_primitive,
             unknown=AST.TypeHint.any,
@@ -121,7 +138,10 @@ class TypeReferenceToTypeHintConverter:
             type=self._type_declaration_referencer.get_class_reference(
                 name=type_name,
                 must_import_after_current_declaration=must_import_after_current_declaration,
-            )
+            ),
+            is_string_reference=must_import_after_current_declaration(type_name)
+            if must_import_after_current_declaration is not None
+            else False,
         )
 
     def _get_type_hint_for_primitive(self, primitive: ir_types.PrimitiveType) -> AST.TypeHint:

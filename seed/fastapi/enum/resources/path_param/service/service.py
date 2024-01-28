@@ -67,7 +67,7 @@ class AbstractPathParamService(AbstractFernService):
         wrapper.__globals__.update(cls.send.__globals__)
 
         router.post(
-            path="/path-param/{value}",
+            path="//path-param/{value}",
             response_model=None,
             status_code=starlette.status.HTTP_204_NO_CONTENT,
             description=AbstractPathParamService.send.__doc__,

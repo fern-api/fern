@@ -33,8 +33,8 @@ class ContainerValue(pydantic.BaseModel):
 
     def visit(
         self,
-        list: typing.Callable[[typing.List[FieldValue]], T_Result],
-        optional: typing.Callable[[typing.Optional[FieldValue]], T_Result],
+        list: typing.Callable[[typing.List["FieldValue"]], T_Result],
+        optional: typing.Callable[[typing.Optional["FieldValue"]], T_Result],
     ) -> T_Result:
         if self.__root__.type == "list":
             return list(self.__root__.value)
@@ -73,4 +73,4 @@ class _ContainerValue:
 
 _ContainerValue.List.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
 _ContainerValue.Optional.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
-ContainerValue.update_forward_refs()
+ContainerValue.update_forward_refs(ContainerValue=ContainerValue, FieldValue=FieldValue)
