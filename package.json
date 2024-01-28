@@ -98,6 +98,7 @@
     }
   },
   "dependencies": {
+    "open": "^10.0.3",
     "terminal-link": "^3.0.0"
   }
 }
