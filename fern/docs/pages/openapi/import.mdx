@@ -1,18 +1,40 @@
 To use an OpenAPI specification, you can pass in the filepath or URL.
 
-To pass in an OpenAPI spec from a filepath:
+Start by ensuring Fern is installed.
 
 ```bash
 npm install -g fern-api
-fern init --openapi <filepath to openapi>
 ```
 
-Alternatively, to pass in an OpenAPI spec from a URL:
+## From filepath 
 
-```bash
-npm install -g fern-api
-fern init --openapi <url to openapi>
-```
+<CodeBlocks>
+  <CodeBlock title="Import from filepath">
+  ```bash
+  fern init --openapi <filepath to openapi>
+  ```
+  </CodeBlock>
+  <CodeBlock title="Example">
+    ```bash
+    fern init --openapi .../api-spec/openapi.yaml # can be YAML or JSON
+    ```
+<CodeBlocks>
+
+## From URL 
+
+<CodeBlocks>
+  <CodeBlock title="Import from URL">
+  ```bash
+  fern init --openapi <url to openapi>
+  ```
+  </CodeBlock>
+  <CodeBlock title="Example">
+    ```bash
+    fern init --openapi https://raw.githubusercontent.com/OAI/OpenAPI-Specification/main/examples/v3.0/petstore.yaml # can be YAML or JSON
+    ```
+<CodeBlocks>
+
+## Behavior
 
 Fern will generate the following directory with your OpenAPI spec inside of it.
 
@@ -21,18 +43,17 @@ fern/
 ├─ fern.config.json
 ├─ generators.yml
 └─ openapi/
-  └─ openapi.json # <--- your openapi file
+  └─ openapi.json # <--- your openapi spec
 ```
 
-Next, run `fern check` to validate the OpenAPI spec. Resolve any errors.
+Run `fern check` to validate the OpenAPI spec. Resolve any errors.
 
-### Example 
+Then run [fern generate](/overview/cli/fern-generate).
 
+<Callout intent="info">
+If you're having trouble understanding the errors, run the command `fern write-definition`. This command will convert your OpenAPI spec into a Fern Definition. [Read more.](/overview/cli/fern-write-definition)
+</Callout>
 
-Having trouble? Reach out in the [Fern Discord server](https://discord.com/invite/JkkXumPzcG). 
+### Get support
 
-If you're having trouble understanding the errors, run the command `fern write-definition`.
-This command will convert your OpenAPI spec into a Fern Definition. 
-[Read more.](/overview/cli/fern-write-definition)
-
-If there are no errors, you can run [fern generate](/overview/cli/fern-generate).
+Got questions? Reach out on [Discord](https://discord.com/invite/JkkXumPzcG) or by sending us an [email](https://buildwithfern.com/contact). 
