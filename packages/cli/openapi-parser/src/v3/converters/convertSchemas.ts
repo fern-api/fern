@@ -277,6 +277,14 @@ export function convertSchemaObject(
                 description,
                 groupName
             });
+        } else if (schema.format === "json-string") {
+            return SchemaWithExample.unknown({
+                nameOverride,
+                generatedName,
+                description,
+                groupName,
+                example: undefined
+            });
         }
 
         const maybeConstValue = getProperty<string>(schema, "const");
