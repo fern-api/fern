@@ -2,10 +2,6 @@ In this quickstart, we'll install Fern, initialize a sample API, and generate a 
 
 We'll use a [**Fern Definition**](/api-definition/fern-definition/overview) to describe our endpoints, types, and errors. Alternatively, you can use an [OpenAPI specification](/api-definition/openapi/importing-open-api).
 
-```bash
-npm install -g fern-api
-```
-
 ### Prerequisites 
 
 - Node.js 18 or higher
@@ -89,10 +85,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typscript-node-sdk
-          version: 0.8.8
-          output:
-            location: local-file-system
-            path: ../generated/sdks/node
+        version: 0.x.x
+        output:
+          location: local-file-system
+          path: ../generated/sdks/typescript
 ```
 </CodeBlock>
 
@@ -102,7 +98,7 @@ To invoke the generator, run:
 fern generate
 ```
 
-By default, Fern runs the generator in the cloud, compiles your API definition into files, and downloads them to your computer. Once complete, you'll see new files in `/generated/sdks/node/`.
+By default, Fern runs the generator in the cloud, compiles your API definition into files, and downloads them to your computer. Once complete, you'll see new files in `/generated/sdks/typescript/`.
 
 Note: The `generated/` directory will be created at the root level of your repository, one level up from the `fern/` folder.
 
