@@ -1,10 +1,7 @@
 import os
 import subprocess
-import sys
 
 from fern.ir import IntermediateRepresentation
-
-sys.setrecursionlimit(2000)
 
 
 def test_ir_deserialization() -> None:
