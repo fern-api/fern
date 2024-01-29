@@ -257,8 +257,12 @@ function convertResponse(irResponse: Ir.http.HttpResponse): APIV1Write.HttpRespo
                 return {
                     type: "streamingText"
                 };
+            } else {
+                return {
+                    type: "stream",
+                    shape: { type: "reference", value: convertTypeReference(streamingResponse.dataEventType.json) }
+                };
             }
-            return undefined;
         },
         _other: () => {
             throw new Error("Unknown HttpResponse: " + irResponse.type);
