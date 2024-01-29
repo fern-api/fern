@@ -28,6 +28,8 @@ jobs:
           URL=$(echo "$OUTPUT" | grep -oP 'Published docs to \K.*(?= \()')
           echo "Preview URL: $URL"
           echo "🌿 Preview your docs: $URL" > preview_url.txt
+          # Truncate the file to contain only the desired line
+          echo "$(head -n 1 preview_url.txt)" > preview_url.txt
 
       - name: Comment URL in PR
         uses: thollander/actions-comment-pull-request@v2.4.3
