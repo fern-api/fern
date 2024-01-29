@@ -38,6 +38,7 @@ export async function generateIrForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
+                    disableExamples: false,
                     audiences,
                     version
                 });
@@ -58,11 +59,13 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
+    disableExamples,
     version
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: GenerationLanguage | undefined;
+    disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
 }): Promise<unknown> {
@@ -70,7 +73,8 @@ async function getIntermediateRepresentation({
         workspace,
         context,
         generationLanguage,
-        audiences
+        audiences,
+        disableExamples
     });
 
     if (version == null) {

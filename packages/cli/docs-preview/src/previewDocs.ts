@@ -96,7 +96,8 @@ class ReferencedAPICollector {
             const ir = await generateIntermediateRepresentation({
                 workspace: fernWorkspace,
                 audiences: api.audiences,
-                generationLanguage: undefined
+                generationLanguage: undefined,
+                disableExamples: false
             });
             const apiDefinition = convertIrToFdrApi(ir, {});
             const dbApiDefinition = convertAPIDefinitionToDb(
