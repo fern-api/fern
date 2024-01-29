@@ -7,7 +7,9 @@ export const GeneratorInvocationSchema = z.strictObject({
     version: z.string(),
     output: z.optional(GeneratorOutputSchema),
     github: z.optional(GithubConfigurationSchema),
-    config: z.unknown()
+    config: z.unknown(),
+    // Temporary way to unblock example serialization
+    "disable-examples": z.optional(z.boolean())
 });
 
 export type GeneratorInvocationSchema = z.infer<typeof GeneratorInvocationSchema>;

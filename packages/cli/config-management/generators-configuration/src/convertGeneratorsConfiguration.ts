@@ -91,6 +91,7 @@ async function convertGenerator({
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
+        disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)

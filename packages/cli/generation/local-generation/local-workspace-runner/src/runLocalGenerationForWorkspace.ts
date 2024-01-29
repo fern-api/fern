@@ -222,7 +222,8 @@ async function writeIrToFile({
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         audiences,
-        generationLanguage: generatorInvocation.language
+        generationLanguage: generatorInvocation.language,
+        disableExamples: generatorInvocation.disableExamples
     });
     context.logger.debug("Generated IR");
     const migratedIntermediateRepresentation =

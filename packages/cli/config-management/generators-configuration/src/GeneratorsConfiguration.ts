@@ -26,6 +26,7 @@ export interface GeneratorInvocation {
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    disableExamples: boolean;
     language: GenerationLanguage | undefined;
 }
 

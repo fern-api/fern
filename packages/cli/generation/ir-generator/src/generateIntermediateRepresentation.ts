@@ -42,10 +42,12 @@ import { parseErrorName } from "./utils/parseErrorName";
 export async function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
+    disableExamples,
     audiences
 }: {
     workspace: FernWorkspace;
     generationLanguage: GenerationLanguage | undefined;
+    disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
     const casingsGenerator = constructCasingsGenerator(generationLanguage);
@@ -161,6 +163,9 @@ export async function generateIntermediateRepresentation({
                         workspace
                     });
                     const convertedTypeDeclaration = convertedTypeDeclarationWithFilepaths.typeDeclaration;
+                    if (disableExamples) {
+                        convertedTypeDeclaration.examples = [];
+                    }
                     const subpackageFilepaths = convertedTypeDeclarationWithFilepaths.descendantFilepaths;
 
                     const typeId = IdGenerator.generateTypeId(convertedTypeDeclaration.name);
@@ -224,6 +229,9 @@ export async function generateIntermediateRepresentation({
 
                 const convertedEndpoints: Record<string, HttpEndpoint> = {};
                 convertedHttpService.endpoints.forEach((httpEndpoint) => {
+                    if (disableExamples) {
+                        httpEndpoint.examples = [];
+                    }
                     const rawEndpointSchema = service.endpoints[httpEndpoint.name.originalName];
                     irGraph.addEndpoint(convertedHttpService, httpEndpoint, rawEndpointSchema);
                     convertedEndpoints[httpEndpoint.name.originalName] = httpEndpoint;
