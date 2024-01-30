@@ -23,7 +23,7 @@ groups:
           wrapped-aliases: true
           enable-forward-compatible-enums: true
       - name: fernapi/fern-pydantic-model
-        version: 0.3.6-rc1-1-ga2f760f4
+        version: 0.8.0-rc0
         output:
           location: pypi
           url: pypi.buildwithfern.com

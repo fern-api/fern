@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.8.1-rc0] - 2024-01-29
+
+- Fix: Increase recursion depth to allow for highly nested and complex examples,
+  this is a temporary solution while the example datamodel is further refined.
+
 ## [0.8.0-rc0] - 2024-01-28
-- Fix: better handles cyclical references. In particular, 
-  cyclical references are tracked for undiscriminated unions, 
+
+- Fix: better handles cyclical references. In particular,
+  cyclical references are tracked for undiscriminated unions,
   and update_forward_refs is always called with object references.
-  ```
 
 ## [0.7.7] - 2024-01-21
 
