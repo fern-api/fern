@@ -5119,20 +5119,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typescript-eslint/parser@npm:^5.27.1":
-  version: 5.30.5
-  resolution: "@typescript-eslint/parser@npm:5.30.5"
+"@typescript-eslint/parser@npm:^6.20.0":
+  version: 6.20.0
+  resolution: "@typescript-eslint/parser@npm:6.20.0"
   dependencies:
-    "@typescript-eslint/scope-manager": "npm:5.30.5"
-    "@typescript-eslint/types": "npm:5.30.5"
-    "@typescript-eslint/typescript-estree": "npm:5.30.5"
-    debug: "npm:^4.3.4"
+    "@typescript-eslint/scope-manager": 6.20.0
+    "@typescript-eslint/types": 6.20.0
+    "@typescript-eslint/typescript-estree": 6.20.0
+    "@typescript-eslint/visitor-keys": 6.20.0
+    debug: ^4.3.4
   peerDependencies:
-    eslint: ^6.0.0 || ^7.0.0 || ^8.0.0
+    eslint: ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 6c16821e122b891420a538f200f6e576ad1167855a67e87f9a7d3a08c0513fe26006f6411b8ba6f4662a81526bd0339ae37c47dd88fa5943e6f27ff70da9f989
+  checksum: 91c0a715e7a37a0386770b0c4c208d0732736828294a3f58901655f0edf9230d1211dbfb8ac0ea562993506130773131fc1ee241311f43d78007af959bd46b9a
   languageName: node
   linkType: hard
 
@@ -8914,7 +8915,7 @@ env-cmd@toddbluhm/env-cmd:
     "@types/lodash-es": ^4.17.6
     "@types/node": ^18.7.18
     "@typescript-eslint/eslint-plugin": ^5.27.1
-    "@typescript-eslint/parser": ^5.27.1
+    "@typescript-eslint/parser": ^6.20.0
     chalk: ^5.0.1
     depcheck: ^1.4.6
     eslint: ^8.56.0

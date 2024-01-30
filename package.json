@@ -57,7 +57,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
+    "@typescript-eslint/parser": "^6.20.0",
     "chalk": "^5.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
