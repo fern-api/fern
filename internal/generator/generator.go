@@ -405,6 +405,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 		files = append(files, newCoreFile(g.coordinator))
 		files = append(files, newCoreTestFile(g.coordinator))
 		files = append(files, newPointerFile(g.coordinator, ir.ApiName, generatedNames))
+		files = append(files, newRetrierFile(g.coordinator))
 		if ir.SdkConfig.HasStreamingEndpoints {
 			files = append(files, newStreamFile(g.coordinator))
 		}
@@ -823,6 +824,14 @@ func newStreamFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/stream.go",
 		[]byte(streamFile),
+	)
+}
+
+func newRetrierFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/retrier.go",
+		[]byte(retrierFile),
 	)
 }
 

@@ -32,3 +32,10 @@ func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {
 		HTTPHeader: httpHeader.Clone(),
 	}
 }
+
+// WithMaxAttempts configures the maximum number of retry attempts.
+func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
+	return &core.MaxAttemptsOption{
+		MaxAttempts: attempts,
+	}
+}

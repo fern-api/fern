@@ -37,6 +37,9 @@ var (
 
 	//go:embed sdk/core/stream.go
 	streamFile string
+
+	//go:embed sdk/core/retrier.go
+	retrierFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -92,6 +95,11 @@ func (f *fileWriter) WriteLegacyClientOptions(
 	f.P("// WithHTTPHeader adds the given http.Header to the request.")
 	f.P("func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {")
 	f.P("return option.WithHTTPHeader(httpHeader)")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxAttempts configures the maximum number of retry attempts.")
+	f.P("func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {")
+	f.P("return option.WithMaxAttempts(attempts)")
 	f.P("}")
 	f.P()
 
@@ -276,6 +284,7 @@ func (f *fileWriter) WriteRequestOptionsDefinition(
 	f.P("BaseURL string")
 	f.P("HTTPClient HTTPClient")
 	f.P("HTTPHeader http.Header")
+	f.P("MaxAttempts uint")
 
 	// Generate the exported RequestOptions type that all clients can act upon.
 	for _, authScheme := range auth.Schemes {
@@ -444,6 +453,9 @@ func (f *fileWriter) writeRequestOptionStructs(
 		return err
 	}
 	if err := f.writeOptionStruct("HTTPHeader", "http.Header", true, asIdempotentRequestOption); err != nil {
+		return err
+	}
+	if err := f.writeOptionStruct("MaxAttempts", "uint", true, asIdempotentRequestOption); err != nil {
 		return err
 	}
 
@@ -621,6 +633,13 @@ func (f *fileWriter) WriteRequestOptions(
 	f.P("return &core.HTTPHeaderOption{")
 	f.P("// Clone the headers so they can't be modified after the option call.")
 	f.P("HTTPHeader: httpHeader.Clone(),")
+	f.P("}")
+	f.P("}")
+	f.P()
+	f.P("// WithMaxAttempts configures the maximum number of retry attempts.")
+	f.P("func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {")
+	f.P("return &core.MaxAttemptsOption{")
+	f.P("MaxAttempts: attempts,")
 	f.P("}")
 	f.P("}")
 	f.P()
@@ -815,7 +834,12 @@ func (f *fileWriter) WriteClient(
 	f.P("options := core.NewRequestOptions(opts...)")
 	f.P("return &", clientName, "{")
 	f.P(`baseURL: options.BaseURL,`)
-	f.P("caller: core.NewCaller(options.HTTPClient),")
+	f.P("caller: core.NewCaller(")
+	f.P("&core.CallerParams{")
+	f.P("Client: options.HTTPClient,")
+	f.P("MaxAttempts: options.MaxAttempts,")
+	f.P("},")
+	f.P("),")
 	f.P("header: options.ToHeader(),")
 	for _, subpackage := range subpackages {
 		var (
@@ -1045,6 +1069,7 @@ func (f *fileWriter) WriteClient(
 			f.P("&core.StreamParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {
@@ -1066,6 +1091,7 @@ func (f *fileWriter) WriteClient(
 			f.P("&core.CallParams{")
 			f.P("URL: endpointURL, ")
 			f.P("Method:", endpoint.Method, ",")
+			f.P("MaxAttempts: options.MaxAttempts,")
 			f.P("Headers:", headersParameter, ",")
 			f.P("Client: options.HTTPClient,")
 			if endpoint.RequestValueName != "" {

@@ -13,13 +13,15 @@ const defaultStreamDelimiter = '\n'
 
 // Streamer calls APIs and streams responses using a *Stream.
 type Streamer[T any] struct {
-	client HTTPClient
+	client  HTTPClient
+	retrier *Retrier
 }
 
 // NewStreamer returns a new *Streamer backed by the given caller's HTTP client.
 func NewStreamer[T any](caller *Caller) *Streamer[T] {
 	return &Streamer[T]{
-		client: caller.client,
+		client:  caller.client,
+		retrier: caller.retrier,
 	}
 }
 
@@ -28,6 +30,7 @@ type StreamParams struct {
 	URL          string
 	Method       string
 	Delimiter    string
+	MaxAttempts  uint
 	Headers      http.Header
 	Client       HTTPClient
 	Request      interface{}
@@ -52,7 +55,17 @@ func (s *Streamer[T]) Stream(ctx context.Context, params *StreamParams) (*Stream
 		client = params.Client
 	}
 
-	resp, err := client.Do(req)
+	var retryOptions []RetryOption
+	if params.MaxAttempts > 0 {
+		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
+	}
+
+	resp, err := s.retrier.Run(
+		client.Do,
+		req,
+		params.ErrorDecoder,
+		retryOptions...,
+	)
 	if err != nil {
 		return nil, err
 	}

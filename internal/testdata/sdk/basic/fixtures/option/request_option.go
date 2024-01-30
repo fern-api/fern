@@ -33,6 +33,13 @@ func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {
 	}
 }
 
+// WithMaxAttempts configures the maximum number of retry attempts.
+func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
+	return &core.MaxAttemptsOption{
+		MaxAttempts: attempts,
+	}
+}
+
 // WithBasicAuth sets the 'Authorization: Basic <base64>' request header.
 func WithBasicAuth(username, password string) *core.BasicAuthOption {
 	return &core.BasicAuthOption{

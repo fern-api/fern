@@ -28,9 +28,14 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller:  core.NewCaller(options.HTTPClient),
-		header:  options.ToHeader(),
-		Nested:  nestedclient.NewClient(opts...),
+		caller: core.NewCaller(
+			&core.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
+		header: options.ToHeader(),
+		Nested: nestedclient.NewClient(opts...),
 	}
 }
 
@@ -55,11 +60,12 @@ func (c *Client) GetFoo(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:      endpointURL,
-			Method:   http.MethodGet,
-			Headers:  headers,
-			Client:   options.HTTPClient,
-			Response: &response,
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
 		},
 	); err != nil {
 		return nil, err
@@ -117,6 +123,7 @@ func (c *Client) PostFoo(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -172,6 +179,7 @@ func (c *Client) GetFooFooId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,
@@ -241,6 +249,7 @@ func (c *Client) PatchFooFooId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPatch,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -295,6 +304,7 @@ func (c *Client) DeleteFooFooId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodDelete,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			ErrorDecoder: errorDecoder,
@@ -355,6 +365,7 @@ func (c *Client) PostFooFooIdRun(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,
@@ -430,6 +441,7 @@ func (c *Client) PostFooBatchCreate(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -491,6 +503,7 @@ func (c *Client) PostFooBatchDelete(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,

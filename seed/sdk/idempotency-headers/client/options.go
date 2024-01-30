@@ -24,6 +24,11 @@ func WithHTTPHeader(httpHeader http.Header) *core.HTTPHeaderOption {
 	return option.WithHTTPHeader(httpHeader)
 }
 
+// WithMaxAttempts configures the maximum number of retry attempts.
+func WithMaxAttempts(attempts uint) *core.MaxAttemptsOption {
+	return option.WithMaxAttempts(attempts)
+}
+
 // WithToken sets the 'Authorization: Bearer <token>' request header.
 func WithToken(token string) *core.TokenOption {
 	return option.WithToken(token)

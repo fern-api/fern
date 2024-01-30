@@ -24,8 +24,13 @@ type Client struct {
 func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
-		baseURL:               options.BaseURL,
-		caller:                core.NewCaller(options.HTTPClient),
+		baseURL: options.BaseURL,
+		caller: core.NewCaller(
+			&core.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
 		header:                options.ToHeader(),
 		NoHeaders:             noheaders.NewClient(opts...),
 		OnlyLiteralHeaders:    onlyliteralheaders.NewClient(opts...),

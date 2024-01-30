@@ -17,9 +17,10 @@ type RequestOption interface {
 // This type is primarily used by the generated code and is not meant
 // to be used directly; use the option package instead.
 type RequestOptions struct {
-	BaseURL    string
-	HTTPClient HTTPClient
-	HTTPHeader http.Header
+	BaseURL     string
+	HTTPClient  HTTPClient
+	HTTPHeader  http.Header
+	MaxAttempts uint
 }
 
 // NewRequestOptions returns a new *RequestOptions value.
@@ -78,4 +79,13 @@ type HTTPHeaderOption struct {
 
 func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
+}
+
+// MaxAttemptsOption implements the RequestOption interface.
+type MaxAttemptsOption struct {
+	MaxAttempts uint
+}
+
+func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxAttempts = m.MaxAttempts
 }

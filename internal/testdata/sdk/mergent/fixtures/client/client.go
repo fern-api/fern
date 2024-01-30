@@ -25,8 +25,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller:  core.NewCaller(options.HTTPClient),
-		header:  options.ToHeader(),
+		caller: core.NewCaller(
+			&core.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
+		header: options.ToHeader(),
 	}
 }
 
@@ -51,11 +56,12 @@ func (c *Client) GetTasks(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:      endpointURL,
-			Method:   http.MethodGet,
-			Headers:  headers,
-			Client:   options.HTTPClient,
-			Response: &response,
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
 		},
 	); err != nil {
 		return nil, err
@@ -113,6 +119,7 @@ func (c *Client) PostTasks(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -169,6 +176,7 @@ func (c *Client) GetTasksTaskId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,
@@ -239,6 +247,7 @@ func (c *Client) PatchTasksTaskId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPatch,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -294,6 +303,7 @@ func (c *Client) DeleteTasksTaskId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodDelete,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			ErrorDecoder: errorDecoder,
@@ -356,6 +366,7 @@ func (c *Client) PostTasksTaskIdRun(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,
@@ -435,6 +446,7 @@ func (c *Client) PostTasksBatchCreate(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -500,6 +512,7 @@ func (c *Client) PostTasksBatchDelete(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -532,11 +545,12 @@ func (c *Client) GetSchedules(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:      endpointURL,
-			Method:   http.MethodGet,
-			Headers:  headers,
-			Client:   options.HTTPClient,
-			Response: &response,
+			URL:         endpointURL,
+			Method:      http.MethodGet,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Response:    &response,
 		},
 	); err != nil {
 		return nil, err
@@ -587,6 +601,7 @@ func (c *Client) PostSchedules(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPost,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -643,6 +658,7 @@ func (c *Client) GetSchedulesScheduleId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,
@@ -706,6 +722,7 @@ func (c *Client) PatchSchedulesScheduleId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodPatch,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Request:      request,
@@ -761,6 +778,7 @@ func (c *Client) DeleteSchedulesScheduleId(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodDelete,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			ErrorDecoder: errorDecoder,
@@ -815,6 +833,7 @@ func (c *Client) GetSchedulesScheduleIdTasks(
 		&core.CallParams{
 			URL:          endpointURL,
 			Method:       http.MethodGet,
+			MaxAttempts:  options.MaxAttempts,
 			Headers:      headers,
 			Client:       options.HTTPClient,
 			Response:     &response,

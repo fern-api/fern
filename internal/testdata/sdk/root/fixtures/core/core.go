@@ -93,18 +93,29 @@ type ErrorDecoder func(statusCode int, body io.Reader) error
 
 // Caller calls APIs and deserializes their response, if any.
 type Caller struct {
-	client HTTPClient
+	client  HTTPClient
+	retrier *Retrier
 }
 
-// NewCaller returns a new *Caller backed by the given HTTP client.
-func NewCaller(client HTTPClient) *Caller {
-	if client == nil {
-		return &Caller{
-			client: http.DefaultClient,
-		}
+// CallerParams represents the parameters used to constrcut a new *Caller.
+type CallerParams struct {
+	Client      HTTPClient
+	MaxAttempts uint
+}
+
+// NewCaller returns a new *Caller backed by the given parameters.
+func NewCaller(params *CallerParams) *Caller {
+	var httpClient HTTPClient = http.DefaultClient
+	if params.Client != nil {
+		httpClient = params.Client
+	}
+	var retryOptions []RetryOption
+	if params.MaxAttempts > 0 {
+		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
 	}
 	return &Caller{
-		client: client,
+		client:  httpClient,
+		retrier: NewRetrier(retryOptions...),
 	}
 }
 
@@ -112,6 +123,7 @@ func NewCaller(client HTTPClient) *Caller {
 type CallParams struct {
 	URL                string
 	Method             string
+	MaxAttempts        uint
 	Headers            http.Header
 	Client             HTTPClient
 	Request            interface{}
@@ -138,7 +150,17 @@ func (c *Caller) Call(ctx context.Context, params *CallParams) error {
 		client = params.Client
 	}
 
-	resp, err := client.Do(req)
+	var retryOptions []RetryOption
+	if params.MaxAttempts > 0 {
+		retryOptions = append(retryOptions, WithMaxAttempts(params.MaxAttempts))
+	}
+
+	resp, err := c.retrier.Run(
+		client.Do,
+		req,
+		params.ErrorDecoder,
+		retryOptions...,
+	)
 	if err != nil {
 		return err
 	}

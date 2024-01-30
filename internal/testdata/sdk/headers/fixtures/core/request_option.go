@@ -23,6 +23,7 @@ type RequestOptions struct {
 	BaseURL              string
 	HTTPClient           HTTPClient
 	HTTPHeader           http.Header
+	MaxAttempts          uint
 	Custom               *[]byte
 	XApiName             string
 	XApiId               uuid.UUID
@@ -122,6 +123,19 @@ func (h *HTTPHeaderOption) applyRequestOptions(opts *RequestOptions) {
 
 func (h *HTTPHeaderOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
 	opts.HTTPHeader = h.HTTPHeader
+}
+
+// MaxAttemptsOption implements the RequestOption interface.
+type MaxAttemptsOption struct {
+	MaxAttempts uint
+}
+
+func (m *MaxAttemptsOption) applyRequestOptions(opts *RequestOptions) {
+	opts.MaxAttempts = m.MaxAttempts
+}
+
+func (m *MaxAttemptsOption) applyIdempotentRequestOptions(opts *IdempotentRequestOptions) {
+	opts.MaxAttempts = m.MaxAttempts
 }
 
 // CustomOption implements the RequestOption interface.

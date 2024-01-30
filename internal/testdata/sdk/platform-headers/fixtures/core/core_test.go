@@ -113,7 +113,11 @@ func TestCall(t *testing.T) {
 				server = newTestServer(t, test)
 				client = server.Client()
 			)
-			caller := NewCaller(client)
+			caller := NewCaller(
+				&CallerParams{
+					Client: client,
+				},
+			)
 			var response *Response
 			err := caller.Call(
 				context.Background(),

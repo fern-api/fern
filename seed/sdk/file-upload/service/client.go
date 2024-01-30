@@ -25,8 +25,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller:  core.NewCaller(options.HTTPClient),
-		header:  options.ToHeader(),
+		caller: core.NewCaller(
+			&core.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
+		header: options.ToHeader(),
 	}
 }
 
@@ -132,11 +137,12 @@ func (c *Client) Post(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:     endpointURL,
-			Method:  http.MethodPost,
-			Headers: headers,
-			Client:  options.HTTPClient,
-			Request: requestBuffer,
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     requestBuffer,
 		},
 	); err != nil {
 		return err
@@ -183,11 +189,12 @@ func (c *Client) JustFile(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:     endpointURL,
-			Method:  http.MethodPost,
-			Headers: headers,
-			Client:  options.HTTPClient,
-			Request: requestBuffer,
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     requestBuffer,
 		},
 	); err != nil {
 		return err
@@ -253,11 +260,12 @@ func (c *Client) JustFileWithQueryParams(
 	if err := c.caller.Call(
 		ctx,
 		&core.CallParams{
-			URL:     endpointURL,
-			Method:  http.MethodPost,
-			Headers: headers,
-			Client:  options.HTTPClient,
-			Request: requestBuffer,
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     requestBuffer,
 		},
 	); err != nil {
 		return err

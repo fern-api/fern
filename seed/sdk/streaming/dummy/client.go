@@ -20,8 +20,13 @@ func NewClient(opts ...option.RequestOption) *Client {
 	options := core.NewRequestOptions(opts...)
 	return &Client{
 		baseURL: options.BaseURL,
-		caller:  core.NewCaller(options.HTTPClient),
-		header:  options.ToHeader(),
+		caller: core.NewCaller(
+			&core.CallerParams{
+				Client:      options.HTTPClient,
+				MaxAttempts: options.MaxAttempts,
+			},
+		),
+		header: options.ToHeader(),
 	}
 }
 
@@ -47,11 +52,12 @@ func (c *Client) GenerateStream(
 	return streamer.Stream(
 		ctx,
 		&core.StreamParams{
-			URL:     endpointURL,
-			Method:  http.MethodPost,
-			Headers: headers,
-			Client:  options.HTTPClient,
-			Request: request,
+			URL:         endpointURL,
+			Method:      http.MethodPost,
+			MaxAttempts: options.MaxAttempts,
+			Headers:     headers,
+			Client:      options.HTTPClient,
+			Request:     request,
 		},
 	)
 }
