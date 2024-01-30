@@ -1,6 +1,6 @@
 import { GenerationLanguage } from "@fern-api/generators-configuration";
 import { Name, NameAndWireValue, SafeAndUnsafeString } from "@fern-fern/ir-sdk/api";
-import { camelCase, snakeCase, upperFirst } from "lodash-es";
+import { camelCase, snakeCase, upperFirst, words } from "lodash-es";
 import { RESERVED_KEYWORDS } from "./reserved";
 
 export interface CasingsGenerator {
@@ -16,15 +16,33 @@ export function constructCasingsGenerator(generationLanguage: GenerationLanguage
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
             });
 
-            const camelCaseName = camelCase(name);
-            const snakeCaseName = snakeCase(name);
+            const originalCamelCaseName = camelCase(name);
+            const camelCaseWords = words(originalCamelCaseName);
+
+            const camelCaseName = camelCaseWords
+                .map((word, index) => {
+                    return index > 0 && isCommonInitialism(word) ? word.toUpperCase() : word;
+                })
+                .join("");
+            const pascalCaseName = camelCaseWords
+                .map((word, index) => {
+                    if (isCommonInitialism(word)) {
+                        return word.toUpperCase();
+                    }
+                    if (index === 0) {
+                        return upperFirst(word);
+                    }
+                    return word;
+                })
+                .join("");
+            const snakeCaseName = snakeCase(camelCaseName);
 
             return {
                 originalName: name,
                 camelCase: generateSafeAndUnsafeString(camelCaseName),
                 snakeCase: generateSafeAndUnsafeString(snakeCaseName),
                 screamingSnakeCase: generateSafeAndUnsafeString(snakeCaseName.toUpperCase()),
-                pascalCase: generateSafeAndUnsafeString(upperFirst(camelCaseName))
+                pascalCase: generateSafeAndUnsafeString(pascalCaseName)
             };
         },
         generateNameAndWireValue: ({ name, wireValue }) => ({
@@ -53,3 +71,51 @@ const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
 }
+
+function isCommonInitialism(name: string): boolean {
+    return COMMON_ITIALISMS.has(name.toUpperCase());
+}
+
+// For better casing conventions, define the set of common initialisms.
+//
+// Ref: https://github.com/golang/lint/blob/6edffad5e6160f5949cdefc81710b2706fbcd4f6/lint.go#L767C1-L809C2
+const COMMON_ITIALISMS = new Set<string>([
+    "ACL",
+    "API",
+    "ASCII",
+    "CPU",
+    "CSS",
+    "DNS",
+    "EOF",
+    "GUID",
+    "HTML",
+    "HTTP",
+    "HTTPS",
+    "ID",
+    "IP",
+    "JSON",
+    "LHS",
+    "QPS",
+    "RAM",
+    "RHS",
+    "RPC",
+    "SLA",
+    "SMTP",
+    "SQL",
+    "SSH",
+    "TCP",
+    "TLS",
+    "TTL",
+    "UDP",
+    "UI",
+    "UID",
+    "UUID",
+    "URI",
+    "URL",
+    "UTF8",
+    "VM",
+    "XML",
+    "XMPP",
+    "XSRF",
+    "XSS"
+]);

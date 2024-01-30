@@ -58,13 +58,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -162,13 +162,13 @@ exports[`generate IR 1`] = `
       "discriminantValue": {
         "name": {
           "camelCase": {
-            "safeName": "playlistIdNotFoundError",
-            "unsafeName": "playlistIdNotFoundError",
+            "safeName": "playlistIDNotFoundError",
+            "unsafeName": "playlistIDNotFoundError",
           },
           "originalName": "PlaylistIdNotFoundError",
           "pascalCase": {
-            "safeName": "PlaylistIdNotFoundError",
-            "unsafeName": "PlaylistIdNotFoundError",
+            "safeName": "PlaylistIDNotFoundError",
+            "unsafeName": "PlaylistIDNotFoundError",
           },
           "screamingSnakeCase": {
             "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR",
@@ -229,13 +229,13 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "playlistIdNotFoundError",
-            "unsafeName": "playlistIdNotFoundError",
+            "safeName": "playlistIDNotFoundError",
+            "unsafeName": "playlistIDNotFoundError",
           },
           "originalName": "PlaylistIdNotFoundError",
           "pascalCase": {
-            "safeName": "PlaylistIdNotFoundError",
-            "unsafeName": "PlaylistIdNotFoundError",
+            "safeName": "PlaylistIDNotFoundError",
+            "unsafeName": "PlaylistIDNotFoundError",
           },
           "screamingSnakeCase": {
             "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR",
@@ -295,13 +295,13 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "playlistIdNotFoundErrorBody",
-            "unsafeName": "playlistIdNotFoundErrorBody",
+            "safeName": "playlistIDNotFoundErrorBody",
+            "unsafeName": "playlistIDNotFoundErrorBody",
           },
           "originalName": "PlaylistIdNotFoundErrorBody",
           "pascalCase": {
-            "safeName": "PlaylistIdNotFoundErrorBody",
-            "unsafeName": "PlaylistIdNotFoundErrorBody",
+            "safeName": "PlaylistIDNotFoundErrorBody",
+            "unsafeName": "PlaylistIDNotFoundErrorBody",
           },
           "screamingSnakeCase": {
             "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR_BODY",
@@ -728,13 +728,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -792,13 +792,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -868,13 +868,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -932,13 +932,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -1130,13 +1130,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -1194,13 +1194,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -1270,13 +1270,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -1334,13 +1334,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -1532,13 +1532,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -1596,13 +1596,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -1672,13 +1672,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -1736,13 +1736,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -1934,13 +1934,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -1998,13 +1998,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -2074,13 +2074,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -2138,13 +2138,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -2336,13 +2336,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -2400,13 +2400,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -2426,13 +2426,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -2512,13 +2512,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -2576,13 +2576,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -2602,13 +2602,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -2912,13 +2912,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -2976,13 +2976,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -3002,13 +3002,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -3105,13 +3105,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "testCaseId",
-                    "unsafeName": "testCaseId",
+                    "safeName": "testCaseID",
+                    "unsafeName": "testCaseID",
                   },
                   "originalName": "TestCaseId",
                   "pascalCase": {
-                    "safeName": "TestCaseId",
-                    "unsafeName": "TestCaseId",
+                    "safeName": "TestCaseID",
+                    "unsafeName": "TestCaseID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "TEST_CASE_ID",
@@ -3189,13 +3189,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -3253,13 +3253,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -3279,13 +3279,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -3382,13 +3382,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "testCaseId",
-                    "unsafeName": "testCaseId",
+                    "safeName": "testCaseID",
+                    "unsafeName": "testCaseID",
                   },
                   "originalName": "TestCaseId",
                   "pascalCase": {
-                    "safeName": "TestCaseId",
-                    "unsafeName": "TestCaseId",
+                    "safeName": "TestCaseID",
+                    "unsafeName": "TestCaseID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "TEST_CASE_ID",
@@ -3592,13 +3592,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -3656,13 +3656,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -3732,13 +3732,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -3796,13 +3796,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -4104,13 +4104,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -4168,13 +4168,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -4244,13 +4244,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -4308,13 +4308,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "submissionId",
-                    "unsafeName": "submissionId",
+                    "safeName": "submissionID",
+                    "unsafeName": "submissionID",
                   },
                   "originalName": "SubmissionId",
                   "pascalCase": {
-                    "safeName": "SubmissionId",
-                    "unsafeName": "SubmissionId",
+                    "safeName": "SubmissionID",
+                    "unsafeName": "SubmissionID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "SUBMISSION_ID",
@@ -4666,13 +4666,13 @@ exports[`generate IR 1`] = `
                     },
                     "name": {
                       "camelCase": {
-                        "safeName": "problemId",
-                        "unsafeName": "problemId",
+                        "safeName": "problemID",
+                        "unsafeName": "problemID",
                       },
                       "originalName": "ProblemId",
                       "pascalCase": {
-                        "safeName": "ProblemId",
-                        "unsafeName": "ProblemId",
+                        "safeName": "ProblemID",
+                        "unsafeName": "ProblemID",
                       },
                       "screamingSnakeCase": {
                         "safeName": "PROBLEM_ID",
@@ -4788,13 +4788,13 @@ exports[`generate IR 1`] = `
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "problemId",
-                      "unsafeName": "problemId",
+                      "safeName": "problemID",
+                      "unsafeName": "problemID",
                     },
                     "originalName": "ProblemId",
                     "pascalCase": {
-                      "safeName": "ProblemId",
-                      "unsafeName": "ProblemId",
+                      "safeName": "ProblemID",
+                      "unsafeName": "ProblemID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "PROBLEM_ID",
@@ -4888,13 +4888,13 @@ exports[`generate IR 1`] = `
                       },
                       "name": {
                         "camelCase": {
-                          "safeName": "problemId",
-                          "unsafeName": "problemId",
+                          "safeName": "problemID",
+                          "unsafeName": "problemID",
                         },
                         "originalName": "ProblemId",
                         "pascalCase": {
-                          "safeName": "ProblemId",
-                          "unsafeName": "ProblemId",
+                          "safeName": "ProblemID",
+                          "unsafeName": "ProblemID",
                         },
                         "screamingSnakeCase": {
                           "safeName": "PROBLEM_ID",
@@ -6024,13 +6024,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -6088,13 +6088,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -6165,13 +6165,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistIdNotFoundError",
-                    "unsafeName": "playlistIdNotFoundError",
+                    "safeName": "playlistIDNotFoundError",
+                    "unsafeName": "playlistIDNotFoundError",
                   },
                   "originalName": "PlaylistIdNotFoundError",
                   "pascalCase": {
-                    "safeName": "PlaylistIdNotFoundError",
-                    "unsafeName": "PlaylistIdNotFoundError",
+                    "safeName": "PlaylistIDNotFoundError",
+                    "unsafeName": "PlaylistIDNotFoundError",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR",
@@ -6305,13 +6305,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -6369,13 +6369,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -6503,13 +6503,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -6567,13 +6567,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -6644,13 +6644,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistIdNotFoundError",
-                    "unsafeName": "playlistIdNotFoundError",
+                    "safeName": "playlistIDNotFoundError",
+                    "unsafeName": "playlistIDNotFoundError",
                   },
                   "originalName": "PlaylistIdNotFoundError",
                   "pascalCase": {
-                    "safeName": "PlaylistIdNotFoundError",
-                    "unsafeName": "PlaylistIdNotFoundError",
+                    "safeName": "PlaylistIDNotFoundError",
+                    "unsafeName": "PlaylistIDNotFoundError",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR",
@@ -6716,13 +6716,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -6780,13 +6780,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -7096,13 +7096,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlist_id",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -7160,13 +7160,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -7240,13 +7240,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlist_id",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -7304,13 +7304,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -7706,13 +7706,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -7770,13 +7770,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -7846,13 +7846,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -7910,13 +7910,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -8180,13 +8180,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -8244,13 +8244,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -8320,13 +8320,13 @@ description",
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -8384,13 +8384,13 @@ description",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -9212,13 +9212,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -9290,13 +9290,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -9404,13 +9404,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -9482,13 +9482,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -10611,13 +10611,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -10675,13 +10675,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -10751,13 +10751,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -10815,13 +10815,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -10960,13 +10960,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -11024,13 +11024,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -11136,13 +11136,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -11200,13 +11200,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -11871,13 +11871,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -11935,13 +11935,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -12011,13 +12011,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -12075,13 +12075,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -12258,13 +12258,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -12322,13 +12322,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -12434,13 +12434,13 @@ The method name cannot include the following characters:
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -12498,13 +12498,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -14445,13 +14445,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -14511,13 +14511,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -14708,13 +14708,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -14774,13 +14774,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -14900,13 +14900,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -14998,13 +14998,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -15176,13 +15176,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -15274,13 +15274,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -16933,13 +16933,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -16999,13 +16999,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -17196,13 +17196,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -17262,13 +17262,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -17388,13 +17388,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -17486,13 +17486,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -17664,13 +17664,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -17762,13 +17762,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -19269,13 +19269,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "nodeId",
-            "unsafeName": "nodeId",
+            "safeName": "nodeID",
+            "unsafeName": "nodeID",
           },
           "originalName": "NodeId",
           "pascalCase": {
-            "safeName": "NodeId",
-            "unsafeName": "NodeId",
+            "safeName": "NodeID",
+            "unsafeName": "NodeID",
           },
           "screamingSnakeCase": {
             "safeName": "NODE_ID",
@@ -19351,13 +19351,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "problemId",
-            "unsafeName": "problemId",
+            "safeName": "problemID",
+            "unsafeName": "problemID",
           },
           "originalName": "ProblemId",
           "pascalCase": {
-            "safeName": "ProblemId",
-            "unsafeName": "ProblemId",
+            "safeName": "ProblemID",
+            "unsafeName": "ProblemID",
           },
           "screamingSnakeCase": {
             "safeName": "PROBLEM_ID",
@@ -19467,13 +19467,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -19533,13 +19533,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -19730,13 +19730,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "nodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -19796,13 +19796,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "nodeId",
-                  "unsafeName": "nodeId",
+                  "safeName": "nodeID",
+                  "unsafeName": "nodeID",
                 },
                 "originalName": "NodeId",
                 "pascalCase": {
-                  "safeName": "NodeId",
-                  "unsafeName": "NodeId",
+                  "safeName": "NodeID",
+                  "unsafeName": "NodeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NODE_ID",
@@ -19922,13 +19922,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -20100,13 +20100,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -20198,13 +20198,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "nodeId",
-                      "unsafeName": "nodeId",
+                      "safeName": "nodeID",
+                      "unsafeName": "nodeID",
                     },
                     "originalName": "NodeId",
                     "pascalCase": {
-                      "safeName": "NodeId",
-                      "unsafeName": "NodeId",
+                      "safeName": "NodeID",
+                      "unsafeName": "NodeID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NODE_ID",
@@ -20385,8 +20385,8 @@ The method name cannot include the following characters:
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -20828,13 +20828,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "userId",
-            "unsafeName": "userId",
+            "safeName": "userID",
+            "unsafeName": "userID",
           },
           "originalName": "UserId",
           "pascalCase": {
-            "safeName": "UserId",
-            "unsafeName": "UserId",
+            "safeName": "UserID",
+            "unsafeName": "UserID",
           },
           "screamingSnakeCase": {
             "safeName": "USER_ID",
@@ -22983,13 +22983,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlist_id",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -23049,13 +23049,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "PlaylistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -23075,13 +23075,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "ownerId",
-                  "unsafeName": "ownerId",
+                  "safeName": "ownerID",
+                  "unsafeName": "ownerID",
                 },
                 "originalName": "owner-id",
                 "pascalCase": {
-                  "safeName": "OwnerId",
-                  "unsafeName": "OwnerId",
+                  "safeName": "OwnerID",
+                  "unsafeName": "OwnerID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "OWNER_ID",
@@ -23141,13 +23141,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "userId",
-                  "unsafeName": "userId",
+                  "safeName": "userID",
+                  "unsafeName": "userID",
                 },
                 "originalName": "UserId",
                 "pascalCase": {
-                  "safeName": "UserId",
-                  "unsafeName": "UserId",
+                  "safeName": "UserID",
+                  "unsafeName": "UserID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "USER_ID",
@@ -23346,13 +23346,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "problemId",
-                      "unsafeName": "problemId",
+                      "safeName": "problemID",
+                      "unsafeName": "problemID",
                     },
                     "originalName": "ProblemId",
                     "pascalCase": {
-                      "safeName": "ProblemId",
-                      "unsafeName": "ProblemId",
+                      "safeName": "ProblemID",
+                      "unsafeName": "ProblemID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "PROBLEM_ID",
@@ -23421,13 +23421,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "playlistId",
-            "unsafeName": "playlistId",
+            "safeName": "playlistID",
+            "unsafeName": "playlistID",
           },
           "originalName": "PlaylistId",
           "pascalCase": {
-            "safeName": "PlaylistId",
-            "unsafeName": "PlaylistId",
+            "safeName": "PlaylistID",
+            "unsafeName": "PlaylistID",
           },
           "screamingSnakeCase": {
             "safeName": "PLAYLIST_ID",
@@ -23503,13 +23503,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "playlistIdNotFoundErrorBody",
-            "unsafeName": "playlistIdNotFoundErrorBody",
+            "safeName": "playlistIDNotFoundErrorBody",
+            "unsafeName": "playlistIDNotFoundErrorBody",
           },
           "originalName": "PlaylistIdNotFoundErrorBody",
           "pascalCase": {
-            "safeName": "PlaylistIdNotFoundErrorBody",
-            "unsafeName": "PlaylistIdNotFoundErrorBody",
+            "safeName": "PlaylistIDNotFoundErrorBody",
+            "unsafeName": "PlaylistIDNotFoundErrorBody",
           },
           "screamingSnakeCase": {
             "safeName": "PLAYLIST_ID_NOT_FOUND_ERROR_BODY",
@@ -23556,13 +23556,13 @@ The method name cannot include the following characters:
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "playlistId",
-                  "unsafeName": "playlistId",
+                  "safeName": "playlistID",
+                  "unsafeName": "playlistID",
                 },
                 "originalName": "playlistId",
                 "pascalCase": {
-                  "safeName": "PlaylistId",
-                  "unsafeName": "PlaylistId",
+                  "safeName": "PlaylistID",
+                  "unsafeName": "PlaylistID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PLAYLIST_ID",
@@ -23647,13 +23647,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "playlistId",
-                    "unsafeName": "playlistId",
+                    "safeName": "playlistID",
+                    "unsafeName": "playlistID",
                   },
                   "originalName": "PlaylistId",
                   "pascalCase": {
-                    "safeName": "PlaylistId",
-                    "unsafeName": "PlaylistId",
+                    "safeName": "PlaylistID",
+                    "unsafeName": "PlaylistID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PLAYLIST_ID",
@@ -23981,13 +23981,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "problemId",
-                      "unsafeName": "problemId",
+                      "safeName": "problemID",
+                      "unsafeName": "problemID",
                     },
                     "originalName": "ProblemId",
                     "pascalCase": {
-                      "safeName": "ProblemId",
-                      "unsafeName": "ProblemId",
+                      "safeName": "ProblemID",
+                      "unsafeName": "ProblemID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "PROBLEM_ID",
@@ -25098,13 +25098,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -25954,8 +25954,8 @@ The method name cannot include the following characters:
                 },
                 "originalName": "html",
                 "pascalCase": {
-                  "safeName": "Html",
-                  "unsafeName": "Html",
+                  "safeName": "HTML",
+                  "unsafeName": "HTML",
                 },
                 "screamingSnakeCase": {
                   "safeName": "HTML",
@@ -26119,13 +26119,13 @@ The method name cannot include the following characters:
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -26544,13 +26544,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -26610,13 +26610,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -28126,13 +28126,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -28192,13 +28192,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -29651,13 +29651,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -29717,13 +29717,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -29743,13 +29743,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -29809,13 +29809,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -30299,13 +30299,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -30365,13 +30365,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -30951,13 +30951,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -30981,13 +30981,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "executionSessionUrl",
-                  "unsafeName": "executionSessionUrl",
+                  "safeName": "executionSessionURL",
+                  "unsafeName": "executionSessionURL",
                 },
                 "originalName": "executionSessionUrl",
                 "pascalCase": {
-                  "safeName": "ExecutionSessionUrl",
-                  "unsafeName": "ExecutionSessionUrl",
+                  "safeName": "ExecutionSessionURL",
+                  "unsafeName": "ExecutionSessionURL",
                 },
                 "screamingSnakeCase": {
                   "safeName": "EXECUTION_SESSION_URL",
@@ -31317,13 +31317,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "sessionId",
-                  "unsafeName": "sessionId",
+                  "safeName": "sessionID",
+                  "unsafeName": "sessionID",
                 },
                 "originalName": "sessionId",
                 "pascalCase": {
-                  "safeName": "SessionId",
-                  "unsafeName": "SessionId",
+                  "safeName": "SessionID",
+                  "unsafeName": "SessionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SESSION_ID",
@@ -31377,13 +31377,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "awsTaskId",
-                  "unsafeName": "awsTaskId",
+                  "safeName": "awsTaskID",
+                  "unsafeName": "awsTaskID",
                 },
                 "originalName": "awsTaskId",
                 "pascalCase": {
-                  "safeName": "AwsTaskId",
-                  "unsafeName": "AwsTaskId",
+                  "safeName": "AwsTaskID",
+                  "unsafeName": "AwsTaskID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "AWS_TASK_ID",
@@ -31908,13 +31908,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -31974,13 +31974,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -32216,13 +32216,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -32282,13 +32282,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -33132,13 +33132,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -33198,13 +33198,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -33421,13 +33421,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -33487,13 +33487,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -33622,13 +33622,13 @@ The method name cannot include the following characters:
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "testCaseId",
-                      "unsafeName": "testCaseId",
+                      "safeName": "testCaseID",
+                      "unsafeName": "testCaseID",
                     },
                     "originalName": "TestCaseId",
                     "pascalCase": {
-                      "safeName": "TestCaseId",
-                      "unsafeName": "TestCaseId",
+                      "safeName": "TestCaseID",
+                      "unsafeName": "TestCaseID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "TEST_CASE_ID",
@@ -33810,13 +33810,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -33915,13 +33915,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "TestCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -34112,13 +34112,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -34178,13 +34178,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -34516,13 +34516,13 @@ The method name cannot include the following characters:
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionIdNotFound",
-                  "unsafeName": "submissionIdNotFound",
+                  "safeName": "submissionIDNotFound",
+                  "unsafeName": "submissionIDNotFound",
                 },
                 "originalName": "submissionIdNotFound",
                 "pascalCase": {
-                  "safeName": "SubmissionIdNotFound",
-                  "unsafeName": "SubmissionIdNotFound",
+                  "safeName": "SubmissionIDNotFound",
+                  "unsafeName": "SubmissionIDNotFound",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID_NOT_FOUND",
@@ -34583,13 +34583,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionIdNotFound",
-                  "unsafeName": "submissionIdNotFound",
+                  "safeName": "submissionIDNotFound",
+                  "unsafeName": "submissionIDNotFound",
                 },
                 "originalName": "SubmissionIdNotFound",
                 "pascalCase": {
-                  "safeName": "SubmissionIdNotFound",
-                  "unsafeName": "SubmissionIdNotFound",
+                  "safeName": "SubmissionIDNotFound",
+                  "unsafeName": "SubmissionIDNotFound",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID_NOT_FOUND",
@@ -35282,13 +35282,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -35348,13 +35348,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -35404,13 +35404,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -35519,13 +35519,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -35624,13 +35624,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "TestCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -35761,13 +35761,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -35827,13 +35827,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -35853,13 +35853,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "testCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -36189,13 +36189,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -36255,13 +36255,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -36927,13 +36927,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "shareId",
-            "unsafeName": "shareId",
+            "safeName": "shareID",
+            "unsafeName": "shareID",
           },
           "originalName": "ShareId",
           "pascalCase": {
-            "safeName": "ShareId",
-            "unsafeName": "ShareId",
+            "safeName": "ShareID",
+            "unsafeName": "ShareID",
           },
           "screamingSnakeCase": {
             "safeName": "SHARE_ID",
@@ -37514,13 +37514,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -37580,13 +37580,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -37715,13 +37715,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -37781,13 +37781,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -37916,13 +37916,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -37982,13 +37982,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -38087,13 +38087,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -38153,13 +38153,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -38393,13 +38393,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "submissionId",
-            "unsafeName": "submissionId",
+            "safeName": "submissionID",
+            "unsafeName": "submissionID",
           },
           "originalName": "SubmissionId",
           "pascalCase": {
-            "safeName": "SubmissionId",
-            "unsafeName": "SubmissionId",
+            "safeName": "SubmissionID",
+            "unsafeName": "SubmissionID",
           },
           "screamingSnakeCase": {
             "safeName": "SUBMISSION_ID",
@@ -38475,13 +38475,13 @@ The method name cannot include the following characters:
         },
         "name": {
           "camelCase": {
-            "safeName": "submissionIdNotFound",
-            "unsafeName": "submissionIdNotFound",
+            "safeName": "submissionIDNotFound",
+            "unsafeName": "submissionIDNotFound",
           },
           "originalName": "SubmissionIdNotFound",
           "pascalCase": {
-            "safeName": "SubmissionIdNotFound",
-            "unsafeName": "SubmissionIdNotFound",
+            "safeName": "SubmissionIDNotFound",
+            "unsafeName": "SubmissionIDNotFound",
           },
           "screamingSnakeCase": {
             "safeName": "SUBMISSION_ID_NOT_FOUND",
@@ -38507,13 +38507,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "missingSubmissionId",
-                  "unsafeName": "missingSubmissionId",
+                  "safeName": "missingSubmissionID",
+                  "unsafeName": "missingSubmissionID",
                 },
                 "originalName": "missingSubmissionId",
                 "pascalCase": {
-                  "safeName": "MissingSubmissionId",
-                  "unsafeName": "MissingSubmissionId",
+                  "safeName": "MissingSubmissionID",
+                  "unsafeName": "MissingSubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "MISSING_SUBMISSION_ID",
@@ -38573,13 +38573,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -39372,13 +39372,13 @@ The method name cannot include the following characters:
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "problemId",
-                    "unsafeName": "problemId",
+                    "safeName": "problemID",
+                    "unsafeName": "problemID",
                   },
                   "originalName": "ProblemId",
                   "pascalCase": {
-                    "safeName": "ProblemId",
-                    "unsafeName": "ProblemId",
+                    "safeName": "ProblemID",
+                    "unsafeName": "ProblemID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PROBLEM_ID",
@@ -40991,13 +40991,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -41057,13 +41057,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -41273,13 +41273,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -41339,13 +41339,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -41401,13 +41401,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "userId",
-                  "unsafeName": "userId",
+                  "safeName": "userID",
+                  "unsafeName": "userID",
                 },
                 "originalName": "userId",
                 "pascalCase": {
-                  "safeName": "UserId",
-                  "unsafeName": "UserId",
+                  "safeName": "UserID",
+                  "unsafeName": "UserID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "USER_ID",
@@ -42888,13 +42888,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -42954,13 +42954,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -43652,13 +43652,13 @@ The method name cannot include the following characters:
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseIdToState",
-                  "unsafeName": "testCaseIdToState",
+                  "safeName": "testCaseIDToState",
+                  "unsafeName": "testCaseIDToState",
                 },
                 "originalName": "testCaseIdToState",
                 "pascalCase": {
-                  "safeName": "TestCaseIdToState",
-                  "unsafeName": "TestCaseIdToState",
+                  "safeName": "TestCaseIDToState",
+                  "unsafeName": "TestCaseIDToState",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID_TO_STATE",
@@ -44016,13 +44016,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -44082,13 +44082,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -45184,13 +45184,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -45250,13 +45250,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -45728,13 +45728,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -45794,13 +45794,13 @@ The method name cannot include the following characters:
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -47699,13 +47699,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -47765,13 +47765,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -50534,13 +50534,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "submissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -50600,13 +50600,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "submissionId",
-                  "unsafeName": "submissionId",
+                  "safeName": "submissionID",
+                  "unsafeName": "submissionID",
                 },
                 "originalName": "SubmissionId",
                 "pascalCase": {
-                  "safeName": "SubmissionId",
-                  "unsafeName": "SubmissionId",
+                  "safeName": "SubmissionID",
+                  "unsafeName": "SubmissionID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "SUBMISSION_ID",
@@ -50816,13 +50816,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "userId",
-                  "unsafeName": "userId",
+                  "safeName": "userID",
+                  "unsafeName": "userID",
                 },
                 "originalName": "userId",
                 "pascalCase": {
-                  "safeName": "UserId",
-                  "unsafeName": "UserId",
+                  "safeName": "UserID",
+                  "unsafeName": "UserID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "USER_ID",
@@ -52115,13 +52115,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -52220,13 +52220,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseTemplateId",
-                  "unsafeName": "testCaseTemplateId",
+                  "safeName": "testCaseTemplateID",
+                  "unsafeName": "testCaseTemplateID",
                 },
                 "originalName": "TestCaseTemplateId",
                 "pascalCase": {
-                  "safeName": "TestCaseTemplateId",
-                  "unsafeName": "TestCaseTemplateId",
+                  "safeName": "TestCaseTemplateID",
+                  "unsafeName": "TestCaseTemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -52407,13 +52407,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "expectedValueParameterId",
-                  "unsafeName": "expectedValueParameterId",
+                  "safeName": "expectedValueParameterID",
+                  "unsafeName": "expectedValueParameterID",
                 },
                 "originalName": "expectedValueParameterId",
                 "pascalCase": {
-                  "safeName": "ExpectedValueParameterId",
-                  "unsafeName": "ExpectedValueParameterId",
+                  "safeName": "ExpectedValueParameterID",
+                  "unsafeName": "ExpectedValueParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "EXPECTED_VALUE_PARAMETER_ID",
@@ -52512,13 +52512,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -53982,13 +53982,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "expectedValueParameterId",
-                  "unsafeName": "expectedValueParameterId",
+                  "safeName": "expectedValueParameterID",
+                  "unsafeName": "expectedValueParameterID",
                 },
                 "originalName": "expectedValueParameterId",
                 "pascalCase": {
-                  "safeName": "ExpectedValueParameterId",
-                  "unsafeName": "ExpectedValueParameterId",
+                  "safeName": "ExpectedValueParameterID",
+                  "unsafeName": "ExpectedValueParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "EXPECTED_VALUE_PARAMETER_ID",
@@ -54087,13 +54087,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -58619,13 +58619,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -58685,13 +58685,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -59729,13 +59729,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "parameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -59834,13 +59834,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -60068,13 +60068,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "parameterId",
-            "unsafeName": "parameterId",
+            "safeName": "parameterID",
+            "unsafeName": "parameterID",
           },
           "originalName": "ParameterId",
           "pascalCase": {
-            "safeName": "ParameterId",
-            "unsafeName": "ParameterId",
+            "safeName": "ParameterID",
+            "unsafeName": "ParameterID",
           },
           "screamingSnakeCase": {
             "safeName": "PARAMETER_ID",
@@ -60265,13 +60265,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -60331,13 +60331,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -61826,13 +61826,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "testCaseId",
-            "unsafeName": "testCaseId",
+            "safeName": "testCaseID",
+            "unsafeName": "testCaseID",
           },
           "originalName": "TestCaseId",
           "pascalCase": {
-            "safeName": "TestCaseId",
-            "unsafeName": "TestCaseId",
+            "safeName": "TestCaseID",
+            "unsafeName": "TestCaseID",
           },
           "screamingSnakeCase": {
             "safeName": "TEST_CASE_ID",
@@ -62658,8 +62658,8 @@ The offset is the id of the next trace response to load.",
                 },
                 "originalName": "html",
                 "pascalCase": {
-                  "safeName": "Html",
-                  "unsafeName": "Html",
+                  "safeName": "HTML",
+                  "unsafeName": "HTML",
                 },
                 "screamingSnakeCase": {
                   "safeName": "HTML",
@@ -62707,13 +62707,13 @@ The offset is the id of the next trace response to load.",
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "paramId",
-                  "unsafeName": "paramId",
+                  "safeName": "paramID",
+                  "unsafeName": "paramID",
                 },
                 "originalName": "paramId",
                 "pascalCase": {
-                  "safeName": "ParamId",
-                  "unsafeName": "ParamId",
+                  "safeName": "ParamID",
+                  "unsafeName": "ParamID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAM_ID",
@@ -62837,13 +62837,13 @@ The offset is the id of the next trace response to load.",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "parameterId",
-                    "unsafeName": "parameterId",
+                    "safeName": "parameterID",
+                    "unsafeName": "parameterID",
                   },
                   "originalName": "ParameterId",
                   "pascalCase": {
-                    "safeName": "ParameterId",
-                    "unsafeName": "ParameterId",
+                    "safeName": "ParameterID",
+                    "unsafeName": "ParameterID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PARAMETER_ID",
@@ -63022,13 +63022,13 @@ The offset is the id of the next trace response to load.",
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -63152,13 +63152,13 @@ The offset is the id of the next trace response to load.",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "testCaseTemplateId",
-                    "unsafeName": "testCaseTemplateId",
+                    "safeName": "testCaseTemplateID",
+                    "unsafeName": "testCaseTemplateID",
                   },
                   "originalName": "TestCaseTemplateId",
                   "pascalCase": {
-                    "safeName": "TestCaseTemplateId",
-                    "unsafeName": "TestCaseTemplateId",
+                    "safeName": "TestCaseTemplateID",
+                    "unsafeName": "TestCaseTemplateID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -63432,8 +63432,8 @@ The offset is the id of the next trace response to load.",
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -63532,13 +63532,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "TestCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -63755,13 +63755,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -63860,13 +63860,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseTemplateId",
-                  "unsafeName": "testCaseTemplateId",
+                  "safeName": "testCaseTemplateID",
+                  "unsafeName": "testCaseTemplateID",
                 },
                 "originalName": "TestCaseTemplateId",
                 "pascalCase": {
-                  "safeName": "TestCaseTemplateId",
-                  "unsafeName": "TestCaseTemplateId",
+                  "safeName": "TestCaseTemplateID",
+                  "unsafeName": "TestCaseTemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -64133,13 +64133,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "testCaseTemplateId",
-            "unsafeName": "testCaseTemplateId",
+            "safeName": "testCaseTemplateID",
+            "unsafeName": "testCaseTemplateID",
           },
           "originalName": "TestCaseTemplateId",
           "pascalCase": {
-            "safeName": "TestCaseTemplateId",
-            "unsafeName": "TestCaseTemplateId",
+            "safeName": "TestCaseTemplateID",
+            "unsafeName": "TestCaseTemplateID",
           },
           "screamingSnakeCase": {
             "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -64690,13 +64690,13 @@ The offset is the id of the next trace response to load.",
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "parameterId",
-                      "unsafeName": "parameterId",
+                      "safeName": "parameterID",
+                      "unsafeName": "parameterID",
                     },
                     "originalName": "ParameterId",
                     "pascalCase": {
-                      "safeName": "ParameterId",
-                      "unsafeName": "ParameterId",
+                      "safeName": "ParameterID",
+                      "unsafeName": "ParameterID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "PARAMETER_ID",
@@ -68169,13 +68169,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -68312,13 +68312,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseTemplateId",
-                  "unsafeName": "testCaseTemplateId",
+                  "safeName": "testCaseTemplateID",
+                  "unsafeName": "testCaseTemplateID",
                 },
                 "originalName": "TestCaseTemplateId",
                 "pascalCase": {
-                  "safeName": "TestCaseTemplateId",
-                  "unsafeName": "TestCaseTemplateId",
+                  "safeName": "TestCaseTemplateID",
+                  "unsafeName": "TestCaseTemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -68537,13 +68537,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "expectedValueParameterId",
-                  "unsafeName": "expectedValueParameterId",
+                  "safeName": "expectedValueParameterID",
+                  "unsafeName": "expectedValueParameterID",
                 },
                 "originalName": "expectedValueParameterId",
                 "pascalCase": {
-                  "safeName": "ExpectedValueParameterId",
-                  "unsafeName": "ExpectedValueParameterId",
+                  "safeName": "ExpectedValueParameterID",
+                  "unsafeName": "ExpectedValueParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "EXPECTED_VALUE_PARAMETER_ID",
@@ -68680,13 +68680,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -70454,13 +70454,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "expectedValueParameterId",
-                  "unsafeName": "expectedValueParameterId",
+                  "safeName": "expectedValueParameterID",
+                  "unsafeName": "expectedValueParameterID",
                 },
                 "originalName": "expectedValueParameterId",
                 "pascalCase": {
-                  "safeName": "ExpectedValueParameterId",
-                  "unsafeName": "ExpectedValueParameterId",
+                  "safeName": "ExpectedValueParameterID",
+                  "unsafeName": "ExpectedValueParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "EXPECTED_VALUE_PARAMETER_ID",
@@ -70597,13 +70597,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -76231,13 +76231,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -76297,13 +76297,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -77569,13 +77569,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "parameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -77712,13 +77712,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "parameterId",
-                  "unsafeName": "parameterId",
+                  "safeName": "parameterID",
+                  "unsafeName": "parameterID",
                 },
                 "originalName": "ParameterId",
                 "pascalCase": {
-                  "safeName": "ParameterId",
-                  "unsafeName": "ParameterId",
+                  "safeName": "ParameterID",
+                  "unsafeName": "ParameterID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAMETER_ID",
@@ -77984,13 +77984,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "parameterId",
-            "unsafeName": "parameterId",
+            "safeName": "parameterID",
+            "unsafeName": "parameterID",
           },
           "originalName": "ParameterId",
           "pascalCase": {
-            "safeName": "ParameterId",
-            "unsafeName": "ParameterId",
+            "safeName": "ParameterID",
+            "unsafeName": "ParameterID",
           },
           "screamingSnakeCase": {
             "safeName": "PARAMETER_ID",
@@ -78219,13 +78219,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "problemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -78285,13 +78285,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "problemId",
-                  "unsafeName": "problemId",
+                  "safeName": "problemID",
+                  "unsafeName": "problemID",
                 },
                 "originalName": "ProblemId",
                 "pascalCase": {
-                  "safeName": "ProblemId",
-                  "unsafeName": "ProblemId",
+                  "safeName": "ProblemID",
+                  "unsafeName": "ProblemID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PROBLEM_ID",
@@ -80122,13 +80122,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "testCaseId",
-            "unsafeName": "testCaseId",
+            "safeName": "testCaseID",
+            "unsafeName": "testCaseID",
           },
           "originalName": "TestCaseId",
           "pascalCase": {
-            "safeName": "TestCaseId",
-            "unsafeName": "TestCaseId",
+            "safeName": "TestCaseID",
+            "unsafeName": "TestCaseID",
           },
           "screamingSnakeCase": {
             "safeName": "TEST_CASE_ID",
@@ -81182,8 +81182,8 @@ The offset is the id of the next trace response to load.",
                 },
                 "originalName": "html",
                 "pascalCase": {
-                  "safeName": "Html",
-                  "unsafeName": "Html",
+                  "safeName": "HTML",
+                  "unsafeName": "HTML",
                 },
                 "screamingSnakeCase": {
                   "safeName": "HTML",
@@ -81231,13 +81231,13 @@ The offset is the id of the next trace response to load.",
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "paramId",
-                  "unsafeName": "paramId",
+                  "safeName": "paramID",
+                  "unsafeName": "paramID",
                 },
                 "originalName": "paramId",
                 "pascalCase": {
-                  "safeName": "ParamId",
-                  "unsafeName": "ParamId",
+                  "safeName": "ParamID",
+                  "unsafeName": "ParamID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "PARAM_ID",
@@ -81399,13 +81399,13 @@ The offset is the id of the next trace response to load.",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "parameterId",
-                    "unsafeName": "parameterId",
+                    "safeName": "parameterID",
+                    "unsafeName": "parameterID",
                   },
                   "originalName": "ParameterId",
                   "pascalCase": {
-                    "safeName": "ParameterId",
-                    "unsafeName": "ParameterId",
+                    "safeName": "ParameterID",
+                    "unsafeName": "ParameterID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "PARAMETER_ID",
@@ -81622,13 +81622,13 @@ The offset is the id of the next trace response to load.",
             "discriminantValue": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -81790,13 +81790,13 @@ The offset is the id of the next trace response to load.",
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "testCaseTemplateId",
-                    "unsafeName": "testCaseTemplateId",
+                    "safeName": "testCaseTemplateID",
+                    "unsafeName": "testCaseTemplateID",
                   },
                   "originalName": "TestCaseTemplateId",
                   "pascalCase": {
-                    "safeName": "TestCaseTemplateId",
-                    "unsafeName": "TestCaseTemplateId",
+                    "safeName": "TestCaseTemplateID",
+                    "unsafeName": "TestCaseTemplateID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -82146,8 +82146,8 @@ The offset is the id of the next trace response to load.",
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -82284,13 +82284,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseId",
-                  "unsafeName": "testCaseId",
+                  "safeName": "testCaseID",
+                  "unsafeName": "testCaseID",
                 },
                 "originalName": "TestCaseId",
                 "pascalCase": {
-                  "safeName": "TestCaseId",
-                  "unsafeName": "TestCaseId",
+                  "safeName": "TestCaseID",
+                  "unsafeName": "TestCaseID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_ID",
@@ -82545,13 +82545,13 @@ The offset is the id of the next trace response to load.",
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "templateId",
-                  "unsafeName": "templateId",
+                  "safeName": "templateID",
+                  "unsafeName": "templateID",
                 },
                 "originalName": "templateId",
                 "pascalCase": {
-                  "safeName": "TemplateId",
-                  "unsafeName": "TemplateId",
+                  "safeName": "TemplateID",
+                  "unsafeName": "TemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEMPLATE_ID",
@@ -82688,13 +82688,13 @@ The offset is the id of the next trace response to load.",
               },
               "name": {
                 "camelCase": {
-                  "safeName": "testCaseTemplateId",
-                  "unsafeName": "testCaseTemplateId",
+                  "safeName": "testCaseTemplateID",
+                  "unsafeName": "testCaseTemplateID",
                 },
                 "originalName": "TestCaseTemplateId",
                 "pascalCase": {
-                  "safeName": "TestCaseTemplateId",
-                  "unsafeName": "TestCaseTemplateId",
+                  "safeName": "TestCaseTemplateID",
+                  "unsafeName": "TestCaseTemplateID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -83037,13 +83037,13 @@ The offset is the id of the next trace response to load.",
         },
         "name": {
           "camelCase": {
-            "safeName": "testCaseTemplateId",
-            "unsafeName": "testCaseTemplateId",
+            "safeName": "testCaseTemplateID",
+            "unsafeName": "testCaseTemplateID",
           },
           "originalName": "TestCaseTemplateId",
           "pascalCase": {
-            "safeName": "TestCaseTemplateId",
-            "unsafeName": "TestCaseTemplateId",
+            "safeName": "TestCaseTemplateID",
+            "unsafeName": "TestCaseTemplateID",
           },
           "screamingSnakeCase": {
             "safeName": "TEST_CASE_TEMPLATE_ID",
@@ -83746,13 +83746,13 @@ The offset is the id of the next trace response to load.",
                   },
                   "name": {
                     "camelCase": {
-                      "safeName": "parameterId",
-                      "unsafeName": "parameterId",
+                      "safeName": "parameterID",
+                      "unsafeName": "parameterID",
                     },
                     "originalName": "ParameterId",
                     "pascalCase": {
-                      "safeName": "ParameterId",
-                      "unsafeName": "ParameterId",
+                      "safeName": "ParameterID",
+                      "unsafeName": "ParameterID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "PARAMETER_ID",

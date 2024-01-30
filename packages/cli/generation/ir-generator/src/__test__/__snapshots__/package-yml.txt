@@ -41,13 +41,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -79,8 +79,8 @@ exports[`generate IR 1`] = `
         },
         "originalName": "id",
         "pascalCase": {
-          "safeName": "Id",
-          "unsafeName": "Id",
+          "safeName": "ID",
+          "unsafeName": "ID",
         },
         "screamingSnakeCase": {
           "safeName": "ID",
@@ -150,8 +150,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -219,8 +219,8 @@ exports[`generate IR 1`] = `
                     },
                     "originalName": "id",
                     "pascalCase": {
-                      "safeName": "Id",
-                      "unsafeName": "Id",
+                      "safeName": "ID",
+                      "unsafeName": "ID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "ID",
@@ -373,8 +373,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -396,13 +396,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "nestedId",
-                  "unsafeName": "nestedId",
+                  "safeName": "nestedID",
+                  "unsafeName": "nestedID",
                 },
                 "originalName": "nestedId",
                 "pascalCase": {
-                  "safeName": "NestedId",
-                  "unsafeName": "NestedId",
+                  "safeName": "NestedID",
+                  "unsafeName": "NestedID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NESTED_ID",
@@ -434,13 +434,13 @@ exports[`generate IR 1`] = `
                 {
                   "name": {
                     "camelCase": {
-                      "safeName": "nestedId",
-                      "unsafeName": "nestedId",
+                      "safeName": "nestedID",
+                      "unsafeName": "nestedID",
                     },
                     "originalName": "nestedId",
                     "pascalCase": {
-                      "safeName": "NestedId",
-                      "unsafeName": "NestedId",
+                      "safeName": "NestedID",
+                      "unsafeName": "NestedID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "NESTED_ID",
@@ -481,8 +481,8 @@ exports[`generate IR 1`] = `
                     },
                     "originalName": "id",
                     "pascalCase": {
-                      "safeName": "Id",
-                      "unsafeName": "Id",
+                      "safeName": "ID",
+                      "unsafeName": "ID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "ID",
@@ -563,13 +563,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "nestedId",
-                  "unsafeName": "nestedId",
+                  "safeName": "nestedID",
+                  "unsafeName": "nestedID",
                 },
                 "originalName": "nestedId",
                 "pascalCase": {
-                  "safeName": "NestedId",
-                  "unsafeName": "NestedId",
+                  "safeName": "NestedID",
+                  "unsafeName": "NestedID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "NESTED_ID",

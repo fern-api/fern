@@ -6,13 +6,13 @@ exports[`generate IR 1`] = `
   "apiDocs": null,
   "apiName": {
     "camelCase": {
-      "safeName": "multiUrlEnvironment",
-      "unsafeName": "multiUrlEnvironment",
+      "safeName": "multiURLEnvironment",
+      "unsafeName": "multiURLEnvironment",
     },
     "originalName": "multi-url-environment",
     "pascalCase": {
-      "safeName": "MultiUrlEnvironment",
-      "unsafeName": "MultiUrlEnvironment",
+      "safeName": "MultiURLEnvironment",
+      "unsafeName": "MultiURLEnvironment",
     },
     "screamingSnakeCase": {
       "safeName": "MULTI_URL_ENVIRONMENT",
@@ -58,13 +58,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -471,13 +471,13 @@ exports[`generate IR 1`] = `
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "getPresignedUrl",
-              "unsafeName": "getPresignedUrl",
+              "safeName": "getPresignedURL",
+              "unsafeName": "getPresignedURL",
             },
             "originalName": "getPresignedUrl",
             "pascalCase": {
-              "safeName": "GetPresignedUrl",
-              "unsafeName": "GetPresignedUrl",
+              "safeName": "GetPresignedURL",
+              "unsafeName": "GetPresignedURL",
             },
             "screamingSnakeCase": {
               "safeName": "GET_PRESIGNED_URL",
@@ -499,13 +499,13 @@ exports[`generate IR 1`] = `
             "extends": [],
             "name": {
               "camelCase": {
-                "safeName": "getPresignedUrlRequest",
-                "unsafeName": "getPresignedUrlRequest",
+                "safeName": "getPresignedURLRequest",
+                "unsafeName": "getPresignedURLRequest",
               },
               "originalName": "GetPresignedUrlRequest",
               "pascalCase": {
-                "safeName": "GetPresignedUrlRequest",
-                "unsafeName": "GetPresignedUrlRequest",
+                "safeName": "GetPresignedURLRequest",
+                "unsafeName": "GetPresignedURLRequest",
               },
               "screamingSnakeCase": {
                 "safeName": "GET_PRESIGNED_URL_REQUEST",
@@ -603,13 +603,13 @@ exports[`generate IR 1`] = `
               "type": "wrapper",
               "wrapperName": {
                 "camelCase": {
-                  "safeName": "getPresignedUrlRequest",
-                  "unsafeName": "getPresignedUrlRequest",
+                  "safeName": "getPresignedURLRequest",
+                  "unsafeName": "getPresignedURLRequest",
                 },
                 "originalName": "GetPresignedUrlRequest",
                 "pascalCase": {
-                  "safeName": "GetPresignedUrlRequest",
-                  "unsafeName": "GetPresignedUrlRequest",
+                  "safeName": "GetPresignedURLRequest",
+                  "unsafeName": "GetPresignedURLRequest",
                 },
                 "screamingSnakeCase": {
                   "safeName": "GET_PRESIGNED_URL_REQUEST",

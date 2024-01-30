@@ -432,8 +432,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
             "name": {
                 "originalName": "errorInstanceId",
                 "camelCase": {
-                    "unsafeName": "errorInstanceId",
-                    "safeName": "errorInstanceId"
+                    "unsafeName": "errorInstanceID",
+                    "safeName": "errorInstanceID"
                 },
                 "snakeCase": {
                     "unsafeName": "error_instance_id",
@@ -444,8 +444,8 @@ exports[`dependencies correctly incorporates dependencies 1`] = `
                     "safeName": "ERROR_INSTANCE_ID"
                 },
                 "pascalCase": {
-                    "unsafeName": "ErrorInstanceId",
-                    "safeName": "ErrorInstanceId"
+                    "unsafeName": "ErrorInstanceID",
+                    "safeName": "ErrorInstanceID"
                 }
             },
             "wireValue": "errorInstanceId"
