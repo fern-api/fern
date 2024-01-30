@@ -26,9 +26,6 @@ export function generateAliasDefinitionFromTypeDeclaration(
     aliasTypeDeclaration: AliasTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Expression {
-    // TODO: Make this screaming snake case
-    // ideally we make a map of typeID to ClassReference and leverage that instead of generating them by type
-    // declaration etc.
     const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
     const rightSide = classReferenceFactory.fromTypeReference(aliasTypeDeclaration.aliasOf);
     return new Expression({ leftSide: name, rightSide, isAssignment: true, documentation: typeDeclaration.docs });
@@ -38,9 +35,6 @@ export function generateEnumDefinitionFromTypeDeclaration(
     enumTypeDeclaration: EnumTypeDeclaration,
     typeDeclaration: TypeDeclaration
 ): Expression {
-    // TODO: Make this screaming snake case
-    // ideally we make a map of typeID to ClassReference and leverage that instead of generating them by type
-    // declaration etc.
     const name = typeDeclaration.name.name.screamingSnakeCase.safeName;
     const contents = new Map(
         enumTypeDeclaration.values.map((enumValue) => [

@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
+require "faraday"
+require_relative "service/client"
+require "async/http/faraday"
+
 module SeedBearerTokenEnvironmentVariableClient
   class Client
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
-    # @param additional_headers [Hash{String => Object}]
-    # @param additional_query_parameters [Hash{String => Object}]
-    # @param additional_body_parameters [Hash{String => Object}]
     # @return []
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil, additional_headers: nil,
-                   additional_query_parameters: nil, additional_body_parameters: nil)
+    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
+      @service_client = ServiceClient.initialize(request_client: request_client)
     end
   end
 
@@ -18,12 +20,10 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
-    # @param additional_headers [Hash{String => Object}]
-    # @param additional_query_parameters [Hash{String => Object}]
-    # @param additional_body_parameters [Hash{String => Object}]
     # @return []
-    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil, additional_headers: nil,
-                   additional_query_parameters: nil, additional_body_parameters: nil)
+    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
+      @async_service_client = AsyncServiceClient.initialize(request_client: request_client)
     end
   end
 end

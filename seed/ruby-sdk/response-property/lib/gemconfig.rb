@@ -2,7 +2,6 @@
 
 module SeedResponsePropertyClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

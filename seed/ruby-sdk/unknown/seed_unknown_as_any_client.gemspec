@@ -4,7 +4,6 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_unknown_as_any_client"
-  spec.version = SeedUnknownAsAnyClient::Gemconfig::VERSION
   spec.authors = SeedUnknownAsAnyClient::Gemconfig::AUTHORS
   spec.email = SeedUnknownAsAnyClient::Gemconfig::EMAIL
   spec.summary = SeedUnknownAsAnyClient::Gemconfig::SUMMARY

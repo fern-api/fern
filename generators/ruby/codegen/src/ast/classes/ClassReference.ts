@@ -154,8 +154,6 @@ export class SerializableObjectReference extends ClassReference {
     }
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
-        // are written to a "types" subdirectory
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new SerializableObjectReference({
@@ -187,8 +185,6 @@ export class AliasReference extends ClassReference {
     }
 
     static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName, aliasOf: ClassReference): ClassReference {
-        // TODO: there's probably a cleaner way of doing this, but here we're ensuring type files
-        // are written to a "types" subdirectory
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new AliasReference({
@@ -274,6 +270,7 @@ export declare namespace Hash_ {
         // allow for spreading additional hashes into this hash.
         additionalHashes?: AstNode[];
         isFrozen?: boolean;
+        shouldCompact?: boolean;
     }
 }
 export class HashReference extends ClassReference {
@@ -316,13 +313,21 @@ export class HashReference extends ClassReference {
 export class HashInstance extends AstNode {
     public contents: Map<string, string | FunctionInvocation | Variable>;
     public additionalHashes: AstNode[];
+    public shouldCompact: boolean;
     public isFrozen: boolean;
 
-    constructor({ contents = new Map(), isFrozen = false, additionalHashes = [], ...rest }: Hash_.InitInstance) {
+    constructor({
+        contents = new Map(),
+        isFrozen = false,
+        shouldCompact = false,
+        additionalHashes = [],
+        ...rest
+    }: Hash_.InitInstance) {
         super(rest);
 
         this.contents = contents;
         this.isFrozen = isFrozen;
+        this.shouldCompact = shouldCompact;
         this.additionalHashes = additionalHashes;
     }
 
@@ -332,6 +337,7 @@ export class HashInstance extends AstNode {
                 .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write() : `'${v}'`))
                 .join(", ")}${this.additionalHashes.map((ah) => format(", **%s", ah.write()))} }`
         });
+        this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
         this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
     }
 }
@@ -475,6 +481,20 @@ export class ClassReferenceFactory {
                 }
             });
             this.generatedReferences.set(typeId, cr);
+        }
+        return cr;
+    }
+
+    public getClassFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
+        const cr = this.generatedReferences.get(declaredTypeName.typeId);
+        // Likely you care attempting to generate an alias and the aliased class has not yet been created.
+        // Create it now!
+        if (cr === undefined) {
+            const td = this.typeDeclarations.get(declaredTypeName.typeId);
+            if (td !== undefined) {
+                return this.fromTypeDeclaration(td);
+            }
+            throw new Error("ClassReference requested does not exist");
         }
         return cr;
     }

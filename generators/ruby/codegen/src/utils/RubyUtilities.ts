@@ -41,9 +41,10 @@ export function getLocationFromFernFilepath(fernFilepath: FernFilepath): string 
 export function generateGemspec(
     clientName: string,
     gemName: string,
-    extraDependencies: ExternalDependency[]
+    extraDependencies: ExternalDependency[],
+    sdkVersion?: string
 ): GeneratedRubyFile {
-    const gemspec = new Gemspec({ clientName, gemName, dependencies: extraDependencies });
+    const gemspec = new Gemspec({ clientName, gemName, dependencies: extraDependencies, sdkVersion });
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),
@@ -61,7 +62,6 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
         child: new Module_({
             name: "Gemconfig",
             child: [
-                new Expression({ leftSide: "VERSION", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze', isAssignment: true }),
                 new Expression({ leftSide: "EMAIL", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "SUMMARY", rightSide: '""', isAssignment: true }),

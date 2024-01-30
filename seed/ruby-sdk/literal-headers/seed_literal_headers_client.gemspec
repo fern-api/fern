@@ -4,7 +4,6 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_literal_headers_client"
-  spec.version = SeedLiteralHeadersClient::Gemconfig::VERSION
   spec.authors = SeedLiteralHeadersClient::Gemconfig::AUTHORS
   spec.email = SeedLiteralHeadersClient::Gemconfig::EMAIL
   spec.summary = SeedLiteralHeadersClient::Gemconfig::SUMMARY

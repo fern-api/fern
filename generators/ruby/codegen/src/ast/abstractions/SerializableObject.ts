@@ -138,7 +138,6 @@ export class SerializableObject extends Class_ {
                 // TODO: should we have a FunctionReference so we don't need to make these dummy full Function_ objects?
                 // also see the definition of "new" in the function above
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
-                // TODO: call to_json on these properties if they're objects
                 onObject: new HashInstance({
                     contents: new Map(
                         properties?.map((prop) => [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()])

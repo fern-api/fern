@@ -4,7 +4,6 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_objects_with_imports_client"
-  spec.version = SeedObjectsWithImportsClient::Gemconfig::VERSION
   spec.authors = SeedObjectsWithImportsClient::Gemconfig::AUTHORS
   spec.email = SeedObjectsWithImportsClient::Gemconfig::EMAIL
   spec.summary = SeedObjectsWithImportsClient::Gemconfig::SUMMARY

@@ -2379,6 +2379,8 @@ __metadata:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.472
+    "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6

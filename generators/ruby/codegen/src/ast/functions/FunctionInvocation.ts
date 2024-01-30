@@ -5,13 +5,13 @@ import { Import } from "../Import";
 import { Variable } from "../Variable";
 import { Function_ } from "./Function_";
 
-interface BlockConfiguration {
+export interface BlockConfiguration {
     arguments?: string;
     expressions: AstNode[];
 }
 export declare namespace FunctionInvocation {
     export interface Init extends AstNode.Init {
-        baseFunction: Function_;
+        baseFunction?: Function_;
         onObject?: Variable | AstNode | string;
         arguments_?: Argument[];
         block?: BlockConfiguration;
@@ -19,7 +19,7 @@ export declare namespace FunctionInvocation {
     }
 }
 export class FunctionInvocation extends AstNode {
-    public baseFunction: Function_;
+    public baseFunction: Function_ | undefined;
     // Required if this function is a class method
     public onObject: Variable | AstNode | string | undefined;
     public arguments_: Argument[];
@@ -46,7 +46,7 @@ export class FunctionInvocation extends AstNode {
     }
 
     private writeBlock(startingTabSpaces: number) {
-        if (this.block) {
+        if (this.block && this.block.expressions.length > 0) {
             this.addText({ stringContent: " do", appendToLastString: true, startingTabSpaces });
             this.addText({
                 stringContent: this.block.arguments,
@@ -73,13 +73,13 @@ export class FunctionInvocation extends AstNode {
             templateString: this.optionalSafeCall ? "%s&." : "%s.",
             startingTabSpaces
         });
-        this.addText({ stringContent: this.baseFunction.name, startingTabSpaces, appendToLastString: true });
+        this.addText({ stringContent: this.baseFunction?.name, startingTabSpaces, appendToLastString: true });
         this.addText({ stringContent: this.writeArgmuments(), appendToLastString: true });
         this.writeBlock(startingTabSpaces);
     }
 
     public getImports(): Set<Import> {
-        let imports = this.baseFunction.getImports();
+        let imports = this.baseFunction?.getImports() ?? new Set<Import>();
         if (this.onObject instanceof AstNode) {
             imports = new Set([...imports, ...this.onObject.getImports()]);
         }

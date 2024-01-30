@@ -13,6 +13,7 @@ export { Expression } from "./ast/expressions/Expression";
 export { RaiseException } from "./ast/expressions/RaiseException";
 export { ExternalDependency } from "./ast/ExternalDependency";
 export { FunctionInvocation } from "./ast/functions/FunctionInvocation";
+export type { BlockConfiguration } from "./ast/functions/FunctionInvocation";
 export { Function_ } from "./ast/functions/Function_";
 export { Import } from "./ast/Import";
 export { Module_ } from "./ast/Module_";

@@ -1,6 +1,6 @@
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { GeneratorContext, getSdkVersion } from "@fern-api/generator-commons";
 import {
     generateBinDir,
     GeneratedFile,
@@ -44,13 +44,14 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
         );
+        const sdkVersion = getSdkVersion(config);
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateGitignore());
         boilerPlateFiles.push(generateRubocopConfig());
         boilerPlateFiles.push(generateGemfile());
         boilerPlateFiles.push(generateReadme());
-        boilerPlateFiles.push(generateGemspec(clientName, gemName, []));
+        boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion));
         boilerPlateFiles.push(generateGemConfig(clientName));
         boilerPlateFiles.concat(generateBinDir(gemName));
 
@@ -64,12 +65,16 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            RelativeFilePath.of(
-                getClientName(
-                    config.organization,
-                    intermediateRepresentation.apiName.pascalCase.safeName,
-                    customConfig.clientClassName
-                )
+            getGemName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName,
+                customConfig.gemName
+            ),
+            getClientName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName
             ),
             generatorContext,
             intermediateRepresentation

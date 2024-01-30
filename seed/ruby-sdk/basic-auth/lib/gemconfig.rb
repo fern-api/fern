@@ -2,7 +2,6 @@
 
 module SeedBasicAuthClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

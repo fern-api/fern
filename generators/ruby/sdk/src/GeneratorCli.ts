@@ -1,7 +1,7 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
-import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
-import { GeneratorContext } from "@fern-api/generator-commons";
+import { GeneratorContext, getSdkVersion } from "@fern-api/generator-commons";
 import {
     generateBinDir,
     GeneratedFile,
@@ -18,7 +18,6 @@ import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
 import { ClientsGenerator } from "./ClientsGenerator";
-import { getSdkVersion } from "./ConfigUtilities";
 import { parseCustomConfig, RubySdkCustomConfig } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfig> {
@@ -44,13 +43,14 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation.apiName.pascalCase.safeName,
             customConfig.clientClassName
         );
+        const sdkVersion = getSdkVersion(config);
 
         const boilerPlateFiles = [];
         boilerPlateFiles.push(generateGitignore());
         boilerPlateFiles.push(generateRubocopConfig());
         boilerPlateFiles.push(generateGemfile());
         boilerPlateFiles.push(generateReadme());
-        boilerPlateFiles.push(generateGemspec(clientName, gemName, []));
+        boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion));
         boilerPlateFiles.push(generateGemConfig(clientName));
         boilerPlateFiles.concat(generateBinDir(gemName));
 
@@ -64,12 +64,16 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const generatedTypeFiles = new TypesGenerator(
-            RelativeFilePath.of(
-                getClientName(
-                    config.organization,
-                    intermediateRepresentation.apiName.pascalCase.safeName,
-                    customConfig.clientClassName
-                )
+            getGemName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName,
+                customConfig.gemName
+            ),
+            getClientName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName
             ),
             generatorContext,
             intermediateRepresentation
@@ -85,18 +89,16 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     ) {
         const sdkVersion = getSdkVersion(config);
         const generatedClientFiles = new ClientsGenerator(
-            RelativeFilePath.of(
-                getClientName(
-                    config.organization,
-                    intermediateRepresentation.apiName.pascalCase.safeName,
-                    customConfig.clientClassName
-                )
-            ),
             getGemName(
                 config.organization,
                 intermediateRepresentation.apiName.pascalCase.safeName,
                 customConfig.clientClassName,
                 customConfig.gemName
+            ),
+            getClientName(
+                config.organization,
+                intermediateRepresentation.apiName.pascalCase.safeName,
+                customConfig.clientClassName
             ),
             generatorContext,
             intermediateRepresentation,

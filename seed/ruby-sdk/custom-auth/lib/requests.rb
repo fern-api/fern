@@ -7,21 +7,20 @@ module SeedCustomAuthClient
   class RequestClient
     attr_reader :headers, :base_url, :conn
 
-    # @param environment [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [RequestClient]
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
-      @base_url = environment
+    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
         "X-API-KEY": " #{custom_auth_scheme.to_json}"
       }
-      @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
+      @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.request :retry, { max: max_retries }
+        faraday.response :raise_error, include_request: true
         faraday.options.timeout = timeout_in_seconds
       end
     end
@@ -30,21 +29,20 @@ module SeedCustomAuthClient
   class AsyncRequestClient
     attr_reader :headers, :base_url, :conn
 
-    # @param environment [String]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [AsyncRequestClient]
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
-      @base_url = environment
+    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
         "X-API-KEY": " #{custom_auth_scheme.to_json}"
       }
-      @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
+      @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.request :retry, { max: max_retries }
+        faraday.response :raise_error, include_request: true
         faraday.options.timeout = timeout_in_seconds
         faraday.adapter = :async_http
       end

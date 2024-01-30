@@ -4,7 +4,6 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_custom_auth_client"
-  spec.version = SeedCustomAuthClient::Gemconfig::VERSION
   spec.authors = SeedCustomAuthClient::Gemconfig::AUTHORS
   spec.email = SeedCustomAuthClient::Gemconfig::EMAIL
   spec.summary = SeedCustomAuthClient::Gemconfig::SUMMARY

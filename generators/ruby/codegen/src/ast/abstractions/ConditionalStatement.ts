@@ -28,16 +28,18 @@ export class ConditionalStatement extends AstNode {
     }
 
     private writeCondition(startingTabSpaces: number, condition: Condition, type: "if" | "elsif" | "else"): void {
-        const moddedType = condition.operation === "!" && condition.leftSide === undefined ? "unless" : type;
-        this.addText({
-            stringContent: condition.leftSide instanceof AstNode ? condition.leftSide.write() : condition.leftSide,
-            templateString: `${type} %s`,
-            startingTabSpaces
-        });
-        this.addText({
-            stringContent: moddedType,
-            appendToLastString: true
-        });
+        if (condition.operation === "!" && condition.leftSide === undefined) {
+            this.addText({
+                stringContent: "unless ",
+                startingTabSpaces
+            });
+        } else {
+            this.addText({
+                stringContent: condition.leftSide instanceof AstNode ? condition.leftSide.write() : condition.leftSide,
+                templateString: `${type} %s`,
+                startingTabSpaces
+            });
+        }
         this.addText({
             stringContent: condition.rightSide instanceof AstNode ? condition.rightSide.write() : condition.rightSide,
             appendToLastString: true

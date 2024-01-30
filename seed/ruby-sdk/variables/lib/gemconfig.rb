@@ -2,7 +2,6 @@
 
 module SeedVariablesClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

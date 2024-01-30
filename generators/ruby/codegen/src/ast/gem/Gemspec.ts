@@ -12,11 +12,35 @@ export declare namespace Gemspec {
         clientName: string;
         gemName: string;
         dependencies: ExternalDependency[];
+        sdkVersion: string | undefined;
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ clientName, gemName, dependencies }: Gemspec.Init) {
+    constructor({ clientName, gemName, dependencies, sdkVersion }: Gemspec.Init) {
         const globalDependencies: ExternalDependency[] = [];
+
+        const gemBlock = [
+            new Expression({
+                leftSide: "spec.name",
+                rightSide: new ClassReference({
+                    name: `"${gemName}"`,
+                    import_: new Import({ from: "lib/gemconfig" })
+                }),
+                isAssignment: true
+            })
+        ];
+        if (sdkVersion !== undefined) {
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.version",
+                    rightSide: new ClassReference({
+                        name: `"${sdkVersion}"`,
+                        import_: new Import({ from: "lib/gemconfig" })
+                    }),
+                    isAssignment: true
+                })
+            );
+        }
 
         super({
             baseFunction: new Function_({ name: "new", functionBody: [] }),
@@ -24,22 +48,7 @@ export class Gemspec extends FunctionInvocation {
             block: {
                 arguments: "spec",
                 expressions: [
-                    new Expression({
-                        leftSide: "spec.name",
-                        rightSide: new ClassReference({
-                            name: `"${gemName}"`,
-                            import_: new Import({ from: "lib/gemconfig" })
-                        }),
-                        isAssignment: true
-                    }),
-                    new Expression({
-                        leftSide: "spec.version",
-                        rightSide: new ClassReference({
-                            name: `${clientName}::Gemconfig::VERSION`,
-                            import_: new Import({ from: "lib/gemconfig" })
-                        }),
-                        isAssignment: true
-                    }),
+                    ...gemBlock,
                     new Expression({
                         leftSide: "spec.authors",
                         rightSide: new ClassReference({

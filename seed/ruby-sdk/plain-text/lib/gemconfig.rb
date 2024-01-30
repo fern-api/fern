@@ -2,7 +2,6 @@
 
 module SeedPlainTextClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

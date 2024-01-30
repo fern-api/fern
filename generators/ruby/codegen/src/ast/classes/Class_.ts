@@ -14,6 +14,7 @@ export declare namespace Class_ {
         functions?: Function_[];
         expressions?: Expression[];
         includeInitializer?: boolean;
+        initializerOverride?: Function_;
     }
 }
 
@@ -28,8 +29,11 @@ export class Class_ extends AstNode {
     public functions: Function_[];
     public expressions: Expression[];
 
+    public initializer?: Function_;
+
     constructor({
         classReference,
+        initializerOverride,
         properties = [],
         functions = [],
         expressions = [],
@@ -40,8 +44,9 @@ export class Class_ extends AstNode {
         this.classReference = classReference;
 
         this.properties = properties;
+
         if (includeInitializer) {
-            const initializer = new Function_({
+            this.initializer = new Function_({
                 name: "initialize",
                 parameters: properties.map((prop) => prop.toParameter()),
                 returnValue: classReference,
@@ -55,7 +60,10 @@ export class Class_ extends AstNode {
                     });
                 })
             });
-            functions = [initializer, ...functions];
+            functions = [this.initializer, ...functions];
+        } else if (initializerOverride !== undefined) {
+            this.initializer = initializerOverride;
+            functions = [this.initializer, ...functions];
         }
         this.functions = functions;
         this.expressions = expressions;
