@@ -172,7 +172,8 @@ function getRequestWrapperPropertiesByName({
                 filepathOfDeclaration: relativeFilepath,
                 definitionFile,
                 workspace,
-                typeResolver: new TypeResolverImpl(workspace)
+                typeResolver: new TypeResolverImpl(workspace),
+                specialCasing: false
             });
 
             for (const property of allProperties) {

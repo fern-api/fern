@@ -7,7 +7,9 @@ import { constructFernFileContext } from "../FernFileContext";
 import { ResolvedType } from "../resolvers/ResolvedType";
 import { TypeResolver } from "../resolvers/TypeResolver";
 
-export const CASINGS_GENERATOR = constructCasingsGenerator(undefined);
+// Note: using this exported variable is NOT recommended, but its included for convenience
+// when the call-site doesn't care about the language nor special casing convention.
+export const CASINGS_GENERATOR = constructCasingsGenerator(undefined, false);
 
 export interface ObjectPropertyWithPath {
     wireKey: string;
@@ -35,6 +37,7 @@ export function getAllPropertiesForObject({
     definitionFile,
     workspace,
     typeResolver,
+    specialCasing,
     // used only for recursive calls
     path = [],
     seen = {}
@@ -46,6 +49,7 @@ export function getAllPropertiesForObject({
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
+    specialCasing: boolean;
     // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
@@ -61,10 +65,15 @@ export function getAllPropertiesForObject({
         seenAtFilepath.add(typeName);
     }
 
+    let casingsGenerator = CASINGS_GENERATOR;
+    if (specialCasing) {
+        casingsGenerator = constructCasingsGenerator(undefined, specialCasing);
+    }
+
     const file = constructFernFileContext({
         relativeFilepath: filepathOfDeclaration,
         definitionFile,
-        casingsGenerator: CASINGS_GENERATOR,
+        casingsGenerator,
         rootApiFile: workspace.definition.rootApiFile.contents
     });
 
@@ -112,6 +121,7 @@ export function getAllPropertiesForObject({
                             definitionFile,
                             workspace,
                             typeResolver,
+                            specialCasing,
                             path: [
                                 ...path,
                                 {
@@ -141,13 +151,15 @@ export function getAllPropertiesForType({
     filepathOfDeclaration,
     definitionFile,
     workspace,
-    typeResolver
+    typeResolver,
+    specialCasing
 }: {
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
+    specialCasing: boolean;
 }): ObjectPropertyWithPath[] {
     const resolvedType = typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
@@ -167,7 +179,8 @@ export function getAllPropertiesForType({
         filepathOfDeclaration,
         definitionFile,
         workspace,
-        typeResolver
+        typeResolver,
+        specialCasing
     });
 }
 

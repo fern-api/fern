@@ -2,10 +2,10 @@ import { isPlainObject } from "@fern-api/core-utils";
 import { FernWorkspace, getDefinitionFile } from "@fern-api/workspace-loader";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { keyBy } from "lodash-es";
-import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
 import { constructFernFileContext, FernFileContext } from "../FernFileContext";
 import { ExampleResolver } from "../resolvers/ExampleResolver";
 import { TypeResolver } from "../resolvers/TypeResolver";
+import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "../utils/getAllPropertiesForObject";
 import { ExampleViolation } from "./exampleViolation";
 import { getViolationsForMisshapenExample } from "./getViolationsForMisshapenExample";
 import { validateTypeReferenceExample } from "./validateTypeReferenceExample";
@@ -42,7 +42,8 @@ export function validateObjectExample({
         typeResolver,
         definitionFile: file.definitionFile,
         workspace,
-        filepathOfDeclaration: file.relativeFilepath
+        filepathOfDeclaration: file.relativeFilepath,
+        specialCasing: false
     });
 
     const allPropertiesByWireKey = keyBy(allPropertiesForObject, (property) => property.wireKey);

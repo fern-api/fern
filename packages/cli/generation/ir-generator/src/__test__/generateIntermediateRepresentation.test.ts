@@ -59,6 +59,7 @@ it("generate IR", async () => {
             workspace,
             generationLanguage: undefined,
             audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            specialCasing: true, // Verify the special casing convention in tests.
             disableExamples: false
         });
 

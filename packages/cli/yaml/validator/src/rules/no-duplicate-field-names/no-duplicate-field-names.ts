@@ -1,5 +1,7 @@
 import {
     constructFernFileContext,
+    convertObjectPropertyWithPathToString,
+    getAllPropertiesForObject,
     getEnumName,
     getSingleUnionTypeName,
     getUnionDiscriminantName,
@@ -10,7 +12,6 @@ import { isRawObjectDefinition, visitRawTypeDeclaration } from "@fern-api/yaml-s
 import { groupBy, noop } from "lodash-es";
 import { Rule, RuleViolation } from "../../Rule";
 import { CASINGS_GENERATOR } from "../../utils/casingsGenerator";
-import { convertObjectPropertyWithPathToString, getAllPropertiesForObject } from "@fern-api/ir-generator";
 import { getTypeDeclarationNameAsString } from "../../utils/getTypeDeclarationNameAsString";
 
 export const NoDuplicateFieldNamesRule: Rule = {
@@ -47,7 +48,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                 filepathOfDeclaration: relativeFilepath,
                                 definitionFile: contents,
                                 workspace,
-                                typeResolver
+                                typeResolver,
+                                specialCasing: false
                             });
                             const propertiesGroupedByName = groupBy(allProperties, (property) => property.name);
                             for (const [propertyName, propertiesWithName] of Object.entries(propertiesGroupedByName)) {
@@ -124,7 +126,8 @@ export const NoDuplicateFieldNamesRule: Rule = {
                                             filepathOfDeclaration: resolvedType.filepath,
                                             definitionFile,
                                             workspace,
-                                            typeResolver
+                                            typeResolver,
+                                            specialCasing: false
                                         });
                                         const propertiesWithSameNameAsDiscriminant = propertiesOnObject.filter(
                                             (property) => property.name === discriminantName

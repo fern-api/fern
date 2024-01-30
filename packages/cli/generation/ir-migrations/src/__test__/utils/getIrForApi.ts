@@ -21,6 +21,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
         workspace: workspace.workspace,
         generationLanguage: undefined,
         audiences: { type: "all" },
+        specialCasing: true, // Verify the special casing convention in tests.
         disableExamples: false
     });
 }

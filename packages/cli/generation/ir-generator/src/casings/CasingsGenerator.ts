@@ -8,7 +8,10 @@ export interface CasingsGenerator {
     generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
 }
 
-export function constructCasingsGenerator(generationLanguage: GenerationLanguage | undefined): CasingsGenerator {
+export function constructCasingsGenerator(
+    generationLanguage: GenerationLanguage | undefined,
+    specialCasing: boolean
+): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({
@@ -16,25 +19,27 @@ export function constructCasingsGenerator(generationLanguage: GenerationLanguage
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
             });
 
-            const originalCamelCaseName = camelCase(name);
-            const camelCaseWords = words(originalCamelCaseName);
-
-            const camelCaseName = camelCaseWords
-                .map((word, index) => {
-                    return index > 0 && isCommonInitialism(word) ? word.toUpperCase() : word;
-                })
-                .join("");
-            const pascalCaseName = camelCaseWords
-                .map((word, index) => {
-                    if (isCommonInitialism(word)) {
-                        return word.toUpperCase();
-                    }
-                    if (index === 0) {
-                        return upperFirst(word);
-                    }
-                    return word;
-                })
-                .join("");
+            let camelCaseName = camelCase(name);
+            let pascalCaseName = upperFirst(camelCaseName);
+            if (specialCasing) {
+                const camelCaseWords = words(camelCaseName);
+                camelCaseName = camelCaseWords
+                    .map((word, index) => {
+                        return index > 0 && isCommonInitialism(word) ? word.toUpperCase() : word;
+                    })
+                    .join("");
+                pascalCaseName = camelCaseWords
+                    .map((word, index) => {
+                        if (isCommonInitialism(word)) {
+                            return word.toUpperCase();
+                        }
+                        if (index === 0) {
+                            return upperFirst(word);
+                        }
+                        return word;
+                    })
+                    .join("");
+            }
             const snakeCaseName = snakeCase(camelCaseName);
 
             return {
