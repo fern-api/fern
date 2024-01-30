@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@fern-api/fdr-sdk": "0.44.0-1-geb2e930",
-    "@fern-api/venus-api-sdk": "0.0.36",
+    "@fern-api/venus-api-sdk": "0.0.38",
     "@fern-fern/fiddle-sdk": "^0.0.386"
   },
   "devDependencies": {
