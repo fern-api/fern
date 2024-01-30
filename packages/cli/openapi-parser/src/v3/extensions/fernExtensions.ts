@@ -197,7 +197,19 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-sdk-return-value: data
      */
-    RESPONSE_PROPERTY: "x-fern-sdk-return-value"
+    RESPONSE_PROPERTY: "x-fern-sdk-return-value",
+
+    /**
+     * Used to resolve multiple schemas into a single schema. All the references
+     * are replaced with a single schema.
+     *
+     * x-fern-resolutions:
+     *  - name: User
+     *    resolutions:
+     *      - `#/components/schemas/Group/properties/user`
+     *      - `#/components/schemas/User`
+     */
+    RESOLUTIONS: "x-fern-resolutions"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
