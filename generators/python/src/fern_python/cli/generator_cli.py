@@ -1,7 +1,5 @@
 import sys
 
-from fern_python.generator_exec_wrapper import GeneratorExecWrapper
-
 import fern.ir.resources as ir_types
 from fern.generator_exec.resources.config import GeneratorConfig
 from fern.generator_exec.resources.logging import (
@@ -12,6 +10,8 @@ from fern.generator_exec.resources.logging import (
     RegistryType,
     SuccessfulStatusUpdate,
 )
+
+from fern_python.generator_exec_wrapper import GeneratorExecWrapper
 
 from .abstract_generator import AbstractGenerator
 
