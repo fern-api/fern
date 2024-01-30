@@ -3,7 +3,7 @@ module github.com/fern-api/fern-go
 go 1.19
 
 require (
-	github.com/fern-api/generator-exec-go v0.0.522
+	github.com/fern-api/generator-exec-go v0.0.534
 	github.com/google/uuid v1.6.0
 	github.com/hmdsefi/gograph v0.4.0
 	github.com/stretchr/testify v1.8.4
