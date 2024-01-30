@@ -17,6 +17,7 @@ install:
 test: install
 	go test ./...
 	npm install -g @fern-api/seed-cli@0.16.25-2-g32eebe2b
+	seed test --workspace sdk --fixture bytes
 	seed test --workspace sdk --fixture enum-query-params
 	seed test --workspace sdk --fixture response-property
 	seed test --workspace sdk --fixture file-upload

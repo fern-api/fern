@@ -2,7 +2,6 @@ package generator
 
 import (
 	_ "embed"
-	"errors"
 	"fmt"
 	"path"
 	"sort"
@@ -929,6 +928,9 @@ func (f *fileWriter) WriteClient(
 				}
 			}
 		}
+		if endpoint.ContentType != "" {
+			f.P(fmt.Sprintf(`%s.Set("Content-Type", %q)`, headersParameter, endpoint.ContentType))
+		}
 		f.P()
 
 		// Include the error decoder, if any.
@@ -986,6 +988,18 @@ func (f *fileWriter) WriteClient(
 			f.P("}")
 			f.P("return apiError")
 			f.P("}")
+			f.P()
+		}
+
+		if endpoint.RequestIsBytes {
+			if endpoint.RequestIsOptional {
+				f.P("var requestBuffer io.Reader")
+				f.P("if ", endpoint.RequestParameterName, " != nil {")
+				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestParameterName, ")")
+				f.P("}")
+			} else {
+				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestParameterName, ")")
+			}
 			f.P()
 		}
 
@@ -1151,6 +1165,8 @@ type endpoint struct {
 	OptionsParameterName        string
 	RequestParameterName        string
 	RequestValueName            string
+	RequestIsBytes              bool
+	RequestIsOptional           bool
 	ResponseType                string
 	ResponseParameterName       string
 	ResponseInitializerFormat   string
@@ -1168,6 +1184,7 @@ type endpoint struct {
 	StreamDelimiter             string
 	ErrorDecoderParameterName   string
 	Idempotent                  bool
+	ContentType                 string
 	Errors                      ir.ResponseErrors
 	QueryParameters             []*ir.QueryParameter
 	Headers                     []*ir.HttpHeader
@@ -1236,14 +1253,31 @@ func (f *fileWriter) endpointFromIR(
 
 	// Format the rest of the request parameters.
 	var (
+		contentType          = ""
 		requestParameterName = ""
 		requestValueName     = ""
+		requestIsBytes       = false
+		requestIsOptional    = false
 	)
 	if irEndpoint.SdkRequest != nil {
 		if needsRequestParameter(irEndpoint) {
 			var requestType string
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
-				requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+				switch requestBody.Type {
+				case "typeReference":
+					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
+				case "bytes":
+					contentType = "application/octet-stream"
+					if requestBody.Bytes.ContentType != nil {
+						contentType = *requestBody.Bytes.ContentType
+					}
+					requestType = "[]byte"
+					requestValueName = "requestBuffer"
+					requestIsBytes = true
+					requestIsOptional = requestBody.Bytes.IsOptional
+				default:
+					return nil, fmt.Errorf("%s requests are not supported yet", requestBody.Type)
+				}
 			}
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
@@ -1256,7 +1290,7 @@ func (f *fileWriter) endpointFromIR(
 					parameter: fmt.Sprintf("%s %s", requestParameterName, requestType),
 				},
 			)
-			if irEndpoint.RequestBody != nil {
+			if irEndpoint.RequestBody != nil && requestValueName == "" {
 				// Only send a request body if one is defined.
 				requestValueName = requestParameterName
 			}
@@ -1408,6 +1442,8 @@ func (f *fileWriter) endpointFromIR(
 		OptionsParameterName:        "options",
 		RequestParameterName:        requestParameterName,
 		RequestValueName:            requestValueName,
+		RequestIsBytes:              requestIsBytes,
+		RequestIsOptional:           requestIsOptional,
 		ResponseType:                responseType,
 		ResponseParameterName:       responseParameterName,
 		ResponseInitializerFormat:   responseInitializerFormat,
@@ -1424,6 +1460,7 @@ func (f *fileWriter) endpointFromIR(
 		IsStreaming:                 isStreaming,
 		StreamDelimiter:             streamDelimiter,
 		ErrorDecoderParameterName:   errorDecoderParameterName,
+		ContentType:                 contentType,
 		Idempotent:                  irEndpoint.Idempotent,
 		Errors:                      irEndpoint.Errors,
 		QueryParameters:             irEndpoint.QueryParameters,
@@ -1960,7 +1997,8 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 }
 
 func (r *requestBodyVisitor) VisitBytes(bytes *ir.BytesRequest) error {
-	return errors.New("bytes requests are not supported yet")
+	// TODO: Add support for bytes request bodies within an in-lined request.
+	return nil
 }
 
 // inlinedRequestBodyToObjectTypeDeclaration maps the given inlined request body
