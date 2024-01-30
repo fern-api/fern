@@ -197,7 +197,32 @@ export const FernOpenAPIExtension = {
      *    get:
      *      x-fern-sdk-return-value: data
      */
-    RESPONSE_PROPERTY: "x-fern-sdk-return-value"
+    RESPONSE_PROPERTY: "x-fern-sdk-return-value",
+
+
+    /**
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-code-samples:
+     *      - language: typescript
+     *        install: npm install my-client
+     *        code: |
+     *          import { MyClient } from "my-client";
+     *          const client = new MyClient();
+     *          const response = await client.myEndpoint();
+     *          console.log(response);
+     *        name: Console Log My Endpoint
+     *        description: This is a code sample that logs the response
+     */
+    CUSTOM_CODE_SAMPLES: "x-fern-code-samples",
+
+    /**
+     * Migrate from readme extensions to fern IR.
+     * 
+     * https://docs.readme.com/main/docs/openapi-extensions
+     */
+    README_EXT: "x-readme",
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

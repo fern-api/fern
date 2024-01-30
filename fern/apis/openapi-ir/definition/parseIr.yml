@@ -3,8 +3,8 @@ imports:
   finalIr: finalIr.yml
 
 types:
-  NamedFullExample: 
-    properties: 
+  NamedFullExample:
+    properties:
       name: optional<string>
       value: unknown
 
@@ -40,6 +40,11 @@ types:
       response: optional<ResponseWithExample>
       errorStatusCode: list<commons.StatusCode>
       server: list<commons.Server>
+      customCodeSamples:
+        type: list<finalIr.CustomCodeSample>
+        docs: |
+          Populated by `x-fern-code-samples` on a path object.
+          Also migrated from `x-readme.code-samples` if present.
 
   RequestWithExample:
     union:
