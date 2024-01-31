@@ -22,13 +22,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "body": {},
@@ -65,14 +61,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -136,10 +128,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "event_data_id": "string",
                   "label": "string",
@@ -202,13 +190,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "id": "string",
@@ -235,13 +219,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -278,14 +258,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -329,12 +305,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "target": "http",
                 },
@@ -377,12 +350,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -477,13 +447,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -515,10 +481,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "query": {
                     "status": "SCHEDULED",
@@ -565,11 +527,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -592,14 +549,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -641,13 +594,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1010,13 +959,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1048,10 +993,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "query": {},
                 },
@@ -1096,11 +1037,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1123,14 +1059,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -1172,13 +1104,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1268,13 +1196,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1306,10 +1230,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "query": {
                     "rejection_cause": "SOURCE_ARCHIVED",
@@ -1357,11 +1277,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1384,14 +1299,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -1433,13 +1344,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1707,13 +1614,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1776,10 +1679,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "destination": {
                     "name": "string",
@@ -1892,13 +1791,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1961,14 +1856,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -2012,13 +1903,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2080,13 +1967,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2148,13 +2031,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2218,12 +2097,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "ruleset": {
                     "name": "string",
@@ -2316,10 +2192,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "destination": {
                     "name": "string",
@@ -2586,13 +2458,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2625,10 +2493,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "rate_limit_period": "second",
@@ -2691,13 +2555,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2730,14 +2590,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -2779,13 +2635,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2819,12 +2671,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "rate_limit_period": "second",
@@ -2895,10 +2744,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "rate_limit_period": "second",
@@ -3011,13 +2856,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attempts": 1,
@@ -3058,16 +2899,12 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "include": "data",
                   "order_by": "last_attempt_at",
                   "status": "SCHEDULED",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -3124,13 +2961,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "body": "string",
@@ -3157,13 +2990,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attempts": 1,
@@ -3203,13 +3032,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attempt": {
@@ -3292,14 +3117,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "source_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "success": true,
@@ -3328,10 +3149,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "configs": {
                     "algorithm": "md5",
@@ -3401,13 +3218,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "id": "string",
@@ -3435,14 +3248,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "source_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -3468,13 +3277,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "configs": {
@@ -3515,13 +3320,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "provider": "twitter",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -3556,12 +3357,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "configs": {
                     "algorithm": "md5",
@@ -3670,10 +3468,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "channels": {
                     "email": {},
@@ -3744,13 +3538,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "id": "string",
@@ -3777,13 +3567,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "channels": {
@@ -3824,13 +3610,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "channels": {
@@ -3871,13 +3653,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "channels": {
@@ -3919,15 +3697,11 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                   "type": "delivery",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -3967,12 +3741,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "channels": {
                     "email": {},
@@ -4049,10 +3820,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "channels": {
                     "email": {},
@@ -4212,9 +3979,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
@@ -4224,7 +3988,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "status": "OPENED",
                   "type": "delivery",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -4268,9 +4031,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "id": "iss_YXKv5OdJXCiVwkPhGy",
@@ -4280,7 +4040,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "status": "OPENED",
                   "type": "delivery",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -4437,10 +4196,6 @@ exports[`open api parser hookdeck simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -4500,13 +4255,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -4544,8 +4295,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -4555,7 +4304,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "order_by": "last_attempt_at",
                   "status": "SCHEDULED",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -4617,8 +4365,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -4626,7 +4372,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -4666,13 +4411,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "body": "string",
@@ -4700,9 +4441,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "include": "data",
@@ -4710,7 +4448,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "rejection_cause": "SOURCE_ARCHIVED",
                   "status": "accepted",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -4763,12 +4500,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "webhook_ids": [],
                 },
@@ -4879,13 +4613,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -4919,10 +4649,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -4973,13 +4699,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5013,14 +4735,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -5060,13 +4778,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5101,12 +4815,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -5163,10 +4874,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -5243,13 +4950,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5288,10 +4991,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -5342,13 +5041,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5387,14 +5082,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -5435,13 +5126,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5481,12 +5168,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -5543,10 +5227,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -5624,10 +5304,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "code": "string",
                   "name": "string",
@@ -5681,13 +5357,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "code": "string",
@@ -5719,14 +5391,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "execution_id": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -5770,8 +5438,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -5780,7 +5446,6 @@ exports[`open api parser hookdeck simple 1`] = `
                   "log_level": "debug",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -5824,14 +5489,10 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "dir": "asc",
                   "order_by": "created_at",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "pagination": {
@@ -5870,10 +5531,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "env": {},
                   "request": {
@@ -5943,12 +5600,9 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -6003,10 +5657,6 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "code": "string",
                   "name": "string",

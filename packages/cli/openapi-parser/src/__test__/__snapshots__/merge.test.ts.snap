@@ -13744,7 +13744,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
-          "name": undefined,
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": {

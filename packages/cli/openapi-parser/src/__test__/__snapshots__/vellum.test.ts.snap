@@ -184,7 +184,7 @@ Creates a new document index.",
           "codeSamples": [],
           "docs": undefined,
           "headers": [],
-          "name": undefined,
+          "name": "Index Using Instructor Model",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1567,7 +1567,7 @@ or overwritten with default values.",
           "codeSamples": [],
           "docs": undefined,
           "headers": [],
-          "name": undefined,
+          "name": "Basic Example",
           "pathParameters": [
             {
               "name": "id",

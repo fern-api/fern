@@ -59,10 +59,6 @@ exports[`open api parser assembly simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "final_model": "default",
                   "transcript_ids": [],
@@ -101,13 +97,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "request_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "deleted": true,
@@ -144,10 +136,6 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "final_model": "default",
                   "questions": [],
@@ -198,10 +186,6 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "final_model": "default",
                   "transcript_ids": [],
@@ -252,10 +236,6 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "final_model": "default",
                   "prompt": "string",
@@ -317,10 +297,6 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "expires_in": 1,
                 },
@@ -376,10 +352,6 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "audio_url": "string",
                   "boost_param": "low",
@@ -456,13 +428,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "acoustic_model": "string",
@@ -521,13 +489,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "acoustic_model": "string",
@@ -586,13 +550,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "audio_duration": 1.1,
@@ -630,13 +590,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "redacted_audio_url": "string",
@@ -672,13 +628,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "audio_duration": 1.1,
@@ -746,13 +698,9 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "status": "queued",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "page_details": {

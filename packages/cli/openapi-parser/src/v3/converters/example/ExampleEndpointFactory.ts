@@ -133,7 +133,7 @@ export class ExampleEndpointFactory {
         }
 
         let exampleName = requestSchemaIdResponse?.example?.name;
-        if (exampleName != null && requestSchemaIdResponse?.schema != null) {
+        if (exampleName == null && requestSchemaIdResponse?.schema != null) {
             exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
         }
         const example = {
@@ -216,8 +216,8 @@ function isExamplePrimitive(example: FullExample): boolean {
     }
 }
 
-function getNameFromSchemaWithExample(example: SchemaWithExample): string | undefined {
-    switch (example.type) {
+function getNameFromSchemaWithExample(schema: SchemaWithExample): string | undefined {
+    switch (schema.type) {
         case "primitive":
         case "enum":
         case "literal":
@@ -229,9 +229,9 @@ function getNameFromSchemaWithExample(example: SchemaWithExample): string | unde
         case "reference":
             return undefined;
         case "object":
-            return example.fullExamples?.[0]?.name ?? undefined;
+            return schema.fullExamples?.[0]?.name ?? undefined;
         case "oneOf":
-            switch (example.oneOf.type) {
+            switch (schema.oneOf.type) {
                 case "discriminated":
                     return undefined;
                 case "undisciminated":
@@ -240,6 +240,6 @@ function getNameFromSchemaWithExample(example: SchemaWithExample): string | unde
                     return undefined;
             }
         default:
-            assertNever(example);
+            assertNever(schema);
     }
 }

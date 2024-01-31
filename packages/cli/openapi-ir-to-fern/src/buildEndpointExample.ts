@@ -17,29 +17,47 @@ export function buildEndpointExample({
     endpointExample: EndpointExample;
     context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema {
-    return {
-        "path-parameters":
-            endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
-                ? convertNamedFullExamples(endpointExample.pathParameters)
-                : undefined,
-        "query-parameters":
-            endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0
-                ? convertQueryParameterExample(endpointExample.queryParameters)
-                : undefined,
-        headers:
-            endpointExample.headers != null && endpointExample.headers.length > 0
-                ? convertHeaderExamples({ context, namedFullExamples: endpointExample.headers })
-                : undefined,
-        request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
-        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined,
-        "code-samples": endpointExample.codeSamples.map((codeSample) => ({
+    const example: RawSchemas.ExampleEndpointCallSchema = {};
+
+    if (endpointExample.name != null) {
+        example.name = endpointExample.name;
+    }
+
+    if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
+        example["path-parameters"] = convertNamedFullExamples(endpointExample.pathParameters);
+    }
+
+    if (endpointExample.queryParameters != null && endpointExample.queryParameters.length > 0) {
+        example["query-parameters"] = convertQueryParameterExample(endpointExample.queryParameters);
+    }
+
+    if (endpointExample.headers != null && endpointExample.headers.length > 0) {
+        example.headers = convertHeaderExamples({ context, namedFullExamples: endpointExample.headers });
+    }
+
+    if (endpointExample.request != null) {
+        example.request = convertFullExample(endpointExample.request);
+    }
+
+    if (endpointExample.response != null) {
+        example.response = { body: convertFullExample(endpointExample.response) };
+    }
+
+    if (endpointExample.response != null) {
+        example.response = { body: convertFullExample(endpointExample.response) };
+    }
+
+    if (endpointExample.codeSamples.length > 0) {
+        example["code-samples"] = endpointExample.codeSamples.map((codeSample) => ({
             language: codeSample.language,
             code: codeSample.code,
             name: codeSample.name ?? undefined,
             install: codeSample.install ?? undefined,
             docs: codeSample.description ?? undefined
-        }))
-    };
+        }));
+    }
+
+    return example;
 }
 
 interface NamedFullExample {
