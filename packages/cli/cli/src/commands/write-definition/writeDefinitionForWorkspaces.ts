@@ -8,7 +8,6 @@ import {
     FernWorkspace,
     OpenAPIWorkspace
 } from "@fern-api/workspace-loader";
-import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import chalk from "chalk";
 import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
@@ -109,11 +108,6 @@ async function writeFernDefinition({
     for (const [relativePath, definitionFile] of Object.entries(definition.namedDefinitionFiles)) {
         const absoluteFilepath = join(absolutePathToOutputDirectory, RelativeFilePath.of(relativePath));
         await mkdir(dirname(absoluteFilepath), { recursive: true });
-        await writeFile(
-            absoluteFilepath,
-            await formatDefinitionFile({
-                fileContents: yaml.dump(definitionFile.contents)
-            })
-        );
+        await writeFile(absoluteFilepath, yaml.dump(definitionFile.contents));
     }
 }
