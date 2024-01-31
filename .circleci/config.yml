@@ -2,20 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  live-test-dev:
-    docker:
-      - image: cimg/node:18.8.0
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Live Test (dev)
-          command: |
-            yarn workspace @fern-api/cli dist:cli:dev
-            cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
-            ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
-
   live-test:
     docker:
       - image: cimg/node:18.8.0
