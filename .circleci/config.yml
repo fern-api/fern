@@ -132,14 +132,6 @@ workflows:
   version: 2
   build:
     jobs:
-      - live-test-dev:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-            - fern-tokens
-
       - live-test:
           filters:
             branches:
