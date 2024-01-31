@@ -10,6 +10,7 @@ export declare namespace Parameter {
         defaultValue?: Variable | string;
         isOptional?: boolean;
         isNamed?: boolean;
+        describeAsHashInYardoc?: boolean;
     }
 }
 
@@ -19,13 +20,23 @@ export class Parameter extends AstNode {
     // TODO: deal with constants in a more structured way.
     public defaultValue: Variable | string | undefined;
     public isNamed: boolean;
+    public describeAsHashInYardoc: boolean;
 
-    constructor({ name, type, defaultValue, isOptional = false, isNamed = true, ...rest }: Parameter.Init) {
+    constructor({
+        name,
+        type,
+        defaultValue,
+        isOptional = false,
+        isNamed = true,
+        describeAsHashInYardoc = false,
+        ...rest
+    }: Parameter.Init) {
         super(rest);
         this.name = name;
         this.type = type;
         this.defaultValue = defaultValue ?? (isOptional ? NilValue : undefined);
         this.isNamed = isNamed || this.defaultValue !== undefined;
+        this.describeAsHashInYardoc = describeAsHashInYardoc;
     }
 
     public writeInternal(): void {

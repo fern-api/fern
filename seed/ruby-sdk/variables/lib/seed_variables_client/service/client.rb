@@ -18,7 +18,9 @@ module SeedVariablesClient
       # @param request_options [RequestOptions]
       # @return [Void]
       def post(endpoint_param:, request_options: nil)
-        @request_client.conn.post("/#{endpoint_param}")
+        @request_client.conn.post("/#{endpoint_param}") do |req|
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        end
       end
     end
 
@@ -37,7 +39,9 @@ module SeedVariablesClient
       # @return [Void]
       def post(endpoint_param:, request_options: nil)
         Async.call do
-          @request_client.conn.post("/#{endpoint_param}")
+          @request_client.conn.post("/#{endpoint_param}") do |req|
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          end
         end
       end
     end

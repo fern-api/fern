@@ -17,7 +17,9 @@ module SeedErrorPropertyClient
       # @param request_options [RequestOptions]
       # @return [String]
       def throw_error(request_options: nil)
-        @request_client.conn.get("/property-based-error")
+        @request_client.conn.get("/property-based-error") do |req|
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        end
       end
     end
 
@@ -35,7 +37,9 @@ module SeedErrorPropertyClient
       # @return [String]
       def throw_error(request_options: nil)
         Async.call do
-          response = @request_client.conn.get("/property-based-error")
+          response = @request_client.conn.get("/property-based-error") do |req|
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          end
           response
         end
       end

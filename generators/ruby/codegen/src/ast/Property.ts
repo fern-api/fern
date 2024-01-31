@@ -36,21 +36,28 @@ export class Property extends AstNode {
         });
     }
 
-    public toParameter(defaultValue?: Variable | string): Parameter {
+    public toParameter({
+        defaultValue,
+        describeAsHashInYardoc
+    }: {
+        defaultValue?: Variable | string;
+        describeAsHashInYardoc?: boolean;
+    }): Parameter {
         return new Parameter({
             name: this.name,
             type: this.type,
             isOptional: this.isOptional,
             documentation: this.documentation,
-            defaultValue
+            defaultValue,
+            describeAsHashInYardoc
         });
     }
 
-    public toVariable(): Variable {
+    public toVariable(variableType?: VariableType): Variable {
         return new Variable({
             name: this.name,
             type: this.type,
-            variableType: VariableType.INSTANCE,
+            variableType: variableType ?? VariableType.INSTANCE,
             isOptional: this.isOptional
         });
     }

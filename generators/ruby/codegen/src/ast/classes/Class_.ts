@@ -48,7 +48,7 @@ export class Class_ extends AstNode {
         if (includeInitializer) {
             this.initializer = new Function_({
                 name: "initialize",
-                parameters: properties.map((prop) => prop.toParameter()),
+                parameters: properties.map((prop) => prop.toParameter({})),
                 returnValue: classReference,
                 functionBody: properties.map((prop) => {
                     const yardoc = new Yardoc({ reference: { name: "typeReference", type: prop } });

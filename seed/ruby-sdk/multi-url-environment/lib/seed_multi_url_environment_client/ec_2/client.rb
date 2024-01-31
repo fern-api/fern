@@ -20,7 +20,8 @@ module SeedMultiUrlEnvironmentClient
       def boot_instance(size:, request_options: nil)
         @request_client.conn.post("/ec2/boot") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.body = { size: "size" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request_options&.additional_body_parameters, size: size }.compact
           req.url = @request_client.default_environment[ec2]
         end
       end
@@ -43,7 +44,8 @@ module SeedMultiUrlEnvironmentClient
         Async.call do
           @request_client.conn.post("/ec2/boot") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = { size: "size" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request_options&.additional_body_parameters, size: size }.compact
             req.url = @request_client.default_environment[ec2]
           end
         end

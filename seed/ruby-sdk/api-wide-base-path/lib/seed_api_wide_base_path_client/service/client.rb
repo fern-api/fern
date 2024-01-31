@@ -20,7 +20,9 @@ module SeedApiWideBasePathClient
       # @param request_options [RequestOptions]
       # @return [Void]
       def post(path_param:, service_param:, endpoint_param:, request_options: nil)
-        @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}")
+        @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}") do |req|
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        end
       end
     end
 
@@ -41,7 +43,9 @@ module SeedApiWideBasePathClient
       # @return [Void]
       def post(path_param:, service_param:, endpoint_param:, request_options: nil)
         Async.call do
-          @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}")
+          @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}") do |req|
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          end
         end
       end
     end

@@ -23,7 +23,8 @@ module SeedExhaustiveClient
         def get_and_return_list_of_primitives(request:, request_options: nil)
           @request_client.conn.post("/container/list-of-primitives") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
         end
 
@@ -33,7 +34,8 @@ module SeedExhaustiveClient
         def get_and_return_list_of_objects(request:, request_options: nil)
           response = @request_client.conn.post("/container/list-of-objects") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           response.map do |v|
             v = v.to_h.to_json
@@ -47,7 +49,8 @@ module SeedExhaustiveClient
         def get_and_return_set_of_primitives(request:, request_options: nil)
           response = @request_client.conn.post("/container/set-of-primitives") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Set.new(response)
         end
@@ -58,7 +61,8 @@ module SeedExhaustiveClient
         def get_and_return_set_of_objects(request:, request_options: nil)
           response = @request_client.conn.post("/container/set-of-objects") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Set.new(response)
         end
@@ -69,7 +73,8 @@ module SeedExhaustiveClient
         def get_and_return_map_prim_to_prim(request:, request_options: nil)
           @request_client.conn.post("/container/map-prim-to-prim") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
         end
 
@@ -79,17 +84,20 @@ module SeedExhaustiveClient
         def get_and_return_map_of_prim_to_object(request:, request_options: nil)
           @request_client.conn.post("/container/map-prim-to-object") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithRequiredField]
         def get_and_return_optional(request: nil, request_options: nil)
           response = @request_client.conn.post("/container/opt-objects") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithRequiredField.from_json(json_object: response)
         end
@@ -112,7 +120,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/list-of-primitives") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             response
           end
@@ -125,7 +134,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/list-of-objects") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             response.map do |v|
               v = v.to_h.to_json
@@ -141,7 +151,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/set-of-primitives") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Set.new(response)
           end
@@ -154,7 +165,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/set-of-objects") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Set.new(response)
           end
@@ -167,7 +179,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/map-prim-to-prim") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             response
           end
@@ -180,20 +193,23 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/container/map-prim-to-object") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             response
           end
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithRequiredField]
         def get_and_return_optional(request: nil, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/container/opt-objects") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithRequiredField.from_json(json_object: response)
           end

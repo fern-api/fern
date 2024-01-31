@@ -19,6 +19,7 @@ module SeedAuthEnvironmentVariablesClient
       def get_with_api_key(request_options: nil)
         @request_client.conn.get("/apiKey") do |req|
           req.headers["X-FERN-API-KEY"] = @request_client.api_key unless @request_client.api_key.nil?
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
     end
@@ -39,6 +40,7 @@ module SeedAuthEnvironmentVariablesClient
         Async.call do
           response = @request_client.conn.get("/apiKey") do |req|
             req.headers["X-FERN-API-KEY"] = @request_client.api_key unless @request_client.api_key.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response
         end

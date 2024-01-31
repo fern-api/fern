@@ -23,8 +23,13 @@ module SeedAudiencesClient
       # @return [Foo::ImportingType]
       def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
         response = @request_client.conn.post("/") do |req|
-          req.params = { "optionalString": "optional_string" }.compact
-          req.body = { publicProperty: "public_property", privateProperty: "private_property" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.params = { **request_options&.additional_query_parameters, "optionalString": optional_string }.compact
+          req.body = {
+            **request_options&.additional_body_parameters,
+            publicProperty: public_property,
+            privateProperty: private_property
+          }.compact
         end
         Foo::ImportingType.from_json(json_object: response)
       end
@@ -48,8 +53,13 @@ module SeedAudiencesClient
       def find(optional_string:, public_property: nil, private_property: nil, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/") do |req|
-            req.params = { "optionalString": "optional_string" }.compact
-            req.body = { publicProperty: "public_property", privateProperty: "private_property" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.params = { **request_options&.additional_query_parameters, "optionalString": optional_string }.compact
+            req.body = {
+              **request_options&.additional_body_parameters,
+              publicProperty: public_property,
+              privateProperty: private_property
+            }.compact
           end
           Foo::ImportingType.from_json(json_object: response)
         end

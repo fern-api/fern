@@ -20,57 +20,104 @@ module SeedExhaustiveClient
           @request_client = request_client
         end
 
-        # @param request [Types::Object::ObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :integer (Integer)
+        #   * :long (Long)
+        #   * :double (Float)
+        #   * :bool (Boolean)
+        #   * :datetime (DateTime)
+        #   * :date (Date)
+        #   * :uuid (UUID)
+        #   * :base_64 (String)
+        #   * :list (Array<String>)
+        #   * :set (Set<String>)
+        #   * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-optional-field") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithOptionalField.from_json(json_object: response)
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithRequiredField]
         def get_and_return_with_required_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-required-field") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithRequiredField.from_json(json_object: response)
         end
 
-        # @param request [Types::Object::ObjectWithMapOfMap]
+        # @param request [Hash] Request of type Types::Object::ObjectWithMapOfMap, as a Hash
+        #   * :map (Hash{String => String})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-map-of-map") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithMapOfMap.from_json(json_object: response)
         end
 
-        # @param request [Types::Object::NestedObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::NestedObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :nested_object (Hash)
+        #     * :string (String)
+        #     * :integer (Integer)
+        #     * :long (Long)
+        #     * :double (Float)
+        #     * :bool (Boolean)
+        #     * :datetime (DateTime)
+        #     * :date (Date)
+        #     * :uuid (UUID)
+        #     * :base_64 (String)
+        #     * :list (Array<String>)
+        #     * :set (Set<String>)
+        #     * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-nested-with-optional-field") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::NestedObjectWithOptionalField.from_json(json_object: response)
         end
 
-        # @param request [Types::Object::NestedObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::NestedObjectWithRequiredField, as a Hash
+        #   * :string (String)
+        #   * :nested_object (Hash)
+        #     * :string (String)
+        #     * :integer (Integer)
+        #     * :long (Long)
+        #     * :double (Float)
+        #     * :bool (Boolean)
+        #     * :datetime (DateTime)
+        #     * :date (Date)
+        #     * :uuid (UUID)
+        #     * :base_64 (String)
+        #     * :list (Array<String>)
+        #     * :set (Set<String>)
+        #     * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::NestedObjectWithRequiredField.from_json(json_object: response)
         end
@@ -86,66 +133,113 @@ module SeedExhaustiveClient
           @request_client = request_client
         end
 
-        # @param request [Types::Object::ObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :integer (Integer)
+        #   * :long (Long)
+        #   * :double (Float)
+        #   * :bool (Boolean)
+        #   * :datetime (DateTime)
+        #   * :date (Date)
+        #   * :uuid (UUID)
+        #   * :base_64 (String)
+        #   * :list (Array<String>)
+        #   * :set (Set<String>)
+        #   * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-optional-field") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithOptionalField.from_json(json_object: response)
           end
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithRequiredField]
         def get_and_return_with_required_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-required-field") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithRequiredField.from_json(json_object: response)
           end
         end
 
-        # @param request [Types::Object::ObjectWithMapOfMap]
+        # @param request [Hash] Request of type Types::Object::ObjectWithMapOfMap, as a Hash
+        #   * :map (Hash{String => String})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-map-of-map") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithMapOfMap.from_json(json_object: response)
           end
         end
 
-        # @param request [Types::Object::NestedObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::NestedObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :nested_object (Hash)
+        #     * :string (String)
+        #     * :integer (Integer)
+        #     * :long (Long)
+        #     * :double (Float)
+        #     * :bool (Boolean)
+        #     * :datetime (DateTime)
+        #     * :date (Date)
+        #     * :uuid (UUID)
+        #     * :base_64 (String)
+        #     * :list (Array<String>)
+        #     * :set (Set<String>)
+        #     * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-nested-with-optional-field") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::NestedObjectWithOptionalField.from_json(json_object: response)
           end
         end
 
-        # @param request [Types::Object::NestedObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::NestedObjectWithRequiredField, as a Hash
+        #   * :string (String)
+        #   * :nested_object (Hash)
+        #     * :string (String)
+        #     * :integer (Integer)
+        #     * :long (Long)
+        #     * :double (Float)
+        #     * :bool (Boolean)
+        #     * :datetime (DateTime)
+        #     * :date (Date)
+        #     * :uuid (UUID)
+        #     * :base_64 (String)
+        #     * :list (Array<String>)
+        #     * :set (Set<String>)
+        #     * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::NestedObjectWithRequiredField.from_json(json_object: response)
           end

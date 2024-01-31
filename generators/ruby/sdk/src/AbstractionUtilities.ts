@@ -33,10 +33,12 @@ import {
     HttpService,
     MultipleBaseUrlsEnvironments,
     Name,
+    ObjectProperty,
     Package,
     PathParameter,
     SdkConfig,
-    SingleBaseUrlEnvironments
+    SingleBaseUrlEnvironments,
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
@@ -60,7 +62,9 @@ export function generateEndpoints(
     requestOptions: RequestOptions,
     isAsync: boolean,
     irBasePath: string,
-    serviceBasePath: string
+    serviceBasePath: string,
+    generatedClasses: Map<TypeId, Class_>,
+    flattenedProperties: Map<TypeId, ObjectProperty[]>
 ): Function_[] {
     return endpoints.map((endpoint) => {
         // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
@@ -72,7 +76,18 @@ export function generateEndpoints(
             type: GenericClassReference,
             variableType: VariableType.LOCAL
         });
-        const generator = new EndpointGenerator(endpoint, requestOptions, crf);
+        const requestOptionsVariable = new Variable({
+            name: "request_options",
+            type: requestOptions.classReference,
+            variableType: VariableType.LOCAL
+        });
+        const generator = new EndpointGenerator(
+            endpoint,
+            requestOptionsVariable,
+            requestOptions,
+            crf,
+            generatedClasses
+        );
 
         const functionCore: AstNode[] = [
             new Expression({
@@ -95,7 +110,11 @@ export function generateEndpoints(
             parameters: [
                 ...generator.getEndpointParameters(),
                 // Optional request_options, e.g. the per-request customizer, optional
-                new Parameter({ name: "request_options", type: requestOptions.classReference, isOptional: true })
+                new Parameter({
+                    name: requestOptionsVariable.name,
+                    type: requestOptionsVariable.type,
+                    isOptional: true
+                })
             ],
             functionBody: isAsync
                 ? [
@@ -108,7 +127,9 @@ export function generateEndpoints(
                       })
                   ]
                 : functionCore,
-            returnValue: generator.getResponseType()
+            returnValue: generator.getResponseType(),
+            crf,
+            flattenedProperties
         });
     });
 }
@@ -123,6 +144,8 @@ export function generateRootPackage(
     syncSubpackages: Class_[],
     asyncSubpackages: Class_[],
     irBasePath: string,
+    generatedClasses: Map<TypeId, Class_>,
+    flattenedProperties: Map<TypeId, ObjectProperty[]>,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -146,7 +169,9 @@ export function generateRootPackage(
                   requestOptions,
                   false,
                   irBasePath,
-                  generateRubyPathTemplate(rootService.pathParameters, rootService.basePath)
+                  generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
+                  generatedClasses,
+                  flattenedProperties
               )
             : [],
         includeInitializer: false,
@@ -202,7 +227,9 @@ export function generateRootPackage(
                   requestOptions,
                   false,
                   irBasePath,
-                  generateRubyPathTemplate(rootService.pathParameters, rootService.basePath)
+                  generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
+                  generatedClasses,
+                  flattenedProperties
               )
             : [],
         includeInitializer: false,
@@ -335,7 +362,9 @@ export function generateService(
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
     requestOptions: RequestOptions,
-    irBasePath: string
+    irBasePath: string,
+    generatedClasses: Map<TypeId, Class_>,
+    flattenedProperties: Map<TypeId, ObjectProperty[]>
 ): ClientClassPair {
     const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
 
@@ -356,7 +385,9 @@ export function generateService(
             requestOptions,
             false,
             irBasePath,
-            serviceBasePath
+            serviceBasePath,
+            generatedClasses,
+            flattenedProperties
         )
     });
 
@@ -376,7 +407,9 @@ export function generateService(
             requestOptions,
             true,
             irBasePath,
-            serviceBasePath
+            serviceBasePath,
+            generatedClasses,
+            flattenedProperties
         )
     });
 

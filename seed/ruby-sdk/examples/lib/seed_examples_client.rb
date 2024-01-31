@@ -30,7 +30,8 @@ module SeedExamplesClient
     def echo(request:, request_options: nil)
       request_client.conn.post("/") do |req|
         req.headers["Authorization"] = request_client.token unless request_client.token.nil?
-        req.body = request
+        req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        req.body = { **request, **request_options&.additional_body_parameters }.compact
       end
     end
   end
@@ -54,7 +55,8 @@ module SeedExamplesClient
     def echo(request:, request_options: nil)
       request_client.conn.post("/") do |req|
         req.headers["Authorization"] = request_client.token unless request_client.token.nil?
-        req.body = request
+        req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        req.body = { **request, **request_options&.additional_body_parameters }.compact
       end
     end
   end

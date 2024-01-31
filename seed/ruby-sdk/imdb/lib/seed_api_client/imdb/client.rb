@@ -17,13 +17,16 @@ module SeedApiClient
         @request_client = request_client
       end
 
-      # @param request [Imdb::CreateMovieRequest]
+      # @param request [Hash] Request of type Imdb::CreateMovieRequest, as a Hash
+      #   * :title (String)
+      #   * :rating (Float)
       # @param request_options [RequestOptions]
       # @return [Imdb::MOVIE_ID]
       def create_movie(request:, request_options: nil)
         @request_client.conn.post("/movies/create-movie") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
       end
 
@@ -33,6 +36,7 @@ module SeedApiClient
       def get_movie(movie_id:, request_options: nil)
         response = @request_client.conn.get("/movies/#{movie_id}") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
         Imdb::Movie.from_json(json_object: response)
       end
@@ -48,14 +52,17 @@ module SeedApiClient
         @request_client = request_client
       end
 
-      # @param request [Imdb::CreateMovieRequest]
+      # @param request [Hash] Request of type Imdb::CreateMovieRequest, as a Hash
+      #   * :title (String)
+      #   * :rating (Float)
       # @param request_options [RequestOptions]
       # @return [Imdb::MOVIE_ID]
       def create_movie(request:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/movies/create-movie") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           response
         end
@@ -68,6 +75,7 @@ module SeedApiClient
         Async.call do
           response = @request_client.conn.get("/movies/#{movie_id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           Imdb::Movie.from_json(json_object: response)
         end

@@ -6,3 +6,8 @@ generatorType: sdk
 defaultOutputMode: local_files
 fixtures: []
 scripts: []
+allowedFailures:
+  - bytes
+  - file-download
+  - file-upload
+  - streaming

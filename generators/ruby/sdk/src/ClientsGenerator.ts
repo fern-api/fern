@@ -4,6 +4,7 @@ import { ClassReferenceFactory, Class_, GeneratedRubyFile, Module_ } from "@fern
 import {
     HttpService,
     IntermediateRepresentation,
+    ObjectProperty,
     Package,
     ServiceId,
     Subpackage,
@@ -31,6 +32,8 @@ export class ClientsGenerator {
     private subpackages: Map<SubpackageId, Subpackage>;
     private gc: GeneratorContext;
     private irBasePath: string;
+    private generatedClasses: Map<TypeId, Class_>;
+    private flattenedProperties: Map<TypeId, ObjectProperty[]>;
 
     private clientName: string;
     private gemName: string;
@@ -47,7 +50,9 @@ export class ClientsGenerator {
         clientName: string,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation,
-        sdkVersion: string | undefined
+        sdkVersion: string | undefined,
+        generatedClasses: Map<TypeId, Class_>,
+        flattenedProperties: Map<TypeId, ObjectProperty[]>
     ) {
         this.types = new Map();
 
@@ -57,8 +62,11 @@ export class ClientsGenerator {
         this.clientName = clientName;
         this.gemName = gemName;
 
+        this.generatedClasses = generatedClasses;
+        this.flattenedProperties = flattenedProperties;
+
         // For convenience just get what's inheriting what ahead of time.
-        this.gc.logger.debug(`[TESTING] Found this many types: ${intermediateRepresentation.types.length}`);
+        this.gc.logger.debug(`Found ${intermediateRepresentation.types.length} types to generate`);
         for (const type of Object.values(intermediateRepresentation.types)) {
             this.types.set(type.name.typeId, type);
         }
@@ -132,7 +140,9 @@ export class ClientsGenerator {
             clientName: string,
             gemName: string,
             crf: ClassReferenceFactory,
-            irBasePath: string
+            irBasePath: string,
+            generatedClasses: Map<TypeId, Class_>,
+            flattenedProperties: Map<TypeId, ObjectProperty[]>
         ): ClientClassPair {
             if (package_.service === undefined) {
                 throw new Error("Calling getServiceClasses without a service defined within the subpackage.");
@@ -148,7 +158,9 @@ export class ClientsGenerator {
                 asyncClientClass.classReference,
                 crf,
                 requestOptionsClass,
-                irBasePath
+                irBasePath,
+                generatedClasses,
+                flattenedProperties
             );
             const serviceModule = Module_.wrapInModules(
                 clientName,
@@ -175,10 +187,22 @@ export class ClientsGenerator {
             clientName: string,
             gemName: string,
             crf: ClassReferenceFactory,
-            irBasePath: string
+            irBasePath: string,
+            generatedClasses: Map<TypeId, Class_>,
+            flattenedProperties: Map<TypeId, ObjectProperty[]>
         ): ClientClassPair | undefined {
             if (package_.service !== undefined) {
-                return getServiceClasses(packageId, package_, services, clientName, gemName, crf, irBasePath);
+                return getServiceClasses(
+                    packageId,
+                    package_,
+                    services,
+                    clientName,
+                    gemName,
+                    crf,
+                    irBasePath,
+                    generatedClasses,
+                    flattenedProperties
+                );
             } else {
                 // We create these subpackage files to support dot access for service clients,
                 // if the package has no services then this isn't necessary.
@@ -200,7 +224,9 @@ export class ClientsGenerator {
                                     clientName,
                                     gemName,
                                     crf,
-                                    irBasePath
+                                    irBasePath,
+                                    generatedClasses,
+                                    flattenedProperties
                                 );
                             }
                             return classPair;
@@ -245,7 +271,9 @@ export class ClientsGenerator {
                 this.clientName,
                 this.gemName,
                 this.crf,
-                this.irBasePath
+                this.irBasePath,
+                this.generatedClasses,
+                this.flattenedProperties
             )
         );
 
@@ -266,6 +294,8 @@ export class ClientsGenerator {
                 rootSubpackageClasses.map((sp) => sp.syncClientClass),
                 rootSubpackageClasses.map((sp) => sp.asyncClientClass),
                 this.irBasePath,
+                this.generatedClasses,
+                this.flattenedProperties,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")
             )
         );

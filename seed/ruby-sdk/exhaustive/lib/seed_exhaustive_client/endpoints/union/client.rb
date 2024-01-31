@@ -16,13 +16,14 @@ module SeedExhaustiveClient
           @request_client = request_client
         end
 
-        # @param request [Types::Union::Animal]
+        # @param request [Hash] Request of type Types::Union::Animal, as a Hash
         # @param request_options [RequestOptions]
         # @return [Types::Union::Animal]
         def get_and_return_union(request:, request_options: nil)
           response = @request_client.conn.post("/union") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Union::Animal.from_json(json_object: response)
         end
@@ -38,14 +39,15 @@ module SeedExhaustiveClient
           @request_client = request_client
         end
 
-        # @param request [Types::Union::Animal]
+        # @param request [Hash] Request of type Types::Union::Animal, as a Hash
         # @param request_options [RequestOptions]
         # @return [Types::Union::Animal]
         def get_and_return_union(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/union") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Union::Animal.from_json(json_object: response)
           end

@@ -45,9 +45,9 @@ module SeedExhaustiveClient
         def to_json(*_args)
           case @discriminant
           when "dog"
-            { animal: @discriminant, **@member.to_json }.to_json
+            { **@member.to_json, animal: @discriminant }.to_json
           when "cat"
-            { animal: @discriminant, **@member.to_json }.to_json
+            { **@member.to_json, animal: @discriminant }.to_json
           else
             { "animal": @discriminant, value: @member }.to_json
           end

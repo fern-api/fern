@@ -19,7 +19,8 @@ module SeedUnknownAsAnyClient
       # @return [Array<Object>]
       def post(request:, request_options: nil)
         @request_client.conn.post("/") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
       end
     end
@@ -40,7 +41,8 @@ module SeedUnknownAsAnyClient
       def post(request:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           response
         end

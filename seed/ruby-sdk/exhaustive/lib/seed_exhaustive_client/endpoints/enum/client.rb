@@ -21,7 +21,8 @@ module SeedExhaustiveClient
         def get_and_return_enum(request:, request_options: nil)
           response = @request_client.conn.post("/enum") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           WEATHER_REPORT.key(response)
         end
@@ -44,7 +45,8 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/enum") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             WEATHER_REPORT.key(response)
           end

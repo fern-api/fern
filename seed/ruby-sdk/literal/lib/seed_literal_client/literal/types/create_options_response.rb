@@ -45,7 +45,7 @@ module SeedLiteralClient
         when "ok"
           { "type": @discriminant, "value": @member }.to_json
         when "options"
-          { type: @discriminant, **@member.to_json }.to_json
+          { **@member.to_json, type: @discriminant }.to_json
         else
           { "type": @discriminant, value: @member }.to_json
         end

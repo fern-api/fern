@@ -17,7 +17,9 @@ module SeedPlainTextClient
       # @param request_options [RequestOptions]
       # @return [String]
       def get_text(request_options: nil)
-        @request_client.conn.post("/text")
+        @request_client.conn.post("/text") do |req|
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        end
       end
     end
 
@@ -35,7 +37,9 @@ module SeedPlainTextClient
       # @return [String]
       def get_text(request_options: nil)
         Async.call do
-          response = @request_client.conn.post("/text")
+          response = @request_client.conn.post("/text") do |req|
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          end
           response
         end
       end

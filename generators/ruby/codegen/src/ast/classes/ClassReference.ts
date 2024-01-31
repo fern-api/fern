@@ -5,6 +5,7 @@ import {
     Literal,
     MapType,
     PrimitiveType,
+    ResolvedNamedType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
     TypeDeclaration,
@@ -43,6 +44,7 @@ export declare namespace ClassReference {
     export interface Init extends AstNode.Init {
         name: string;
         typeHint?: string;
+        resolvedTypeId?: TypeId;
         import_?: Import;
         moduleBreadcrumbs?: string[];
     }
@@ -51,16 +53,26 @@ export declare namespace ClassReference {
 export class ClassReference extends AstNode {
     public name: string;
     public typeHint: string;
+    public resolvedTypeId: TypeId | undefined;
     public qualifiedName: string;
     public import_: Import | undefined;
 
-    constructor({ name, typeHint, import_, location, moduleBreadcrumbs, ...rest }: ClassReference.Init) {
+    constructor({
+        name,
+        typeHint,
+        import_,
+        location,
+        moduleBreadcrumbs,
+        resolvedTypeId,
+        ...rest
+    }: ClassReference.Init) {
         super(rest);
         this.name = name;
         this.import_ = import_;
 
         this.qualifiedName = [...(moduleBreadcrumbs ?? []), name].join("::");
         this.typeHint = typeHint ?? this.qualifiedName;
+        this.resolvedTypeId = resolvedTypeId;
     }
 
     public writeInternal(startingTabSpaces: number): void {
@@ -159,7 +171,8 @@ export class SerializableObjectReference extends ClassReference {
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
-            moduleBreadcrumbs
+            moduleBreadcrumbs,
+            resolvedTypeId: declaredTypeName.typeId
         });
     }
 }
@@ -184,14 +197,19 @@ export class AliasReference extends ClassReference {
         return this.aliasOf.validateRaw(variable, isOptional);
     }
 
-    static fromDeclaredTypeName(declaredTypeName: DeclaredTypeName, aliasOf: ClassReference): ClassReference {
+    static fromDeclaredTypeName(
+        declaredTypeName: DeclaredTypeName,
+        aliasOf: ClassReference,
+        resolvedTypeId: string | undefined
+    ): ClassReference {
         const location = getLocationForTypeDeclaration(declaredTypeName);
         const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
             import_: new Import({ from: location }),
-            moduleBreadcrumbs
+            moduleBreadcrumbs,
+            resolvedTypeId
         });
     }
 }
@@ -266,9 +284,9 @@ export declare namespace Hash_ {
         valueType: ClassReference | string;
     }
     export interface InitInstance extends AstNode.Init {
-        contents?: Map<string, string | FunctionInvocation | Variable>;
+        contents?: Map<string, string | AstNode>;
         // allow for spreading additional hashes into this hash.
-        additionalHashes?: AstNode[];
+        additionalHashes?: (AstNode | string)[];
         isFrozen?: boolean;
         shouldCompact?: boolean;
     }
@@ -311,8 +329,8 @@ export class HashReference extends ClassReference {
 }
 
 export class HashInstance extends AstNode {
-    public contents: Map<string, string | FunctionInvocation | Variable>;
-    public additionalHashes: AstNode[];
+    public contents: Map<string, string | AstNode>;
+    public additionalHashes: (AstNode | string)[];
     public shouldCompact: boolean;
     public isFrozen: boolean;
 
@@ -332,10 +350,13 @@ export class HashInstance extends AstNode {
     }
 
     public writeInternal(): void {
+        const hashContents = Array.from(this.contents.entries());
         this.addText({
-            stringContent: `{ ${Array.from(this.contents.entries())
+            stringContent: `{ ${this.additionalHashes
+                .map((ah) => format("**%s", ah instanceof AstNode ? ah.write() : ah))
+                .join(", ")}${hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""}${hashContents
                 .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write() : `'${v}'`))
-                .join(", ")}${this.additionalHashes.map((ah) => format(", **%s", ah.write()))} }`
+                .join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
         this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
@@ -470,7 +491,14 @@ export class ClassReferenceFactory {
             cr = type.shape._visit<ClassReference>({
                 alias: (atd: AliasTypeDeclaration) => {
                     const aliasOfCr = this.fromTypeReference(atd.aliasOf);
-                    return AliasReference.fromDeclaredTypeName(type.name, aliasOfCr);
+                    const resolvedTypeId = atd.resolvedType._visit<TypeId | undefined>({
+                        named: (rnt: ResolvedNamedType) => rnt.name.typeId,
+                        container: (ct) => this.forContainerType(ct).resolvedTypeId,
+                        primitive: (pt) => this.forPrimitiveType(pt).resolvedTypeId,
+                        unknown: () => undefined,
+                        _other: () => undefined
+                    });
+                    return AliasReference.fromDeclaredTypeName(type.name, aliasOfCr, resolvedTypeId);
                 },
                 enum: () => EnumReference.fromDeclaredTypeName(type.name),
                 object: () => SerializableObjectReference.fromDeclaredTypeName(type.name),
@@ -481,20 +509,6 @@ export class ClassReferenceFactory {
                 }
             });
             this.generatedReferences.set(typeId, cr);
-        }
-        return cr;
-    }
-
-    public getClassFromDeclaredTypeName(declaredTypeName: DeclaredTypeName): ClassReference {
-        const cr = this.generatedReferences.get(declaredTypeName.typeId);
-        // Likely you care attempting to generate an alias and the aliased class has not yet been created.
-        // Create it now!
-        if (cr === undefined) {
-            const td = this.typeDeclarations.get(declaredTypeName.typeId);
-            if (td !== undefined) {
-                return this.fromTypeDeclaration(td);
-            }
-            throw new Error("ClassReference requested does not exist");
         }
         return cr;
     }

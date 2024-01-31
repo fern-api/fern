@@ -43,7 +43,7 @@ module SeedExamplesClient
       def to_json(*_args)
         case @discriminant
         when "generic"
-          { type: @discriminant, **@member.to_json }.to_json
+          { **@member.to_json, type: @discriminant }.to_json
         when "timeout"
           { type: @discriminant }.to_json
         else

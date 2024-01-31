@@ -3,6 +3,7 @@ import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext, getSdkVersion } from "@fern-api/generator-commons";
 import {
+    Class_,
     generateBinDir,
     GeneratedFile,
     generateGemConfig,
@@ -15,13 +16,15 @@ import {
     getGemName
 } from "@fern-api/ruby-codegen";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
+import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";
 import { ClientsGenerator } from "./ClientsGenerator";
 import { parseCustomConfig, RubySdkCustomConfig } from "./CustomConfig";
 
 export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfig> {
     generatedFiles: GeneratedFile[] = [];
+    generatedClasses: Map<TypeId, Class_> = new Map();
+    flattenedProperties: Map<TypeId, ObjectProperty[]> = new Map();
 
     protected parseCustomConfig(customConfig: unknown): RubySdkCustomConfig {
         return parseCustomConfig(customConfig);
@@ -63,7 +66,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const generatedTypeFiles = new TypesGenerator(
+        const generatedTypes = new TypesGenerator(
             getGemName(
                 config.organization,
                 intermediateRepresentation.apiName.pascalCase.safeName,
@@ -77,8 +80,10 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             ),
             generatorContext,
             intermediateRepresentation
-        ).generateFiles();
-        this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
+        );
+        this.generatedFiles.push(...Array.from(generatedTypes.generateFiles().values()));
+        this.generatedClasses = generatedTypes.getResolvedClasses();
+        this.flattenedProperties = generatedTypes.flattenedProperties;
     }
 
     private generateClients(
@@ -102,7 +107,9 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             ),
             generatorContext,
             intermediateRepresentation,
-            sdkVersion
+            sdkVersion,
+            this.generatedClasses,
+            this.flattenedProperties
         ).generateFiles();
         this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
     }

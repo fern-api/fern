@@ -1,6 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
+import { ClassReferenceFactory, Class_, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -8,6 +8,7 @@ import {
     IntermediateRepresentation,
     ObjectProperty,
     ObjectTypeDeclaration,
+    ResolvedNamedType,
     Type,
     TypeDeclaration,
     TypeId,
@@ -24,8 +25,11 @@ import {
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
+    public generatedClasses: Map<TypeId, Class_>;
+    public resolvedReferences: Map<TypeId, TypeId>;
+    public flattenedProperties: Map<TypeId, ObjectProperty[]>;
+
     private types: Map<TypeId, TypeDeclaration>;
-    private flattenedProperties: Map<TypeId, ObjectProperty[]>;
     private gc: GeneratorContext;
     private classReferenceFactory: ClassReferenceFactory;
     private gemName: string;
@@ -39,13 +43,15 @@ export class TypesGenerator {
     ) {
         this.types = new Map();
         this.flattenedProperties = new Map();
+        this.generatedClasses = new Map();
+        this.resolvedReferences = new Map();
         this.gc = generatorContext;
 
         this.gemName = gemName;
         this.clientName = clientName;
 
         // For convenience just get what's inheriting what ahead of time.
-        this.gc.logger.debug(`[TESTING] Found this many types: ${intermediateRepresentation.types.length}`);
+        this.gc.logger.debug(`Found ${intermediateRepresentation.types.length} types to generate`);
         for (const type of Object.values(intermediateRepresentation.types)) {
             this.types.set(type.name.typeId, type);
         }
@@ -107,6 +113,7 @@ export class TypesGenerator {
     }
 
     private generateAliasFile(
+        typeId: TypeId,
         aliasTypeDeclaration: AliasTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
@@ -115,6 +122,24 @@ export class TypesGenerator {
             aliasTypeDeclaration,
             typeDeclaration
         );
+        aliasTypeDeclaration.resolvedType._visit<void>({
+            container: () => {
+                return;
+            },
+            named: (rnt: ResolvedNamedType) => {
+                this.resolvedReferences.set(typeId, rnt.name.typeId);
+            },
+            primitive: () => {
+                return;
+            },
+            unknown: () => {
+                return;
+            },
+            _other: () => {
+                return;
+            }
+        });
+
         const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
@@ -146,6 +171,7 @@ export class TypesGenerator {
             objectTypeDeclaration,
             typeDeclaration
         );
+        this.generatedClasses.set(typeId, serializableObject);
         const rootNode = Module_.wrapInModules(this.clientName, serializableObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
@@ -165,6 +191,7 @@ export class TypesGenerator {
             unionTypeDeclaration,
             typeDeclaration
         );
+        this.generatedClasses.set(typeId, unionObject);
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
@@ -173,6 +200,7 @@ export class TypesGenerator {
         });
     }
     private generateUndiscriminatedUnionFile(
+        typeId: TypeId,
         undiscriminatedUnionTypeDeclaration: UndiscriminatedUnionTypeDeclaration,
         typeDeclaration: TypeDeclaration
     ): GeneratedRubyFile | undefined {
@@ -181,6 +209,8 @@ export class TypesGenerator {
             undiscriminatedUnionTypeDeclaration,
             typeDeclaration
         );
+
+        this.generatedClasses.set(typeId, unionObject);
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
@@ -196,12 +226,12 @@ export class TypesGenerator {
         const typeFiles = new Map<TypeId, GeneratedRubyFile>();
         for (const [typeId, typeDeclaration] of this.types.entries()) {
             const generatedFile = typeDeclaration.shape._visit<GeneratedRubyFile | undefined>({
-                alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(atd, typeDeclaration),
+                alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
                 enum: (etd: EnumTypeDeclaration) => this.generateEnumFile(etd, typeDeclaration),
                 object: (otd: ObjectTypeDeclaration) => this.generateObjectFile(typeId, otd, typeDeclaration),
                 union: (utd: UnionTypeDeclaration) => this.generateUnionFile(typeId, utd, typeDeclaration),
                 undiscriminatedUnion: (uutd: UndiscriminatedUnionTypeDeclaration) =>
-                    this.generateUndiscriminatedUnionFile(uutd, typeDeclaration),
+                    this.generateUndiscriminatedUnionFile(typeId, uutd, typeDeclaration),
                 _other: () => this.generateUnkownFile(typeDeclaration.shape)
             });
 
@@ -211,5 +241,15 @@ export class TypesGenerator {
         }
 
         return typeFiles;
+    }
+
+    public getResolvedClasses(): Map<TypeId, Class_> {
+        this.resolvedReferences.forEach((typeId, resolvedTypeId) => {
+            const resolvedClass = this.generatedClasses.get(resolvedTypeId);
+            if (resolvedClass !== undefined) {
+                this.generatedClasses.set(typeId, resolvedClass);
+            }
+        });
+        return this.generatedClasses;
     }
 }

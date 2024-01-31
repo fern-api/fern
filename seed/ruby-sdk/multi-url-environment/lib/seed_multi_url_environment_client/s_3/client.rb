@@ -20,7 +20,8 @@ module SeedMultiUrlEnvironmentClient
       def get_presigned_url(s_3_key:, request_options: nil)
         @request_client.conn.post("/s3/presigned-url") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.body = { s3Key: "s_3_key" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request_options&.additional_body_parameters, s3Key: s_3_key }.compact
           req.url = @request_client.default_environment[s3]
         end
       end
@@ -43,7 +44,8 @@ module SeedMultiUrlEnvironmentClient
         Async.call do
           response = @request_client.conn.post("/s3/presigned-url") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = { s3Key: "s_3_key" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request_options&.additional_body_parameters, s3Key: s_3_key }.compact
             req.url = @request_client.default_environment[s3]
           end
           response

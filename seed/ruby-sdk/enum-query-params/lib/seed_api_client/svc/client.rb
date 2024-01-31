@@ -20,7 +20,8 @@ module SeedApiClient
       def test(some_enum: nil, request_options: nil)
         @request_client.conn.get("/test") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.params = { "some-enum": "some_enum" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.params = { **request_options&.additional_query_parameters, "some-enum": some_enum }.compact
         end
       end
     end
@@ -42,7 +43,8 @@ module SeedApiClient
         Async.call do
           response = @request_client.conn.get("/test") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.params = { "some-enum": "some_enum" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.params = { **request_options&.additional_query_parameters, "some-enum": some_enum }.compact
           end
           response
         end

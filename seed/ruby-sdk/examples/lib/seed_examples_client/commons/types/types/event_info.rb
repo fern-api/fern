@@ -45,7 +45,7 @@ module SeedExamplesClient
         def to_json(*_args)
           case @discriminant
           when "metadata"
-            { type: @discriminant, **@member.to_json }.to_json
+            { **@member.to_json, type: @discriminant }.to_json
           when "tag"
             { "type": @discriminant, "value": @member }.to_json
           else

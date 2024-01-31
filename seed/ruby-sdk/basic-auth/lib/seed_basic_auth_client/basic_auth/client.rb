@@ -20,6 +20,7 @@ module SeedBasicAuthClient
         @request_client.conn.get("/basic-auth") do |req|
           req.headers["username"] = @request_client.username unless @request_client.username.nil?
           req.headers["password"] = @request_client.password unless @request_client.password.nil?
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
 
@@ -30,7 +31,8 @@ module SeedBasicAuthClient
         @request_client.conn.post("/basic-auth") do |req|
           req.headers["username"] = @request_client.username unless @request_client.username.nil?
           req.headers["password"] = @request_client.password unless @request_client.password.nil?
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
       end
     end
@@ -52,6 +54,7 @@ module SeedBasicAuthClient
           response = @request_client.conn.get("/basic-auth") do |req|
             req.headers["username"] = @request_client.username unless @request_client.username.nil?
             req.headers["password"] = @request_client.password unless @request_client.password.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response
         end
@@ -65,7 +68,8 @@ module SeedBasicAuthClient
           response = @request_client.conn.post("/basic-auth") do |req|
             req.headers["username"] = @request_client.username unless @request_client.username.nil?
             req.headers["password"] = @request_client.password unless @request_client.password.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           response
         end

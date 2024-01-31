@@ -20,7 +20,8 @@ module SeedPackageYmlClient
     # @return [String]
     def echo(id:, request:, request_options: nil)
       request_client.conn.post("/#{id}") do |req|
-        req.body = request
+        req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        req.body = { **request, **request_options&.additional_body_parameters }.compact
       end
     end
   end
@@ -40,7 +41,8 @@ module SeedPackageYmlClient
     # @return [String]
     def echo(id:, request:, request_options: nil)
       request_client.conn.post("/#{id}") do |req|
-        req.body = request
+        req.headers = { **req.headers, **request_options&.additional_headers }.compact
+        req.body = { **request, **request_options&.additional_body_parameters }.compact
       end
     end
   end

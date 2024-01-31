@@ -24,7 +24,8 @@ module SeedResponsePropertyClient
       # @return [Service::Response]
       def get_movie(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
         Service::Response.from_json(json_object: nested_response_json)
@@ -35,7 +36,8 @@ module SeedResponsePropertyClient
       # @return [Service::Response]
       def get_movie_docs(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).docs.to_h.to_json
         Service::Response.from_json(json_object: nested_response_json)
@@ -46,7 +48,8 @@ module SeedResponsePropertyClient
       # @return [StringResponse]
       def get_movie_name(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
         StringResponse.from_json(json_object: nested_response_json)
@@ -57,7 +60,8 @@ module SeedResponsePropertyClient
       # @return [Service::Response]
       def get_movie_metadata(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).metadata.to_h.to_json
         Service::Response.from_json(json_object: nested_response_json)
@@ -68,7 +72,8 @@ module SeedResponsePropertyClient
       # @return [Service::Response]
       def get_optional_movie(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
         Service::Response.from_json(json_object: nested_response_json)
@@ -79,7 +84,8 @@ module SeedResponsePropertyClient
       # @return [Service::OPTIONAL_WITH_DOCS]
       def get_optional_movie_docs(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).docs.to_h.to_json
         Service::WithDocs.from_json(json_object: nested_response_json)
@@ -90,7 +96,8 @@ module SeedResponsePropertyClient
       # @return [OPTIONAL_STRING_RESPONSE]
       def get_optional_movie_name(request:, request_options: nil)
         @request_client.conn.post("/movie") do |req|
-          req.body = request
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
         nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
         StringResponse.from_json(json_object: nested_response_json)
@@ -113,7 +120,8 @@ module SeedResponsePropertyClient
       def get_movie(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
           Service::Response.from_json(json_object: nested_response_json)
@@ -126,7 +134,8 @@ module SeedResponsePropertyClient
       def get_movie_docs(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).docs.to_h.to_json
           Service::Response.from_json(json_object: nested_response_json)
@@ -139,7 +148,8 @@ module SeedResponsePropertyClient
       def get_movie_name(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
           StringResponse.from_json(json_object: nested_response_json)
@@ -152,7 +162,8 @@ module SeedResponsePropertyClient
       def get_movie_metadata(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).metadata.to_h.to_json
           Service::Response.from_json(json_object: nested_response_json)
@@ -165,7 +176,8 @@ module SeedResponsePropertyClient
       def get_optional_movie(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
           Service::Response.from_json(json_object: nested_response_json)
@@ -178,7 +190,8 @@ module SeedResponsePropertyClient
       def get_optional_movie_docs(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).docs.to_h.to_json
           Service::WithDocs.from_json(json_object: nested_response_json)
@@ -191,7 +204,8 @@ module SeedResponsePropertyClient
       def get_optional_movie_name(request:, request_options: nil)
         Async.call do
           @request_client.conn.post("/movie") do |req|
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           nested_response_json JSON.parse(json_object, object_class: OpenStruct).data.to_h.to_json
           StringResponse.from_json(json_object: nested_response_json)

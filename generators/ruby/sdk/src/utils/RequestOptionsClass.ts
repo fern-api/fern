@@ -6,7 +6,8 @@ import {
     HashReference,
     LongClassReference,
     Property,
-    StringClassReference
+    StringClassReference,
+    Variable
 } from "@fern-api/ruby-codegen";
 import { HeadersGenerator } from "./HeadersGenerator";
 
@@ -108,17 +109,17 @@ export class RequestOptions extends Class_ {
     }
 
     // Probably do conditional sets here as well
-    public getAdditionalHeaderProperties(): Expression[] {
-        return [];
+    public getAdditionalHeaderProperties(requestOptionsVariable: Variable): string {
+        return `${requestOptionsVariable.write()}&.${this.additionalHeaderProperty.name}`;
     }
 
     // Just add to the map and compact it
-    public getAdditionalQueryProperties(): Expression[] {
-        return [];
+    public getAdditionalQueryProperties(requestOptionsVariable: Variable): string {
+        return `${requestOptionsVariable.write()}&.${this.additionalQueryProperty.name}`;
     }
 
     // Just add to the map and compact it
-    public getAdditionalBodyProperties(): Expression[] {
-        return [];
+    public getAdditionalBodyProperties(requestOptionsVariable: Variable): string {
+        return `${requestOptionsVariable.write()}&.${this.additionalBodyProperty.name}`;
     }
 }

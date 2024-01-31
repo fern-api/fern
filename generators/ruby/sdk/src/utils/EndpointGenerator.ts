@@ -4,6 +4,7 @@ import {
     BlockConfiguration,
     ClassReference,
     ClassReferenceFactory,
+    Class_,
     ConditionalStatement,
     Expression,
     FunctionInvocation,
@@ -24,7 +25,8 @@ import {
     HttpRequestBodyReference,
     InlinedRequestBody,
     JsonResponse,
-    JsonResponseBodyWithProperty
+    JsonResponseBodyWithProperty,
+    TypeId
 } from "@fern-fern/ir-sdk/api";
 import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
@@ -34,17 +36,26 @@ export class EndpointGenerator {
     private blockArg: string;
     private requestOptions: RequestOptions;
     private crf: ClassReferenceFactory;
+    private requestOptionsVariable: Variable;
 
     private pathParametersAsProperties: Property[];
     private queryParametersAsProperties: Property[];
     private headersAsProperties: Property[];
     private bodyAsProperties: Property[];
 
-    constructor(endpoint: HttpEndpoint, requestOptions: RequestOptions, crf: ClassReferenceFactory) {
+    constructor(
+        endpoint: HttpEndpoint,
+        requestOptionsVariable: Variable,
+        requestOptions: RequestOptions,
+        crf: ClassReferenceFactory,
+        generatedClasses: Map<TypeId, Class_>
+    ) {
         this.endpoint = endpoint;
         this.blockArg = "req";
         this.requestOptions = requestOptions;
         this.crf = crf;
+
+        this.requestOptionsVariable = requestOptionsVariable;
 
         this.pathParametersAsProperties = this.endpoint.allPathParameters.map(
             (pp) =>
@@ -74,36 +85,37 @@ export class EndpointGenerator {
         );
 
         const defaultBodyParameterName = "body";
-        // TODO(P0): create a function on serializable objects to be able to convert them to yardoc typed hashes for params
-        // ie, we need to type these as hashes as opposed to the actual type + have the yardoc reflect that
         this.bodyAsProperties =
             this.endpoint.requestBody?._visit<Property[]>({
                 inlinedRequestBody: (irb: InlinedRequestBody) => {
-                    // TODO(P0): How can we get the properties here, probably need TypesGenerator to provide Class_ objects
-                    // const properties: Property[] = irb.extends.flatMap(dtn => crf.fromDeclaredTypeName(dtb).properties);
-                    const properties: Property[] = [];
+                    const properties: Property[] = irb.extends
+                        .flatMap((dtn) => generatedClasses.get(dtn.typeId)?.properties)
+                        .filter((p) => p !== undefined) as Property[];
                     return [
                         ...properties,
-                        ...irb.properties.map(
-                            (prop) =>
-                                new Property({
-                                    name: prop.name.name.snakeCase.safeName,
-                                    wireValue: prop.name.wireValue,
-                                    type: crf.fromTypeReference(prop.valueType),
-                                    isOptional: isTypeOptional(prop.valueType)
-                                })
-                        )
+                        ...irb.properties.map((prop) => {
+                            return new Property({
+                                name: prop.name.name.snakeCase.safeName,
+                                wireValue: prop.name.wireValue,
+                                type: crf.fromTypeReference(prop.valueType),
+                                isOptional: isTypeOptional(prop.valueType),
+                                documentation: prop instanceof Property ? prop.documentation : undefined
+                            });
+                        })
                     ];
                 },
-                reference: (_rbr: HttpRequestBodyReference) => [
-                    new Property({
-                        name:
-                            this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
-                            defaultBodyParameterName,
-                        type: crf.fromTypeReference(_rbr.requestBodyType),
-                        isOptional: isTypeOptional(_rbr.requestBodyType)
-                    })
-                ],
+                reference: (rbr: HttpRequestBodyReference) => {
+                    return [
+                        new Property({
+                            name:
+                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                defaultBodyParameterName,
+                            type: crf.fromTypeReference(rbr.requestBodyType),
+                            isOptional: isTypeOptional(rbr.requestBodyType),
+                            documentation: rbr.docs
+                        })
+                    ];
+                },
                 fileUpload: () => {
                     throw new Error("File upload not yet supported.");
                 },
@@ -118,29 +130,46 @@ export class EndpointGenerator {
 
     public getEndpointParameters(): Parameter[] {
         return [
-            ...this.pathParametersAsProperties.map((pathProp) => pathProp.toParameter()),
-            ...this.queryParametersAsProperties.map((queryProp) => queryProp.toParameter()),
-            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter()),
-            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter())
+            ...this.pathParametersAsProperties.map((pathProp) => pathProp.toParameter({})),
+            ...this.queryParametersAsProperties.map((queryProp) => queryProp.toParameter({})),
+            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({})),
+            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true }))
         ];
     }
 
-    public getFaradayHeaders(): Expression[] {
-        return this.headersAsProperties.map(
-            (header) =>
-                new Expression({
-                    leftSide: `${this.blockArg}.headers["${header.wireValue}"]`,
-                    rightSide: header.name,
-                    isAssignment: true
-                })
+    public getFaradayHeaders(): Expression {
+        const additionalHeadersProperty = this.requestOptions.getAdditionalHeaderProperties(
+            this.requestOptionsVariable
         );
+        return new Expression({
+            leftSide: `${this.blockArg}.headers`,
+            rightSide: new HashInstance({
+                contents: new Map(
+                    this.headersAsProperties.map((header) => [
+                        `"${header.wireValue}"`,
+                        header.toVariable(VariableType.LOCAL)
+                    ])
+                ),
+                // Expand the existing headers hash, then the additionalheaders params
+                additionalHashes: ["req.headers", additionalHeadersProperty],
+                shouldCompact: true
+            }),
+            isAssignment: true
+        });
     }
     public getFaradayParameters(): Expression | undefined {
+        const additionalQueryProperty = this.requestOptions.getAdditionalQueryProperties(this.requestOptionsVariable);
         return this.queryParametersAsProperties.length > 0
             ? new Expression({
                   leftSide: `${this.blockArg}.params`,
                   rightSide: new HashInstance({
-                      contents: new Map(this.queryParametersAsProperties.map((qp) => [`"${qp.wireValue}"`, qp.name])),
+                      contents: new Map(
+                          this.queryParametersAsProperties.map((qp) => [
+                              `"${qp.wireValue}"`,
+                              qp.toVariable(VariableType.LOCAL)
+                          ])
+                      ),
+                      additionalHashes: [additionalQueryProperty],
                       shouldCompact: true
                   }),
                   isAssignment: true
@@ -148,13 +177,18 @@ export class EndpointGenerator {
             : undefined;
     }
     public getFaradayBody(): Expression | undefined {
+        const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable);
         if (this.endpoint.requestBody !== undefined) {
             return this.endpoint.requestBody._visit<Expression>({
                 inlinedRequestBody: () => {
                     const inlineHash = new HashInstance({
                         contents: new Map(
-                            this.bodyAsProperties.map((prop) => [prop.wireValue ?? prop.name, prop.name])
+                            this.bodyAsProperties.map((prop) => [
+                                prop.wireValue ?? prop.name,
+                                prop.toVariable(VariableType.LOCAL)
+                            ])
                         ),
+                        additionalHashes: [additionalBodyProperty],
                         shouldCompact: true
                     });
                     return new Expression({
@@ -164,12 +198,17 @@ export class EndpointGenerator {
                     });
                 },
                 // Our inputs are hashes, so pass that in
-                reference: () =>
-                    new Expression({
+                reference: () => {
+                    const referenceBodyHash = new HashInstance({
+                        additionalHashes: [this.bodyAsProperties[0]!.name, additionalBodyProperty],
+                        shouldCompact: true
+                    });
+                    return new Expression({
                         leftSide: `${this.blockArg}.body`,
-                        rightSide: this.bodyAsProperties[0]!.name,
+                        rightSide: referenceBodyHash,
                         isAssignment: true
-                    }),
+                    });
+                },
                 fileUpload: () => {
                     throw new Error("File upload not yet supported.");
                 },
@@ -207,17 +246,14 @@ export class EndpointGenerator {
                         }
                     })
             ),
-            ...this.requestOptions.getAdditionalHeaderProperties(),
-            ...this.getFaradayHeaders()
+            this.getFaradayHeaders()
         ];
 
-        expressions.concat(this.requestOptions.getAdditionalQueryProperties());
         const parameters = this.getFaradayParameters();
         if (parameters !== undefined) {
             expressions.push(parameters);
         }
 
-        expressions.concat(this.requestOptions.getAdditionalBodyProperties());
         const body = this.getFaradayBody();
         if (body !== undefined) {
             expressions.push(body);

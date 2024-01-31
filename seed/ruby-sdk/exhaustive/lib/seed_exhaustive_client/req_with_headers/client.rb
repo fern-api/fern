@@ -21,8 +21,12 @@ module SeedExhaustiveClient
       def get_with_custom_header(x_test_endpoint_header:, request:, request_options: nil)
         @request_client.conn.post("/test-headers/custom-header") do |req|
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-TEST-ENDPOINT-HEADER"] = x_test_endpoint_header
-          req.body = request
+          req.headers = {
+            **req.headers,
+            **request_options&.additional_headers,
+            "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
+          }.compact
+          req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
       end
     end
@@ -45,8 +49,12 @@ module SeedExhaustiveClient
         Async.call do
           @request_client.conn.post("/test-headers/custom-header") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-TEST-ENDPOINT-HEADER"] = x_test_endpoint_header
-            req.body = request
+            req.headers = {
+              **req.headers,
+              **request_options&.additional_headers,
+              "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header
+            }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
         end
       end

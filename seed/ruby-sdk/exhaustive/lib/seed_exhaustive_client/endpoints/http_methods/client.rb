@@ -23,40 +23,58 @@ module SeedExhaustiveClient
         def test_get(id:, request_options: nil)
           @request_client.conn.get("/http-methods/#{id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_post(request:, request_options: nil)
           response = @request_client.conn.post("/http-methods") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithOptionalField.from_json(json_object: response)
         end
 
         # @param id [String]
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_put(id:, request:, request_options: nil)
           response = @request_client.conn.put("/http-methods/#{id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithOptionalField.from_json(json_object: response)
         end
 
         # @param id [String]
-        # @param request [Types::Object::ObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :integer (Integer)
+        #   * :long (Long)
+        #   * :double (Float)
+        #   * :bool (Boolean)
+        #   * :datetime (DateTime)
+        #   * :date (Date)
+        #   * :uuid (UUID)
+        #   * :base_64 (String)
+        #   * :list (Array<String>)
+        #   * :set (Set<String>)
+        #   * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_patch(id:, request:, request_options: nil)
           response = @request_client.conn.patch("/http-methods/#{id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.body = request
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
           Types::Object::ObjectWithOptionalField.from_json(json_object: response)
         end
@@ -67,6 +85,7 @@ module SeedExhaustiveClient
         def test_delete(id:, request_options: nil)
           @request_client.conn.delete("/http-methods/#{id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
       end
@@ -88,47 +107,65 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.get("/http-methods/#{id}") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response
           end
         end
 
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_post(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/http-methods") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithOptionalField.from_json(json_object: response)
           end
         end
 
         # @param id [String]
-        # @param request [Types::Object::ObjectWithRequiredField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithRequiredField, as a Hash
+        #   * :string (String)
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_put(id:, request:, request_options: nil)
           Async.call do
             response = @request_client.conn.put("/http-methods/#{id}") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithOptionalField.from_json(json_object: response)
           end
         end
 
         # @param id [String]
-        # @param request [Types::Object::ObjectWithOptionalField]
+        # @param request [Hash] Request of type Types::Object::ObjectWithOptionalField, as a Hash
+        #   * :string (String)
+        #   * :integer (Integer)
+        #   * :long (Long)
+        #   * :double (Float)
+        #   * :bool (Boolean)
+        #   * :datetime (DateTime)
+        #   * :date (Date)
+        #   * :uuid (UUID)
+        #   * :base_64 (String)
+        #   * :list (Array<String>)
+        #   * :set (Set<String>)
+        #   * :map (Hash{Integer => Integer})
         # @param request_options [RequestOptions]
         # @return [Types::Object::ObjectWithOptionalField]
         def test_patch(id:, request:, request_options: nil)
           Async.call do
             response = @request_client.conn.patch("/http-methods/#{id}") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              req.body = request
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
+              req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
             Types::Object::ObjectWithOptionalField.from_json(json_object: response)
           end
@@ -141,6 +178,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.delete("/http-methods/#{id}") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response
           end

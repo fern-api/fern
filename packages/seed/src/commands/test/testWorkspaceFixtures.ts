@@ -146,15 +146,17 @@ export async function testWorkspaceFixtures({
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. All were expected.`
         );
     } else if (workspace.workspaceConfig.allowedFailures != null) {
-        const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures);
-        CONSOLE_LOGGER.info(
-            `${failedFixtures.length}/${
-                results.length
-            } test cases failed. The failed fixtures include ${failedFixtures.join(
-                ", "
-            )}. Unexpted fixtures were .${unexpectedFixtures.join(", ")}`
-        );
-        process.exit(1);
+        if (failedFixtures.length > 0) {
+            const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures);
+            CONSOLE_LOGGER.info(
+                `${failedFixtures.length}/${
+                    results.length
+                } test cases failed. The failed fixtures include ${failedFixtures.join(
+                    ", "
+                )}. Unexpected fixtures were .${unexpectedFixtures.join(", ")}`
+            );
+            process.exit(1);
+        }
     } else {
         CONSOLE_LOGGER.info("All tests passed!");
     }

@@ -1,5 +1,6 @@
+import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../../utils/RubyConstants";
-import { ClassReference } from "../classes/ClassReference";
+import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
@@ -13,6 +14,8 @@ export declare namespace Function_ {
         isAsync?: boolean;
         isStatic?: boolean;
         returnValue?: ClassReference | ClassReference[];
+        flattenedProperties?: Map<TypeId, ObjectProperty[]>;
+        crf?: ClassReferenceFactory;
     }
 }
 export class Function_ extends AstNode {
@@ -29,6 +32,8 @@ export class Function_ extends AstNode {
     constructor({
         name,
         functionBody,
+        flattenedProperties,
+        crf,
         parameters = [],
         isAsync = false,
         isStatic = false,
@@ -43,7 +48,11 @@ export class Function_ extends AstNode {
         this.isAsync = isAsync;
         this.isStatic = isStatic;
 
-        this.yardoc = new Yardoc({ reference: { name: "docString", parameters, returnValue: this.returnValue } });
+        this.yardoc = new Yardoc({
+            reference: { name: "docString", parameters, returnValue: this.returnValue },
+            crf,
+            flattenedProperties
+        });
     }
 
     private writeParameters(): string | undefined {

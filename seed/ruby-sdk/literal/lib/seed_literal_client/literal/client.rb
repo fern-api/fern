@@ -22,7 +22,8 @@ module SeedLiteralClient
       # @return [Literal::CreateOptionsResponse]
       def create_options(values:, request_options: nil)
         response = @request_client.conn.post("/options") do |req|
-          req.body = { values: "values" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request_options&.additional_body_parameters, values: values }.compact
         end
         Literal::CreateOptionsResponse.from_json(json_object: response)
       end
@@ -32,7 +33,8 @@ module SeedLiteralClient
       # @return [Literal::Options]
       def get_options(dry_run:, request_options: nil)
         response = @request_client.conn.post("/options") do |req|
-          req.body = { dryRun: "dry_run" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request_options&.additional_body_parameters, dryRun: dry_run }.compact
         end
         Literal::Options.from_json(json_object: response)
       end
@@ -42,7 +44,8 @@ module SeedLiteralClient
       # @return [Literal::UndiscriminatedOptions]
       def get_undiscriminated_options(dry_run:, request_options: nil)
         response = @request_client.conn.post("/options") do |req|
-          req.body = { dryRun: "dry_run" }.compact
+          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.body = { **request_options&.additional_body_parameters, dryRun: dry_run }.compact
         end
         Literal::UndiscriminatedOptions.from_json(json_object: response)
       end
@@ -64,7 +67,8 @@ module SeedLiteralClient
       def create_options(values:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/options") do |req|
-            req.body = { values: "values" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request_options&.additional_body_parameters, values: values }.compact
           end
           Literal::CreateOptionsResponse.from_json(json_object: response)
         end
@@ -76,7 +80,8 @@ module SeedLiteralClient
       def get_options(dry_run:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/options") do |req|
-            req.body = { dryRun: "dry_run" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request_options&.additional_body_parameters, dryRun: dry_run }.compact
           end
           Literal::Options.from_json(json_object: response)
         end
@@ -88,7 +93,8 @@ module SeedLiteralClient
       def get_undiscriminated_options(dry_run:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/options") do |req|
-            req.body = { dryRun: "dry_run" }.compact
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.body = { **request_options&.additional_body_parameters, dryRun: dry_run }.compact
           end
           Literal::UndiscriminatedOptions.from_json(json_object: response)
         end

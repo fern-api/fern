@@ -21,6 +21,7 @@ module SeedExamplesClient
         def check(id:, request_options: nil)
           @request_client.conn.get("/check/#{id}") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
 
@@ -29,6 +30,7 @@ module SeedExamplesClient
         def ping(request_options: nil)
           @request_client.conn.get("/ping") do |req|
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
       end
@@ -50,6 +52,7 @@ module SeedExamplesClient
           Async.call do
             @request_client.conn.get("/check/#{id}") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
           end
         end
@@ -60,6 +63,7 @@ module SeedExamplesClient
           Async.call do
             response = @request_client.conn.get("/ping") do |req|
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response
           end

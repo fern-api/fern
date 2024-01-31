@@ -23,9 +23,13 @@ module SeedLiteralHeadersClient
         @request_client.conn.post("/with-non-literal-headers") do |req|
           req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
           req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
-          req.headers["nonLiteralEndpointHeader"] = non_literal_endpoint_header
-          req.headers["literalEndpointHeader"] = literal_endpoint_header
-          req.headers["trueEndpointHeader"] = true_endpoint_header
+          req.headers = {
+            **req.headers,
+            **request_options&.additional_headers,
+            "nonLiteralEndpointHeader": non_literal_endpoint_header,
+            "literalEndpointHeader": literal_endpoint_header,
+            "trueEndpointHeader": true_endpoint_header
+          }.compact
         end
       end
     end
@@ -50,9 +54,13 @@ module SeedLiteralHeadersClient
           @request_client.conn.post("/with-non-literal-headers") do |req|
             req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
             req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
-            req.headers["nonLiteralEndpointHeader"] = non_literal_endpoint_header
-            req.headers["literalEndpointHeader"] = literal_endpoint_header
-            req.headers["trueEndpointHeader"] = true_endpoint_header
+            req.headers = {
+              **req.headers,
+              **request_options&.additional_headers,
+              "nonLiteralEndpointHeader": non_literal_endpoint_header,
+              "literalEndpointHeader": literal_endpoint_header,
+              "trueEndpointHeader": true_endpoint_header
+            }.compact
           end
         end
       end
