@@ -2172,7 +2172,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/core@workspace:packages/core"
   dependencies:
-    "@fern-api/fdr-sdk": 0.46.1-17-g110b27e
+    "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
     "@fern-api/venus-api-sdk": 0.0.38
     "@fern-fern/fiddle-sdk": ^0.0.386
     "@types/jest": ^29.0.3
@@ -2233,7 +2233,7 @@ __metadata:
   dependencies:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.46.1-17-g110b27e
+    "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-fern/docs-config": 0.0.53
@@ -2256,7 +2256,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.46.1-17-g110b27e
+    "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/register": "workspace:*"
@@ -2327,9 +2327,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/fdr-sdk@npm:0.46.1-17-g110b27e":
-  version: 0.46.1-17-g110b27e
-  resolution: "@fern-api/fdr-sdk@npm:0.46.1-17-g110b27e"
+"@fern-api/fdr-sdk@npm:0.46.1-18-g26596cb":
+  version: 0.46.1-18-g26596cb
+  resolution: "@fern-api/fdr-sdk@npm:0.46.1-18-g26596cb"
   dependencies:
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
@@ -2337,7 +2337,7 @@ __metadata:
     lodash: ^4.17.21
     marked: ^5.1.0
     url-join: 4.0.1
-  checksum: 087c2782a2452b9be3e15f19f8ee5bc9b8599f9ffdc507ce19bd0f4e9755aad60ec839aa27c5632cbffb8802b5495d1e5c29f407c43cb67ee433ba4f62a1a7b8
+  checksum: 35ed5308efdfb5cb2f55aaa482b9b86b6a2e8d68e044fc18e957bb15f469ffc14db528f7d4e20cfddc4add82d40f9938b14fb41fb32ab0dd5d16b0ccadbd6fdd
   languageName: node
   linkType: hard
 
@@ -2349,7 +2349,7 @@ __metadata:
     "@fern-api/generator-cli": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.472
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -2780,7 +2780,7 @@ __metadata:
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
     "@fern-fern/generator-exec-client": ^0.0.6
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 0.0.2828
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7
@@ -2884,7 +2884,7 @@ __metadata:
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
     "@fern-fern/generator-exec-sdk": ^0.0.472
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
     "@types/lodash": ^4.14.199
@@ -2961,7 +2961,7 @@ __metadata:
     "@fern-api/config-management-commons": "workspace:*"
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
-    "@fern-api/fdr-sdk": 0.46.1-17-g110b27e
+    "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
     "@fern-api/ir-generator": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
@@ -2988,7 +2988,7 @@ __metadata:
     "@fern-api/core": "workspace:*"
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/docs-configuration": "workspace:*"
-    "@fern-api/fdr-sdk": 0.46.1-17-g110b27e
+    "@fern-api/fdr-sdk": 0.46.1-18-g26596cb
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generators-configuration": "workspace:*"
     "@fern-api/ir-generator": "workspace:*"
@@ -3327,6 +3327,20 @@ __metadata:
     axios-retry: 3.2.0
     url-join: 4.0.1
   checksum: 1b44ecb213711e7ecfde32f819c15c32d621d31d13c6eb7680cce29fa5df378ea077e8b04da832bb47ae568dbdbade8a84dabf04a946a8d5bbc73953b53f6a33
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:0.0.2828":
+  version: 0.0.2828
+  resolution: "@fern-fern/ir-sdk@npm:0.0.2828"
+  checksum: 5fa08423209d8c7b8d9d60be822eeae3d955ac893d61abdaf3ba36750f98f1a4969480a3bc65294e59444fec43defa34f0b3f71fe5a55d90faa0c04658c5d918
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:0.0.3277":
+  version: 0.0.3277
+  resolution: "@fern-fern/ir-sdk@npm:0.0.3277"
+  checksum: d9a619d9ed602d34ad0da974b684d877076b420fcf20c43a58cb2a8e270afedb97a61bd610a3726b5977cd1c8f4ca17a0315edb22fbbad047e080742c5ea142a
   languageName: node
   linkType: hard
 
