@@ -73,7 +73,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -294,7 +296,9 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -521,7 +525,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -725,7 +731,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -972,7 +980,9 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -1234,7 +1244,9 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -1331,7 +1343,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -1444,7 +1458,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -1625,7 +1641,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1863,7 +1881,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "institutionId",
@@ -2198,7 +2218,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "institutionId",
@@ -2410,7 +2432,9 @@ This information provides hints to clients, allowing bank customers to select tr
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "institutionId",
@@ -3120,7 +3144,9 @@ The default response lists only recent transactions. Normally, this is transacti
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "accountId",
@@ -3755,7 +3781,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -3846,7 +3874,9 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -4357,7 +4387,9 @@ Note: This operation requires an identity challenge if the financial institution
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4685,7 +4717,9 @@ Note: This operation requires an identity challenge if the financial institution
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "transferId",
@@ -4906,7 +4940,9 @@ Note: This operation requires an identity challenge if the financial institution
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "transferId",
@@ -4979,7 +5015,9 @@ Note: This operation requires an identity challenge if the financial institution
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "transferId",

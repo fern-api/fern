@@ -132,7 +132,13 @@ export class ExampleEndpointFactory {
             }
         }
 
+        let exampleName = requestSchemaIdResponse?.example?.name;
+        if (exampleName != null && requestSchemaIdResponse?.schema != null) {
+            exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
+        }
         const example = {
+            name: exampleName,
+            docs: undefined,
             pathParameters,
             queryParameters,
             headers,
@@ -204,6 +210,34 @@ function isExamplePrimitive(example: FullExample): boolean {
                     return isExamplePrimitive(example.oneOf.undisciminated);
                 default:
                     return false;
+            }
+        default:
+            assertNever(example);
+    }
+}
+
+function getNameFromSchemaWithExample(example: SchemaWithExample): string | undefined {
+    switch (example.type) {
+        case "primitive":
+        case "enum":
+        case "literal":
+        case "unknown":
+        case "array":
+        case "map":
+        case "optional":
+        case "nullable":
+        case "reference":
+            return undefined;
+        case "object":
+            return example.fullExamples?.[0]?.name ?? undefined;
+        case "oneOf":
+            switch (example.oneOf.type) {
+                case "discriminated":
+                    return undefined;
+                case "undisciminated":
+                    return undefined;
+                default:
+                    return undefined;
             }
         default:
             assertNever(example);
