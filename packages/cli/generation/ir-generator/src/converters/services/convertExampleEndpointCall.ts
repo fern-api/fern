@@ -102,7 +102,14 @@ export function convertExampleEndpointCall({
             exampleResolver,
             file,
             workspace
-        })
+        }),
+        codeSamples: example["code-samples"]?.map((codeSample) => ({
+            code: codeSample.code,
+            language: codeSample.language,
+            docs: codeSample.docs,
+            name: codeSample.name != null ? file.casingsGenerator.generateName(codeSample.name) : undefined,
+            install: codeSample.install
+        }))
     };
 }
 

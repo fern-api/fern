@@ -22,6 +22,7 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -72,6 +73,7 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -122,6 +124,7 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -172,6 +175,7 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -222,6 +226,7 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -298,6 +303,7 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -372,6 +378,7 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -437,6 +444,7 @@ If the permission is not granted, it is skipped.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -533,6 +541,7 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -693,6 +702,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
@@ -730,6 +740,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
@@ -838,6 +849,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
@@ -894,6 +906,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
@@ -950,6 +963,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1019,6 +1033,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
@@ -1214,6 +1229,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1301,6 +1317,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
@@ -1354,6 +1371,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1386,6 +1404,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1435,6 +1454,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
@@ -1481,6 +1501,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1540,6 +1561,7 @@ allowed.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -1651,6 +1673,7 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1707,6 +1730,7 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
@@ -1735,6 +1759,7 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1768,6 +1793,7 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
@@ -1809,6 +1835,7 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1847,6 +1874,7 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
@@ -1922,6 +1950,7 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1990,6 +2019,7 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
@@ -2017,6 +2047,7 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
@@ -2057,6 +2088,7 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -2095,6 +2127,7 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
@@ -2176,6 +2209,7 @@ to a role as one action.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -2269,6 +2303,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
@@ -2311,6 +2346,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
@@ -2374,6 +2410,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -2431,6 +2468,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
@@ -2532,6 +2570,7 @@ Each (resource, action) pair defines a unique permission level.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -2617,6 +2656,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
@@ -2659,6 +2699,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
@@ -2719,6 +2760,7 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -2776,6 +2818,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
@@ -2881,6 +2924,7 @@ define a boolean \`private\` attributes that we can now use in our policies.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -2947,6 +2991,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -3002,6 +3047,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -3063,6 +3109,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3120,6 +3167,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -3208,6 +3256,7 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3295,6 +3344,7 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3332,6 +3382,7 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3391,6 +3442,7 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3443,6 +3495,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3544,6 +3597,7 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3616,6 +3670,7 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3720,6 +3775,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3762,6 +3818,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3827,6 +3884,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3877,6 +3935,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3927,6 +3986,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -3985,6 +4045,7 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4058,6 +4119,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4182,6 +4244,7 @@ A resource may also contain:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4308,6 +4371,7 @@ A resource may also contain:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4345,6 +4409,7 @@ A resource may also contain:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4422,6 +4487,7 @@ A resource may also contain:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4494,6 +4560,7 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4609,6 +4676,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4748,6 +4816,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4805,6 +4874,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4846,6 +4916,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4891,6 +4962,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -4958,6 +5030,7 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5020,6 +5093,7 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5086,6 +5160,7 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5184,6 +5259,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5221,6 +5297,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5280,6 +5357,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5325,6 +5403,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5370,6 +5449,7 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5434,6 +5514,7 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5501,6 +5582,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5630,6 +5712,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5696,6 +5779,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5733,6 +5817,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5775,6 +5860,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5834,6 +5920,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5901,6 +5988,7 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -5964,6 +6052,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6078,6 +6167,7 @@ define a string \`owner\` attribute that we can now use in our policies.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6143,6 +6233,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -6194,6 +6285,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -6256,6 +6348,7 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6309,6 +6402,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
@@ -6398,6 +6492,7 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6477,6 +6572,7 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6574,6 +6670,7 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6611,6 +6708,7 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6697,6 +6795,7 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6759,6 +6858,7 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6865,6 +6965,7 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
@@ -6923,6 +7024,7 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",

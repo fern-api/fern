@@ -8,6 +8,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -66,6 +67,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve the hiring guide data for a country. This data can be used to create Employee of Record (EOR) contract quotes.",
       "errorStatusCode": [
         401,
@@ -75,6 +77,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -330,6 +333,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create an Employee of Record (EOR) contract quote. The endpoints creates a contract quote request. Deel will process the information and get back with a quote for this contract.",
       "errorStatusCode": [
         401,
@@ -339,6 +343,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -644,6 +649,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -656,6 +662,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1318,6 +1325,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -1330,6 +1338,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1988,6 +1997,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -2000,6 +2010,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2658,6 +2669,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -2670,6 +2682,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3332,6 +3345,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of contracts.",
       "errorStatusCode": [
         400,
@@ -3344,6 +3358,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -3665,6 +3680,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new Deel contract.",
       "errorStatusCode": [
         400,
@@ -3677,6 +3693,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -4339,6 +4356,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a single contract.",
       "errorStatusCode": [
         400,
@@ -4351,6 +4369,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4829,6 +4848,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add an external Id to a Deel contract. You can use this to add a Deel contract's refernece Id in your platform. External Id can be passed as a query parameter in List contract endpoint to find this conract later.",
       "errorStatusCode": [
         400,
@@ -4841,6 +4861,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4957,6 +4978,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Attach document to a contract. You can only add one document at a time. If you need to attach more documents please attach a Zip file.",
       "errorStatusCode": [
         400,
@@ -5034,6 +5056,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Overwrite the file currently attached to contract document.",
       "errorStatusCode": [
         400,
@@ -5111,6 +5134,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve an IC contract agreement content in HTML. If no template is specified, the default or currently assigned template will be used. This endpoint does not support EOR and Global Payroll contract types.",
       "errorStatusCode": [
         400,
@@ -5123,6 +5147,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5206,6 +5231,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of tasks for a given contract.",
       "errorStatusCode": [
         400,
@@ -5218,6 +5244,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5297,6 +5324,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new task for the contractor.",
       "errorStatusCode": [
         400,
@@ -5309,6 +5337,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5458,6 +5487,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns an array of alternate email objects",
       "errorStatusCode": [
         400,
@@ -5468,6 +5498,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5542,6 +5573,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review multiple tasks to approve or decline the submitted work.",
       "errorStatusCode": [
         400,
@@ -5554,6 +5586,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5670,6 +5703,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review a single task to approve or decline the submitted work.",
       "errorStatusCode": [
         400,
@@ -5682,6 +5716,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5821,6 +5856,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete task from the contract.",
       "errorStatusCode": [
         400,
@@ -5833,6 +5869,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5972,6 +6009,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Amend payment details of a contract.",
       "errorStatusCode": [
         400,
@@ -5984,6 +6022,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6158,6 +6197,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Terminate an active contract.",
       "errorStatusCode": [
         400,
@@ -6170,6 +6210,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6286,6 +6327,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Sign a contract as a client.",
       "errorStatusCode": [
         400,
@@ -6298,6 +6340,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6414,6 +6457,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Archive a terminated, cancelled or completed contract.",
       "errorStatusCode": [
         400,
@@ -6424,6 +6468,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6511,6 +6556,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Invite a worker to sign the contract. Worker will be notified via email.",
       "errorStatusCode": [
         400,
@@ -6523,6 +6569,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6646,6 +6693,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Remove invite in order to re-invite a worker to sign the contract.",
       "errorStatusCode": [
         400,
@@ -6658,6 +6706,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6745,6 +6794,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of timesheets found for a contract.",
       "errorStatusCode": [
         400,
@@ -6757,6 +6807,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7016,6 +7067,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of milestones found for a contract.",
       "errorStatusCode": [
         400,
@@ -7028,6 +7080,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7107,6 +7160,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add a new milestone to contract.",
       "errorStatusCode": [
         400,
@@ -7119,6 +7173,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7249,6 +7304,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a single milestone.",
       "errorStatusCode": [
         400,
@@ -7261,6 +7317,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7455,6 +7512,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a single milestone from a contract.",
       "errorStatusCode": [
         400,
@@ -7467,6 +7525,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7581,6 +7640,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review a milestone to approve or decline submitted work.",
       "errorStatusCode": [
         400,
@@ -7593,6 +7653,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7733,6 +7794,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review a batch of milestones to approve or reject submitted work.",
       "errorStatusCode": [
         400,
@@ -7745,6 +7807,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7862,6 +7925,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of off-cycle payments for the given contract id.",
       "errorStatusCode": [
         400,
@@ -7874,6 +7938,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7953,6 +8018,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add a new invoice line-item for the purpose of off-cycle payment for a given contract.",
       "errorStatusCode": [
         400,
@@ -7965,6 +8031,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8088,6 +8155,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a single off-cycle payment.",
       "errorStatusCode": [
         400,
@@ -8100,6 +8168,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8308,6 +8377,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add additional protection against misclassification by upgrading to Deel Premium.",
       "errorStatusCode": [
         401,
@@ -8317,6 +8387,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8459,6 +8530,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Remove Deel Premium from an existing contract.",
       "errorStatusCode": [
         400,
@@ -8471,6 +8543,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8583,6 +8656,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Calculate the final payment due to the contractor when ending the contract.",
       "errorStatusCode": [
         401,
@@ -8592,6 +8666,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8869,6 +8944,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "First payment is calculated from the number of working/calendar days between their start date and the start of the payment cycle.",
       "errorStatusCode": [
         401,
@@ -8878,6 +8954,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -9071,6 +9148,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve the list of time off requests by an employee.",
       "errorStatusCode": [
         401,
@@ -9080,6 +9158,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9159,6 +9238,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add a time off request for a full-time employee.",
       "errorStatusCode": [
         401,
@@ -9168,6 +9248,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9604,6 +9685,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Edit a time off request for a full-time employee.",
       "errorStatusCode": [
         401,
@@ -9613,6 +9695,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10076,6 +10159,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Cancel a time off request for an employee.",
       "errorStatusCode": [
         401,
@@ -10085,6 +10169,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10199,6 +10284,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of timesheets in your Deel account. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "errorStatusCode": [
         400,
@@ -10211,6 +10297,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -10465,6 +10552,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Submit work for a contractor.",
       "errorStatusCode": [
         400,
@@ -10477,6 +10565,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -10599,6 +10688,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a single timesheet entry by Id.",
       "errorStatusCode": [
         400,
@@ -10611,6 +10701,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10916,6 +11007,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a single timesheet entry.",
       "errorStatusCode": [
         400,
@@ -10928,6 +11020,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11038,6 +11131,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update a single timesheet entry.",
       "errorStatusCode": [
         400,
@@ -11050,6 +11144,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11171,6 +11266,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review a timesheet to approve or decline submitted work.",
       "errorStatusCode": [
         400,
@@ -11183,6 +11279,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11294,6 +11391,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review a batch of timesheets to approve or reject submitted work.",
       "errorStatusCode": [
         400,
@@ -11306,6 +11404,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -11394,6 +11493,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of invoice details for the given contract id.",
       "errorStatusCode": [
         400,
@@ -11406,6 +11506,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11721,6 +11822,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of invoice details. You can filter the list by providing additional paramters e.g. contract_id, contract_type etc.",
       "errorStatusCode": [
         400,
@@ -11733,6 +11835,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -12043,6 +12146,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create an invoice adjustment using this endpoint. For example, you can add a bonus, commission, VAT %, deduction etc. to an invoice.",
       "errorStatusCode": [
         400,
@@ -12055,6 +12159,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12181,6 +12286,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update an existing invoice adjustment.",
       "errorStatusCode": [
         400,
@@ -12193,6 +12299,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12303,6 +12410,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update an existing invoice adjustment. It is not possible to update VAT adjustments, we recommend you to delete the existing VAT adjust and create a new one.",
       "errorStatusCode": [
         400,
@@ -12315,6 +12423,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12429,6 +12538,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review an invoice adjustment to approve or decline it.",
       "errorStatusCode": [
         400,
@@ -12441,6 +12551,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12552,6 +12663,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Review multiple invoice adjustments to approve or decline a batch.",
       "errorStatusCode": [
         400,
@@ -12564,6 +12676,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12652,6 +12765,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of legal entities in your account.",
       "errorStatusCode": [
         400,
@@ -12664,6 +12778,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12709,6 +12824,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of countries supported by Deel.",
       "errorStatusCode": [
         400,
@@ -12721,6 +12837,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12771,6 +12888,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve the list of currencies used by Deel.",
       "errorStatusCode": [
         400,
@@ -12783,6 +12901,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12833,6 +12952,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of pre-defined job titles in Deel platform.",
       "errorStatusCode": [
         400,
@@ -12845,6 +12965,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12954,6 +13075,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of pre-defined seniority level for roles in Deel platform.",
       "errorStatusCode": [
         400,
@@ -12966,6 +13088,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13039,6 +13162,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of pre-defined time off types to register in Deel platform.",
       "errorStatusCode": [
         400,
@@ -13051,6 +13175,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13102,6 +13227,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve the current organization details. Organization is automatically detected from the auth token.",
       "errorStatusCode": [
         400,
@@ -13114,6 +13240,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13164,6 +13291,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of teams in your organization.",
       "errorStatusCode": [
         400,
@@ -13176,6 +13304,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13226,6 +13355,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Upload file to Deel storage to use the file attachment feature for other endpoints.",
       "errorStatusCode": [
         401,
@@ -13237,6 +13367,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13328,6 +13459,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "This end-point returns a list of your agreements with Deel.",
       "errorStatusCode": [
         401,
@@ -13339,6 +13471,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13466,6 +13599,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of contract templates in your organization.",
       "errorStatusCode": [
         401,
@@ -13477,6 +13611,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13522,6 +13657,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of time off entitlements for a full-time employee.",
       "errorStatusCode": [
         401,
@@ -13531,6 +13667,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13615,6 +13752,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "List of time offs for all employees in your organization.",
       "errorStatusCode": [
         401,
@@ -13624,6 +13762,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13686,6 +13825,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Approve or decline an employee's time off request.",
       "errorStatusCode": [
         400,
@@ -13698,6 +13838,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13821,6 +13962,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of paid invoices for your workforce.",
       "errorStatusCode": [
         400,
@@ -13831,6 +13973,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13970,6 +14113,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get link to download the invoice PDF.",
       "errorStatusCode": [
         400,
@@ -13982,6 +14126,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14081,6 +14226,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a link to download the Deel billing invoice PDF.",
       "errorStatusCode": [
         400,
@@ -14093,6 +14239,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14192,6 +14339,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of payments made to Deel.",
       "errorStatusCode": [
         400,
@@ -14202,6 +14350,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -14374,6 +14523,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14386,6 +14536,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14481,6 +14632,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14493,6 +14645,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14557,6 +14710,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of webhook subscriptions.",
       "errorStatusCode": [
         400,
@@ -14569,6 +14723,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14619,6 +14774,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new webhooks subscription.",
       "errorStatusCode": [
         400,
@@ -14631,6 +14787,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14799,6 +14956,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a single webhook subscription.",
       "errorStatusCode": [
         400,
@@ -14811,6 +14969,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14955,6 +15114,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a webhook subscription.",
       "errorStatusCode": [
         400,
@@ -14967,6 +15127,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15025,6 +15186,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Edit a webhook subscription.",
       "errorStatusCode": [
         400,
@@ -15037,6 +15199,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15227,6 +15390,7 @@ exports[`open api parser deel parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a full breakdown of a payment made to Deel. Breakdown will include individual invoices and Deel fee as line items.",
       "errorStatusCode": [
         400,
@@ -15239,6 +15403,7 @@ exports[`open api parser deel parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {

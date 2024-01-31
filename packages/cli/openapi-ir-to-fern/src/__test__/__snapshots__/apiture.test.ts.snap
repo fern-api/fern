@@ -23,6 +23,7 @@ exports[`open api parser apiture simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -71,6 +72,7 @@ exports[`open api parser apiture simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -134,6 +136,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -195,6 +198,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -323,6 +327,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
@@ -398,6 +403,7 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
@@ -561,6 +567,7 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
@@ -654,6 +661,7 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -736,6 +744,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -807,6 +816,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -850,6 +860,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -918,6 +929,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -981,6 +993,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1038,6 +1051,7 @@ The default response lists only recent transactions. Normally, this is transacti
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
@@ -1195,6 +1209,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1294,6 +1309,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",
@@ -1323,6 +1339,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",
@@ -1386,6 +1403,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1510,6 +1528,7 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",

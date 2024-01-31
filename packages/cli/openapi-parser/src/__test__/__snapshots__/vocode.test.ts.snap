@@ -18,12 +18,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -140,6 +142,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -198,6 +201,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -236,6 +240,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -307,6 +312,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -365,12 +371,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -487,6 +495,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -545,6 +554,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -603,6 +613,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -656,12 +667,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -733,10 +746,12 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -808,6 +823,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -896,12 +912,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1018,6 +1036,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1101,6 +1120,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1202,6 +1222,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1260,12 +1281,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1382,6 +1405,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1435,6 +1459,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1506,6 +1531,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1602,12 +1628,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1724,6 +1752,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1815,6 +1844,7 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -1924,12 +1954,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -2034,12 +2066,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2156,12 +2190,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2269,12 +2305,14 @@ exports[`open api parser vocode parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [

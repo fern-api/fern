@@ -36,6 +36,7 @@ with all stable endpoints. You can find them here:
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -44,6 +45,7 @@ Used to retrieve a deployment given its ID or name.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -170,12 +172,14 @@ Used to retrieve a deployment given its ID or name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -528,6 +532,7 @@ Creates a new document index.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -536,6 +541,7 @@ Used to list documents. Optionally filter on supported fields.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -696,6 +702,7 @@ Used to list documents. Optionally filter on supported fields.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
@@ -754,6 +761,7 @@ Executes a deployed Workflow and streams back its results.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -767,6 +775,7 @@ Generate a completion using a previously defined deployment.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -853,6 +862,7 @@ Generate a completion using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a stream of completions using a previously defined deployment.
@@ -918,6 +928,7 @@ Generate a stream of completions using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -926,6 +937,7 @@ Used to retrieve a model version given its ID.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1130,12 +1142,14 @@ Used to retrieve a model version given its ID.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1262,6 +1276,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration
@@ -1273,6 +1288,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1521,6 +1537,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
@@ -1533,6 +1550,7 @@ or overwritten with default values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1761,12 +1779,14 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1852,6 +1872,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Perform a search against a document index.
@@ -1864,6 +1885,7 @@ Perform a search against a document index.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1984,6 +2006,7 @@ Perform a search against a document index.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -1996,6 +2019,7 @@ Used to submit feedback regarding the quality of previously generated completion
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2052,6 +2076,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
@@ -2064,6 +2089,7 @@ or overwritten with default values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2194,12 +2220,14 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2285,6 +2313,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Upload a document to be indexed and used for search.

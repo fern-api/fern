@@ -20,6 +20,7 @@ Used to retrieve a deployment given its ID or name.
 ",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -73,6 +74,7 @@ Used to retrieve a deployment given its ID or name.
 Creates a new document index.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -182,6 +184,7 @@ Used to list documents. Optionally filter on supported fields.
 ",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -288,6 +291,7 @@ Upload a document to be indexed and used for search.
 Compiles the prompt backing the model version using the provided input values.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -344,6 +348,7 @@ Used to retrieve a model version given its ID.
 ",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -421,6 +426,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -542,6 +548,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -579,6 +586,7 @@ Note that a full replacement of the scenario is performed, so any fields not pro
 or overwritten with default values.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -664,6 +672,7 @@ or overwritten with default values.",
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -701,6 +710,7 @@ Note that a full replacement of the test case is performed, so any fields not pr
 or overwritten with default values.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -846,6 +856,7 @@ Generate a completion using a previously defined deployment.
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -955,6 +966,7 @@ Perform a search against a document index.
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -1025,6 +1037,7 @@ Used to submit feedback regarding the quality of previously generated completion
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,

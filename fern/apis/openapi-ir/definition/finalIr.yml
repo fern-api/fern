@@ -91,6 +91,35 @@ types:
       server: list<commons.Server>
       examples: list<EndpointExample>
 
+  CustomCodeSample:
+    availability: in-development
+    extends: commons.WithDescription
+    properties:
+      language: SupportedLanguage
+      code:
+        type: string
+        docs: |
+          The code sample. 
+          This is a string because we want to support code samples that are not valid JSON.
+      name: optional<string>
+      install:
+        type: optional<string>
+        docs: |
+          The command to install the dependencies for the code sample.
+          For example, `npm install` or `pip install -r requirements.txt`.
+
+  SupportedLanguage:
+    docs: Syntax highlighting.
+    enum:
+      - curl
+      - python
+      - javascript
+      - js # alias to javascript
+      - node # alias to javascript
+      - typescript
+      - ts # alias to typescript
+      - go
+
   EndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
@@ -102,6 +131,7 @@ types:
       headers: optional<list<HeaderExample>>
       request: optional<example.FullExample>
       response: optional<example.FullExample>
+      codeSamples: list<CustomCodeSample>
 
   PathParameterExample:
     properties:

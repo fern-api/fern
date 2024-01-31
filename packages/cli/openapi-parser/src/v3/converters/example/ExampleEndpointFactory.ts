@@ -137,7 +137,8 @@ export class ExampleEndpointFactory {
             queryParameters,
             headers,
             request: requestExample,
-            response: responseExample
+            response: responseExample,
+            codeSamples: endpoint.customCodeSamples
         };
 
         return example;

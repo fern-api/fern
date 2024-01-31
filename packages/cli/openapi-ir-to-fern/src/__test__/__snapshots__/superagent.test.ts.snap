@@ -20,6 +20,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -64,6 +65,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
@@ -94,6 +96,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
@@ -121,6 +124,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all agents",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -146,6 +150,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
@@ -181,6 +186,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
@@ -237,6 +243,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -274,6 +281,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "tokenId": "string",
@@ -304,6 +312,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "tokenId": "string",
@@ -331,6 +340,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all API tokens",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -367,6 +377,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -406,6 +417,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -458,6 +470,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -503,6 +516,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "documentId": "string",
@@ -533,6 +547,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "documentId": "string",
@@ -560,6 +575,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all documents",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -596,6 +612,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -637,6 +654,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
@@ -667,6 +685,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
@@ -694,6 +713,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all prompts",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -719,6 +739,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
@@ -765,6 +786,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -805,6 +827,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "toolId": "string",
@@ -835,6 +858,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "toolId": "string",
@@ -862,6 +886,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all tools",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -892,6 +917,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all agent traces",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -928,6 +954,7 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "userId": "string",
@@ -955,6 +982,7 @@ exports[`open api parser superagent simple 1`] = `
             "docs": undefined,
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,

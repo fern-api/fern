@@ -99,6 +99,81 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/accounts/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete an account
+client.Accounts.delete("account-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.accounts.delete id: 'account-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.accounts.delete('accountId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -141,6 +216,79 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/accounts/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get an account
+account = client.Accounts.get(id="account-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.accounts.detail id: 'account-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.accounts.detail('accountId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -242,6 +390,81 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/accounts/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Accounts
+for account in client.Accounts.list():
+    pprint(account)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.accounts.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.accounts.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -490,6 +713,96 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://sandbox.belvo.com/api/accounts/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume accounts
+accounts = client.Accounts.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.accounts.resume(
+  session: 'session_id',
+  token: 'token',
+  link: 'link_id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.accounts.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -555,6 +868,88 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/accounts/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "link_id"
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve accounts
+accounts = client.Accounts.create(
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.accounts.retrieve link: 'link-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.accounts.retrieve('link-id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -693,6 +1088,81 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/balance/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete a balance
+client.Balances.delete("balance-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.balances.delete id: 'balance-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.balances.delete('balanceId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -721,6 +1191,79 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/balances/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a balance
+balance = client.Balances.get(id="balance-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.balances.detail id: 'balance-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.balances.detail('balanceId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -827,6 +1370,81 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/balances/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List balances
+for balance in client.Balances.list():
+    pprint(balance)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.balances.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.balances.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1014,6 +1632,96 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://sandbox.belvo.com/api/balances/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume balances
+balances = client.Balances.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.balances.resume(
+  session: 'session-id',
+  token: 'token',
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.balances.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1065,6 +1773,97 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/balances/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "account": "",
+    "date_from": "",
+    "date_to": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve balances
+balances = client.Balances.create(
+  "link_id",
+  "2019-07-01",
+  date_to="2019-07-31"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.balances.retrieve(
+  link: 'link-id',
+  date_from: '2019-07-01',
+  date_to: '2019-07-31'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.balances.retrieve('linkId', '2019-07-01', { 'dateTo': '2019-07-31' })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1166,6 +1965,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1229,6 +2029,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
@@ -1280,6 +2081,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1437,6 +2239,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1500,6 +2303,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1550,6 +2354,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
@@ -1595,6 +2400,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1738,6 +2544,7 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -1766,6 +2573,7 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -1839,6 +2647,7 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1901,6 +2710,7 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1986,6 +2796,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -2124,6 +2935,81 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://api.belvo.com/api/incomes/{id}/ \\
+  -H 'Host: api.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# Delete an income
+client.Incomes.delete("income-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.incomes.delete id: 'income-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.incomes.delete('incomeId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2152,6 +3038,79 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://api.belvo.com/api/incomes/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# Get an income
+income = client.Incomes.get(id="income-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.incomes.detail id: 'income-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.incomes.detail('incomeId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2201,6 +3160,81 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://api.belvo.com/api/incomes/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# List incomes
+for income in client.Incomes.list():
+    pprint(income)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.incomes.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.incomes.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2288,6 +3322,96 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://api.belvo.com/api/incomes/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: api.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# Resume incomes
+incomes = client.Incomes.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.incomes.resume(
+  session: 'session_id',
+  token: 'token',
+  link: 'link_id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.incomes.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2339,6 +3463,88 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://api.belvo.com/api/incomes/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: api.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# Retrieve incomes
+incomes = client.Incomes.create(
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.incomes.retrieve link: 'link-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.incomes.retrieve('link-id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2464,6 +3670,80 @@ You can see a complete list of institutions by either consulting our [Institutio
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/institutions/{id}  \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a institution
+institution = client.Institutions.get(id="institution_id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.institutions.detail id: 'institution-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.institutions.detail('institution_id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2525,6 +3805,81 @@ You can see a complete list of institutions by either consulting our [Institutio
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/institutions/  \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List institutions
+for institution in client.Institutions.list():
+    pprint(institution)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.institutions.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.institutions.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2692,6 +4047,72 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Investment Portfolio
+client.InvestmentsPortfolios.delete('investment-portfolio.id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.investments_portfolio.delete id: 'investment-portfolio.id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.investmentsPortfolios.delete('investment-portfolio.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2720,6 +4141,72 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get Investment Portfolio
+client.InvestmentsPortfolios.get('investments-portfolios.id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.investments_portfolio.detail id: 'investments-portfolios.id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.investmentsPortfolios.detail('investments-portfolios.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2777,6 +4264,73 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Investment Portfolios
+for portfolio in client.InvestmentsPortfolios.list():
+pprint(portfolio)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.investments_portfolio.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.investmentsPortfolios.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2851,6 +4405,80 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume Investment Portfolios
+investments_portfolios = client.InvestmentsPortfolios.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.investments_portfolio.resume(
+  session: 'session_id',
+  token: 'token',
+  link: 'link_id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.investmentsPortfolios.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2908,6 +4536,74 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve Investment Portfolios
+client.InvestmentsPortfolios.create('link-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.investments_portfolio.retrieve(
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.investmentsPortfolios.retrieve('linkID')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3041,6 +4737,82 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/invoices/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Invoice
+client.Invoices.delete('invoice-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.invoices.delete id: 'invoice-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.invoices.delete('invoiceId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  });
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3069,6 +4841,80 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/invoices/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+invoice = client.Invoices.detail('invoice-id'):
+pprint(invoice)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.invoices.detail id: 'invoice-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.invoices.detail('invoiceId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  });
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3165,6 +5011,81 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/invoices/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Invoices
+for invoice in client.Invoices.list():
+    pprint(invoice)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.invoices.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.invoices.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  });
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3364,6 +5285,96 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://api.belvo.com/api/invoices/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: api.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "https://api.belvo.com")
+
+# Resume incomes
+incomes = client.Invoices.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+)
+
+client.invoices.resume(
+  session: 'session_id',
+  token: 'token',
+  link: 'link_id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'https://api.belvo.com'
+);
+
+client.connect()
+  .then(function () {
+    client.invoices.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3416,6 +5427,96 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/invoices/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "date_from": "YYYY-MM-DD",
+    "date_to": "YYYY-MM-DD",
+    "type": "OUTFLOW"
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Invoices
+for invoice in client.Invoices.create('link-id', '2019-07-01', '2019-07-31', 'OUTFLOW'):
+    pprint(invoice)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.invoices.retrieve(
+  link: 'link-id',
+  date_from: '2019-07-01',
+  date_to: '2019-07-31',
+  type: 'OUTFLOW'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.invoices.retrieve('linkId', '2019-07-01', '2019-07-31', 'OUTFLOW')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  });
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3570,6 +5671,7 @@ For single links, you have to perform POST calls to an institution **every time*
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "e4bb1afb-4a4f-4dd6-8be0-e615d233185b",
@@ -3647,6 +5749,80 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/links/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+client.Links.delete("link_id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.delete id: 'link-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.delete('linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3675,6 +5851,79 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/links/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a link
+link = client.Links.get(id="link_id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.detail id: 'link-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.detail('linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3735,6 +5984,81 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/links/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List links
+for link in client.Links.list():
+    pprint(link)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3890,6 +6214,96 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://sandbox.belvo.com/api/links/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume a link
+link = client.Links.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.resume(
+  session_id: 'your-session-id',
+  token: 'otp-token',
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.resume('yourSessionId', 'yourOTPToken', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3955,6 +6369,96 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/links/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "institution": "",
+    "username": "",
+    "password": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Register a link
+link = client.Links.create(
+    institution="erebor_mx_retail",
+    username="johndoe",
+    password="supersecret"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.register(
+  institution: 'erebor_mx_retail',
+  username: 'johndoe',
+  password: 'supersecret'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.register('erebor_mx_retail', 'johndoe', 'supersecret')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4157,6 +6661,85 @@ For a list of standards codes, see the table below.
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PUT https://sandbox.belvo.com/api/links/{id} \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "password": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Update a link
+link = client.Links.put(link="link_id", password="password")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.links.update(link: 'link-id', password: 'new-password')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.links.update('linkID', 'newSuperSecret')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4363,6 +6946,81 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/owners/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete a owner
+client.Owners.delete("owner-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.owners.delete id: 'owner-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.owners.delete('ownerId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4391,6 +7049,79 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/owners/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a owner
+owner = client.Owners.get(id="owner-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.owners.detail id: 'owner-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.owners.detail('ownerId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4454,6 +7185,81 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/owners/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List owners
+for owner in client.Owners.list():
+    pprint(owner)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.owners.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.owners.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4570,6 +7376,96 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://sandbox.belvo.com/api/owners/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume owners
+owners = client.Owners.resume(
+  session="session-id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.owners.resume(
+  session: 'session-id',
+  token: 'token',
+  link: 'link-id',
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.owners.resume('yourSessionId', 'yourOTPToken', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4621,6 +7517,88 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/owners/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve owners
+owners = client.Owners.create(
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.owners.retrieve(link: 'link-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.owners.retrieve('linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4681,6 +7659,7 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
@@ -4726,6 +7705,7 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4898,6 +7878,7 @@ A payment intent captures all payment information (such as the amount to be char
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5096,6 +8077,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5156,6 +8138,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "access_token": "YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU",
@@ -5205,6 +8188,7 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5366,6 +8350,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
@@ -5413,6 +8398,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5578,6 +8564,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -5606,6 +8593,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
@@ -5647,6 +8635,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5679,6 +8668,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5757,6 +8747,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -5785,6 +8776,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -5858,6 +8850,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5999,6 +8992,7 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6153,6 +9147,72 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Tax compliance status
+client.RecurringExpenses.delete('recurring-expenses.id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.recurring_expenses.delete id: 'recurring-expenses.id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.recurringExpenses.delete('recurring-expenses.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -6181,6 +9241,72 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get Recurring Expense
+client.RecurringExpenses.get('recurring-expenses.id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.recurring_expenses.detail id: 'recurring-expenses.id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.recurringExpenses.detail('recurring-expenses.id')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -6230,6 +9356,73 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Recurring Expenses
+for income in client.RecurringExpenses.list():
+pprint(income)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.recurring_expenses.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.recurringExpenses.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6327,6 +9520,80 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume Recurring Expenses
+incomes = client.RecurringExpenses.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.recurring_expenses.resume(
+  session: 'session_id',
+  token: 'token',
+  link: 'link_id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.recurringExpenses.resume('sessionId', 'token', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6378,6 +9645,74 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve Recurring Expense
+client.RecurringExpenses.create('link-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# For more information about our SDKs go to:
+# https://developers.belvo.com/docs/belvo-sdks
+
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.recurring_expenses.retrieve(
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// For more information about our SDKs go to:
+// https://developers.belvo.com/docs/belvo-sdks
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.recurringExpenses.retrieve('linkID')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6511,6 +9846,7 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -6539,6 +9875,7 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -6588,6 +9925,7 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6672,6 +10010,7 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6725,6 +10064,7 @@ If you need to know the currency of the account, just do a GET Details to the ac
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6820,6 +10160,7 @@ For example:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -6848,6 +10189,7 @@ For example:
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -6943,6 +10285,81 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/tax-compliance-status/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Tax compliance status
+client.TaxComplianceStatus.delete('tax-compliance-status-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.tax_compliance_status.delete id: 'tax-compliance-status-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxComplianceStatus.delete('taxComplianceStatusId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -6971,6 +10388,79 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-compliance-status/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get Tax compliance status
+client.TaxComplianceStatus.get('tax-compliance-status-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_status.detail id: 'tax-compliance-status-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxComplianceStatus.detail('taxComplianceStatusId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7028,6 +10518,79 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-compliance-status/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List Tax compliance status
+client.TaxComplianceStatus.list()
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.tax_compliance_status.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxComplianceStatus.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7136,6 +10699,89 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/tax-compliance-status/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "link-id",
+    "attach_pdf": false
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve Tax compliance status
+client.TaxComplianceStatus.create('link-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.tax_compliance_status.retrieve(
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxComplianceStatus.retrieve('linkID')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7224,6 +10870,81 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/tax-compliance-status/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete Tax declaration
+client.TaxDeclaration.delete('tax-declaration-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+client.tax_declarations.delete id: 'tax-declaration-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxDeclaration.delete('taxDeclarationId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7252,6 +10973,79 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-compliance-status/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get Tax declaration
+client.TaxDeclaration.get('tax-declaration-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+client = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_declaration.detail id: 'tax-declaration-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxDeclaration.detail('taxDeclarationId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7375,6 +11169,81 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-declarations/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List tax declarations
+for tax_declaration in client.TaxDeclarations.list()
+  pprint(tax_declaration)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_declarations.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxDeclarations.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7513,6 +11382,98 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "### Retrieve Tax Declarations
+curl -X POST \\
+  https://sandbox.belvo.com/api/tax-declarations/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "year_from": YYYY,
+    "year_to": YYYY,
+    "attach_pdf": false
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve Tax Declarations
+tax_declarations = client.TaxDeclarations.create(
+  link="link_id",
+  year_from="2019",
+  year_to="2020",
+  attach_pdf=True
+)",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+# Retrieve Tax Declarations
+sandbox.tax_declarations.retrieve(
+  link: 'link-id',
+  year_from: "2019",
+  year_to: "2020"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+// Retrieve Tax Declarations
+client.connect()
+  .then(function () {
+    client.taxDeclarations.retrieve('linkID', "2019", "2020")
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7688,6 +11649,7 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7716,6 +11678,7 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7785,6 +11748,7 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7883,6 +11847,7 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8034,6 +11999,81 @@ client.tax_returns.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/tax-returns/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete a tax return
+client.TaxReturns.delete("tax-return-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_returns.delete id: 'tax-return-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxReturns.delete('taxReturnId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8062,6 +12102,79 @@ client.tax_returns.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-returns/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a tax return
+tax_return = client.TaxReturns.get(id="tax-return-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_returns.detail id: 'tax-return-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxReturns.detail('taxReturnId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8118,6 +12231,81 @@ client.tax_returns.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-returns/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List tax returns
+for tax_return in client.TaxReturns.list()
+  pprint(tax_return)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_returns.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxReturns.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8266,6 +12454,145 @@ client.tax_returns.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "### Yearly Tax Returns
+curl -X POST \\
+  https://sandbox.belvo.com/api/tax-returns/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "year_from": YYYY,
+    "year_to": YYYY,
+    "attach_pdf": false
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+
+### Monthly Tax Returns
+curl -X POST \\
+  https://sandbox.belvo.com/api/tax-returns/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "date_from": "2019-01-01",
+    "date_to": "2019-04-01",
+    "type": "monthly",
+    "attach_pdf": false
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Yearly Tax Returns
+tax_returns = client.TaxReturns.create(
+  link="link_id",
+  year_from="2019",
+  year_to="2020",
+  attach_pdf=True
+)
+
+# Monthly Tax Returns
+tax_returns = client.TaxReturns.create(
+  link="link_id",
+  date_from="2019-01-01",
+  date_to="2019-04-01",
+  attach_pdf=True,
+  type_="monthly"
+)",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+# Yearly Tax Returns
+sandbox.tax_returns.retrieve(
+  link: 'link-id',
+  year_from: "2019",
+  year_to: "2020"
+)
+
+# Monthly Tax Returns
+sandbox.tax_returns.retrieve(
+  link: 'some-link-uuid',
+  options: {
+    type: TaxReturnType::MONTHLY,
+    date_from: '2019-01-01',
+    date_to: '2019-04-01',
+  }
+      )
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+// Yearly Tax Returns
+client.connect()
+  .then(function () {
+    client.taxReturns.retrieve('linkID', "2019", "2020")
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+
+// Monthly Tax Returns
+
+client.connect()
+  .then(function () {
+    client.taxReturns.retrieve('linkID', "2019-01-01", "2019-04-01", {type: 'monthly'})
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8408,6 +12735,81 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/tax-status/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete tax status
+client.TaxStatus.delete('tax-status-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_status.delete id: 'tax-status-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxStatus.delete('taxStatusId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8436,6 +12838,79 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-status/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get tax status
+client.TaxStatus.get('tax-status-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_status.detail id: 'tax-status-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxStatus.detail('taxStatusId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8517,6 +12992,79 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/tax-status/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List tax status
+client.TaxStatus.list()
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_status.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxStatus.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8625,6 +13173,89 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/tax-status/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "link-id",
+    "attach_pdf": false
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve tax status
+client.TaxStatus.create('link-id')
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.tax_status.retrieve(
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.taxStatus.retrieve('linkID')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8821,6 +13452,81 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X DELETE \\
+  https://sandbox.belvo.com/api/transactions/{id}/ \\
+  -H 'Host: sandbox.belvo.com' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Delete a transaction
+client.Transactions.delete("transaction-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.transactions.delete id: 'transaction-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.delete('transactionId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8849,6 +13555,79 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/transactions/{id} \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Get a transaction
+transaction = client.Transactions.get(id="transaction-id")
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.transactions.detail id: 'transaction-id'
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.detail('transactionId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8980,6 +13759,81 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl https://sandbox.belvo.com/api/transactions/ \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from pprint import pprint
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# List transactions
+for transaction in client.Transactions.list():
+    pprint(transaction)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.transactions.list
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.list()
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -9317,6 +14171,96 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X PATCH \\
+  https://sandbox.belvo.com/api/transactions/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+      "session": "",
+      "token": "",
+      "link": ""
+  }' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Resume transactions
+transactions = client.Transactions.resume(
+  session="session_id",
+  token="token",
+  link="link_id"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+sandbox.transactions.resume(
+  session: 'session-id',
+  token: 'token',
+  link: 'link-id'
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.resume('yourSessionId', 'yourOTPToken', 'linkId')
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -9371,6 +14315,100 @@ If you try to access older information than what we can access, we will return a
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/transactions/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "account": "",
+    "date_from": "",
+    "date_to": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve transactions
+transactions = client.Transactions.create(
+  "link_id",
+  "2019-07-01",
+  date_to="2019-07-31"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+transactions = sandbox.transactions.retrieve(
+  link: 'link_id',
+  date_from: '2022-01-01',
+  options: {
+    account: account, //optional
+    date_to: '2022-01-24'
+  }
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.retrieve('linkId', '2019-01-01', { 'dateTo': '2019-07-31' })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -9426,6 +14464,100 @@ If you try to access older information than what we can access, we will return a
             ],
             "examples": [
               {
+                "code-samples": [
+                  {
+                    "code": "curl -X POST \\
+  https://sandbox.belvo.com/api/transactions/ \\
+  -H 'Content-Type: application/json' \\
+  -H 'Host: sandbox.belvo.com' \\
+  -H 'cache-control: no-cache' \\
+  -d '{
+    "link": "",
+    "account": "",
+    "date_from": "",
+    "date_to": ""
+}' \\
+  -u [Secret Key ID]:[Secret Key PASSWORD]
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "cURL",
+                    "name": undefined,
+                  },
+                  {
+                    "code": "# check our python-client library on github
+# https://github.com/belvo-finance/belvo-python
+from belvo.client import Client
+
+# Login to Belvo API
+client = Client("Secret Key ID", "Secret Key PASSWORD", "sandbox")
+
+# Retrieve transactions
+transactions = client.Transactions.create(
+  "link_id",
+  "2019-07-01",
+  date_to="2019-07-31"
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "python",
+                    "name": "Belvo Python SDK",
+                  },
+                  {
+                    "code": "# check our Ruby gem on github
+# https://github.com/belvo-finance/belvo-ruby
+require 'belvo'
+
+sandbox = Belvo::Client.new(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+)
+
+transactions = sandbox.transactions.retrieve(
+  link: 'link_id',
+  date_from: '2022-01-01',
+  options: {
+    account: account, //optional
+    date_to: '2022-01-24'
+  }
+)
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "ruby",
+                    "name": "Belvo Ruby SDK",
+                  },
+                  {
+                    "code": "// check our node package on github
+// https://github.com/belvo-finance/belvo-js
+
+var belvo = require('belvo').default;
+
+var client = new belvo(
+  'Secret Key ID',
+  'Secret Key PASSWORD',
+  'sandbox'
+);
+
+client.connect()
+  .then(function () {
+    client.transactions.retrieve('linkId', '2019-01-01', { 'dateTo': '2019-07-31' })
+      .then(function (res) {
+        console.log(res);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+});
+",
+                    "docs": undefined,
+                    "install": undefined,
+                    "language": "node",
+                    "name": "Belvo Node SDK",
+                  },
+                ],
                 "headers": {
                   "X-Belvo-Request-Mode": "async",
                 },

@@ -317,6 +317,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
@@ -506,6 +507,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
@@ -1376,6 +1378,7 @@ exports[`generate IR 1`] = `
           ],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
@@ -1914,6 +1917,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
@@ -2050,6 +2054,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
@@ -2319,6 +2324,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
@@ -3536,6 +3542,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
@@ -4794,6 +4801,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [
                 {

@@ -8,6 +8,7 @@ exports[`open api parser flagright parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Transactions
 
 \`/transactions\` endpoint allows you to operate on the [Transaction entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction)
@@ -36,6 +37,7 @@ Here are some of the most used payload fields explained (you can find the full p
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -612,6 +614,7 @@ Here are some of the most used payload fields explained (you can find the full p
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "### GET Transactions
 
 \`/transactions\` endpoint allows you to operate on the [Transaction entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction).
@@ -623,6 +626,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1111,6 +1115,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Transaction Events
 
 \`/events/transaction\` endpoint allows you to operate on the [Transaction Events entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#transaction-event)
@@ -1139,6 +1144,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1889,6 +1895,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Consumer User
 
 \`/consumer/user\` endpoint allows you to operate on the [Consumer user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
@@ -1909,6 +1916,7 @@ Each consumer User entity needs three mandatory fields:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3870,6 +3878,7 @@ Each consumer User entity needs three mandatory fields:
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "### GET Consumer User
 
 \`/consumer/user\` endpoint allows you to operate on the [Consumer User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
@@ -3881,6 +3890,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5778,6 +5788,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Business User
 
 \`/business/user\` endpoint allows you to operate on the [Business user entity.](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user)
@@ -5799,6 +5810,7 @@ Each consumer Business entity needs three mandatory fields:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -7527,6 +7539,7 @@ Each consumer Business entity needs three mandatory fields:
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "### GET Business User
 
 \`/business/user\` endpoint allows you to operate on the [Business User entity](https://docs.flagright.com/docs/flagright-api/8c06ae6a3231a-entities-and-relationships#user).
@@ -7538,6 +7551,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10091,6 +10105,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Consumer User Events
 
 \`/events/consumer/user\` endpoint allows you to operate on the Consumer User Events entity.
@@ -10118,6 +10133,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13418,6 +13434,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "## POST Business User Events
 
 \`/events/business/user\` endpoint allows you to operate on the Business User Events entity.
@@ -13445,6 +13462,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],

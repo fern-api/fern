@@ -205,6 +205,21 @@ types:
       queryParameters: list<ExampleQueryParameter>
       request: optional<ExampleRequestBody>
       response: ExampleResponse
+      codeSamples:
+        availability: in-development
+        type: optional<list<ExampleCodeSample>>
+        docs: |
+          Hand-written code samples for this endpoint.These code samples should match the 
+          example that it's attached to, so that we can spin up an API Playground with
+          the code sample that's being displayed in the API Reference.
+
+  ExampleCodeSample:
+    extends: commons.WithDocs
+    properties:
+      name: optional<commons.Name>
+      language: string
+      code: string
+      install: optional<string>
 
   ExamplePathParameter:
     properties:

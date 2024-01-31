@@ -22,6 +22,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -51,6 +52,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -99,6 +101,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -151,6 +154,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -204,6 +208,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -252,6 +257,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -299,6 +305,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -347,6 +354,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -395,6 +403,7 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -447,6 +456,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -473,6 +483,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -515,6 +526,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -557,6 +569,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -620,6 +633,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -662,6 +676,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -696,6 +711,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -738,6 +754,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -784,6 +801,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -818,6 +836,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -863,6 +882,7 @@ You will be assigned as owner of the new app automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -928,6 +948,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -986,6 +1007,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1038,6 +1060,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1096,6 +1119,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1154,6 +1178,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1213,6 +1238,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1283,6 +1309,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1349,6 +1376,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1429,6 +1457,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1506,6 +1535,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1575,6 +1605,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1642,6 +1673,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1717,6 +1749,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1839,6 +1872,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1899,6 +1933,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1946,6 +1981,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -1979,6 +2015,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2212,6 +2249,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2271,6 +2309,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2348,6 +2387,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2394,6 +2434,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2477,6 +2518,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2588,6 +2630,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2724,6 +2767,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2790,6 +2834,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2854,6 +2899,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -2937,6 +2983,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3005,6 +3052,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3089,6 +3137,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3130,6 +3179,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3162,6 +3212,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3190,6 +3241,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3241,6 +3293,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3279,6 +3332,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3329,6 +3383,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3368,6 +3423,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3418,6 +3474,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3473,6 +3530,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3552,6 +3610,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3607,6 +3666,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3659,6 +3719,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3714,6 +3775,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3768,6 +3830,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3847,6 +3910,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3914,6 +3978,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -3977,6 +4042,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4029,6 +4095,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4092,6 +4159,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4156,6 +4224,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4218,6 +4287,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4290,6 +4360,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4357,6 +4428,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4434,6 +4506,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4496,6 +4569,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4584,6 +4658,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4604,6 +4679,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4634,6 +4710,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4669,6 +4746,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
@@ -4715,6 +4793,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
@@ -4761,6 +4840,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
@@ -4817,6 +4897,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -4860,6 +4941,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -4913,6 +4995,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4949,6 +5032,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4999,6 +5083,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "commentId": "string",
@@ -5031,6 +5116,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "userId": "string",
@@ -5086,6 +5172,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5113,6 +5200,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5140,6 +5228,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5171,6 +5260,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5213,6 +5303,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -5256,6 +5347,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5296,6 +5388,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -5347,6 +5440,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5380,6 +5474,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5409,6 +5504,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5442,6 +5538,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5475,6 +5572,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5554,6 +5652,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5586,6 +5685,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "type": "string",
@@ -5619,6 +5719,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5645,6 +5746,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5705,6 +5807,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5773,6 +5876,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5857,6 +5961,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5899,6 +6004,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -5973,6 +6079,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6018,6 +6125,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6091,6 +6199,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6169,6 +6278,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6203,6 +6313,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6276,6 +6387,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6354,6 +6466,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6427,6 +6540,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6504,6 +6618,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6571,6 +6686,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6614,6 +6730,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6687,6 +6804,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6765,6 +6883,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6838,6 +6957,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -6980,6 +7100,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7076,6 +7197,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7144,6 +7266,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7295,6 +7418,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7373,6 +7497,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7446,6 +7571,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7527,6 +7653,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7634,6 +7761,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7707,6 +7835,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7803,6 +7932,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7888,6 +8018,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -7959,6 +8090,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8032,6 +8164,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8110,6 +8243,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8188,6 +8322,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8242,6 +8377,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8279,6 +8415,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8313,6 +8450,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8357,6 +8495,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "fromDate": "string",
@@ -8401,6 +8540,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8438,6 +8578,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -8494,6 +8635,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "fromDate": "string",
@@ -8562,6 +8704,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8614,6 +8757,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8660,6 +8804,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8706,6 +8851,7 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8752,6 +8898,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -8779,6 +8926,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8832,6 +8980,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -8886,6 +9035,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "team": "string",
@@ -8958,6 +9108,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "name": "string",
@@ -8999,6 +9150,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -9044,6 +9196,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "app": "string",
@@ -9117,6 +9270,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9145,6 +9299,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9190,6 +9345,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -9244,6 +9400,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9290,6 +9447,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -9359,6 +9517,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9436,6 +9595,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9493,6 +9653,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -9555,6 +9716,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -9587,6 +9749,7 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,

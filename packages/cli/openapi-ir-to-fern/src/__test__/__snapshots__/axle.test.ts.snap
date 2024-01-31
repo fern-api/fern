@@ -17,6 +17,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Account method will return an Account object including high-level account information (e.g., name) and any children objects (e.g., Policies) associated with the Account. Please note that this method will NOT refresh the Account object.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": {
                   "id": "string",
@@ -87,6 +88,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Carrier method returns a Carrier object that include additional details about an Axle-supported insurance carrier.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": {
                   "id": "string",
@@ -126,6 +128,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Carriers method returns an array of Carrier objects.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -175,6 +178,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "Start an Ignition session. Returns the ignitionUri to direct the user to authenticate.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -264,6 +268,7 @@ exports[`open api parser axle simple 1`] = `
             "docs": "The Get Policy method returns a Policy object including high-level policy information (e.g., policy number) and any children objects (e.g., Coverages) associated with the Policy. Please note that this method will NOT refresh the Policy object.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": {
                   "id": "string",
@@ -344,6 +349,7 @@ exports[`open api parser axle simple 1`] = `
 Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not expire.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": {},
                 "path-parameters": undefined,
                 "query-parameters": undefined,

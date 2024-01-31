@@ -8,10 +8,12 @@ exports[`examples examples parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],

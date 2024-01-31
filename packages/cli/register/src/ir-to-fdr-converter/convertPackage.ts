@@ -394,7 +394,13 @@ function convertExampleEndpointCall(
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             }
         }),
-        responseBody: irExample.response.body?.jsonExample
+        responseBody: irExample.response.body?.jsonExample,
+        codeSamples: irExample.codeSamples?.map((codeSample) => ({
+            name: codeSample.name?.originalName,
+            language: codeSample.language,
+            code: codeSample.code,
+            install: codeSample.install
+        }))
     };
 }
 
