@@ -170,7 +170,5 @@ workflows:
               only: main
             tags:
               only: /.*/
-          requires:
-            - live-test-dev
           context:
             - fern-tokens
