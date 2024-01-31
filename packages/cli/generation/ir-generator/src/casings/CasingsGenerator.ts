@@ -19,11 +19,11 @@ export function constructCasingsGenerator(
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
             });
 
-            const snakeCaseName = snakeCase(name);
             let camelCaseName = camelCase(name);
             let pascalCaseName = upperFirst(camelCaseName);
-            if (specialCasing) {
-                const camelCaseWords = words(camelCaseName);
+            const snakeCaseName = snakeCase(name);
+            const camelCaseWords = words(camelCaseName);
+            if (specialCasing && !hasAdjacentCommonInitialisms(camelCaseWords)) {
                 camelCaseName = camelCaseWords
                     .map((word, index) => {
                         if (index > 0) {
@@ -88,6 +88,22 @@ function sanitizeNameForLanguage(name: string, generationLanguage: GenerationLan
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
+}
+
+function hasAdjacentCommonInitialisms(wordList: string[]): boolean {
+    return wordList.some((word, index) => {
+        if (index === 0) {
+            return false;
+        }
+        const previousWord = wordList[index - 1];
+        if (previousWord == null) {
+            return false;
+        }
+        const previousWordIsInitialism =
+            maybeGetPluralInitialism(previousWord) != null || isCommonInitialism(previousWord);
+        const currentWordIsInitialism = maybeGetPluralInitialism(word) != null || isCommonInitialism(word);
+        return previousWordIsInitialism && currentWordIsInitialism;
+    });
 }
 
 function maybeGetPluralInitialism(name: string): string | undefined {
