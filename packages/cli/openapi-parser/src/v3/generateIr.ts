@@ -151,8 +151,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     parameterNameOverride: header.parameterNameOverride
                 };
             }),
-            examples: endpointExample == null ? [] : [endpointExample],
-            customCodeSamples: endpointWithExample.customCodeSamples
+            examples: endpointExample == null ? [] : [endpointExample]
         };
     });
 

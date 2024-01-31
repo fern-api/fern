@@ -18,8 +18,6 @@ export function buildEndpointExample({
     context: OpenApiIrConverterContext;
 }): RawSchemas.ExampleEndpointCallSchema {
     return {
-        name: endpointExample.nameOverride ?? endpointExample.generatedName,
-        docs: endpointExample.description ?? undefined,
         "path-parameters":
             endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0
                 ? convertNamedFullExamples(endpointExample.pathParameters)
