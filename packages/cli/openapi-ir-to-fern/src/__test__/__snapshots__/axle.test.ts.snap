@@ -102,7 +102,7 @@ exports[`open api parser axle simple 1`] = `
                       "domain": "string",
                       "id": "string",
                       "modifiedAt": "string",
-                      "name": "example-1",
+                      "name": "string",
                       "phone": "string",
                     },
                   },
@@ -134,18 +134,7 @@ exports[`open api parser axle simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "data": [
-                      {
-                        "address": {},
-                        "domain": "string",
-                        "id": "string",
-                        "modifiedAt": "string",
-                        "name": "example-1",
-                        "phone": "string",
-                      },
-                    ],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -292,45 +281,18 @@ exports[`open api parser axle simple 1`] = `
                       "account": "string",
                       "address": {},
                       "carrier": "string",
-                      "coverages": [
-                        {
-                          "code": "BI",
-                          "label": "string",
-                        },
-                      ],
+                      "coverages": [],
                       "createdAt": "string",
                       "effectiveDate": "string",
                       "expirationDate": "string",
                       "id": "string",
-                      "insureds": [
-                        {
-                          "firstName": "string",
-                          "lastName": "string",
-                        },
-                      ],
+                      "insureds": [],
                       "isActive": true,
                       "modifiedAt": "string",
                       "policyNumber": "string",
-                      "properties": [
-                        {
-                          "data": {
-                            "make": "string",
-                            "model": "string",
-                            "vin": "string",
-                            "year": "string",
-                          },
-                          "id": "string",
-                          "type": "vehicle",
-                        },
-                      ],
+                      "properties": [],
                       "refreshedAt": "string",
-                      "thirdParties": [
-                        {
-                          "address": {},
-                          "name": "string",
-                          "type": "lienholder",
-                        },
-                      ],
+                      "thirdParties": [],
                       "type": "auto",
                     },
                   },

@@ -136,27 +136,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "response": {
             "properties": {
               "form_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "key": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "id": {
@@ -561,28 +541,7 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "requested_token_type": {
-                        "enum": "urn:devrev:params:oauth:token-type:aat",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1317,36 +1276,7 @@ disabled.
           "response": {
             "properties": {
               "dev_users": {
-                "array": [
-                  {
-                    "properties": {
-                      "display_picture": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2510,20 +2440,7 @@ to access.
           "response": {
             "properties": {
               "rev_orgs": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -3261,27 +3178,7 @@ and a logical concept denoted by the tag's name.
           "response": {
             "properties": {
               "tags": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -3875,15 +3772,6 @@ used.
           "queryParameters": [],
           "request": {
             "properties": {
-              "event_types": {
-                "array": [
-                  {
-                    "enum": "part_created",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
               "url": {
                 "primitive": {
                   "string": "string",
@@ -3898,15 +3786,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",
@@ -4115,15 +3994,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",
@@ -4230,47 +4100,7 @@ used.
           "response": {
             "properties": {
               "webhooks": {
-                "array": [
-                  {
-                    "properties": {
-                      "event_types": {
-                        "array": [
-                          {
-                            "enum": "part_created",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "secret": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "status": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -4337,35 +4167,7 @@ used.
                 "type": "enum",
               },
               "event_types": {
-                "properties": {
-                  "add": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "remove": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "set": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "id": {
@@ -4382,15 +4184,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",

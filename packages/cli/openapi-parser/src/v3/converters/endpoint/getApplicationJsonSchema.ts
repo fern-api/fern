@@ -27,11 +27,14 @@ export function getApplicationJsonSchemaMediaObject(
             if (mediaObject.example != null) {
                 fullExamples.push({ name: undefined, value: mediaObject.example });
             }
-            const examples = getExtension<Record<string, unknown>>(mediaObject, OpenAPIExtension.EXAMPLES);
+            const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(
+                mediaObject,
+                OpenAPIExtension.EXAMPLES
+            );
             if (examples != null && Object.keys(examples).length > 0) {
                 fullExamples.push(
                     ...Object.entries(examples).map(([name, value]) => {
-                        return { name, value };
+                        return { name: value.summary ?? name, value: value.value };
                     })
                 );
             }
@@ -41,7 +44,7 @@ export function getApplicationJsonSchemaMediaObject(
                         if (isReferenceObject(value)) {
                             return { name: undefined, value: undefined };
                         }
-                        return { name, value: value.value };
+                        return { name: value.summary ?? name, value: value.value };
                     })
                 );
             }

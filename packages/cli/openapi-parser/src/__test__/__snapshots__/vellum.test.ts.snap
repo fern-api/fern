@@ -427,7 +427,7 @@ Creates a new document index.",
         "description": undefined,
         "fullExamples": [
           {
-            "name": "Example1",
+            "name": "Index Using Instructor Model",
             "value": {
               "copy_documents_from_index_id": null,
               "indexing_config": {
@@ -452,7 +452,7 @@ Creates a new document index.",
             },
           },
           {
-            "name": "Example2",
+            "name": "Index Using a Sentence Transformers Model",
             "value": {
               "copy_documents_from_index_id": null,
               "indexing_config": {
@@ -473,7 +473,7 @@ Creates a new document index.",
             },
           },
           {
-            "name": "Example3",
+            "name": "Index Using OpenAI Model",
             "value": {
               "copy_documents_from_index_id": null,
               "indexing_config": {
@@ -568,83 +568,6 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "document_to_document_indexes": {
-                        "array": [
-                          {
-                            "properties": {
-                              "document_index_id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "indexing_state": {
-                                "enum": "AWAITING_PROCESSING",
-                                "type": "enum",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "label": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "last_uploaded_at": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "processing_failure_reason": {
-                        "literal": {
-                          "string": "EXCEEDED_CHARACTER_LIMIT",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                      "processing_state": {
-                        "enum": "QUEUED",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "literal": {
-                          "string": "ACTIVE",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -868,49 +791,7 @@ Generate a completion using a previously defined deployment.
                 "type": "object",
               },
               "requests": {
-                "array": [
-                  {
-                    "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "input_values": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "value": {
-                              "map": [],
-                              "type": "map",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -919,98 +800,7 @@ Generate a completion using a previously defined deployment.
           "response": {
             "properties": {
               "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "data": {
-                        "properties": {
-                          "completions": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "finish_reason": {
-                                    "enum": "LENGTH",
-                                    "type": "enum",
-                                  },
-                                  "id": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "logprobs": {
-                                    "properties": {
-                                      "tokens": {
-                                        "array": [
-                                          {
-                                            "properties": {
-                                              "text_offset": {
-                                                "primitive": {
-                                                  "int": 1,
-                                                  "type": "int",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                              "token": {
-                                                "primitive": {
-                                                  "string": "string",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
-                                        "type": "array",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                  "model_version_id": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "text": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "error": {
-                        "properties": {
-                          "message": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1199,20 +989,7 @@ Used to retrieve a model version given its ID.
               "exec_config": {
                 "properties": {
                   "input_variables": {
-                    "array": [
-                      {
-                        "properties": {
-                          "key": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "array": [],
                     "type": "array",
                   },
                   "parameters": {
@@ -1258,37 +1035,7 @@ Used to retrieve a model version given its ID.
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [
-                          {
-                            "properties": {
-                              "block_type": {
-                                "enum": "CHAT_MESSAGE",
-                                "type": "enum",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "properties": {
-                                "properties": {
-                                  "chat_role": {
-                                    "enum": "SYSTEM",
-                                    "type": "enum",
-                                  },
-                                  "template_type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "array": [],
                         "type": "array",
                       },
                       "version": {
@@ -1611,56 +1358,13 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "prompt": {
                 "properties": {
                   "input_variables": {
-                    "array": [
-                      {
-                        "properties": {
-                          "key": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "array": [],
                     "type": "array",
                   },
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [
-                          {
-                            "properties": {
-                              "block_type": {
-                                "enum": "CHAT_MESSAGE",
-                                "type": "enum",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "properties": {
-                                "properties": {
-                                  "chat_role": {
-                                    "enum": "SYSTEM",
-                                    "type": "enum",
-                                  },
-                                  "template_type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "array": [],
                         "type": "array",
                       },
                       "version": {
@@ -1867,27 +1571,6 @@ or overwritten with default values.",
                 "array": [
                   {
                     "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
                       "key": {
                         "primitive": {
                           "string": "var_1",
@@ -1902,6 +1585,29 @@ or overwritten with default values.",
                       "value": {
                         "primitive": {
                           "string": "Hello, world!",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "var_2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "Why hello, there!",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1941,45 +1647,7 @@ or overwritten with default values.",
                 "type": "primitive",
               },
               "inputs": {
-                "array": [
-                  {
-                    "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "key": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "TEXT",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "metric_input_params": {
@@ -2027,7 +1695,7 @@ or overwritten with default values.",
         "description": undefined,
         "fullExamples": [
           {
-            "name": "Example1",
+            "name": "Basic Example",
             "value": {
               "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d",
               "inputs": [
@@ -2049,7 +1717,7 @@ or overwritten with default values.",
             },
           },
           {
-            "name": "Example2",
+            "name": "Chat History Example",
             "value": {
               "id": "50c55d1d-4c37-4c83-afc1-9d895f286320",
               "inputs": [
@@ -2276,50 +1944,7 @@ Perform a search against a document index.
           "response": {
             "properties": {
               "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "document": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "label": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "keywords": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "score": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2401,12 +2026,7 @@ Used to submit feedback regarding the quality of previously generated completion
           "request": {
             "properties": {
               "actuals": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },

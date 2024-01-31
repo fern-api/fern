@@ -88,7 +88,7 @@ export function convertSchemaObject(
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
 
-    const examples = getExtension<Record<string, unknown>>(schema, OpenAPIExtension.EXAMPLES);
+    const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(schema, OpenAPIExtension.EXAMPLES);
     const fullExamples: NamedFullExample[] = [];
     if (schema.example != null) {
         fullExamples.push({ name: undefined, value: schema.example });
@@ -96,7 +96,7 @@ export function convertSchemaObject(
     if (examples != null && Object.keys(examples).length > 0) {
         fullExamples.push(
             ...Object.entries(examples).map(([name, value]) => {
-                return { name, value };
+                return { name: value.summary ?? name, value: value.value };
             })
         );
     }

@@ -194,17 +194,24 @@ export class ExampleTypeFactory {
                 }
                 return FullExample.map([]);
             case "array": {
-                const itemExample = this.buildExampleHelper({
-                    example: getFullExampleAsArray(example)?.[0],
-                    schema: schema.value,
-                    isOptional: true,
-                    visitedSchemaIds,
-                    parameter
-                });
-                if (isOptional) {
-                    return itemExample != null ? FullExample.array([itemExample]) : undefined;
+                const fullExample = getFullExampleAsArray(example);
+                if (isOptional && fullExample == null) {
+                    return undefined;
                 }
-                return itemExample != null ? FullExample.array([itemExample]) : FullExample.array([]);
+                const itemExamples = [];
+                for (const item of fullExample ?? []) {
+                    const itemExample = this.buildExampleHelper({
+                        example: item,
+                        schema: schema.value,
+                        isOptional: true,
+                        visitedSchemaIds,
+                        parameter
+                    });
+                    if (itemExample != null) {
+                        itemExamples.push(itemExample);
+                    }
+                }
+                return FullExample.array(itemExamples);
             }
             case "map": {
                 const objectExample = getFullExampleAsObject(example);
@@ -258,43 +265,29 @@ export class ExampleTypeFactory {
                 const result: Record<string, FullExample> = {};
                 const fullExample =
                     getFullExampleAsObject(example) ??
-                    (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0]) : {}) ??
+                    (schema.fullExamples?.[0] != null ? getFullExampleAsObject(schema.fullExamples[0].value) : {}) ??
                     {};
                 const allProperties = this.getAllProperties(schema);
                 const requiredProperties = this.getAllRequiredProperties(schema);
                 for (const [property, schema] of Object.entries(allProperties)) {
                     const required = property in requiredProperties;
-                    if (required && fullExample[property] != null) {
-                        const propertyExample = this.buildExampleHelper({
-                            schema,
-                            example: fullExample[property],
-                            isOptional: !required,
-                            visitedSchemaIds,
-                            parameter
-                        });
-                        if (propertyExample != null) {
-                            result[property] = propertyExample;
-                        } else {
-                            return undefined;
-                        }
-                    } else {
-                        const propertyExample = this.buildExampleHelper({
-                            schema,
-                            example: fullExample[property],
-                            isOptional: !required,
-                            visitedSchemaIds,
-                            parameter
-                        });
-                        if (propertyExample != null) {
-                            result[property] = propertyExample;
-                        } else if (required) {
-                            return undefined;
-                        }
+                    const propertyExample = this.buildExampleHelper({
+                        schema,
+                        example: fullExample[property],
+                        isOptional: !required,
+                        visitedSchemaIds,
+                        parameter
+                    });
+                    if (propertyExample != null) {
+                        result[property] = propertyExample;
+                    } else if (required) {
+                        return undefined;
                     }
                 }
-                return FullExample.object({
+                const a = FullExample.object({
                     properties: result
                 });
+                return a;
             }
             default:
                 assertNever(schema);

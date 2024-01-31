@@ -80,12 +80,7 @@ exports[`open api parser devrev simple 1`] = `
                 },
                 "response": {
                   "body": {
-                    "form_data": [
-                      {
-                        "key": "string",
-                        "value": "string",
-                      },
-                    ],
+                    "form_data": [],
                     "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                     "url": "string",
                   },
@@ -552,13 +547,7 @@ token type issued for a given subject.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "tokens": [
-                      {
-                        "id": "string",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "status": "active",
-                      },
-                    ],
+                    "tokens": [],
                   },
                 },
               },
@@ -728,15 +717,7 @@ organization.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "dev_users": [
-                      {
-                        "display_picture": {
-                          "id": "string",
-                        },
-                        "id": "string",
-                        "state": "active",
-                      },
-                    ],
+                    "dev_users": [],
                   },
                 },
               },
@@ -1240,11 +1221,7 @@ to access.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "rev_orgs": [
-                      {
-                        "id": "string",
-                      },
-                    ],
+                    "rev_orgs": [],
                   },
                 },
               },
@@ -1585,12 +1562,7 @@ permitted.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "tags": [
-                      {
-                        "id": "string",
-                        "name": "string",
-                      },
-                    ],
+                    "tags": [],
                   },
                 },
               },
@@ -1863,17 +1835,11 @@ used.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "event_types": [
-                    "part_created",
-                  ],
                   "url": "string",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",
@@ -1987,9 +1953,6 @@ response.
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",
@@ -2035,17 +1998,7 @@ response.
                 "request": undefined,
                 "response": {
                   "body": {
-                    "webhooks": [
-                      {
-                        "event_types": [
-                          "part_created",
-                        ],
-                        "id": "string",
-                        "secret": "string",
-                        "status": "active",
-                        "url": "string",
-                      },
-                    ],
+                    "webhooks": [],
                   },
                 },
               },
@@ -2077,25 +2030,12 @@ response.
                 "query-parameters": undefined,
                 "request": {
                   "action": "activate",
-                  "event_types": {
-                    "add": [
-                      "part_created",
-                    ],
-                    "remove": [
-                      "part_created",
-                    ],
-                    "set": [
-                      "part_created",
-                    ],
-                  },
+                  "event_types": {},
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",

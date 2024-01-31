@@ -143,42 +143,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "appName": "string",
-                      "appSecret": "string",
-                      "authConfiguration": {
-                        "anonymous": {},
-                        "google": {
-                          "clientId": "string",
-                        },
-                        "nickname": {},
-                      },
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "createdBy": "string",
-                      "deployment": {
-                        "appId": "string",
-                        "buildId": 1.1,
-                        "containerPort": 1,
-                        "createdAt": "2024-01-15T09:30:00Z",
-                        "createdBy": "string",
-                        "deploymentId": 1.1,
-                        "env": [
-                          {
-                            "name": "string",
-                            "value": "string",
-                          },
-                        ],
-                        "planName": "tiny",
-                        "requestedCPU": 1.1,
-                        "requestedMemoryMB": 1.1,
-                        "roomsPerProcess": 1,
-                        "transportType": "tcp",
-                      },
-                      "orgId": "string",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -433,12 +398,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "imageSize": 1.1,
-                    "regionalContainerTags": [
-                      {
-                        "containerTag": "string",
-                        "region": "Seattle",
-                      },
-                    ],
+                    "regionalContainerTags": [],
                     "status": "created",
                   },
                 },
@@ -505,12 +465,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "imageSize": 1.1,
-                    "regionalContainerTags": [
-                      {
-                        "containerTag": "string",
-                        "region": "Seattle",
-                      },
-                    ],
+                    "regionalContainerTags": [],
                     "status": "created",
                   },
                 },
@@ -543,22 +498,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "buildId": 1.1,
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "createdBy": "string",
-                      "imageSize": 1.1,
-                      "regionalContainerTags": [
-                        {
-                          "containerTag": "string",
-                          "region": "Seattle",
-                        },
-                      ],
-                      "status": "created",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -626,12 +566,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": {
                   "containerPort": 1,
-                  "env": [
-                    {
-                      "name": "string",
-                      "value": "string",
-                    },
-                  ],
+                  "env": [],
                   "planName": "tiny",
                   "roomsPerProcess": 1,
                   "transportType": "tcp",
@@ -644,12 +579,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "deploymentId": 1.1,
-                    "env": [
-                      {
-                        "name": "string",
-                        "value": "string",
-                      },
-                    ],
+                    "env": [],
                     "planName": "tiny",
                     "requestedCPU": 1.1,
                     "requestedMemoryMB": 1.1,
@@ -697,12 +627,7 @@ exports[`open api parser hathora simple 1`] = `
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "string",
                     "deploymentId": 1.1,
-                    "env": [
-                      {
-                        "name": "string",
-                        "value": "string",
-                      },
-                    ],
+                    "env": [],
                     "planName": "tiny",
                     "requestedCPU": 1.1,
                     "requestedMemoryMB": 1.1,
@@ -739,27 +664,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "buildId": 1.1,
-                      "containerPort": 1,
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "createdBy": "string",
-                      "deploymentId": 1.1,
-                      "env": [
-                        {
-                          "name": "string",
-                          "value": "string",
-                        },
-                      ],
-                      "planName": "tiny",
-                      "requestedCPU": 1.1,
-                      "requestedMemoryMB": 1.1,
-                      "roomsPerProcess": 1,
-                      "transportType": "tcp",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -795,13 +700,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "host": "string",
-                      "port": 1.1,
-                      "region": "Seattle",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -946,20 +845,7 @@ exports[`open api parser hathora simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "createdBy": "string",
-                      "initialConfig": {
-                        "string": {},
-                      },
-                      "local": true,
-                      "region": "Seattle",
-                      "roomId": "string",
-                      "visibility": "private",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1337,20 +1223,7 @@ exports[`open api parser hathora simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "createdAt": "2024-01-15T09:30:00Z",
-                      "createdBy": "string",
-                      "initialConfig": {
-                        "string": {},
-                      },
-                      "local": true,
-                      "region": "Seattle",
-                      "roomId": "string",
-                      "visibility": "private",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1540,32 +1413,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "cpu": [
-                      {
-                        "timestamp": 1.1,
-                        "value": 1.1,
-                      },
-                    ],
-                    "memory": [
-                      {
-                        "timestamp": 1.1,
-                        "value": 1.1,
-                      },
-                    ],
-                    "rate_egress": [
-                      {
-                        "timestamp": 1.1,
-                        "value": 1.1,
-                      },
-                    ],
-                    "total_egress": [
-                      {
-                        "timestamp": 1.1,
-                        "value": 1.1,
-                      },
-                    ],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1666,35 +1514,7 @@ exports[`open api parser hathora simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "activeConnections": 1.1,
-                      "appId": "string",
-                      "deploymentId": 1.1,
-                      "draining": true,
-                      "egressedBytes": 1.1,
-                      "host": "string",
-                      "port": 1.1,
-                      "processId": "string",
-                      "region": "Seattle",
-                      "roomSlotsAvailable": 1.1,
-                      "rooms": [
-                        {
-                          "appId": "string",
-                          "currentAllocation": {
-                            "processId": "string",
-                            "roomAllocationId": "string",
-                            "scheduledAt": "2024-01-15T09:30:00Z",
-                          },
-                          "roomId": "string",
-                          "status": "scheduling",
-                        },
-                      ],
-                      "roomsPerProcess": 1.1,
-                      "startingAt": "2024-01-15T09:30:00Z",
-                      "totalRooms": 1.1,
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1732,22 +1552,7 @@ exports[`open api parser hathora simple 1`] = `
                 },
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "activeConnections": 1.1,
-                      "appId": "string",
-                      "deploymentId": 1.1,
-                      "draining": true,
-                      "egressedBytes": 1.1,
-                      "host": "string",
-                      "port": 1.1,
-                      "processId": "string",
-                      "region": "Seattle",
-                      "roomSlotsAvailable": 1.1,
-                      "roomsPerProcess": 1.1,
-                      "startingAt": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1865,18 +1670,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "currentAllocation": {
-                        "processId": "string",
-                        "roomAllocationId": "string",
-                        "scheduledAt": "2024-01-15T09:30:00Z",
-                      },
-                      "roomId": "string",
-                      "status": "scheduling",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1927,18 +1721,7 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "appId": "string",
-                      "currentAllocation": {
-                        "processId": "string",
-                        "roomAllocationId": "string",
-                        "scheduledAt": "2024-01-15T09:30:00Z",
-                      },
-                      "roomId": "string",
-                      "status": "scheduling",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1971,13 +1754,7 @@ exports[`open api parser hathora simple 1`] = `
                 "request": undefined,
                 "response": {
                   "body": {
-                    "allocations": [
-                      {
-                        "processId": "string",
-                        "roomAllocationId": "string",
-                        "scheduledAt": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "allocations": [],
                     "appId": "string",
                     "currentAllocation": {
                       "processId": "string",
