@@ -11,8 +11,8 @@ exports[`generate IR 1`] = `
     },
     "originalName": "api-wide-base-path",
     "pascalCase": {
-      "safeName": "ApiWideBasePath",
-      "unsafeName": "ApiWideBasePath",
+      "safeName": "APIWideBasePath",
+      "unsafeName": "APIWideBasePath",
     },
     "screamingSnakeCase": {
       "safeName": "API_WIDE_BASE_PATH",
@@ -41,13 +41,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",

@@ -30,8 +30,8 @@ describe("migrateFromV11ToV10", () => {
                             },
                             originalName: "ApiKey",
                             pascalCase: {
-                                safeName: "ApiKey",
-                                unsafeName: "ApiKey"
+                                safeName: "APIKey",
+                                unsafeName: "APIKey"
                             },
                             screamingSnakeCase: {
                                 safeName: "API_KEY",

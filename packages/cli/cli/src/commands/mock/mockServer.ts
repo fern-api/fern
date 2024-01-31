@@ -40,6 +40,7 @@ export async function mockServer({
             workspace: fernWorkspace,
             audiences: { type: "all" },
             generationLanguage: undefined,
+            smartCasing: false,
             disableExamples: false
         });
 

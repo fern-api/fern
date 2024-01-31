@@ -10,12 +10,14 @@ export async function generateIrForFernWorkspace({
     workspace,
     context,
     generationLanguage,
+    smartCasing,
     disableExamples,
     audiences
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: GenerationLanguage | undefined;
+    smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
@@ -23,6 +25,7 @@ export async function generateIrForFernWorkspace({
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,
+        smartCasing,
         disableExamples,
         audiences
     });

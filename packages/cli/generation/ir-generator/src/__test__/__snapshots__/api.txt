@@ -11,8 +11,8 @@ exports[`generate IR 1`] = `
     },
     "originalName": "api",
     "pascalCase": {
-      "safeName": "Api",
-      "unsafeName": "Api",
+      "safeName": "API",
+      "unsafeName": "API",
     },
     "screamingSnakeCase": {
       "safeName": "API",
@@ -58,13 +58,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -220,13 +220,13 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "movieId",
-            "unsafeName": "movieId",
+            "safeName": "movieID",
+            "unsafeName": "movieID",
           },
           "originalName": "MovieId",
           "pascalCase": {
-            "safeName": "MovieId",
-            "unsafeName": "MovieId",
+            "safeName": "MovieID",
+            "unsafeName": "MovieID",
           },
           "screamingSnakeCase": {
             "safeName": "MOVIE_ID",
@@ -454,13 +454,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
+                    "safeName": "movieID",
+                    "unsafeName": "movieID",
                   },
                   "originalName": "MovieId",
                   "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
+                    "safeName": "MovieID",
+                    "unsafeName": "MovieID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "MOVIE_ID",
@@ -579,13 +579,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "movieId",
-                  "unsafeName": "movieId",
+                  "safeName": "movieID",
+                  "unsafeName": "movieID",
                 },
                 "originalName": "movieId",
                 "pascalCase": {
-                  "safeName": "MovieId",
-                  "unsafeName": "MovieId",
+                  "safeName": "MovieID",
+                  "unsafeName": "MovieID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "MOVIE_ID",
@@ -643,13 +643,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
+                    "safeName": "movieID",
+                    "unsafeName": "movieID",
                   },
                   "originalName": "MovieId",
                   "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
+                    "safeName": "MovieID",
+                    "unsafeName": "MovieID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "MOVIE_ID",
@@ -788,13 +788,13 @@ exports[`generate IR 1`] = `
               "location": "ENDPOINT",
               "name": {
                 "camelCase": {
-                  "safeName": "movieId",
-                  "unsafeName": "movieId",
+                  "safeName": "movieID",
+                  "unsafeName": "movieID",
                 },
                 "originalName": "movieId",
                 "pascalCase": {
-                  "safeName": "MovieId",
-                  "unsafeName": "MovieId",
+                  "safeName": "MovieID",
+                  "unsafeName": "MovieID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "MOVIE_ID",
@@ -852,13 +852,13 @@ exports[`generate IR 1`] = `
                 },
                 "name": {
                   "camelCase": {
-                    "safeName": "movieId",
-                    "unsafeName": "movieId",
+                    "safeName": "movieID",
+                    "unsafeName": "movieID",
                   },
                   "originalName": "MovieId",
                   "pascalCase": {
-                    "safeName": "MovieId",
-                    "unsafeName": "MovieId",
+                    "safeName": "MovieID",
+                    "unsafeName": "MovieID",
                   },
                   "screamingSnakeCase": {
                     "safeName": "MOVIE_ID",
@@ -1306,8 +1306,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -1367,13 +1367,13 @@ exports[`generate IR 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "movieId",
-                  "unsafeName": "movieId",
+                  "safeName": "movieID",
+                  "unsafeName": "movieID",
                 },
                 "originalName": "MovieId",
                 "pascalCase": {
-                  "safeName": "MovieId",
-                  "unsafeName": "MovieId",
+                  "safeName": "MovieID",
+                  "unsafeName": "MovieID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "MOVIE_ID",
@@ -1500,13 +1500,13 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "movieId",
-            "unsafeName": "movieId",
+            "safeName": "movieID",
+            "unsafeName": "movieID",
           },
           "originalName": "MovieId",
           "pascalCase": {
-            "safeName": "MovieId",
-            "unsafeName": "MovieId",
+            "safeName": "MovieID",
+            "unsafeName": "MovieID",
           },
           "screamingSnakeCase": {
             "safeName": "MOVIE_ID",
@@ -1549,8 +1549,8 @@ exports[`generate IR 2`] = `
     },
     "originalName": "api",
     "pascalCase": {
-      "safeName": "Api",
-      "unsafeName": "Api",
+      "safeName": "API",
+      "unsafeName": "API",
     },
     "screamingSnakeCase": {
       "safeName": "API",
@@ -1571,13 +1571,13 @@ exports[`generate IR 2`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -3110,8 +3110,8 @@ exports[`generate IR 3`] = `
     },
     "originalName": "api",
     "pascalCase": {
-      "safeName": "Api",
-      "unsafeName": "Api",
+      "safeName": "API",
+      "unsafeName": "API",
     },
     "screamingSnakeCase": {
       "safeName": "API",
@@ -3132,13 +3132,13 @@ exports[`generate IR 3`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",

@@ -97,6 +97,7 @@ class ReferencedAPICollector {
                 workspace: fernWorkspace,
                 audiences: api.audiences,
                 generationLanguage: undefined,
+                smartCasing: false,
                 disableExamples: false
             });
             const apiDefinition = convertIrToFdrApi(ir, {});

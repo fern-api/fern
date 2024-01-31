@@ -33,13 +33,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -70,8 +70,8 @@ exports[`generate IR 1`] = `
           },
           "originalName": "apiHeader",
           "pascalCase": {
-            "safeName": "ApiHeader",
-            "unsafeName": "ApiHeader",
+            "safeName": "APIHeader",
+            "unsafeName": "APIHeader",
           },
           "screamingSnakeCase": {
             "safeName": "API_HEADER",
@@ -106,8 +106,8 @@ exports[`generate IR 1`] = `
           },
           "originalName": "apiTest",
           "pascalCase": {
-            "safeName": "ApiTest",
-            "unsafeName": "ApiTest",
+            "safeName": "APITest",
+            "unsafeName": "APITest",
           },
           "screamingSnakeCase": {
             "safeName": "API_TEST",
