@@ -59,6 +59,7 @@ exports[`open api parser assembly simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -100,6 +101,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "request_id": "string",
@@ -142,6 +144,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -204,6 +207,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -257,6 +261,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -321,6 +326,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -379,6 +385,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -580,6 +587,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -757,6 +765,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -934,6 +943,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -992,6 +1002,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -1033,6 +1044,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -1121,6 +1133,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {

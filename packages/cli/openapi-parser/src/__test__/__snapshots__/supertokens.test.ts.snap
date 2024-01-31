@@ -8,6 +8,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Add a TOTP device for a user and enable TOTP if not already enabled.
 ",
       "errorStatusCode": [
@@ -18,6 +19,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -318,6 +320,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update the name of a TOTP device for a user.
 ",
       "errorStatusCode": [
@@ -328,6 +331,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -594,6 +598,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a list of TOTP devices for a user.
 ",
       "errorStatusCode": [
@@ -604,6 +609,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -923,6 +929,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Remove a TOTP device for a user. If all devices are removed, TOTP is disabled for the user.
 ",
       "errorStatusCode": [
@@ -933,6 +940,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1185,6 +1193,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Check if a TOTP code is valid against any of the TOTP devices for a user.
 ",
       "errorStatusCode": [
@@ -1195,6 +1204,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1483,6 +1493,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Mark a TOTP device as verified if the given TOTP code is valid for that device.
 ",
       "errorStatusCode": [
@@ -1493,6 +1504,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1824,6 +1836,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve a UserIdMapping
 ",
       "errorStatusCode": [
@@ -1834,6 +1847,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -2143,6 +2157,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a mapping between a SuperTokens userId and an external userId.
 ",
       "errorStatusCode": [
@@ -2153,6 +2168,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2486,6 +2502,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a mapping between a SuperTokens userId and an external userId.
 ",
       "errorStatusCode": [
@@ -2496,6 +2513,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2777,6 +2795,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update or delete externalUserIdInfo
 ",
       "errorStatusCode": [
@@ -2787,6 +2806,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3059,6 +3079,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Tries to consume the passed userInputCode+deviceId combo or the linkCode to sign the user in
 ",
       "errorStatusCode": [
@@ -3069,6 +3090,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3568,6 +3590,7 @@ exports[`open api parser supertokens parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Starts a sign in process by requesting a linkCode and a deviceId + userInputCode combination the user can use to sign in.
 Passing the optional deviceId signifies a resend code flow.
 ",
@@ -3579,6 +3602,7 @@ Passing the optional deviceId signifies a resend code flow.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -4141,6 +4165,7 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Revokes a code by id
 ",
       "errorStatusCode": [
@@ -4151,6 +4176,7 @@ Passing the optional deviceId signifies a resend code flow.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -4342,6 +4368,7 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists all active passwordless codes of the user
 ",
       "errorStatusCode": [
@@ -4352,6 +4379,7 @@ Passing the optional deviceId signifies a resend code flow.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -4898,6 +4926,7 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Revokes all codes issued for the user
 ",
       "errorStatusCode": [
@@ -4908,6 +4937,7 @@ Passing the optional deviceId signifies a resend code flow.
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -5136,6 +5166,7 @@ Passing the optional deviceId signifies a resend code flow.
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -5147,6 +5178,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -5510,6 +5542,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update a user's information. 
 If the email or phoneNumber is set to null the previous value will be deleted. If they are not set (i.e., undefined/missing from the request), they are left as-is.
 ",
@@ -5521,6 +5554,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -5806,6 +5840,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Signin a user with email ID and password
 ",
       "errorStatusCode": [
@@ -5816,6 +5851,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -6093,6 +6129,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Signup a user with email ID and password
 ",
       "errorStatusCode": [
@@ -6103,6 +6140,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -6382,6 +6420,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a user's information
 ",
       "errorStatusCode": [
@@ -6392,6 +6431,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -6708,6 +6748,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update a user's information
 ",
       "errorStatusCode": [
@@ -6718,6 +6759,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -6988,6 +7030,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Generate a new reset password token for this user
 ",
       "errorStatusCode": [
@@ -6998,6 +7041,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -7228,6 +7272,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "User Pagination API
 ",
       "errorStatusCode": [
@@ -7238,6 +7283,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -7563,6 +7609,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Reset a password using password reset token
 ",
       "errorStatusCode": [
@@ -7573,6 +7620,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -7868,6 +7916,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get number of users
 ",
       "errorStatusCode": [
@@ -7878,6 +7927,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -8058,6 +8108,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Import a user with email ID and password hash
 ",
       "errorStatusCode": [
@@ -8068,6 +8119,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -8412,6 +8464,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Signin/up a user
 ",
       "errorStatusCode": [
@@ -8422,6 +8475,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -8763,6 +8817,7 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a user's information.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -8774,6 +8829,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -9126,6 +9182,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get all users accounts associated with given email
 ",
       "errorStatusCode": [
@@ -9135,6 +9192,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -9385,6 +9443,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get User Pagination data.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec.
 ",
@@ -9396,6 +9455,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -9733,6 +9793,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get number of users.
 Note that there is an invisible character at the end of the path, this was to avoid a conflict with the OpenAPI spec
 ",
@@ -9744,6 +9805,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -9924,6 +9986,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Generate a new email verification token for this user
 ",
       "errorStatusCode": [
@@ -9934,6 +9997,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -10149,6 +10213,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Remove all unused email verification tokens for this user
 ",
       "errorStatusCode": [
@@ -10159,6 +10224,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -10343,6 +10409,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Check if an email is verified
 ",
       "errorStatusCode": [
@@ -10353,6 +10420,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -10601,6 +10669,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Verify an email
 ",
       "errorStatusCode": [
@@ -10611,6 +10680,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -10902,6 +10972,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Unverify an email
 ",
       "errorStatusCode": [
@@ -10912,6 +10983,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -11096,6 +11168,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the stored metadata object of the user
 ",
       "errorStatusCode": [
@@ -11106,6 +11179,7 @@ Note that there is an invisible character at the end of the path, this was to av
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -11306,6 +11380,7 @@ Note that there is an invisible character at the end of the path, this was to av
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates the metadata object stored about the user by doing a shallow merge of the stored and the update JSONs
 and removing properties set to null on the root level of the update object. The merged object is then reserialized and stored.
 
@@ -11324,6 +11399,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -11564,6 +11640,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Removes the entire metadata JSON stored about the user.
 ",
       "errorStatusCode": [
@@ -11574,6 +11651,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -11772,6 +11850,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a User Role mapping
 ",
       "errorStatusCode": [
@@ -11782,6 +11861,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12028,6 +12108,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Removes a User Role mapping
 ",
       "errorStatusCode": [
@@ -12038,6 +12119,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -12284,6 +12366,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrive the roles associated with the user.
 ",
       "errorStatusCode": [
@@ -12294,6 +12377,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -12513,6 +12597,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrive the users associated with the role.
 ",
       "errorStatusCode": [
@@ -12523,6 +12608,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -12746,6 +12832,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a role with permissions, can also be used to add permissions to a role
 ",
       "errorStatusCode": [
@@ -12756,6 +12843,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13021,6 +13109,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrive the permissions associated with a role
 ",
       "errorStatusCode": [
@@ -13031,6 +13120,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -13258,6 +13348,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Removes permissions mapped to a role, if no permissions are passed all permissions mapped to the role are removed
 ",
       "errorStatusCode": [
@@ -13268,6 +13359,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13506,6 +13598,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrive the roles associated with the permission
 ",
       "errorStatusCode": [
@@ -13516,6 +13609,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -13739,6 +13833,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes a role
 ",
       "errorStatusCode": [
@@ -13749,6 +13844,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13970,6 +14066,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrive all created roles
 ",
       "errorStatusCode": [
@@ -13980,6 +14077,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14174,6 +14272,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get user and session information for a given session handle
 ",
       "errorStatusCode": [
@@ -14184,6 +14283,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -14524,6 +14624,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new Session
 ",
       "errorStatusCode": [
@@ -14534,6 +14635,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14994,6 +15096,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a sesion
 ",
       "errorStatusCode": [
@@ -15004,6 +15107,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -15284,6 +15388,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Verify a Session
 ",
       "errorStatusCode": [
@@ -15294,6 +15399,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -15731,6 +15837,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Refresh a Session
 ",
       "errorStatusCode": [
@@ -15741,6 +15848,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16224,6 +16332,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get session handles for a user
 ",
       "errorStatusCode": [
@@ -16234,6 +16343,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -16453,6 +16563,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Regenerate a session
 ",
       "errorStatusCode": [
@@ -16463,6 +16574,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16773,6 +16885,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get session data
 ",
       "errorStatusCode": [
@@ -16783,6 +16896,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -16990,6 +17104,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Change session data
 ",
       "errorStatusCode": [
@@ -17187,6 +17302,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a signed JWT
 ",
       "errorStatusCode": [
@@ -17196,6 +17312,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17539,6 +17656,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve JWKs for JWT verification, containing both static and dynamic keys.
 ",
       "errorStatusCode": [
@@ -17548,6 +17666,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17656,6 +17775,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get JWT data for a session
 ",
       "errorStatusCode": [
@@ -17666,6 +17786,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -17873,6 +17994,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Change JWT data for a session
 ",
       "errorStatusCode": [
@@ -18070,6 +18192,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a dashboard user
 ",
       "errorStatusCode": [
@@ -18081,6 +18204,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -18490,6 +18614,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Update a user's email or password
 ",
       "errorStatusCode": [
@@ -18500,6 +18625,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -19049,6 +19175,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a dashboard user with their userId or email
 ",
       "errorStatusCode": [
@@ -19059,6 +19186,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -19302,6 +19430,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a list of call the dashboard users
 ",
       "errorStatusCode": [
@@ -19312,6 +19441,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -19630,6 +19760,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Verify a Dashboard user's sessionId
 ",
       "errorStatusCode": [
@@ -19640,6 +19771,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -19883,6 +20015,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Revoke a Dashboard user's session
 ",
       "errorStatusCode": [
@@ -19893,6 +20026,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -20079,6 +20213,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Signin a Dashboard user
 ",
       "errorStatusCode": [
@@ -20089,6 +20224,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -20390,6 +20526,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a list of the sessions for the dashboard user
 ",
       "errorStatusCode": [
@@ -20400,6 +20537,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -20719,6 +20857,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a list of compatible CDI versions
 ",
       "errorStatusCode": [
@@ -20729,6 +20868,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -20834,6 +20974,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get path to the loaded config file
 ",
       "errorStatusCode": [
@@ -20844,6 +20985,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21033,6 +21175,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21040,6 +21183,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21088,6 +21232,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21095,6 +21240,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21143,6 +21289,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21150,6 +21297,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21198,6 +21346,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21205,6 +21354,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21253,6 +21403,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a simple hello message
 ",
       "errorStatusCode": [
@@ -21260,6 +21411,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21308,6 +21460,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns the telemetryID if it exists
 ",
       "errorStatusCode": [
@@ -21318,6 +21471,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -21517,6 +21671,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get number of users.
 ",
       "errorStatusCode": [
@@ -21527,6 +21682,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -21719,6 +21875,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get number of active users.
 ",
       "errorStatusCode": [
@@ -21729,6 +21886,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -21912,6 +22070,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "User Pagination
 ",
       "errorStatusCode": [
@@ -21922,6 +22081,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -22478,6 +22638,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete user
 ",
       "errorStatusCode": [
@@ -22487,6 +22648,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -22661,6 +22823,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve available tags for search
 ",
       "errorStatusCode": [
@@ -22671,6 +22834,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -22829,6 +22993,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a list of the enabled enterprise features
 ",
       "errorStatusCode": [
@@ -22839,6 +23004,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -23034,6 +23200,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieve license key
 ",
       "errorStatusCode": [
@@ -23043,6 +23210,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -23207,6 +23375,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Set or sync license key
 ",
       "errorStatusCode": [
@@ -23216,6 +23385,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -23409,6 +23579,7 @@ e.g.:
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete license key
 ",
       "errorStatusCode": [
@@ -23418,6 +23589,7 @@ e.g.:
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],

@@ -8,12 +8,14 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -243,6 +245,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -250,6 +253,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -405,6 +409,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -412,6 +417,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -554,6 +560,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -562,6 +569,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -739,6 +747,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -748,6 +757,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -811,6 +821,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -820,6 +831,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -962,6 +974,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -971,6 +984,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1113,12 +1127,14 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1200,12 +1216,14 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Search the user by query that contains the email address or the part of the email address.",
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1356,6 +1374,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1363,6 +1382,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1505,6 +1525,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -1556,6 +1577,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -1563,6 +1585,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1678,12 +1701,14 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1833,6 +1858,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1840,6 +1866,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1957,6 +1984,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1964,6 +1992,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2154,6 +2183,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -2162,6 +2192,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2376,6 +2407,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -2384,6 +2416,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2574,6 +2607,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -2582,6 +2616,7 @@ exports[`open api parser squidex parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2799,6 +2834,7 @@ exports[`open api parser squidex parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only retrieve the list of teams when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all teams, where you are assigned as a contributor.",
       "errorStatusCode": [
@@ -2806,6 +2842,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2934,6 +2971,7 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only create an team when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new team automatically.",
       "errorStatusCode": [
@@ -2943,6 +2981,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3083,6 +3122,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3090,6 +3130,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3235,6 +3276,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -3243,6 +3285,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3412,6 +3455,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3419,6 +3463,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3498,6 +3543,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3505,6 +3551,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3744,6 +3791,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3751,6 +3799,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3990,6 +4039,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3997,6 +4047,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4091,6 +4142,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4098,6 +4150,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4192,6 +4245,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4199,6 +4253,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4366,6 +4421,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4373,6 +4429,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4540,6 +4597,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4547,6 +4605,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4705,6 +4764,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -4801,6 +4861,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -4912,6 +4973,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -4920,6 +4982,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5207,6 +5270,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -5215,6 +5279,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5507,6 +5572,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -5515,6 +5581,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -5832,6 +5899,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -5942,6 +6010,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -5950,6 +6019,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6246,6 +6316,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -6371,6 +6442,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -6379,6 +6451,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6700,6 +6773,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A locked field cannot be updated or deleted.",
       "errorStatusCode": [
         400,
@@ -6708,6 +6782,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7004,6 +7079,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A locked field cannot be edited or deleted.",
       "errorStatusCode": [
         400,
@@ -7012,6 +7088,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7333,6 +7410,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "errorStatusCode": [
         400,
@@ -7341,6 +7419,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7637,6 +7716,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "errorStatusCode": [
         400,
@@ -7645,6 +7725,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -7966,6 +8047,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "errorStatusCode": [
         400,
@@ -7974,6 +8056,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8270,6 +8353,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A hidden field is not part of the API response, but can still be edited in the portal.",
       "errorStatusCode": [
         400,
@@ -8278,6 +8362,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8599,6 +8684,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "errorStatusCode": [
         400,
@@ -8607,6 +8693,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8903,6 +8990,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "errorStatusCode": [
         400,
@@ -8911,6 +8999,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9232,6 +9321,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "errorStatusCode": [
         400,
@@ -9240,6 +9330,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9536,6 +9627,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "A disabled field cannot not be edited in the squidex portal anymore, but will be part of the API response.",
       "errorStatusCode": [
         400,
@@ -9544,6 +9636,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9865,6 +9958,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -9872,6 +9966,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10156,6 +10251,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -10164,6 +10260,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10487,6 +10584,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -10494,6 +10592,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -10765,6 +10864,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -10773,6 +10873,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11068,6 +11169,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -11076,6 +11178,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11166,6 +11269,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -11174,6 +11278,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11520,6 +11625,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -11528,6 +11634,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -11815,6 +11922,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -11823,6 +11931,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12124,6 +12233,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -12132,6 +12242,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12419,6 +12530,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -12427,6 +12539,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -12736,6 +12849,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -12744,6 +12858,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13015,6 +13130,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13023,6 +13139,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13294,12 +13411,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -13437,6 +13556,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -13444,6 +13564,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13558,6 +13679,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13636,6 +13758,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13643,6 +13766,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13706,6 +13830,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13801,6 +13926,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13809,6 +13935,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -13899,6 +14026,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -13981,6 +14109,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14063,6 +14192,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14071,6 +14201,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14161,6 +14292,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14168,6 +14300,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14281,6 +14414,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14288,6 +14422,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14378,6 +14513,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14456,6 +14592,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -14463,6 +14600,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14651,6 +14789,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -14658,6 +14797,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14927,6 +15067,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -14934,6 +15075,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -14997,6 +15139,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -15005,6 +15148,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15095,6 +15239,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -15103,6 +15248,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15193,12 +15339,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -15260,6 +15408,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -15267,6 +15416,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15343,6 +15493,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -15350,6 +15501,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15519,6 +15671,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -15527,6 +15680,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15630,6 +15784,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -15637,6 +15792,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15806,6 +15962,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -15814,6 +15971,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -15917,12 +16075,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -15987,12 +16147,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16027,12 +16189,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Can be used to test, if the Squidex API is alive and responding.",
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16096,12 +16260,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16207,12 +16373,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Provide a list of supported language codes, following the ISO2Code standard.",
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16297,6 +16465,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -16304,6 +16473,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16463,6 +16633,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -16470,6 +16641,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16629,12 +16801,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16784,6 +16958,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -16792,6 +16967,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16930,6 +17106,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -16938,6 +17115,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -17076,6 +17254,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -17084,6 +17263,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -17222,6 +17402,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
@@ -17229,6 +17410,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17263,6 +17445,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
@@ -17270,6 +17453,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17304,6 +17488,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         404,
@@ -17311,6 +17496,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -17682,6 +17868,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -17690,6 +17877,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18121,6 +18309,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -18129,6 +18318,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18467,6 +18657,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         404,
@@ -18474,6 +18665,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18775,6 +18967,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -18783,6 +18976,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19239,6 +19433,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -19247,6 +19442,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19634,6 +19830,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can create an generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -19642,6 +19839,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19804,6 +20002,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -19812,6 +20011,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -20199,6 +20399,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -20207,6 +20408,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -20324,6 +20526,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         404,
@@ -20331,6 +20534,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -20705,6 +20909,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         404,
@@ -20712,6 +20917,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -21086,6 +21292,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [],
       "examples": [],
@@ -21186,6 +21393,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -21194,6 +21402,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -21360,6 +21569,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -21368,6 +21578,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -21595,6 +21806,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -21603,6 +21815,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -21976,6 +22189,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -21984,6 +22198,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -22333,6 +22548,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -22341,6 +22557,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -22690,6 +22907,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can read the generated documentation for your app at /api/content/{appName}/docs.",
       "errorStatusCode": [
         400,
@@ -22698,6 +22916,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23047,6 +23266,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -23054,6 +23274,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23168,6 +23389,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "errorStatusCode": [
         404,
@@ -23175,6 +23397,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23388,6 +23611,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -23396,6 +23620,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23555,6 +23780,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -23563,6 +23789,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23704,6 +23931,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -23712,6 +23940,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -23829,12 +24058,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "When passing in a version you can retrieve all updates since then.",
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -24021,6 +24252,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -24029,6 +24261,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -24119,6 +24352,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -24187,6 +24421,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -24195,6 +24430,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -24285,6 +24521,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -24385,6 +24622,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -24392,6 +24630,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -24574,6 +24813,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -24582,6 +24822,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -24645,12 +24886,14 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         500,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -24724,6 +24967,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -24731,6 +24975,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -24789,6 +25034,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -25188,6 +25434,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -25546,6 +25793,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get all asset folders for the app.",
       "errorStatusCode": [
         404,
@@ -25553,6 +25801,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -25859,6 +26108,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -25867,6 +26117,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26029,6 +26280,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -26037,6 +26289,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26226,6 +26479,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -26234,6 +26488,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26324,6 +26579,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -26332,6 +26588,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26513,6 +26770,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get all tags for assets.",
       "errorStatusCode": [
         404,
@@ -26520,6 +26778,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26634,6 +26893,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -26642,6 +26902,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -26807,6 +27068,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get all assets for the app.",
       "errorStatusCode": [
         404,
@@ -26814,6 +27076,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -27279,6 +27542,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "errorStatusCode": [
         400,
@@ -27429,6 +27693,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get all assets for the app.",
       "errorStatusCode": [
         400,
@@ -27437,6 +27702,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -27753,6 +28019,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -27760,6 +28027,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -28040,6 +28308,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only upload one file at a time. The mime type of the file is not calculated by Squidex and is required correctly.",
       "errorStatusCode": [
         400,
@@ -28183,6 +28452,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -28191,6 +28461,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -28487,6 +28758,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -28495,6 +28767,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -28630,6 +28903,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -28638,6 +28912,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -28787,6 +29062,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Use multipart request to upload an asset.",
       "errorStatusCode": [
         400,
@@ -28883,6 +29159,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -28891,6 +29168,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -29187,6 +29465,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -29194,6 +29473,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -29311,6 +29591,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -29319,6 +29600,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -29452,6 +29734,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets all configured clients for the app with the specified name.",
       "errorStatusCode": [
         404,
@@ -29459,6 +29742,7 @@ You will be assigned as owner of the new team automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -29651,6 +29935,7 @@ You will be assigned as owner of the new team automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new client for the app with the specified name.
 The client secret is auto generated on the server and returned. The client does not expire, the access token is valid for 30 days.",
       "errorStatusCode": [
@@ -29660,6 +29945,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -29876,6 +30162,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Only the display name can be changed, create a new client if necessary.",
       "errorStatusCode": [
         400,
@@ -29884,6 +30171,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -30119,6 +30407,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "The application that uses this client credentials cannot access the API after it has been revoked.",
       "errorStatusCode": [
         400,
@@ -30127,6 +30416,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -30346,6 +30636,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -30353,6 +30644,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -30543,6 +30835,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -30551,6 +30844,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -30765,6 +31059,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -30773,6 +31068,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -30963,6 +31259,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -30971,6 +31268,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -31188,6 +31486,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -31239,6 +31538,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31317,6 +31617,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31325,6 +31626,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -31503,6 +31805,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -31510,6 +31813,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -31692,6 +31996,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31700,6 +32005,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -31906,6 +32212,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31914,6 +32221,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -32139,6 +32447,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -32147,6 +32456,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -32356,6 +32666,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -32363,6 +32674,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -32560,6 +32872,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -32568,6 +32881,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -32789,6 +33103,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -32796,6 +33111,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -32886,6 +33202,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -32894,6 +33211,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -33139,6 +33457,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -33147,6 +33466,7 @@ The client secret is auto generated on the server and returned. The client does 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -33371,6 +33691,7 @@ The client secret is auto generated on the server and returned. The client does 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
       "errorStatusCode": [
@@ -33378,6 +33699,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -33539,6 +33861,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only create an app when you are authenticated as a user (OpenID implicit flow).
 You will be assigned as owner of the new app automatically.",
       "errorStatusCode": [
@@ -33548,6 +33871,7 @@ You will be assigned as owner of the new app automatically.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -33721,6 +34045,7 @@ You will be assigned as owner of the new app automatically.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "You can only retrieve the list of apps when you are authenticated as a user (OpenID implicit flow).
 You will retrieve all apps, where you are assigned as a contributor.",
       "errorStatusCode": [
@@ -33728,6 +34053,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -33918,6 +34244,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -33925,6 +34252,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -34103,6 +34431,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -34111,6 +34440,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -34305,6 +34635,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -34313,6 +34644,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -34376,6 +34708,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -34384,6 +34717,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -34578,6 +34912,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -34585,6 +34920,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -34764,6 +35100,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -34772,6 +35109,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35016,6 +35354,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -35023,6 +35362,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35177,6 +35517,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -35185,6 +35526,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35363,6 +35705,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -35371,6 +35714,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35591,6 +35935,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -35599,6 +35944,7 @@ You will retrieve all apps, where you are assigned as a contributor.",
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {

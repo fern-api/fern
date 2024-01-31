@@ -62,6 +62,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a paginated list of the customer's accounts, consisting of internal accounts at this financial institution and accounts at other financial institutions, if any.",
       "errorStatusCode": [
         400,
@@ -71,6 +72,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -282,6 +284,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return details of the customer's internal account.",
       "errorStatusCode": [
         401,
@@ -290,6 +293,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -503,6 +507,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a list of the requested internal accounts' balances. The \`accounts\` query parameter is a list of account IDs which typically comes from the \`getAccounts\` operation response. The returned list does not include external accounts. The caller must have entitlements to view each account's details, as indicated by a \`true\` value for \`account.allows.view\`. Requests to list balances for accounts the user is not allowed to read results in a 403 Forbidden response.
 
 The response may be incomplete. Given a \`Retry-After\` response header, the client can retry the operation after a short delay, requesting only the accounts which are incomplete; see the 202 Accepted response for details.",
@@ -515,6 +520,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -661,6 +667,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a collection of account joint owners. The user must have the \`account.manageJointOwners\` permission to use this operation.",
       "errorStatusCode": [
         400,
@@ -670,6 +677,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -770,6 +778,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a paginated list of a customer's accounts that are eligible for ACH transfers based on allowed privileges.
 
 Optionally, an agent can access a business customer's ACH accounts when acting on behalf of that business customer via the optional \`customerId\` query parameter.",
@@ -920,6 +929,7 @@ Optionally, an agent can access a business customer's ACH accounts when acting o
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a paginated list of a customer's accounts that are eligible to serve as overdraft protection accounts for the given account. An overdraft protection account is a deposit account that the financial institution can transfer funds from to prevent the account balance from going negative and incurring non-sufficient funds fees.
 
 The user must have the \`allows.manageOverdraftAccounts\` permission on the account to use this operation.
@@ -934,6 +944,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1082,6 +1093,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return the JSON representation of this account's overdraft protection settings.",
       "errorStatusCode": [
         401,
@@ -1090,6 +1102,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1173,6 +1186,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Perform a partial update of the overdraft accounts. Only fields in the request body are updated on the resource; fields which are omitted are not updated. To add, replace, or remove an overdraft account, add, replace, or remove the corresponding account item from the \`items\` array. Only the account \`id\` in the items is significant.
 
 The user must have the \`allows.manageOverdraftAccounts\` permission on the account to use this operation.",
@@ -1185,6 +1199,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1284,6 +1299,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create and send an invitation to another person to become a joint owner of the account. The invitation will be sent to the invitee's email address. The invitation directs the invitee to a web page to verify and accept the invitation, and if necessary, enroll in digital banking.
 
 The authenticated user must have the \`account.allows.manageJointOwners\` permission to use this operation.",
@@ -1296,6 +1312,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1452,6 +1469,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Look up a financial institution by their country code and either [American Bankers Association routing number](https://www.aba.com/about-us/routing-number), by [International Bank Account Number (IBAN)](https://www.ecbs.org/iban.htm), or by [SWIFT Business Identifier Code (BIC) code](https://www.swift.com/standards/data-standards/bic-business-identifier-code). Optionally, include a list of intermediary institutions that may be necessary to complete international wire transfers.",
       "errorStatusCode": [
         400,
@@ -1461,6 +1479,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -1748,6 +1767,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a transfer schedule list for this institution.",
       "errorStatusCode": [
         400,
@@ -1758,6 +1778,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1983,6 +2004,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return daily cutoff times for different money movement processes at a financial institution. Money movement requests (account to account transfers, ACH, wire transfers, etc.) must be submitted before the cutoff time in order for the financial institution to begin processing the request that day. Some [cutoff time types](#schema-cutoffTimeType) may have multiple cutoff times per day.
 
 Cutoff times are very slowly changing data. This is a _conditional operation_ when the \`If-None-Match\` header is used. If the client has a \`getCutoffTimes\` response and the \`ETag\` returned from a previous call to this operation, this operation returns a 304 Not Modified when called again if the cutoff times have not changed.",
@@ -1996,6 +2018,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2146,6 +2169,7 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return the transfer date restrictions for a date range and transfer parameters. The result is a list of days and dates that the financial institution does not allow scheduling specific types of transfers.
 
 This information provides hints to clients, allowing bank customers to select transfer dates from a calendar picker. However, these dates are not strictly enforced; a transfer can still be scheduled to occur on restricted dates but the financial institution may shift the date when funds are drafted to account for holidays, closures, or to adjust based on the risk level of the funding account.",
@@ -2158,6 +2182,7 @@ This information provides hints to clients, allowing bank customers to select tr
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2393,6 +2418,7 @@ This information provides hints to clients, allowing bank customers to select tr
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transaction history for this internal account. The [\`nextPage_url\`](https://dx.apiture.com/docs/api-documentation/concepts/links) link in the response, if present, is a pagination link to the next page of transactions for the given filters.
 
 This operation returns a 403 Forbidden error if the customer does not have \`view\` permissions in the \`account.allows\` object, or a 422 Unprocessable Entity if called on an external account.
@@ -2409,6 +2435,7 @@ The default response lists only recent transactions. Normally, this is transacti
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2870,6 +2897,7 @@ The default response lists only recent transactions. Normally, this is transacti
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a collection of transaction categories. The response is limited to 1,000 categories.
 
 This is a _conditional operation_ when the \`If-None-Match\` header is used. If the client has a \`transactionCategories\` response and the \`ETag\` returned from a previous call, this operation returns a 304 Not Modified if called again when the categories collection has not changed.",
@@ -2881,6 +2909,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -2985,6 +3014,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return a [paginated](https://dx.apiture.com/docs/api-documentation/concepts/pagination) collection of transfers. The [nextPage_url](https://dx.apiture.com/docs/api-documentation/concepts/links) in the response is a pagination link.",
       "errorStatusCode": [
         400,
@@ -2994,6 +3024,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3304,6 +3335,7 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a new transfer within the transfers collection. If all the necessary properties are set, the transfer is queued for processing. If the request omits the \`schedule.scheduledOn\` date, the transfer remains pending/unscheduled until the user sets it via the [\`patchTransfer\`](#op-patchTransfer) operation.
 
 Note: This operation requires an identity challenge if the financial institution requires the user to proove their identity for some types of transfers. See the "Challenges API".",
@@ -3315,6 +3347,7 @@ Note: This operation requires an identity challenge if the financial institution
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3591,6 +3624,7 @@ Note: This operation requires an identity challenge if the financial institution
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Return the JSON representation of this transfer resource.",
       "errorStatusCode": [
         401,
@@ -3599,6 +3633,7 @@ Note: This operation requires an identity challenge if the financial institution
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3781,6 +3816,7 @@ Note: This operation requires an identity challenge if the financial institution
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete this transfer resource and any resources that are owned by it. Only transfers that have not been processed may be deleted.",
       "errorStatusCode": [
         401,
@@ -3790,6 +3826,7 @@ Note: This operation requires an identity challenge if the financial institution
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3849,6 +3886,7 @@ Note: This operation requires an identity challenge if the financial institution
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Perform a partial update of this transfer as per [JSON Merge Patch](https://datatracker.ietf.org/doc/html/rfc7396) format and processing rules. Only fields in the request body are updated on the resource; fields which are omitted are not updated.
 
 Note: This operation requires an identity challenge if the financial institution requires the user to prove their identity for some types of transfers. See the "Challenges API".",
@@ -3861,6 +3899,7 @@ Note: This operation requires an identity challenge if the financial institution
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {

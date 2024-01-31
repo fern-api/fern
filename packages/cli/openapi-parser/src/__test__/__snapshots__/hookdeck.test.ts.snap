@@ -8,6 +8,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -15,6 +16,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -632,6 +634,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -639,6 +642,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -918,6 +922,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -925,6 +930,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -1204,12 +1210,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1351,6 +1359,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -1358,6 +1367,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1685,12 +1695,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1773,12 +1785,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -1920,12 +1934,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2067,6 +2083,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -2074,6 +2091,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -2468,12 +2486,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -2604,6 +2624,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -2611,6 +2632,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -3426,6 +3448,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -3433,6 +3456,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -3660,12 +3684,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -3802,6 +3828,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -3810,6 +3837,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4065,12 +4093,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4153,6 +4183,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -4161,6 +4192,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -4385,6 +4417,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -4392,6 +4425,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -5326,6 +5360,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -5333,6 +5368,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -5624,6 +5660,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -5631,6 +5668,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -5922,12 +5960,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6042,6 +6082,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -6050,6 +6091,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6400,12 +6442,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6520,12 +6564,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -6640,6 +6686,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -6647,6 +6694,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -8751,12 +8799,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -8918,12 +8968,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9006,12 +9058,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9238,12 +9292,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -9405,6 +9461,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -9412,6 +9469,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -12413,6 +12471,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -12420,6 +12479,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -14265,6 +14325,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -14272,6 +14333,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -16052,12 +16114,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16168,12 +16232,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -16284,6 +16350,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -16291,6 +16358,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -17454,6 +17522,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -17461,6 +17530,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17727,6 +17797,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -17734,6 +17805,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -17940,12 +18012,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18056,12 +18130,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18172,6 +18248,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -18179,6 +18256,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -18376,6 +18454,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -18383,6 +18462,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -18686,12 +18766,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -18846,6 +18928,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -18854,6 +18937,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19207,12 +19291,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19295,6 +19381,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -19302,6 +19389,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19411,6 +19499,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -19418,6 +19507,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -19519,6 +19609,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -19526,6 +19617,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -21245,12 +21337,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         422,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -22968,6 +23062,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
@@ -23026,6 +23121,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -23140,6 +23236,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
@@ -23198,6 +23295,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -23205,6 +23303,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -24900,12 +24999,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -25036,12 +25137,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -25124,6 +25227,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -25132,6 +25236,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -25412,6 +25517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -25420,6 +25526,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -27553,6 +27660,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -27561,6 +27669,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -27979,6 +28088,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -27986,6 +28096,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -30568,6 +30679,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -30575,6 +30687,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -32022,6 +32135,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -32029,6 +32143,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -33407,12 +33522,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -33523,12 +33640,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -33639,6 +33758,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -33646,6 +33766,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -34730,6 +34851,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -34737,6 +34859,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -34963,6 +35086,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -34970,6 +35094,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -35196,12 +35321,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35340,6 +35467,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -35348,6 +35476,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35633,12 +35762,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35777,12 +35908,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -35921,6 +36054,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -35928,6 +36062,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -36830,6 +36965,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -36837,6 +36973,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -37002,6 +37139,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -37009,6 +37147,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -37174,12 +37313,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -37329,6 +37470,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -37337,6 +37479,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -37560,12 +37703,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -37715,12 +37860,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -37870,10 +38017,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -38048,6 +38197,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -38055,6 +38205,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -38505,6 +38656,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -38512,6 +38664,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -38736,6 +38889,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -38743,6 +38897,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -38967,12 +39122,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -39090,6 +39247,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -39098,6 +39256,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -39350,6 +39509,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -39357,6 +39517,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -39817,6 +39978,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -39824,6 +39986,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -40654,12 +40817,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -40867,6 +41032,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -40874,6 +41040,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [
@@ -42222,6 +42389,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -42229,6 +42397,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -43128,6 +43297,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -43135,6 +43305,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [],
           "queryParameters": [],
@@ -44034,12 +44205,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -44383,6 +44556,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         400,
@@ -44391,6 +44565,7 @@ exports[`open api parser hookdeck parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -44986,12 +45161,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -45335,12 +45512,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -45684,12 +45863,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {
@@ -46033,12 +46214,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "",
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
           "headers": [],
           "pathParameters": [
             {

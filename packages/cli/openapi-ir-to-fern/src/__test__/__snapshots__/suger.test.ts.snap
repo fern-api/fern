@@ -20,6 +20,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -78,6 +79,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
@@ -136,6 +138,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -191,6 +194,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
@@ -274,6 +278,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -331,6 +336,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -451,6 +457,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -568,6 +575,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
@@ -690,6 +698,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
@@ -812,6 +821,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -934,6 +944,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1056,6 +1067,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -1208,6 +1220,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -1335,6 +1348,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -1471,6 +1485,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1576,6 +1591,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1620,6 +1636,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1692,6 +1709,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1757,6 +1775,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -1879,6 +1898,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2001,6 +2021,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2041,6 +2062,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2131,6 +2153,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -2197,6 +2220,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2258,6 +2282,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2324,6 +2349,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -2443,6 +2469,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2553,6 +2580,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -2669,6 +2697,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
@@ -2748,6 +2777,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
@@ -2787,6 +2817,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -3356,6 +3387,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -3924,6 +3956,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
@@ -3962,6 +3995,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
@@ -4266,6 +4300,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -4567,6 +4602,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
@@ -4885,6 +4921,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5211,6 +5248,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5280,6 +5318,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5318,6 +5357,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5604,6 +5644,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5644,6 +5685,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -5927,6 +5969,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -6215,6 +6258,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -6538,6 +6582,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -6631,6 +6676,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -6683,6 +6729,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
@@ -6769,6 +6816,7 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",

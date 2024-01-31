@@ -36,6 +36,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": {
                 "userId": "string",
@@ -688,6 +689,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": {
                 "transactionId": "string",
@@ -823,6 +825,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": {
                 "userId": "string",
@@ -1330,6 +1333,7 @@ Each consumer Business entity needs three mandatory fields:
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -2008,6 +2012,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -3282,6 +3287,7 @@ Here are some of the most used payload fields explained (you can find the full p
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -3434,6 +3440,7 @@ Each consumer User entity needs three mandatory fields:
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -4004,6 +4011,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,
@@ -4215,6 +4223,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
+              "code-samples": [],
               "headers": undefined,
               "path-parameters": undefined,
               "query-parameters": undefined,

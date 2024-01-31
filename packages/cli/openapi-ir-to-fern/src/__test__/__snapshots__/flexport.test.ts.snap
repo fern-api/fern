@@ -22,6 +22,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -475,6 +476,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1019,6 +1021,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -1459,6 +1462,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1784,6 +1788,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -1855,6 +1860,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1944,6 +1950,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -2055,6 +2062,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -2254,6 +2262,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -2522,6 +2531,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of commercial invoices",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -2732,6 +2742,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -2911,6 +2922,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3221,6 +3233,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3315,6 +3328,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3421,6 +3435,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3492,6 +3507,7 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Retrieves the details of a single company.",
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3574,6 +3590,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -3746,6 +3763,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -3837,6 +3855,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -3945,6 +3964,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4008,6 +4028,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4172,6 +4193,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -4249,6 +4271,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4332,6 +4355,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4387,6 +4411,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4528,6 +4553,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4679,6 +4705,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -4845,6 +4872,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -4929,6 +4957,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -5028,6 +5057,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5097,6 +5127,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -5189,6 +5220,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -5253,6 +5285,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -5352,6 +5385,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -5459,6 +5493,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -6245,6 +6280,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -7077,6 +7113,7 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7321,6 +7358,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7535,6 +7573,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -7638,6 +7677,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -7740,6 +7780,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7807,6 +7848,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -7973,6 +8015,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -8104,6 +8147,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -8239,6 +8283,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -8327,6 +8372,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8399,6 +8445,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -8602,6 +8649,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -8884,6 +8932,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -9162,6 +9211,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -9359,6 +9409,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -9720,6 +9771,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -9953,6 +10005,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -10196,6 +10249,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -10683,6 +10737,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -10740,6 +10795,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": "string",
@@ -11089,6 +11145,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
@@ -11545,6 +11602,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -11772,6 +11830,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "id": 1,
