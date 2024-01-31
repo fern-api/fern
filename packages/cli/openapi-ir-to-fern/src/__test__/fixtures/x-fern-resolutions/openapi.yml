@@ -1,0 +1,42 @@
+openapi: 3.0.3
+info:
+  title: Test extension `x-fern-sdk-group-name` for schemas
+  version: 1.0.0
+paths: 
+  /user: 
+    get: 
+      x-fern-sdk-group-name: ["user"]
+      x-fern-sdk-method-name: ["get"]
+      responses:
+        "200": 
+          description: "Success"
+          content:
+            application/json: 
+              schema: 
+                type: object
+                properties:
+                  id:
+                    type: string
+                    format: uuid
+  /users: 
+    get: 
+      x-fern-sdk-group-name: ["user"]
+      x-fern-sdk-method-name: ["get"]
+      responses:
+        "200": 
+          description: "Success"
+          content:
+            application/json: 
+              schema: 
+                type: array
+                items: 
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      format: uuid
+
+x-fern-resolutions: 
+  - name: User
+    resolutions: 
+      - '#/paths/%2fuser/get/responses/200/content/application~1json/schema'
