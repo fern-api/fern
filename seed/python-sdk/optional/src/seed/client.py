@@ -5,7 +5,7 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
-from .optional._client import AsyncOptionalClient, OptionalClient
+from .resources.optional.client import AsyncOptionalClient, OptionalClient
 
 
 class SeedObjectsWithImports:

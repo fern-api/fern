@@ -20,12 +20,9 @@ Used to retrieve a deployment given its ID or name.
 ",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "active_model_version_ids": [],
@@ -73,16 +70,28 @@ Used to retrieve a deployment given its ID or name.
 Creates a new document index.",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "name": "Index Using Instructor Model",
                 "request": {
                   "environment": "DEVELOPMENT",
                   "indexing_config": {
-                    "string": "string",
+                    "chunking": {
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5,
+                      },
+                      "chunker_name": "sentence-chunker",
+                    },
+                    "vectorizer": {
+                      "config": {
+                        "instruction_document_text_type": "plain_text",
+                        "instruction_domain": "",
+                        "instruction_query_text_type": "plain_text",
+                      },
+                      "model_name": "hkunlp/instructor-xl",
+                    },
                   },
-                  "label": "string",
-                  "name": "string",
+                  "label": "My Document Index",
+                  "name": "my-document-index",
                   "status": "ACTIVE",
                 },
                 "response": {
@@ -91,7 +100,7 @@ Creates a new document index.",
                     "environment": "DEVELOPMENT",
                     "id": "string",
                     "indexing_config": {
-                      "string": "string",
+                      "string": {},
                     },
                     "label": "string",
                     "name": "string",
@@ -168,32 +177,11 @@ Used to list documents. Optionally filter on supported fields.
 ",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-                    "results": [
-                      {
-                        "document_to_document_indexes": [
-                          {
-                            "document_index_id": "string",
-                            "id": "string",
-                            "indexing_state": "AWAITING_PROCESSING",
-                          },
-                        ],
-                        "id": "string",
-                        "label": "string",
-                        "last_uploaded_at": "2024-01-15T09:30:00Z",
-                        "processing_failure_reason": "EXCEEDED_CHARACTER_LIMIT",
-                        "processing_state": "QUEUED",
-                        "status": "ACTIVE",
-                      },
-                    ],
                   },
                 },
               },
@@ -291,14 +279,12 @@ Upload a document to be indexed and used for search.
 Compiles the prompt backing the model version using the provided input values.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "input_values": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
@@ -347,12 +333,9 @@ Used to retrieve a model version given its ID.
 ",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "build_config": {
@@ -363,11 +346,7 @@ Used to retrieve a model version given its ID.
                     },
                     "created": "2024-01-15T09:30:00Z",
                     "exec_config": {
-                      "input_variables": [
-                        {
-                          "key": "string",
-                        },
-                      ],
+                      "input_variables": [],
                       "parameters": {
                         "frequency_penalty": 1.1,
                         "max_tokens": 1,
@@ -376,16 +355,7 @@ Used to retrieve a model version given its ID.
                         "top_p": 1.1,
                       },
                       "prompt_block_data": {
-                        "blocks": [
-                          {
-                            "block_type": "CHAT_MESSAGE",
-                            "id": "string",
-                            "properties": {
-                              "chat_role": "SYSTEM",
-                              "template_type": "STRING",
-                            },
-                          },
-                        ],
+                        "blocks": [],
                         "version": 1,
                       },
                     },
@@ -437,9 +407,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "label": "string",
                   "model": "string",
@@ -452,22 +419,9 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                     "top_p": 1.1,
                   },
                   "prompt": {
-                    "input_variables": [
-                      {
-                        "key": "string",
-                      },
-                    ],
+                    "input_variables": [],
                     "prompt_block_data": {
-                      "blocks": [
-                        {
-                          "block_type": "CHAT_MESSAGE",
-                          "id": "string",
-                          "properties": {
-                            "chat_role": "SYSTEM",
-                            "template_type": "STRING",
-                          },
-                        },
-                      ],
+                      "blocks": [],
                       "version": 1,
                     },
                   },
@@ -571,14 +525,10 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "scenario_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -608,24 +558,24 @@ Note that a full replacement of the scenario is performed, so any fields not pro
 or overwritten with default values.",
             "examples": [
               {
-                "headers": undefined,
+                "name": "Basic Example",
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "inputs": [
                     {
-                      "chat_history": [
-                        {
-                          "role": "SYSTEM",
-                          "text": "string",
-                        },
-                      ],
-                      "key": "string",
+                      "key": "var_1",
                       "type": "TEXT",
+                      "value": "Hello, world!",
+                    },
+                    {
+                      "key": "var_2",
+                      "type": "TEXT",
+                      "value": "Why hello, there!",
                     },
                   ],
+                  "label": "Scenario 1",
                   "metric_input_params": {
                     "params": {},
                   },
@@ -633,18 +583,7 @@ or overwritten with default values.",
                 "response": {
                   "body": {
                     "id": "string",
-                    "inputs": [
-                      {
-                        "chat_history": [
-                          {
-                            "role": "SYSTEM",
-                            "text": "string",
-                          },
-                        ],
-                        "key": "string",
-                        "type": "TEXT",
-                      },
-                    ],
+                    "inputs": [],
                     "metric_input_params": {
                       "params": {},
                     },
@@ -703,14 +642,10 @@ or overwritten with default values.",
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "test_case_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -740,22 +675,20 @@ Note that a full replacement of the test case is performed, so any fields not pr
 or overwritten with default values.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "evaluation_params": {},
                   "input_values": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
                   "body": {
                     "evaluation_params": {},
                     "input_values": {
-                      "string": "string",
+                      "string": {},
                     },
                   },
                 },
@@ -885,55 +818,15 @@ Generate a completion using a previously defined deployment.
           ],
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "options": {
                   "logprobs": "ALL",
                 },
-                "requests": [
-                  {
-                    "chat_history": [
-                      {
-                        "role": "SYSTEM",
-                        "text": "string",
-                      },
-                    ],
-                    "input_values": {
-                      "string": "string",
-                    },
-                  },
-                ],
+                "requests": [],
               },
               "response": {
                 "body": {
-                  "results": [
-                    {
-                      "data": {
-                        "completions": [
-                          {
-                            "finish_reason": "LENGTH",
-                            "id": "string",
-                            "logprobs": {
-                              "tokens": [
-                                {
-                                  "text_offset": 1,
-                                  "token": "string",
-                                },
-                              ],
-                            },
-                            "model_version_id": "string",
-                            "text": "string",
-                            "type": "STRING",
-                          },
-                        ],
-                      },
-                      "error": {
-                        "message": "string",
-                      },
-                    },
-                  ],
+                  "results": [],
                 },
               },
             },
@@ -1031,9 +924,6 @@ Perform a search against a document index.
           ],
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "options": {
                   "filters": {},
@@ -1049,17 +939,7 @@ Perform a search against a document index.
               },
               "response": {
                 "body": {
-                  "results": [
-                    {
-                      "document": {
-                        "id": "string",
-                        "label": "string",
-                      },
-                      "keywords": [],
-                      "score": 1.1,
-                      "text": "string",
-                    },
-                  ],
+                  "results": [],
                 },
               },
             },
@@ -1111,15 +991,9 @@ Used to submit feedback regarding the quality of previously generated completion
           ],
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
-                "actuals": [
-                  {},
-                ],
+                "actuals": [],
               },
-              "response": undefined,
             },
           ],
           "method": "POST",

@@ -4,7 +4,7 @@ import { CONSOLE_LOGGER, LogLevel } from "@fern-api/logger";
 import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
-import { loadAPIWorkspace } from "@fern-api/workspace-loader";
+import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
 import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
 import fs from "fs";
 import { writeFile } from "fs/promises";
@@ -262,18 +262,14 @@ async function testWithWriteToDisk({
                 id
             };
         }
-        if (workspace.workspace.type === "openapi") {
-            taskContext.logger.error("Expected fern workspace. Found OpenAPI instead!");
-            return {
-                type: "failure",
-                reason: "Expected fern workspace. Found OpenAPI instead!",
-                id
-            };
-        }
+        const fernWorkspace: FernWorkspace =
+            workspace.workspace.type === "fern"
+                ? workspace.workspace
+                : await convertOpenApiWorkspaceToFernWorkspace(workspace.workspace, taskContext);
         await runDockerForWorkspace({
             absolutePathToOutput: outputDir,
             docker,
-            workspace: workspace.workspace,
+            workspace: fernWorkspace,
             language,
             customConfig,
             taskContext,

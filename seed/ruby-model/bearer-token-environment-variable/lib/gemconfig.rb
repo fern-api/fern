@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-module SeedClient
+module SeedBearerTokenEnvironmentVariableClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

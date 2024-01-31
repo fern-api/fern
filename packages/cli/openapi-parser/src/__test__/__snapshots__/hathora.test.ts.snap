@@ -8,189 +8,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "appName": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "appSecret": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "authConfiguration": {
-                    "properties": {
-                      "anonymous": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "google": {
-                        "properties": {
-                          "clientId": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "nickname": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "createdAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdBy": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "deployment": {
-                    "properties": {
-                      "appId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "buildId": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "containerPort": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "createdAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "createdBy": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "deploymentId": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "env": {
-                        "array": [
-                          {
-                            "properties": {
-                              "name": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "value": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "planName": {
-                        "enum": "tiny",
-                        "type": "enum",
-                      },
-                      "requestedCPU": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "requestedMemoryMB": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomsPerProcess": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "transportType": {
-                        "enum": "tcp",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "orgId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -237,6 +68,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -244,7 +76,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -528,6 +363,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -536,7 +372,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -845,13 +684,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -989,6 +832,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -996,7 +840,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1050,13 +897,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1155,13 +1006,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1305,6 +1160,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1312,7 +1168,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1456,13 +1315,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1478,73 +1341,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "buildId": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdBy": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "imageSize": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "regionalContainerTags": {
-                    "array": [
-                      {
-                        "properties": {
-                          "containerTag": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "region": {
-                            "enum": "Seattle",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "status": {
-                    "enum": "created",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -1605,13 +1402,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1674,24 +1475,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
               },
               "regionalContainerTags": {
-                "array": [
-                  {
-                    "properties": {
-                      "containerTag": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "region": {
-                        "enum": "Seattle",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "status": {
@@ -1765,6 +1549,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1773,7 +1558,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1826,24 +1614,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
               },
               "regionalContainerTags": {
-                "array": [
-                  {
-                    "properties": {
-                      "containerTag": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "region": {
-                        "enum": "Seattle",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "status": {
@@ -1904,6 +1675,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -1972,6 +1744,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1980,7 +1753,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2057,13 +1833,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2079,108 +1859,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "buildId": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "containerPort": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdBy": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "deploymentId": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "env": {
-                    "array": [
-                      {
-                        "properties": {
-                          "name": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "value": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "planName": {
-                    "enum": "tiny",
-                    "type": "enum",
-                  },
-                  "requestedCPU": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "requestedMemoryMB": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "roomsPerProcess": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "transportType": {
-                    "enum": "tcp",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -2241,13 +1920,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2317,27 +2000,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
               },
               "env": {
-                "array": [
-                  {
-                    "properties": {
-                      "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "planName": {
@@ -2436,6 +2099,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -2444,7 +2108,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2478,27 +2145,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
               },
               "env": {
-                "array": [
-                  {
-                    "properties": {
-                      "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "planName": {
@@ -2564,27 +2211,7 @@ exports[`open api parser hathora parse open api 1`] = `
                 "type": "primitive",
               },
               "env": {
-                "array": [
-                  {
-                    "properties": {
-                      "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "planName": {
@@ -2696,40 +2323,20 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "host": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "port": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "region": {
-                    "enum": "Seattle",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -2769,6 +2376,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2779,6 +2387,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2791,6 +2401,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2932,6 +2543,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2942,6 +2554,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2954,6 +2568,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3095,6 +2710,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3102,6 +2718,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3114,6 +2732,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3137,74 +2756,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdBy": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "initialConfig": {
-                    "map": [
-                      {
-                        "key": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "value": {
-                          "primitive": {
-                            "string": "string",
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    ],
-                    "type": "map",
-                  },
-                  "local": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "region": {
-                    "enum": "Seattle",
-                    "type": "enum",
-                  },
-                  "roomId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "visibility": {
-                    "enum": "private",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -3326,6 +2878,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3336,6 +2889,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3348,6 +2903,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3371,11 +2927,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -3419,11 +2972,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -3604,6 +3154,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3614,6 +3165,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3626,6 +3179,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3649,11 +3203,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -3697,11 +3248,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -3882,6 +3430,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3892,6 +3441,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3904,6 +3455,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3927,11 +3479,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -3975,11 +3524,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -4160,6 +3706,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -4170,6 +3717,8 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -4182,6 +3731,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4205,11 +3755,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -4257,11 +3804,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -4475,11 +4019,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4503,74 +4051,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "createdBy": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "initialConfig": {
-                    "map": [
-                      {
-                        "key": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "value": {
-                          "primitive": {
-                            "string": "string",
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                    ],
-                    "type": "map",
-                  },
-                  "local": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "region": {
-                    "enum": "Seattle",
-                    "type": "enum",
-                  },
-                  "roomId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "visibility": {
-                    "enum": "private",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -4652,13 +4133,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4714,11 +4199,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -4813,6 +4295,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4820,7 +4303,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4854,11 +4340,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -4898,11 +4381,8 @@ exports[`open api parser hathora parse open api 1`] = `
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -5043,6 +4523,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -5150,6 +4631,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -5250,6 +4732,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -5350,6 +4833,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5357,7 +4841,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5380,120 +4867,10 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
-          "queryParameters": [
-            {
-              "name": "metrics",
-              "value": {
-                "array": [
-                  {
-                    "enum": "cpu",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "cpu": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "memory": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "rate_egress": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "total_egress": {
-                "array": [
-                  {
-                    "properties": {
-                      "timestamp": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -5654,13 +5031,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5684,155 +5065,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "activeConnections": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "deploymentId": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "draining": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "egressedBytes": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "host": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "port": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "processId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "region": {
-                    "enum": "Seattle",
-                    "type": "enum",
-                  },
-                  "roomSlotsAvailable": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "rooms": {
-                    "array": [
-                      {
-                        "properties": {
-                          "appId": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "currentAllocation": {
-                            "properties": {
-                              "processId": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "roomAllocationId": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "scheduledAt": {
-                                "primitive": {
-                                  "datetime": "2024-01-15T09:30:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                          "roomId": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status": {
-                            "enum": "scheduling",
-                            "type": "enum",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "roomsPerProcess": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "startingAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "totalRooms": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -5914,13 +5147,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5944,94 +5181,7 @@ exports[`open api parser hathora parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "activeConnections": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "deploymentId": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "draining": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "egressedBytes": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "host": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "port": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "processId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "region": {
-                    "enum": "Seattle",
-                    "type": "enum",
-                  },
-                  "roomSlotsAvailable": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "roomsPerProcess": {
-                    "primitive": {
-                      "double": 1.1,
-                      "type": "double",
-                    },
-                    "type": "primitive",
-                  },
-                  "startingAt": {
-                    "primitive": {
-                      "datetime": "2024-01-15T09:30:00Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -6113,13 +5263,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6294,6 +5448,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -6301,7 +5456,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6412,13 +5570,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6446,34 +5608,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "response": {
             "properties": {
               "allocations": {
-                "array": [
-                  {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "appId": {
@@ -6587,13 +5722,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6619,57 +5758,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "roomId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "status": {
-                    "enum": "scheduling",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -6743,13 +5832,17 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6775,57 +5868,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "appId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "currentAllocation": {
-                    "properties": {
-                      "processId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "roomAllocationId": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "scheduledAt": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "roomId": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "status": {
-                    "enum": "scheduling",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -6899,6 +5942,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -6906,7 +5950,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -6983,6 +6030,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -6990,7 +6038,10 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -7067,6 +6118,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,

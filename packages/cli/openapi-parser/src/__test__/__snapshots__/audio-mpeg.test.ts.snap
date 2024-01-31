@@ -8,6 +8,7 @@ exports[`open api parser audio-mpeg-content-type parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],

@@ -20,15 +20,12 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "type": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -64,14 +61,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -94,14 +88,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -121,12 +112,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all agents",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -146,16 +133,14 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "string": "string",
+                  "string": {},
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -181,18 +166,16 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "agentId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "input": {
-                    "string": "string",
+                    "string": {},
                   },
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -237,14 +220,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "description": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -274,14 +254,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "tokenId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -304,14 +281,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "tokenId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -331,12 +305,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all API tokens",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -367,15 +337,12 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "email": "string",
                   "password": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -406,15 +373,12 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "email": "string",
                   "password": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -458,16 +422,13 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "type": "string",
                   "url": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -503,14 +464,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "documentId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -533,14 +491,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "documentId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -560,12 +515,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all documents",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -596,16 +547,13 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "input_variables": [],
                   "name": "string",
                   "template": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -637,14 +585,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -667,14 +612,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -694,12 +636,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all prompts",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -719,16 +657,14 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "promptId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "string": "string",
+                  "string": {},
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -765,15 +701,12 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                   "type": "string",
                 },
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -805,14 +738,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "toolId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -835,14 +765,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "toolId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -862,12 +789,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all tools",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -892,12 +815,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": "List all agent traces",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -928,14 +847,11 @@ exports[`open api parser superagent simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "userId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],
@@ -955,12 +871,8 @@ exports[`open api parser superagent simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": "string",
+                  "body": {},
                 },
               },
             ],

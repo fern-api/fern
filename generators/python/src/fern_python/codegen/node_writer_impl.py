@@ -24,8 +24,11 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
     def write_node(self, node: AST.AstNode) -> None:
         node.write(writer=self)
 
-    def write_reference(self, reference: AST.Reference) -> None:
-        self.write(self._reference_resolver.resolve_reference(reference))
+    def write_reference(self, reference: AST.Reference, is_string_reference: bool = False) -> None:
+        content = self._reference_resolver.resolve_reference(reference)
+        if is_string_reference:
+            content = f'"{content}"'
+        self.write(content)
 
     def should_format_as_snippet(self) -> bool:
         return self._should_format_as_snippet

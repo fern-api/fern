@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Set
 
 import fern.ir.resources as ir_types
 from typing_extensions import Never
@@ -136,14 +136,14 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
 
                     # we assume that the forward-refed types are the ones
                     # that circularly reference this union type
-                    referenced_type_ids: List[ir_types.TypeId] = single_union_type.shape.visit(
+                    referenced_type_ids: Set[ir_types.TypeId] = single_union_type.shape.visit(
                         same_properties_as_object=lambda type_name: self._context.get_referenced_types_of_type_declaration(
                             self._context.get_declaration_for_type_id(type_name.type_id),
                         ),
                         single_property=lambda single_property: self._context.get_referenced_types_of_type_reference(
                             single_property.type
                         ),
-                        no_properties=lambda: [],
+                        no_properties=lambda: set(),
                     )
                     forward_refed_types = [
                         referenced_type_id
@@ -165,8 +165,9 @@ class DiscriminatedUnionWithUtilsGenerator(AbstractTypeGenerator):
                         # that reference this type appear after the main (exported) model for the union.
                         # FernAwarePydanticModel will automatically add the import constraint if the
                         # referenced type_name circularly references this type.
-                        for type_id in forward_refed_types:
-                            external_pydantic_model.add_ghost_reference(type_id)
+                        for referenced_type_id in self._context.get_referenced_types(self._name.type_id):
+                            if self._context.does_type_reference_other_type(referenced_type_id, self._name.type_id):
+                                external_pydantic_model.add_ghost_reference(referenced_type_id)
 
             root_type = AST.TypeHint.union(
                 *(

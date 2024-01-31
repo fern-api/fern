@@ -58,7 +58,8 @@ it("generate IR", async () => {
         const intermediateRepresentation = await generateIntermediateRepresentation({
             workspace,
             generationLanguage: undefined,
-            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" }
+            audiences: TEST_DEFINITION_CONFIG[workspace.name]?.audiences ?? { type: "all" },
+            disableExamples: false
         });
 
         const intermediateRepresentationJson = await IrSerialization.IntermediateRepresentation.jsonOrThrow(

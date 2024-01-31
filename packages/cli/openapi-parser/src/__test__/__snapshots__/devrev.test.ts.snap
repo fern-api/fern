@@ -8,6 +8,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the download URL for the artifact.",
       "errorStatusCode": [
         400,
@@ -20,7 +21,10 @@ exports[`open api parser devrev parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -102,6 +106,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates an artifact and generates an upload URL for its data.
 ",
       "errorStatusCode": [
@@ -114,7 +119,10 @@ exports[`open api parser devrev parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -132,27 +140,7 @@ exports[`open api parser devrev parse open api 1`] = `
           "response": {
             "properties": {
               "form_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "key": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "value": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "id": {
@@ -222,6 +210,7 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
@@ -235,7 +224,10 @@ authenticated user.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -351,6 +343,7 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
@@ -365,7 +358,10 @@ given Dev organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -410,6 +406,7 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
@@ -424,7 +421,10 @@ given Dev organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -520,6 +520,7 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
@@ -534,7 +535,10 @@ token type issued for a given subject.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -549,28 +553,7 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "requested_token_type": {
-                        "enum": "urn:devrev:params:oauth:token-type:aat",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -689,6 +672,7 @@ subject.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
@@ -703,7 +687,10 @@ authenticated user.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -753,6 +740,7 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
@@ -767,7 +755,10 @@ organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -864,6 +855,7 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
@@ -929,6 +921,7 @@ enterprise connections can be created by an organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
@@ -944,7 +937,10 @@ connections can not be deleted using this method.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -998,6 +994,7 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieves the details for an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1063,6 +1060,7 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
@@ -1078,7 +1076,10 @@ created by the user.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1129,6 +1130,7 @@ created by the user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
@@ -1146,7 +1148,10 @@ disabled.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1204,6 +1209,7 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1264,6 +1270,7 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists users within your organization.",
       "errorStatusCode": [
         400,
@@ -1275,7 +1282,10 @@ disabled.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1285,53 +1295,12 @@ disabled.
                 "type": "enum",
               },
             },
-            {
-              "name": "state",
-              "value": {
-                "array": [
-                  {
-                    "enum": "active",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
           ],
           "request": undefined,
           "response": {
             "properties": {
               "dev_users": {
-                "array": [
-                  {
-                    "properties": {
-                      "display_picture": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -1536,6 +1505,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the authenticated user's information.",
       "errorStatusCode": [
         400,
@@ -1547,7 +1517,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1621,6 +1594,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1679,6 +1653,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1691,7 +1666,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1714,11 +1692,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -1774,6 +1749,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -1839,6 +1815,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
       "errorStatusCode": [
@@ -1851,7 +1828,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1859,18 +1839,6 @@ used.
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "capability",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],
@@ -2113,6 +2081,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -2173,6 +2142,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
@@ -2186,7 +2156,10 @@ organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2272,6 +2245,7 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes the Rev organization.",
       "errorStatusCode": [
         400,
@@ -2284,7 +2258,10 @@ organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2307,11 +2284,8 @@ organization.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -2367,6 +2341,7 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Retrieves the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2379,7 +2354,10 @@ organization.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2466,6 +2444,7 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
 to access.
@@ -2481,7 +2460,10 @@ to access.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2496,20 +2478,7 @@ to access.
           "response": {
             "properties": {
               "rev_orgs": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2813,6 +2782,7 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2825,7 +2795,10 @@ them.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2911,6 +2884,7 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
@@ -2924,7 +2898,10 @@ and a logical concept denoted by the tag's name.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3013,6 +2990,7 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes a tag.",
       "errorStatusCode": [
         400,
@@ -3025,7 +3003,10 @@ and a logical concept denoted by the tag's name.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3048,11 +3029,8 @@ and a logical concept denoted by the tag's name.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -3108,6 +3086,7 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets a tag's information.",
       "errorStatusCode": [
         400,
@@ -3120,7 +3099,10 @@ and a logical concept denoted by the tag's name.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3214,6 +3196,7 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists the available tags.",
       "errorStatusCode": [
         400,
@@ -3225,7 +3208,10 @@ and a logical concept denoted by the tag's name.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3240,27 +3226,7 @@ and a logical concept denoted by the tag's name.
           "response": {
             "properties": {
               "tags": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -3374,6 +3340,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates a tag's information.",
       "errorStatusCode": [
         400,
@@ -3386,7 +3353,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3479,6 +3449,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a new entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3537,6 +3508,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3601,6 +3573,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists the timeline entries for an object.",
       "errorStatusCode": [
         400,
@@ -3613,7 +3586,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3771,6 +3747,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3829,6 +3806,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a new webhook target.",
       "errorStatusCode": [
         400,
@@ -3840,20 +3818,14 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
-              "event_types": {
-                "array": [
-                  {
-                    "enum": "part_created",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
               "url": {
                 "primitive": {
                   "string": "string",
@@ -3868,15 +3840,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",
@@ -3958,6 +3921,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes the requested webhook.",
       "errorStatusCode": [
         400,
@@ -3970,7 +3934,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3993,11 +3960,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -4053,6 +4017,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets the requested webhook's information.",
       "errorStatusCode": [
         400,
@@ -4065,7 +4030,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -4084,15 +4052,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",
@@ -4179,6 +4138,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists the webhooks.",
       "errorStatusCode": [
         400,
@@ -4190,54 +4150,17 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
               "webhooks": {
-                "array": [
-                  {
-                    "properties": {
-                      "event_types": {
-                        "array": [
-                          {
-                            "enum": "part_created",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "secret": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "status": {
-                        "enum": "active",
-                        "type": "enum",
-                      },
-                      "url": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -4280,6 +4203,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates the requested webhook.",
       "errorStatusCode": [
         400,
@@ -4292,7 +4216,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4302,35 +4229,7 @@ used.
                 "type": "enum",
               },
               "event_types": {
-                "properties": {
-                  "add": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "remove": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                  "set": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
-                },
+                "properties": {},
                 "type": "object",
               },
               "id": {
@@ -4347,15 +4246,6 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
-                  "event_types": {
-                    "array": [
-                      {
-                        "enum": "part_created",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "string",
@@ -4437,6 +4327,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
@@ -4497,6 +4388,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Deletes a work item.",
       "errorStatusCode": [
         400,
@@ -4509,7 +4401,10 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4532,11 +4427,8 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "primitive": {
-                    "string": "string",
-                    "type": "string",
-                  },
-                  "type": "primitive",
+                  "map": [],
+                  "type": "map",
                 },
               },
             ],
@@ -4592,6 +4484,7 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Exports a collection of work items.",
       "errorStatusCode": [
         400,
@@ -4603,46 +4496,12 @@ used.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -4985,6 +4844,7 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets a work item's information.",
       "errorStatusCode": [
         400,
@@ -5049,6 +4909,7 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Lists a collection of work items.",
       "errorStatusCode": [
         400,
@@ -5060,50 +4921,17 @@ organizations.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
-            {
-              "name": "issue.priority",
-              "value": {
-                "array": [
-                  {
-                    "enum": "p0",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
             {
               "name": "mode",
               "value": {
                 "enum": "after",
                 "type": "enum",
-              },
-            },
-            {
-              "name": "ticket.severity",
-              "value": {
-                "array": [
-                  {
-                    "enum": "blocker",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "array": [
-                  {
-                    "enum": "issue",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
               },
             },
           ],
@@ -5496,6 +5324,7 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Updates a work item's information.",
       "errorStatusCode": [
         400,

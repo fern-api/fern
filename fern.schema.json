@@ -546,6 +546,33 @@
                             }
                           },
                           "additionalProperties": false
+                        },
+                        "code-samples": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "name": {
+                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/examples/items/properties/name"
+                              },
+                              "docs": {
+                                "$ref": "#/properties/types/additionalProperties/anyOf/1/anyOf/0/properties/docs"
+                              },
+                              "language": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "enum": ["curl", "python", "javascript", "js", "node", "typescript", "ts", "go"]
+                                  },
+                                  { "type": "string" }
+                                ]
+                              },
+                              "code": { "type": "string" },
+                              "install": { "type": "string" }
+                            },
+                            "required": ["language", "code"],
+                            "additionalProperties": false
+                          }
                         }
                       },
                       "additionalProperties": false

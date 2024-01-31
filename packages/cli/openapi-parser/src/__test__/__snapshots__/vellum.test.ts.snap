@@ -36,6 +36,7 @@ with all stable endpoints. You can find them here:
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -44,7 +45,10 @@ Used to retrieve a deployment given its ID or name.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -170,13 +174,17 @@ Used to retrieve a deployment given its ID or name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": "Index Using Instructor Model",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -189,15 +197,143 @@ Creates a new document index.",
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "chunking",
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
+                      "type": "unknown",
+                      "unknown": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "chunker_name",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "sentence-chunker",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          {
+                            "key": {
+                              "string": "chunker_config",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [
+                                {
+                                  "key": {
+                                    "string": "character_limit",
+                                    "type": "string",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "int": 1000,
+                                      "type": "int",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "string": "min_overlap_ratio",
+                                    "type": "string",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "double": 0.5,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                              ],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
                       },
-                      "type": "primitive",
+                    },
+                  },
+                  {
+                    "key": {
+                      "string": "vectorizer",
+                      "type": "string",
+                    },
+                    "value": {
+                      "type": "unknown",
+                      "unknown": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "model_name",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "string": "hkunlp/instructor-xl",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          {
+                            "key": {
+                              "string": "config",
+                              "type": "string",
+                            },
+                            "value": {
+                              "map": [
+                                {
+                                  "key": {
+                                    "string": "instruction_domain",
+                                    "type": "string",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "string": "instruction_document_text_type",
+                                    "type": "string",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "plain_text",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                {
+                                  "key": {
+                                    "string": "instruction_query_text_type",
+                                    "type": "string",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "plain_text",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                              ],
+                              "type": "map",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
                     },
                   },
                 ],
@@ -205,14 +341,14 @@ Creates a new document index.",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "My Document Index",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "my-document-index",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -252,11 +388,8 @@ Creates a new document index.",
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -298,84 +431,72 @@ Creates a new document index.",
         "description": undefined,
         "fullExamples": [
           {
-            "name": "Example1",
+            "name": "Index Using Instructor Model",
             "value": {
-              "description": "This example shows how to create a document index that vectorizes documents using an instructor model.",
-              "summary": "Index Using Instructor Model",
-              "value": {
-                "copy_documents_from_index_id": null,
-                "indexing_config": {
-                  "chunking": {
-                    "chunker_config": {
-                      "character_limit": 1000,
-                      "min_overlap_ratio": 0.5,
-                    },
-                    "chunker_name": "sentence-chunker",
+              "copy_documents_from_index_id": null,
+              "indexing_config": {
+                "chunking": {
+                  "chunker_config": {
+                    "character_limit": 1000,
+                    "min_overlap_ratio": 0.5,
                   },
-                  "vectorizer": {
-                    "config": {
-                      "instruction_document_text_type": "plain_text",
-                      "instruction_domain": "",
-                      "instruction_query_text_type": "plain_text",
-                    },
-                    "model_name": "hkunlp/instructor-xl",
-                  },
+                  "chunker_name": "sentence-chunker",
                 },
-                "label": "My Document Index",
-                "name": "my-document-index",
+                "vectorizer": {
+                  "config": {
+                    "instruction_document_text_type": "plain_text",
+                    "instruction_domain": "",
+                    "instruction_query_text_type": "plain_text",
+                  },
+                  "model_name": "hkunlp/instructor-xl",
+                },
               },
+              "label": "My Document Index",
+              "name": "my-document-index",
             },
           },
           {
-            "name": "Example2",
+            "name": "Index Using a Sentence Transformers Model",
             "value": {
-              "description": "This example shows how to create a document index that vectorizes documents using a Sentence Transformers model.",
-              "summary": "Index Using a Sentence Transformers Model",
-              "value": {
-                "copy_documents_from_index_id": null,
-                "indexing_config": {
-                  "chunking": {
-                    "chunker_config": {
-                      "character_limit": 1000,
-                      "min_overlap_ratio": 0.5,
-                    },
-                    "chunker_name": "sentence-chunker",
+              "copy_documents_from_index_id": null,
+              "indexing_config": {
+                "chunking": {
+                  "chunker_config": {
+                    "character_limit": 1000,
+                    "min_overlap_ratio": 0.5,
                   },
-                  "vectorizer": {
-                    "config": {},
-                    "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
-                  },
+                  "chunker_name": "sentence-chunker",
                 },
-                "label": "My Document Index",
-                "name": "my-document-index",
+                "vectorizer": {
+                  "config": {},
+                  "model_name": "sentence-transformers/multi-qa-mpnet-base-dot-v1",
+                },
               },
+              "label": "My Document Index",
+              "name": "my-document-index",
             },
           },
           {
-            "name": "Example3",
+            "name": "Index Using OpenAI Model",
             "value": {
-              "description": "This example shows how to create a document index that vectorizes documents using one of OpenAI's embedding models.",
-              "summary": "Index Using OpenAI Model",
-              "value": {
-                "copy_documents_from_index_id": null,
-                "indexing_config": {
-                  "chunking": {
-                    "chunker_config": {
-                      "character_limit": 1000,
-                      "min_overlap_ratio": 0.5,
-                    },
-                    "chunker_name": "sentence-chunker",
+              "copy_documents_from_index_id": null,
+              "indexing_config": {
+                "chunking": {
+                  "chunker_config": {
+                    "character_limit": 1000,
+                    "min_overlap_ratio": 0.5,
                   },
-                  "vectorizer": {
-                    "config": {
-                      "add_openai_api_key": true,
-                    },
-                    "model_name": "text-embedding-ada-002",
-                  },
+                  "chunker_name": "sentence-chunker",
                 },
-                "label": "My Document Index",
-                "name": "my-document-index",
+                "vectorizer": {
+                  "config": {
+                    "add_openai_api_key": true,
+                  },
+                  "model_name": "text-embedding-ada-002",
+                },
               },
+              "label": "My Document Index",
+              "name": "my-document-index",
             },
           },
         ],
@@ -415,6 +536,7 @@ Creates a new document index.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
@@ -423,7 +545,10 @@ Used to list documents. Optionally filter on supported fields.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -449,83 +574,6 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "document_to_document_indexes": {
-                        "array": [
-                          {
-                            "properties": {
-                              "document_index_id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "indexing_state": {
-                                "enum": "AWAITING_PROCESSING",
-                                "type": "enum",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "label": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "last_uploaded_at": {
-                        "primitive": {
-                          "datetime": "2024-01-15T09:30:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "processing_failure_reason": {
-                        "literal": {
-                          "string": "EXCEEDED_CHARACTER_LIMIT",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                      "processing_state": {
-                        "enum": "QUEUED",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "literal": {
-                          "string": "ACTIVE",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -660,6 +708,7 @@ Used to list documents. Optionally filter on supported fields.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Executes a deployed Workflow and streams back its results.",
@@ -718,6 +767,7 @@ Executes a deployed Workflow and streams back its results.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a completion using a previously defined deployment.
@@ -731,7 +781,10 @@ Generate a completion using a previously defined deployment.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -746,52 +799,7 @@ Generate a completion using a previously defined deployment.
                 "type": "object",
               },
               "requests": {
-                "array": [
-                  {
-                    "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "input_values": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "value": {
-                              "primitive": {
-                                "string": "string",
-                                "type": "string",
-                              },
-                              "type": "primitive",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -800,98 +808,7 @@ Generate a completion using a previously defined deployment.
           "response": {
             "properties": {
               "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "data": {
-                        "properties": {
-                          "completions": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "finish_reason": {
-                                    "enum": "LENGTH",
-                                    "type": "enum",
-                                  },
-                                  "id": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "logprobs": {
-                                    "properties": {
-                                      "tokens": {
-                                        "array": [
-                                          {
-                                            "properties": {
-                                              "text_offset": {
-                                                "primitive": {
-                                                  "int": 1,
-                                                  "type": "int",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                              "token": {
-                                                "primitive": {
-                                                  "string": "string",
-                                                  "type": "string",
-                                                },
-                                                "type": "primitive",
-                                              },
-                                            },
-                                            "type": "object",
-                                          },
-                                        ],
-                                        "type": "array",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                  "model_version_id": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "text": {
-                                    "primitive": {
-                                      "string": "string",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "error": {
-                        "properties": {
-                          "message": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -953,6 +870,7 @@ Generate a completion using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Generate a stream of completions using a previously defined deployment.
@@ -1018,6 +936,7 @@ Generate a stream of completions using a previously defined deployment.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "
 <strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
@@ -1026,7 +945,10 @@ Used to retrieve a model version given its ID.
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1077,20 +999,7 @@ Used to retrieve a model version given its ID.
               "exec_config": {
                 "properties": {
                   "input_variables": {
-                    "array": [
-                      {
-                        "properties": {
-                          "key": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "array": [],
                     "type": "array",
                   },
                   "parameters": {
@@ -1136,37 +1045,7 @@ Used to retrieve a model version given its ID.
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [
-                          {
-                            "properties": {
-                              "block_type": {
-                                "enum": "CHAT_MESSAGE",
-                                "type": "enum",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "properties": {
-                                "properties": {
-                                  "chat_role": {
-                                    "enum": "SYSTEM",
-                                    "type": "enum",
-                                  },
-                                  "template_type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "array": [],
                         "type": "array",
                       },
                       "version": {
@@ -1273,13 +1152,17 @@ Used to retrieve a model version given its ID.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1303,11 +1186,8 @@ Compiles the prompt backing the model version using the provided input values.",
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -1408,6 +1288,7 @@ Compiles the prompt backing the model version using the provided input values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Registers a prompt within Vellum and creates associated Vellum entities. Intended to be used by integration
@@ -1419,7 +1300,10 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1488,56 +1372,13 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "prompt": {
                 "properties": {
                   "input_variables": {
-                    "array": [
-                      {
-                        "properties": {
-                          "key": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
+                    "array": [],
                     "type": "array",
                   },
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [
-                          {
-                            "properties": {
-                              "block_type": {
-                                "enum": "CHAT_MESSAGE",
-                                "type": "enum",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "properties": {
-                                "properties": {
-                                  "chat_role": {
-                                    "enum": "SYSTEM",
-                                    "type": "enum",
-                                  },
-                                  "template_type": {
-                                    "enum": "STRING",
-                                    "type": "enum",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
+                        "array": [],
                         "type": "array",
                       },
                       "version": {
@@ -1710,6 +1551,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new scenario for a sandbox, keying off of the optionally provided scenario id.
@@ -1722,7 +1564,10 @@ or overwritten with default values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": "Basic Example",
           "pathParameters": [
             {
               "name": "id",
@@ -1742,30 +1587,9 @@ or overwritten with default values.",
                 "array": [
                   {
                     "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
                       "key": {
                         "primitive": {
-                          "string": "string",
+                          "string": "var_1",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1774,11 +1598,48 @@ or overwritten with default values.",
                         "enum": "TEXT",
                         "type": "enum",
                       },
+                      "value": {
+                        "primitive": {
+                          "string": "Hello, world!",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "var_2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "Why hello, there!",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                     "type": "object",
                   },
                 ],
                 "type": "array",
+              },
+              "label": {
+                "primitive": {
+                  "string": "Scenario 1",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
               "metric_input_params": {
                 "properties": {
@@ -1802,45 +1663,7 @@ or overwritten with default values.",
                 "type": "primitive",
               },
               "inputs": {
-                "array": [
-                  {
-                    "properties": {
-                      "chat_history": {
-                        "array": [
-                          {
-                            "properties": {
-                              "role": {
-                                "enum": "SYSTEM",
-                                "type": "enum",
-                              },
-                              "text": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "key": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "TEXT",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "metric_input_params": {
@@ -1888,58 +1711,50 @@ or overwritten with default values.",
         "description": undefined,
         "fullExamples": [
           {
-            "name": "Example1",
+            "name": "Basic Example",
             "value": {
-              "description": "This example shows how to specify a scenario with two variables, var_1 and var_2.",
-              "summary": "Basic Example",
-              "value": {
-                "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d",
-                "inputs": [
-                  {
-                    "key": "var_1",
-                    "type": "TEXT",
-                    "value": "Hello, world!",
-                  },
-                  {
-                    "key": "var_2",
-                    "type": "TEXT",
-                    "value": "Why hello, there!",
-                  },
-                ],
-                "label": "Scenario 1",
-                "metric_input_params": {
-                  "params": {},
+              "id": "3ee58bf2-1e5c-415e-8b6c-02ca8b77f29d",
+              "inputs": [
+                {
+                  "key": "var_1",
+                  "type": "TEXT",
+                  "value": "Hello, world!",
                 },
+                {
+                  "key": "var_2",
+                  "type": "TEXT",
+                  "value": "Why hello, there!",
+                },
+              ],
+              "label": "Scenario 1",
+              "metric_input_params": {
+                "params": {},
               },
             },
           },
           {
-            "name": "Example2",
+            "name": "Chat History Example",
             "value": {
-              "description": "This example shows how to specify a chat history for the special $chat_history variable.",
-              "summary": "Chat History Example",
-              "value": {
-                "id": "50c55d1d-4c37-4c83-afc1-9d895f286320",
-                "inputs": [
-                  {
-                    "chat_history": [
-                      {
-                        "role": "USER",
-                        "text": "What's your favorite color?",
-                      },
-                      {
-                        "role": "ASSISTANT",
-                        "text": "AI's don't have a favorite color.... Yet.",
-                      },
-                    ],
-                    "key": "$chat_history",
-                    "type": "CHAT_HISTORY",
-                  },
-                ],
-                "label": "Scenario 2",
-                "metric_input_params": {
-                  "params": {},
+              "id": "50c55d1d-4c37-4c83-afc1-9d895f286320",
+              "inputs": [
+                {
+                  "chat_history": [
+                    {
+                      "role": "USER",
+                      "text": "What's your favorite color?",
+                    },
+                    {
+                      "role": "ASSISTANT",
+                      "text": "AI's don't have a favorite color.... Yet.",
+                    },
+                  ],
+                  "key": "$chat_history",
+                  "type": "CHAT_HISTORY",
                 },
+              ],
+              "label": "Scenario 2",
+              "metric_input_params": {
+                "params": {},
               },
             },
           },
@@ -1980,13 +1795,17 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2071,6 +1890,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Perform a search against a document index.
@@ -2083,7 +1903,10 @@ Perform a search against a document index.
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2141,50 +1964,7 @@ Perform a search against a document index.
           "response": {
             "properties": {
               "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "document": {
-                        "properties": {
-                          "id": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "label": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "keywords": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "score": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "text": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2246,6 +2026,7 @@ Perform a search against a document index.
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Used to submit feedback regarding the quality of previously generated completions.
@@ -2258,18 +2039,16 @@ Used to submit feedback regarding the quality of previously generated completion
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
               "actuals": {
-                "array": [
-                  {
-                    "properties": {},
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -2319,6 +2098,7 @@ Used to submit feedback regarding the quality of previously generated completion
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Upserts a new test case for a test suite, keying off of the optionally provided test case id.
@@ -2331,7 +2111,10 @@ or overwritten with default values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2359,11 +2142,8 @@ or overwritten with default values.",
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -2386,11 +2166,8 @@ or overwritten with default values.",
                       "type": "string",
                     },
                     "value": {
-                      "primitive": {
-                        "string": "string",
-                        "type": "string",
-                      },
-                      "type": "primitive",
+                      "map": [],
+                      "type": "map",
                     },
                   },
                 ],
@@ -2467,13 +2244,17 @@ or overwritten with default values.",
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Deletes an existing test case for a test suite, keying off of the test case id.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2558,6 +2339,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "<strong style="background-color:#4caf50; color:white; padding:4px; border-radius:4px">Stable</strong>
 
 Upload a document to be indexed and used for search.

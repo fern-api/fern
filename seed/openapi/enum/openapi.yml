@@ -2,25 +2,92 @@ openapi: 3.0.1
 info:
   title: enum
   version: ''
-paths: {}
+paths:
+  /inlined-request:
+    post:
+      operationId: inlinedRequest_send
+      tags:
+        - InlinedRequest
+      parameters: []
+      responses:
+        '204':
+          description: ''
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                value:
+                  $ref: '#/components/schemas/Operand'
+                  nullable: true
+            examples:
+              Example1:
+                value:
+                  value: '>'
+  /path-param/{value}:
+    post:
+      operationId: pathParam_send
+      tags:
+        - PathParam
+      parameters:
+        - name: value
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/Operand'
+          examples:
+            Example1:
+              value: '>'
+      responses:
+        '204':
+          description: ''
+  /query:
+    post:
+      operationId: queryParam_send
+      tags:
+        - QueryParam
+      parameters:
+        - name: value
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/Operand'
+            nullable: true
+          examples:
+            Example1:
+              value: '>'
+      responses:
+        '204':
+          description: ''
+  /query-list:
+    post:
+      operationId: queryParam_sendList
+      tags:
+        - QueryParam
+      parameters:
+        - name: value
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Operand'
+              nullable: true
+      responses:
+        '204':
+          description: ''
 components:
   schemas:
-    Enum:
-      title: Enum
+    Operand:
+      title: Operand
       type: string
       enum:
-        - ONE
-        - TWO
-        - THREE
-    One:
-      title: One
-      type: string
-      enum:
-        - one
-        - One
-        - ONe
-        - ONE
+        - '>'
+        - '='
+        - less_than
       description: |-
-        Represents a variety of casing conventions that
-        could collide without special care.
+        Tests enum name and value can be
+        different.
   securitySchemes: {}

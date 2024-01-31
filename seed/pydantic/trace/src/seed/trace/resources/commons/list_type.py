@@ -14,7 +14,7 @@ except ImportError:
 
 
 class ListType(pydantic.BaseModel):
-    value_type: VariableType = pydantic.Field(alias="valueType")
+    value_type: "VariableType" = pydantic.Field(alias="valueType")
     is_fixed_length: typing.Optional[bool] = pydantic.Field(
         alias="isFixedLength",
         description="Whether this list is fixed-size (for languages that supports fixed-size lists). Defaults to false.",
@@ -33,6 +33,7 @@ class ListType(pydantic.BaseModel):
         json_encoders = {dt.datetime: serialize_datetime}
 
 
+from .map_type import MapType  # noqa: E402
 from .variable_type import VariableType  # noqa: E402
 
-ListType.update_forward_refs()
+ListType.update_forward_refs(VariableType=VariableType)

@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: Test spec for `examples` keys
+  version: 1.0.0
+paths: 
+  "/property/search":
+    get:
+      operationId: Search
+      responses:
+        '200':
+          description: A simplified list of properties.
+          content:
+            application/json:
+              schema:
+                items:
+                  "$ref": "#/components/schemas/PropertySearchResponse"
+                type: array
+              examples:
+                Example 1:
+                  value:
+                  - id: '123'
+                    lat: 37.789
+                    lon: -122.395
+                    building_name: The Main Building
+                    building_name_alias:
+                    - Main Building
+                    street_address: 123 Main St
+                    street_address_alias:
+                    - 123 Main Street
+                    city: San Francisco
+                    state: CA
+                    zip_code: '94105'
+                    number_units: 100
+                    year_built: 2010
+
+components: 
+  schemas: 
+    PropertySearchResponse:
+      description: |-
+        The PropertySearchResponse object is returned by the /properties/search endpoint.
+        It is a very simple property object that can then be used to query the /properties/:id endpoint
+      properties:
+        id:
+          type: string
+        lat:
+          type: number
+          format: double
+        lon:
+          type: number
+          format: double
+        building_name:
+          type: string
+          nullable: true
+        building_name_alias:
+          items:
+            type: string
+          type: array
+        street_address:
+          type: string
+        street_address_alias:
+          items:
+            type: string
+          type: array
+        city:
+          type: string
+        state:
+          type: string
+        zip_code:
+          type: string
+        number_units:
+          type: number
+          format: double
+          nullable: true
+        year_built:
+          type: number
+          format: double
+          nullable: true
+        score:
+          type: number
+          format: double
+      required:
+      - id
+      - building_name
+      - building_name_alias
+      - street_address
+      - street_address_alias
+      - city
+      - state
+      - zip_code
+      type: object
+      additionalProperties: false

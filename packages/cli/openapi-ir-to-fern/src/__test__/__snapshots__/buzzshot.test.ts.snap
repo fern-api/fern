@@ -16,20 +16,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "name": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -55,35 +46,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "string",
-                        "extra_fields": [
-                          {
-                            "key": "string",
-                            "present": true,
-                          },
-                        ],
-                        "photos": [
-                          {
-                            "photo": "string",
-                          },
-                        ],
-                        "time": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -125,53 +92,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "date": "string",
-                        "games": [
-                          {
-                            "complete": {
-                              "completed_at": "2024-01-15T09:30:00Z",
-                            },
-                            "date": "string",
-                            "extra_fields": [
-                              {
-                                "key": "string",
-                                "present": true,
-                              },
-                            ],
-                            "time": "string",
-                          },
-                        ],
-                        "photos": [
-                          {
-                            "photo": "string",
-                          },
-                        ],
-                        "players": [
-                          {
-                            "email": "string",
-                            "extra_fields": [
-                              {
-                                "key": "string",
-                                "present": true,
-                              },
-                            ],
-                            "phone": "string",
-                          },
-                        ],
-                        "time": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -205,20 +130,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "name": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -244,25 +160,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "original_image": "string",
-                        "processed": [
-                          {
-                            "photo": "string",
-                          },
-                        ],
-                      },
-                    ],
                   },
                 },
               },
@@ -288,27 +190,11 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
-                    "results": [
-                      {
-                        "email": "string",
-                        "extra_fields": [
-                          {
-                            "key": "string",
-                            "present": true,
-                          },
-                        ],
-                        "phone": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -334,12 +220,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "name": "string",
@@ -365,29 +248,16 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "complete": {
                       "completed_at": "2024-01-15T09:30:00Z",
                     },
                     "date": "string",
-                    "extra_fields": [
-                      {
-                        "key": "string",
-                        "present": true,
-                      },
-                    ],
-                    "photos": [
-                      {
-                        "photo": "string",
-                      },
-                    ],
+                    "extra_fields": [],
                     "time": "string",
                   },
                 },
@@ -432,47 +302,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "date": "string",
-                    "games": [
-                      {
-                        "complete": {
-                          "completed_at": "2024-01-15T09:30:00Z",
-                        },
-                        "date": "string",
-                        "extra_fields": [
-                          {
-                            "key": "string",
-                            "present": true,
-                          },
-                        ],
-                        "time": "string",
-                      },
-                    ],
-                    "photos": [
-                      {
-                        "photo": "string",
-                      },
-                    ],
-                    "players": [
-                      {
-                        "email": "string",
-                        "extra_fields": [
-                          {
-                            "key": "string",
-                            "present": true,
-                          },
-                        ],
-                        "phone": "string",
-                      },
-                    ],
+                    "players": [],
                     "time": "string",
                   },
                 },
@@ -509,12 +345,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "name": "string",
@@ -540,20 +373,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "photo_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "original_image": "string",
-                    "processed": [
-                      {
-                        "photo": "string",
-                      },
-                    ],
+                    "processed": [],
                   },
                 },
               },
@@ -576,21 +402,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "email": "string",
-                    "extra_fields": [
-                      {
-                        "key": "string",
-                        "present": true,
-                      },
-                    ],
+                    "extra_fields": [],
                     "phone": "string",
                   },
                 },
