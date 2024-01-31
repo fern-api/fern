@@ -8,7 +8,6 @@ import {
     FernWorkspace,
     OpenAPIWorkspace
 } from "@fern-api/workspace-loader";
-import { formatDefinitionFile } from "@fern-api/yaml-formatter";
 import chalk from "chalk";
 import { mkdir, rmdir, writeFile } from "fs/promises";
 import yaml from "js-yaml";
