@@ -109,11 +109,6 @@ async function writeFernDefinition({
     for (const [relativePath, definitionFile] of Object.entries(definition.namedDefinitionFiles)) {
         const absoluteFilepath = join(absolutePathToOutputDirectory, RelativeFilePath.of(relativePath));
         await mkdir(dirname(absoluteFilepath), { recursive: true });
-        await writeFile(
-            absoluteFilepath,
-            await formatDefinitionFile({
-                fileContents: yaml.dump(definitionFile.contents)
-            })
-        );
+        await writeFile(absoluteFilepath, yaml.dump(definitionFile.contents));
     }
 }
