@@ -159,19 +159,6 @@ workflows:
             - npm
             - auth0-dev
 
-      - publish-rc:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
-          requires:
-            - live-test-dev
-          context:
-            - npm
-            - auth0-prod
-            - posthog
-
       - publish:
           filters:
             branches:
@@ -179,7 +166,6 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
-            - live-test-dev
             - live-test
           context:
             - npm
