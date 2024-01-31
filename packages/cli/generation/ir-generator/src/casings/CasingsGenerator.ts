@@ -19,17 +19,31 @@ export function constructCasingsGenerator(
                 safeName: sanitizeNameForLanguage(unsafeString, generationLanguage)
             });
 
+            const snakeCaseName = snakeCase(name);
             let camelCaseName = camelCase(name);
             let pascalCaseName = upperFirst(camelCaseName);
             if (specialCasing) {
                 const camelCaseWords = words(camelCaseName);
                 camelCaseName = camelCaseWords
                     .map((word, index) => {
-                        return index > 0 && isCommonInitialism(word) ? word.toUpperCase() : word;
+                        if (index > 0) {
+                            const pluralInitialism = maybeGetPluralInitialism(word);
+                            if (pluralInitialism != null) {
+                                return pluralInitialism;
+                            }
+                            if (isCommonInitialism(word)) {
+                                return word.toUpperCase();
+                            }
+                        }
+                        return word;
                     })
                     .join("");
                 pascalCaseName = camelCaseWords
                     .map((word, index) => {
+                        const pluralInitialism = maybeGetPluralInitialism(word);
+                        if (pluralInitialism != null) {
+                            return pluralInitialism;
+                        }
                         if (isCommonInitialism(word)) {
                             return word.toUpperCase();
                         }
@@ -40,7 +54,6 @@ export function constructCasingsGenerator(
                     })
                     .join("");
             }
-            const snakeCaseName = snakeCase(camelCaseName);
 
             return {
                 originalName: name,
@@ -75,6 +88,10 @@ function sanitizeNameForLanguage(name: string, generationLanguage: GenerationLan
 const STARTS_WITH_NUMBER = /^[0-9]/;
 function startsWithNumber(str: string): boolean {
     return STARTS_WITH_NUMBER.test(str);
+}
+
+function maybeGetPluralInitialism(name: string): string | undefined {
+    return PLURAL_COMMON_ITIALISMS.get(name.toUpperCase());
 }
 
 function isCommonInitialism(name: string): boolean {
@@ -123,4 +140,19 @@ const COMMON_ITIALISMS = new Set<string>([
     "XMPP",
     "XSRF",
     "XSS"
+]);
+
+// A subset of the COMMON_INITIALISMS that require special handling. We want
+// the plural equivalent to be specified with a lowercase trailing 's', such
+// as 'APIs' and 'UUIDs'.
+const PLURAL_COMMON_ITIALISMS = new Map<string, string>([
+    ["ACLS", "ACLs"],
+    ["APIS", "APIs"],
+    ["CPUS", "CPUs"],
+    ["GUIDS", "GUIDs"],
+    ["IDS", "IDs"],
+    ["UIDS", "UIDs"],
+    ["UUIDS", "UUIDs"],
+    ["URIS", "URIs"],
+    ["URLS", "URLs"]
 ]);

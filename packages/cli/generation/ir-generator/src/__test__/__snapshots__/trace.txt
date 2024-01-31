@@ -32527,13 +32527,13 @@ The method name cannot include the following characters:
             "name": {
               "name": {
                 "camelCase": {
-                  "safeName": "warmingSessionIds",
-                  "unsafeName": "warmingSessionIds",
+                  "safeName": "warmingSessionIDs",
+                  "unsafeName": "warmingSessionIDs",
                 },
                 "originalName": "warmingSessionIds",
                 "pascalCase": {
-                  "safeName": "WarmingSessionIds",
-                  "unsafeName": "WarmingSessionIds",
+                  "safeName": "WarmingSessionIDs",
+                  "unsafeName": "WarmingSessionIDs",
                 },
                 "screamingSnakeCase": {
                   "safeName": "WARMING_SESSION_IDS",
