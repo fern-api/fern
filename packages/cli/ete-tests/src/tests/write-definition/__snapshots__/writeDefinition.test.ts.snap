@@ -60,9 +60,7 @@ service:
         type: root.Pets
       examples:
         - response:
-            body:
-              - id: 1
-                name: string
+            body: []
 
     createPets:
       path: /v1/pets

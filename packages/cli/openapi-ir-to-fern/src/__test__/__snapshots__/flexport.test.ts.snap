@@ -60,15 +60,6 @@ exports[`open api parser flexport simple 1`] = `
                                 "unlocode": "US AL2",
                                 "zip": "56307",
                               },
-                              "details": [
-                                {
-                                  "_object": "/air/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
-                                  "port_code": "3901",
-                                },
-                              ],
                               "name": "ORD - Chicago - IL",
                             },
                             "incoterm": "EXW",
@@ -87,31 +78,8 @@ exports[`open api parser flexport simple 1`] = `
                                 "unlocode": "US AL2",
                                 "zip": "56307",
                               },
-                              "details": [
-                                {
-                                  "_object": "/air/port",
-                                  "country_code": "US",
-                                  "iata_code": "LAX",
-                                  "icao_code": "KLAX",
-                                  "port_code": "3901",
-                                },
-                              ],
                               "name": "ORD - Chicago - IL",
                             },
-                            "product_descriptions": [
-                              {
-                                "_object": "/bookings/product_descriptions",
-                                "description": "Wristwatches",
-                                "description_for_export_customs": "手表",
-                                "description_for_export_customs_locale": "zh_CN",
-                                "hs_code": {
-                                  "_object": "/hs_code",
-                                  "code": "9101.00",
-                                  "country_code": "US",
-                                  "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                },
-                              },
-                            ],
                             "wants_delivery_service": false,
                             "wants_pickup_service": true,
                           },
@@ -260,6 +228,13 @@ exports[`open api parser flexport simple 1`] = `
                                   "icao_code": "KLAX",
                                   "port_code": "2704",
                                 },
+                                {
+                                  "_object": "/ocean/port",
+                                  "country_code": "US",
+                                  "iata_code": "LAX",
+                                  "icao_code": "KLAX",
+                                  "port_code": "2704",
+                                },
                               ],
                               "name": "Long Beach, Los Angeles, California",
                             },
@@ -283,6 +258,13 @@ exports[`open api parser flexport simple 1`] = `
                               "details": [
                                 {
                                   "_object": "/trucking/port",
+                                  "country_code": "US",
+                                  "iata_code": "LAX",
+                                  "icao_code": "KLAX",
+                                  "port_code": "57035",
+                                },
+                                {
+                                  "_object": "/ocean/port",
                                   "country_code": "US",
                                   "iata_code": "LAX",
                                   "icao_code": "KLAX",
@@ -484,14 +466,7 @@ exports[`open api parser flexport simple 1`] = `
                     "origin_port_iata_code": "HKG",
                     "origin_port_icao_code": "VHHH",
                     "origin_port_loc_code": "HKHKG",
-                    "product_descriptions": [
-                      {
-                        "description": "Wristwatches",
-                        "description_for_export_customs": "手表",
-                        "description_for_export_customs_locale": "zh_CN",
-                        "hs_code": "9101.01",
-                      },
-                    ],
+                    "product_descriptions": [],
                     "wants_delivery_service": true,
                     "wants_pickup_service": true,
                   },
@@ -611,15 +586,6 @@ exports[`open api parser flexport simple 1`] = `
                             "unlocode": "US AL2",
                             "zip": "56307",
                           },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
                           "name": "ORD - Chicago - IL",
                         },
                         "incoterm": "EXW",
@@ -638,31 +604,8 @@ exports[`open api parser flexport simple 1`] = `
                             "unlocode": "US AL2",
                             "zip": "56307",
                           },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
                           "name": "ORD - Chicago - IL",
                         },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                            "hs_code": {
-                              "_object": "/hs_code",
-                              "code": "9101.00",
-                              "country_code": "US",
-                              "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                            },
-                          },
-                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -812,6 +755,13 @@ exports[`open api parser flexport simple 1`] = `
                               "icao_code": "KLAX",
                               "port_code": "2704",
                             },
+                            {
+                              "_object": "/ocean/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "2704",
+                            },
                           ],
                           "name": "Long Beach, Los Angeles, California",
                         },
@@ -835,6 +785,13 @@ exports[`open api parser flexport simple 1`] = `
                           "details": [
                             {
                               "_object": "/trucking/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "57035",
+                            },
+                            {
+                              "_object": "/ocean/port",
                               "country_code": "US",
                               "iata_code": "LAX",
                               "icao_code": "KLAX",
@@ -1047,15 +1004,6 @@ exports[`open api parser flexport simple 1`] = `
                             "unlocode": "US AL2",
                             "zip": "56307",
                           },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
                           "name": "ORD - Chicago - IL",
                         },
                         "incoterm": "EXW",
@@ -1074,31 +1022,8 @@ exports[`open api parser flexport simple 1`] = `
                             "unlocode": "US AL2",
                             "zip": "56307",
                           },
-                          "details": [
-                            {
-                              "_object": "/air/port",
-                              "country_code": "US",
-                              "iata_code": "LAX",
-                              "icao_code": "KLAX",
-                              "port_code": "3901",
-                            },
-                          ],
                           "name": "ORD - Chicago - IL",
                         },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                            "hs_code": {
-                              "_object": "/hs_code",
-                              "code": "9101.00",
-                              "country_code": "US",
-                              "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                            },
-                          },
-                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -1248,6 +1173,13 @@ exports[`open api parser flexport simple 1`] = `
                               "icao_code": "KLAX",
                               "port_code": "57035",
                             },
+                            {
+                              "_object": "/ocean/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "57035",
+                            },
                           ],
                           "name": "Shanghai, China",
                         },
@@ -1276,23 +1208,16 @@ exports[`open api parser flexport simple 1`] = `
                               "icao_code": "KLAX",
                               "port_code": "57035",
                             },
+                            {
+                              "_object": "/ocean/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "57035",
+                            },
                           ],
                           "name": "Shanghai, China",
                         },
-                        "product_descriptions": [
-                          {
-                            "_object": "/bookings/product_descriptions",
-                            "description": "Wristwatches",
-                            "description_for_export_customs": "手表",
-                            "description_for_export_customs_locale": "zh_CN",
-                            "hs_code": {
-                              "_object": "/hs_code",
-                              "code": "9101.00",
-                              "country_code": "US",
-                              "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                            },
-                          },
-                        ],
                         "wants_delivery_service": false,
                         "wants_pickup_service": true,
                       },
@@ -1527,13 +1452,6 @@ exports[`open api parser flexport simple 1`] = `
                   "new_origin_address_ref": "warehouse_cn",
                   "new_origin_port_loc_code": "CNSZP",
                   "new_origin_port_us_cbp_port_code": "57078",
-                  "new_product_descriptions": [
-                    {
-                      "description": "Wristwatches",
-                      "description_for_export_customs": "手表",
-                      "hs_code": "9101.01",
-                    },
-                  ],
                   "new_wants_bco": true,
                   "new_wants_flexport_freight": true,
                   "new_wants_import_customs_service": false,
@@ -1659,19 +1577,6 @@ exports[`open api parser flexport simple 1`] = `
                         "unlocode": "US AL2",
                         "zip": "60666",
                       },
-                      "new_product_descriptions": [
-                        {
-                          "_object": "/booking_amendment_product_description",
-                          "description": "Wristwatches",
-                          "description_for_export_customs": "手表",
-                          "hs_code": {
-                            "_object": "/hs_code",
-                            "code": "9101.00",
-                            "country_code": "US",
-                            "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                          },
-                        },
-                      ],
                       "new_wants_bco": true,
                       "new_wants_flexport_freight": true,
                       "new_wants_import_customs_service": false,
@@ -2260,59 +2165,8 @@ exports[`open api parser flexport simple 1`] = `
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
-                  "involved_parties": [
-                    {
-                      "company_entity_ref": "string",
-                      "type": "string",
-                    },
-                  ],
                   "is_related_parties": false,
-                  "line_items": [
-                    {
-                      "container_number": "522932-1",
-                      "country_of_origin": "CN",
-                      "document_line_number": 1,
-                      "first_sale_value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "gross_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "metadata": {},
-                      "net_net_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "net_value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "net_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "price_per_unit": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "product_sku": "PRODUCT-123",
-                      "purchase_order_number": "9876-ABC",
-                      "quantity": {
-                        "unit": "pcs",
-                        "value": 1.1,
-                      },
-                      "value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "volume": {
-                        "unit": "cbm",
-                        "value": 472.62,
-                      },
-                    },
-                  ],
+                  "line_items": [],
                   "metadata": {},
                   "proration_amount": {
                     "amount": "12.34",
@@ -2330,32 +2184,6 @@ exports[`open api parser flexport simple 1`] = `
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "company_entity": {
-                            "_object": "/api/refs/object",
-                            "id": 1,
-                            "link": "https://api.flexport.com/network/company_entities/12345",
-                            "ref_type": "/company_entity",
-                          },
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2541,32 +2369,6 @@ exports[`open api parser flexport simple 1`] = `
                           "digitization_status": "complete",
                           "id": "abcxyz-23456-def",
                           "invoice_number": "ABCDEFGHIJKLMNOP",
-                          "involved_parties": [
-                            {
-                              "_object": "/customs/involved_party",
-                              "address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "company_entity": {
-                                "_object": "/api/refs/object",
-                                "id": 1,
-                                "link": "https://api.flexport.com/network/company_entities/12345",
-                                "ref_type": "/company_entity",
-                              },
-                              "name": "The West Coast Company",
-                              "type": "consignee",
-                            },
-                          ],
                           "is_related_parties": false,
                           "line_items": [
                             {
@@ -2747,32 +2549,6 @@ exports[`open api parser flexport simple 1`] = `
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "company_entity": {
-                            "_object": "/api/refs/object",
-                            "id": 1,
-                            "link": "https://api.flexport.com/network/company_entities/12345",
-                            "ref_type": "/company_entity",
-                          },
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -2918,52 +2694,6 @@ exports[`open api parser flexport simple 1`] = `
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
                   "is_related_parties": false,
-                  "line_items": [
-                    {
-                      "container_number": "522932-1",
-                      "country_of_origin": "CN",
-                      "document_line_number": 1,
-                      "first_sale_value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "gross_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "metadata": {},
-                      "net_net_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "net_value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "net_weight": {
-                        "unit": "kg",
-                        "value": 2300.4,
-                      },
-                      "price_per_unit": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "product_sku": "PRODUCT-123",
-                      "purchase_order_number": "9876-ABC",
-                      "quantity": {
-                        "unit": "pcs",
-                        "value": 1.1,
-                      },
-                      "value": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "volume": {
-                        "unit": "cbm",
-                        "value": 472.62,
-                      },
-                    },
-                  ],
                   "proration_amount": {
                     "amount": "12.34",
                     "currency_code": "USD",
@@ -2978,32 +2708,6 @@ exports[`open api parser flexport simple 1`] = `
                       "digitization_status": "complete",
                       "id": "abcxyz-23456-def",
                       "invoice_number": "ABCDEFGHIJKLMNOP",
-                      "involved_parties": [
-                        {
-                          "_object": "/customs/involved_party",
-                          "address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "company_entity": {
-                            "_object": "/api/refs/object",
-                            "id": 1,
-                            "link": "https://api.flexport.com/network/company_entities/12345",
-                            "ref_type": "/company_entity",
-                          },
-                          "name": "The West Coast Company",
-                          "type": "consignee",
-                        },
-                      ],
                       "is_related_parties": false,
                       "line_items": [
                         {
@@ -3258,13 +2962,7 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
+                          "vat_numbers": [],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -3455,13 +3153,7 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "zoomit_ref",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
+                          "vat_numbers": [],
                         },
                       ],
                       "id": "ABC123",
@@ -3613,13 +3305,7 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "name": "Zoomit",
                           "ref": "id-123456",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
+                          "vat_numbers": [],
                         },
                       ],
                       "id": "K67EZV1K8cQ5afQErZwk1Q",
@@ -3854,12 +3540,6 @@ exports[`open api parser flexport simple 1`] = `
                   },
                   "name": "Zoomit",
                   "ref": "my-zoomit-ref",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -4025,12 +3705,6 @@ exports[`open api parser flexport simple 1`] = `
                   },
                   "name": "Zoomit V2",
                   "ref": "zoomit-us",
-                  "vat_numbers": [
-                    {
-                      "country_code": "GB",
-                      "number": "GB 123456789",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -4572,36 +4246,12 @@ exports[`open api parser flexport simple 1`] = `
                               "product": {
                                 "_object": "/product",
                                 "archived_at": "2019-01-18T22:08:38.599Z",
-                                "classifications": [
-                                  {
-                                    "_object": "/product/classification",
-                                    "codes": [
-                                      "0301.00",
-                                    ],
-                                    "region": "US",
-                                  },
-                                ],
                                 "client_verified": true,
                                 "country_of_origin": "China",
                                 "description": "The best 12V AC Adapter on the market",
-                                "hs_codes": [
-                                  {
-                                    "_object": "/hs_code",
-                                    "code": "9101.00",
-                                    "country_code": "US",
-                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                  },
-                                ],
                                 "id": 84291,
                                 "name": "AC Adapter 12V",
                                 "product_category": "Cosmetics",
-                                "product_properties": [
-                                  {
-                                    "_object": "/product/property",
-                                    "type": "color",
-                                    "value": "blue",
-                                  },
-                                ],
                                 "sku": "WDVCDFD-RM00472",
                               },
                               "purchase_order_number": "PO002811",
@@ -4719,36 +4369,12 @@ exports[`open api parser flexport simple 1`] = `
                           "product": {
                             "_object": "/product",
                             "archived_at": "2019-01-18T22:08:38.599Z",
-                            "classifications": [
-                              {
-                                "_object": "/product/classification",
-                                "codes": [
-                                  "0301.00",
-                                ],
-                                "region": "US",
-                              },
-                            ],
                             "client_verified": true,
                             "country_of_origin": "China",
                             "description": "The best 12V AC Adapter on the market",
-                            "hs_codes": [
-                              {
-                                "_object": "/hs_code",
-                                "code": "9101.00",
-                                "country_code": "US",
-                                "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                              },
-                            ],
                             "id": 84291,
                             "name": "AC Adapter 12V",
                             "product_category": "Cosmetics",
-                            "product_properties": [
-                              {
-                                "_object": "/product/property",
-                                "type": "color",
-                                "value": "blue",
-                              },
-                            ],
                             "sku": "WDVCDFD-RM00472",
                           },
                           "purchase_order_number": "PO002811",
@@ -5470,733 +5096,6 @@ exports[`open api parser flexport simple 1`] = `
                     "_object": "/api/response",
                     "data": {
                       "_object": "/api/collections/paginated",
-                      "data": [
-                        {
-                          "_object": "/event",
-                          "created_at": "2019-04-16T18:05:10.964Z",
-                          "data": {
-                            "_object": "/shipment_event_data",
-                            "containers": [
-                              {
-                                "_object": "/ocean/shipment_container",
-                                "container_legs": {
-                                  "_object": "/api/refs/collection",
-                                  "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                                  "ref_type": "/ocean/shipment_container_leg",
-                                },
-                                "container_number": "BWSE3982156",
-                                "container_size": "twenty_ft",
-                                "container_type": "dry",
-                                "id": 1,
-                                "items": [
-                                  {
-                                    "_object": "/shipment_item",
-                                    "id": 1,
-                                    "product": {
-                                      "_object": "/product",
-                                      "archived_at": "2019-01-18T22:08:38.599Z",
-                                      "classifications": [
-                                        {
-                                          "_object": "/product/classification",
-                                          "codes": [
-                                            "0301.00",
-                                          ],
-                                          "region": "US",
-                                        },
-                                      ],
-                                      "client_verified": true,
-                                      "country_of_origin": "China",
-                                      "description": "The best 12V AC Adapter on the market",
-                                      "hs_codes": [
-                                        {
-                                          "_object": "/hs_code",
-                                          "code": "9101.00",
-                                          "country_code": "US",
-                                          "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                        },
-                                      ],
-                                      "id": 1,
-                                      "name": "AC Adapter 12V",
-                                      "product_category": "Cosmetics",
-                                      "product_properties": [
-                                        {
-                                          "_object": "/product/property",
-                                          "type": "color",
-                                          "value": "blue",
-                                        },
-                                      ],
-                                      "sku": "WDVCDFD-RM00472",
-                                    },
-                                    "purchase_order_number": "PO002811",
-                                    "total_units": 1,
-                                    "total_volume": {
-                                      "_object": "/quantity/volume",
-                                      "unit": "cbm",
-                                      "value": 472.62,
-                                    },
-                                    "total_weight": {
-                                      "_object": "/quantity/weight",
-                                      "unit": "kg",
-                                      "value": 2300.4,
-                                    },
-                                  },
-                                ],
-                                "pickup_number": "ABCD1234",
-                                "seal_number": "UE_WQ2934875",
-                                "shipment": {
-                                  "_object": "/api/refs/object",
-                                  "id": 1,
-                                  "link": "https://api.flexport.com/shipments/123",
-                                  "ref_type": "/shipment",
-                                },
-                              },
-                            ],
-                            "exception": {
-                              "message": "US Customs Hold",
-                              "root_cause_name": "Government Agency",
-                              "root_cause_slug": "carrier",
-                            },
-                            "location": {
-                              "_object": "/shipment_node",
-                              "place": {
-                                "_object": "/place",
-                                "address": {
-                                  "_object": "/address",
-                                  "city": "Albany",
-                                  "country": "United States of America",
-                                  "country_code": "US",
-                                  "ref": "address_ref_x",
-                                  "state": "MN",
-                                  "street_address": "1641 Settlers Lane",
-                                  "street_address2": "STE 2918",
-                                  "timezone": "America/Los_Angeles",
-                                  "unlocode": "US AL2",
-                                  "zip": "56307",
-                                },
-                                "details": [
-                                  {
-                                    "_object": "/air/port",
-                                    "country_code": "US",
-                                    "iata_code": "LAX",
-                                    "icao_code": "KLAX",
-                                    "port_code": "3901",
-                                  },
-                                ],
-                                "name": "ORD - Chicago - IL",
-                              },
-                              "tags": [
-                                "port_of_loading",
-                              ],
-                              "terminal": {
-                                "_object": "/shipment_node/terminal",
-                                "address": {
-                                  "_object": "/address",
-                                  "city": "Albany",
-                                  "country": "United States of America",
-                                  "country_code": "US",
-                                  "ref": "address_ref_x",
-                                  "state": "MN",
-                                  "street_address": "1641 Settlers Lane",
-                                  "street_address2": "STE 2918",
-                                  "timezone": "America/Los_Angeles",
-                                  "unlocode": "US AL2",
-                                  "zip": "56307",
-                                },
-                                "firms_code": "I092",
-                                "name": "Terminal 3",
-                              },
-                            },
-                            "resource": {
-                              "_object": "/shipments",
-                              "air_shipment": {
-                                "_object": "/air/shipment",
-                                "chargeable_volume": {
-                                  "_object": "/quantity/volume",
-                                  "unit": "cbm",
-                                  "value": 472.62,
-                                },
-                                "chargeable_weight": {
-                                  "_object": "/quantity/weight",
-                                  "unit": "kg",
-                                  "value": 2300.4,
-                                },
-                                "house_airway_bill": "HWXJKE67732",
-                                "master_airway_bill": "22831046871",
-                              },
-                              "booking": {},
-                              "buyers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "calculated_volume": {
-                                "_object": "/quantity/volume",
-                                "unit": "cbm",
-                                "value": 472.62,
-                              },
-                              "calculated_weight": {
-                                "_object": "/quantity/weight",
-                                "unit": "kg",
-                                "value": 2300.4,
-                              },
-                              "child_shipments": [
-                                {
-                                  "_object": "/api/refs/object",
-                                  "id": 1,
-                                  "link": "https://api.flexport.com/shipments/123",
-                                  "ref_type": "/shipment",
-                                },
-                              ],
-                              "commercial_invoices": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
-                                "ref_type": "/commercial_invoice",
-                              },
-                              "consignees": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "customs_entries": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/customs_entries?f.shipment.id=2983",
-                                "ref_type": "/customs_entry",
-                              },
-                              "dangerous_goods": {
-                                "_object": "/shipment/dangerous_goods",
-                                "review_status": "pending",
-                              },
-                              "documents": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/document?f.shipment.id=2983",
-                                "ref_type": "/document",
-                              },
-                              "freight_type": "port_to_door",
-                              "id": 1,
-                              "importers_of_record": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "incoterm": "EXW",
-                              "it_number": "V12345678",
-                              "items": [
-                                {
-                                  "_object": "/shipment_item",
-                                  "id": 1,
-                                  "product": {
-                                    "_object": "/product",
-                                    "archived_at": "2019-01-18T22:08:38.599Z",
-                                    "classifications": [
-                                      {
-                                        "_object": "/product/classification",
-                                        "codes": [
-                                          "0301.00",
-                                        ],
-                                        "region": "US",
-                                      },
-                                    ],
-                                    "client_verified": true,
-                                    "country_of_origin": "China",
-                                    "description": "The best 12V AC Adapter on the market",
-                                    "hs_codes": [
-                                      {
-                                        "_object": "/hs_code",
-                                        "code": "9101.00",
-                                        "country_code": "US",
-                                        "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                      },
-                                    ],
-                                    "id": 1,
-                                    "name": "AC Adapter 12V",
-                                    "product_category": "Cosmetics",
-                                    "product_properties": [
-                                      {
-                                        "_object": "/product/property",
-                                        "type": "color",
-                                        "value": "blue",
-                                      },
-                                    ],
-                                    "sku": "WDVCDFD-RM00472",
-                                  },
-                                  "purchase_order_number": "PO002811",
-                                  "total_units": 1,
-                                  "total_volume": {
-                                    "_object": "/quantity/volume",
-                                    "unit": "cbm",
-                                    "value": 472.62,
-                                  },
-                                  "total_weight": {
-                                    "_object": "/quantity/weight",
-                                    "unit": "kg",
-                                    "value": 2300.4,
-                                  },
-                                },
-                              ],
-                              "legs": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
-                                "ref_type": "/shipment_leg",
-                              },
-                              "name": "ABC Shipment",
-                              "ocean_shipment": {
-                                "_object": "/ocean/shipment",
-                                "carrier_booking_number": "697216024",
-                                "confirmed_space_released_at": "2021-06-08T06:18:46.299Z",
-                                "containers": {
-                                  "_object": "/api/refs/collection",
-                                  "link": "https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123",
-                                  "ref_type": "/ocean/shipment_container",
-                                },
-                                "house_bill_number": "TUWSANR18658",
-                                "is_lcl": false,
-                                "master_bill_number": "NEWO697216024",
-                              },
-                              "parent_shipment": {
-                                "_object": "/api/refs/object",
-                                "id": 1,
-                                "link": "https://api.flexport.com/shipments/123",
-                                "ref_type": "/shipment",
-                              },
-                              "pieces": 1,
-                              "priority": "standard",
-                              "sellers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "shippers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "status": "seller_location",
-                              "transportation_mode": "ocean",
-                              "visibility_only": true,
-                              "wants_commercial_invoice_transcription": true,
-                              "wants_delivery_service": true,
-                              "wants_export_customs_service": true,
-                              "wants_flexport_freight": true,
-                              "wants_flexport_insurance": true,
-                              "wants_freight_management_bco": true,
-                              "wants_import_customs_service": true,
-                              "wants_pickup_service": true,
-                              "wants_trade_declaration_service": true,
-                            },
-                            "shipment": {
-                              "_object": "/shipments",
-                              "air_shipment": {
-                                "_object": "/air/shipment",
-                                "chargeable_volume": {
-                                  "_object": "/quantity/volume",
-                                  "unit": "cbm",
-                                  "value": 472.62,
-                                },
-                                "chargeable_weight": {
-                                  "_object": "/quantity/weight",
-                                  "unit": "kg",
-                                  "value": 2300.4,
-                                },
-                                "house_airway_bill": "HWXJKE67732",
-                                "master_airway_bill": "22831046871",
-                              },
-                              "booking": {},
-                              "buyers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "calculated_volume": {
-                                "_object": "/quantity/volume",
-                                "unit": "cbm",
-                                "value": 472.62,
-                              },
-                              "calculated_weight": {
-                                "_object": "/quantity/weight",
-                                "unit": "kg",
-                                "value": 2300.4,
-                              },
-                              "child_shipments": [
-                                {
-                                  "_object": "/api/refs/object",
-                                  "id": 1,
-                                  "link": "https://api.flexport.com/shipments/123",
-                                  "ref_type": "/shipment",
-                                },
-                              ],
-                              "commercial_invoices": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
-                                "ref_type": "/commercial_invoice",
-                              },
-                              "consignees": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "customs_entries": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/customs_entries?f.shipment.id=2983",
-                                "ref_type": "/customs_entry",
-                              },
-                              "dangerous_goods": {
-                                "_object": "/shipment/dangerous_goods",
-                                "review_status": "pending",
-                              },
-                              "documents": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/document?f.shipment.id=2983",
-                                "ref_type": "/document",
-                              },
-                              "freight_type": "port_to_door",
-                              "id": 1,
-                              "importers_of_record": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "incoterm": "EXW",
-                              "it_number": "V12345678",
-                              "items": [
-                                {
-                                  "_object": "/shipment_item",
-                                  "id": 1,
-                                  "product": {
-                                    "_object": "/product",
-                                    "archived_at": "2019-01-18T22:08:38.599Z",
-                                    "classifications": [
-                                      {
-                                        "_object": "/product/classification",
-                                        "codes": [
-                                          "0301.00",
-                                        ],
-                                        "region": "US",
-                                      },
-                                    ],
-                                    "client_verified": true,
-                                    "country_of_origin": "China",
-                                    "description": "The best 12V AC Adapter on the market",
-                                    "hs_codes": [
-                                      {
-                                        "_object": "/hs_code",
-                                        "code": "9101.00",
-                                        "country_code": "US",
-                                        "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                      },
-                                    ],
-                                    "id": 1,
-                                    "name": "AC Adapter 12V",
-                                    "product_category": "Cosmetics",
-                                    "product_properties": [
-                                      {
-                                        "_object": "/product/property",
-                                        "type": "color",
-                                        "value": "blue",
-                                      },
-                                    ],
-                                    "sku": "WDVCDFD-RM00472",
-                                  },
-                                  "purchase_order_number": "PO002811",
-                                  "total_units": 1,
-                                  "total_volume": {
-                                    "_object": "/quantity/volume",
-                                    "unit": "cbm",
-                                    "value": 472.62,
-                                  },
-                                  "total_weight": {
-                                    "_object": "/quantity/weight",
-                                    "unit": "kg",
-                                    "value": 2300.4,
-                                  },
-                                },
-                              ],
-                              "legs": {
-                                "_object": "/api/refs/collection",
-                                "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
-                                "ref_type": "/shipment_leg",
-                              },
-                              "name": "ABC Shipment",
-                              "ocean_shipment": {
-                                "_object": "/ocean/shipment",
-                                "carrier_booking_number": "697216024",
-                                "confirmed_space_released_at": "2021-06-08T06:18:46.299Z",
-                                "containers": {
-                                  "_object": "/api/refs/collection",
-                                  "link": "https://api.flexport.com/ocean/shipment_containers?f.shipment.id=123",
-                                  "ref_type": "/ocean/shipment_container",
-                                },
-                                "house_bill_number": "TUWSANR18658",
-                                "is_lcl": false,
-                                "master_bill_number": "NEWO697216024",
-                              },
-                              "parent_shipment": {
-                                "_object": "/api/refs/object",
-                                "id": 1,
-                                "link": "https://api.flexport.com/shipments/123",
-                                "ref_type": "/shipment",
-                              },
-                              "pieces": 1,
-                              "priority": "standard",
-                              "sellers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "shippers": [
-                                {
-                                  "_object": "/company_entity",
-                                  "id": 1,
-                                  "mailing_address": {
-                                    "_object": "/address",
-                                    "city": "Albany",
-                                    "country": "United States of America",
-                                    "country_code": "US",
-                                    "ref": "address_ref_x",
-                                    "state": "MN",
-                                    "street_address": "1641 Settlers Lane",
-                                    "street_address2": "STE 2918",
-                                    "timezone": "America/Los_Angeles",
-                                    "unlocode": "US AL2",
-                                    "zip": "56307",
-                                  },
-                                  "name": "Zoomit",
-                                  "ref": "zoomit_ref",
-                                  "vat_numbers": [
-                                    {
-                                      "_object": "/company_entity/vat_number",
-                                      "country_code": "GB",
-                                      "number": "GB 123456789",
-                                    },
-                                  ],
-                                },
-                              ],
-                              "status": "seller_location",
-                              "transportation_mode": "ocean",
-                              "visibility_only": true,
-                              "wants_commercial_invoice_transcription": true,
-                              "wants_delivery_service": true,
-                              "wants_export_customs_service": true,
-                              "wants_flexport_freight": true,
-                              "wants_flexport_insurance": true,
-                              "wants_freight_management_bco": true,
-                              "wants_import_customs_service": true,
-                              "wants_pickup_service": true,
-                              "wants_trade_declaration_service": true,
-                            },
-                          },
-                          "id": 1,
-                          "occurred_at": "2019-04-16T18:05:10.964Z",
-                          "type": "/shipment_leg#departed",
-                          "version": 1,
-                        },
-                      ],
                     },
                     "self": "https://api.flexport.com/events",
                     "version": 1,
@@ -6259,81 +5158,6 @@ exports[`open api parser flexport simple 1`] = `
                       "created_at": "2019-04-16T18:05:10.964Z",
                       "data": {
                         "_object": "/shipment_event_data",
-                        "containers": [
-                          {
-                            "_object": "/ocean/shipment_container",
-                            "container_legs": {
-                              "_object": "/api/refs/collection",
-                              "link": "https://api.flexport.com/ocean/shipment_container_legs?f.shipment_container.id=123",
-                              "ref_type": "/ocean/shipment_container_leg",
-                            },
-                            "container_number": "BWSE3982156",
-                            "container_size": "twenty_ft",
-                            "container_type": "dry",
-                            "id": 1,
-                            "items": [
-                              {
-                                "_object": "/shipment_item",
-                                "id": 1,
-                                "product": {
-                                  "_object": "/product",
-                                  "archived_at": "2019-01-18T22:08:38.599Z",
-                                  "classifications": [
-                                    {
-                                      "_object": "/product/classification",
-                                      "codes": [
-                                        "0301.00",
-                                      ],
-                                      "region": "US",
-                                    },
-                                  ],
-                                  "client_verified": true,
-                                  "country_of_origin": "China",
-                                  "description": "The best 12V AC Adapter on the market",
-                                  "hs_codes": [
-                                    {
-                                      "_object": "/hs_code",
-                                      "code": "9101.00",
-                                      "country_code": "US",
-                                      "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                    },
-                                  ],
-                                  "id": 1,
-                                  "name": "AC Adapter 12V",
-                                  "product_category": "Cosmetics",
-                                  "product_properties": [
-                                    {
-                                      "_object": "/product/property",
-                                      "type": "color",
-                                      "value": "blue",
-                                    },
-                                  ],
-                                  "sku": "WDVCDFD-RM00472",
-                                },
-                                "purchase_order_number": "PO002811",
-                                "total_units": 1,
-                                "total_volume": {
-                                  "_object": "/quantity/volume",
-                                  "unit": "cbm",
-                                  "value": 472.62,
-                                },
-                                "total_weight": {
-                                  "_object": "/quantity/weight",
-                                  "unit": "kg",
-                                  "value": 2300.4,
-                                },
-                              },
-                            ],
-                            "pickup_number": "ABCD1234",
-                            "seal_number": "UE_WQ2934875",
-                            "shipment": {
-                              "_object": "/api/refs/object",
-                              "id": 1,
-                              "link": "https://api.flexport.com/shipments/123",
-                              "ref_type": "/shipment",
-                            },
-                          },
-                        ],
                         "exception": {
                           "message": "US Customs Hold",
                           "root_cause_name": "Government Agency",
@@ -6356,20 +5180,8 @@ exports[`open api parser flexport simple 1`] = `
                               "unlocode": "US AL2",
                               "zip": "56307",
                             },
-                            "details": [
-                              {
-                                "_object": "/air/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
-                                "port_code": "3901",
-                              },
-                            ],
                             "name": "ORD - Chicago - IL",
                           },
-                          "tags": [
-                            "port_of_loading",
-                          ],
                           "terminal": {
                             "_object": "/shipment_node/terminal",
                             "address": {
@@ -6407,34 +5219,6 @@ exports[`open api parser flexport simple 1`] = `
                             "master_airway_bill": "22831046871",
                           },
                           "booking": {},
-                          "buyers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "calculated_volume": {
                             "_object": "/quantity/volume",
                             "unit": "cbm",
@@ -6445,47 +5229,11 @@ exports[`open api parser flexport simple 1`] = `
                             "unit": "kg",
                             "value": 2300.4,
                           },
-                          "child_shipments": [
-                            {
-                              "_object": "/api/refs/object",
-                              "id": 1,
-                              "link": "https://api.flexport.com/shipments/123",
-                              "ref_type": "/shipment",
-                            },
-                          ],
                           "commercial_invoices": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
                             "ref_type": "/commercial_invoice",
                           },
-                          "consignees": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "customs_entries": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/customs_entries?f.shipment.id=2983",
@@ -6502,89 +5250,8 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "freight_type": "port_to_door",
                           "id": 1,
-                          "importers_of_record": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "incoterm": "EXW",
                           "it_number": "V12345678",
-                          "items": [
-                            {
-                              "_object": "/shipment_item",
-                              "id": 1,
-                              "product": {
-                                "_object": "/product",
-                                "archived_at": "2019-01-18T22:08:38.599Z",
-                                "classifications": [
-                                  {
-                                    "_object": "/product/classification",
-                                    "codes": [
-                                      "0301.00",
-                                    ],
-                                    "region": "US",
-                                  },
-                                ],
-                                "client_verified": true,
-                                "country_of_origin": "China",
-                                "description": "The best 12V AC Adapter on the market",
-                                "hs_codes": [
-                                  {
-                                    "_object": "/hs_code",
-                                    "code": "9101.00",
-                                    "country_code": "US",
-                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                  },
-                                ],
-                                "id": 1,
-                                "name": "AC Adapter 12V",
-                                "product_category": "Cosmetics",
-                                "product_properties": [
-                                  {
-                                    "_object": "/product/property",
-                                    "type": "color",
-                                    "value": "blue",
-                                  },
-                                ],
-                                "sku": "WDVCDFD-RM00472",
-                              },
-                              "purchase_order_number": "PO002811",
-                              "total_units": 1,
-                              "total_volume": {
-                                "_object": "/quantity/volume",
-                                "unit": "cbm",
-                                "value": 472.62,
-                              },
-                              "total_weight": {
-                                "_object": "/quantity/weight",
-                                "unit": "kg",
-                                "value": 2300.4,
-                              },
-                            },
-                          ],
                           "legs": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
@@ -6612,62 +5279,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "pieces": 1,
                           "priority": "standard",
-                          "sellers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
-                          "shippers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "status": "seller_location",
                           "transportation_mode": "ocean",
                           "visibility_only": true,
@@ -6699,34 +5310,6 @@ exports[`open api parser flexport simple 1`] = `
                             "master_airway_bill": "22831046871",
                           },
                           "booking": {},
-                          "buyers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "calculated_volume": {
                             "_object": "/quantity/volume",
                             "unit": "cbm",
@@ -6737,47 +5320,11 @@ exports[`open api parser flexport simple 1`] = `
                             "unit": "kg",
                             "value": 2300.4,
                           },
-                          "child_shipments": [
-                            {
-                              "_object": "/api/refs/object",
-                              "id": 1,
-                              "link": "https://api.flexport.com/shipments/123",
-                              "ref_type": "/shipment",
-                            },
-                          ],
                           "commercial_invoices": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
                             "ref_type": "/commercial_invoice",
                           },
-                          "consignees": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "customs_entries": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/customs_entries?f.shipment.id=2983",
@@ -6794,89 +5341,8 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "freight_type": "port_to_door",
                           "id": 1,
-                          "importers_of_record": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "incoterm": "EXW",
                           "it_number": "V12345678",
-                          "items": [
-                            {
-                              "_object": "/shipment_item",
-                              "id": 1,
-                              "product": {
-                                "_object": "/product",
-                                "archived_at": "2019-01-18T22:08:38.599Z",
-                                "classifications": [
-                                  {
-                                    "_object": "/product/classification",
-                                    "codes": [
-                                      "0301.00",
-                                    ],
-                                    "region": "US",
-                                  },
-                                ],
-                                "client_verified": true,
-                                "country_of_origin": "China",
-                                "description": "The best 12V AC Adapter on the market",
-                                "hs_codes": [
-                                  {
-                                    "_object": "/hs_code",
-                                    "code": "9101.00",
-                                    "country_code": "US",
-                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                  },
-                                ],
-                                "id": 1,
-                                "name": "AC Adapter 12V",
-                                "product_category": "Cosmetics",
-                                "product_properties": [
-                                  {
-                                    "_object": "/product/property",
-                                    "type": "color",
-                                    "value": "blue",
-                                  },
-                                ],
-                                "sku": "WDVCDFD-RM00472",
-                              },
-                              "purchase_order_number": "PO002811",
-                              "total_units": 1,
-                              "total_volume": {
-                                "_object": "/quantity/volume",
-                                "unit": "cbm",
-                                "value": 472.62,
-                              },
-                              "total_weight": {
-                                "_object": "/quantity/weight",
-                                "unit": "kg",
-                                "value": 2300.4,
-                              },
-                            },
-                          ],
                           "legs": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/shipment_legs?f.shipment.id=123",
@@ -6904,62 +5370,6 @@ exports[`open api parser flexport simple 1`] = `
                           },
                           "pieces": 1,
                           "priority": "standard",
-                          "sellers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
-                          "shippers": [
-                            {
-                              "_object": "/company_entity",
-                              "id": 1,
-                              "mailing_address": {
-                                "_object": "/address",
-                                "city": "Albany",
-                                "country": "United States of America",
-                                "country_code": "US",
-                                "ref": "address_ref_x",
-                                "state": "MN",
-                                "street_address": "1641 Settlers Lane",
-                                "street_address2": "STE 2918",
-                                "timezone": "America/Los_Angeles",
-                                "unlocode": "US AL2",
-                                "zip": "56307",
-                              },
-                              "name": "Zoomit",
-                              "ref": "zoomit_ref",
-                              "vat_numbers": [
-                                {
-                                  "_object": "/company_entity/vat_number",
-                                  "country_code": "GB",
-                                  "number": "GB 123456789",
-                                },
-                              ],
-                            },
-                          ],
                           "status": "seller_location",
                           "transportation_mode": "ocean",
                           "visibility_only": true,
@@ -7118,11 +5528,13 @@ exports[`open api parser flexport simple 1`] = `
                               },
                               "categories": [
                                 "customs",
+                                "freight",
                               ],
                               "category": "additional",
                               "credited_at": "2019-05-24T18:39:53.679Z",
                               "reasons": [
                                 "reason for credit",
+                                "another reason",
                               ],
                             },
                           ],
@@ -7176,6 +5588,106 @@ exports[`open api parser flexport simple 1`] = `
                               },
                               "slug": "import_customs_clearance",
                             },
+                            {
+                              "_object": "/invoice_item",
+                              "amount": {
+                                "amount": "200.61",
+                                "currency_code": "EUR",
+                              },
+                              "category": "destination",
+                              "name": "Fuel Surcharge",
+                              "quantity": {
+                                "_object": "/invoice/quantity",
+                                "qualifier": "EUR",
+                                "value": "872.22",
+                              },
+                              "rate": {
+                                "_object": "/invoice/rate",
+                                "qualifier": "% Cartage Base",
+                                "value": "23",
+                              },
+                              "slug": "fuel_surcharge",
+                            },
+                            {
+                              "_object": "/invoice_item",
+                              "amount": {
+                                "amount": "872.22",
+                                "currency_code": "EUR",
+                              },
+                              "category": "destination",
+                              "name": "Cartage Base",
+                              "quantity": {
+                                "_object": "/invoice/quantity",
+                                "qualifier": "100_LB",
+                                "value": "1667",
+                              },
+                              "rate": {
+                                "_object": "/invoice/rate",
+                                "qualifier": "EUR",
+                                "value": "0.5233",
+                              },
+                              "slug": "cartage_base",
+                            },
+                            {
+                              "_object": "/invoice_item",
+                              "amount": {
+                                "amount": "15",
+                                "currency_code": "EUR",
+                              },
+                              "category": "freight",
+                              "name": "Automated Manifest System",
+                              "quantity": {
+                                "_object": "/invoice/quantity",
+                                "qualifier": "bill of lading",
+                                "value": "1",
+                              },
+                              "rate": {
+                                "_object": "/invoice/rate",
+                                "qualifier": "EUR",
+                                "value": "15",
+                              },
+                              "slug": "automated_manifest_system_freight",
+                            },
+                            {
+                              "_object": "/invoice_item",
+                              "amount": {
+                                "amount": "5197.13",
+                                "currency_code": "EUR",
+                              },
+                              "category": "freight",
+                              "name": "Air Freight",
+                              "quantity": {
+                                "_object": "/invoice/quantity",
+                                "qualifier": "KG",
+                                "value": "1667.67",
+                              },
+                              "rate": {
+                                "_object": "/invoice/rate",
+                                "qualifier": "EUR",
+                                "value": "3.1183",
+                              },
+                              "slug": "air_freight",
+                            },
+                            {
+                              "_object": "/invoice_item",
+                              "amount": {
+                                "amount": "433.33",
+                                "currency_code": "EUR",
+                              },
+                              "category": "freight",
+                              "name": "Fuel Surcharge",
+                              "quantity": {
+                                "_object": "/invoice/quantity",
+                                "qualifier": "KG",
+                                "value": "1667.67",
+                              },
+                              "rate": {
+                                "_object": "/invoice/rate",
+                                "qualifier": "EUR",
+                                "value": "0.26",
+                              },
+                              "slug": "fuel_surcharge",
+                            },
                           ],
                           "last_updated_at": "2019-05-24T20:49:15.653Z",
                           "name": "FLEX-123456-1",
@@ -7183,6 +5695,9 @@ exports[`open api parser flexport simple 1`] = `
                             "**Container numbers**
 
 1234567",
+                            "**Notes**
+
+Other details about this invoice",
                           ],
                           "recipient": {
                             "_object": "/company_entity",
@@ -7345,11 +5860,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "categories": [
                             "customs",
+                            "freight",
                           ],
                           "category": "additional",
                           "credited_at": "2019-05-24T18:39:53.679Z",
                           "reasons": [
                             "reason for credit",
+                            "another reason",
                           ],
                         },
                       ],
@@ -7403,6 +5920,106 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "slug": "import_customs_clearance",
                         },
+                        {
+                          "_object": "/invoice_item",
+                          "amount": {
+                            "amount": "200.61",
+                            "currency_code": "EUR",
+                          },
+                          "category": "destination",
+                          "name": "Fuel Surcharge",
+                          "quantity": {
+                            "_object": "/invoice/quantity",
+                            "qualifier": "EUR",
+                            "value": "872.22",
+                          },
+                          "rate": {
+                            "_object": "/invoice/rate",
+                            "qualifier": "% Cartage Base",
+                            "value": "23",
+                          },
+                          "slug": "fuel_surcharge",
+                        },
+                        {
+                          "_object": "/invoice_item",
+                          "amount": {
+                            "amount": "872.22",
+                            "currency_code": "EUR",
+                          },
+                          "category": "destination",
+                          "name": "Cartage Base",
+                          "quantity": {
+                            "_object": "/invoice/quantity",
+                            "qualifier": "100_LB",
+                            "value": "1667",
+                          },
+                          "rate": {
+                            "_object": "/invoice/rate",
+                            "qualifier": "EUR",
+                            "value": "0.5233",
+                          },
+                          "slug": "cartage_base",
+                        },
+                        {
+                          "_object": "/invoice_item",
+                          "amount": {
+                            "amount": "15",
+                            "currency_code": "EUR",
+                          },
+                          "category": "freight",
+                          "name": "Automated Manifest System",
+                          "quantity": {
+                            "_object": "/invoice/quantity",
+                            "qualifier": "bill of lading",
+                            "value": "1",
+                          },
+                          "rate": {
+                            "_object": "/invoice/rate",
+                            "qualifier": "EUR",
+                            "value": "15",
+                          },
+                          "slug": "automated_manifest_system_freight",
+                        },
+                        {
+                          "_object": "/invoice_item",
+                          "amount": {
+                            "amount": "5197.13",
+                            "currency_code": "EUR",
+                          },
+                          "category": "freight",
+                          "name": "Air Freight",
+                          "quantity": {
+                            "_object": "/invoice/quantity",
+                            "qualifier": "KG",
+                            "value": "1667.67",
+                          },
+                          "rate": {
+                            "_object": "/invoice/rate",
+                            "qualifier": "EUR",
+                            "value": "3.1183",
+                          },
+                          "slug": "air_freight",
+                        },
+                        {
+                          "_object": "/invoice_item",
+                          "amount": {
+                            "amount": "433.33",
+                            "currency_code": "EUR",
+                          },
+                          "category": "freight",
+                          "name": "Fuel Surcharge",
+                          "quantity": {
+                            "_object": "/invoice/quantity",
+                            "qualifier": "KG",
+                            "value": "1667.67",
+                          },
+                          "rate": {
+                            "_object": "/invoice/rate",
+                            "qualifier": "EUR",
+                            "value": "0.26",
+                          },
+                          "slug": "fuel_surcharge",
+                        },
                       ],
                       "last_updated_at": "2019-05-24T20:49:15.653Z",
                       "name": "FLEX-123456-1",
@@ -7410,6 +6027,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "**Container numbers**
 
 1234567",
+                        "**Notes**
+
+Other details about this invoice",
                       ],
                       "recipient": {
                         "_object": "/company_entity",
@@ -8011,8 +6631,55 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "icao_code": "KORD",
                               "port_code": "3901",
                             },
+                            {
+                              "_object": "/trucking/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "3901",
+                            },
                           ],
                           "name": "ORD - Chicago - IL",
+                        },
+                        {
+                          "_object": "/place",
+                          "address": {
+                            "_object": "/address",
+                            "city": "Oakland",
+                            "country": "United States of America",
+                            "country_code": "US",
+                            "ref": "oakland-ref",
+                            "state": "CA",
+                            "street_address": "530 Water St",
+                            "street_address2": "STE 2918",
+                            "timezone": "America/Los_Angeles",
+                            "unlocode": "US AL2",
+                            "zip": "94607",
+                          },
+                          "details": [
+                            {
+                              "_object": "/trucking/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "2811",
+                            },
+                            {
+                              "_object": "/ocean/railport",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "2811",
+                            },
+                            {
+                              "_object": "/ocean/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "2811",
+                            },
+                          ],
+                          "name": "Oakland, CA",
                         },
                       ],
                       "next": "https://api.flexport.com/ports?page=1&per=10",
@@ -8108,31 +6775,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
-                  "classifications": [
-                    {
-                      "codes": [],
-                      "region": "US",
-                    },
-                  ],
                   "client_verified": true,
                   "country_of_origin": "China",
                   "description": "The best 12V AC Adapter on the market",
                   "name": "AC Adapter 12V",
                   "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
                   "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 1,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -8405,31 +7053,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 },
                 "query-parameters": undefined,
                 "request": {
-                  "classifications": [
-                    {
-                      "codes": [],
-                      "region": "US",
-                    },
-                  ],
                   "client_verified": true,
                   "country_of_origin": "China",
                   "description": "The best 12V AC Adapter on the market",
                   "name": "AC Adapter 12V",
                   "product_category": "Cosmetics",
-                  "product_properties": [
-                    {
-                      "type": "color",
-                      "value": "blue",
-                    },
-                  ],
                   "sku": "WDVCDFD-RM00472",
-                  "suppliers": [
-                    {
-                      "country_of_origin": "CN",
-                      "id": 1,
-                      "ref": "FACTORY-123",
-                    },
-                  ],
                 },
                 "response": {
                   "body": {
@@ -8610,6 +7239,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "currency_code": "USD",
                   "destination_location_refs": [
                     "id-654321",
+                    "id-654322",
                   ],
                   "destination_port": {
                     "code": "USFBN",
@@ -8705,6 +7335,20 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       "location_ref": "id-1232",
                       "role": "buyer",
                     },
+                    {
+                      "contacts": [
+                        {
+                          "department": "a department",
+                          "email": "abc@173.com",
+                          "fax": "123456789",
+                          "name": "cds",
+                          "phone": "123456789",
+                        },
+                      ],
+                      "external_ref": "id-321",
+                      "location_ref": "id-432",
+                      "role": "seller",
+                    },
                   ],
                   "priority": "standard",
                   "status": "open",
@@ -8713,21 +7357,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "destination_addresses": [
-                      {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -8743,15 +7372,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -8794,70 +7414,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
                       "name": "ORD - Chicago - IL",
                     },
-                    "parties": [
-                      {
-                        "company_entity": {
-                          "_object": "/company_entity",
-                          "id": 1,
-                          "mailing_address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "name": "Zoomit",
-                          "ref": "zoomit_ref",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
-                        },
-                        "contacts": [
-                          {
-                            "department": "marketing",
-                            "email": "John.Doe@example.com",
-                            "fax": "1 323 555 1234",
-                            "name": "John Doe",
-                            "phone": "767 878 8888",
-                          },
-                        ],
-                        "location": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "role": "buyer",
-                      },
-                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -8950,6 +7508,20 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                 "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
+                              {
+                                "_object": "/trucking/port",
+                                "country_code": "US",
+                                "iata_code": "LAX",
+                                "icao_code": "KLAX",
+                                "port_code": "3901",
+                              },
+                              {
+                                "_object": "/ocean/port",
+                                "country_code": "US",
+                                "iata_code": "LAX",
+                                "icao_code": "KLAX",
+                                "port_code": "3901",
+                              },
                             ],
                             "name": "Fairburn",
                           },
@@ -9008,6 +7580,20 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                 "icao_code": "KLAX",
                                 "port_code": "3901",
                               },
+                              {
+                                "_object": "/trucking/port",
+                                "country_code": "US",
+                                "iata_code": "LAX",
+                                "icao_code": "KLAX",
+                                "port_code": "3901",
+                              },
+                              {
+                                "_object": "/ocean/port",
+                                "country_code": "US",
+                                "iata_code": "LAX",
+                                "icao_code": "KLAX",
+                                "port_code": "3901",
+                              },
                             ],
                             "name": "Fairburn",
                           },
@@ -9031,21 +7617,52 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                 },
                                 "name": "test",
                                 "ref": "id-754619",
-                                "vat_numbers": [
-                                  {
-                                    "_object": "/company_entity/vat_number",
-                                    "country_code": "GB",
-                                    "number": "GB 123456789",
-                                  },
-                                ],
+                                "vat_numbers": [],
+                              },
+                              "contacts": [],
+                              "location": {
+                                "_object": "/address",
+                                "city": "Albany",
+                                "country": "United States of America",
+                                "country_code": "US",
+                                "ref": "address_ref_x",
+                                "state": "MN",
+                                "street_address": "1641 Settlers Lane",
+                                "street_address2": "STE 2918",
+                                "timezone": "America/Los_Angeles",
+                                "unlocode": "US AL2",
+                                "zip": "56307",
+                              },
+                              "role": "buyer",
+                            },
+                            {
+                              "company_entity": {
+                                "_object": "/company_entity",
+                                "id": 677939,
+                                "mailing_address": {
+                                  "_object": "/address",
+                                  "city": "Albany",
+                                  "country": "United States of America",
+                                  "country_code": "US",
+                                  "ref": "address_ref_x",
+                                  "state": "MN",
+                                  "street_address": "1641 Settlers Lane",
+                                  "street_address2": "STE 2918",
+                                  "timezone": "America/Los_Angeles",
+                                  "unlocode": "US AL2",
+                                  "zip": "56307",
+                                },
+                                "name": "75 Aero Camino Suite 203 Goleta",
+                                "ref": "id-677939",
+                                "vat_numbers": [],
                               },
                               "contacts": [
                                 {
-                                  "department": "marketing",
-                                  "email": "John.Doe@example.com",
-                                  "fax": "1 323 555 1234",
-                                  "name": "John Doe",
-                                  "phone": "767 878 8888",
+                                  "department": "a department",
+                                  "email": "abc@173.com",
+                                  "fax": "123456789",
+                                  "name": "cds",
+                                  "phone": "123456789",
                                 },
                               ],
                               "location": {
@@ -9061,7 +7678,52 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                 "unlocode": "US AL2",
                                 "zip": "56307",
                               },
-                              "role": "buyer",
+                              "role": "seller",
+                            },
+                            {
+                              "company_entity": {
+                                "_object": "/company_entity",
+                                "id": 754619,
+                                "mailing_address": {
+                                  "_object": "/address",
+                                  "city": "shanghai",
+                                  "country": "China",
+                                  "country_code": "CN",
+                                  "ref": "address_ref_x",
+                                  "state": "Shanghai",
+                                  "street_address": "test",
+                                  "street_address2": "STE 2918",
+                                  "timezone": "Asia/Shanghai",
+                                  "unlocode": "US AL2",
+                                  "zip": "56307",
+                                },
+                                "name": "test",
+                                "ref": "id-754619",
+                                "vat_numbers": [],
+                              },
+                              "contacts": [
+                                {
+                                  "department": "a department",
+                                  "email": "abc@173.com",
+                                  "fax": "123456789",
+                                  "name": "abc",
+                                  "phone": "123456789",
+                                },
+                              ],
+                              "location": {
+                                "_object": "/address",
+                                "city": "Albany",
+                                "country": "United States of America",
+                                "country_code": "US",
+                                "ref": "address_ref_x",
+                                "state": "MN",
+                                "street_address": "1641 Settlers Lane",
+                                "street_address2": "STE 2918",
+                                "timezone": "America/Los_Angeles",
+                                "unlocode": "US AL2",
+                                "zip": "56307",
+                              },
+                              "role": "owner",
                             },
                           ],
                           "priority": "standard",
@@ -9173,21 +7835,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                     "_object": "/purchase_order",
                     "data": {
                       "_object": "/booking",
-                      "destination_addresses": [
-                        {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                      ],
                       "destination_port": {
                         "_object": "/place",
                         "address": {
@@ -9203,15 +7850,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "freight_paymnet_terms": "freight_collect",
@@ -9254,70 +7892,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
                         "name": "ORD - Chicago - IL",
                       },
-                      "parties": [
-                        {
-                          "company_entity": {
-                            "_object": "/company_entity",
-                            "id": 1,
-                            "mailing_address": {
-                              "_object": "/address",
-                              "city": "Albany",
-                              "country": "United States of America",
-                              "country_code": "US",
-                              "ref": "address_ref_x",
-                              "state": "MN",
-                              "street_address": "1641 Settlers Lane",
-                              "street_address2": "STE 2918",
-                              "timezone": "America/Los_Angeles",
-                              "unlocode": "US AL2",
-                              "zip": "56307",
-                            },
-                            "name": "Zoomit",
-                            "ref": "zoomit_ref",
-                            "vat_numbers": [
-                              {
-                                "_object": "/company_entity/vat_number",
-                                "country_code": "GB",
-                                "number": "GB 123456789",
-                              },
-                            ],
-                          },
-                          "contacts": [
-                            {
-                              "department": "marketing",
-                              "email": "John.Doe@example.com",
-                              "fax": "1 323 555 1234",
-                              "name": "John Doe",
-                              "phone": "767 878 8888",
-                            },
-                          ],
-                          "location": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "role": "buyer",
-                        },
-                      ],
                       "priority": "standard",
                       "status": "open",
                       "transportation_mode": "ocean",
@@ -9369,6 +7945,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "currency_code": "USD",
                   "destination_location_refs": [
                     "id-654321",
+                    "id-654322",
                   ],
                   "destination_port": {
                     "code": "CNSHA",
@@ -9377,67 +7954,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   "freight_payment_terms": "freight_collect",
                   "incoterm": "FOB",
                   "issue_date": "2019-06-30",
-                  "line_items": [
-                    {
-                      "assigned_party_ref": "id-12321",
-                      "cargo_ready_date": "2019-06-30",
-                      "destination_locations": [
-                        {
-                          "location_ref": "id-1234",
-                          "units": 1,
-                        },
-                      ],
-                      "destination_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
-                      "hs_codes": [
-                        {
-                          "code": "7608.20.00.00",
-                          "country_code": "CA",
-                        },
-                      ],
-                      "incoterm": "EXW",
-                      "item_key": "item_key_1",
-                      "line_item_number": 1,
-                      "line_type": "main_line",
-                      "measurements": [
-                        {
-                          "measure_type": "length",
-                          "unit_of_measure": "EA",
-                          "value": "1.0",
-                        },
-                      ],
-                      "metadata": {},
-                      "must_arrive_date": "2019-09-30",
-                      "origin_location_ref": "id-123456",
-                      "origin_port": {
-                        "code": "USFBN",
-                        "code_type": "unlocode",
-                      },
-                      "product": {
-                        "color": "red",
-                        "country_of_origin": "US",
-                        "dangerous": false,
-                        "ean_ucc_13": "0123456789012",
-                        "ean_ucc_8": "01234567",
-                        "lot_number": "123-456",
-                        "name": "AC Adapter 12",
-                        "product_category": "Cosmetics",
-                        "size": "M",
-                        "sku": "SKU-123",
-                        "style": "classical",
-                        "upc": "012345678912",
-                      },
-                      "transportation_mode": "air",
-                      "unit_cost": {
-                        "amount": "12.34",
-                        "currency_code": "USD",
-                      },
-                      "unit_of_measure": "BBL",
-                      "units": 1,
-                    },
-                  ],
+                  "line_items": [],
                   "memo": "memo",
                   "metadata": {},
                   "must_arrive_date": "2019-07-31",
@@ -9451,18 +7968,14 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                   },
                   "parties": [
                     {
-                      "contacts": [
-                        {
-                          "department": "marketing",
-                          "email": "John.Doe@example.com",
-                          "fax": "1 323 555 1234",
-                          "name": "John Doe",
-                          "phone": "767 878 8888",
-                        },
-                      ],
                       "external_ref": "id-1232",
                       "location_ref": "id-1232",
                       "role": "buyer",
+                    },
+                    {
+                      "external_ref": "id-321",
+                      "location_ref": "id-432",
+                      "role": "seller",
                     },
                   ],
                   "priority": "standard",
@@ -9472,21 +7985,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "response": {
                   "body": {
                     "_object": "/api/response",
-                    "destination_addresses": [
-                      {
-                        "_object": "/address",
-                        "city": "Albany",
-                        "country": "United States of America",
-                        "country_code": "US",
-                        "ref": "address_ref_x",
-                        "state": "MN",
-                        "street_address": "1641 Settlers Lane",
-                        "street_address2": "STE 2918",
-                        "timezone": "America/Los_Angeles",
-                        "unlocode": "US AL2",
-                        "zip": "56307",
-                      },
-                    ],
                     "destination_port": {
                       "_object": "/place",
                       "address": {
@@ -9502,15 +8000,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
                       "name": "ORD - Chicago - IL",
                     },
                     "freight_paymnet_terms": "freight_collect",
@@ -9553,70 +8042,8 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "unlocode": "US AL2",
                         "zip": "56307",
                       },
-                      "details": [
-                        {
-                          "_object": "/air/port",
-                          "country_code": "US",
-                          "iata_code": "LAX",
-                          "icao_code": "KLAX",
-                          "port_code": "3901",
-                        },
-                      ],
                       "name": "ORD - Chicago - IL",
                     },
-                    "parties": [
-                      {
-                        "company_entity": {
-                          "_object": "/company_entity",
-                          "id": 1,
-                          "mailing_address": {
-                            "_object": "/address",
-                            "city": "Albany",
-                            "country": "United States of America",
-                            "country_code": "US",
-                            "ref": "address_ref_x",
-                            "state": "MN",
-                            "street_address": "1641 Settlers Lane",
-                            "street_address2": "STE 2918",
-                            "timezone": "America/Los_Angeles",
-                            "unlocode": "US AL2",
-                            "zip": "56307",
-                          },
-                          "name": "Zoomit",
-                          "ref": "zoomit_ref",
-                          "vat_numbers": [
-                            {
-                              "_object": "/company_entity/vat_number",
-                              "country_code": "GB",
-                              "number": "GB 123456789",
-                            },
-                          ],
-                        },
-                        "contacts": [
-                          {
-                            "department": "marketing",
-                            "email": "John.Doe@example.com",
-                            "fax": "1 323 555 1234",
-                            "name": "John Doe",
-                            "phone": "767 878 8888",
-                          },
-                        ],
-                        "location": {
-                          "_object": "/address",
-                          "city": "Albany",
-                          "country": "United States of America",
-                          "country_code": "US",
-                          "ref": "address_ref_x",
-                          "state": "MN",
-                          "street_address": "1641 Settlers Lane",
-                          "street_address2": "STE 2918",
-                          "timezone": "America/Los_Angeles",
-                          "unlocode": "US AL2",
-                          "zip": "56307",
-                        },
-                        "role": "buyer",
-                      },
-                    ],
                     "priority": "standard",
                     "status": "open",
                     "transportation_mode": "ocean",
@@ -9790,15 +8217,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "unlocode": "US AL2",
                               "zip": "56307",
                             },
-                            "details": [
-                              {
-                                "_object": "/air/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
-                                "port_code": "3901",
-                              },
-                            ],
                             "name": "ORD - Chicago - IL",
                           },
                           "hs_codes": [
@@ -9855,15 +8273,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "unlocode": "US AL2",
                               "zip": "56307",
                             },
-                            "details": [
-                              {
-                                "_object": "/air/port",
-                                "country_code": "US",
-                                "iata_code": "LAX",
-                                "icao_code": "KLAX",
-                                "port_code": "3901",
-                              },
-                            ],
                             "name": "ORD - Chicago - IL",
                           },
                           "product": {
@@ -10016,15 +8425,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "hs_codes": [
@@ -10081,15 +8481,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "unlocode": "US AL2",
                           "zip": "56307",
                         },
-                        "details": [
-                          {
-                            "_object": "/air/port",
-                            "country_code": "US",
-                            "iata_code": "LAX",
-                            "icao_code": "KLAX",
-                            "port_code": "3901",
-                          },
-                        ],
                         "name": "ORD - Chicago - IL",
                       },
                       "product": {
@@ -10284,14 +8675,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                             "value": 2300.4,
                           },
                           "cargo_ready_date": "2019-02-06",
-                          "child_shipments": [
-                            {
-                              "_object": "/api/refs/object",
-                              "id": 1,
-                              "link": "https://api.flexport.com/shipments/123",
-                              "ref_type": "/shipment",
-                            },
-                          ],
                           "commercial_invoices": {
                             "_object": "/api/refs/collection",
                             "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -10333,6 +8716,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           },
                           "dangerous_goods": {
                             "_object": "/shipment/dangerous_goods",
+                            "classifications": [],
                             "review_status": "complete",
                           },
                           "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
@@ -10385,36 +8769,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "product": {
                                 "_object": "/product",
                                 "archived_at": "2019-01-18T22:08:38.599Z",
-                                "classifications": [
-                                  {
-                                    "_object": "/product/classification",
-                                    "codes": [
-                                      "0301.00",
-                                    ],
-                                    "region": "US",
-                                  },
-                                ],
                                 "client_verified": true,
                                 "country_of_origin": "China",
                                 "description": "The best 12V AC Adapter on the market",
-                                "hs_codes": [
-                                  {
-                                    "_object": "/hs_code",
-                                    "code": "9101.00",
-                                    "country_code": "US",
-                                    "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                                  },
-                                ],
                                 "id": 84291,
                                 "name": "AC Adapter 12V",
                                 "product_category": "Cosmetics",
-                                "product_properties": [
-                                  {
-                                    "_object": "/product/property",
-                                    "type": "color",
-                                    "value": "blue",
-                                  },
-                                ],
                                 "sku": "WDVCDFD-RM00472",
                               },
                               "purchase_order_number": "PO002811",
@@ -10689,6 +9049,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                 "request": {
                   "shipment_ids": [
                     123,
+                    456,
                   ],
                 },
                 "response": {
@@ -10701,6 +9062,11 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "expiration_date": "2023-06-05T00:14:50.341Z",
                           "shareable_url": "https://app.flexport.com/track_and_trace/Va0y2ckci5Jk",
                           "shipment_id": 123,
+                        },
+                        {
+                          "expiration_date": "2023-06-05T00:14:50.341Z",
+                          "shareable_url": "https://app.flexport.com/track_and_trace/Va0y2ckci5Jk",
+                          "shipment_id": 456,
                         },
                       ],
                     },
@@ -10816,14 +9182,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
-                      "child_shipments": [
-                        {
-                          "_object": "/api/refs/object",
-                          "id": 1,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
-                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -10865,6 +9223,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
+                        "classifications": [],
                         "review_status": "complete",
                       },
                       "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
@@ -10917,36 +9276,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "product": {
                             "_object": "/product",
                             "archived_at": "2019-01-18T22:08:38.599Z",
-                            "classifications": [
-                              {
-                                "_object": "/product/classification",
-                                "codes": [
-                                  "0301.00",
-                                ],
-                                "region": "US",
-                              },
-                            ],
                             "client_verified": true,
                             "country_of_origin": "China",
                             "description": "The best 12V AC Adapter on the market",
-                            "hs_codes": [
-                              {
-                                "_object": "/hs_code",
-                                "code": "9101.00",
-                                "country_code": "US",
-                                "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                              },
-                            ],
                             "id": 84291,
                             "name": "AC Adapter 12V",
                             "product_category": "Cosmetics",
-                            "product_properties": [
-                              {
-                                "_object": "/product/property",
-                                "type": "color",
-                                "value": "blue",
-                              },
-                            ],
                             "sku": "WDVCDFD-RM00472",
                           },
                           "purchase_order_number": "PO002811",
@@ -11164,14 +9499,6 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                         "value": 2300.4,
                       },
                       "cargo_ready_date": "2019-02-06",
-                      "child_shipments": [
-                        {
-                          "_object": "/api/refs/object",
-                          "id": 1,
-                          "link": "https://api.flexport.com/shipments/123",
-                          "ref_type": "/shipment",
-                        },
-                      ],
                       "commercial_invoices": {
                         "_object": "/api/refs/collection",
                         "link": "https://api.flexport.com/commercial_invoices?f.shipment.id=2983",
@@ -11213,6 +9540,7 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                       },
                       "dangerous_goods": {
                         "_object": "/shipment/dangerous_goods",
+                        "classifications": [],
                         "review_status": "complete",
                       },
                       "delivered_in_full_date": "2019-02-06T19:28:25+00:00",
@@ -11265,36 +9593,12 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                           "product": {
                             "_object": "/product",
                             "archived_at": "2019-01-18T22:08:38.599Z",
-                            "classifications": [
-                              {
-                                "_object": "/product/classification",
-                                "codes": [
-                                  "0301.00",
-                                ],
-                                "region": "US",
-                              },
-                            ],
                             "client_verified": true,
                             "country_of_origin": "China",
                             "description": "The best 12V AC Adapter on the market",
-                            "hs_codes": [
-                              {
-                                "_object": "/hs_code",
-                                "code": "9101.00",
-                                "country_code": "US",
-                                "description": "N-Butyl-2,2,6,6-tetramethylpiperidin-4-amine (CAS No. 36177-92-1) (provided for in subheading 2933.39.91)",
-                              },
-                            ],
                             "id": 84291,
                             "name": "AC Adapter 12V",
                             "product_category": "Cosmetics",
-                            "product_properties": [
-                              {
-                                "_object": "/product/property",
-                                "type": "color",
-                                "value": "blue",
-                              },
-                            ],
                             "sku": "WDVCDFD-RM00472",
                           },
                           "purchase_order_number": "PO002811",
@@ -11603,6 +9907,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                   "icao_code": "KORD",
                                   "port_code": "3901",
                                 },
+                                {
+                                  "_object": "/trucking/port",
+                                  "country_code": "US",
+                                  "iata_code": "LAX",
+                                  "icao_code": "KLAX",
+                                  "port_code": "3901",
+                                },
                               ],
                               "name": "ORD - Chicago - IL",
                             },
@@ -11666,6 +9977,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                                   "country_code": "US",
                                   "iata_code": "ORD",
                                   "icao_code": "KORD",
+                                  "port_code": "3901",
+                                },
+                                {
+                                  "_object": "/trucking/port",
+                                  "country_code": "US",
+                                  "iata_code": "LAX",
+                                  "icao_code": "KLAX",
                                   "port_code": "3901",
                                 },
                               ],
@@ -11826,6 +10144,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "icao_code": "KORD",
                               "port_code": "3901",
                             },
+                            {
+                              "_object": "/trucking/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
+                              "port_code": "3901",
+                            },
                           ],
                           "name": "ORD - Chicago - IL",
                         },
@@ -11889,6 +10214,13 @@ This parameter is mutually exclusive with the f.shipment.id filter.
                               "country_code": "US",
                               "iata_code": "ORD",
                               "icao_code": "KORD",
+                              "port_code": "3901",
+                            },
+                            {
+                              "_object": "/trucking/port",
+                              "country_code": "US",
+                              "iata_code": "LAX",
+                              "icao_code": "KLAX",
                               "port_code": "3901",
                             },
                           ],
