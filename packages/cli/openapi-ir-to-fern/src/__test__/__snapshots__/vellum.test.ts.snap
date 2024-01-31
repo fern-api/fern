@@ -20,13 +20,9 @@ Used to retrieve a deployment given its ID or name.
 ",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "active_model_version_ids": [],
@@ -74,10 +70,7 @@ Used to retrieve a deployment given its ID or name.
 Creates a new document index.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "name": "Index Using Instructor Model",
                 "request": {
                   "environment": "DEVELOPMENT",
                   "indexing_config": {
@@ -184,11 +177,6 @@ Used to list documents. Optionally filter on supported fields.
 ",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -291,12 +279,9 @@ Upload a document to be indexed and used for search.
 Compiles the prompt backing the model version using the provided input values.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "input_values": {
                     "string": {},
@@ -348,13 +333,9 @@ Used to retrieve a model version given its ID.
 ",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "build_config": {
@@ -426,10 +407,6 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "label": "string",
                   "model": "string",
@@ -548,15 +525,10 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "scenario_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -586,12 +558,10 @@ Note that a full replacement of the scenario is performed, so any fields not pro
 or overwritten with default values.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
+                "name": "Basic Example",
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "inputs": [
                     {
@@ -672,15 +642,10 @@ or overwritten with default values.",
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "test_case_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -710,12 +675,9 @@ Note that a full replacement of the test case is performed, so any fields not pr
 or overwritten with default values.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "evaluation_params": {},
                   "input_values": {
@@ -856,10 +818,6 @@ Generate a completion using a previously defined deployment.
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "options": {
                   "logprobs": "ALL",
@@ -966,10 +924,6 @@ Perform a search against a document index.
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "options": {
                   "filters": {},
@@ -1037,14 +991,9 @@ Used to submit feedback regarding the quality of previously generated completion
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "actuals": [],
               },
-              "response": undefined,
             },
           ],
           "method": "POST",

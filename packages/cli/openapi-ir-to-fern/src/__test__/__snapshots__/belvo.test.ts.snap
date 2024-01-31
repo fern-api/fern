@@ -174,13 +174,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -289,7 +285,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -297,7 +292,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "balance": {
@@ -465,8 +459,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "balance__available": "4000.00",
                   "balance__available__gt": "2000.00",
@@ -507,7 +499,6 @@ client.connect()
                   "public_identification_value": "150194683119900273",
                   "type": "Cuentas de efectivo",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -803,8 +794,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -950,8 +939,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -1163,13 +1150,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1264,7 +1247,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -1272,7 +1254,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "account": {
@@ -1445,8 +1426,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                   "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
@@ -1477,7 +1456,6 @@ client.connect()
                   "value_date__lte": "2022-03-01",
                   "value_date__range": "2022-03-01,2022-05-06",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -1722,8 +1700,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -1864,8 +1840,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -1965,10 +1939,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "details": {
                     "account_type": "CHECKINGS",
@@ -2029,13 +1999,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2022-02-09T08:45:50.406032Z",
@@ -2081,9 +2047,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at": "2022-09-15",
                   "created_at__gt": "2022-09-15",
@@ -2101,7 +2064,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "page": 1,
                   "providers": "payments_way",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -2239,10 +2201,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "language": "pt",
                   "transactions": [],
@@ -2303,10 +2261,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
                   "country": "BRA",
@@ -2354,13 +2308,9 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
@@ -2400,9 +2350,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at": "2022-09-15",
                   "created_at__gt": "2022-09-15",
@@ -2415,7 +2362,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "page": 1,
                   "search": "car",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -2544,14 +2490,9 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2573,8 +2514,6 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -2582,7 +2521,6 @@ At the moment, the employment records resource is available for:
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "collected_at": "2020-04-23T21:32:55.336854+00:00",
@@ -2647,16 +2585,12 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -2710,9 +2644,6 @@ At the moment, the employment records resource is available for:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -2796,10 +2727,6 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "date_from": "2022-08-01",
                   "date_to": "2022-12-30",
@@ -3010,13 +2937,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3111,7 +3034,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -3119,7 +3041,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -3235,8 +3156,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                   "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
@@ -3247,7 +3166,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -3412,8 +3330,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -3545,8 +3461,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -3744,7 +3658,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -3752,7 +3665,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "display_name": "Erebor Mexico",
@@ -3880,8 +3792,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "country_code": "MX",
                   "country_code__in": "CO,BR",
@@ -3898,7 +3808,6 @@ client.connect()
                   "type__in": "fiscal,bank",
                   "website": "https://www.erebor.mx",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -4113,13 +4022,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -4207,7 +4112,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -4215,7 +4119,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "balance_gross": 76000,
@@ -4331,8 +4234,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
@@ -4340,7 +4241,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -4479,8 +4379,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -4604,8 +4502,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -4813,13 +4709,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -4915,7 +4807,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -4923,7 +4814,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "cancelation_update_date": "2019-12-02",
@@ -5086,8 +4976,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -5121,7 +5009,6 @@ client.connect()
                   "type": "OUTFLOW",
                   "type__in": "OUTFLOW,INFLOW",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -5375,8 +5262,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -5517,8 +5402,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -5671,8 +5554,6 @@ For single links, you have to perform POST calls to an institution **every time*
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "e4bb1afb-4a4f-4dd6-8be0-e615d233185b",
                 },
@@ -5823,13 +5704,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5924,7 +5801,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -5932,7 +5808,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "access_mode": "recurrent",
@@ -6059,8 +5934,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "access_mode": "single",
                   "created_at": "2022-05-01",
@@ -6086,7 +5959,6 @@ client.connect()
                   "status": "invalid",
                   "status__in": "invalid,unconfirmed",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -6304,8 +6176,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -6459,8 +6329,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -6740,7 +6608,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -7021,13 +6888,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -7122,7 +6985,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -7130,7 +6992,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
@@ -7260,8 +7121,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -7279,7 +7138,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -7466,8 +7324,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -7599,8 +7455,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -7659,13 +7513,9 @@ client.connect()
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "active": true,
@@ -7705,9 +7555,6 @@ client.connect()
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "country": "COL",
                   "country__in": "COL,BRA",
@@ -7719,7 +7566,6 @@ client.connect()
                   "created_at__range": "2022-09-15,2022-09-20",
                   "page": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -7878,9 +7724,6 @@ A payment intent captures all payment information (such as the amount to be char
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "amount": "1000.00",
                   "amount__gt": "1000.00",
@@ -7902,7 +7745,6 @@ A payment intent captures all payment information (such as the amount to be char
                   "status": "SUCCEEDED",
                   "status__in": "PROCESSING,SUCCEEDED",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -8077,10 +7919,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "allowed_payment_method_types": [],
                   "amount": "1234.12",
@@ -8138,13 +7976,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "access_token": "YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "access_token": "YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU",
@@ -8188,9 +8022,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at": "2022-09-15",
                   "created_at__gt": "2022-09-15",
@@ -8204,7 +8035,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "search": "trai",
                   "status": "ACTIVE",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -8350,13 +8180,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "amount": "1020.00",
@@ -8398,9 +8224,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "amount": "1000.00",
                   "amount__gt": "1000.00",
@@ -8426,7 +8249,6 @@ You can use the Payment Transactions resource in order to get useful information
                   "payer__in": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
                   "transaction__type": "INFLOW",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -8564,14 +8386,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -8593,13 +8410,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "a3b92311-1888-449f-acaa-49ae28d68fcd",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auth_header": "Authorization",
@@ -8635,11 +8448,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -8668,10 +8476,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auth_header": "Authorization",
                   "auth_token": "Bearer hv7alD71j0dzXf09iKfg7u",
@@ -8747,14 +8551,9 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -8776,8 +8575,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -8785,7 +8582,6 @@ You can use the Payment Transactions resource in order to get useful information
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "account": {
@@ -8850,9 +8646,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
                   "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
@@ -8874,7 +8667,6 @@ You can use the Payment Transactions resource in order to get useful information
                   "value_date__lte": "2022-03-01",
                   "value_date__range": "2022-03-01,2022-05-06",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -8992,9 +8784,6 @@ You can use the Payment Transactions resource in order to get useful information
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -9213,13 +9002,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -9307,7 +9092,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -9315,7 +9099,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -9423,8 +9206,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
                   "account_in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
@@ -9437,7 +9218,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -9594,8 +9374,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -9713,8 +9491,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -9846,14 +9622,9 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -9875,8 +9646,6 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -9884,7 +9653,6 @@ client. risk_insights.list(params: {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -9925,9 +9693,6 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
@@ -9938,7 +9703,6 @@ client. risk_insights.list(params: {
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -10010,9 +9774,6 @@ client. risk_insights.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -10064,9 +9825,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -10160,11 +9918,6 @@ For example:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -10189,11 +9942,6 @@ For example:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -10360,13 +10108,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -10461,7 +10205,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -10469,7 +10212,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -10591,8 +10333,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -10608,7 +10348,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -10782,8 +10521,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -10945,13 +10682,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -11046,7 +10779,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -11054,7 +10786,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "annual_income_statement": {
@@ -11244,8 +10975,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -11267,7 +10996,6 @@ client.connect()
                   "year__lte": "2017",
                   "year__range": "2017,2021",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -11474,8 +11202,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -11649,14 +11375,9 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -11678,8 +11399,6 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -11687,7 +11406,6 @@ client.tax_retentions.list(params: {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "certified_at": "2019-01-03T21:10:41.000Z",
@@ -11748,9 +11466,6 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -11764,7 +11479,6 @@ client.tax_retentions.list(params: {
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -11847,9 +11561,6 @@ client.tax_retentions.list(params: {
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -12074,13 +11785,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -12175,7 +11882,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -12183,7 +11889,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "collected_at": "2019-09-27T13:01:41.941Z",
@@ -12306,8 +12011,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -12331,7 +12034,6 @@ client.connect()
                   "tipo_declaracion": "Normal",
                   "tipo_declaracion__in": "Normal,Commercial",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -12593,8 +12295,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -12810,13 +12510,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -12911,7 +12607,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -12919,7 +12614,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "address": {
@@ -13065,8 +12759,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "created_at__gt": "2022-05-05",
                   "created_at__gte": "2022-05-04",
@@ -13082,7 +12774,6 @@ client.connect()
                   "page": 1,
                   "page_size": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -13256,8 +12947,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -13527,13 +13216,9 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -13628,7 +13313,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
@@ -13636,7 +13320,6 @@ client.connect()
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "account": {
@@ -13834,8 +13517,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
                   "account__balance__available": "4000.00",
@@ -13896,7 +13577,6 @@ client.connect()
                   "value_date__lte": "2022-03-01",
                   "value_date__range": "2022-03-01,2022-05-06",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 1,
@@ -14261,8 +13941,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -14409,8 +14087,6 @@ client.connect()
                     "name": "Belvo Node SDK",
                   },
                 ],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
@@ -14561,7 +14237,6 @@ client.connect()
                 "headers": {
                   "X-Belvo-Request-Mode": "async",
                 },
-                "path-parameters": undefined,
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",

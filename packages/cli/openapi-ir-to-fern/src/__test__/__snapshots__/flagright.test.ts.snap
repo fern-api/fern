@@ -36,13 +36,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
               "path-parameters": {
                 "userId": "string",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
@@ -662,13 +658,9 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
               "path-parameters": {
                 "transactionId": "string",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": {
                   "destinationAmountDetails": {
@@ -772,13 +764,9 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
               "path-parameters": {
                 "userId": "string",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
@@ -1277,10 +1265,6 @@ Each consumer Business entity needs three mandatory fields:
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "acquisitionChannel": "ORGANIC",
                 "createdTimestamp": 1.1,
@@ -1753,10 +1737,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "timestamp": 1.1,
                 "updatedBusinessUserAttributes": {
@@ -2842,10 +2822,7 @@ Here are some of the most used payload fields explained (you can find the full p
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
+              "name": "example-1",
               "request": {
                 "destinationAmountDetails": {
                   "country": "IN",
@@ -2969,10 +2946,7 @@ Each consumer User entity needs three mandatory fields:
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
+              "name": "example-1",
               "request": {
                 "acquisitionChannel": "ORGANIC",
                 "contactDetails": {
@@ -3480,10 +3454,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
+              "name": "example-2",
               "request": {
                 "eventDescription": "Transaction created",
                 "eventId": "aaeeb166147a406b957dd9147a406b957",
@@ -3680,10 +3651,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           ],
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "timestamp": 1.1,
                 "updatedConsumerUserAttributes": {

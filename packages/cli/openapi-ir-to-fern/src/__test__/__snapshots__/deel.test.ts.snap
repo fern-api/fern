@@ -30,13 +30,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "payment_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -71,13 +67,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "invoice_id": 1000000,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -119,13 +111,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "invoice_id": 1000000,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -166,11 +154,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {},
@@ -224,14 +207,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {},
@@ -298,10 +277,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "content_type": "application/pdf",
@@ -370,11 +345,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "client_country": "US",
@@ -408,11 +378,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -468,12 +433,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "agreement_reflects_relation": true,
@@ -533,12 +495,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": 100,
@@ -603,10 +562,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -759,10 +714,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -915,10 +866,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -1070,10 +1017,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -1225,10 +1168,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -1384,14 +1323,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "GET",
@@ -1429,13 +1363,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1484,12 +1414,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "completion_date": "1999-12-31",
@@ -1594,13 +1521,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1640,12 +1563,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "external_id": "string",
@@ -1695,8 +1615,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
@@ -1704,7 +1622,6 @@ exports[`open api parser deel simple 1`] = `
                   "calculation_type": "CUSTOM_AMOUNT",
                   "end_date": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1812,13 +1729,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1854,13 +1767,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -1970,14 +1879,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "order_direction": "asc",
                   "sort_by": "contract_title",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -2062,11 +1967,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -2096,12 +1996,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "email": "string",
@@ -2155,10 +2052,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "compensation_details": {
@@ -2229,12 +2122,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client_signature": "string",
@@ -2289,13 +2179,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -2356,10 +2242,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "client": {
@@ -2453,13 +2335,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "country_code": "US",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -2590,10 +2468,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": 2500,
@@ -2648,12 +2522,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "invoice_adjustment_id": 1.1,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "status": "approved",
@@ -2708,10 +2579,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "ids": [],
@@ -2761,13 +2628,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "invoice_adjustment_id": 1.1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -2816,14 +2679,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -2908,8 +2767,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
@@ -2917,7 +2774,6 @@ exports[`open api parser deel simple 1`] = `
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3004,12 +2860,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "invoice_adjustment_id": 1.1,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "description": "string",
@@ -3077,11 +2930,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3113,11 +2961,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3149,11 +2992,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3201,11 +3039,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3246,11 +3079,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3295,12 +3123,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": "900.00",
@@ -3357,13 +3182,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "milestone_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "status": "approved",
@@ -3422,12 +3244,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "ids": [],
@@ -3483,14 +3302,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "milestone_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -3534,13 +3349,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3578,14 +3389,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "milestone_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -3656,12 +3463,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": 2500,
@@ -3717,14 +3521,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "offcycle_payment_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -3784,13 +3584,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3837,11 +3633,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3893,11 +3684,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -3927,11 +3713,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -3963,11 +3744,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -4012,12 +3788,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "amount": "123.45",
@@ -4078,12 +3851,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "ids": [],
@@ -4138,13 +3908,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "task_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "reason": "Excited!",
@@ -4202,14 +3969,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "task_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -4262,13 +4025,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -4317,12 +4076,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "end_date": "2022-09-05",
@@ -4424,14 +4180,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "timeoff_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -4473,13 +4225,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                   "timeoff_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "end_date": "2022-09-05",
@@ -4585,11 +4334,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -4622,13 +4366,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -4666,13 +4406,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -4710,12 +4446,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "timeoff_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "denial_reason": "Not allowed for this day.",
@@ -4784,10 +4517,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "contract_id": "string",
@@ -4841,12 +4570,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "timesheet_id": 1000000,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "status": "approved",
@@ -4901,10 +4627,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "ids": [],
@@ -4954,13 +4676,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "timesheet_id": 1000000,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -5009,13 +4727,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "timesheet_id": 1000000,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -5095,14 +4809,10 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -5176,8 +4886,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "contract_id": "string",
                 },
@@ -5185,7 +4893,6 @@ exports[`open api parser deel simple 1`] = `
                   "date_from": "1999-12-31",
                   "date_to": "1999-12-31",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -5261,12 +4968,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "timesheet_id": 1000000,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "data": {
                     "description": "string",
@@ -5333,14 +5037,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5366,12 +5065,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "My first webhook",
                   "events": [],
@@ -5457,13 +5153,9 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -5509,10 +5201,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "api_version": "v1",
                   "description": "I like it very much.",
@@ -5600,11 +5288,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],

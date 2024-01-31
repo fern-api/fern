@@ -22,9 +22,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.consignee_entity_ref": "amazon-us",
@@ -35,7 +32,6 @@ exports[`open api parser flexport simple 1`] = `
                   "per": 1,
                   "sort": "cargo_ready_date",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -458,10 +454,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "air_booking": {
                     "incoterm": "EXW",
@@ -978,13 +970,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1387,10 +1375,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "amendment_note": "This is an amendment note with useful context to changes made to the booking.",
                   "booking_id": 12345,
@@ -1693,10 +1677,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "booking_id": 9876,
                   "purchase_order_line_item_id": 112358,
@@ -1765,9 +1745,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.booking.id": 1,
@@ -1776,7 +1753,6 @@ exports[`open api parser flexport simple 1`] = `
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1855,13 +1831,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -1967,10 +1939,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "destination_address": {
                     "city": "Albany",
@@ -2167,10 +2135,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
@@ -2359,14 +2323,10 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Returns a list of commercial invoices",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2544,13 +2504,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -2698,10 +2654,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "currency_code": "USD",
                   "invoice_number": "INVOICE-04-05-2020",
@@ -2937,10 +2889,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "Zoomit",
                   "ref": "zoomit-ref",
@@ -3026,14 +2974,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3133,11 +3077,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3199,13 +3138,9 @@ exports[`open api parser flexport simple 1`] = `
             "docs": "Retrieves the details of a single company.",
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3282,12 +3217,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "Updated Zoomit",
                   "ref": "zoomit_ref",
@@ -3449,14 +3381,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3541,10 +3469,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "company_ref": "Zoomit",
@@ -3644,13 +3568,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -3708,12 +3628,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "mailing_address": {
                     "city": "Albany",
@@ -3867,10 +3784,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "company_id": "2UXaj4xcHoW8nwh9UVOMpw",
                   "email": "john@example.com",
@@ -3945,14 +3858,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4029,13 +3938,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4085,12 +3990,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "email": "john_new_email@example.com",
                   "name": "John Smith",
@@ -4227,14 +4129,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4355,13 +4253,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4498,14 +4392,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4583,13 +4473,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4683,14 +4569,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4753,13 +4635,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -4846,10 +4724,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "document": "SGVsbG8sIFdvcmxkIQ==",
                   "document_type": "packing_list",
@@ -4911,14 +4785,10 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5011,13 +4881,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5119,13 +4985,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "f.data.resource._object": "/document",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5179,13 +5041,9 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5523,9 +5381,6 @@ exports[`open api parser flexport simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.client_id": 1,
@@ -5543,7 +5398,6 @@ exports[`open api parser flexport simple 1`] = `
                   "per": 1,
                   "sort": "due_date",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -5873,13 +5727,9 @@ This parameter is mutually exclusive with the f.shipment.id filter.
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6193,14 +6043,10 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6297,10 +6143,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "address": {
                     "city": "Albany",
@@ -6400,13 +6242,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6468,12 +6306,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "address": {
                     "city": "Albany",
@@ -6635,16 +6470,12 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "f.port_type": "airport",
                   "f.unlocode": "CATOR",
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -6814,10 +6645,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "client_verified": true,
                   "country_of_origin": "China",
@@ -6931,11 +6758,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -7020,13 +6842,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -7093,12 +6911,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "client_verified": true,
                   "country_of_origin": "China",
@@ -7278,10 +7093,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
@@ -7490,9 +7301,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.buyer_entity_ref": "id-54321",
@@ -7508,7 +7316,6 @@ Other details about this invoice",
                   "per": 1,
                   "sort": "id",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -7873,13 +7680,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/purchase_order",
@@ -7985,12 +7788,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "cargo_ready_date": "2019-06-30",
                   "currency_code": "USD",
@@ -8198,9 +7998,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.item_key": "item1",
@@ -8208,7 +8005,6 @@ Other details about this invoice",
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -8414,13 +8210,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -8640,9 +8432,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "direction": "asc",
                   "f.container_number": "BWSE3982156",
@@ -8655,7 +8444,6 @@ Other details about this invoice",
                   "per": 1,
                   "sort": "id",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -9097,10 +8885,6 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "shipment_ids": [
                     123,
@@ -9161,13 +8945,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -9480,12 +9260,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -9906,14 +9683,10 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "page": 1,
                   "per": 1,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",
@@ -10148,13 +9921,9 @@ Other details about this invoice",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": 1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_object": "/api/response",

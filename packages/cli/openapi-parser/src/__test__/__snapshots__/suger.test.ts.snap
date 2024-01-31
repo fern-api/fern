@@ -16,7 +16,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -105,7 +107,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -259,7 +263,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -429,7 +435,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -546,7 +554,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -842,7 +852,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -931,7 +943,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1066,7 +1080,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1213,7 +1229,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1363,7 +1381,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1479,7 +1499,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1646,7 +1668,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -1850,7 +1874,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -2018,7 +2044,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -2244,7 +2272,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -2334,7 +2364,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -2608,7 +2640,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -2848,7 +2882,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -3010,7 +3046,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -3355,7 +3393,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -3514,7 +3554,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -3604,7 +3646,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -3900,7 +3944,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4108,7 +4154,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4225,7 +4273,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4341,7 +4391,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4457,7 +4509,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4643,7 +4697,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4771,6 +4827,7 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -4783,6 +4840,7 @@ exports[`open api parser suger parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -4928,7 +4986,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -5057,7 +5117,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -5344,7 +5406,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -5630,7 +5694,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -5719,7 +5785,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -5941,7 +6009,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6057,7 +6127,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6317,7 +6389,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6433,7 +6507,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6549,7 +6625,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6666,7 +6744,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -6869,7 +6949,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7072,7 +7154,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7199,7 +7283,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7374,7 +7460,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7489,7 +7577,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7664,7 +7754,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7792,7 +7884,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "orgId",
@@ -7905,7 +7999,9 @@ exports[`open api parser suger parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {

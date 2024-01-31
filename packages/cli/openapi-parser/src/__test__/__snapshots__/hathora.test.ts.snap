@@ -14,7 +14,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -75,7 +77,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -369,7 +373,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -686,7 +692,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -833,7 +841,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -895,7 +905,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1002,7 +1014,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1155,7 +1169,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1307,7 +1323,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1392,7 +1410,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1539,7 +1559,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1732,7 +1754,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1817,7 +1841,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -1902,7 +1928,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2081,7 +2109,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2299,7 +2329,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2356,6 +2388,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2368,6 +2401,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2521,6 +2555,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2533,6 +2568,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2683,6 +2719,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2695,6 +2732,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -2852,6 +2890,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -2864,6 +2903,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3126,6 +3166,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3138,6 +3179,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3400,6 +3442,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3412,6 +3455,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3674,6 +3718,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
@@ -3686,6 +3731,7 @@ exports[`open api parser hathora parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -3979,7 +4025,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4093,7 +4141,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4254,7 +4304,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4790,7 +4842,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -4985,7 +5039,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5099,7 +5155,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5213,7 +5271,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5397,7 +5457,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5516,7 +5578,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5666,7 +5730,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5774,7 +5840,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5883,7 +5951,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
@@ -5969,7 +6039,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",

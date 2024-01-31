@@ -126,6 +126,8 @@ types:
       examples will be fully complete (i.e. there will be no
       PartialObjectExamples).
     properties:
+      name: optional<string>
+      docs: optional<string>
       pathParameters: optional<list<PathParameterExample>>
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>

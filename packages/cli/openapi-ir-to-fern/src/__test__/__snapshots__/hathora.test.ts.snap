@@ -20,10 +20,6 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "appName": "string",
                   "authConfiguration": {
@@ -72,14 +68,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -96,13 +87,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "appId": "string",
@@ -137,11 +124,6 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -163,12 +145,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "appName": "string",
                   "authConfiguration": {
@@ -230,13 +209,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "token": "string",
@@ -263,12 +238,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "idToken": "string",
                 },
@@ -307,12 +279,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "nickname": "string",
                 },
@@ -384,13 +353,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "appId": "string",
@@ -424,15 +389,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "buildId": 1.1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -450,14 +410,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "buildId": 1.1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "appId": "string",
@@ -490,13 +446,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -557,13 +509,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "buildId": 1.1,
                 },
-                "query-parameters": undefined,
                 "request": {
                   "containerPort": 1,
                   "env": [],
@@ -611,14 +560,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "deploymentId": 1.1,
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "appId": "string",
@@ -656,13 +601,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -694,11 +635,6 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -734,7 +670,6 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
@@ -744,7 +679,6 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -785,7 +719,6 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
@@ -795,7 +728,6 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -833,7 +765,6 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
@@ -843,7 +774,6 @@ exports[`open api parser hathora simple 1`] = `
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -895,14 +825,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
                     "string": {},
@@ -967,14 +895,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
                     "string": {},
@@ -1037,14 +963,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
                     "string": {},
@@ -1107,14 +1031,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "initialConfig": {
                     "string": {},
@@ -1173,14 +1095,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "roomId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "appId": "string",
@@ -1213,15 +1131,12 @@ exports[`open api parser hathora simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1252,13 +1167,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "roomId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "state": {
                     "string": {},
@@ -1404,14 +1316,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "processId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1459,14 +1367,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "processId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "activeConnections": 1.1,
@@ -1504,15 +1408,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1542,15 +1443,12 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
                 "query-parameters": {
                   "region": "Seattle",
                 },
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1592,12 +1490,9 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "region": "Seattle",
                 },
@@ -1635,15 +1530,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "roomId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -1661,14 +1551,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "processId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1712,14 +1598,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "processId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1744,14 +1626,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "roomId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "allocations": [],
@@ -1787,15 +1665,10 @@ exports[`open api parser hathora simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "appId": "string",
                   "roomId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "POST",

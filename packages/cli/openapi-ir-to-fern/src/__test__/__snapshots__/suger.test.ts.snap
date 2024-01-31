@@ -20,10 +20,6 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "string",
                   "organizationID": "string",
@@ -79,14 +75,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -133,13 +125,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -167,13 +155,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -246,13 +231,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "creditAmountIncrement": 1.1,
                   "entitlementID": "string",
@@ -304,14 +286,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -350,13 +328,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -384,14 +358,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "buyerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -423,14 +393,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -462,14 +428,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -501,14 +463,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -540,13 +498,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -618,15 +573,11 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "entitlementTermId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "entitlementInfo": {
@@ -671,14 +622,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -722,12 +669,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "info": {
                     "awsAceIntegration": {
@@ -822,15 +766,11 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -867,15 +807,11 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -937,13 +873,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -972,14 +904,11 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "info": {
                     "awsAceIntegration": {
@@ -1089,15 +1018,11 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": true,
                 },
@@ -1212,14 +1137,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "usageRecordGroupId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "metaInfo": {},
@@ -1253,14 +1174,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "usageRecordReportId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -1299,14 +1216,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1360,13 +1273,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1416,14 +1325,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1477,14 +1382,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1542,13 +1443,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1598,14 +1495,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -1660,13 +1553,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "entitlementId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "entitlementID": "string",
                   "metaInfo": {},
@@ -1740,14 +1630,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -1780,12 +1666,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "info": {
                     "azureOriginalPlan": {
@@ -1878,12 +1761,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "info": {
                     "azureOriginalPlan": {
@@ -1975,14 +1855,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -2014,14 +1890,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "offerId": "string",
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -2083,13 +1955,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2117,7 +1985,6 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
                 "headers": {
                   "Authorization": "string",
                 },
@@ -2125,8 +1992,6 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "string",
                   "partner": "AWS",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2168,14 +2033,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2227,13 +2088,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2293,14 +2150,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": "string",
                 },
@@ -2332,14 +2185,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "info": {
@@ -2403,14 +2252,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2442,13 +2287,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2476,14 +2317,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2515,13 +2352,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "productId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "fulfillmentUrl": "string",
                   "id": "string",
@@ -2623,12 +2457,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "organizationID": "string",
                   "partner": "AWS",
@@ -2696,12 +2527,9 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "entitlementID": "string",
                   "organizationID": "string",
@@ -2745,14 +2573,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -2818,14 +2642,10 @@ exports[`open api parser suger simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "orgId": "string",
                   "partner": "AWS",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
