@@ -2,7 +2,7 @@ import { Name } from "@fern-fern/ir-sdk/api";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 
 describe("casingsGenerator", () => {
-    const casingsGenerator = constructCasingsGenerator(undefined, true);
+    const casingsGenerator = constructCasingsGenerator({ generationLanguage: undefined, smartCasing: true });
     it("simple", () => {
         const expected: Name = {
             originalName: "hello",

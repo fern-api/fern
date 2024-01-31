@@ -8,10 +8,13 @@ export interface CasingsGenerator {
     generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
 }
 
-export function constructCasingsGenerator(
-    generationLanguage: GenerationLanguage | undefined,
-    smartCasing: boolean
-): CasingsGenerator {
+export function constructCasingsGenerator({
+    generationLanguage,
+    smartCasing
+}: {
+    generationLanguage: GenerationLanguage | undefined;
+    smartCasing: boolean;
+}): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name) => {
             const generateSafeAndUnsafeString = (unsafeString: string): SafeAndUnsafeString => ({

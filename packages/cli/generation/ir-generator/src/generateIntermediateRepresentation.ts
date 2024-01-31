@@ -52,7 +52,7 @@ export async function generateIntermediateRepresentation({
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
-    const casingsGenerator = constructCasingsGenerator(generationLanguage, smartCasing);
+    const casingsGenerator = constructCasingsGenerator({ generationLanguage, smartCasing });
 
     const irGraph = new IrGraph(audiences);
 
