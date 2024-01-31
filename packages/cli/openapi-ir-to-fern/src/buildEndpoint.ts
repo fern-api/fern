@@ -2,7 +2,6 @@ import { RelativeFilePath } from "@fern-api/fs-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import { SchemaId } from "@fern-fern/openapi-ir-model/commons";
 import {
-    CustomCodeSample,
     Endpoint,
     EndpointAvailability,
     EndpointExample,
@@ -211,8 +210,7 @@ export function buildEndpoint({
     if (endpoint.examples.length > 0) {
         convertedEndpoint.examples = convertEndpointExamples({
             endpointExamples: endpoint.examples,
-            context,
-            codeSamples: endpoint.customCodeSamples
+            context
         });
     }
 
@@ -231,14 +229,12 @@ export function buildEndpoint({
 
 function convertEndpointExamples({
     endpointExamples,
-    context,
-    codeSamples
+    context
 }: {
     endpointExamples: EndpointExample[];
     context: OpenApiIrConverterContext;
-    codeSamples: CustomCodeSample[];
 }): RawSchemas.ExampleEndpointCallSchema[] {
-    const examples = endpointExamples.map((endpointExample) => {
+    return endpointExamples.map((endpointExample) => {
         try {
             return buildEndpointExample({ endpointExample, context });
         } catch (e) {
@@ -247,17 +243,6 @@ function convertEndpointExamples({
             throw e;
         }
     });
-    if (codeSamples.length > 0) {
-        examples.push({
-            "code-samples": codeSamples.map((codeSample) => ({
-                language: codeSample.language,
-                code: codeSample.code,
-                name: codeSample.name ?? undefined,
-                install: codeSample.install ?? undefined
-            }))
-        });
-    }
-    return examples;
 }
 
 interface ConvertedRequest {
