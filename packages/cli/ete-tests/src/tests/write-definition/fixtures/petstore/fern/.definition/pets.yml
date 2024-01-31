@@ -23,9 +23,8 @@ service:
         type: root.Pets
       examples:
         - response:
-            body:
-              - id: 1
-                name: string
+            body: []
+          code-samples: []
 
     createPets:
       path: /v1/pets
@@ -33,7 +32,7 @@ service:
       auth: false
       display-name: Create a pet
       examples:
-        - {}
+        - code-samples: []
 
     showPetById:
       path: /v1/pets/{petId}
@@ -54,3 +53,4 @@ service:
             body:
               id: 1
               name: string
+          code-samples: []

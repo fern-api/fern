@@ -59,6 +59,7 @@ exports[`open api parser assembly simple 1`] = `
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -100,6 +101,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "request_id": "string",
@@ -142,27 +144,19 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
                   "final_model": "default",
-                  "questions": [
-                    {
-                      "question": "string",
-                    },
-                  ],
+                  "questions": [],
                   "transcript_ids": [],
                 },
                 "response": {
                   "body": {
                     "request_id": "string",
-                    "response": [
-                      {
-                        "answer": "string",
-                        "question": "string",
-                      },
-                    ],
+                    "response": [],
                   },
                 },
               },
@@ -204,6 +198,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -257,6 +252,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -321,6 +317,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
@@ -379,22 +376,14 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": undefined,
                 "request": {
                   "audio_url": "string",
                   "boost_param": "low",
-                  "custom_spelling": [
-                    {
-                      "from": [],
-                      "to": "string",
-                    },
-                  ],
                   "language_code": "en",
-                  "redact_pii_policies": [
-                    "medical_process",
-                  ],
                   "redact_pii_sub": "entity_type",
                   "summary_model": "informative",
                   "summary_type": "bullets",
@@ -405,90 +394,14 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_url": "string",
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [
-                        {
-                          "count": 1,
-                          "rank": 1.1,
-                          "text": "string",
-                          "timestamps": [
-                            {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          ],
-                        },
-                      ],
+                      "results": [],
                     },
-                    "chapters": [
-                      {
-                        "end": 1,
-                        "gist": "string",
-                        "headline": "string",
-                        "start": 1,
-                        "summary": "string",
-                      },
-                    ],
                     "content_safety_labels": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "confidence": 1.1,
-                              "label": "string",
-                              "severity": 1.1,
-                            },
-                          ],
-                          "sentences_idx_end": 1,
-                          "sentences_idx_start": 1,
-                          "severity_score_summary": {
-                            "string": {
-                              "high": 1.1,
-                              "low": 1.1,
-                              "medium": 1.1,
-                            },
-                          },
-                          "summary": {
-                            "string": 1.1,
-                          },
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                     },
-                    "custom_spelling": [
-                      {
-                        "from": [],
-                        "to": "string",
-                      },
-                    ],
-                    "entities": [
-                      {
-                        "end": 1,
-                        "entity_type": "banking_information",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "iab_categories_result": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "label": "string",
-                              "relevance": 1.1,
-                            },
-                          ],
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                       "summary": {
                         "string": 1.1,
@@ -498,47 +411,10 @@ The LLM response data, as well as any context provided in the original request w
                     "language_code": "en",
                     "language_model": "string",
                     "redact_pii": true,
-                    "redact_pii_policies": [
-                      "medical_process",
-                    ],
                     "redact_pii_sub": "entity_type",
-                    "sentiment_analysis_results": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "sentiment": "POSITIVE",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "status": "queued",
                     "summarization": true,
-                    "utterances": [
-                      {
-                        "channel": "string",
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                        "words": [
-                          {
-                            "confidence": 1.1,
-                            "end": 1,
-                            "start": 1,
-                            "text": "string",
-                          },
-                        ],
-                      },
-                    ],
                     "webhook_auth": true,
-                    "words": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -580,6 +456,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -592,90 +469,14 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_url": "string",
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [
-                        {
-                          "count": 1,
-                          "rank": 1.1,
-                          "text": "string",
-                          "timestamps": [
-                            {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          ],
-                        },
-                      ],
+                      "results": [],
                     },
-                    "chapters": [
-                      {
-                        "end": 1,
-                        "gist": "string",
-                        "headline": "string",
-                        "start": 1,
-                        "summary": "string",
-                      },
-                    ],
                     "content_safety_labels": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "confidence": 1.1,
-                              "label": "string",
-                              "severity": 1.1,
-                            },
-                          ],
-                          "sentences_idx_end": 1,
-                          "sentences_idx_start": 1,
-                          "severity_score_summary": {
-                            "string": {
-                              "high": 1.1,
-                              "low": 1.1,
-                              "medium": 1.1,
-                            },
-                          },
-                          "summary": {
-                            "string": 1.1,
-                          },
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                     },
-                    "custom_spelling": [
-                      {
-                        "from": [],
-                        "to": "string",
-                      },
-                    ],
-                    "entities": [
-                      {
-                        "end": 1,
-                        "entity_type": "banking_information",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "iab_categories_result": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "label": "string",
-                              "relevance": 1.1,
-                            },
-                          ],
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                       "summary": {
                         "string": 1.1,
@@ -685,47 +486,10 @@ The LLM response data, as well as any context provided in the original request w
                     "language_code": "en",
                     "language_model": "string",
                     "redact_pii": true,
-                    "redact_pii_policies": [
-                      "medical_process",
-                    ],
                     "redact_pii_sub": "entity_type",
-                    "sentiment_analysis_results": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "sentiment": "POSITIVE",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "status": "queued",
                     "summarization": true,
-                    "utterances": [
-                      {
-                        "channel": "string",
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                        "words": [
-                          {
-                            "confidence": 1.1,
-                            "end": 1,
-                            "start": 1,
-                            "text": "string",
-                          },
-                        ],
-                      },
-                    ],
                     "webhook_auth": true,
-                    "words": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -757,6 +521,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -769,90 +534,14 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_url": "string",
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [
-                        {
-                          "count": 1,
-                          "rank": 1.1,
-                          "text": "string",
-                          "timestamps": [
-                            {
-                              "end": 1,
-                              "start": 1,
-                            },
-                          ],
-                        },
-                      ],
+                      "results": [],
                     },
-                    "chapters": [
-                      {
-                        "end": 1,
-                        "gist": "string",
-                        "headline": "string",
-                        "start": 1,
-                        "summary": "string",
-                      },
-                    ],
                     "content_safety_labels": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "confidence": 1.1,
-                              "label": "string",
-                              "severity": 1.1,
-                            },
-                          ],
-                          "sentences_idx_end": 1,
-                          "sentences_idx_start": 1,
-                          "severity_score_summary": {
-                            "string": {
-                              "high": 1.1,
-                              "low": 1.1,
-                              "medium": 1.1,
-                            },
-                          },
-                          "summary": {
-                            "string": 1.1,
-                          },
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                     },
-                    "custom_spelling": [
-                      {
-                        "from": [],
-                        "to": "string",
-                      },
-                    ],
-                    "entities": [
-                      {
-                        "end": 1,
-                        "entity_type": "banking_information",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "iab_categories_result": {
-                      "results": [
-                        {
-                          "labels": [
-                            {
-                              "label": "string",
-                              "relevance": 1.1,
-                            },
-                          ],
-                          "text": "string",
-                          "timestamp": {
-                            "end": 1,
-                            "start": 1,
-                          },
-                        },
-                      ],
+                      "results": [],
                       "status": "success",
                       "summary": {
                         "string": 1.1,
@@ -862,47 +551,10 @@ The LLM response data, as well as any context provided in the original request w
                     "language_code": "en",
                     "language_model": "string",
                     "redact_pii": true,
-                    "redact_pii_policies": [
-                      "medical_process",
-                    ],
                     "redact_pii_sub": "entity_type",
-                    "sentiment_analysis_results": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "sentiment": "POSITIVE",
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                     "status": "queued",
                     "summarization": true,
-                    "utterances": [
-                      {
-                        "channel": "string",
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                        "words": [
-                          {
-                            "confidence": 1.1,
-                            "end": 1,
-                            "start": 1,
-                            "text": "string",
-                          },
-                        ],
-                      },
-                    ],
                     "webhook_auth": true,
-                    "words": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                      },
-                    ],
                   },
                 },
               },
@@ -934,6 +586,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -945,22 +598,7 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_duration": 1.1,
                     "confidence": 1.1,
                     "id": "string",
-                    "paragraphs": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                        "words": [
-                          {
-                            "confidence": 1.1,
-                            "end": 1,
-                            "start": 1,
-                            "text": "string",
-                          },
-                        ],
-                      },
-                    ],
+                    "paragraphs": [],
                   },
                 },
               },
@@ -992,6 +630,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -1033,6 +672,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": {
                   "transcript_id": "string",
@@ -1044,22 +684,7 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_duration": 1.1,
                     "confidence": 1.1,
                     "id": "string",
-                    "sentences": [
-                      {
-                        "confidence": 1.1,
-                        "end": 1,
-                        "start": 1,
-                        "text": "string",
-                        "words": [
-                          {
-                            "confidence": 1.1,
-                            "end": 1,
-                            "start": 1,
-                            "text": "string",
-                          },
-                        ],
-                      },
-                    ],
+                    "sentences": [],
                   },
                 },
               },
@@ -1121,6 +746,7 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
+                "code-samples": [],
                 "headers": undefined,
                 "path-parameters": undefined,
                 "query-parameters": {
@@ -1135,15 +761,7 @@ The LLM response data, as well as any context provided in the original request w
                       "prev_url": "string",
                       "result_count": 1,
                     },
-                    "transcripts": [
-                      {
-                        "audio_url": "string",
-                        "created": "2024-01-15T09:30:00Z",
-                        "id": "string",
-                        "resource_url": "string",
-                        "status": "queued",
-                      },
-                    ],
+                    "transcripts": [],
                   },
                 },
               },
@@ -1195,32 +813,6 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
-            ],
-            "examples": [
-              {
-                "headers": undefined,
-                "path-parameters": {
-                  "transcript_id": "string",
-                },
-                "query-parameters": {
-                  "words": undefined,
-                },
-                "request": undefined,
-                "response": {
-                  "body": {
-                    "id": "string",
-                    "matches": [
-                      {
-                        "count": 1,
-                        "indexes": [],
-                        "text": "string",
-                        "timestamps": [],
-                      },
-                    ],
-                    "total_count": 1,
-                  },
-                },
-              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/word-search",

@@ -24,7 +24,7 @@ class MetadataLoadingNodeWriter(NodeWriter):
     def write_node(self, node: AstNode) -> None:
         self.metadata.update(node.get_metadata())
 
-    def write_reference(self, reference: Reference) -> None:
+    def write_reference(self, reference: Reference, is_string_reference_bool: bool = False) -> None:
         self.metadata.references.add(reference)
 
     def should_format_as_snippet(self) -> bool:

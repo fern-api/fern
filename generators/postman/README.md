@@ -1,7 +1,7 @@
 <br/>
 <div align="center">
   <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-postman&utm_content=logo">
-    <img src="fern-logo.png" height="50" align="center" alt="header" />
+    <img src="/fern/docs/images/logo-green.png" height="50" align="center" alt="Fern logo" />
   </a>
   
   <br/>

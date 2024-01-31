@@ -22,6 +22,7 @@ import { formatWorkspaces } from "./commands/format/formatWorkspaces";
 import { generateFdrApiDefinitionForWorkspaces } from "./commands/generate-fdr/generateFdrApiDefinitionForWorkspaces";
 import { generateIrForWorkspaces } from "./commands/generate-ir/generateIrForWorkspaces";
 import { generateOpenAPIIrForWorkspaces } from "./commands/generate-openapi-ir/generateOpenAPIIrForWorkspaces";
+import { writeOverridesForWorkspaces } from "./commands/generate-overrides/writeOverridesForWorkspaces";
 import { generateAPIWorkspaces } from "./commands/generate/generateAPIWorkspaces";
 import { generateDocsWorkspace } from "./commands/generate/generateDocsWorkspace";
 import { mockServer } from "./commands/mock/mockServer";
@@ -139,6 +140,7 @@ async function tryRunCli(cliContext: CliContext) {
     addWriteDefinitionCommand(cli, cliContext);
     addPreviewCommand(cli, cliContext);
     addMockCommand(cli, cliContext);
+    addWriteOverridesCommand(cli, cliContext);
 
     addUpgradeCommand({
         cli,
@@ -708,6 +710,30 @@ function addMockCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
                     defaultToAllApiWorkspaces: false
                 }),
                 port: argv.port
+            });
+        }
+    );
+}
+
+function addWriteOverridesCommand(cli: Argv<GlobalCliOptions>, cliContext: CliContext) {
+    cli.command(
+        "write-overrides",
+        "Generate a basic openapi overrides file.",
+        (yargs) =>
+            yargs.option("api", {
+                string: true,
+                description: "Only run the command on the provided API"
+            }),
+        async (argv) => {
+            cliContext.instrumentPostHogEvent({
+                command: "fern generate-overrides"
+            });
+            await writeOverridesForWorkspaces({
+                project: await loadProjectAndRegisterWorkspacesWithContext(cliContext, {
+                    commandLineApiWorkspace: argv.api,
+                    defaultToAllApiWorkspaces: true
+                }),
+                cliContext
             });
         }
     );

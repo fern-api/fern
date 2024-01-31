@@ -1,6 +1,8 @@
+## Configuring content with docs.yml
+
 Every Fern Docs website has a special configuation file called `docs.yml`.
 
-<CodeBlock title = "docs.yml">
+<CodeBlock title="docs.yml">
 ```yaml
 title: Example | Docs
 navigation:
@@ -49,6 +51,32 @@ navigation:
 ```
 </CodeBlock>
 
+### Nested Sections
+If you'd like a section to toggle into more sections and pages, you can nest sections within sections. Here's an example of how it's done.
+<CodeBlock title="docs.yml">
+```mdx
+navigation:
+  - tab: guides
+    layout:
+      - section: Learn
+        contents: 
+          - section: Key Concepts
+            contents: 
+              - page: Embeddings
+                path: ./docs/pages/embeddings.mdx
+              - page: Prompt Engineering
+                path: ./docs/pages/prompts.mdx
+          - section: Generation
+            contents: 
+              - page: Command Nightly
+                path: ./docs/pages/command.mdx
+              - page: Likelihood
+                path: ./docs/pages/likelihood.mdx
+```
+</CodeBlock>
+
+![Result of above docs.yml example](https://fern-image-hosting.s3.amazonaws.com/fern/nested-sections.png)
+
 ### API Reference
 
 A key benefit of using Fern Docs is that you get your API Reference with just one line. 
@@ -90,7 +118,7 @@ You may want to use a trackable link in your URL. For example, if using [UTM par
 
 ### Colors
 
-#### Primary Accent
+#### Primary accent
 
 You may specify a primary accent color using the [Hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp). The primary accent color is used in many places, including:
 
@@ -159,7 +187,7 @@ The following configuration options are optional and allow you to further person
 
 You can specify a custom font for your documentation website.
 
-<CodeBlock title = "fern directory">
+<CodeBlock title="fern directory">
 ```diff
   fern/
   ├─ fern.config.json
@@ -180,7 +208,7 @@ The `headingsFont` is used for the page title and section titles. The `bodyFont`
 
 Here's an example of how to specify custom fonts:
 
-<CodeBlock title = "docs.yml">
+<CodeBlock title="docs.yml">
 ```yaml
 typography:
   headingsFont:
@@ -194,7 +222,7 @@ typography:
 
 ### Tabs
 
-Within the navigation you can add `tabs`. Tabs are used to group content together. Let's add a new tab so that we can include `Help Center` content in addition to our API Reference. Each tab has a `title` and `icon`. [Browse the icons available](./components/icons) from FontAwesome.
+Within the navigation, you can add `tabs`. Tabs are used to group content together. Let's add a new tab so that we can include `Help Center` content in addition to our API Reference. Each tab has a `title` and `icon`. [Browse the icons available](/generate-docs/component-library/icons) from FontAwesome.
 
 <CodeBlock title="docs.yml">
 ```yaml
@@ -223,21 +251,22 @@ tabs:
 ```
 </CodeBlock>
 
-![Here's an example of what the Tabs implementation looks like](https://fern-image-hosting.s3.amazonaws.com/fern/tabs.png)
+Here's an example of what the Tabs implementation looks like:
+![Screenshot showing two vertically stacked tabs labeled API Reference and Help Center](https://fern-image-hosting.s3.amazonaws.com/fern/tabs.png)
 
 ### Versions
 
-If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the versions and their availability.
+If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the versions and their availability:
 
 ![A dropdown of the available versions](https://fern-image-hosting.s3.amazonaws.com/versions.png)
 
-To add a version, specify the `display-name` which be visible to users and `path` which is a file that must be in a folder called `versions`.
+To add a version, specify the `display-name`, which will be visible to users, and `path`, which is a file that must be in a folder called `versions`:
 
 <CodeBlock title="docs.yml">
 ```yaml
 versions: 
   - display-name: v1.0
-      path: v1-0.yml # has to be in a `versions` folder
+      path: v1-0.yml # must be in a `versions` folder
   - display-name: v1.1
       path: v1-1.yml
 ```

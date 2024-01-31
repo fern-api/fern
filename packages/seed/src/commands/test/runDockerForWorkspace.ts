@@ -46,7 +46,8 @@ export async function runDockerForWorkspace({
                 config: customConfig,
                 outputMode: getOutputMode({ outputMode, language, fixtureName }),
                 absolutePathToLocalOutput: absolutePathToOutput,
-                language
+                language,
+                disableExamples: false
             }
         ]
     };

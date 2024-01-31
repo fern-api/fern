@@ -2,6 +2,7 @@ import { NamedFullExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../../extensions/extensions";
 import { getExtension } from "../../extensions/getExtension";
+import { isReferenceObject } from "../../utils/isReferenceObject";
 
 export const APPLICATION_JSON_CONTENT = "application/json";
 export const APPLICATION_JSON_REGEX = /^application.*json$/;
@@ -26,18 +27,24 @@ export function getApplicationJsonSchemaMediaObject(
             if (mediaObject.example != null) {
                 fullExamples.push({ name: undefined, value: mediaObject.example });
             }
-            const examples = getExtension<Record<string, unknown>>(mediaObject, OpenAPIExtension.EXAMPLES);
+            const examples = getExtension<Record<string, OpenAPIV3.ExampleObject>>(
+                mediaObject,
+                OpenAPIExtension.EXAMPLES
+            );
             if (examples != null && Object.keys(examples).length > 0) {
                 fullExamples.push(
                     ...Object.entries(examples).map(([name, value]) => {
-                        return { name, value };
+                        return { name: value.summary ?? name, value: value.value };
                     })
                 );
             }
             if (mediaObject.examples != null && Object.keys(mediaObject.examples).length > 0) {
                 fullExamples.push(
                     ...Object.entries(mediaObject.examples).map(([name, value]) => {
-                        return { name, value };
+                        if (isReferenceObject(value)) {
+                            return { name: undefined, value: undefined };
+                        }
+                        return { name: value.summary ?? name, value: value.value };
                     })
                 );
             }

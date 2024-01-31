@@ -20,6 +20,7 @@ export async function getIrForApi(absolutePathToWorkspace: AbsoluteFilePath): Pr
     return generateIntermediateRepresentation({
         workspace: workspace.workspace,
         generationLanguage: undefined,
-        audiences: { type: "all" }
+        audiences: { type: "all" },
+        disableExamples: false
     });
 }

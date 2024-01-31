@@ -1,4 +1,6 @@
+import { assertNever } from "@fern-api/core-utils";
 import { Logger } from "@fern-api/logger";
+import { FullExample } from "@fern-fern/openapi-ir-model/example";
 import {
     EndpointExample,
     HeaderExample,
@@ -43,7 +45,7 @@ export class ExampleEndpointFactory {
                 schema: requestSchemaIdResponse.schema,
                 example: requestSchemaIdResponse.example?.value,
                 isOptional: !required,
-                parameter: true
+                parameter: false
             });
             if (required && requestExample == null) {
                 return undefined;
@@ -57,7 +59,7 @@ export class ExampleEndpointFactory {
                 schema: responseSchemaIdResponse.schema,
                 example: responseSchemaIdResponse.example?.value,
                 isOptional: !required,
-                parameter: true
+                parameter: false
             });
             if (required && responseExample == null) {
                 return undefined;
@@ -67,12 +69,15 @@ export class ExampleEndpointFactory {
         const pathParameters: PathParameterExample[] = [];
         for (const pathParameter of endpoint.pathParameters) {
             const required = this.isSchemaRequired(pathParameter.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: pathParameter.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            if (example != null && !isExamplePrimitive(example)) {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -86,12 +91,15 @@ export class ExampleEndpointFactory {
         const queryParameters: QueryParameterExample[] = [];
         for (const queryParameter of endpoint.queryParameters) {
             const required = this.isSchemaRequired(queryParameter.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            if (example != null && !isExamplePrimitive(example)) {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -105,12 +113,15 @@ export class ExampleEndpointFactory {
         const headers: HeaderExample[] = [];
         for (const header of endpoint.headers) {
             const required = this.isSchemaRequired(header.schema);
-            const example = this.exampleTypeFactory.buildExample({
+            let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
                 isOptional: !required,
                 example: undefined,
                 parameter: true
             });
+            if (example != null && !isExamplePrimitive(example)) {
+                example = undefined;
+            }
             if (required && example == null) {
                 return undefined;
             } else if (example != null) {
@@ -126,7 +137,8 @@ export class ExampleEndpointFactory {
             queryParameters,
             headers,
             request: requestExample,
-            response: responseExample
+            response: responseExample,
+            codeSamples: endpoint.customCodeSamples
         };
 
         return example;
@@ -170,4 +182,30 @@ function getResponseSchema(response: ResponseWithExample | null | undefined): Sc
         return { type: "unsupported" };
     }
     return { type: "present", schema: response.schema, example: response.fullExamples?.[0] ?? undefined };
+}
+
+function isExamplePrimitive(example: FullExample): boolean {
+    switch (example.type) {
+        case "primitive":
+        case "enum":
+        case "literal":
+            return true;
+        case "unknown":
+            return isExamplePrimitive(example.unknown);
+        case "array":
+        case "object":
+        case "map":
+            return false;
+        case "oneOf":
+            switch (example.oneOf.type) {
+                case "discriminated":
+                    return false;
+                case "undisciminated":
+                    return isExamplePrimitive(example.oneOf.undisciminated);
+                default:
+                    return false;
+            }
+        default:
+            assertNever(example);
+    }
 }

@@ -10,17 +10,20 @@ export async function generateIrForFernWorkspace({
     workspace,
     context,
     generationLanguage,
+    disableExamples,
     audiences
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: GenerationLanguage | undefined;
+    disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
     await validateAPIWorkspaceAndLogIssues({ workspace, context, logWarnings: false });
     return generateIntermediateRepresentation({
         workspace,
         generationLanguage,
+        disableExamples,
         audiences
     });
 }

@@ -31,7 +31,14 @@ export function buildEndpointExample({
                 ? convertHeaderExamples({ context, namedFullExamples: endpointExample.headers })
                 : undefined,
         request: endpointExample.request != null ? convertFullExample(endpointExample.request) : undefined,
-        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined
+        response: endpointExample.response != null ? { body: convertFullExample(endpointExample.response) } : undefined,
+        "code-samples": endpointExample.codeSamples.map((codeSample) => ({
+            language: codeSample.language,
+            code: codeSample.code,
+            name: codeSample.name ?? undefined,
+            install: codeSample.install ?? undefined,
+            docs: codeSample.description ?? undefined
+        }))
     };
 }
 

@@ -169,7 +169,7 @@ boilerplate, postman collections, etc.). Below you can find a list of all of Fer
 
 | Generator ID                | Description                  | Latest Version | Changelog                                                 | Entrypoint                                                          |
 | --------------------------- | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------- |
-| fernapi/fern-python-sdk     | Generate a Python SDK        | 0.7.7          | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
+| fernapi/fern-python-sdk     | Generate a Python SDK        | 0.8.0          | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
 | fernapi/fern-pydantic-model | Generate Pydantic Models     | 0.7.7          | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
 | fernapi/fern-fastapi-server | Generate FastAPI boilerplate | 0.7.7          | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
 | fernapi/fern-openapi        | Fern Definition -> OpenAPI   | 0.0.30         | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                           |

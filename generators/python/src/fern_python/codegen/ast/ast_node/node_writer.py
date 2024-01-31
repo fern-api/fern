@@ -12,7 +12,7 @@ class NodeWriter(Writer):
         ...
 
     @abstractmethod
-    def write_reference(self, reference: Reference) -> None:
+    def write_reference(self, reference: Reference, is_string_reference: bool = False) -> None:
         ...
 
     @abstractmethod

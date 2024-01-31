@@ -147,6 +147,7 @@ exports[`migrateFromV30ToV29 snapshot 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": undefined,
               "docs": undefined,
               "endpointHeaders": [
                 {
