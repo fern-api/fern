@@ -35,14 +35,13 @@
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/generator-cli": "workspace:*",
     "@fern-api/generator-commons": "workspace:*",
+    "@fern-api/ruby-codegen": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.472",
     "@fern-fern/ir-sdk": "0.0.3277",
-    "lodash-es": "^4.17.21",
     "zod": "^3.22.3"
   },
   "devDependencies": {
     "@types/jest": "^29.0.3",
-    "@types/lodash-es": "^4.17.7",
     "@types/node": "^18.7.18",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
@@ -54,7 +53,7 @@
     "prettier": "^2.7.1",
     "ts-loader": "^9.3.1",
     "typescript": "4.6.4",
-    "webpack": "^5.88.2",
+    "webpack": "^5.76.0",
     "webpack-cli": "5.1.4"
   }
 }

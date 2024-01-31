@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../../packages/generators/cli" },
-    { "path": "../../../packages/generators/commons" }
+    { "path": "../../../packages/generators/commons" },
+    { "path": "../codegen" }
   ]
 }
