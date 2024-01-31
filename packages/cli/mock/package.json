@@ -29,7 +29,7 @@
   "dependencies": {
     "@fern-api/core-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/ir-sdk": "0.0.3277",
+    "@fern-fern/ir-sdk": "0.0.3294",
     "@types/lodash-es": "^4.17.7",
     "express": "^4.18.2",
     "get-port": "7.0.0",
