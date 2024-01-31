@@ -8,7 +8,7 @@ export type SupportedLanguageSchema = z.infer<typeof SupportedLanguageSchema>;
 export const ExampleCodeSampleSchema = WithNameAndDocsSchema.extend({
     language: z.union([SupportedLanguageSchema, z.string()]),
     code: z.string(),
-    install: z.string()
+    install: z.optional(z.string())
 });
 
 export type ExampleCodeSampleSchema = z.infer<typeof ExampleCodeSampleSchema>;

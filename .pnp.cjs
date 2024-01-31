@@ -4647,7 +4647,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.160"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.161"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4673,7 +4673,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.160"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.161"],\
             ["@redocly/openapi-core", "npm:1.4.1"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5038,7 +5038,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
             ["@fern-fern/docs-config", "npm:0.0.53"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.386"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.160"],\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.161"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5508,10 +5508,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/openapi-ir-model", [\
-        ["npm:0.0.160", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.160-23143524fc-61e02ec95e.zip/node_modules/@fern-fern/openapi-ir-model/",\
+        ["npm:0.0.161", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-openapi-ir-model-npm-0.0.161-c3e78b7c7c-d70b621f11.zip/node_modules/@fern-fern/openapi-ir-model/",\
           "packageDependencies": [\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.160"]\
+            ["@fern-fern/openapi-ir-model", "npm:0.0.161"]\
           ],\
           "linkType": "HARD"\
         }]\

@@ -122,6 +122,9 @@ types:
       - go
 
   EndpointExample:
+    extends:
+      - commons.WithDescription
+      - commons.WithName
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
