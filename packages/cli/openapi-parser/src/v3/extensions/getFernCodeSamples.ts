@@ -3,6 +3,7 @@ import { CustomCodeSample } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { FernOpenAPIExtension } from "./fernExtensions";
 import { getExtension } from "./getExtension";
+import { ReadmeOpenAPIExtension } from "./readmeExtensions";
 
 export function getFernCodeSamples(operationObject: OpenAPIV3.OperationObject): CustomCodeSample[] {
     const maybeCodeSamples = getExtension<unknown>(operationObject, FernOpenAPIExtension.CUSTOM_CODE_SAMPLES);
@@ -31,7 +32,7 @@ export function getFernCodeSamples(operationObject: OpenAPIV3.OperationObject): 
 }
 
 export function getReadmeCodeSamples(operationObject: OpenAPIV3.OperationObject): CustomCodeSample[] {
-    const maybeCodeSamples = getExtension<unknown>(operationObject, FernOpenAPIExtension.README_EXT);
+    const maybeCodeSamples = getExtension<unknown>(operationObject, ReadmeOpenAPIExtension.README_EXT);
 
     if (!isPlainObject(maybeCodeSamples)) {
         return [];
