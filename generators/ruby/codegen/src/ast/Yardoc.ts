@@ -44,9 +44,9 @@ export class Yardoc extends AstNode {
         nestedLayer: number
     ): void {
         const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
-
+        const classFactory = this.crf;
         const postCommentSpacing = " ".repeat(this.tabSizeSpaces * (nestedLayer + 1));
-        if (typeId !== undefined && properties !== undefined && this.crf !== undefined) {
+        if (typeId !== undefined && properties !== undefined && classFactory !== undefined) {
             this.addText({
                 stringContent: name,
                 templateString: `# ${postCommentSpacing}* :%s (Hash)`,
@@ -54,7 +54,7 @@ export class Yardoc extends AstNode {
             });
 
             properties.forEach((prop) => {
-                const classReference = this.crf!.fromTypeReference(prop.valueType);
+                const classReference = classFactory.fromTypeReference(prop.valueType);
                 this.writeHashContents(
                     prop.name.name.snakeCase.safeName,
                     classReference.typeHint,
@@ -72,7 +72,8 @@ export class Yardoc extends AstNode {
     private writeParameterAsHash(parameter: Parameter, startingTabSpaces: number): void {
         const typeId = parameter.type.resolvedTypeId;
         const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
-        if (typeId === undefined || properties === undefined || this.crf === undefined) {
+        const classFactory = this.crf;
+        if (typeId === undefined || properties === undefined || classFactory === undefined) {
             this.writeParameterAsClass(parameter, startingTabSpaces);
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s [Hash] ", startingTabSpaces });
@@ -81,7 +82,7 @@ export class Yardoc extends AstNode {
                 appendToLastString: true
             });
             properties.forEach((prop) => {
-                const classReference = this.crf!.fromTypeReference(prop.valueType);
+                const classReference = classFactory.fromTypeReference(prop.valueType);
                 this.writeHashContents(
                     prop.name.name.snakeCase.safeName,
                     classReference.typeHint,

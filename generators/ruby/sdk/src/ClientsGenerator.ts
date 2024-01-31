@@ -231,8 +231,7 @@ export class ClientsGenerator {
                             }
                             return classPair;
                         })
-                        .filter((cp) => cp !== undefined)
-                        .map((cp) => cp!);
+                        .filter((cp) => cp !== undefined) as ClientClassPair[];
 
                     const subpackageClasses = generateSubpackage(
                         package_,
@@ -280,8 +279,7 @@ export class ClientsGenerator {
         // 3. Generate main file, this is what people import while leveraging the gem.
         const rootSubpackageClasses = this.intermediateRepresentation.rootPackage.subpackages
             .map((sp) => subpackageClassReferences.get(sp))
-            .filter((cp) => cp !== undefined)
-            .map((cp) => cp!);
+            .filter((cp) => cp !== undefined) as ClientClassPair[];
         // TODO: this should also exist in some form for the model gen to consolidate imports
         clientFiles.push(
             generateRootPackage(

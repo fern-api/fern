@@ -182,7 +182,7 @@ export function generateRootPackage(
                     leftSide: requestClientVariable,
                     rightSide: new FunctionInvocation({
                         onObject: requestClient.classReference,
-                        baseFunction: requestClient.initializer!,
+                        baseFunction: requestClient.initializer,
                         arguments_: requestClient.properties.map((prop) => prop.toArgument(prop.name, true))
                     }),
                     isAssignment: true
@@ -197,7 +197,7 @@ export function generateRootPackage(
                         leftSide: spInstanceVar,
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
-                            baseFunction: sp.initializer!,
+                            baseFunction: sp.initializer,
                             arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
                         }),
                         isAssignment: true
@@ -240,7 +240,7 @@ export function generateRootPackage(
                     leftSide: asyncRequestClientVariable,
                     rightSide: new FunctionInvocation({
                         onObject: asyncRequestClient.classReference,
-                        baseFunction: asyncRequestClient.initializer!,
+                        baseFunction: asyncRequestClient.initializer,
                         arguments_: asyncRequestClient.properties.map((prop) => prop.toArgument(prop.name, true))
                     }),
                     isAssignment: true
@@ -255,7 +255,7 @@ export function generateRootPackage(
                         leftSide: spInstanceVar,
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
-                            baseFunction: sp.initializer!,
+                            baseFunction: sp.initializer,
                             arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
                         }),
                         isAssignment: true
@@ -366,6 +366,7 @@ export function generateService(
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>
 ): ClientClassPair {
+    const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
     const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
 
     // Add Client class
@@ -373,7 +374,7 @@ export function generateService(
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
     const syncClientClass = new Class_({
         classReference: new ClassReference({
-            name: `${service.name.fernFilepath.file!.pascalCase.safeName}Client`,
+            name: `${serviceName}Client`,
             import_
         }),
         properties: [requestClientProperty],
@@ -395,7 +396,7 @@ export function generateService(
     const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr });
     const asyncClientClass = new Class_({
         classReference: new ClassReference({
-            name: `Async${service.name.fernFilepath.file!.pascalCase.safeName}Client`,
+            name: `Async${serviceName}Client`,
             import_
         }),
         properties: [asyncRequestClientProperty],

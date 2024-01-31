@@ -199,8 +199,13 @@ export class EndpointGenerator {
                 },
                 // Our inputs are hashes, so pass that in
                 reference: () => {
+                    const prop = this.bodyAsProperties[0];
+                    if (prop === undefined) {
+                        throw new Error("No body properties found.");
+                    }
+
                     const referenceBodyHash = new HashInstance({
-                        additionalHashes: [this.bodyAsProperties[0]!.name, additionalBodyProperty],
+                        additionalHashes: [prop.name, additionalBodyProperty],
                         shouldCompact: true
                     });
                     return new Expression({

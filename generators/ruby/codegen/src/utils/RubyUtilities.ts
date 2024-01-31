@@ -28,9 +28,11 @@ export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName
 export function getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
     return [
         ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
-        declaredServiceName.fernFilepath.file!.snakeCase.safeName,
+        declaredServiceName.fernFilepath.file?.snakeCase.safeName,
         "client"
-    ].join("/");
+    ]
+        .filter((p) => p !== undefined)
+        .join("/");
 }
 
 // Note: this assumes the file is in a directory of the same name
