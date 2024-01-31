@@ -20,6 +20,7 @@ module SeedAudiencesClient
         # @return [FolderA::Service::Response]
         def get_direct_thread(request_options: nil)
           response = @request_client.conn.get("/") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           FolderA::Service::Response.from_json(json_object: response)
@@ -41,6 +42,7 @@ module SeedAudiencesClient
         def get_direct_thread(request_options: nil)
           Async.call do
             response = @request_client.conn.get("/") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             FolderA::Service::Response.from_json(json_object: response)

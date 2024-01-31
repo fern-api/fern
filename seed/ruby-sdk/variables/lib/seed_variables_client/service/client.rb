@@ -19,6 +19,7 @@ module SeedVariablesClient
       # @return [Void]
       def post(endpoint_param:, request_options: nil)
         @request_client.conn.post("/#{endpoint_param}") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -40,6 +41,7 @@ module SeedVariablesClient
       def post(endpoint_param:, request_options: nil)
         Async.call do
           @request_client.conn.post("/#{endpoint_param}") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end

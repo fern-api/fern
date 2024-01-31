@@ -18,6 +18,7 @@ module SeedSingleUrlEnvironmentDefaultClient
       # @return [String]
       def get_dummy(request_options: nil)
         @request_client.conn.get("/dummy") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
@@ -39,6 +40,7 @@ module SeedSingleUrlEnvironmentDefaultClient
       def get_dummy(request_options: nil)
         Async.call do
           response = @request_client.conn.get("/dummy") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end

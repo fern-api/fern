@@ -53,10 +53,9 @@ module SeedBasicAuthClient
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :max_retries, :timeout_in_seconds, :username, :password, :additional_headers,
-                :additional_query_parameters, :additional_body_parameters
+    attr_reader :timeout_in_seconds, :username, :password, :additional_headers, :additional_query_parameters,
+                :additional_body_parameters
 
-    # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
@@ -64,10 +63,8 @@ module SeedBasicAuthClient
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @return [RequestOptions]
-    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil, additional_headers: nil,
+    def initialize(username:, password:, timeout_in_seconds: nil, additional_headers: nil,
                    additional_query_parameters: nil, additional_body_parameters: nil)
-      # @type [Long] The number of times to retry a failed request, defaults to 2.
-      @max_retries = max_retries
       # @type [Long]
       @timeout_in_seconds = timeout_in_seconds
       # @type [String]

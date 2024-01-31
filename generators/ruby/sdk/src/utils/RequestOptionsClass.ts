@@ -1,7 +1,10 @@
 import {
     ClassReference,
     Class_,
+    ConditionalStatement,
     Expression,
+    FunctionInvocation,
+    Function_,
     GenericClassReference,
     HashReference,
     LongClassReference,
@@ -18,7 +21,6 @@ export declare namespace RequestOptions {
 }
 
 export class RequestOptions extends Class_ {
-    public retryProperty: Property;
     public timeoutProperty: Property;
     public headerProperties: Property[];
     public additionalHeaderProperty: Property;
@@ -26,12 +28,6 @@ export class RequestOptions extends Class_ {
     public additionalBodyProperty: Property;
 
     constructor({ headersGenerator }: RequestOptions.Init) {
-        const retryProperty = new Property({
-            name: "max_retries",
-            type: LongClassReference,
-            isOptional: true,
-            documentation: "The number of times to retry a failed request, defaults to 2."
-        });
         const timeoutProperty = new Property({
             name: "timeout_in_seconds",
             type: LongClassReference,
@@ -64,7 +60,6 @@ export class RequestOptions extends Class_ {
             classReference: new ClassReference({ name: "RequestOptions", location: "requests" }),
             includeInitializer: true,
             properties: [
-                retryProperty,
                 timeoutProperty,
                 ...headerProperties,
                 additionalHeaderProperty,
@@ -74,7 +69,6 @@ export class RequestOptions extends Class_ {
             documentation: "Additional options for request-specific configuration when calling APIs via the SDK."
         });
 
-        this.retryProperty = retryProperty;
         this.timeoutProperty = timeoutProperty;
         this.headerProperties = headerProperties;
         this.additionalHeaderProperty = additionalHeaderProperty;
@@ -84,28 +78,29 @@ export class RequestOptions extends Class_ {
 
     // TODO(P0): Finish this
     // These functions all essentially check if parameters are nil, and if not then add them to the overrides
-    public getAdditionalRequestOverrides(): Expression[] {
-        // .map(
-        //     (prop) =>
-        //         new ConditionalStatement({
-        //             if_: {
-        //                 rightSide: new FunctionInvocation({
-        //                     // TODO: Do this field access on the client better
-        //                     onObject: `${requestClientVariable.write()}.${prop.name}`,
-        //                     baseFunction: new Function_({ name: "nil?", functionBody: [] })
-        //                 }),
-        //                 operation: "!",
-        //                 expressions: [
-        //                     new Expression({
-        //                         leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
-        //                         rightSide: `${requestClientVariable.write()}.${prop.name}`,
-        //                         isAssignment: true
-        //                     })
-        //                 ]
-        //             }
-        //         })
-        // )
-        return [];
+    public getAdditionalRequestOverrides(
+        requestOptionsVariable: Variable,
+        faradayBlockArg: string
+    ): ConditionalStatement[] {
+        return [
+            new ConditionalStatement({
+                if_: {
+                    rightSide: new FunctionInvocation({
+                        // TODO: Do this field access on the client better
+                        onObject: `${requestOptionsVariable.write()}.${this.timeoutProperty.name}`,
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                    }),
+                    operation: "!",
+                    expressions: [
+                        new Expression({
+                            leftSide: `${faradayBlockArg}.options.timeout`,
+                            rightSide: `${requestOptionsVariable.write()}.${this.timeoutProperty.name}`,
+                            isAssignment: true
+                        })
+                    ]
+                }
+            })
+        ];
     }
 
     // Probably do conditional sets here as well

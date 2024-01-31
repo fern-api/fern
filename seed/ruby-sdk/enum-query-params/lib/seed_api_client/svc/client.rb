@@ -19,6 +19,7 @@ module SeedApiClient
       # @return [String]
       def test(some_enum: nil, request_options: nil)
         @request_client.conn.get("/test") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.params = { **request_options&.additional_query_parameters, "some-enum": some_enum }.compact
@@ -42,6 +43,7 @@ module SeedApiClient
       def test(some_enum: nil, request_options: nil)
         Async.call do
           response = @request_client.conn.get("/test") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = { **request_options&.additional_query_parameters, "some-enum": some_enum }.compact

@@ -21,6 +21,7 @@ module SeedApiWideBasePathClient
       # @return [Void]
       def post(path_param:, service_param:, endpoint_param:, request_options: nil)
         @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -44,6 +45,7 @@ module SeedApiWideBasePathClient
       def post(path_param:, service_param:, endpoint_param:, request_options: nil)
         Async.call do
           @request_client.conn.post("/test/#{path_param}/#{service_param}/#{endpoint_param}") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end

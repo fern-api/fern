@@ -34,6 +34,7 @@ module SeedExhaustiveClient
       # @return [Types::Object::ObjectWithOptionalField]
       def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
         response = @request_client.conn.post("/req-bodies/object") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = {
@@ -77,6 +78,7 @@ module SeedExhaustiveClient
       def post_with_object_bodyand_response(string:, integer:, nested_object:, request_options: nil)
         Async.call do
           response = @request_client.conn.post("/req-bodies/object") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = {

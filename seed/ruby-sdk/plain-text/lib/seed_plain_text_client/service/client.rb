@@ -18,6 +18,7 @@ module SeedPlainTextClient
       # @return [String]
       def get_text(request_options: nil)
         @request_client.conn.post("/text") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -38,6 +39,7 @@ module SeedPlainTextClient
       def get_text(request_options: nil)
         Async.call do
           response = @request_client.conn.post("/text") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response

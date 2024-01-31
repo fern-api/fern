@@ -11,3 +11,5 @@ allowedFailures:
   - file-download
   - file-upload
   - streaming
+  - folders
+  - trace

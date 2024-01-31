@@ -20,6 +20,7 @@ module SeedExamplesClient
         # @return [Void]
         def check(id:, request_options: nil)
           @request_client.conn.get("/check/#{id}") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
@@ -29,6 +30,7 @@ module SeedExamplesClient
         # @return [Boolean]
         def ping(request_options: nil)
           @request_client.conn.get("/ping") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
@@ -51,6 +53,7 @@ module SeedExamplesClient
         def check(id:, request_options: nil)
           Async.call do
             @request_client.conn.get("/check/#{id}") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
@@ -62,6 +65,7 @@ module SeedExamplesClient
         def ping(request_options: nil)
           Async.call do
             response = @request_client.conn.get("/ping") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end

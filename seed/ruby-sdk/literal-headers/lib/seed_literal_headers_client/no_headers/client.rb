@@ -18,6 +18,7 @@ module SeedLiteralHeadersClient
       # @return [Void]
       def get(request_options: nil)
         @request_client.conn.post("/no-headers") do |req|
+          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
           req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
           req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
@@ -40,6 +41,7 @@ module SeedLiteralHeadersClient
       def get(request_options: nil)
         Async.call do
           @request_client.conn.post("/no-headers") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
             req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact

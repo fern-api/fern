@@ -37,6 +37,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::ObjectWithOptionalField]
         def get_and_return_with_optional_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-optional-field") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -50,6 +51,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::ObjectWithRequiredField]
         def get_and_return_with_required_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-required-field") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -63,6 +65,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::ObjectWithMapOfMap]
         def get_and_return_with_map_of_map(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-with-map-of-map") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -89,6 +92,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::NestedObjectWithOptionalField]
         def get_and_return_nested_with_optional_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-nested-with-optional-field") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -115,6 +119,7 @@ module SeedExhaustiveClient
         # @return [Types::Object::NestedObjectWithRequiredField]
         def get_and_return_nested_with_required_field(request:, request_options: nil)
           response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
+            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
             req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -151,6 +156,7 @@ module SeedExhaustiveClient
         def get_and_return_with_optional_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-optional-field") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -166,6 +172,7 @@ module SeedExhaustiveClient
         def get_and_return_with_required_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-required-field") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -181,6 +188,7 @@ module SeedExhaustiveClient
         def get_and_return_with_map_of_map(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-with-map-of-map") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -209,6 +217,7 @@ module SeedExhaustiveClient
         def get_and_return_nested_with_optional_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-nested-with-optional-field") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
@@ -237,6 +246,7 @@ module SeedExhaustiveClient
         def get_and_return_nested_with_required_field(request:, request_options: nil)
           Async.call do
             response = @request_client.conn.post("/object/get-and-return-nested-with-required-field") do |req|
+              req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
               req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact

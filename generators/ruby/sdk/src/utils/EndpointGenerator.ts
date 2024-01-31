@@ -225,7 +225,7 @@ export class EndpointGenerator {
 
     public getFaradayBlock(requestClientVariable: Variable): BlockConfiguration {
         const expressions = [
-            ...this.requestOptions.getAdditionalRequestOverrides(),
+            ...this.requestOptions.getAdditionalRequestOverrides(this.requestOptionsVariable, this.blockArg),
             ...this.requestOptions.headerProperties.map(
                 (prop) =>
                     new ConditionalStatement({
