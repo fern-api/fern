@@ -1,6 +1,4 @@
 name: api
-environments: 
-default-environment: Production
 error-discrimination:
   strategy: status-code
 auth: bearer

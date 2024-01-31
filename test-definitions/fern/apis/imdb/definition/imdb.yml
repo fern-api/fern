@@ -16,11 +16,9 @@ types:
 
 service:
   auth: false
-  url: ServerB
   base-path: /movies
   endpoints:
     createMovie:
-      url: ServerA
       docs: Add a movie to the database
       method: POST
       path: /create-movie
