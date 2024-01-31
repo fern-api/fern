@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@fern-fern/generator-exec-client": "^0.0.6",
-    "@fern-fern/ir-sdk": "0.0.3294",
+    "@fern-fern/ir-sdk": "0.0.2828",
     "js-yaml": "^4.1.0",
     "lodash-es": "^4.17.21",
     "openapi-types": "^12.1.3",
