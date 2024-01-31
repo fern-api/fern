@@ -74,6 +74,10 @@ navigation:
         contents:
           - page: Publishing to Maven Central
             path: ./docs/pages/guides/publish-to-maven-central.mdx
+      - section: Changelog
+        contents: 
+          - page: December 2023
+            path: ./docs/pages/changelog/december-2023.mdx
   - tab: api-definition
     layout:
       - section: OpenAPI Specification
