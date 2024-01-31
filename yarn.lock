@@ -2352,7 +2352,6 @@ __metadata:
     "@fern-fern/generator-exec-sdk": ^0.0.472
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
     "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
     depcheck: ^1.4.6
@@ -2360,7 +2359,6 @@ __metadata:
     esbuild: ^0.15.7
     eslint: ^8.56.0
     jest: ^29.7.0
-    lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     ts-loader: ^9.3.1
@@ -3042,7 +3040,6 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.472
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7

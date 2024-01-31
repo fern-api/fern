@@ -76,7 +76,6 @@ export class RequestOptions extends Class_ {
         this.additionalBodyProperty = additionalBodyProperty;
     }
 
-    // TODO(P0): Finish this
     // These functions all essentially check if parameters are nil, and if not then add them to the overrides
     public getAdditionalRequestOverrides(
         requestOptionsVariable: Variable,
