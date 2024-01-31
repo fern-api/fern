@@ -24,6 +24,7 @@ test: install
 	seed test --workspace sdk --fixture idempotency-headers
 	seed test --workspace sdk --fixture literal
 	seed test --workspace sdk --fixture literal-headers
+	seed test --workspace sdk --fixture plain-text
 	seed test --workspace sdk --fixture streaming
 
 .PHONY: fixtures

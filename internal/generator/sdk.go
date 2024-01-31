@@ -1357,11 +1357,11 @@ func (f *fileWriter) endpointFromIR(
 			successfulReturnValues = "response, nil"
 			errorReturnValues = "nil, err"
 		case "text":
-			responseType = "string"
-			responseInitializerFormat = "var response %s"
+			responseType = "bytes.NewBuffer(nil)"
+			responseInitializerFormat = "response := %s"
 			responseParameterName = "response"
 			signatureReturnValues = "(string, error)"
-			successfulReturnValues = "response, nil"
+			successfulReturnValues = "response.String(), nil"
 			errorReturnValues = `"", err`
 		case "streaming":
 			if terminator := irEndpoint.Response.Streaming.Terminator; terminator != nil {
