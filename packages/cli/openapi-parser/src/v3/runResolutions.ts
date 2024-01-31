@@ -7,6 +7,8 @@ export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): Op
         return openapi;
     }
 
+    console.log("Running resolutions....", JSON.stringify(resolutions));
+
     /**
      * A map of references that have been replaced.
      * This is useful so that we can replace inline
@@ -41,7 +43,7 @@ interface AddComponentSchemaArgs {
 }
 
 function addComponentSchema({ openapi, schemaReference, schemaName }: AddComponentSchemaArgs): OpenAPIV3.Document {
-    const keys = schemaReference.split("/");
+    const keys = schemaReference.split("/").map((key) => key.replace("~1", "/"));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
     for (const key of keys) {
@@ -59,6 +61,8 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
     if (openapi.components.schemas == null) {
         openapi.components.schemas = {};
     }
+
+    console.log("Updating component schema....");
     openapi.components.schemas[schemaName] = value;
 
     return openapi;
@@ -96,7 +100,7 @@ function replaceWithSchemaReference({
         }
     }
 
-    const keys = replaceReference.split("/");
+    const keys = replaceReference.split("/").map((key) => key.replace("~1", "/"));
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
     for (const key of keys) {
@@ -108,6 +112,7 @@ function replaceWithSchemaReference({
         value = nextValue as any;
     }
 
+    console.log("Updating with ref....");
     value = {
         $ref: schemaReference
     };

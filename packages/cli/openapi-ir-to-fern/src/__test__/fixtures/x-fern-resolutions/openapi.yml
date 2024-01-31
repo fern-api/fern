@@ -39,4 +39,5 @@ paths:
 x-fern-resolutions: 
   - name: User
     resolutions: 
-      - '#/paths/%2fuser/get/responses/200/content/application~1json/schema'
+      - '#/paths/~1user/get/responses/200/content/application~1json/schema'
+      - '#/paths/~1users/get/responses/200/content/application~1json/schema/items'

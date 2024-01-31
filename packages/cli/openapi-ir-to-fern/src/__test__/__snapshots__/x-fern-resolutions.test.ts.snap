@@ -1,19 +1,16 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
+exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
 {
   "definitionFiles": {
-    "auth/user.yml": {
-      "imports": {
-        "user": "../user.yml",
-      },
+    "user.yml": {
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "get": {
             "auth": false,
-            "docs": "This endpoint should be in \`auth/user.yml\`",
+            "docs": undefined,
             "examples": [
               {
                 "headers": undefined,
@@ -21,49 +18,38 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
                 "query-parameters": undefined,
                 "request": undefined,
                 "response": {
-                  "body": {
-                    "associatedPersons": [
-                      {},
-                    ],
-                  },
+                  "body": [
+                    {},
+                  ],
                 },
               },
             ],
             "method": "GET",
-            "path": "/auth/user",
+            "path": "/users",
             "response": {
               "docs": "Success",
-              "type": "user.User",
+              "type": "list<UserGetResponseItem>",
             },
           },
         },
       },
-    },
-    "user.yml": {
-      "imports": {
-        "root": "__package__.yml",
-      },
       "types": {
-        "User": {
-          "docs": "This user object should be in user.yml",
+        "UserGetResponse": {
+          "docs": undefined,
           "properties": {
-            "associatedPersons": "optional<list<root.Person>>",
+            "id": "optional<string>",
+          },
+        },
+        "UserGetResponseItem": {
+          "docs": undefined,
+          "properties": {
             "id": "optional<string>",
           },
         },
       },
     },
   },
-  "packageMarkerFile": {
-    "types": {
-      "Person": {
-        "docs": undefined,
-        "properties": {
-          "id": "optional<string>",
-        },
-      },
-    },
-  },
+  "packageMarkerFile": {},
   "rootApiFile": {
     "display-name": "Test extension \`x-fern-sdk-group-name\` for schemas",
     "error-discrimination": {
