@@ -32,7 +32,7 @@ export function getAllPropertiesForRequest({
             definitionFile,
             workspace,
             typeResolver,
-            specialCasing: false
+            smartCasing: false
         });
     }
 
@@ -47,7 +47,7 @@ export function getAllPropertiesForRequest({
             definitionFile,
             workspace,
             typeResolver,
-            specialCasing: false
+            smartCasing: false
         });
     }
 
@@ -61,6 +61,6 @@ export function getAllPropertiesForRequest({
         definitionFile,
         workspace,
         typeResolver,
-        specialCasing: false
+        smartCasing: false
     });
 }

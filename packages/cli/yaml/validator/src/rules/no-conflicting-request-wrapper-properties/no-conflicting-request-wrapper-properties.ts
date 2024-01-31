@@ -173,7 +173,7 @@ function getRequestWrapperPropertiesByName({
                 definitionFile,
                 workspace,
                 typeResolver: new TypeResolverImpl(workspace),
-                specialCasing: false
+                smartCasing: false
             });
 
             for (const property of allProperties) {

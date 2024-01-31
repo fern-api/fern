@@ -37,7 +37,7 @@ export function getAllPropertiesForObject({
     definitionFile,
     workspace,
     typeResolver,
-    specialCasing,
+    smartCasing,
     // used only for recursive calls
     path = [],
     seen = {}
@@ -49,7 +49,7 @@ export function getAllPropertiesForObject({
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
-    specialCasing: boolean;
+    smartCasing: boolean;
     // these are for recursive calls only
     path?: ObjectPropertyPath;
     seen?: Record<RelativeFilePath, Set<TypeName>>;
@@ -66,8 +66,8 @@ export function getAllPropertiesForObject({
     }
 
     let casingsGenerator = CASINGS_GENERATOR;
-    if (specialCasing) {
-        casingsGenerator = constructCasingsGenerator(undefined, specialCasing);
+    if (smartCasing) {
+        casingsGenerator = constructCasingsGenerator(undefined, smartCasing);
     }
 
     const file = constructFernFileContext({
@@ -121,7 +121,7 @@ export function getAllPropertiesForObject({
                             definitionFile,
                             workspace,
                             typeResolver,
-                            specialCasing,
+                            smartCasing,
                             path: [
                                 ...path,
                                 {
@@ -152,14 +152,14 @@ export function getAllPropertiesForType({
     definitionFile,
     workspace,
     typeResolver,
-    specialCasing
+    smartCasing
 }: {
     typeName: TypeName;
     filepathOfDeclaration: RelativeFilePath;
     definitionFile: RawSchemas.DefinitionFileSchema;
     workspace: FernWorkspace;
     typeResolver: TypeResolver;
-    specialCasing: boolean;
+    smartCasing: boolean;
 }): ObjectPropertyWithPath[] {
     const resolvedType = typeResolver.resolveNamedType({
         referenceToNamedType: typeName,
@@ -180,7 +180,7 @@ export function getAllPropertiesForType({
         definitionFile,
         workspace,
         typeResolver,
-        specialCasing
+        smartCasing
     });
 }
 

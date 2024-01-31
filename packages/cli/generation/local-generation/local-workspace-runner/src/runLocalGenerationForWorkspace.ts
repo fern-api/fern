@@ -223,7 +223,7 @@ async function writeIrToFile({
         workspace,
         audiences,
         generationLanguage: generatorInvocation.language,
-        specialCasing: generatorInvocation.specialCasing,
+        smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples
     });
     context.logger.debug("Generated IR");

@@ -9,7 +9,7 @@ export const GeneratorInvocationSchema = z.strictObject({
     github: z.optional(GithubConfigurationSchema),
     config: z.unknown(),
     // Feature flag used to enable better IR naming.
-    "special-casing": z.optional(z.boolean()),
+    "smart-casing": z.optional(z.boolean()),
     // Temporary way to unblock example serialization
     "disable-examples": z.optional(z.boolean())
 });

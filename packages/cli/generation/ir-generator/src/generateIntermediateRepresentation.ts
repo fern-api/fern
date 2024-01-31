@@ -42,17 +42,17 @@ import { parseErrorName } from "./utils/parseErrorName";
 export async function generateIntermediateRepresentation({
     workspace,
     generationLanguage,
-    specialCasing,
+    smartCasing,
     disableExamples,
     audiences
 }: {
     workspace: FernWorkspace;
     generationLanguage: GenerationLanguage | undefined;
-    specialCasing: boolean;
+    smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
 }): Promise<IntermediateRepresentation> {
-    const casingsGenerator = constructCasingsGenerator(generationLanguage, specialCasing);
+    const casingsGenerator = constructCasingsGenerator(generationLanguage, smartCasing);
 
     const irGraph = new IrGraph(audiences);
 

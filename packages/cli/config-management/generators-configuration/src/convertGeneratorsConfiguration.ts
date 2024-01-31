@@ -91,7 +91,7 @@ async function convertGenerator({
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
-        specialCasing: generator["special-casing"] ?? false,
+        smartCasing: generator["smart-casing"] ?? false,
         disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"

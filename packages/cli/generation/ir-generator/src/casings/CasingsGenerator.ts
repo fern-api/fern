@@ -10,7 +10,7 @@ export interface CasingsGenerator {
 
 export function constructCasingsGenerator(
     generationLanguage: GenerationLanguage | undefined,
-    specialCasing: boolean
+    smartCasing: boolean
 ): CasingsGenerator {
     const casingsGenerator: CasingsGenerator = {
         generateName: (name) => {
@@ -23,7 +23,7 @@ export function constructCasingsGenerator(
             let pascalCaseName = upperFirst(camelCaseName);
             const snakeCaseName = snakeCase(name);
             const camelCaseWords = words(camelCaseName);
-            if (specialCasing && !hasAdjacentCommonInitialisms(camelCaseWords)) {
+            if (smartCasing && !hasAdjacentCommonInitialisms(camelCaseWords)) {
                 camelCaseName = camelCaseWords
                     .map((word, index) => {
                         if (index > 0) {
