@@ -138,6 +138,7 @@ export class ExampleEndpointFactory {
             headers,
             request: requestExample,
             response: responseExample
+            codeSamples: [
         };
 
         return example;

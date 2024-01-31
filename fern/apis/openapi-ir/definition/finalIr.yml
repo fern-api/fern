@@ -90,7 +90,6 @@ types:
       errorStatusCode: list<commons.StatusCode>
       server: list<commons.Server>
       examples: list<EndpointExample>
-      customCodeSamples: list<CustomCodeSample>
 
   CustomCodeSample:
     availability: in-development
@@ -122,9 +121,6 @@ types:
       - go
 
   EndpointExample:
-    extends:
-      - commons.WithDescription
-      - commons.WithName
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
@@ -135,6 +131,7 @@ types:
       headers: optional<list<HeaderExample>>
       request: optional<example.FullExample>
       response: optional<example.FullExample>
+      codeSamples: list<CustomCodeSample>
 
   PathParameterExample:
     properties:
