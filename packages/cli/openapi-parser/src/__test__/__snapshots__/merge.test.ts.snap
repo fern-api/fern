@@ -14,6 +14,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -26,6 +27,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -162,7 +164,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "public_token",
@@ -262,6 +266,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -274,6 +279,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -362,6 +368,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -374,6 +381,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -891,6 +899,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -903,6 +912,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1184,6 +1194,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1196,6 +1207,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1540,6 +1552,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1552,6 +1565,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1770,6 +1784,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1782,6 +1797,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2068,6 +2084,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2080,6 +2097,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2236,6 +2254,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2248,6 +2267,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2300,6 +2320,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2312,6 +2333,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2781,6 +2803,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2793,6 +2816,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -3031,6 +3055,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3043,6 +3068,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5548,6 +5574,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -5560,6 +5587,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -6049,6 +6077,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -6061,6 +6090,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -8183,6 +8213,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -8195,6 +8226,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "model_id",
@@ -8304,6 +8336,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -8316,6 +8349,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -8433,6 +8467,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -8445,6 +8480,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9078,6 +9114,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9090,6 +9127,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -9563,7 +9601,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -9653,6 +9693,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9665,6 +9706,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -10042,6 +10084,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10054,6 +10097,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -10281,7 +10325,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -10670,7 +10716,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -10790,7 +10838,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10905,7 +10955,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -11335,6 +11387,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11347,6 +11400,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -11700,6 +11754,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11712,6 +11767,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -11978,6 +12034,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11990,6 +12047,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -12127,6 +12185,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12139,6 +12198,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -12425,6 +12485,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12437,6 +12498,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -12586,6 +12648,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12598,6 +12661,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -13129,6 +13193,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13141,6 +13206,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -13405,7 +13471,9 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13495,6 +13563,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13507,6 +13576,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -13661,6 +13731,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13673,6 +13744,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13861,6 +13933,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13873,6 +13946,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14147,6 +14221,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14159,6 +14234,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14289,6 +14365,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14301,6 +14378,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14376,6 +14454,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14388,6 +14467,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -14732,6 +14812,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14744,6 +14825,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -14934,6 +15016,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14946,6 +15029,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -15602,6 +15686,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15614,6 +15699,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -15892,6 +15978,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15904,6 +15991,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -16385,6 +16473,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16397,6 +16486,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -16650,6 +16740,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16662,6 +16753,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -17045,6 +17137,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17057,6 +17150,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -17174,6 +17268,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17186,6 +17281,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -17261,6 +17357,7 @@ exports[`open api parser merge parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17273,6 +17370,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {

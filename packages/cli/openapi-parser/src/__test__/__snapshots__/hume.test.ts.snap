@@ -14,7 +14,9 @@ exports[`open api parser hume parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -226,7 +228,9 @@ exports[`open api parser hume parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -346,7 +350,9 @@ exports[`open api parser hume parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",

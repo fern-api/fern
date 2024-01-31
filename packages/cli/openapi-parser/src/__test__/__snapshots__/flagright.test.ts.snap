@@ -38,7 +38,9 @@ Here are some of the most used payload fields explained (you can find the full p
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -627,7 +629,9 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "transactionId",
@@ -1145,7 +1149,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": "example-2",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1917,7 +1923,9 @@ Each consumer User entity needs three mandatory fields:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": "example-1",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3891,7 +3899,9 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "userId",
@@ -5811,7 +5821,9 @@ Each consumer Business entity needs three mandatory fields:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -7552,7 +7564,9 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "userId",
@@ -10134,7 +10148,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13463,7 +13479,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {

@@ -22,14 +22,9 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -52,14 +47,10 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -101,14 +92,10 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -154,13 +141,9 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -208,14 +191,10 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "language": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -257,13 +236,9 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -305,14 +280,10 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "roleName": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -354,14 +325,10 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -403,13 +370,9 @@ exports[`open api parser squidex simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -456,11 +419,6 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -483,13 +441,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -526,13 +480,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -569,13 +519,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -633,13 +579,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -676,13 +618,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -711,13 +649,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -754,13 +688,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -801,13 +731,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -836,13 +762,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -882,10 +804,6 @@ You will be assigned as owner of the new app automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -948,12 +866,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "id": "string",
                 },
@@ -1007,12 +922,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "contributorId": "string",
                 },
@@ -1060,12 +972,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "language": "string",
                 },
@@ -1119,12 +1028,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -1178,12 +1084,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -1238,12 +1141,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1309,12 +1209,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1376,12 +1273,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1457,13 +1351,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1535,13 +1426,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "language": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1605,13 +1493,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "roleName": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permissions": [],
                 },
@@ -1673,12 +1558,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "editors": [],
                   "patterns": [],
@@ -1749,13 +1631,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "initial": "string",
                   "steps": {
@@ -1872,12 +1751,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": [],
@@ -1933,15 +1809,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1981,15 +1852,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2015,14 +1881,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -2249,15 +2111,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
                 "query-parameters": {
                   "scope": "PathAndItems",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -2309,13 +2168,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -2387,12 +2242,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2434,13 +2286,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": 1,
@@ -2518,12 +2366,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "folderName": "string",
                 },
@@ -2630,13 +2475,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2767,13 +2609,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "folderName": "string",
                 },
@@ -2834,13 +2673,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2899,13 +2735,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2983,13 +2816,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "name": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "tagName": "string",
                 },
@@ -3052,15 +2882,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3137,13 +2962,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -3179,11 +3000,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "log": [],
@@ -3212,14 +3028,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -3241,14 +3052,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "url": "string",
                 },
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -3293,16 +3099,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "commentId": "string",
                   "commentsId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3332,14 +3133,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "commentsId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "version": 1,
@@ -3383,13 +3180,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -3423,13 +3216,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "commentsId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "text": "string",
                 },
@@ -3474,18 +3264,14 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "commentId": "string",
                   "commentsId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "text": "string",
                 },
-                "response": undefined,
               },
             ],
             "method": "PUT",
@@ -3530,13 +3316,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "jobs": [],
                 },
@@ -3610,15 +3393,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -3666,16 +3445,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3719,15 +3493,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -3775,15 +3545,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -3830,15 +3596,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -3910,16 +3672,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "GET",
@@ -3978,14 +3735,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4042,13 +3795,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -4095,15 +3845,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4159,15 +3905,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4224,14 +3966,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "string": {
                     "string": {},
@@ -4287,13 +4026,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "string": {
                     "string": {},
@@ -4360,13 +4096,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "datas": [],
                 },
@@ -4428,14 +4161,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "string": {
                     "string": {},
@@ -4506,14 +4236,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "string": {
                     "string": {},
@@ -4569,14 +4296,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "status": "string",
                 },
@@ -4657,14 +4381,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotImplementedError",
             ],
             "examples": [
-              {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
+              {},
             ],
             "method": "GET",
             "path": "/api/diagnostics/dump",
@@ -4678,14 +4395,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.NotImplementedError",
             ],
             "examples": [
-              {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
+              {},
             ],
             "method": "GET",
             "path": "/api/diagnostics/gcdump",
@@ -4710,11 +4420,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4746,13 +4451,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4793,13 +4494,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4840,13 +4537,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "consumerName": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -4897,13 +4590,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -4941,13 +4630,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -4995,11 +4680,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -5032,11 +4712,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "features": [],
@@ -5083,15 +4758,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "commentId": "string",
                   "userId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5116,13 +4786,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "userId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "version": 1,
@@ -5172,14 +4838,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "GET",
@@ -5200,11 +4861,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": "string",
@@ -5227,14 +4883,7 @@ The client secret is auto generated on the server and returned. The client does 
               "root.InternalServerError",
             ],
             "examples": [
-              {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
-              },
+              {},
             ],
             "method": "GET",
             "path": "/api/ping",
@@ -5260,13 +4909,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "locked": "None",
@@ -5303,13 +4948,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "locked": "None",
@@ -5347,12 +4988,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "planId": "string",
                 },
@@ -5388,12 +5026,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "planId": "string",
                 },
@@ -5440,15 +5075,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5474,14 +5104,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5504,15 +5129,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5538,15 +5158,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5572,14 +5187,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5652,11 +5262,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {
@@ -5685,13 +5290,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "type": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -5719,11 +5320,6 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -5746,13 +5342,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -5807,13 +5399,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -5876,15 +5464,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "PUT",
@@ -5961,15 +5544,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "PUT",
@@ -6004,14 +5582,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6079,15 +5653,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "PUT",
@@ -6125,15 +5694,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6199,16 +5764,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6278,15 +5839,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6313,15 +5869,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6387,16 +5939,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6466,15 +6014,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6540,16 +6084,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6618,14 +6158,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6686,13 +6222,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6730,15 +6262,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6804,16 +6332,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6883,15 +6407,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -6957,16 +6477,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -7100,12 +6616,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "isPublished": true,
                   "isSingleton": true,
@@ -7197,14 +6710,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -7266,13 +6775,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -7418,14 +6924,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "fieldIds": [],
                 },
@@ -7497,13 +7000,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "string": "string",
                 },
@@ -7571,13 +7071,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -7653,13 +7150,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "validateOnPublish": true,
                 },
@@ -7761,13 +7255,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "fieldIds": [],
                 },
@@ -7835,13 +7326,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "isPublished": true,
                   "noFieldDeletion": true,
@@ -7932,13 +7420,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -8018,13 +7503,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -8090,15 +7572,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8164,16 +7642,12 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "id": 1,
                   "parentId": 1,
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8243,14 +7717,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "schema": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8322,13 +7792,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -8377,13 +7843,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "maxAllowed": 1,
@@ -8415,13 +7877,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },
@@ -8450,15 +7908,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "fromDate": "string",
                   "toDate": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -8495,15 +7949,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "fromDate": "string",
                   "team": "string",
                   "toDate": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -8540,13 +7990,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "maxAllowed": 1,
@@ -8578,15 +8024,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                   "fromDate": "string",
                   "toDate": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "allowedBytes": 1,
@@ -8635,15 +8077,11 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "fromDate": "string",
                   "team": "string",
                   "toDate": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "allowedBytes": 1,
@@ -8704,14 +8142,10 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8757,13 +8191,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8804,13 +8234,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8851,13 +8277,9 @@ The client secret is auto generated on the server and returned. The client does 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -8898,11 +8320,6 @@ You will retrieve all teams, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -8926,12 +8343,9 @@ You will retrieve all teams, where you are assigned as a contributor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "contributorId": "string",
                 },
@@ -8980,10 +8394,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -9035,12 +8445,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "team": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -9108,13 +8515,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "name": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9150,11 +8553,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9196,12 +8594,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "app": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "targetLanguage": "string",
                   "text": "string",
@@ -9270,14 +8665,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -9299,13 +8689,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9345,11 +8731,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9400,13 +8781,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9447,10 +8824,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "displayName": "string",
                   "email": "string",
@@ -9517,12 +8890,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "displayName": "string",
                   "email": "string",
@@ -9595,13 +8965,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9653,13 +9019,9 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9716,11 +9078,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_links": {
@@ -9749,11 +9106,6 @@ You will be assigned as owner of the new team automatically.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },

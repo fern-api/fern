@@ -22,13 +22,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "operations": [],
                 },
@@ -73,13 +70,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "operations": [],
                 },
@@ -124,13 +118,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "idents": [],
                 },
@@ -175,13 +166,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "idents": [],
                 },
@@ -226,13 +214,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "operations": [],
                 },
@@ -303,13 +288,10 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permission": "repository:clone",
                   "resource_set": "private_repos",
@@ -378,14 +360,10 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -444,19 +422,15 @@ If the permission is not granted, it is skipped.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permission": "repository:clone",
                   "resource_set": "private_repos",
                   "user_set": "us_based_employees",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -541,13 +515,10 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "conditions": {
                     "allOf": {
@@ -702,16 +673,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -740,15 +706,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "autogenerated": false,
@@ -849,15 +811,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -906,15 +864,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -963,8 +917,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
@@ -972,7 +924,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "query-parameters": {
                   "type": "userset",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -1033,14 +984,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "conditions": {
                     "allOf": {
@@ -1229,13 +1177,10 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "conflict_strategy": "fail",
                   "scope": {
@@ -1317,12 +1262,9 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "jwks": {
                     "keys": [],
@@ -1371,15 +1313,10 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1404,14 +1341,10 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1454,13 +1387,9 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1501,14 +1430,10 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1561,13 +1486,10 @@ allowed.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "jwks": {
                     "keys": [],
@@ -1673,10 +1595,6 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "key": "string",
                   "name": "string",
@@ -1730,14 +1648,9 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1759,11 +1672,6 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1793,13 +1701,9 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1835,11 +1739,6 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -1874,12 +1773,9 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1950,10 +1846,6 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "key": "string",
                   "name": "string",
@@ -2019,14 +1911,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2047,13 +1934,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2088,11 +1971,6 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2127,12 +2005,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2209,14 +2084,11 @@ to a role as one action.
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "actions": [
                     "read",
@@ -2303,17 +2175,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2346,16 +2213,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "actions": [
@@ -2410,15 +2273,11 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2468,15 +2327,12 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2570,14 +2426,11 @@ Each (resource, action) pair defines a unique permission level.
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "read a document",
                   "key": "read",
@@ -2656,17 +2509,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2699,16 +2547,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2019-08-24T14:15:22Z",
@@ -2760,15 +2604,11 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -2818,15 +2658,12 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "read a document",
                 },
@@ -2924,14 +2761,11 @@ define a boolean \`private\` attributes that we can now use in our policies.
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "whether or not the github repository is private",
                   "key": "private",
@@ -2991,17 +2825,12 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3047,16 +2876,12 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "built_in": false,
@@ -3109,15 +2934,11 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -3167,15 +2988,12 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "whether or not the github repository is private",
                   "type": "bool",
@@ -3256,13 +3074,10 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "attributes": {
                     "owner": "facebook",
@@ -3344,16 +3159,11 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3382,15 +3192,11 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attributes": {
@@ -3442,14 +3248,10 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -3495,14 +3297,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "attributes": {
                     "owner": "facebook",
@@ -3597,15 +3396,12 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permissions": [
                     "document:write",
@@ -3670,14 +3466,11 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "the maintainer role can read from the repo and push changes",
                   "extends": [
@@ -3775,17 +3568,12 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3818,16 +3606,12 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2019-08-24T14:15:22Z",
@@ -3884,16 +3668,12 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "roles": [],
@@ -3935,16 +3715,12 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "roles": [],
@@ -3986,15 +3762,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -4045,15 +3817,12 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permissions": [
                     "document:share",
@@ -4119,15 +3888,12 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "the maintainer role can read from the repo and push changes",
                   "permissions": [
@@ -4244,13 +4010,10 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "actions": {
                     "clone": {},
@@ -4371,16 +4134,11 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -4409,15 +4167,11 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "actions": {
@@ -4487,14 +4241,10 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -4560,14 +4310,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "actions": {
                     "string": {},
@@ -4676,14 +4423,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -4816,13 +4560,10 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "role": "admin",
                   "tenant": "stripe-inc",
@@ -4874,13 +4615,10 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": [],
                 "response": {
                   "body": {},
@@ -4916,13 +4654,10 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": [],
                 "response": {
                   "body": {},
@@ -4962,14 +4697,10 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -5030,19 +4761,15 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "role": "editor",
                   "tenant": "google-inc",
                   "user": "jane@coolcompany.com",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5093,14 +4820,11 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permissions": [
                     "document:write",
@@ -5160,13 +4884,10 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "the editor role can read and write to documents",
                   "extends": [
@@ -5259,16 +4980,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5297,15 +5013,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2019-08-24T14:15:22Z",
@@ -5357,15 +5069,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "roles": [],
@@ -5403,15 +5111,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "roles": [],
@@ -5449,14 +5153,10 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -5514,14 +5214,11 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "permissions": [
                     "document:share",
@@ -5582,14 +5279,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "the editor role can read and write to documents",
                   "permissions": [
@@ -5712,13 +5406,10 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "attributes": {
                     "allowed_locations": {
@@ -5779,16 +5470,11 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5817,17 +5503,12 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5860,15 +5541,11 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attributes": {
@@ -5920,15 +5597,11 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -5988,14 +5661,10 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -6052,14 +5721,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -6167,13 +5833,10 @@ define a string \`owner\` attribute that we can now use in our policies.
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "whether or not the github repository is private",
                   "key": "private",
@@ -6233,16 +5896,11 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6285,15 +5943,11 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "built_in": false,
@@ -6348,14 +6002,10 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -6402,14 +6052,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "whether or not the github repository is private",
                   "type": "bool",
@@ -6492,14 +6139,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "role": "admin",
                   "tenant": "stripe-inc",
@@ -6572,13 +6216,10 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "attributes": {
                     "age": 30,
@@ -6670,16 +6311,11 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6708,15 +6344,11 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "associated_tenants": [
@@ -6795,14 +6427,10 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": [],
@@ -6858,14 +6486,11 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "attributes": {
                     "age": 30,
@@ -6965,19 +6590,15 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "role": "editor",
                   "tenant": "google-inc",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -7024,14 +6645,11 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {

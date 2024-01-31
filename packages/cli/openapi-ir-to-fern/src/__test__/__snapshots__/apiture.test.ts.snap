@@ -23,13 +23,9 @@ exports[`open api parser apiture simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [],
@@ -72,13 +68,9 @@ exports[`open api parser apiture simple 1`] = `
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "allows": {
@@ -136,11 +128,6 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [
@@ -198,13 +185,9 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "location": "internal",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [],
@@ -327,13 +310,9 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [
@@ -403,8 +382,6 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
                 },
@@ -414,7 +391,6 @@ This information provides hints to clients, allowing bank customers to select tr
                   "startsOn": "2022-07-04",
                   "type": "internal",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "accuracyEndsOn": "2026-12-31T00:00:00.000Z",
@@ -567,8 +543,6 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "institutionId": "TIBURON",
                 },
@@ -578,7 +552,6 @@ This information provides hints to clients, allowing bank customers to select tr
                   "frequency": "once",
                   "startsOn": "2022-07-04",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [
@@ -661,15 +634,11 @@ This information provides hints to clients, allowing bank customers to select tr
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "countryCode": "string",
                   "locator": "string",
                   "locatorType": "abaRoutingNumber",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "found": true,
@@ -744,12 +713,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "disallowDebitCardAccess": false,
                   "emailAddress": "Mary.Jones@example.com",
@@ -816,13 +782,9 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "maximumOverdraftAccounts": 1,
@@ -860,13 +822,9 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": {
@@ -929,12 +887,9 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -993,11 +948,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [],
@@ -1051,13 +1001,9 @@ The default response lists only recent transactions. Normally, this is transacti
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "accountId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "count": 2381,
@@ -1209,10 +1155,6 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "amount": "275.00",
                   "memo": "Cover check for car repair",
@@ -1309,14 +1251,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1339,13 +1276,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "amount": "275.00",
@@ -1403,11 +1336,6 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "items": [
@@ -1528,12 +1456,9 @@ Note: This operation requires an identity challenge if the financial institution
             ],
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "transferId": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "amount": "275.00",
                   "schedule": {

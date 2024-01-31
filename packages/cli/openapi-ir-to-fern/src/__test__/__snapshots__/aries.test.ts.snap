@@ -19,13 +19,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -52,13 +48,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -92,12 +84,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "name": "Query",
                   "params": {
@@ -147,13 +136,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -180,12 +165,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "menu": {
                     "description": "User preferences for window settings",
@@ -243,12 +225,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "content": "Hello",
                 },
@@ -304,13 +283,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -373,13 +348,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -434,10 +405,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "metadata": {},
@@ -539,10 +506,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "alias": "alias",
                   "my_did": "WgWxqztrNooG92RXvxSTWv",
@@ -640,13 +603,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -673,13 +632,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "my_endpoint": "https://myhost:8021",
@@ -707,13 +662,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": {},
@@ -749,13 +700,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -801,15 +748,11 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "connection_protocol": "connections/1.0",
                   "state": "start",
                   "their_role": "invitee",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -916,10 +859,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -1029,12 +968,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "metadata": {},
                 },
@@ -1077,14 +1013,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                   "ref_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -1171,11 +1103,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "credential_definition_ids": [
@@ -1228,13 +1155,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_def_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "credential_definition": {
@@ -1292,10 +1215,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "revocation_registry_size": 1000,
                   "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
@@ -1393,13 +1312,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_def_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "credential_definition": {
@@ -1470,13 +1385,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -1503,13 +1414,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -1536,13 +1443,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": {
@@ -1571,13 +1474,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "attrs": {
@@ -1611,11 +1510,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -1674,13 +1568,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "revoked": true,
@@ -1720,13 +1610,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "credential_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "contexts": [
@@ -1779,10 +1665,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "contexts": [
                     "https://myhost:8021",
@@ -1952,13 +1834,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -2017,13 +1895,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -2082,13 +1956,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "their_public_did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "accept": "auto",
@@ -2157,10 +2027,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -2285,11 +2151,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -2358,11 +2219,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2429,11 +2285,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -2498,11 +2349,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": {
@@ -2569,13 +2415,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "tran_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_type": "101",
@@ -2634,9 +2476,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "tran_id": "string",
                 },
@@ -2717,11 +2556,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -2813,13 +2647,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "tran_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_type": "101",
@@ -2878,13 +2708,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "tran_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_type": "101",
@@ -2943,13 +2769,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "tran_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_type": "101",
@@ -3008,13 +2830,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "tran_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "_type": "101",
@@ -3073,15 +2891,12 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
                 "query-parameters": {
                   "endorser_did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "endorser_did": "endorser_did",
@@ -3122,15 +2937,12 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
                 "query-parameters": {
                   "transaction_my_job": "TRANSACTION_AUTHOR",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "transaction_my_job": "TRANSACTION_AUTHOR",
@@ -3189,15 +3001,12 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
                 "query-parameters": {
                   "target_connection_id": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -3250,10 +3059,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -3451,10 +3256,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_issue": true,
                   "auto_remove": true,
@@ -3632,13 +3433,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -3665,13 +3462,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -3803,14 +3596,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "role": "issuer",
                   "state": "proposal_sent",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -4069,12 +3858,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "comment": "comment",
                 },
@@ -4222,12 +4008,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "description",
                 },
@@ -4267,12 +4050,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "counter_proposal": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -4440,13 +4220,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -4578,10 +4354,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -4784,10 +4556,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_issue": true,
                   "auto_remove": true,
@@ -4970,10 +4738,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -5176,12 +4940,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "credential_id": "credential_id",
                 },
@@ -5362,10 +5123,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -5565,10 +5322,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_issue": true,
                   "auto_remove": true,
@@ -5773,13 +5526,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -5806,13 +5555,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "cred_ex_record": {
@@ -5950,14 +5695,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "role": "issuer",
                   "state": "proposal-sent",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -6228,12 +5969,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "comment": "comment",
                 },
@@ -6387,12 +6125,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "description",
                 },
@@ -6432,12 +6167,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "counter_preview": {
                     "@type": "issue-credential/2.0/credential-preview",
@@ -6628,12 +6360,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "holder_did": "did:key:ahsdkjahsdkjhaskjdhakjshdkajhsdkjahs",
                 },
@@ -6766,10 +6495,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -6951,10 +6676,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_issue": true,
                   "auto_remove": true,
@@ -7164,10 +6885,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -7349,10 +7066,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_remove": true,
                   "comment": "comment",
@@ -7538,12 +7251,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "credential_id": "credential_id",
                 },
@@ -7757,10 +7467,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "doc": {
                     "credential": {},
@@ -7806,10 +7512,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "doc": {
                     "proof": {
@@ -7867,10 +7569,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "mechanism": "mechanism",
                   "text": "text",
@@ -7908,13 +7606,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "role": "ENDORSER",
@@ -7944,13 +7638,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "verkey": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
@@ -7980,11 +7670,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "ledger_config_list": [
@@ -8020,14 +7705,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                   "endpoint_type": "Endpoint",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "endpoint": "https://myhost:8021",
@@ -8061,11 +7742,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -8104,11 +7780,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "ledger_id": "ledger_id",
@@ -8129,15 +7800,11 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                   "role": "STEWARD",
                   "verkey": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "success": true,
@@ -8222,11 +7889,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -8278,11 +7940,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -8321,13 +7978,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -8372,12 +8025,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "mediator_terms": [
                     "mediator_terms",
@@ -8440,11 +8090,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -8483,13 +8128,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "role": "client",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -8544,13 +8185,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "state": "request",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -8637,13 +8274,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -8688,13 +8321,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8727,12 +8356,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "mediator_terms": [
                     "mediator_terms",
@@ -8804,12 +8430,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "filter": {},
                 },
@@ -8867,12 +8490,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "updates": [
                     {
@@ -8932,13 +8552,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "mediation_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "connection_id": "connection_id",
@@ -8983,12 +8599,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                 },
@@ -9074,10 +8687,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "image_url": "https://aries.ca/images/sample.png",
                   "key_management_mode": "managed",
@@ -9160,12 +8769,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "wallet_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "wallet_key": "MySecretKey123",
                 },
@@ -9208,12 +8814,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "wallet_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "wallet_key": "MySecretKey123",
                 },
@@ -9253,11 +8856,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -9304,13 +8902,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "wallet_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
@@ -9342,12 +8936,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "wallet_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "image_url": "https://aries.ca/images/sample.png",
                   "label": "Alice",
@@ -9460,10 +9051,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "accept": [
                     "didcomm/aip1",
@@ -9644,10 +9231,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
@@ -9881,10 +9464,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "comment": "comment",
@@ -10094,13 +9673,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -10127,14 +9702,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "role": "prover",
                   "state": "proposal_sent",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -10415,13 +9986,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -10467,13 +10034,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -10616,12 +10179,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "description",
                 },
@@ -10661,10 +10221,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "comment": "comment",
@@ -10879,10 +10435,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_present": true,
                   "comment": "comment",
@@ -11084,12 +10636,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "requested_attributes": {
                     "key": {
@@ -11253,12 +10802,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "trace": false,
@@ -11422,13 +10968,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -11605,10 +11147,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "comment": "comment",
@@ -11760,13 +11298,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -11793,14 +11327,10 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "role": "prover",
                   "state": "proposal-sent",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -11927,13 +11457,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": [],
                 },
@@ -11979,13 +11505,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -12051,12 +11573,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "description": "description",
                 },
@@ -12096,10 +11615,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "comment": "comment",
@@ -12256,10 +11771,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "auto_present": true,
                   "comment": "comment",
@@ -12408,12 +11919,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "dif": {
                     "presentation_definition": {
@@ -12530,12 +12038,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "auto_verify": false,
                   "trace": false,
@@ -12622,13 +12127,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "pres_ex_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auto_present": false,
@@ -12745,13 +12246,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "did": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "did_document": {},
@@ -12792,10 +12289,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "purge": {
                     "key": [
@@ -12842,10 +12335,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "credential_definition_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
                   "max_cred_num": 1000,
@@ -12929,11 +12418,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "message": "message",
@@ -12984,13 +12468,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "cred_def_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -13059,13 +12539,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "state": "init",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "rev_reg_ids": [
@@ -13102,11 +12578,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -13154,13 +12625,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -13210,13 +12677,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": 0,
@@ -13243,13 +12706,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "rev_reg_delta": {},
@@ -13276,13 +12735,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -13351,13 +12806,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "sent": {
@@ -13476,13 +12927,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -13564,10 +13011,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "rrid2crid": {
                     "key": [
@@ -13641,10 +13084,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13721,15 +13160,12 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
                 "query-parameters": {
                   "state": "init",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -13807,15 +13243,12 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
                 "query-parameters": {
                   "apply_ledger_update": true,
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "accum_calculated": {},
@@ -13853,12 +13286,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "tails_public_uri": "http://192.168.56.133:6543/revocation/registry/WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0/tails-file",
                 },
@@ -13943,13 +13373,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "rev_reg_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -14016,11 +13442,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "schema_ids": [
@@ -14065,13 +13486,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "schema_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "schema": {
@@ -14108,10 +13525,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "attributes": [
                     "score",
@@ -14218,13 +13631,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "schema_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "schema": {
@@ -14272,11 +13681,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "config": {},
@@ -14297,11 +13701,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "alive": true,
@@ -14322,11 +13721,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": [
@@ -14350,11 +13744,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "ready": true,
@@ -14375,11 +13764,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "conductor": {},
@@ -14403,11 +13787,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -14428,11 +13807,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -14466,12 +13840,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
                 "path-parameters": {
                   "conn_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "comment": "comment",
                 },
@@ -14527,10 +13898,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "method": "sov",
                   "options": {
@@ -14583,13 +13950,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "did": "WgWxqztrNooG92RXvxSTWv",
@@ -14620,15 +13983,11 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "key_type": "ed25519",
                   "method": "key",
                   "posture": "public",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "results": [
@@ -14689,11 +14048,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -14720,13 +14074,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "string": {},
@@ -14756,10 +14106,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "did": "WgWxqztrNooG92RXvxSTWv",
                   "endpoint": "https://myhost:8021",
@@ -14815,13 +14161,9 @@ exports[`open api parser aries simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "code-samples": [],
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "did": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "result": {
@@ -14907,13 +14249,9 @@ exports[`open api parser aries simple 1`] = `
           "docs": undefined,
           "examples": [
             {
-              "code-samples": [],
-              "headers": undefined,
               "path-parameters": {
                 "tran_id": "string",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": {
                   "_type": "101",

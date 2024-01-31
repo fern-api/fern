@@ -20,7 +20,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -332,7 +334,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -610,7 +614,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -932,7 +938,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1196,7 +1204,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1496,7 +1506,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -1839,7 +1851,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2160,7 +2174,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2505,7 +2521,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2798,7 +2816,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3082,7 +3102,9 @@ exports[`open api parser supertokens parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -3594,7 +3616,9 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4168,7 +4192,9 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -4371,7 +4397,9 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -4860,7 +4888,9 @@ Passing the optional deviceId signifies a resend code flow.
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -5101,7 +5131,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5477,7 +5509,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -5774,7 +5808,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -6063,7 +6099,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -6354,7 +6392,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -6682,7 +6722,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -6964,7 +7006,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -7206,7 +7250,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -7512,7 +7558,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -7819,7 +7867,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -8011,7 +8061,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -8367,7 +8419,9 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -8721,7 +8775,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9084,7 +9140,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9304,7 +9362,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9611,7 +9671,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -9803,7 +9865,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10030,7 +10094,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10226,7 +10292,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -10486,7 +10554,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10789,7 +10859,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10985,7 +11057,9 @@ Note that there is an invisible character at the end of the path, this was to av
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -11205,7 +11279,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -11457,7 +11533,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -11667,7 +11745,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -11925,7 +12005,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -12183,7 +12265,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12402,7 +12486,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12625,7 +12711,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -12890,7 +12978,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -13117,7 +13207,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13355,7 +13447,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -13578,7 +13672,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13811,7 +13907,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14005,7 +14103,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -14357,7 +14457,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -14829,7 +14931,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -15096,7 +15200,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -15545,7 +15651,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -16040,7 +16148,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -16259,7 +16369,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -16581,7 +16693,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -16997,7 +17111,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -17351,7 +17467,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -17439,7 +17557,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -17857,7 +17977,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -18278,7 +18400,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -18839,7 +18963,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -19094,7 +19220,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -19386,7 +19514,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -19641,7 +19771,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -19839,7 +19971,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -20152,7 +20286,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -20444,7 +20580,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20561,7 +20699,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20759,7 +20899,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20816,7 +20958,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20873,7 +21017,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20930,7 +21076,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20987,7 +21135,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -21047,7 +21197,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -21258,7 +21410,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -21462,7 +21616,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -21657,7 +21813,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -22184,7 +22342,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -22370,7 +22530,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -22540,7 +22702,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -22746,7 +22910,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -22921,7 +23087,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -23125,7 +23293,9 @@ e.g.:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,

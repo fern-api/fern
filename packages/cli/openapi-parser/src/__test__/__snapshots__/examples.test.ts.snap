@@ -14,7 +14,9 @@ exports[`examples examples parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,

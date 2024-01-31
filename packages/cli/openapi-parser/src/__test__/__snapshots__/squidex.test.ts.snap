@@ -16,7 +16,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -186,7 +188,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -350,7 +354,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -502,7 +508,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -690,7 +698,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -764,7 +774,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -917,7 +929,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1067,7 +1081,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1156,7 +1172,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1247,7 +1265,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1450,7 +1470,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -1573,7 +1595,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1667,7 +1691,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "name",
@@ -1793,7 +1819,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -1936,7 +1964,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -2103,7 +2133,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -2246,7 +2278,9 @@ exports[`open api parser squidex parse open api 1`] = `
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -2415,7 +2449,9 @@ You will retrieve all teams, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2483,7 +2519,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -2632,7 +2670,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -2787,7 +2827,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -2965,7 +3007,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -3053,7 +3097,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -3267,7 +3313,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -3481,7 +3529,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -3584,7 +3634,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -3687,7 +3739,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -3836,7 +3890,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -3985,7 +4041,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -4315,7 +4373,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -4595,7 +4655,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -4880,7 +4942,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -5301,7 +5365,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -5716,7 +5782,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -6030,7 +6098,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -6319,7 +6389,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -6633,7 +6705,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -6922,7 +6996,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -7236,7 +7312,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -7525,7 +7603,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -7839,7 +7919,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -8128,7 +8210,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -8442,7 +8526,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -8731,7 +8817,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -9044,7 +9132,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -9168,7 +9258,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -9462,7 +9554,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -9726,7 +9820,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -10014,7 +10110,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -10114,7 +10212,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -10432,7 +10532,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -10712,7 +10814,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -11006,7 +11110,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -11286,7 +11392,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -11566,7 +11674,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -11830,7 +11940,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -12092,7 +12204,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -12200,7 +12314,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -12402,7 +12518,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -12571,7 +12689,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -12837,7 +12957,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -12936,7 +13058,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13058,7 +13182,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13236,7 +13362,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13393,7 +13521,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13592,7 +13722,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13665,7 +13797,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13765,7 +13899,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -13863,7 +13999,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -13933,7 +14071,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "type",
@@ -14018,7 +14158,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -14142,7 +14284,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -14254,7 +14398,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -14378,7 +14524,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -14489,7 +14637,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14561,7 +14711,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14603,7 +14755,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -14674,7 +14828,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14767,7 +14923,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -14833,7 +14991,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -14953,7 +15113,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -15072,7 +15234,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -15167,7 +15331,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "consumerName",
@@ -15315,7 +15481,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "consumerName",
@@ -15463,7 +15631,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "consumerName",
@@ -15610,7 +15780,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -15653,7 +15825,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -15696,7 +15870,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -15907,7 +16083,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -16178,7 +16356,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -16355,7 +16535,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -16666,7 +16848,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -16962,7 +17146,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -17189,7 +17375,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -17361,7 +17549,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -17588,7 +17778,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -17714,7 +17906,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -17927,7 +18121,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -18242,7 +18438,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -18386,7 +18584,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -18530,7 +18730,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -18743,7 +18945,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -18932,7 +19136,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19121,7 +19327,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19309,7 +19517,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19432,7 +19642,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19579,7 +19791,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19748,7 +19962,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -19899,7 +20115,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -20024,7 +20242,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "userId",
@@ -20144,7 +20364,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "userId",
@@ -20313,7 +20535,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -20513,7 +20737,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -20637,7 +20863,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -20708,7 +20936,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -20790,7 +21020,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -21616,7 +21848,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -21804,7 +22038,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -21976,7 +22212,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -22175,7 +22413,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -22275,7 +22515,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -22465,7 +22707,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -22589,7 +22833,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -22763,7 +23009,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -23210,7 +23458,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -23356,7 +23606,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -23790,7 +24042,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -24096,7 +24350,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -24241,7 +24497,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -24450,7 +24708,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -24755,7 +25015,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -24882,7 +25144,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25024,7 +25288,9 @@ You will be assigned as owner of the new team automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25149,7 +25415,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25297,7 +25565,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25464,7 +25734,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25614,7 +25886,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25757,7 +26031,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -25924,7 +26200,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26067,7 +26345,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26368,7 +26648,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26555,7 +26837,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26679,7 +26963,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26827,7 +27113,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -26994,7 +27282,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27144,7 +27434,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27268,7 +27560,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27415,7 +27709,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27515,7 +27811,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27687,7 +27985,9 @@ The client secret is auto generated on the server and returned. The client does 
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -27837,7 +28137,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -27905,7 +28207,9 @@ You will be assigned as owner of the new app automatically.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -28087,7 +28391,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "team",
@@ -28182,7 +28488,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -28370,7 +28678,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -28574,7 +28884,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -28647,7 +28959,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -28850,7 +29164,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -28999,7 +29315,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -29172,7 +29490,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -29300,7 +29620,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -29452,7 +29774,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",
@@ -29646,7 +29970,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "app",

@@ -309,7 +309,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1346,7 +1348,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1830,7 +1834,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2204,7 +2210,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2586,7 +2594,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -3020,7 +3030,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -3091,7 +3103,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -3480,7 +3494,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5024,7 +5040,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5402,7 +5420,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -5757,7 +5777,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -6389,7 +6411,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -6603,7 +6627,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -8849,7 +8875,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9237,6 +9265,7 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Belvo-Request-Mode",
@@ -9249,6 +9278,7 @@ client.connect()
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9630,7 +9660,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9963,7 +9995,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -10770,7 +10804,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -10984,7 +11020,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12200,7 +12238,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12569,7 +12609,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12894,7 +12936,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -13536,7 +13580,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -13750,7 +13796,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -14466,7 +14514,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -14835,7 +14885,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -15585,7 +15637,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -15933,7 +15987,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -16258,7 +16314,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -16647,7 +16705,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -16861,7 +16921,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -18191,7 +18253,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -18596,7 +18660,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -18938,7 +19004,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -19578,7 +19646,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -19792,7 +19862,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -20914,7 +20986,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -21325,7 +21399,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -21726,7 +21802,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -21936,7 +22014,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -22626,7 +22706,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -23154,7 +23236,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -23684,7 +23768,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -23894,7 +23980,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -24575,7 +24663,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -24921,7 +25011,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -25269,7 +25361,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -25483,7 +25577,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -25996,7 +26092,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -26488,7 +26586,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -26808,7 +26908,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -27116,7 +27218,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -27314,7 +27418,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -27867,7 +27973,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -28192,7 +28300,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -28498,7 +28608,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -28788,7 +28900,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -28986,7 +29100,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -29509,7 +29625,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -29859,7 +29977,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -30198,7 +30318,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -30528,7 +30650,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -30594,7 +30718,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -31318,7 +31444,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -31613,7 +31741,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -31892,7 +32022,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -31958,7 +32090,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -32308,7 +32442,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -32473,7 +32609,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -32649,7 +32787,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -32809,7 +32949,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -32875,7 +33017,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -33324,7 +33468,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -33497,7 +33643,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -33781,7 +33929,9 @@ If you need to know the currency of the account, just do a GET Details to the ac
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -33995,7 +34145,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -34918,7 +35070,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -35265,7 +35419,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -35990,7 +36146,9 @@ client.connect()
               "name": "Belvo Node SDK",
             },
           ],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -36056,7 +36214,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -36266,7 +36426,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -36421,7 +36583,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -36706,7 +36870,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -36779,7 +36945,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -36897,7 +37065,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -36986,7 +37156,9 @@ client.connect()
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -37065,7 +37237,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -37125,7 +37299,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -37197,7 +37373,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -37303,7 +37481,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -37433,7 +37613,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -37499,7 +37681,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -37874,7 +38058,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -38031,7 +38217,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -38460,7 +38648,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -38713,7 +38903,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -38897,7 +39089,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -39491,7 +39685,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -39775,7 +39971,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -39971,7 +40169,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -40437,7 +40637,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -40707,7 +40909,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "access_token",
@@ -40891,7 +41095,9 @@ For example:
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -41797,7 +42003,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -42648,7 +42856,9 @@ During the payment intent flow, you need to fill in the payment intent with requ
       "examples": [
         {
           "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
