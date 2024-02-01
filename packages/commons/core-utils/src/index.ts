@@ -16,3 +16,4 @@ export { values, type Values } from "./objects/values";
 export { PLATFORM, type Platform } from "./platform";
 export type { Digit, Letter, LowercaseLetter, UppercaseLetter } from "./types";
 export { visitDiscriminatedUnion } from "./visitDiscriminatedUnion";
+export type { WithoutQuestionMarks } from "./withoutQuestionMarks";

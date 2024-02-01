@@ -93,15 +93,17 @@ types:
 
   CustomCodeSample:
     availability: in-development
-    extends: commons.WithDescription
     properties:
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      docs: optional<string>
       language: SupportedLanguage
       code:
         type: string
         docs: |
           The code sample. 
           This is a string because we want to support code samples that are not valid JSON.
-      name: optional<string>
       install:
         type: optional<string>
         docs: |

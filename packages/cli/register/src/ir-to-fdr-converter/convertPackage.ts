@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
 import { FernIr as Ir } from "@fern-fern/ir-sdk";
 import { startCase } from "lodash-es";
@@ -357,8 +357,9 @@ function convertResponseErrorsV2(
 function convertExampleEndpointCall(
     irExample: Ir.http.ExampleEndpointCall,
     ir: Ir.ir.IntermediateRepresentation
-): APIV1Write.ExampleEndpointCall {
+): WithoutQuestionMarks<APIV1Write.ExampleEndpointCall> {
     return {
+        name: irExample.name?.originalName,
         description: irExample.docs ?? undefined,
         path: irExample.url,
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
@@ -381,6 +382,7 @@ function convertExampleEndpointCall(
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,
+        requestBodyV3: irExample.request != null ? { type: "json", value: irExample.request.jsonExample } : undefined,
         responseStatusCode: Ir.http.ExampleResponse._visit(irExample.response, {
             ok: ({ body }) => (body != null ? 200 : 204),
             error: ({ error: errorName }) => {
@@ -395,12 +397,17 @@ function convertExampleEndpointCall(
             }
         }),
         responseBody: irExample.response.body?.jsonExample,
-        codeSamples: irExample.codeSamples?.map((codeSample) => ({
-            name: codeSample.name?.originalName,
-            language: codeSample.language,
-            code: codeSample.code,
-            install: codeSample.install
-        }))
+        responseBodyV3:
+            irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
+        codeSamples: irExample.codeSamples?.map(
+            (codeSample): WithoutQuestionMarks<APIV1Write.CustomCodeSample> => ({
+                name: codeSample.name?.originalName,
+                language: codeSample.language,
+                code: codeSample.code,
+                install: codeSample.install,
+                description: codeSample.docs
+            })
+        )
     };
 }
 

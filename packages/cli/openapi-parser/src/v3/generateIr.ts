@@ -111,9 +111,18 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
     );
     const exampleEndpointFactory = new ExampleEndpointFactory(schemasWithExample, context.logger);
     const endpoints = endpointsWithExample.map((endpointWithExample): Endpoint => {
-        const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+        // if x-fern-examples is not present, generate an example
+        let examples = endpointWithExample.examples;
+        if (examples.length === 0) {
+            const endpointExample = exampleEndpointFactory.buildEndpointExample(endpointWithExample);
+            if (endpointExample != null) {
+                examples = [endpointExample];
+            }
+        }
+
         const request = endpointWithExample.request;
         const response = endpointWithExample.response;
+
         return {
             ...endpointWithExample,
             request:
@@ -154,7 +163,7 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
                     parameterNameOverride: header.parameterNameOverride
                 };
             }),
-            examples: endpointExample == null ? [] : [endpointExample]
+            examples
         };
     });
 

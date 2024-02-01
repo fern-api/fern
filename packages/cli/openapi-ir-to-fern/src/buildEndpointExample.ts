@@ -23,6 +23,10 @@ export function buildEndpointExample({
         example.name = endpointExample.name;
     }
 
+    if (endpointExample.docs != null) {
+        example.docs = endpointExample.docs;
+    }
+
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
         example["path-parameters"] = convertNamedFullExamples(endpointExample.pathParameters);
     }
@@ -49,11 +53,11 @@ export function buildEndpointExample({
 
     if (endpointExample.codeSamples.length > 0) {
         example["code-samples"] = endpointExample.codeSamples.map((codeSample) => ({
+            name: codeSample.name ?? undefined,
+            docs: codeSample.docs ?? undefined,
             language: codeSample.language,
             code: codeSample.code,
-            name: codeSample.name ?? undefined,
-            install: codeSample.install ?? undefined,
-            docs: codeSample.description ?? undefined
+            install: codeSample.install ?? undefined
         }));
     }
 
