@@ -25,6 +25,32 @@ exports[`open api parser cohere simple 1`] = `
             ],
             "examples": [
               {
+                "request": {
+                  "name": "string",
+                  "oauth": {},
+                  "service_auth": {
+                    "token": "string",
+                    "type": "bearer",
+                  },
+                  "url": "string",
+                },
+                "response": {
+                  "body": {
+                    "connector": {
+                      "auth_status": "valid",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "string",
+                      "name": "string",
+                      "oauth": {
+                        "authorize_url": "string",
+                        "token_url": "string",
+                      },
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "import cohere
@@ -167,6 +193,16 @@ const cohere = new CohereClient({
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "const { CohereClient } = require("cohere-ai");
@@ -221,6 +257,26 @@ co.delete_connector("test-id")",
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "connector": {
+                      "auth_status": "valid",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "string",
+                      "name": "string",
+                      "oauth": {
+                        "authorize_url": "string",
+                        "token_url": "string",
+                      },
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -278,6 +334,13 @@ const cohere = new CohereClient({
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "response": {
+                  "body": {
+                    "connectors": [],
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -343,6 +406,14 @@ const cohere = new CohereClient({
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {},
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -413,6 +484,33 @@ const cohere = new CohereClient({
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "request": {
+                  "oauth": {},
+                  "service_auth": {
+                    "token": "string",
+                    "type": "bearer",
+                  },
+                },
+                "response": {
+                  "body": {
+                    "connector": {
+                      "auth_status": "valid",
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "id": "string",
+                      "name": "string",
+                      "oauth": {
+                        "authorize_url": "string",
+                        "token_url": "string",
+                      },
+                      "updated_at": "2024-01-15T09:30:00Z",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -676,6 +774,16 @@ const cohere = new CohereClient({
             "docs": "Delete a dataset by ID. Datasets are automatically deleted after 30 days, but they can also be deleted manually.",
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "string": {},
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "import cohere
@@ -719,6 +827,24 @@ co.delete_dataset('id')",
             "display-name": "Get a Dataset",
             "docs": "Retrieve a dataset by ID. See ['Datasets'](https://docs.cohere.com/docs/datasets) for more information.",
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "dataset": {
+                      "created_at": "2024-01-15T09:30:00Z",
+                      "dataset_type": "embed-input",
+                      "id": "string",
+                      "name": "string",
+                      "parse_info": {},
+                      "updated_at": "2024-01-15T09:30:00Z",
+                      "validation_status": "unknown",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -783,6 +909,11 @@ const cohere = new CohereClient({
             "docs": "View the dataset storage usage for your Organization. Each Organization can have up to 10GB of storage across all their users.",
             "examples": [
               {
+                "response": {
+                  "body": {},
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "import cohere
@@ -842,6 +973,11 @@ const cohere = new CohereClient({
             "display-name": "List Datasets",
             "docs": "List datasets that have been created.",
             "examples": [
+              {
+                "response": {
+                  "body": {},
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -987,6 +1123,11 @@ const cohere = new CohereClient({
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "import cohere
@@ -1050,6 +1191,25 @@ const cohere = new CohereClient({
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "request": {
+                  "dataset_id": "string",
+                  "input_type": "search_document",
+                  "model": "string",
+                  "truncate": "START",
+                },
+                "response": {
+                  "body": {
+                    "job_id": "string",
+                    "meta": {
+                      "api_version": {
+                        "version": "string",
+                      },
+                      "billed_units": {},
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -1186,6 +1346,27 @@ Passing \`START\` will discard the start of the input. \`END\` will discard the 
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2024-01-15T09:30:00Z",
+                    "input_dataset_id": "string",
+                    "job_id": "string",
+                    "meta": {
+                      "api_version": {
+                        "version": "string",
+                      },
+                      "billed_units": {},
+                    },
+                    "model": "string",
+                    "status": "processing",
+                    "truncate": "START",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "import cohere
@@ -1255,6 +1436,11 @@ const cohere = new CohereClient({
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "response": {
+                  "body": {},
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -1356,6 +1542,32 @@ Passing \`START\` will discard the start of the input. \`END\` will discard the 
 The endpoint features additional parameters such as [connectors](https://docs.cohere.com/docs/connectors) and \`documents\` that enable conversations enriched by external knowledge. We call this ["Retrieval Augmented Generation"](https://docs.cohere.com/docs/retrieval-augmented-generation-rag), or "RAG". For a full breakdown of the Chat API endpoint, document and connector modes, and streaming (with code samples), see [this guide](https://docs.cohere.com/docs/cochat-beta).
 ",
           "examples": [
+            {
+              "name": "Chat",
+              "request": {
+                "chat_history": [
+                  {
+                    "message": "Hi!",
+                    "role": "CHATBOT",
+                  },
+                  {
+                    "message": "How can I help you today?",
+                    "role": "CHATBOT",
+                  },
+                ],
+                "citation_quality": "fast",
+                "message": "Can you give me a global market overview of solar panels?",
+                "prompt_truncation": "OFF",
+                "stream": false,
+                "temperature": 0.3,
+              },
+              "response": {
+                "body": {
+                  "generation_id": "string",
+                  "text": "string",
+                },
+              },
+            },
             {
               "code-samples": [
                 {
@@ -1877,6 +2089,114 @@ Note: [Fine-tuned models](https://docs.cohere.com/docs/classify-fine-tuning) tra
           ],
           "examples": [
             {
+              "name": "Example",
+              "request": {
+                "examples": [
+                  {
+                    "label": "Spam",
+                    "text": "Dermatologists don't like her!",
+                  },
+                  {
+                    "label": "Spam",
+                    "text": "Hello, open to this?",
+                  },
+                  {
+                    "label": "Spam",
+                    "text": "I need help please wire me $1000 right now",
+                  },
+                  {
+                    "label": "Spam",
+                    "text": "Nice to know you ;)",
+                  },
+                  {
+                    "label": "Spam",
+                    "text": "Please help me?",
+                  },
+                  {
+                    "label": "Not spam",
+                    "text": "Your parcel will be delivered today",
+                  },
+                  {
+                    "label": "Not spam",
+                    "text": "Review changes to our Terms and Conditions",
+                  },
+                  {
+                    "label": "Not spam",
+                    "text": "Weekly sync notes",
+                  },
+                  {
+                    "label": "Not spam",
+                    "text": "Re: Follow up from today’s meeting",
+                  },
+                  {
+                    "label": "Not spam",
+                    "text": "Pre-read for tomorrow",
+                  },
+                ],
+                "inputs": [
+                  "Confirm your email address",
+                  "hey i need u to send some $",
+                ],
+                "preset": "my-preset-a58sbd",
+                "truncate": "NONE",
+              },
+              "response": {
+                "body": {
+                  "classifications": [
+                    {
+                      "classification_type": "single-label",
+                      "confidence": 0.7581943,
+                      "confidences": [
+                        0.7581943,
+                      ],
+                      "id": "c50ab0d9-95d8-44de-ba90-9647a1718744",
+                      "input": "Confirm your email address",
+                      "labels": {
+                        "Not spam": {
+                          "confidence": 0.7581943,
+                        },
+                        "Spam": {
+                          "confidence": 0.24180566,
+                        },
+                      },
+                      "prediction": "Not spam",
+                      "predictions": [
+                        "Not spam",
+                      ],
+                    },
+                    {
+                      "classification_type": "single-label",
+                      "confidence": 0.9965721,
+                      "confidences": [
+                        0.9965721,
+                      ],
+                      "id": "8a841de2-027f-49d4-8c91-e88fa1865b89",
+                      "input": "hey i need u to send some $",
+                      "labels": {
+                        "Not spam": {
+                          "confidence": 0.0034279241,
+                        },
+                        "Spam": {
+                          "confidence": 0.9965721,
+                        },
+                      },
+                      "prediction": "Spam",
+                      "predictions": [
+                        "Spam",
+                      ],
+                    },
+                  ],
+                  "id": "ca245541-8841-456e-b306-293370789a30",
+                  "meta": {
+                    "api_version": {
+                      "version": "1",
+                    },
+                    "billed_units": {},
+                  },
+                },
+              },
+            },
+            {
               "code-samples": [
                 {
                   "code": "const { CohereClient } = require("cohere-ai");
@@ -2009,6 +2329,30 @@ If \`NONE\` is selected, when the input exceeds the maximum input token length a
           "display-name": "Detokenize",
           "docs": "This endpoint takes tokens using byte-pair encoding and returns their text representation. To learn more about tokenization and byte pair encoding, see the tokens page.",
           "examples": [
+            {
+              "name": "Example",
+              "request": {
+                "tokens": [
+                  10104,
+                  12221,
+                  1315,
+                  34,
+                  1420,
+                  69,
+                ],
+              },
+              "response": {
+                "body": {
+                  "meta": {
+                    "api_version": {
+                      "version": "1",
+                    },
+                    "billed_units": {},
+                  },
+                  "text": "detokenized! :D",
+                },
+              },
+            },
             {
               "code-samples": [
                 {
@@ -2220,6 +2564,28 @@ If \`NONE\` is selected, when the input exceeds the maximum input token length a
             "InternalServerError",
           ],
           "examples": [
+            {
+              "name": "Example",
+              "request": {
+                "preset": "my-preset-a58sbd",
+                "prompt": "Please explain to me how LLMs work",
+                "return_likelihoods": "GENERATION",
+                "stream": false,
+                "truncate": "NONE",
+              },
+              "response": {
+                "body": {
+                  "generations": [],
+                  "id": "string",
+                  "meta": {
+                    "api_version": {
+                      "version": "string",
+                    },
+                    "billed_units": {},
+                  },
+                },
+              },
+            },
             {
               "code-samples": [
                 {
@@ -2659,6 +3025,30 @@ If \`NONE\` is selected, when the input exceeds the maximum input token length a
           "docs": "This endpoint takes in a query and a list of texts and produces an ordered array with each text assigned a relevance score.",
           "examples": [
             {
+              "name": "Example",
+              "request": {
+                "documents": [
+                  "Carson City is the capital city of the American state of Nevada.",
+                  "The Commonwealth of the Northern Mariana Islands is a group of islands in the Pacific Ocean. Its capital is Saipan.",
+                  "Washington, D.C. (also known as simply Washington or D.C., and officially as the District of Columbia) is the capital of the United States. It is a federal district.",
+                  "Capital punishment (the death penalty) has existed in the United States since beforethe United States was a country. As of 2017, capital punishment is legal in 30 of the 50 states.",
+                ],
+                "model": "rerank-english-v2.0",
+                "query": "What is the capital of the United States?",
+              },
+              "response": {
+                "body": {
+                  "meta": {
+                    "api_version": {
+                      "version": "string",
+                    },
+                    "billed_units": {},
+                  },
+                  "results": [],
+                },
+              },
+            },
+            {
               "code-samples": [
                 {
                   "code": "const { CohereClient } = require("cohere-ai");
@@ -2782,6 +3172,28 @@ We recommend a maximum of 1,000 documents for optimal endpoint performance.",
           "display-name": "Summarize",
           "docs": "This endpoint generates a summary in English for a given text.",
           "examples": [
+            {
+              "name": "Example",
+              "request": {
+                "extractiveness": "low",
+                "format": "paragraph",
+                "length": "short",
+                "text": "Ice cream is a sweetened frozen food typically eaten as a snack or dessert. It may be made from milk or cream and is flavoured with a sweetener, either sugar or an alternative, and a spice, such as cocoa or vanilla, or with fruit such as strawberries or peaches. It can also be made by whisking a flavored cream base and liquid nitrogen together. Food coloring is sometimes added, in addition to stabilizers. The mixture is cooled below the freezing point of water and stirred to incorporate air spaces and to prevent detectable ice crystals from forming. The result is a smooth, semi-solid foam that is solid at very low temperatures (below 2 °C or 35 °F). It becomes more malleable as its temperature increases.
+
+The meaning of the name "ice cream" varies from one country to another. In some countries, such as the United States, "ice cream" applies only to a specific variety, and most governments regulate the commercial use of the various terms according to the relative quantities of the main ingredients, notably the amount of cream. Products that do not meet the criteria to be called ice cream are sometimes labelled "frozen dairy dessert" instead. In other countries, such as Italy and Argentina, one word is used fo
+ all variants. Analogues made from dairy alternatives, such as goat's or sheep's milk, or milk substitutes (e.g., soy, cashew, coconut, almond milk or tofu), are available for those who are lactose intolerant, allergic to dairy protein or vegan.",
+              },
+              "response": {
+                "body": {
+                  "meta": {
+                    "api_version": {
+                      "version": "string",
+                    },
+                    "billed_units": {},
+                  },
+                },
+              },
+            },
             {
               "code-samples": [
                 {
@@ -2938,6 +3350,39 @@ print(response)",
             "InternalServerError",
           ],
           "examples": [
+            {
+              "name": "Example",
+              "request": {
+                "model": "command",
+                "text": "tokenize me! :D",
+              },
+              "response": {
+                "body": {
+                  "meta": {
+                    "api_version": {
+                      "version": "1",
+                    },
+                    "billed_units": {},
+                  },
+                  "token_strings": [
+                    "token",
+                    "ize'",
+                    " me",
+                    "!",
+                    " :",
+                    "D",
+                  ],
+                  "tokens": [
+                    34160,
+                    974,
+                    514,
+                    34,
+                    1420,
+                    69,
+                  ],
+                },
+              },
+            },
             {
               "code-samples": [
                 {

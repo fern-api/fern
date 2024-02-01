@@ -99,6 +99,11 @@ client.accounts.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -209,6 +214,70 @@ client.connect()
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "balance": {
+                      "available": 5621.12,
+                      "current": 5874.13,
+                    },
+                    "balance_type": "ASSET",
+                    "category": "CHECKING_ACCOUNT",
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "credit_data": {
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "credit_limit": 192000,
+                      "cutting_date": "2019-12-11",
+                      "interest_rate": 4,
+                      "minimum_payment": 2400.3,
+                      "next_payment_date": "2019-12-13",
+                      "no_interest_payment": 2690.83,
+                    },
+                    "currency": "MXN",
+                    "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "institution": {
+                      "name": "erebor_mx_retail",
+                      "type": "bank",
+                    },
+                    "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "loan_data": {
+                      "collected_at": "2022-02-09T08:45:50.406032Z",
+                      "contract_amount": 202000,
+                      "contract_end_date": "2027-10-01",
+                      "contract_number": "890ASLDJF87SD00",
+                      "contract_start_date": "2020-03-01",
+                      "loan_type": "Consignado",
+                      "monthly_payment": 1000,
+                      "number_of_installments_outstanding": 1,
+                      "number_of_installments_total": 1,
+                      "outstanding_balance": 182000,
+                      "outstanding_principal": 142023,
+                      "payment_day": "27",
+                      "principal": 192000,
+                    },
+                    "name": "Cuenta Perfiles- M.N. - MXN-666",
+                    "number": "4057068115181",
+                    "public_identification_name": "CLABE",
+                    "public_identification_value": "150194683119900273",
+                    "receivables_data": {
+                      "anticipated": 1393.46,
+                      "available": 800.37,
+                      "collected_at": "2022-02-09T08:45:50.406032Z",
+                      "current": 2193.83,
+                    },
+                    "type": "Cuentas de efectivo",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl https://sandbox.belvo.com/api/accounts/{id} \\
@@ -318,6 +387,54 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "balance__available": "4000.00",
+                  "balance__available__gt": "2000.00",
+                  "balance__available__gte": "1999.00",
+                  "balance__available__lt": "6000.00",
+                  "balance__available__lte": "5999.00",
+                  "balance__available__range": "3000.00,4350.00",
+                  "balance__current": "4000.00",
+                  "balance__current__gt": "2000.00",
+                  "balance__current__gte": "1999.00",
+                  "balance__current__lt": "6000.00",
+                  "balance__current__lte": "5999.00",
+                  "balance__current__range": "3000.00,4350.00",
+                  "category": "CREDIT_ACCOUNT",
+                  "category__in": "CHECKING_ACCOUNT,SAVINGS_ACCOUNT",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "id": "24ccab1d-3a86-4136-a6eb-e04bf52b356f",
+                  "id__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_mx_retail",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "name": "Cuenta Perfiles- M.N. - MXN-666",
+                  "name__icontains": "Perfiles",
+                  "number": "4057068115181",
+                  "number__in": "4057068115181,7809346821648",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "public_identification_name": "CLABE",
+                  "public_identification_value": "150194683119900273",
+                  "type": "Cuentas de efectivo",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -593,6 +710,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -732,6 +864,19 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -940,6 +1085,11 @@ client.balances.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -1035,6 +1185,75 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "account": {
+                      "balance": {
+                        "available": 5621.12,
+                        "current": 5874.13,
+                      },
+                      "balance_type": "ASSET",
+                      "category": "CHECKING_ACCOUNT",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_data": {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "credit_limit": 192000,
+                        "cutting_date": "2019-12-11",
+                        "interest_rate": 4,
+                        "minimum_payment": 2400.3,
+                        "next_payment_date": "2019-12-13",
+                        "no_interest_payment": 2690.83,
+                      },
+                      "currency": "MXN",
+                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "institution": {
+                        "name": "erebor_mx_retail",
+                        "type": "bank",
+                      },
+                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loan_data": {
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "contract_amount": 202000,
+                        "contract_end_date": "2027-10-01",
+                        "contract_number": "890ASLDJF87SD00",
+                        "contract_start_date": "2020-03-01",
+                        "loan_type": "Consignado",
+                        "monthly_payment": 1000,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
+                        "outstanding_balance": 182000,
+                        "outstanding_principal": 142023,
+                        "payment_day": "27",
+                        "principal": 192000,
+                      },
+                      "name": "Cuenta Perfiles- M.N. - MXN-666",
+                      "number": "4057068115181",
+                      "public_identification_name": "CLABE",
+                      "public_identification_value": "150194683119900273",
+                      "receivables_data": {
+                        "anticipated": 1393.46,
+                        "available": 800.37,
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "current": 2193.83,
+                      },
+                      "type": "Cuentas de efectivo",
+                    },
+                    "balance": 50000,
+                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                    "value_date": "2019-10-23",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -1145,6 +1364,44 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "account__type": "Cuentas de efectivo",
+                  "account__type__in": "Cuentas de efectivo,Credito",
+                  "balance": "530.00",
+                  "balance__gt": "520.00",
+                  "balance__gte": "519.00",
+                  "balance__lt": "540.00",
+                  "balance__lte": "541.00",
+                  "balance__range": "519.00,541.00",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_mx_retail",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "value_date": "2022-05-05",
+                  "value_date__gt": "2022-05-06",
+                  "value_date__gte": "2022-05-04",
+                  "value_date__lt": "2022-03-02",
+                  "value_date__lte": "2022-03-01",
+                  "value_date__range": "2022-03-01,2022-05-06",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -1369,6 +1626,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -1494,6 +1766,22 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2021-01-18",
+                  "date_to": "2021-02-15",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -2594,6 +2882,11 @@ client.incomes.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -2689,6 +2982,18 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -2799,6 +3104,24 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "fields": "link,balance,account",
+                  "link": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "link__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -2943,6 +3266,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -3068,6 +3406,43 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "date_from": "2020-08-01",
+                  "date_to": "2020-12-30",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "minimum_confidence_level": "HIGH",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "first_transaction_date": "2022-06-09",
+                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                    "income_source_type": "BANK",
+                    "income_streams": [],
+                    "last_transaction_date": "2023-02-09",
+                    "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
+                    "monthly_average": 1705.46,
+                    "monthly_average_high_confidence": 0,
+                    "monthly_average_irregular": 1308.18,
+                    "monthly_average_low_confidence": 1308.18,
+                    "monthly_average_medium_confidence": 2500,
+                    "monthly_average_regular": 2500,
+                    "number_of_income_streams": 1,
+                    "total_high_confidence": 0,
+                    "total_income_amount": 12616.37,
+                    "total_irregular_income_amount": 2616.37,
+                    "total_low_confidence": 2616.37,
+                    "total_medium_confidence": 10000,
+                    "total_regular_income_amount": 10000,
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -3239,6 +3614,30 @@ You can see a complete list of institutions by either consulting our [Institutio
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "display_name": "Erebor Mexico",
+                    "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                    "id": 1,
+                    "integration_type": "credentials",
+                    "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                    "name": "erebor_mx_retail",
+                    "primary_color": "#056dae",
+                    "status": "healthy",
+                    "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                    "type": "bank",
+                    "website": "https://www.erebor.com/",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl https://sandbox.belvo.com/api/institutions/{id}  \\
@@ -3349,6 +3748,30 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "country_code": "MX",
+                  "country_code__in": "CO,BR",
+                  "display_name": "Erebor Bank",
+                  "fields": "link,balance,account",
+                  "name__in": "erebor_br_retail,gotham_co_business",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "resources__allin": "ACCOUNTS,OWNERS,TRANSACTIONS",
+                  "status": "healthy",
+                  "status__in": "healthy,down",
+                  "type": "fiscal",
+                  "type__in": "fiscal,bank",
+                  "website": "https://www.erebor.mx",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -3567,6 +3990,11 @@ client. investments_portfolio.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "# For more information about our SDKs go to:
@@ -3653,6 +4081,26 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "balance_gross": 76000,
+                    "balance_net": 77370.69,
+                    "balance_type": "ASSET",
+                    "currency": "BRL",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "name": "Investimento",
+                    "type": "FIXED_INCOME",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -3756,6 +4204,21 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -3882,6 +4345,28 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "balance_gross": 76000,
+                    "balance_net": 77370.69,
+                    "balance_type": "ASSET",
+                    "currency": "BRL",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "name": "Investimento",
+                    "type": "FIXED_INCOME",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "# For more information about our SDKs go to:
@@ -3990,6 +4475,27 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "balance_gross": 76000,
+                    "balance_net": 77370.69,
+                    "balance_type": "ASSET",
+                    "currency": "BRL",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "name": "Investimento",
+                    "type": "FIXED_INCOME",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -4171,6 +4677,11 @@ client.invoices.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -4267,6 +4778,65 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "cancelation_update_date": "2019-12-02",
+                    "certification_authority": "CCC333333CC33",
+                    "certification_date": "2019-12-01",
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "currency": "MXN",
+                    "discount_amount": 10,
+                    "exchange_rate": 0.052,
+                    "folio": "26",
+                    "id": "c749315b-eec2-435d-a458-06912878564f",
+                    "invoice_date": "2019-12-01",
+                    "invoice_details": [],
+                    "invoice_identification": "A1A1A1A1-2B2B-3C33-D44D-555555E55EE",
+                    "invoice_type": "Egreso",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "payment_method": "PUE",
+                    "payment_type": "99",
+                    "payments": [],
+                    "payroll": {
+                      "amount": 20400.1,
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "date_from": "2018-07-01",
+                      "date_to": "2018-07-31",
+                      "days": 1,
+                      "payment_date": "string",
+                      "type": "O",
+                      "version": "1.2",
+                    },
+                    "place_of_issue": "01165",
+                    "receiver_id": "BBB222222BB22",
+                    "receiver_name": "BELVO CORP",
+                    "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                    "sender_id": "AAA111111AA11",
+                    "sender_name": "ACME CORP",
+                    "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                    "status": "Vigente",
+                    "subtotal_amount": 400,
+                    "tax_amount": 64,
+                    "total_amount": 454,
+                    "type": "INFLOW",
+                    "usage": "P01",
+                    "version": "3.3",
+                    "warnings": {
+                      "code": "sat_xml_limit_reached",
+                      "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -4378,6 +4948,47 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "invoice_date": "2022-05-05",
+                  "invoice_date__gt": "2022-05-06",
+                  "invoice_date__gte": "2022-05-04",
+                  "invoice_date__lt": "2022-03-02",
+                  "invoice_date__lte": "2022-03-01",
+                  "invoice_date__range": "2022-03-01,2022-05-06",
+                  "invoice_identification": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
+                  "invoice_identification__in": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840,992B9918-3G6H-4E0B-DAI9-2BE2D833B833",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "status": "Vigente",
+                  "status__in": "Vigente,Cancelado",
+                  "total_amount": "1000.00",
+                  "total_amount__gt": "520.00",
+                  "total_amount__gte": "519.00",
+                  "total_amount__lt": "540.00",
+                  "total_amount__lte": "541.00",
+                  "total_amount__range": "519.00,541.00",
+                  "type": "OUTFLOW",
+                  "type__in": "OUTFLOW,INFLOW",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -4611,6 +5222,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -4737,6 +5363,22 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "date_from": "2020-01-01",
+                  "date_to": "2020-02-01",
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": true,
+                  "type": "INFLOW",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -5042,6 +5684,11 @@ To delete links in bulk, we recommend looping through the list of links you want
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -5136,6 +5783,29 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "access_mode": "recurrent",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "refresh_rate": "7d",
+                    "status": "valid",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -5246,6 +5916,39 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "access_mode": "single",
+                  "created_at": "2022-05-01",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "created_by__not_in": "578947e2-3c9a-4401-bbad-59b2f2d2b91b,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "external_id": "InternalUser4000",
+                  "external_id__in": "InternalUser4000,InternalUser4001",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "institution": "erebor_mx_retail",
+                  "institution__in": "erebor_mx_retail,gringotts_co_retail",
+                  "institution_user_id": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=",
+                  "institution_user_id__in": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=,YwuTM0uEEh1BbVgDZBcNpa_-Tm3l2q8ZkZNrlhp-pNA=",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "refresh_rate": "24h",
+                  "status": "invalid",
+                  "status__in": "invalid,unconfirmed",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -5443,6 +6146,31 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "access_mode": "recurrent",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "refresh_rate": "7d",
+                    "status": "valid",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -5572,6 +6300,42 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "access_mode": "single",
+                  "certificate": "1234567890abcd=",
+                  "credentials_storage": "store",
+                  "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "fetch_historical": true,
+                  "institution": "erebor_mx_retail",
+                  "password": "password",
+                  "password2": "pin",
+                  "private_key": "1234567890abcd=",
+                  "token": "1234ab",
+                  "username": "username",
+                  "username2": "secondusername",
+                  "username3": "thirdusername",
+                  "username_type": "001",
+                },
+                "response": {
+                  "body": {
+                    "access_mode": "recurrent",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "refresh_rate": "7d",
+                    "status": "valid",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -5829,6 +6593,37 @@ For a list of standards codes, see the table below.
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "certificate": "1234567890abcd=",
+                  "password": "password",
+                  "password2": "pin",
+                  "private_key": "1234567890abcd=",
+                  "token": "1234ab",
+                  "username_type": "001",
+                },
+                "response": {
+                  "body": {
+                    "access_mode": "recurrent",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                    "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                    "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "institution": "erebor_mx_retail",
+                    "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                    "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                    "refresh_rate": "7d",
+                    "status": "valid",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PUT https://sandbox.belvo.com/api/links/{id} \\
@@ -6084,6 +6879,11 @@ client.owners.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -6179,6 +6979,32 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "display_name": "John Doe",
+                    "document_id": {
+                      "document_number": "235578435-S",
+                      "document_type": "CPF",
+                    },
+                    "email": "johndoe@belvo.com",
+                    "id": "c749315b-eec2-435d-a458-06912878564f",
+                    "internal_identification": "7e5838e4",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "phone_number": "+52-XXX-XXX-XXXX",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -6289,6 +7115,31 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "display_name__icontains": "Daniela",
+                  "email": "lopes.d@gmail.com",
+                  "fields": "link,balance,account",
+                  "id": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "id__in": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -6455,6 +7306,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -6580,6 +7446,19 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -8133,6 +9012,11 @@ client. recurring_expenses.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "# For more information about our SDKs go to:
@@ -8219,6 +9103,18 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -8322,6 +9218,26 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "account": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "account_in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -8466,6 +9382,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "# For more information about our SDKs go to:
@@ -8575,6 +9506,21 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "date_from": "2022-08-01",
+                  "date_to": "2022-12-30",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -9173,6 +10119,11 @@ client.tax_compliance_status.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -9268,6 +10219,26 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "collected_at": "2022-02-09T08:45:50.406032Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                    "internal_identification": "20NE1234567",
+                    "outcome": "POSITIVE",
+                    "pdf": "=PDF-STRING=",
+                    "rfc": "KDFC211118IS0",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -9378,6 +10349,29 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -9536,6 +10530,27 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": true,
+                },
+                "response": {
+                  "body": {
+                    "collected_at": "2022-02-09T08:45:50.406032Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                    "internal_identification": "20NE1234567",
+                    "outcome": "POSITIVE",
+                    "pdf": "=PDF-STRING=",
+                    "rfc": "KDFC211118IS0",
+                  },
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X POST \\
@@ -9686,6 +10701,11 @@ At the moment, the Tax Declaration resource is available for:
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -9781,6 +10801,92 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "annual_income_statement": {
+                      "annual_totals": {
+                        "total_applicable_deductions": 0,
+                        "total_exempt_income": 115004000,
+                        "total_exemptions_and_deductions": 0,
+                        "total_ordinary_net_income": 0,
+                      },
+                      "gross_income": {
+                        "capital_income": 0,
+                        "earned_income": 115004000,
+                        "fee_based_income": 0,
+                        "non_labor_income": 0,
+                      },
+                      "net_income": {
+                        "capital_income": 0,
+                        "earned_income": 115004000,
+                        "fee_based_income": 0,
+                        "non_labor_income": 0,
+                      },
+                      "non_taxable_income": {
+                        "capital_income": 0,
+                        "earned_income": 115004000,
+                        "fee_based_income": 0,
+                        "non_labor_income": 0,
+                      },
+                    },
+                    "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                    "created_at": "2020-04-23T21:30:20.336854+00:00",
+                    "date_issued": "2022-09-02",
+                    "document_information": {
+                      "form_number": "2117680087604",
+                      "name": "Declaracion de Renta y Complementario o de Ingresos y Patrimonio para Personas Juridicas y Asimiladas y Personas Naturales y Asimiladas no Residentes y Sucesiones Iliquidas de Causantes no Residentes",
+                      "type": "110",
+                      "year": 1,
+                    },
+                    "equity_statement": {
+                      "total_debts": 77626000,
+                      "total_gross_equity": 4648000,
+                      "total_net_equity": 0,
+                    },
+                    "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                    "link": "8a95ca1a-1a7a-4ce0-8599-f8ff1dc792ac",
+                    "pdf": "==BINARY-STRING==",
+                    "pension_income_statement": {
+                      "net_pension_income": 0,
+                      "net_taxable_pension_income": 0,
+                    },
+                    "tax_assessment": {
+                      "balance_payable": 0,
+                      "balance_refundable": 84000,
+                      "fortuitous_profit_tax": 0,
+                      "net_income_tax": 9144000,
+                      "previous_year_balance": 1514000,
+                      "total_payment": 0,
+                      "total_tax_due": 9144000,
+                      "total_tax_on_taxable_net_income": 9144000,
+                      "total_withheld_tax": 7714000,
+                    },
+                    "tax_payer_information": {
+                      "document_id": {
+                        "document_number": "7113223466",
+                        "document_type": "NIT",
+                      },
+                      "first_last_name": "Restrepo",
+                      "first_name": "Carlos",
+                      "main_economic_activity": "0010",
+                      "other_names": "Alberto",
+                      "reporting_id": {
+                        "reporting_type": "sectional_address_code",
+                        "reporting_value": "32",
+                      },
+                      "second_last_name": "Vives",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -9891,6 +10997,35 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "year": "2021",
+                  "year__gt": "2020",
+                  "year__gte": "2019",
+                  "year__lt": "2018",
+                  "year__lte": "2017",
+                  "year__range": "2017,2021",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -10074,6 +11209,22 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "attach_pdf": false,
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": true,
+                  "year_from": "2018",
+                  "year_to": "2019",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -10661,6 +11812,11 @@ client.tax_returns.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -10756,6 +11912,25 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "collected_at": "2019-09-27T13:01:41.941Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "pdf": "=PDF-STRING=",
+                    "receipt_pdf": "=PDF-STRING=",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -10866,6 +12041,37 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "ejercicio": "2018",
+                  "ejercicio__gt": "2019",
+                  "ejercicio__gte": "2017",
+                  "ejercicio__lt": "2020",
+                  "ejercicio__lte": "2021",
+                  "ejercicio__range": "2015,2021",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "tipo_declaracion": "Normal",
+                  "tipo_declaracion__in": "Normal,Commercial",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -11057,6 +12263,23 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "attach_pdf": false,
+                  "date_from": "2018-01-01",
+                  "date_to": "2019-01-01",
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": true,
+                  "type": "string",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -11322,6 +12545,11 @@ client.tax_status.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -11417,6 +12645,50 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "address": {
+                      "exterior_number": "432",
+                      "interior_number": "PLANTA BAJA",
+                      "locality": "none",
+                      "municipality": "CDMX DC",
+                      "postal_code": "21255",
+                      "state": "Federal",
+                      "street": "LA MALINCHE",
+                      "street_type": "CALLE",
+                      "suburb": "BUENAVENTURA",
+                    },
+                    "collected_at": "2020-04-23T21:32:55.336Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
+                    "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
+                    "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
+                    "id_cif": "12345678901",
+                    "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
+                    "official_name": "John Doe",
+                    "pdf": "=PDF-STRING=",
+                    "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
+                    "tax_payer_information": {
+                      "commercial_name": "Jar Jar Transport",
+                      "email": "john_doe@gmail.com",
+                      "first_last_name": "DOE",
+                      "name": "JOHN",
+                      "phone": "1234567890",
+                      "rfc": "BEMP12345G58",
+                      "second_last_name": "SCHMOE",
+                      "social_name": "John Doe SA DE CV",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -11527,6 +12799,29 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "fields": "link,balance,account",
+                  "id": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "id__in": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "link__in": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -11684,6 +12979,51 @@ client.connect()
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "save_data": true,
+                },
+                "response": {
+                  "body": {
+                    "address": {
+                      "exterior_number": "432",
+                      "interior_number": "PLANTA BAJA",
+                      "locality": "none",
+                      "municipality": "CDMX DC",
+                      "postal_code": "21255",
+                      "state": "Federal",
+                      "street": "LA MALINCHE",
+                      "street_type": "CALLE",
+                      "suburb": "BUENAVENTURA",
+                    },
+                    "collected_at": "2020-04-23T21:32:55.336Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
+                    "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
+                    "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
+                    "id_cif": "12345678901",
+                    "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
+                    "official_name": "John Doe",
+                    "pdf": "=PDF-STRING=",
+                    "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
+                    "tax_payer_information": {
+                      "commercial_name": "Jar Jar Transport",
+                      "email": "john_doe@gmail.com",
+                      "first_last_name": "DOE",
+                      "name": "JOHN",
+                      "phone": "1234567890",
+                      "rfc": "BEMP12345G58",
+                      "second_last_name": "SCHMOE",
+                      "social_name": "John Doe SA DE CV",
+                    },
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -11919,6 +13259,11 @@ client.transactions.list(params: {
             ],
             "examples": [
               {
+                "path-parameters": {
+                  "id": "string",
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X DELETE \\
@@ -12014,6 +13359,100 @@ client.connect()
               "root.NotFoundError",
             ],
             "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "response": {
+                  "body": {
+                    "account": {
+                      "balance": {
+                        "available": 5621.12,
+                        "current": 5874.13,
+                      },
+                      "balance_type": "ASSET",
+                      "category": "CHECKING_ACCOUNT",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_data": {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "credit_limit": 192000,
+                        "cutting_date": "2019-12-11",
+                        "interest_rate": 4,
+                        "minimum_payment": 2400.3,
+                        "next_payment_date": "2019-12-13",
+                        "no_interest_payment": 2690.83,
+                      },
+                      "currency": "MXN",
+                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "institution": {
+                        "name": "erebor_mx_retail",
+                        "type": "bank",
+                      },
+                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loan_data": {
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "contract_amount": 202000,
+                        "contract_end_date": "2027-10-01",
+                        "contract_number": "890ASLDJF87SD00",
+                        "contract_start_date": "2020-03-01",
+                        "loan_type": "Consignado",
+                        "monthly_payment": 1000,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
+                        "outstanding_balance": 182000,
+                        "outstanding_principal": 142023,
+                        "payment_day": "27",
+                        "principal": 192000,
+                      },
+                      "name": "Cuenta Perfiles- M.N. - MXN-666",
+                      "number": "4057068115181",
+                      "public_identification_name": "CLABE",
+                      "public_identification_value": "150194683119900273",
+                      "receivables_data": {
+                        "anticipated": 1393.46,
+                        "available": 800.37,
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "current": 2193.83,
+                      },
+                      "type": "Cuentas de efectivo",
+                    },
+                    "accounting_date": "2019-10-23T13:01:41.941Z",
+                    "amount": 2145.45,
+                    "balance": 16907.96,
+                    "category": "Income & Payments",
+                    "collected_at": "2019-11-28T10:27:44.813Z",
+                    "created_at": "2022-02-09T08:45:50.406032Z",
+                    "credit_card_data": {
+                      "bill_amount": 300,
+                      "bill_name": "apr-2020",
+                      "bill_status": "PAID",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "previous_bill_total": "9614.30",
+                    },
+                    "currency": "BRL",
+                    "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
+                    "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                    "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
+                    "merchant": {
+                      "logo": "https://logo.clearbit.com/asesor-contable.es",
+                      "merchant_name": "Merchants R Us Global",
+                      "website": "https://merchants-r-us.com",
+                    },
+                    "observations": "OPTIONAL OBSERVATIONS",
+                    "reference": "8703",
+                    "status": "PROCESSED",
+                    "subcategory": "Freelance",
+                    "type": "INFLOW",
+                    "value_date": "2019-10-23",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -12124,6 +13563,74 @@ client.connect()
               "root.UnauthorizedError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "account": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
+                  "account__balance__available": "4000.00",
+                  "account__balance__available__lt": "6000.00",
+                  "account__balance__available__lte": "5999.00",
+                  "account__balance__available__range": "3000.00,4350.00",
+                  "account__balance__current": "4000.00",
+                  "account__balance__current__gt": "4020.00",
+                  "account__balance__current__gte": "4019.00",
+                  "account__balance__current__lt": "3000.00",
+                  "account__balance__current__lte": "2999.00",
+                  "account__balance__current__range": "2999.00,4000.00",
+                  "account__in": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "account_type": "Cuentas de efectivo",
+                  "account_type__in": "Cuentas de efectivo,Depositos Ahorro",
+                  "accounting_date": "2022-05-05",
+                  "accounting_date__gt": "2022-05-06",
+                  "accounting_date__gte": "2022-05-04",
+                  "accounting_date__lt": "2022-03-02",
+                  "accounting_date__lte": "2022-03-01",
+                  "accounting_date__range": "2022-03-01,2022-05-06",
+                  "amount": "1000.00",
+                  "amount__gt": "520.00",
+                  "amount__gte": "519.00",
+                  "amount__lt": "540.00",
+                  "amount__lte": "541.00",
+                  "amount__range": "519.00,541.00",
+                  "collected_at": "2022-05-01",
+                  "collected_at__gt": "2022-05-05",
+                  "collected_at__gte": "2022-05-04",
+                  "collected_at__lt": "2022-04-01",
+                  "collected_at__lte": "2022-03-30",
+                  "collected_at__range": "2022-03-03,2022-05-04",
+                  "created_at": "2022-05-01",
+                  "created_at__gt": "2022-05-05",
+                  "created_at__gte": "2022-05-04",
+                  "created_at__lt": "2022-04-01",
+                  "created_at__lte": "2022-03-30",
+                  "created_at__range": "2022-03-03,2022-05-04",
+                  "credit_card_data__bill_name__in": "maio-2022,feb-2022",
+                  "currency": "COP",
+                  "currency__in": "COP,MXN",
+                  "fields": "link,balance,account",
+                  "link": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "omit": "link,balance",
+                  "page": 1,
+                  "page_size": 1,
+                  "reference": "085904452810319225",
+                  "reference__in": "085904452810319225,8703",
+                  "status": "PENDING",
+                  "status__in": "PENDING,PROCESSED",
+                  "type": "OUTFLOW",
+                  "type__in": "INFLOW,OUTFLOW",
+                  "value_date": "2022-05-05",
+                  "value_date__gt": "2022-05-06",
+                  "value_date__gte": "2022-05-04",
+                  "value_date__lt": "2022-03-02",
+                  "value_date__lte": "2022-03-01",
+                  "value_date__range": "2022-03-01,2022-05-06",
+                },
+                "response": {
+                  "body": {
+                    "count": 1,
+                    "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -12468,6 +13975,21 @@ client.connect()
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "link": "683005d6-f45c-4adb-b289-f1a12f50f80c",
+                  "save_data": true,
+                  "session": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
+              {
                 "code-samples": [
                   {
                     "code": "curl -X PATCH \\
@@ -12596,6 +14118,22 @@ If you try to access older information than what we can access, we will return a
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2020-08-05",
+                  "date_to": "2020-10-05",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": [],
+                },
+              },
               {
                 "code-samples": [
                   {
@@ -12729,6 +14267,27 @@ If you try to access older information than what we can access, we will return a
               "root.InternalServerError",
             ],
             "examples": [
+              {
+                "headers": {
+                  "X-Belvo-Request-Mode": "async",
+                },
+                "query-parameters": {
+                  "fields": "link,balance,account",
+                  "omit": "link,balance",
+                },
+                "request": {
+                  "account": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "date_from": "2020-08-05",
+                  "date_to": "2020-10-05",
+                  "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "token": "1234ab",
+                },
+                "response": {
+                  "body": {
+                    "request_id": "b5d0106ac9cc43d5b36199fe831f6bbe",
+                  },
+                },
+              },
               {
                 "code-samples": [
                   {
