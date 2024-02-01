@@ -55,12 +55,9 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Get the JSON predictions of a completed job.",
           "examples": [
             {
-              "headers": undefined,
               "path-parameters": {
                 "id": "string",
               },
-              "query-parameters": undefined,
-              "request": undefined,
               "response": {
                 "body": [],
               },
@@ -82,14 +79,11 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Sort and filter jobs.",
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
               "query-parameters": {
                 "direction": "asc",
                 "sort_by": "created",
                 "when": "created_before",
               },
-              "request": undefined,
               "response": {
                 "body": [],
               },
@@ -138,9 +132,6 @@ exports[`open api parser hume simple 1`] = `
           "docs": "Start a new batch job.",
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "models": {
                   "face": {},

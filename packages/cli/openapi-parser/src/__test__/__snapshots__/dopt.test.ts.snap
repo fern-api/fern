@@ -8,6 +8,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -17,7 +18,10 @@ exports[`open api parser dopt parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "uid",
@@ -56,30 +60,7 @@ exports[`open api parser dopt parse open api 1`] = `
           "response": {
             "properties": {
               "fields": {
-                "array": [
-                  {
-                    "oneOf": {
-                      "discriminated": {
-                        "sid": {
-                          "primitive": {
-                            "string": "string",
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                        "type": {
-                          "primitive": {
-                            "string": "string",
-                            "type": "string",
-                          },
-                          "type": "primitive",
-                        },
-                      },
-                      "type": "discriminated",
-                    },
-                    "type": "oneOf",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "kind": {
@@ -682,6 +663,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -811,6 +793,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -820,7 +803,10 @@ exports[`open api parser dopt parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "sid",
@@ -868,119 +854,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
-              "blocks": {
-                "array": [
-                  {
-                    "properties": {
-                      "fields": {
-                        "array": [
-                          {
-                            "oneOf": {
-                              "discriminated": {
-                                "sid": {
-                                  "primitive": {
-                                    "string": "string",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                                "type": {
-                                  "primitive": {
-                                    "string": "string",
-                                    "type": "string",
-                                  },
-                                  "type": "primitive",
-                                },
-                              },
-                              "type": "discriminated",
-                            },
-                            "type": "oneOf",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "kind": {
-                        "literal": {
-                          "string": "block",
-                          "type": "string",
-                        },
-                        "type": "literal",
-                      },
-                      "sid": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "properties": {
-                          "active": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "entered": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "exited": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "transitioned": {
-                        "map": [
-                          {
-                            "key": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "value": {
-                              "primitive": {
-                                "boolean": true,
-                                "type": "boolean",
-                              },
-                              "type": "primitive",
-                            },
-                          },
-                        ],
-                        "type": "map",
-                      },
-                      "type": {
-                        "enum": "custom",
-                        "type": "enum",
-                      },
-                      "uid": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "version": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "kind": {
                 "literal": {
                   "string": "flow",
@@ -1795,6 +1668,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -1804,7 +1678,10 @@ exports[`open api parser dopt parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "uid",

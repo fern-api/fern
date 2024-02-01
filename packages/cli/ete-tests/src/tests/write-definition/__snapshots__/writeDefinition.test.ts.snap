@@ -3,17 +3,13 @@
 exports[`validate petstore 1`] = `
 [
   {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-types:
+    "contents": "types:
   Pet:
     properties:
       id: integer
       name: string
       tag: optional<string>
-
   Pets: list<Pet>
-
   Error:
     properties:
       code: integer
@@ -35,14 +31,11 @@ default-environment: Default
     "type": "file",
   },
   {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-imports:
+    "contents": "imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     listPets:
       path: /v1/pets
@@ -60,10 +53,7 @@ service:
         type: root.Pets
       examples:
         - response:
-            body:
-              - id: 1
-                name: string
-
+            body: []
     createPets:
       path: /v1/pets
       method: POST
@@ -71,7 +61,6 @@ service:
       display-name: Create a pet
       examples:
         - {}
-
     showPetById:
       path: /v1/pets/{petId}
       method: GET

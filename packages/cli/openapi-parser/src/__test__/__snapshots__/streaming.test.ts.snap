@@ -8,6 +8,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -101,11 +102,15 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -217,6 +222,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -310,11 +316,15 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -434,6 +444,7 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -601,11 +612,15 @@ exports[`open api parser streaming parse open api 1`] = `
       "audiences": [],
       "authed": false,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {

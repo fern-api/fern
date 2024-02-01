@@ -33,13 +33,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -117,6 +117,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],
@@ -534,6 +535,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [
@@ -797,6 +799,7 @@ exports[`generate IR 1`] = `
           "errors": [],
           "examples": [
             {
+              "codeSamples": null,
               "docs": null,
               "endpointHeaders": [],
               "endpointPathParameters": [],

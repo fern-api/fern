@@ -22,19 +22,12 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "operations": [
-                    {
-                      "key": "string",
-                      "name": "string",
-                    },
-                  ],
+                  "operations": [],
                 },
                 "response": {
                   "body": {},
@@ -77,18 +70,12 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "operations": [
-                    {
-                      "key": "string",
-                    },
-                  ],
+                  "operations": [],
                 },
                 "response": {
                   "body": {},
@@ -131,12 +118,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "idents": [],
                 },
@@ -181,12 +166,10 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "idents": [],
                 },
@@ -231,18 +214,12 @@ exports[`open api parser permit simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "operations": [
-                    {
-                      "key": "string",
-                    },
-                  ],
+                  "operations": [],
                 },
                 "response": {
                   "body": {},
@@ -311,32 +288,17 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permission": "string",
-                  "resource_set": "string",
-                  "user_set": "string",
+                  "permission": "repository:clone",
+                  "resource_set": "private_repos",
+                  "user_set": "us_based_employees",
                 },
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "organization_id": "string",
-                      "permission": "string",
-                      "project_id": "string",
-                      "resource_set": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "user_set": "string",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -398,28 +360,12 @@ If the permission is already granted, it is skipped.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "organization_id": "string",
-                      "permission": "string",
-                      "project_id": "string",
-                      "resource_set": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                      "user_set": "string",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -476,18 +422,15 @@ If the permission is not granted, it is skipped.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permission": "string",
-                  "resource_set": "string",
-                  "user_set": "string",
+                  "permission": "repository:clone",
+                  "resource_set": "private_repos",
+                  "user_set": "us_based_employees",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -572,38 +515,98 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "conditions": {
+                    "allOf": {
+                      "0": {
+                        "user.role": {
+                          "equals": "employee",
+                        },
+                      },
+                      "1": {
+                        "user.location": {
+                          "in": {
+                            "0": "US",
+                            "1": "Canada",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  "key": "na_based_employees",
+                  "name": "US or Canada based employees",
                   "type": "userset",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
+                    "autogenerated": false,
+                    "conditions": {
+                      "allOf": {
+                        "0": {
+                          "user.role": {
+                            "equals": "employee",
+                          },
+                        },
+                        "1": {
+                          "user.location": {
+                            "in": {
+                              "0": "US",
+                              "1": "Canada",
+                            },
+                          },
+                        },
+                      },
                     },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "All employees based in the US or Canada",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "na_based_employees",
+                    "name": "US or Canada based employees",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": {
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        },
+                      },
+                      "attributes": {
+                        "created": {
+                          "description": "the time (timestamp) the repository was created",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                        },
+                        "private": {
+                          "description": "whether the repo is private (if false, the repo is public)",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                        },
+                      },
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "description": "a git repository stored on github",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "key": "repository",
+                      "name": "Repository",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "urn": "prn:github:scm:repository",
+                    },
+                    "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                     "type": "userset",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -670,15 +673,11 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -707,35 +706,77 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
+                    "autogenerated": false,
+                    "conditions": {
+                      "allOf": {
+                        "0": {
+                          "user.role": {
+                            "equals": "employee",
+                          },
+                        },
+                        "1": {
+                          "user.location": {
+                            "in": {
+                              "0": "US",
+                              "1": "Canada",
+                            },
+                          },
+                        },
+                      },
                     },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "All employees based in the US or Canada",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "na_based_employees",
+                    "name": "US or Canada based employees",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": {
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        },
+                      },
+                      "attributes": {
+                        "created": {
+                          "description": "the time (timestamp) the repository was created",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                        },
+                        "private": {
+                          "description": "whether the repo is private (if false, the repo is public)",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                        },
+                      },
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "description": "a git repository stored on github",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "key": "repository",
+                      "name": "Repository",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "urn": "prn:github:scm:repository",
+                    },
+                    "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                     "type": "userset",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -770,38 +811,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource": {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                      "type": "userset",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -848,38 +864,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource": {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                      "type": "userset",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -926,7 +917,6 @@ This includes any permissions granted to said condition set (i.e: any matching c
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
@@ -934,32 +924,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
                 "query-parameters": {
                   "type": "userset",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "resource": {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "environment_id": "string",
-                          "id": "string",
-                          "key": "string",
-                          "name": "string",
-                          "organization_id": "string",
-                          "project_id": "string",
-                          "updated_at": "2024-01-15T09:30:00Z",
-                        },
-                        "type": "userset",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -1017,35 +984,96 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "condition_set_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "conditions": {
+                    "allOf": {
+                      "0": {
+                        "user.role": {
+                          "equals": "manager",
+                        },
+                      },
+                      "1": {
+                        "user.location": {
+                          "in": {
+                            "0": "US",
+                          },
+                        },
+                      },
+                    },
+                  },
+                  "name": "US based managers",
+                },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
+                    "autogenerated": false,
+                    "conditions": {
+                      "allOf": {
+                        "0": {
+                          "user.role": {
+                            "equals": "employee",
+                          },
+                        },
+                        "1": {
+                          "user.location": {
+                            "in": {
+                              "0": "US",
+                              "1": "Canada",
+                            },
+                          },
+                        },
+                      },
                     },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "All employees based in the US or Canada",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "na_based_employees",
+                    "name": "US or Canada based employees",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": {
+                      "actions": {
+                        "clone": {
+                          "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        },
+                        "push": {
+                          "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        },
+                        "read": {
+                          "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        },
+                      },
+                      "attributes": {
+                        "created": {
+                          "description": "the time (timestamp) the repository was created",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                          "type": "time",
+                        },
+                        "private": {
+                          "description": "whether the repo is private (if false, the repo is public)",
+                          "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                          "type": "bool",
+                        },
+                      },
+                      "created_at": "2019-08-24T14:15:22Z",
+                      "description": "a git repository stored on github",
+                      "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                      "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                      "key": "repository",
+                      "name": "Repository",
+                      "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                      "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                      "updated_at": "2019-08-24T14:15:22Z",
+                      "urn": "prn:github:scm:repository",
+                    },
+                    "resource_id": "e05f8571-f31e-20b2-2c45-15ae74cfb0f1",
                     "type": "userset",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -1149,12 +1177,10 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "conflict_strategy": "fail",
                   "scope": {
@@ -1236,11 +1262,9 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "jwks": {
                     "keys": [],
@@ -1289,14 +1313,10 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1321,13 +1341,10 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1370,27 +1387,11 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "id": "string",
-                      "jwks": {
-                        "keys": [],
-                      },
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1429,13 +1430,10 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1446,60 +1444,11 @@ allowed.",
                     "key": "string",
                     "name": "string",
                     "organization_id": "string",
-                    "pdp_configs": [
-                      {
-                        "client_secret": "string",
-                        "environment_id": "string",
-                        "id": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                      },
-                    ],
+                    "pdp_configs": [],
                     "project_id": "string",
                     "stats": {
                       "has_decision_logs": true,
-                      "members": [
-                        {
-                          "created_at": "2024-01-15T09:30:00Z",
-                          "email": "string",
-                          "email_verified": true,
-                          "grants": [
-                            {
-                              "access_level": "admin",
-                              "object_type": "org",
-                              "organization_id": "string",
-                            },
-                          ],
-                          "id": "string",
-                          "identities": [
-                            {
-                              "auth0_info": {
-                                "string": {},
-                              },
-                              "email": "string",
-                              "email_verified": true,
-                              "provider": "string",
-                              "sub": "string",
-                              "user_id": "string",
-                            },
-                          ],
-                          "invite": {
-                            "created_at": "2024-01-15T09:30:00Z",
-                            "email": "string",
-                            "id": "string",
-                            "invite_code": "string",
-                            "organization_id": "string",
-                            "role": "admin",
-                            "status": "pending",
-                          },
-                          "is_onboarding": true,
-                          "is_superuser": true,
-                          "onboarding_step": "create_organization",
-                          "settings": {
-                            "string": {},
-                          },
-                        },
-                      ],
+                      "members": [],
                       "policies": 1,
                       "resources": 1,
                       "roles": 1,
@@ -1537,12 +1486,10 @@ allowed.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "jwks": {
                     "keys": [],
@@ -1648,9 +1595,6 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "key": "string",
                   "name": "string",
@@ -1704,13 +1648,9 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -1732,10 +1672,6 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1765,12 +1701,9 @@ if such org exists and can be accessed by the authenticated actor.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -1806,21 +1739,8 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "id": "string",
-                      "is_enterprise": true,
-                      "key": "string",
-                      "name": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -1853,11 +1773,9 @@ authenticated actor (i.e: human team member or api key).",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "org_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -1928,9 +1846,6 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "key": "string",
                   "name": "string",
@@ -1996,13 +1911,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2023,12 +1934,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
@@ -2063,21 +1971,8 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -2110,11 +2005,9 @@ Every project is a separate silo, and has its own unique set of environments and
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
@@ -2191,28 +2084,36 @@ to a role as one action.
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "actions": [
+                    "read",
+                    "update",
+                  ],
+                  "description": "Writer Action Group",
+                  "key": "writer",
+                  "name": "Writer",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": [
+                      "read",
+                      "update",
+                    ],
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "Writer Action Group",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "writer",
+                    "name": "Writer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2274,16 +2175,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2316,26 +2213,28 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": [
+                      "read",
+                      "update",
+                    ],
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "Writer Action Group",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "writer",
+                    "name": "Writer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2374,28 +2273,13 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -2443,26 +2327,29 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_group_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": [
+                      "read",
+                      "update",
+                    ],
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "Writer Action Group",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "writer",
+                    "name": "Writer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2539,29 +2426,29 @@ Each (resource, action) pair defines a unique permission level.
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "description": "read a document",
+                  "key": "read",
+                  "name": "read",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "permission_name": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "read a document",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "read",
+                    "name": "read",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permission_name": "document:read",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2622,16 +2509,12 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -2664,27 +2547,25 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "permission_name": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "read a document",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "read",
+                    "name": "read",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permission_name": "document:read",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2723,29 +2604,13 @@ This includes any permissions granted to perform the action.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "permission_name": "string",
-                      "project_id": "string",
-                      "resource_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -2793,27 +2658,28 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "action_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "description": "read a document",
+                },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "permission_name": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "read a document",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "read",
+                    "name": "read",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permission_name": "document:read",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2895,30 +2761,30 @@ define a boolean \`private\` attributes that we can now use in our policies.
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
+                  "description": "whether or not the github repository is private",
+                  "key": "private",
                   "type": "bool",
                 },
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -2959,16 +2825,12 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3014,28 +2876,26 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3074,30 +2934,13 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "built_in": true,
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource_id": "string",
-                      "resource_key": "string",
-                      "type": "bool",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -3145,30 +2988,30 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
+                  "description": "whether or not the github repository is private",
                   "type": "bool",
                 },
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3231,27 +3074,36 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "resource": "string",
+                  "attributes": {
+                    "owner": "facebook",
+                    "private": "false",
+                  },
+                  "key": "react",
+                  "resource": "repository",
+                  "tenant": "default",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "owner": "facebook",
+                      "private": "false",
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "react",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": "repository",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                    "tenant": "default",
+                    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3307,15 +3159,11 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3344,25 +3192,28 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "owner": "facebook",
+                      "private": "false",
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "react",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": "repository",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                    "tenant": "default",
+                    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3397,27 +3248,12 @@ and will return the existing instance object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource": "string",
-                      "resource_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -3461,25 +3297,34 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "instance_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "attributes": {
+                    "owner": "facebook",
+                    "private": "false",
+                  },
+                },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "owner": "facebook",
+                      "private": "false",
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "react",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource": "repository",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c5",
+                    "tenant": "default",
+                    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c3",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3551,28 +3396,35 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permissions": [],
+                  "permissions": [
+                    "document:write",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the maintainer role can read from the repo and push changes",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "contributor",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "maintainer",
+                    "name": "Maintainer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "push",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3614,28 +3466,40 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "description": "the maintainer role can read from the repo and push changes",
+                  "extends": [
+                    "contributor",
+                  ],
+                  "key": "maintainer",
+                  "name": "Maintainer",
+                  "permissions": [
+                    "push",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the maintainer role can read from the repo and push changes",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "contributor",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "maintainer",
+                    "name": "Maintainer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "push",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3704,16 +3568,12 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -3746,26 +3606,30 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the maintainer role can read from the repo and push changes",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "contributor",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "maintainer",
+                    "name": "Maintainer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "push",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -3804,30 +3668,15 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "roles": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "resource_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "roles": [],
                   },
                 },
               },
@@ -3866,30 +3715,15 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "roles": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "resource_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "roles": [],
                   },
                 },
               },
@@ -3928,28 +3762,13 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "name": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource_id": "string",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -3998,28 +3817,35 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permissions": [],
+                  "permissions": [
+                    "document:share",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the maintainer role can read from the repo and push changes",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "contributor",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "maintainer",
+                    "name": "Maintainer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "push",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -4062,26 +3888,36 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "description": "the maintainer role can read from the repo and push changes",
+                  "permissions": [
+                    "push",
+                  ],
+                },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the maintainer role can read from the repo and push changes",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "contributor",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "maintainer",
+                    "name": "Maintainer",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "push",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -4174,29 +4010,64 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "actions": {
-                    "string": {},
+                    "clone": {},
+                    "push": {},
+                    "read": {},
                   },
-                  "key": "string",
-                  "name": "string",
+                  "attributes": {
+                    "created": {
+                      "description": "the time (timestamp) the repository was created",
+                      "type": "time",
+                    },
+                    "private": {
+                      "description": "whether the repo is private (if false, the repo is public)",
+                      "type": "bool",
+                    },
+                  },
+                  "key": "repository",
+                  "name": "Repository",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                      },
+                    },
+                    "attributes": {
+                      "created": {
+                        "description": "the time (timestamp) the repository was created",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                      },
+                      "private": {
+                        "description": "whether the repo is private (if false, the repo is public)",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "a git repository stored on github",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "repository",
+                    "name": "Repository",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "urn": "prn:github:scm:repository",
                   },
                 },
               },
@@ -4263,15 +4134,11 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -4300,24 +4167,46 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                      },
+                    },
+                    "attributes": {
+                      "created": {
+                        "description": "the time (timestamp) the repository was created",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                      },
+                      "private": {
+                        "description": "whether the repo is private (if false, the repo is public)",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "a git repository stored on github",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "repository",
+                    "name": "Repository",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "urn": "prn:github:scm:repository",
                   },
                 },
               },
@@ -4352,27 +4241,13 @@ A resource may also contain:
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -4435,13 +4310,11 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "actions": {
                     "string": {},
@@ -4450,14 +4323,39 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                      },
+                    },
+                    "attributes": {
+                      "created": {
+                        "description": "the time (timestamp) the repository was created",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                      },
+                      "private": {
+                        "description": "whether the repo is private (if false, the repo is public)",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "a git repository stored on github",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "repository",
+                    "name": "Repository",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "urn": "prn:github:scm:repository",
                   },
                 },
               },
@@ -4525,24 +4423,47 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "resource_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "actions": {
+                      "clone": {
+                        "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                      },
+                      "push": {
+                        "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                      },
+                      "read": {
+                        "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                      },
+                    },
+                    "attributes": {
+                      "created": {
+                        "description": "the time (timestamp) the repository was created",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "type": "time",
+                      },
+                      "private": {
+                        "description": "whether the repo is private (if false, the repo is public)",
+                        "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "type": "bool",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "a git repository stored on github",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "repository",
+                    "name": "Repository",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
+                    "urn": "prn:github:scm:repository",
                   },
                 },
               },
@@ -4639,30 +4560,28 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "role": "string",
-                  "tenant": "string",
-                  "user": "string",
+                  "role": "admin",
+                  "tenant": "stripe-inc",
+                  "user": "jane@coolcompany.com",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "role": "string",
-                    "role_id": "string",
-                    "tenant": "string",
-                    "tenant_id": "string",
-                    "user": "string",
-                    "user_id": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "role": "admin",
+                    "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
+                    "tenant": "stripe-inc",
+                    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
+                    "user": "jane@coolcompany.com",
+                    "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
                   },
                 },
               },
@@ -4696,19 +4615,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": [
-                  {
-                    "role": "string",
-                    "tenant": "string",
-                    "user": "string",
-                  },
-                ],
+                "request": [],
                 "response": {
                   "body": {},
                 },
@@ -4743,19 +4654,11 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": [
-                  {
-                    "role": "string",
-                    "tenant": "string",
-                    "user": "string",
-                  },
-                ],
+                "request": [],
                 "response": {
                   "body": {},
                 },
@@ -4794,29 +4697,12 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "role": "string",
-                      "role_id": "string",
-                      "tenant": "string",
-                      "tenant_id": "string",
-                      "user": "string",
-                      "user_id": "string",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -4875,18 +4761,15 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "role": "string",
-                  "tenant": "string",
-                  "user": "string",
+                  "role": "editor",
+                  "tenant": "google-inc",
+                  "user": "jane@coolcompany.com",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -4937,26 +4820,33 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permissions": [],
+                  "permissions": [
+                    "document:write",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the editor role can read and write to documents",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "viewer",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "editor",
+                    "name": "Editor",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "document:write",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -4994,26 +4884,38 @@ If some of the permissions specified are already assigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "description": "the editor role can read and write to documents",
+                  "extends": [
+                    "viewer",
+                  ],
+                  "key": "editor",
+                  "name": "Editor",
+                  "permissions": [
+                    "document:write",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the editor role can read and write to documents",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "viewer",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "editor",
+                    "name": "Editor",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "document:write",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5078,15 +4980,11 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5115,24 +5013,28 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the editor role can read and write to documents",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "viewer",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "editor",
+                    "name": "Editor",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "document:write",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5167,28 +5069,14 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "roles": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "roles": [],
                   },
                 },
               },
@@ -5223,28 +5111,14 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "roles": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "roles": [],
                   },
                 },
               },
@@ -5279,27 +5153,13 @@ This includes any permissions granted to said role.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -5354,26 +5214,33 @@ If some of the permissions specified are already unassigned, will skip them.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "permissions": [],
+                  "permissions": [
+                    "document:share",
+                  ],
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the editor role can read and write to documents",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "viewer",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "editor",
+                    "name": "Editor",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "document:write",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5412,24 +5279,34 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "role_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": {},
+                "request": {
+                  "description": "the editor role can read and write to documents",
+                  "permissions": [
+                    "document:write",
+                  ],
+                },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "the editor role can read and write to documents",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "extends": [
+                      "viewer",
+                    ],
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "editor",
+                    "name": "Editor",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "permissions": [
+                      "document:write",
+                    ],
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5529,27 +5406,37 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "attributes": {
+                    "allowed_locations": {
+                      "0": "US",
+                      "1": "CA",
+                    },
+                  },
+                  "key": "stripeinc",
+                  "name": "Stripe Inc",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "last_action_at": "2024-01-15T09:30:00Z",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "allowed_locations": {
+                        "0": "US",
+                        "1": "CA",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "stripeinc",
+                    "last_action_at": "2019-08-24T14:15:22Z",
+                    "name": "Stripe Inc",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5583,15 +5470,11 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5620,16 +5503,12 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -5662,25 +5541,28 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "last_action_at": "2024-01-15T09:30:00Z",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "allowed_locations": {
+                        "0": "US",
+                        "1": "CA",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "stripeinc",
+                    "last_action_at": "2019-08-24T14:15:22Z",
+                    "name": "Stripe Inc",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5715,38 +5597,14 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "associated_tenants": [
-                          {
-                            "roles": [],
-                            "status": "active",
-                            "tenant": "string",
-                          },
-                        ],
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "roles": [
-                          {
-                            "role": "string",
-                            "tenant": "string",
-                          },
-                        ],
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -5803,28 +5661,13 @@ and will return the existing tenant object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "created_at": "2024-01-15T09:30:00Z",
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "last_action_at": "2024-01-15T09:30:00Z",
-                        "name": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "updated_at": "2024-01-15T09:30:00Z",
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -5878,25 +5721,29 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "tenant_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "last_action_at": "2024-01-15T09:30:00Z",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "attributes": {
+                      "allowed_locations": {
+                        "0": "US",
+                        "1": "CA",
+                      },
+                    },
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "stripeinc",
+                    "last_action_at": "2019-08-24T14:15:22Z",
+                    "name": "Stripe Inc",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -5986,29 +5833,29 @@ define a string \`owner\` attribute that we can now use in our policies.
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
+                  "description": "whether or not the github repository is private",
+                  "key": "private",
                   "type": "bool",
                 },
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -6049,15 +5896,11 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6100,27 +5943,25 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -6161,29 +6002,12 @@ attribute to evaluate as \`undefined\`.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": [
-                    {
-                      "built_in": true,
-                      "created_at": "2024-01-15T09:30:00Z",
-                      "environment_id": "string",
-                      "id": "string",
-                      "key": "string",
-                      "organization_id": "string",
-                      "project_id": "string",
-                      "resource_id": "string",
-                      "resource_key": "string",
-                      "type": "bool",
-                      "updated_at": "2024-01-15T09:30:00Z",
-                    },
-                  ],
+                  "body": [],
                 },
               },
             ],
@@ -6228,29 +6052,29 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "attribute_id": "string",
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
+                  "description": "whether or not the github repository is private",
                   "type": "bool",
                 },
                 "response": {
                   "body": {
-                    "built_in": true,
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "resource_id": "string",
-                    "resource_key": "string",
+                    "built_in": false,
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "description": "whether or not the github repository is private",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "private",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "resource_id": "40ef0e48-a11f-4963-a229-e396c9f7e7dd",
+                    "resource_key": "repository",
                     "type": "bool",
-                    "updated_at": "2024-01-15T09:30:00Z",
+                    "updated_at": "2019-08-24T14:15:22Z",
                   },
                 },
               },
@@ -6315,30 +6139,28 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "role": "string",
-                  "tenant": "string",
+                  "role": "admin",
+                  "tenant": "stripe-inc",
                 },
                 "response": {
                   "body": {
-                    "created_at": "2024-01-15T09:30:00Z",
-                    "environment_id": "string",
-                    "id": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
-                    "role": "string",
-                    "role_id": "string",
-                    "tenant": "string",
-                    "tenant_id": "string",
-                    "user": "string",
-                    "user_id": "string",
+                    "created_at": "2019-08-24T14:15:22Z",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
+                    "role": "admin",
+                    "role_id": "405d8375-3514-403b-8c43-83ae74cfe022",
+                    "tenant": "stripe-inc",
+                    "tenant_id": "40ef0e48-a11f-4963-a229-e396c9f7e733",
+                    "user": "jane@coolcompany.com",
+                    "user_id": "7c60d51f-b44e-4682-87d6-449835ea4d11",
                   },
                 },
               },
@@ -6394,33 +6216,66 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
+                  "attributes": {
+                    "age": 30,
+                    "department": "marketing",
+                    "subscription": {
+                      "expired": false,
+                      "tier": "pro",
+                    },
+                  },
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "key": "user|892179821739812389327",
+                  "last_name": "Doe",
                 },
                 "response": {
                   "body": {
                     "associated_tenants": [
                       {
-                        "roles": [],
+                        "roles": [
+                          "admin",
+                        ],
                         "status": "active",
-                        "tenant": "string",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "roles": [
+                          "viewer",
+                        ],
+                        "status": "pending",
+                        "tenant": "othercompany.com",
                       },
                     ],
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "attributes": {
+                      "age": 30,
+                      "department": "marketing",
+                      "subscription": {
+                        "expired": false,
+                        "tier": "pro",
+                      },
+                    },
+                    "email": "jane@coolcompany.com",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "first_name": "Jane",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "user|892179821739812389327",
+                    "last_name": "Doe",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "roles": [
                       {
-                        "role": "string",
-                        "tenant": "string",
+                        "role": "admin",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "role": "viewer",
+                        "tenant": "othercompany.com",
                       },
                     ],
                   },
@@ -6456,15 +6311,11 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6493,32 +6344,53 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "associated_tenants": [
                       {
-                        "roles": [],
+                        "roles": [
+                          "admin",
+                        ],
                         "status": "active",
-                        "tenant": "string",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "roles": [
+                          "viewer",
+                        ],
+                        "status": "pending",
+                        "tenant": "othercompany.com",
                       },
                     ],
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "attributes": {
+                      "age": 30,
+                      "department": "marketing",
+                      "subscription": {
+                        "expired": false,
+                        "tier": "pro",
+                      },
+                    },
+                    "email": "jane@coolcompany.com",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "first_name": "Jane",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "user|892179821739812389327",
+                    "last_name": "Doe",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "roles": [
                       {
-                        "role": "string",
-                        "tenant": "string",
+                        "role": "admin",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "role": "viewer",
+                        "tenant": "othercompany.com",
                       },
                     ],
                   },
@@ -6555,37 +6427,13 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "data": [
-                      {
-                        "associated_tenants": [
-                          {
-                            "roles": [],
-                            "status": "active",
-                            "tenant": "string",
-                          },
-                        ],
-                        "environment_id": "string",
-                        "id": "string",
-                        "key": "string",
-                        "organization_id": "string",
-                        "project_id": "string",
-                        "roles": [
-                          {
-                            "role": "string",
-                            "tenant": "string",
-                          },
-                        ],
-                      },
-                    ],
+                    "data": [],
                     "total_count": 1,
                   },
                 },
@@ -6638,34 +6486,67 @@ and will return the existing user object in the response body.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "key": "string",
+                  "attributes": {
+                    "age": 30,
+                    "department": "marketing",
+                    "subscription": {
+                      "expired": false,
+                      "tier": "pro",
+                    },
+                  },
+                  "email": "jane@coolcompany.com",
+                  "first_name": "Jane",
+                  "key": "user|892179821739812389327",
+                  "last_name": "Doe",
                 },
                 "response": {
                   "body": {
                     "associated_tenants": [
                       {
-                        "roles": [],
+                        "roles": [
+                          "admin",
+                        ],
                         "status": "active",
-                        "tenant": "string",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "roles": [
+                          "viewer",
+                        ],
+                        "status": "pending",
+                        "tenant": "othercompany.com",
                       },
                     ],
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "attributes": {
+                      "age": 30,
+                      "department": "marketing",
+                      "subscription": {
+                        "expired": false,
+                        "tier": "pro",
+                      },
+                    },
+                    "email": "jane@coolcompany.com",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "first_name": "Jane",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "user|892179821739812389327",
+                    "last_name": "Doe",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "roles": [
                       {
-                        "role": "string",
-                        "tenant": "string",
+                        "role": "admin",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "role": "viewer",
+                        "tenant": "othercompany.com",
                       },
                     ],
                   },
@@ -6709,18 +6590,15 @@ If the role is not actually assigned, will return 404.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
-                  "role": "string",
-                  "tenant": "string",
+                  "role": "editor",
+                  "tenant": "google-inc",
                 },
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -6767,32 +6645,54 @@ Fields that will be provided will be completely overwritten.",
             ],
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
                   "env_id": "string",
                   "proj_id": "string",
                   "user_id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {},
                 "response": {
                   "body": {
                     "associated_tenants": [
                       {
-                        "roles": [],
+                        "roles": [
+                          "admin",
+                        ],
                         "status": "active",
-                        "tenant": "string",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "roles": [
+                          "viewer",
+                        ],
+                        "status": "pending",
+                        "tenant": "othercompany.com",
                       },
                     ],
-                    "environment_id": "string",
-                    "id": "string",
-                    "key": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "attributes": {
+                      "age": 30,
+                      "department": "marketing",
+                      "subscription": {
+                        "expired": false,
+                        "tier": "pro",
+                      },
+                    },
+                    "email": "jane@coolcompany.com",
+                    "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
+                    "first_name": "Jane",
+                    "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
+                    "key": "user|892179821739812389327",
+                    "last_name": "Doe",
+                    "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "roles": [
                       {
-                        "role": "string",
-                        "tenant": "string",
+                        "role": "admin",
+                        "tenant": "stripe-inc",
+                      },
+                      {
+                        "role": "viewer",
+                        "tenant": "othercompany.com",
                       },
                     ],
                   },

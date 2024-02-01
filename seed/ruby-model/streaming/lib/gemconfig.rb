@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-module SeedClient
+module SeedStreamingClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

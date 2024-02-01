@@ -209,7 +209,24 @@ export const FernOpenAPIExtension = {
      *      - `#/components/schemas/Group/properties/user`
      *      - `#/components/schemas/User`
      */
-    RESOLUTIONS: "x-fern-resolutions"
+    RESOLUTIONS: "x-fern-resolutions",
+
+    /**
+     * paths:
+     *  /path/to/my:
+     *    get:
+     *      x-fern-code-samples:
+     *      - language: typescript
+     *        install: npm install my-client
+     *        code: |
+     *          import { MyClient } from "my-client";
+     *          const client = new MyClient();
+     *          const response = await client.myEndpoint();
+     *          console.log(response);
+     *        name: Console Log My Endpoint
+     *        description: This is a code sample that logs the response
+     */
+    CUSTOM_CODE_SAMPLES: "x-fern-code-samples"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

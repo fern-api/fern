@@ -27,12 +27,9 @@ exports[`open api parser devrev simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "url": "string",
@@ -70,20 +67,12 @@ exports[`open api parser devrev simple 1`] = `
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "file_name": "string",
                 },
                 "response": {
                   "body": {
-                    "form_data": [
-                      {
-                        "key": "string",
-                        "value": "string",
-                      },
-                    ],
+                    "form_data": [],
                     "id": "don:<partition>:core:devo/<dev-org-id>:artifact/<artifact-id>",
                     "url": "string",
                   },
@@ -167,13 +156,9 @@ connections can not be deleted using this method.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "string",
                 },
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -237,10 +222,6 @@ created by the user.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "auth_connections": [],
@@ -274,14 +255,10 @@ disabled.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "string",
                   "toggle": "disable",
                 },
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -351,9 +328,6 @@ authenticated user.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "grant_type": "urn:devrev:params:oauth:grant-type:token-issue",
                   "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
@@ -443,11 +417,7 @@ given Dev organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {},
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -485,12 +455,9 @@ given Dev organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "token_id": "string",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "token": {
@@ -535,21 +502,12 @@ token type issued for a given subject.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "tokens": [
-                      {
-                        "id": "string",
-                        "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                        "status": "active",
-                      },
-                    ],
+                    "tokens": [],
                   },
                 },
               },
@@ -601,13 +559,9 @@ authenticated user.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
                 },
-                "response": undefined,
               },
             ],
             "method": "POST",
@@ -639,9 +593,6 @@ organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "token_hint": "string",
                   "token_id": "string",
@@ -708,23 +659,12 @@ organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "dev_users": [
-                      {
-                        "display_picture": {
-                          "id": "string",
-                        },
-                        "id": "string",
-                        "state": "active",
-                      },
-                    ],
+                    "dev_users": [],
                   },
                 },
               },
@@ -787,10 +727,6 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "dev_user": {
@@ -859,9 +795,6 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
@@ -935,12 +868,9 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "parts": [],
@@ -1048,9 +978,6 @@ organization.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "display_name": "string",
                   "environment": "production",
@@ -1118,9 +1045,6 @@ records.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
@@ -1165,12 +1089,9 @@ records.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "rev_org": {
@@ -1213,19 +1134,12 @@ to access.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "rev_orgs": [
-                      {
-                        "id": "string",
-                      },
-                    ],
+                    "rev_orgs": [],
                   },
                 },
               },
@@ -1312,9 +1226,6 @@ them.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "environment": "production",
                   "id": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
@@ -1400,9 +1311,6 @@ and a logical concept denoted by the tag's name.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "name": "string",
                 },
@@ -1461,9 +1369,6 @@ permitted.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
@@ -1508,12 +1413,9 @@ permitted.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "tag": {
@@ -1553,20 +1455,12 @@ permitted.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
-                    "tags": [
-                      {
-                        "id": "string",
-                        "name": "string",
-                      },
-                    ],
+                    "tags": [],
                   },
                 },
               },
@@ -1613,9 +1507,6 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "allowed_values": {},
                   "id": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
@@ -1737,13 +1628,10 @@ tags.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                   "object": "don:<partition>:core:devo/<dev-org-id>:<part-type>/<part-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "timeline_entries": [],
@@ -1832,21 +1720,12 @@ used.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
-                  "event_types": [
-                    "part_created",
-                  ],
                   "url": "string",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",
@@ -1902,9 +1781,6 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
@@ -1949,18 +1825,12 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",
@@ -1999,23 +1869,9 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "webhooks": [
-                      {
-                        "event_types": [
-                          "part_created",
-                        ],
-                        "id": "string",
-                        "secret": "string",
-                        "status": "active",
-                        "url": "string",
-                      },
-                    ],
+                    "webhooks": [],
                   },
                 },
               },
@@ -2041,30 +1897,14 @@ response.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "action": "activate",
-                  "event_types": {
-                    "add": [
-                      "part_created",
-                    ],
-                    "remove": [
-                      "part_created",
-                    ],
-                    "set": [
-                      "part_created",
-                    ],
-                  },
+                  "event_types": {},
                   "id": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
                 },
                 "response": {
                   "body": {
                     "webhook": {
-                      "event_types": [
-                        "part_created",
-                      ],
                       "id": "string",
                       "secret": "string",
                       "status": "active",
@@ -2162,9 +2002,6 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "id": "don:<partition>:core:devo/<dev-org-id>:<work-type>/<work-id>",
                 },
@@ -2208,10 +2045,6 @@ won't receive any object events until successfully verified.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "works": [],
@@ -2326,12 +2159,9 @@ organizations.
             ],
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
                 "query-parameters": {
                   "mode": "after",
                 },
-                "request": undefined,
                 "response": {
                   "body": {
                     "works": [],

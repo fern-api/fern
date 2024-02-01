@@ -26,6 +26,7 @@ export async function registerApi({
         workspace,
         audiences,
         generationLanguage: undefined,
+        smartCasing: false,
         disableExamples: false
     });
 

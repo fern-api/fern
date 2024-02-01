@@ -14,11 +14,9 @@ exports[`x-fern-parameter-name x-fern-parameter-name simple 1`] = `
           "examples": [
             {
               "headers": {},
-              "path-parameters": undefined,
               "query-parameters": {
                 "foo": "string",
               },
-              "request": undefined,
               "response": {
                 "body": "string",
               },

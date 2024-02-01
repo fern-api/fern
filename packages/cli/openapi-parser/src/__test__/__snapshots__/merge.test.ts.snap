@@ -8,10 +8,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get details for a linked account.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -24,6 +27,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -154,11 +158,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns the account token for the end user with the provided public token.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "public_token",
@@ -184,15 +192,6 @@ exports[`open api parser merge parse open api 1`] = `
               },
               "integration": {
                 "properties": {
-                  "categories": {
-                    "array": [
-                      {
-                        "enum": "hris",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "name": {
                     "primitive": {
                       "string": "string",
@@ -261,10 +260,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of models and actions available for an account.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -277,51 +279,14 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
-              "available_model_operations": {
-                "array": [
-                  {
-                    "properties": {
-                      "available_operations": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "model_name": {
-                        "primitive": {
-                          "string": "Candidate",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "required_post_parameters": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "supported_fields": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "integration": {
                 "properties": {
-                  "categories": {
-                    "array": [
-                      {
-                        "enum": "hris",
-                        "type": "enum",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "name": {
                     "primitive": {
                       "string": "string",
@@ -397,10 +362,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`BankInfo\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -413,6 +381,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -476,93 +445,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "account_number": {
-                        "primitive": {
-                          "string": "439291590",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "account_type": {
-                        "enum": "SAVINGS",
-                        "type": "enum",
-                      },
-                      "bank_name": {
-                        "primitive": {
-                          "string": "Chase",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee": {
-                        "primitive": {
-                          "string": "a3617eb4-dfe3-426f-921e-a65fc1661e10",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_created_at": {
-                        "primitive": {
-                          "datetime": "2021-12-06T10:11:26Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "123234",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "routing_number": {
-                        "primitive": {
-                          "string": "089690059",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -1011,10 +893,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1027,6 +912,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1119,23 +1005,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -1319,10 +1188,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Benefit\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1335,6 +1207,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -1364,96 +1237,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "company_contribution": {
-                        "primitive": {
-                          "double": 150,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee": {
-                        "primitive": {
-                          "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_contribution": {
-                        "primitive": {
-                          "double": 23.65,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_date": {
-                        "primitive": {
-                          "datetime": "2021-10-15 00:23:25.309761+00:00",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "3fe5ae7a-f1ba-4529-b7af-84e86dc6d232",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "provider_name": {
-                        "primitive": {
-                          "string": "Blue Shield of California",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "start_date": {
-                        "primitive": {
-                          "datetime": "2020-11-15 00:59:25.309761+00:00",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -1763,10 +1546,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -1779,6 +1565,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -1854,23 +1641,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -2008,10 +1778,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Company\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2024,6 +1797,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2042,68 +1816,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "display_name": {
-                        "primitive": {
-                          "string": "Waystar Royco",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "legal_name": {
-                        "primitive": {
-                          "string": "Waystar Royco, Inc.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -2366,10 +2078,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`Company\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2382,6 +2097,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -2425,23 +2141,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -2549,10 +2248,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Delete a linked account.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2565,6 +2267,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -2611,10 +2314,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -2627,6 +2333,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -2653,314 +2360,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "check_date": {
-                        "primitive": {
-                          "datetime": "2020-11-10T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "deductions": {
-                        "array": [
-                          {
-                            "properties": {
-                              "company_deduction": {
-                                "primitive": {
-                                  "double": 78.78,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "employee_deduction": {
-                                "primitive": {
-                                  "double": 34.54,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "employee_payroll_run": {
-                                "primitive": {
-                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "5fd439fc-1b64-4755-b275-64918936c365",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "modified_at": {
-                                "primitive": {
-                                  "datetime": "2021-10-16T00:00:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "Social Security",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "remote_data": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "path": {
-                                        "primitive": {
-                                          "string": "string",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "remote_id": {
-                                "primitive": {
-                                  "string": "93478612",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "earnings": {
-                        "array": [
-                          {
-                            "properties": {
-                              "amount": {
-                                "primitive": {
-                                  "double": 1002.34,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "employee_payroll_run": {
-                                "primitive": {
-                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "babbced6-3a81-4775-8da2-490dc6385259",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "modified_at": {
-                                "primitive": {
-                                  "datetime": "2021-10-16T00:00:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                              "remote_data": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "path": {
-                                        "primitive": {
-                                          "string": "string",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "remote_id": {
-                                "primitive": {
-                                  "string": "52802",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "type": {
-                                "enum": "SALARY",
-                                "type": "enum",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "employee": {
-                        "primitive": {
-                          "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_date": {
-                        "primitive": {
-                          "datetime": "2020-11-09T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "gross_pay": {
-                        "primitive": {
-                          "double": 1342.67,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "fb8c55b6-1cb8-4b4c-9fb6-17924231619d",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "net_pay": {
-                        "primitive": {
-                          "double": 865.78,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "payroll_run": {
-                        "primitive": {
-                          "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "start_date": {
-                        "primitive": {
-                          "datetime": "2020-11-08T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "taxes": {
-                        "array": [
-                          {
-                            "properties": {
-                              "amount": {
-                                "primitive": {
-                                  "double": 100.25,
-                                  "type": "double",
-                                },
-                                "type": "primitive",
-                              },
-                              "employee_payroll_run": {
-                                "primitive": {
-                                  "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "id": {
-                                "primitive": {
-                                  "string": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "modified_at": {
-                                "primitive": {
-                                  "datetime": "2021-10-16T00:00:00Z",
-                                  "type": "datetime",
-                                },
-                                "type": "primitive",
-                              },
-                              "name": {
-                                "primitive": {
-                                  "string": "California State Income Tax",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "remote_data": {
-                                "array": [
-                                  {
-                                    "properties": {
-                                      "path": {
-                                        "primitive": {
-                                          "string": "string",
-                                          "type": "string",
-                                        },
-                                        "type": "primitive",
-                                      },
-                                    },
-                                    "type": "object",
-                                  },
-                                ],
-                                "type": "array",
-                              },
-                              "remote_id": {
-                                "primitive": {
-                                  "string": "26806834",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -3398,10 +2797,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3414,6 +2816,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -3444,148 +2847,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "deductions": {
-                "array": [
-                  {
-                    "properties": {
-                      "company_deduction": {
-                        "primitive": {
-                          "double": 78.78,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_deduction": {
-                        "primitive": {
-                          "double": 34.54,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_payroll_run": {
-                        "primitive": {
-                          "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "5fd439fc-1b64-4755-b275-64918936c365",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "Social Security",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "93478612",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "earnings": {
-                "array": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "primitive": {
-                          "double": 1002.34,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_payroll_run": {
-                        "primitive": {
-                          "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "babbced6-3a81-4775-8da2-490dc6385259",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "52802",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "SALARY",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "employee": {
                 "primitive": {
@@ -3636,23 +2897,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -3666,75 +2910,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "taxes": {
-                "array": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "primitive": {
-                          "double": 100.25,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_payroll_run": {
-                        "primitive": {
-                          "string": "35347df1-95e7-46e2-93cc-66f1191edca5",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "e3a825fd-c38d-4095-a717-df98c4cb9ebc",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "California State Income Tax",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "26806834",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -3874,10 +3049,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Employee\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -3890,6 +3068,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -3937,217 +3116,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "avatar": {
-                        "primitive": {
-                          "string": "http://alturl.com/h2h8m",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "company": {
-                        "primitive": {
-                          "string": "8d9fd929-436c-4fd4-a48b-0c61f68d6178",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "date_of_birth": {
-                        "primitive": {
-                          "datetime": "1990-11-10T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "display_full_name": {
-                        "primitive": {
-                          "string": "Cousin Greg Hirsch",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_number": {
-                        "primitive": {
-                          "string": "2",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employment_status": {
-                        "enum": "ACTIVE",
-                        "type": "enum",
-                      },
-                      "ethnicity": {
-                        "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
-                        "type": "enum",
-                      },
-                      "first_name": {
-                        "primitive": {
-                          "string": "Greg",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "gender": {
-                        "enum": "MALE",
-                        "type": "enum",
-                      },
-                      "hire_date": {
-                        "primitive": {
-                          "datetime": "2020-10-10T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "home_location": {
-                        "primitive": {
-                          "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "last_name": {
-                        "primitive": {
-                          "string": "Hirsch",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "manager": {
-                        "primitive": {
-                          "string": "0048ea5b-911e-4dff-9364-92070dea62ff",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "marital_status": {
-                        "enum": "SINGLE",
-                        "type": "enum",
-                      },
-                      "mobile_phone_number": {
-                        "primitive": {
-                          "string": "+1234567890",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "pay_group": {
-                        "primitive": {
-                          "string": "ad1264e2-39be-4787-b749-f1aade9e3405",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "personal_email": {
-                        "primitive": {
-                          "string": "greg@gmail.com",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_created_at": {
-                        "primitive": {
-                          "datetime": "2020-10-11T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "ssn": {
-                        "primitive": {
-                          "string": "1234567890",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "start_date": {
-                        "primitive": {
-                          "datetime": "2020-10-11T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "team": {
-                        "primitive": {
-                          "string": "249c9faa-3045-4a31-953b-8f22d3613301",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "termination_date": {
-                        "primitive": {
-                          "datetime": "2021-10-12T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "username": {
-                        "primitive": {
-                          "string": "cousingreg",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "work_email": {
-                        "primitive": {
-                          "string": "greg@merge.dev",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "work_location": {
-                        "primitive": {
-                          "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -6600,10 +5568,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -6616,6 +5587,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -6787,96 +5759,7 @@ exports[`open api parser merge parse open api 1`] = `
           "response": {
             "properties": {
               "errors": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "custom_fields is a required field on model.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "MISSING_REQUIRED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Missing Required Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "logs": {
-                "array": [
-                  {
-                    "properties": {
-                      "dashboard_view": {
-                        "primitive": {
-                          "string": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_id": {
-                        "primitive": {
-                          "string": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_summary": {
-                        "properties": {
-                          "method": {
-                            "primitive": {
-                              "string": "POST",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status_code": {
-                            "primitive": {
-                              "int": 1,
-                              "type": "int",
-                            },
-                            "type": "primitive",
-                          },
-                          "url": {
-                            "primitive": {
-                              "string": "https://harvest.greenhouse.io/v1/candidates/",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "model": {
@@ -7009,23 +5892,6 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "remote_data": {
-                    "array": [
-                      {
-                        "properties": {
-                          "path": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "remote_id": {
                     "primitive": {
                       "string": "19202938",
@@ -7086,46 +5952,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "object",
               },
               "warnings": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "An unrecognized field, age, was passed in with request data.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "UNRECOGNIZED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Unrecognized Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -7244,10 +6071,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns an \`Employee\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -7260,6 +6090,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -7425,23 +6256,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -9393,10 +8207,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9409,6 +8226,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "model_id",
@@ -9512,10 +8330,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9528,6 +8349,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -9639,10 +8461,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Employment\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -9655,6 +8480,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -9702,102 +8528,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "effective_date": {
-                        "primitive": {
-                          "datetime": "2023-10-06T18:42:34Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee": {
-                        "primitive": {
-                          "string": "0958cbc6-6040-430a-848e-aafacbadf4ae",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employment_type": {
-                        "enum": "FULL_TIME",
-                        "type": "enum",
-                      },
-                      "flsa_status": {
-                        "enum": "EXEMPT",
-                        "type": "enum",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "65d8ffd0-211b-4ba4-b85a-fbe2ce220982",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "job_title": {
-                        "primitive": {
-                          "string": "Executive Assistant to Tom Wambsgans",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "pay_currency": {
-                        "enum": "XUA",
-                        "type": "enum",
-                      },
-                      "pay_frequency": {
-                        "enum": "WEEKLY",
-                        "type": "enum",
-                      },
-                      "pay_group": {
-                        "primitive": {
-                          "string": "d4e4837f-9900-484c-ac40-528365bb08ef",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "pay_period": {
-                        "enum": "HOUR",
-                        "type": "enum",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -10378,10 +9108,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns an \`Employment\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10394,6 +9127,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -10493,23 +9227,6 @@ exports[`open api parser merge parse open api 1`] = `
               "pay_period": {
                 "enum": "HOUR",
                 "type": "enum",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -10878,11 +9595,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Create a remote key.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -10966,10 +9687,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Group\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -10982,6 +9706,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -11021,72 +9746,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "134e0111-0f67-44f6-98f0-597000290bb3",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "COST_CENTER_US",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "parent_group": {
-                        "primitive": {
-                          "string": "2ef51b11-2c4e-4b02-8d1d-50592d9e96ef",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "800293",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "type": {
-                        "enum": "TEAM",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -11419,10 +10078,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`Group\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -11435,6 +10097,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -11499,23 +10162,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -11673,11 +10319,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Gets issues.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -11704,55 +10354,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "error_description": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "first_incident_time": {
-                        "primitive": {
-                          "datetime": "2022-12-05T16:19:15.161Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "is_muted": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "last_incident_time": {
-                        "primitive": {
-                          "datetime": "2022-12-05T16:19:15.161Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "status": {
-                        "enum": "ONGOING",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -12109,11 +10710,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a specific issue.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -12227,52 +10832,21 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a link token to be used when linking a new end user.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
               "categories": {
-                "array": [
-                  {
-                    "enum": "hris",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-              "common_models": {
-                "array": [
-                  {
-                    "properties": {
-                      "disabled_fields": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "enabled_actions": {
-                        "array": [
-                          {
-                            "enum": "READ",
-                            "type": "enum",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "model_id": {
-                        "primitive": {
-                          "string": "hris.Employee",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "end_user_email_address": {
@@ -12375,11 +10949,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "List linked accounts for your organization.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12406,137 +10984,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "category": {
-                        "enum": "hris",
-                        "type": "enum",
-                      },
-                      "end_user_email_address": {
-                        "primitive": {
-                          "string": "hradmin@foobar.dev",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_user_organization_name": {
-                        "primitive": {
-                          "string": "Foo Bar, LLC",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_user_origin_id": {
-                        "primitive": {
-                          "string": "3ac95cde-6c7f-4eef-afec-be710b42308d",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "e59b1821-f85c-4e28-a6b3-1804156f3563",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "integration": {
-                        "properties": {
-                          "available_model_operations": {
-                            "array": [
-                              {
-                                "properties": {
-                                  "available_operations": {
-                                    "array": [],
-                                    "type": "array",
-                                  },
-                                  "model_name": {
-                                    "primitive": {
-                                      "string": "Candidate",
-                                      "type": "string",
-                                    },
-                                    "type": "primitive",
-                                  },
-                                  "required_post_parameters": {
-                                    "array": [],
-                                    "type": "array",
-                                  },
-                                  "supported_fields": {
-                                    "array": [],
-                                    "type": "array",
-                                  },
-                                },
-                                "type": "object",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "categories": {
-                            "array": [
-                              {
-                                "enum": "hris",
-                                "type": "enum",
-                              },
-                            ],
-                            "type": "array",
-                          },
-                          "color": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "name": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "passthrough_available": {
-                            "primitive": {
-                              "boolean": true,
-                              "type": "boolean",
-                            },
-                            "type": "primitive",
-                          },
-                          "slug": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "is_duplicate": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "status": {
-                        "enum": "COMPLETE",
-                        "type": "enum",
-                      },
-                      "webhook_listener_url": {
-                        "primitive": {
-                          "string": "https://api.merge.dev/api/integrations/webhook-listener/7fc3mee0UW8ecV4",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -12934,10 +11381,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Location\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -12950,6 +11400,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -12989,111 +11440,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "city": {
-                        "primitive": {
-                          "string": "New York ",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "country": {
-                        "enum": "AF",
-                        "type": "enum",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "f5e6a151-f44e-449a-afb1-8fd781905958",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "location_type": {
-                        "enum": "HOME",
-                        "type": "enum",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "NYC Office",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "phone_number": {
-                        "primitive": {
-                          "string": "+1111111111",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "93018402",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "state": {
-                        "primitive": {
-                          "string": "NY",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_1": {
-                        "primitive": {
-                          "string": "2920 Broadway",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "street_2": {
-                        "primitive": {
-                          "string": "2nd Floor",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "zip_code": {
-                        "primitive": {
-                          "string": "10027",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -13402,10 +11748,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`Location\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13418,6 +11767,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -13497,23 +11847,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -13695,10 +12028,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13711,6 +12047,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -13725,48 +12062,6 @@ exports[`open api parser merge parse open api 1`] = `
               "method": {
                 "enum": "GET",
                 "type": "enum",
-              },
-              "multipart_form_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "content_type": {
-                        "primitive": {
-                          "string": "application/pdf",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "data": {
-                        "primitive": {
-                          "string": "SW50ZWdyYXRlIGZhc3QKSW50ZWdyYXRlIG9uY2U=",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "encoding": {
-                        "enum": "RAW",
-                        "type": "enum",
-                      },
-                      "file_name": {
-                        "primitive": {
-                          "string": "resume.pdf",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "resume",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "path": {
                 "primitive": {
@@ -13884,10 +12179,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`PayGroup\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -13900,6 +12198,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -13918,61 +12217,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "fd1e0fb5-8f92-4ec9-9f32-179cf732867d",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "pay_group_name": {
-                        "primitive": {
-                          "string": "contractor",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "800293",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -14235,10 +12479,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14251,6 +12498,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -14287,23 +12535,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -14411,10 +12642,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`PayrollRun\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -14427,6 +12661,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -14467,83 +12702,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "check_date": {
-                        "primitive": {
-                          "datetime": "2020-11-15T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_date": {
-                        "primitive": {
-                          "datetime": "2020-11-15T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "37336947-b3d4-4a4c-a310-ab6ab510e079",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "run_state": {
-                        "enum": "PAID",
-                        "type": "enum",
-                      },
-                      "run_type": {
-                        "enum": "REGULAR",
-                        "type": "enum",
-                      },
-                      "start_date": {
-                        "primitive": {
-                          "datetime": "2020-11-08T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -15029,10 +13187,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15045,6 +13206,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -15103,23 +13265,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -15320,11 +13465,15 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -15408,10 +13557,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15424,6 +13576,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -15526,7 +13679,7 @@ exports[`open api parser merge parse open api 1`] = `
         "description": "",
         "fullExamples": [
           {
-            "name": "StartDateConditionExample",
+            "name": "Employees that started on or after January 1st, 2022",
             "value": [
               {
                 "linked_account_conditions": [
@@ -15572,10 +13725,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15588,46 +13744,13 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": "Employees that started on or after January 1st, 2022",
           "pathParameters": [],
           "queryParameters": [],
           "request": {
             "properties": {
               "sync_configurations": {
-                "array": [
-                  {
-                    "properties": {
-                      "linked_account_conditions": {
-                        "array": [
-                          {
-                            "properties": {
-                              "condition_schema_id": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "operator": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                              "value": {
-                                "map": [],
-                                "type": "map",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -15731,7 +13854,7 @@ exports[`open api parser merge parse open api 1`] = `
         "description": undefined,
         "fullExamples": [
           {
-            "name": "StartDateConditionRequestExample",
+            "name": "Employees that started on or after January 1st, 2022",
             "value": {
               "linked_account_conditons": [
                 {
@@ -15758,7 +13881,7 @@ exports[`open api parser merge parse open api 1`] = `
         "description": "",
         "fullExamples": [
           {
-            "name": "StartDateConditionExample",
+            "name": "Employees that started on or after January 1st, 2022",
             "value": [
               {
                 "linked_account_conditions": [
@@ -15804,10 +13927,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get metadata for the conditions available to a linked account.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -15820,6 +13946,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -15896,6 +14023,25 @@ exports[`open api parser merge parse open api 1`] = `
                               "operator": {
                                 "primitive": {
                                   "string": "GREATER_THAN_OR_EQUAL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          {
+                            "properties": {
+                              "is_unique": {
+                                "primitive": {
+                                  "boolean": true,
+                                  "type": "boolean",
+                                },
+                                "type": "primitive",
+                              },
+                              "operator": {
+                                "primitive": {
+                                  "string": "LESS_THAN_OR_EQUAL",
                                   "type": "string",
                                 },
                                 "type": "primitive",
@@ -16020,7 +14166,7 @@ exports[`open api parser merge parse open api 1`] = `
         "description": "",
         "fullExamples": [
           {
-            "name": "PaginatedConditionSchemaListExample",
+            "name": "Employees that started on or after January 1st, 2022",
             "value": {
               "next": "cD0yMDIxLTAxLTA2KzAzJTNBMjQlM0E1My40MzQzMjYlMkIwMCUzQTAw",
               "previous": "cj1sZXdwd2VycWVtY29zZnNkc2NzUWxNMEUxTXk0ME16UXpNallsTWtJ",
@@ -16069,10 +14215,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16085,6 +14234,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -16103,59 +14253,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "is_initial_sync": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                      "last_sync_start": {
-                        "primitive": {
-                          "datetime": "2021-03-30T19:44:18.695973Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "model_id": {
-                        "primitive": {
-                          "string": "hris.Employee",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "model_name": {
-                        "primitive": {
-                          "string": "Employee",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "next_sync_start": {
-                        "primitive": {
-                          "datetime": "2021-03-30T20:44:18.662942Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "selective_sync_configurations_usage": {
-                        "enum": "IN_NEXT_SYNC",
-                        "type": "enum",
-                      },
-                      "status": {
-                        "enum": "SYNCING",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -16262,10 +14359,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16278,60 +14378,12 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "is_initial_sync": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                  "last_sync_start": {
-                    "primitive": {
-                      "datetime": "2021-03-30T19:44:18.695973Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "model_id": {
-                    "primitive": {
-                      "string": "hris.Employee",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "model_name": {
-                    "primitive": {
-                      "string": "Employee",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "next_sync_start": {
-                    "primitive": {
-                      "datetime": "2021-03-30T20:44:18.662942Z",
-                      "type": "datetime",
-                    },
-                    "type": "primitive",
-                  },
-                  "selective_sync_configurations_usage": {
-                    "enum": "IN_NEXT_SYNC",
-                    "type": "enum",
-                  },
-                  "status": {
-                    "enum": "SYNCING",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -16396,10 +14448,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`Team\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16412,6 +14467,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -16441,68 +14497,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "id": {
-                        "primitive": {
-                          "string": "13a72919-9fae-4f54-81ca-ddfd8712a1ba",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "name": {
-                        "primitive": {
-                          "string": "Engineering",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "parent_team": {
-                        "primitive": {
-                          "string": "1b998423-db0a-4037-a4cf-f79c60cb67b3",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -16812,10 +14806,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`Team\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -16828,6 +14825,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -16882,23 +14880,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -17029,10 +15010,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`TimeOff\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17045,6 +15029,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -17099,108 +15084,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "amount": {
-                        "primitive": {
-                          "double": 3,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "approver": {
-                        "primitive": {
-                          "string": "9efbc633-3387-4306-aa55-e2c635e6bb4f",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee": {
-                        "primitive": {
-                          "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "employee_note": {
-                        "primitive": {
-                          "string": "Moving into the new apartment Kendall Roy gave me!",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "end_time": {
-                        "primitive": {
-                          "datetime": "2020-11-17T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "request_type": {
-                        "enum": "VACATION",
-                        "type": "enum",
-                      },
-                      "start_time": {
-                        "primitive": {
-                          "datetime": "2020-11-10T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "status": {
-                        "enum": "REQUESTED",
-                        "type": "enum",
-                      },
-                      "units": {
-                        "enum": "HOURS",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -17797,10 +15680,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -17813,6 +15699,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
@@ -17882,96 +15769,7 @@ exports[`open api parser merge parse open api 1`] = `
           "response": {
             "properties": {
               "errors": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "custom_fields is a required field on model.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "MISSING_REQUIRED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Missing Required Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
-              },
-              "logs": {
-                "array": [
-                  {
-                    "properties": {
-                      "dashboard_view": {
-                        "primitive": {
-                          "string": "https://app.merge.dev/logs/99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_id": {
-                        "primitive": {
-                          "string": "99433219-8017-4acd-bb3c-ceb23d663832",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "log_summary": {
-                        "properties": {
-                          "method": {
-                            "primitive": {
-                              "string": "POST",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                          "status_code": {
-                            "primitive": {
-                              "int": 1,
-                              "type": "int",
-                            },
-                            "type": "primitive",
-                          },
-                          "url": {
-                            "primitive": {
-                              "string": "https://harvest.greenhouse.io/v1/candidates/",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
               "model": {
@@ -18025,23 +15823,6 @@ exports[`open api parser merge parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "remote_data": {
-                    "array": [
-                      {
-                        "properties": {
-                          "path": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                    ],
-                    "type": "array",
-                  },
                   "remote_id": {
                     "primitive": {
                       "string": "19202938",
@@ -18072,46 +15853,7 @@ exports[`open api parser merge parse open api 1`] = `
                 "type": "object",
               },
               "warnings": {
-                "array": [
-                  {
-                    "properties": {
-                      "detail": {
-                        "primitive": {
-                          "string": "An unrecognized field, age, was passed in with request data.",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "problem_type": {
-                        "primitive": {
-                          "string": "UNRECOGNIZED_FIELD",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "source": {
-                        "properties": {
-                          "pointer": {
-                            "primitive": {
-                              "string": "string",
-                              "type": "string",
-                            },
-                            "type": "primitive",
-                          },
-                        },
-                        "type": "object",
-                      },
-                      "title": {
-                        "primitive": {
-                          "string": "Unrecognized Field",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
+                "array": [],
                 "type": "array",
               },
             },
@@ -18230,10 +15972,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`TimeOffBalance\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -18246,6 +15991,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [
             {
@@ -18302,65 +16048,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [
-                  {
-                    "properties": {
-                      "employee": {
-                        "primitive": {
-                          "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "id": {
-                        "primitive": {
-                          "string": "91b2b905-e866-40c8-8be2-efe53827a0aa",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                      "modified_at": {
-                        "primitive": {
-                          "datetime": "2021-10-16T00:00:00Z",
-                          "type": "datetime",
-                        },
-                        "type": "primitive",
-                      },
-                      "policy_type": {
-                        "enum": "VACATION",
-                        "type": "enum",
-                      },
-                      "remote_data": {
-                        "array": [
-                          {
-                            "properties": {
-                              "path": {
-                                "primitive": {
-                                  "string": "string",
-                                  "type": "string",
-                                },
-                                "type": "primitive",
-                              },
-                            },
-                            "type": "object",
-                          },
-                        ],
-                        "type": "array",
-                      },
-                      "remote_id": {
-                        "primitive": {
-                          "string": "19202938",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
             },
             "type": "object",
@@ -18780,10 +16467,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -18796,6 +16486,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -18867,23 +16558,6 @@ exports[`open api parser merge parse open api 1`] = `
               "policy_type": {
                 "enum": "VACATION",
                 "type": "enum",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -19060,10 +16734,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19076,6 +16753,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "id",
@@ -19162,23 +16840,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [
-                  {
-                    "properties": {
-                      "path": {
-                        "primitive": {
-                          "string": "string",
-                          "type": "string",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                ],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -19470,10 +17131,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19486,6 +17150,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -19597,10 +17262,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19613,31 +17281,12 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "array": [
-              {
-                "properties": {
-                  "event": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "is_active": {
-                    "primitive": {
-                      "boolean": true,
-                      "type": "boolean",
-                    },
-                    "type": "primitive",
-                  },
-                },
-                "type": "object",
-              },
-            ],
+            "array": [],
             "type": "array",
           },
         },
@@ -19702,10 +17351,13 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "X-Account-Token",
@@ -19718,6 +17370,7 @@ exports[`open api parser merge parse open api 1`] = `
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {

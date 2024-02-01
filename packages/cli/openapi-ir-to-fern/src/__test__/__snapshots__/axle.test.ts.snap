@@ -21,8 +21,6 @@ exports[`open api parser axle simple 1`] = `
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -91,8 +89,6 @@ exports[`open api parser axle simple 1`] = `
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
@@ -100,7 +96,7 @@ exports[`open api parser axle simple 1`] = `
                       "domain": "string",
                       "id": "string",
                       "modifiedAt": "string",
-                      "name": "example-1",
+                      "name": "string",
                       "phone": "string",
                     },
                   },
@@ -127,22 +123,8 @@ exports[`open api parser axle simple 1`] = `
             "examples": [
               {
                 "headers": {},
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
-                  "body": {
-                    "data": [
-                      {
-                        "address": {},
-                        "domain": "string",
-                        "id": "string",
-                        "modifiedAt": "string",
-                        "name": "example-1",
-                        "phone": "string",
-                      },
-                    ],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -187,8 +169,6 @@ exports[`open api parser axle simple 1`] = `
             "examples": [
               {
                 "headers": {},
-                "path-parameters": undefined,
-                "query-parameters": undefined,
                 "request": {
                   "redirectUri": "https://example.com/redirect",
                   "user": {
@@ -279,53 +259,24 @@ exports[`open api parser axle simple 1`] = `
                 "path-parameters": {
                   "id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
                     "data": {
                       "account": "string",
                       "address": {},
                       "carrier": "string",
-                      "coverages": [
-                        {
-                          "code": "BI",
-                          "label": "string",
-                        },
-                      ],
+                      "coverages": [],
                       "createdAt": "string",
                       "effectiveDate": "string",
                       "expirationDate": "string",
                       "id": "string",
-                      "insureds": [
-                        {
-                          "firstName": "string",
-                          "lastName": "string",
-                        },
-                      ],
+                      "insureds": [],
                       "isActive": true,
                       "modifiedAt": "string",
                       "policyNumber": "string",
-                      "properties": [
-                        {
-                          "data": {
-                            "make": "string",
-                            "model": "string",
-                            "vin": "string",
-                            "year": "string",
-                          },
-                          "id": "string",
-                          "type": "vehicle",
-                        },
-                      ],
+                      "properties": [],
                       "refreshedAt": "string",
-                      "thirdParties": [
-                        {
-                          "address": {},
-                          "name": "string",
-                          "type": "lienholder",
-                        },
-                      ],
+                      "thirdParties": [],
                       "type": "auto",
                     },
                   },
@@ -383,8 +334,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
             "examples": [
               {
                 "headers": {},
-                "path-parameters": undefined,
-                "query-parameters": undefined,
+                "name": "example-1",
                 "request": {
                   "authCode": "string",
                 },

@@ -16,10 +16,6 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
             "docs": undefined,
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {},
                 },

@@ -10,7 +10,6 @@ export const RubyModelCustomConfigSchema = BaseGeneratorConfigSchema.extend({
 export function parseCustomConfig(customConfig: unknown): RubyModelCustomConfig {
     const parsed = customConfig != null ? RubyModelCustomConfigSchema.parse(customConfig) : undefined;
     return {
-        defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
         extraDependencies: parsed?.extraDependencies ?? {},
         clientClassName: parsed?.clientClassName,
         gemName: parsed?.gemName

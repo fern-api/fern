@@ -1,0 +1,15 @@
+irVersion: v32
+docker: fernapi/fern-ruby-sdk:latest
+dockerCommand: yarn workspace @fern-api/fern-ruby-sdk dockerTagLatest
+language: ruby
+generatorType: sdk
+defaultOutputMode: local_files
+fixtures: []
+scripts: []
+allowedFailures:
+  - bytes
+  - file-download
+  - file-upload
+  - streaming
+  - folders
+  - trace

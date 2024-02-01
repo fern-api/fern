@@ -16,6 +16,12 @@
     },
     "duplicate-dependencies": {
       "exclude": ["@fern-fern/ir-sdk"]
+    },
+    "package-json": {
+      "scripts": {
+        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:latest ../../..",
+        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-ruby-sdk:${0} ../../.."
+      }
     }
   },
   "private": false
