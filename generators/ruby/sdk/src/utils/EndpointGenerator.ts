@@ -284,21 +284,37 @@ export class EndpointGenerator {
                     const inlineHash = new HashInstance({
                         contents: new Map<string, AstNode>(
                             this.bodyAsProperties.map((prop) => {
+                                const func = new FunctionInvocation({
+                                    onObject: this.fileUploadUtility.classReference,
+                                    baseFunction: this.fileUploadUtility.convertToFaradayMultipart,
+                                    arguments_: [
+                                        new Argument({
+                                            value: prop.toVariable(VariableType.LOCAL),
+                                            type: FileClassReference,
+                                            isNamed: true,
+                                            name: "file_like"
+                                        })
+                                    ]
+                                });
                                 if (prop.type.some((cr) => cr === FileClassReference)) {
                                     return [
                                         prop.wireValue ?? prop.name,
-                                        new FunctionInvocation({
-                                            onObject: this.fileUploadUtility.classReference,
-                                            baseFunction: this.fileUploadUtility.convertToFaradayMultipart,
-                                            arguments_: [
-                                                new Argument({
-                                                    value: prop.toVariable(VariableType.LOCAL),
-                                                    type: FileClassReference,
-                                                    isNamed: true,
-                                                    name: "file_like"
-                                                })
-                                            ]
-                                        })
+                                        prop.isOptional
+                                            ? new ConditionalStatement({
+                                                  if_: {
+                                                      leftSide: new FunctionInvocation({
+                                                          onObject: prop.toVariable(VariableType.LOCAL),
+                                                          baseFunction: new Function_({
+                                                              name: "nil?",
+                                                              functionBody: []
+                                                          }),
+                                                          optionalSafeCall: false
+                                                      }),
+                                                      operation: "!",
+                                                      expressions: [func]
+                                                  }
+                                              })
+                                            : func
                                     ];
                                 }
                                 return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)];

@@ -1,11 +1,7 @@
-#!/usr/bin/env bash
-set -euo pipefail
-IFS=$'
-	'
-set -vx
+#!/usr/bin/env ruby
+# frozen_string_literal: true
 
-bundle install
-p"
+require "bundler/setup"
 require "seed_single_url_environment_no_default_client"
 
 # You can add fixtures and/or initialization code here to make experimenting
