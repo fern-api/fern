@@ -143,6 +143,17 @@ workflows:
             - fern-tokens
             - posthog
 
+      - publish-rc:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
+          context:
+            - npm
+            - auth0-prod
+            - posthog
+
       - publish-dev:
           filters:
             branches:
