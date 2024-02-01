@@ -21,7 +21,7 @@ paths:
   /users: 
     get: 
       x-fern-sdk-group-name: ["user"]
-      x-fern-sdk-method-name: ["get"]
+      x-fern-sdk-method-name: ["get_all"]
       responses:
         "200": 
           description: "Success"

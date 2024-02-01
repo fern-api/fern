@@ -4,11 +4,35 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
 {
   "definitionFiles": {
     "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
       "service": {
         "auth": false,
         "base-path": "",
         "endpoints": {
           "get": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "headers": undefined,
+                "path-parameters": undefined,
+                "query-parameters": undefined,
+                "request": undefined,
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/user",
+            "response": {
+              "docs": "Success",
+              "type": "root.User",
+            },
+          },
+          "get_all": {
             "auth": false,
             "docs": undefined,
             "examples": [
@@ -28,28 +52,23 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
             "path": "/users",
             "response": {
               "docs": "Success",
-              "type": "list<UserGetResponseItem>",
+              "type": "list<root.User>",
             },
-          },
-        },
-      },
-      "types": {
-        "UserGetResponse": {
-          "docs": undefined,
-          "properties": {
-            "id": "optional<string>",
-          },
-        },
-        "UserGetResponseItem": {
-          "docs": undefined,
-          "properties": {
-            "id": "optional<string>",
           },
         },
       },
     },
   },
-  "packageMarkerFile": {},
+  "packageMarkerFile": {
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+        },
+      },
+    },
+  },
   "rootApiFile": {
     "display-name": "Test extension \`x-fern-sdk-group-name\` for schemas",
     "error-discrimination": {

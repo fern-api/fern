@@ -7,8 +7,6 @@ export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): Op
         return openapi;
     }
 
-    console.log("Running resolutions....", JSON.stringify(resolutions));
-
     /**
      * A map of references that have been replaced.
      * This is useful so that we can replace inline
@@ -16,9 +14,9 @@ export function runResolutions({ openapi }: { openapi: OpenAPIV3.Document }): Op
      */
     let replacedReferences: Record<string, string> = {};
     for (const resolution of resolutions) {
+        const schemaReference = `#/components/schemas/${resolution.name}`;
         for (const resolutionPath of resolution.resolutions) {
-            const schemaReference = `#/components/schemas/${resolution.name}`;
-            openapi = addComponentSchema({ openapi, schemaReference, schemaName: resolution.name });
+            openapi = addComponentSchema({ openapi, schemaReference: resolutionPath, schemaName: resolution.name });
             openapi = replaceWithSchemaReference({
                 openapi,
                 replaceReference: resolutionPath,
@@ -43,7 +41,11 @@ interface AddComponentSchemaArgs {
 }
 
 function addComponentSchema({ openapi, schemaReference, schemaName }: AddComponentSchemaArgs): OpenAPIV3.Document {
-    const keys = schemaReference.split("/").map((key) => key.replace("~1", "/"));
+    const keys = schemaReference
+        .replace("#/", "")
+        .split("/")
+        .map((key) => key.replace("~1", "/"));
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
     for (const key of keys) {
@@ -51,6 +53,7 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
         if (nextValue == null) {
             return openapi;
         }
+
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value = nextValue as any;
     }
@@ -62,7 +65,6 @@ function addComponentSchema({ openapi, schemaReference, schemaName }: AddCompone
         openapi.components.schemas = {};
     }
 
-    console.log("Updating component schema....");
     openapi.components.schemas[schemaName] = value;
 
     return openapi;
@@ -85,7 +87,7 @@ function replaceWithSchemaReference({
     replacedReferences
 }: ReplaceWithReferenceArgs): OpenAPIV3.Document {
     const overlappingReference = Object.keys(replacedReferences)
-        .filter((replacedReference) => schemaReference.includes(replacedReference))
+        .filter((replacedReference) => replaceReference.startsWith(replacedReference))
         .sort((a, b) => b.length - a.length)[0];
     if (overlappingReference != null) {
         const resolvedOverlappingReference = replacedReferences[overlappingReference];
@@ -100,10 +102,14 @@ function replaceWithSchemaReference({
         }
     }
 
-    const keys = replaceReference.split("/").map((key) => key.replace("~1", "/"));
+    const keys = replaceReference
+        .replace("#/", "")
+        .split("/")
+        .map((key) => key.replace("~1", "/"));
+
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let value = openapi as any;
-    for (const key of keys) {
+    for (const key of keys.slice(0, -1)) {
         const nextValue = value[key];
         if (nextValue == null) {
             return openapi;
@@ -112,8 +118,11 @@ function replaceWithSchemaReference({
         value = nextValue as any;
     }
 
-    console.log("Updating with ref....");
-    value = {
+    const finalKey = keys[keys.length - 1];
+    if (finalKey == null) {
+        return openapi;
+    }
+    value[finalKey] = {
         $ref: schemaReference
     };
 
