@@ -21,10 +21,13 @@ import { FernOpenAPIExtension } from "./extensions/fernExtensions";
 import { getExtension } from "./extensions/getExtension";
 import { getVariableDefinitions } from "./extensions/getVariableDefinitions";
 import { OpenAPIV3ParserContext } from "./OpenAPIV3ParserContext";
+import { runResolutions } from "./runResolutions";
 import { convertSchemaWithExampleToSchema } from "./utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "./utils/isReferenceObject";
 
 export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext): OpenAPIIntermediateRepresentation {
+    openApi = runResolutions({ openapi: openApi });
+
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
             const convertedSecurityScheme = convertSecurityScheme(securityScheme);
