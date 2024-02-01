@@ -13,3 +13,24 @@ paths:
           description: Successful response
         '500':
           description: Internal Server Error
+components: 
+  schemas: 
+    User: 
+      type: object
+      properties: 
+        id: 
+          type: string
+        name: 
+          type: string
+        email: 
+          type: string
+        role: 
+          type: string
+          enum: 
+            - admin
+            - user
+      required: 
+        - id
+        - name
+        - email
+        - role
