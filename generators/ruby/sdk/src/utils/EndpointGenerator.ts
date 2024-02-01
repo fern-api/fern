@@ -132,13 +132,12 @@ export class EndpointGenerator {
                 fileUpload: (fur: FileUploadRequest) => {
                     return fur.properties.map((prop) => {
                         return prop._visit<Property>({
-                            // TODO(P0): we should allow for multiple types on a property so that we can support file uploads as IO or String
                             file: (fp: FileProperty) =>
                                 new Property({
                                     name: fp.key.name.snakeCase.safeName,
                                     isOptional: fp.isOptional,
                                     wireValue: fp.key.wireValue,
-                                    type: FileClassReference
+                                    type: [StringClassReference, FileClassReference]
                                 }),
                             bodyProperty: (irbp: InlinedRequestBodyProperty) =>
                                 new Property({
@@ -285,7 +284,7 @@ export class EndpointGenerator {
                     const inlineHash = new HashInstance({
                         contents: new Map<string, AstNode>(
                             this.bodyAsProperties.map((prop) => {
-                                if (prop.type === FileClassReference) {
+                                if (prop.type.some((cr) => cr === FileClassReference)) {
                                     return [
                                         prop.wireValue ?? prop.name,
                                         new FunctionInvocation({

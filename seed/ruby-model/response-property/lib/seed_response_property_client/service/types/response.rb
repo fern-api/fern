@@ -30,8 +30,7 @@ module SeedResponsePropertyClient
       # @return [Service::Response]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        data = struct.data.to_h.to_json
-        data = Service::Movie.from_json(json_object: data)
+        data = struct.data
         metadata = struct.metadata
         docs = struct.docs
         new(data: data, metadata: metadata, docs: docs, additional_properties: struct)

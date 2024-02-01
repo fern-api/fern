@@ -2,5 +2,5 @@
 
 module SeedEnumClient
   # @type [Hash{String => String}]
-  OPERAND = { greater_than: ">", equal_to: "=", less_than: "less_than" }.frozen
+  ENUM = { one: "ONE", two: "TWO", three: "THREE" }.frozen
 end

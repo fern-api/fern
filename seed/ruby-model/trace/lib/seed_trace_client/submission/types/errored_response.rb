@@ -29,8 +29,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
-        error_info = struct.errorInfo.to_h.to_json
-        error_info = Submission::ErrorInfo.from_json(json_object: error_info)
+        error_info = struct.errorInfo
         new(submission_id: submission_id, error_info: error_info, additional_properties: struct)
       end
 

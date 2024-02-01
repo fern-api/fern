@@ -30,8 +30,7 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             method_name = struct.methodName
-            signature = struct.signature.to_h.to_json
-            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+            signature = struct.signature
             new(method_name: method_name, signature: signature, additional_properties: struct)
           end
 

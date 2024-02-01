@@ -25,8 +25,7 @@ module SeedTraceClient
         # @return [V2::Problem::GetGeneratedTestCaseTemplateFileRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          template = struct.template.to_h.to_json
-          template = V2::Problem::TestCaseTemplate.from_json(json_object: template)
+          template = struct.template
           new(template: template, additional_properties: struct)
         end
 

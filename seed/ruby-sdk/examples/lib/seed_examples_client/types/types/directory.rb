@@ -31,14 +31,8 @@ module SeedExamplesClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
-        files = struct.files.map do |v|
-          v = v.to_h.to_json
-          Types::File.from_json(json_object: v)
-        end
-        directories = struct.directories.map do |v|
-          v = v.to_h.to_json
-          Types::Directory.from_json(json_object: v)
-        end
+        files = struct.files
+        directories = struct.directories
         new(name: name, files: files, directories: directories, additional_properties: struct)
       end
 

@@ -70,7 +70,7 @@ export class Yardoc extends AstNode {
     }
 
     private writeParameterAsHash(parameter: Parameter, startingTabSpaces: number): void {
-        const typeId = parameter.type.resolvedTypeId;
+        const typeId = parameter.type[0]?.resolvedTypeId;
         const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
         const classFactory = this.crf;
         if (typeId === undefined || properties === undefined || classFactory === undefined) {
@@ -78,7 +78,9 @@ export class Yardoc extends AstNode {
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s [Hash] ", startingTabSpaces });
             this.addText({
-                stringContent: parameter.documentation ?? `Request of type ${parameter.type.typeHint}, as a Hash`,
+                stringContent:
+                    parameter.documentation ??
+                    `Request of type ${parameter.type.map((param) => param.typeHint).join(", ")}, as a Hash`,
                 appendToLastString: true
             });
             properties.forEach((prop) => {
@@ -101,7 +103,7 @@ export class Yardoc extends AstNode {
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
             this.addText({
-                stringContent: parameter.type.typeHint,
+                stringContent: parameter.type.map((param) => param.typeHint).join(", "),
                 templateString: " [%s] ",
                 appendToLastString: true
             });
@@ -114,7 +116,7 @@ export class Yardoc extends AstNode {
             if (this.reference.name === "typeReference") {
                 const typeName =
                     this.reference.type instanceof Property
-                        ? this.reference.type.type.typeHint
+                        ? this.reference.type.type.map((prop) => prop.typeHint).join(", ")
                         : this.reference.type instanceof ClassReference
                         ? this.reference.type.typeHint
                         : this.reference.type;

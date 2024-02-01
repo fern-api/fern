@@ -32,10 +32,7 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         method_name = struct.methodName
         line_number = struct.lineNumber
-        scopes = struct.scopes.map do |v|
-          v = v.to_h.to_json
-          Submission::Scope.from_json(json_object: v)
-        end
+        scopes = struct.scopes
         new(method_name: method_name, line_number: line_number, scopes: scopes, additional_properties: struct)
       end
 

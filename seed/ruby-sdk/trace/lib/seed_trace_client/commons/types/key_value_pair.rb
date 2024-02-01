@@ -27,10 +27,8 @@ module SeedTraceClient
       # @return [Commons::KeyValuePair]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key = struct.key.to_h.to_json
-        key = Commons::VariableValue.from_json(json_object: key)
-        value = struct.value.to_h.to_json
-        value = Commons::VariableValue.from_json(json_object: value)
+        key = struct.key
+        value = struct.value
         new(key: key, value: value, additional_properties: struct)
       end
 

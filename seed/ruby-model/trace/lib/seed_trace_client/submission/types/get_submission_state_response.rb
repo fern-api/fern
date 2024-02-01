@@ -34,11 +34,10 @@ module SeedTraceClient
       # @return [Submission::GetSubmissionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        time_submitted = DateTime.parse(struct.timeSubmitted)
+        time_submitted = struct.timeSubmitted
         submission = struct.submission
-        language = LANGUAGE.key(struct.language)
-        submission_type_state = struct.submissionTypeState.to_h.to_json
-        submission_type_state = Submission::SubmissionTypeState.from_json(json_object: submission_type_state)
+        language = struct.language
+        submission_type_state = struct.submissionTypeState
         new(time_submitted: time_submitted, submission: submission, language: language,
             submission_type_state: submission_type_state, additional_properties: struct)
       end

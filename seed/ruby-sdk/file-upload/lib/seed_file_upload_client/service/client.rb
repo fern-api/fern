@@ -20,8 +20,8 @@ module SeedFileUploadClient
 
       # @param maybe_string [String]
       # @param integer [Integer]
-      # @param file [IO]
-      # @param maybe_file [IO]
+      # @param file [String, IO]
+      # @param maybe_file [String, IO]
       # @param maybe_integer [Integer]
       # @param list_of_strings [Array<String>]
       # @param set_of_strings [Set<String>]
@@ -59,7 +59,7 @@ module SeedFileUploadClient
         end
       end
 
-      # @param file [IO]
+      # @param file [String, IO]
       # @param request_options [RequestOptions]
       # @return [Void]
       def just_file(file:, request_options: nil)
@@ -78,7 +78,7 @@ module SeedFileUploadClient
       # @param maybe_integer [Integer]
       # @param list_of_strings [String]
       # @param optional_list_of_strings [String]
-      # @param file [IO]
+      # @param file [String, IO]
       # @param request_options [RequestOptions]
       # @return [Void]
       def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,
@@ -114,8 +114,8 @@ module SeedFileUploadClient
 
       # @param maybe_string [String]
       # @param integer [Integer]
-      # @param file [IO]
-      # @param maybe_file [IO]
+      # @param file [String, IO]
+      # @param maybe_file [String, IO]
       # @param maybe_integer [Integer]
       # @param list_of_strings [Array<String>]
       # @param set_of_strings [Set<String>]
@@ -155,7 +155,7 @@ module SeedFileUploadClient
         end
       end
 
-      # @param file [IO]
+      # @param file [String, IO]
       # @param request_options [RequestOptions]
       # @return [Void]
       def just_file(file:, request_options: nil)
@@ -176,7 +176,7 @@ module SeedFileUploadClient
       # @param maybe_integer [Integer]
       # @param list_of_strings [String]
       # @param optional_list_of_strings [String]
-      # @param file [IO]
+      # @param file [String, IO]
       # @param request_options [RequestOptions]
       # @return [Void]
       def just_file_with_query_params(integer:, list_of_strings:, file:, maybe_string: nil, maybe_integer: nil,

@@ -21,7 +21,7 @@ export class FileUploadUtility extends Class_ {
         const fileProperty = new Property({
             name: "file_like",
             documentation: "The file to be uploaded, or a string path to the file.",
-            type: FileClassReference
+            type: [StringClassReference, FileClassReference]
         });
         const fileVariable = fileProperty.toVariable(VariableType.LOCAL);
         const pathVariable = new Variable({
@@ -120,10 +120,7 @@ export class FileUploadUtility extends Class_ {
                     ]
                 })
             ],
-            parameters: [
-                // TODO(P0): we should allow for multiple types on a property so that we can support file uploads as IO or String
-                fileProperty.toParameter({})
-            ],
+            parameters: [fileProperty.toParameter({})],
             returnValue: faradayFilePartCr
         });
 
