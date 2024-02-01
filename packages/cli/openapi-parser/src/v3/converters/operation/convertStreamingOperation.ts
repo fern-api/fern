@@ -134,14 +134,21 @@ function getRequestBody({
         return undefined; // not an object
     }
 
+    let streamingProperty = resolvedRequstBodySchema.properties?.[streamingExtension.streamConditionProperty];
+    if (streamingProperty != null && isReferenceObject(streamingProperty)) {
+        streamingProperty = undefined;
+    }
+
     const requestBodySchemaWithLiteralProperty: OpenAPIV3.SchemaObject = {
         ...resolvedRequstBodySchema,
         properties: {
             ...resolvedRequstBodySchema.properties,
             [streamingExtension.streamConditionProperty]: {
                 type: "boolean",
-                "x-fern-boolean-literal": isStreaming
-            } as OpenAPIV3.SchemaObject
+                "x-fern-boolean-literal": isStreaming,
+                ...(streamingProperty ?? {})
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } as any
         },
         required: [...(resolvedRequstBodySchema.required ?? []), streamingExtension.streamConditionProperty]
     };
