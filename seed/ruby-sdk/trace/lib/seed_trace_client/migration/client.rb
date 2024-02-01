@@ -21,8 +21,8 @@ module SeedTraceClient
       def get_attempted_migrations(admin_key_header:, request_options: nil)
         response = @request_client.conn.get("/migration-info/all") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = {
             **req.headers,
             **request_options&.additional_headers,
@@ -53,8 +53,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.get("/migration-info/all") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = {
               **req.headers,
               **request_options&.additional_headers,

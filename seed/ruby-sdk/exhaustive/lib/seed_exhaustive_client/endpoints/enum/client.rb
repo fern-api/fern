@@ -21,7 +21,7 @@ module SeedExhaustiveClient
         def get_and_return_enum(request:, request_options: nil)
           response = @request_client.conn.post("/enum") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -46,7 +46,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/enum") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end

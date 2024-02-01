@@ -21,7 +21,7 @@ module SeedIdempotencyHeadersClient
       def create(amount:, currency:, request_options: nil)
         @request_client.conn.post("/payment") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request_options&.additional_body_parameters, amount: amount, currency: currency }.compact
         end
@@ -33,7 +33,7 @@ module SeedIdempotencyHeadersClient
       def delete(payment_id:, request_options: nil)
         @request_client.conn.delete("/payment/#{payment_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -57,7 +57,7 @@ module SeedIdempotencyHeadersClient
         Async.call do
           response = @request_client.conn.post("/payment") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request_options&.additional_body_parameters, amount: amount, currency: currency }.compact
           end
@@ -72,7 +72,7 @@ module SeedIdempotencyHeadersClient
         Async.call do
           @request_client.conn.delete("/payment/#{payment_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end

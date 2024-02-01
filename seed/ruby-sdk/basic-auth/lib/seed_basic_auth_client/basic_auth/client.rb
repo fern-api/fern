@@ -19,8 +19,8 @@ module SeedBasicAuthClient
       def get_with_basic_auth(request_options: nil)
         @request_client.conn.get("/basic-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["username"] = @request_client.username unless @request_client.username.nil?
-          req.headers["password"] = @request_client.password unless @request_client.password.nil?
+          req.headers["username"] = @request_client.username if @request_client.username.nil?
+          req.headers["password"] = @request_client.password if @request_client.password.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -31,8 +31,8 @@ module SeedBasicAuthClient
       def post_with_basic_auth(request:, request_options: nil)
         @request_client.conn.post("/basic-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["username"] = @request_client.username unless @request_client.username.nil?
-          req.headers["password"] = @request_client.password unless @request_client.password.nil?
+          req.headers["username"] = @request_client.username if @request_client.username.nil?
+          req.headers["password"] = @request_client.password if @request_client.password.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -55,8 +55,8 @@ module SeedBasicAuthClient
         Async.call do
           response = @request_client.conn.get("/basic-auth") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["username"] = @request_client.username unless @request_client.username.nil?
-            req.headers["password"] = @request_client.password unless @request_client.password.nil?
+            req.headers["username"] = @request_client.username if @request_client.username.nil?
+            req.headers["password"] = @request_client.password if @request_client.password.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response
@@ -70,8 +70,8 @@ module SeedBasicAuthClient
         Async.call do
           response = @request_client.conn.post("/basic-auth") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["username"] = @request_client.username unless @request_client.username.nil?
-            req.headers["password"] = @request_client.password unless @request_client.password.nil?
+            req.headers["username"] = @request_client.username if @request_client.username.nil?
+            req.headers["password"] = @request_client.password if @request_client.password.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end

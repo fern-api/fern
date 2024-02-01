@@ -19,8 +19,8 @@ module SeedTraceClient
       def test(request_options: nil)
         @request_client.conn.get("/") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -42,8 +42,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.get("/") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end

@@ -20,8 +20,8 @@ module SeedTraceClient
       def get_homepage_problems(request_options: nil)
         @request_client.conn.get("/homepage-problems") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -32,8 +32,8 @@ module SeedTraceClient
       def set_homepage_problems(request:, request_options: nil)
         @request_client.conn.post("/homepage-problems") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -56,8 +56,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.get("/homepage-problems") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response
@@ -71,8 +71,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/homepage-problems") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end

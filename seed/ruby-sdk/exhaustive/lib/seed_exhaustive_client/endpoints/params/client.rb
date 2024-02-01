@@ -21,7 +21,7 @@ module SeedExhaustiveClient
         def get_with_path(param:, request_options: nil)
           @request_client.conn.get("/params/path/#{param}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
@@ -33,7 +33,7 @@ module SeedExhaustiveClient
         def get_with_query(query:, number:, request_options: nil)
           @request_client.conn.get("/params") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = { **request_options&.additional_query_parameters, "query": query, "number": number }.compact
           end
@@ -46,7 +46,7 @@ module SeedExhaustiveClient
         def get_with_allow_multiple_query(query:, numer:, request_options: nil)
           @request_client.conn.get("/params") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = { **request_options&.additional_query_parameters, "query": query, "numer": numer }.compact
           end
@@ -59,7 +59,7 @@ module SeedExhaustiveClient
         def get_with_path_and_query(param:, query:, request_options: nil)
           @request_client.conn.get("/params/path/#{param}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = { **request_options&.additional_query_parameters, "query": query }.compact
           end
@@ -72,7 +72,7 @@ module SeedExhaustiveClient
         def modify_with_path(param:, request:, request_options: nil)
           @request_client.conn.put("/params/path/#{param}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -96,7 +96,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.get("/params/path/#{param}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response
@@ -111,7 +111,7 @@ module SeedExhaustiveClient
           Async.call do
             @request_client.conn.get("/params") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.params = { **request_options&.additional_query_parameters, "query": query, "number": number }.compact
             end
@@ -126,7 +126,7 @@ module SeedExhaustiveClient
           Async.call do
             @request_client.conn.get("/params") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.params = { **request_options&.additional_query_parameters, "query": query, "numer": numer }.compact
             end
@@ -141,7 +141,7 @@ module SeedExhaustiveClient
           Async.call do
             @request_client.conn.get("/params/path/#{param}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.params = { **request_options&.additional_query_parameters, "query": query }.compact
             end
@@ -156,7 +156,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.put("/params/path/#{param}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end

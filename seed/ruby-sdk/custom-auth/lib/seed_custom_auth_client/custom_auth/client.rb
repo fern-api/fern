@@ -19,7 +19,7 @@ module SeedCustomAuthClient
       def get_with_custom_auth(request_options: nil)
         @request_client.conn.get("/custom-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["X-API-KEY"] = @request_client.custom_auth_scheme unless @request_client.custom_auth_scheme.nil?
+          req.headers["X-API-KEY"] = @request_client.custom_auth_scheme if @request_client.custom_auth_scheme.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -30,7 +30,7 @@ module SeedCustomAuthClient
       def post_with_custom_auth(request:, request_options: nil)
         @request_client.conn.post("/custom-auth") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["X-API-KEY"] = @request_client.custom_auth_scheme unless @request_client.custom_auth_scheme.nil?
+          req.headers["X-API-KEY"] = @request_client.custom_auth_scheme if @request_client.custom_auth_scheme.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -53,7 +53,7 @@ module SeedCustomAuthClient
         Async.call do
           response = @request_client.conn.get("/custom-auth") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["X-API-KEY"] = @request_client.custom_auth_scheme unless @request_client.custom_auth_scheme.nil?
+            req.headers["X-API-KEY"] = @request_client.custom_auth_scheme if @request_client.custom_auth_scheme.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response
@@ -67,7 +67,7 @@ module SeedCustomAuthClient
         Async.call do
           response = @request_client.conn.post("/custom-auth") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["X-API-KEY"] = @request_client.custom_auth_scheme unless @request_client.custom_auth_scheme.nil?
+            req.headers["X-API-KEY"] = @request_client.custom_auth_scheme if @request_client.custom_auth_scheme.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end

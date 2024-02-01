@@ -22,8 +22,8 @@ module SeedLiteralHeadersClient
       def get(non_literal_endpoint_header:, literal_endpoint_header:, true_endpoint_header:, request_options: nil)
         @request_client.conn.post("/with-non-literal-headers") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
-          req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
+          req.headers["X-API-Header"] = @request_client.api_header if @request_client.api_header.nil?
+          req.headers["X-API-Test"] = @request_client.api_test if @request_client.api_test.nil?
           req.headers = {
             **req.headers,
             **request_options&.additional_headers,
@@ -54,8 +54,8 @@ module SeedLiteralHeadersClient
         Async.call do
           @request_client.conn.post("/with-non-literal-headers") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["X-API-Header"] = @request_client.api_header unless @request_client.api_header.nil?
-            req.headers["X-API-Test"] = @request_client.api_test unless @request_client.api_test.nil?
+            req.headers["X-API-Header"] = @request_client.api_header if @request_client.api_header.nil?
+            req.headers["X-API-Test"] = @request_client.api_test if @request_client.api_test.nil?
             req.headers = {
               **req.headers,
               **request_options&.additional_headers,

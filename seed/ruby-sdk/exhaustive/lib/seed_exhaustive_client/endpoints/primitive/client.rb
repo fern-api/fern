@@ -22,7 +22,7 @@ module SeedExhaustiveClient
         def get_and_return_string(request:, request_options: nil)
           @request_client.conn.post("/primitive/string") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -34,7 +34,7 @@ module SeedExhaustiveClient
         def get_and_return_int(request:, request_options: nil)
           @request_client.conn.post("/primitive/integer") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -46,7 +46,7 @@ module SeedExhaustiveClient
         def get_and_return_long(request:, request_options: nil)
           @request_client.conn.post("/primitive/long") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -58,7 +58,7 @@ module SeedExhaustiveClient
         def get_and_return_double(request:, request_options: nil)
           @request_client.conn.post("/primitive/double") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -70,7 +70,7 @@ module SeedExhaustiveClient
         def get_and_return_bool(request:, request_options: nil)
           @request_client.conn.post("/primitive/boolean") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -82,7 +82,7 @@ module SeedExhaustiveClient
         def get_and_return_datetime(request:, request_options: nil)
           response = @request_client.conn.post("/primitive/datetime") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -95,7 +95,7 @@ module SeedExhaustiveClient
         def get_and_return_date(request:, request_options: nil)
           response = @request_client.conn.post("/primitive/date") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -108,7 +108,7 @@ module SeedExhaustiveClient
         def get_and_return_uuid(request:, request_options: nil)
           @request_client.conn.post("/primitive/uuid") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -120,7 +120,7 @@ module SeedExhaustiveClient
         def get_and_return_base_64(request:, request_options: nil)
           @request_client.conn.post("/primitive/base64") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -144,7 +144,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/string") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -159,7 +159,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/integer") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -174,7 +174,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/long") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -189,7 +189,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/double") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -204,7 +204,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/boolean") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -219,7 +219,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/datetime") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -234,7 +234,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/date") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -249,7 +249,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/uuid") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end
@@ -264,7 +264,7 @@ module SeedExhaustiveClient
           Async.call do
             response = @request_client.conn.post("/primitive/base64") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
               req.body = { **request, **request_options&.additional_body_parameters }.compact
             end

@@ -21,8 +21,8 @@ module SeedTraceClient
       def set_num_warm_instances(language:, num_warm_instances:, request_options: nil)
         @request_client.conn.put("/sysprop/num-warm-instances/#{language}/#{num_warm_instances}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -32,8 +32,8 @@ module SeedTraceClient
       def get_num_warm_instances(request_options: nil)
         response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
         response.transform_values do |_k, v|
@@ -61,8 +61,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.put("/sysprop/num-warm-instances/#{language}/#{num_warm_instances}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end
@@ -74,8 +74,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.get("/sysprop/num-warm-instances") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response.transform_values do |_k, v|

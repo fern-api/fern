@@ -31,8 +31,8 @@ module SeedTraceClient
       def update_test_submission_status(submission_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-test-submission-status/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -47,8 +47,8 @@ module SeedTraceClient
       def send_test_submission_update(submission_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-test-submission-status-v2/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -61,8 +61,8 @@ module SeedTraceClient
       def update_workspace_submission_status(submission_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-workspace-submission-status/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -77,8 +77,8 @@ module SeedTraceClient
       def send_workspace_submission_update(submission_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-workspace-submission-status-v2/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -98,8 +98,8 @@ module SeedTraceClient
       def store_traced_test_case(submission_id:, test_case_id:, result:, trace_responses:, request_options: nil)
         @request_client.conn.post("/admin/store-test-trace/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = {
             **request_options&.additional_body_parameters,
@@ -117,8 +117,8 @@ module SeedTraceClient
       def store_traced_test_case_v_2(submission_id:, test_case_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -138,8 +138,8 @@ module SeedTraceClient
       def store_traced_workspace(submission_id:, workspace_run_details:, trace_responses:, request_options: nil)
         @request_client.conn.post("/admin/store-workspace-trace/submission/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = {
             **request_options&.additional_body_parameters,
@@ -156,8 +156,8 @@ module SeedTraceClient
       def store_traced_workspace_v_2(submission_id:, request:, request_options: nil)
         @request_client.conn.post("/admin/store-workspace-trace-v2/submission/#{submission_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -182,8 +182,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-test-submission-status/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -200,8 +200,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-test-submission-status-v2/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -216,8 +216,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-workspace-submission-status/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -234,8 +234,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-workspace-submission-status-v2/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -257,8 +257,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-test-trace/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = {
               **request_options&.additional_body_parameters,
@@ -278,8 +278,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-test-trace-v2/submission/#{submission_id}/testCase/#{test_case_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -301,8 +301,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-workspace-trace/submission/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = {
               **request_options&.additional_body_parameters,
@@ -321,8 +321,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.post("/admin/store-workspace-trace-v2/submission/#{submission_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end

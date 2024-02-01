@@ -30,8 +30,8 @@ module SeedTraceClient
       def create_playlist(service_param:, datetime:, request:, optional_datetime: nil, request_options: nil)
         response = @request_client.conn.post("/v2/playlist/#{service_param}/create") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.params = {
             **request_options&.additional_query_parameters,
@@ -45,8 +45,8 @@ module SeedTraceClient
 
       # @param service_param [Integer]
       # @param limit [Integer]
-      # @param other_field [String]
-      # @param multi_line_docs [String]
+      # @param other_field [String] i'm another field
+      # @param multi_line_docs [String] I'm a multiline description
       # @param optional_multiple_field [String]
       # @param multiple_field [String]
       # @param request_options [RequestOptions]
@@ -55,8 +55,8 @@ module SeedTraceClient
                         optional_multiple_field: nil, request_options: nil)
         response = @request_client.conn.get("/v2/playlist/#{service_param}/all") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.params = {
             **request_options&.additional_query_parameters,
@@ -80,8 +80,8 @@ module SeedTraceClient
       def get_playlist(service_param:, playlist_id:, request_options: nil)
         response = @request_client.conn.get("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
         Playlist::Playlist.from_json(json_object: response)
@@ -97,8 +97,8 @@ module SeedTraceClient
       def update_playlist(service_param:, playlist_id:, request: nil, request_options: nil)
         response = @request_client.conn.put("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
           req.body = { **request, **request_options&.additional_body_parameters }.compact
         end
@@ -112,8 +112,8 @@ module SeedTraceClient
       def delete_playlist(service_param:, playlist_id:, request_options: nil)
         @request_client.conn.delete("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-          req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+          req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -141,8 +141,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.post("/v2/playlist/#{service_param}/create") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = {
               **request_options&.additional_query_parameters,
@@ -157,8 +157,8 @@ module SeedTraceClient
 
       # @param service_param [Integer]
       # @param limit [Integer]
-      # @param other_field [String]
-      # @param multi_line_docs [String]
+      # @param other_field [String] i'm another field
+      # @param multi_line_docs [String] I'm a multiline description
       # @param optional_multiple_field [String]
       # @param multiple_field [String]
       # @param request_options [RequestOptions]
@@ -168,8 +168,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.get("/v2/playlist/#{service_param}/all") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.params = {
               **request_options&.additional_query_parameters,
@@ -195,8 +195,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.get("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           Playlist::Playlist.from_json(json_object: response)
@@ -214,8 +214,8 @@ module SeedTraceClient
         Async.call do
           response = @request_client.conn.put("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
             req.body = { **request, **request_options&.additional_body_parameters }.compact
           end
@@ -231,8 +231,8 @@ module SeedTraceClient
         Async.call do
           @request_client.conn.delete("/v2/playlist/#{service_param}/#{playlist_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
         end

@@ -20,7 +20,7 @@ module SeedExhaustiveClient
       def get_with_no_request_body(request_options: nil)
         response = @request_client.conn.get("/no-req-body") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
         Types::Object::ObjectWithOptionalField.from_json(json_object: response)
@@ -31,7 +31,7 @@ module SeedExhaustiveClient
       def post_with_no_request_body(request_options: nil)
         @request_client.conn.post("/no-req-body") do |req|
           req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+          req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
           req.headers = { **req.headers, **request_options&.additional_headers }.compact
         end
       end
@@ -53,7 +53,7 @@ module SeedExhaustiveClient
         Async.call do
           response = @request_client.conn.get("/no-req-body") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           Types::Object::ObjectWithOptionalField.from_json(json_object: response)
@@ -66,7 +66,7 @@ module SeedExhaustiveClient
         Async.call do
           response = @request_client.conn.post("/no-req-body") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response

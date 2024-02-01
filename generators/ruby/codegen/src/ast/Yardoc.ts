@@ -95,13 +95,18 @@ export class Yardoc extends AstNode {
     }
 
     private writeParameterAsClass(parameter: Parameter, startingTabSpaces: number): void {
-        this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
-        this.addText({
-            stringContent: parameter.type.typeHint,
-            templateString: " [%s] ",
-            appendToLastString: true
-        });
-        this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+        if (parameter.isBlock) {
+            this.addText({ stringContent: parameter.name, templateString: "# @yield", startingTabSpaces });
+            this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+        } else {
+            this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
+            this.addText({
+                stringContent: parameter.type.typeHint,
+                templateString: " [%s] ",
+                appendToLastString: true
+            });
+            this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+        }
     }
 
     public writeInternal(startingTabSpaces: number): void {

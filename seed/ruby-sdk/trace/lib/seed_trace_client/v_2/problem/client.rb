@@ -23,8 +23,8 @@ module SeedTraceClient
         def get_lightweight_problems(request_options: nil)
           response = @request_client.conn.get("/problems-v2/lightweight-problem-info") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response.map do |v|
@@ -38,8 +38,8 @@ module SeedTraceClient
         def get_problems(request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           response.map do |v|
@@ -54,8 +54,8 @@ module SeedTraceClient
         def get_latest_problem(problem_id:, request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           V2::Problem::ProblemInfoV2.from_json(json_object: response)
@@ -68,8 +68,8 @@ module SeedTraceClient
         def get_problem_version(problem_id:, problem_version:, request_options: nil)
           response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}/version/#{problem_version}") do |req|
             req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-            req.headers["X-Random-Header"] = @request_client.x_random_header unless @request_client.x_random_header.nil?
+            req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+            req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
             req.headers = { **req.headers, **request_options&.additional_headers }.compact
           end
           V2::Problem::ProblemInfoV2.from_json(json_object: response)
@@ -92,11 +92,8 @@ module SeedTraceClient
           Async.call do
             response = @request_client.conn.get("/problems-v2/lightweight-problem-info") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              unless @request_client.x_random_header.nil?
-                req.headers["X-Random-Header"] =
-                  @request_client.x_random_header
-              end
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+              req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response.map do |v|
@@ -112,11 +109,8 @@ module SeedTraceClient
           Async.call do
             response = @request_client.conn.get("/problems-v2/problem-info") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              unless @request_client.x_random_header.nil?
-                req.headers["X-Random-Header"] =
-                  @request_client.x_random_header
-              end
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+              req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             response.map do |v|
@@ -133,11 +127,8 @@ module SeedTraceClient
           Async.call do
             response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              unless @request_client.x_random_header.nil?
-                req.headers["X-Random-Header"] =
-                  @request_client.x_random_header
-              end
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+              req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             V2::Problem::ProblemInfoV2.from_json(json_object: response)
@@ -152,11 +143,8 @@ module SeedTraceClient
           Async.call do
             response = @request_client.conn.get("/problems-v2/problem-info/#{problem_id}/version/#{problem_version}") do |req|
               req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-              req.headers["Authorization"] = @request_client.token unless @request_client.token.nil?
-              unless @request_client.x_random_header.nil?
-                req.headers["X-Random-Header"] =
-                  @request_client.x_random_header
-              end
+              req.headers["Authorization"] = @request_client.token if @request_client.token.nil?
+              req.headers["X-Random-Header"] = @request_client.x_random_header if @request_client.x_random_header.nil?
               req.headers = { **req.headers, **request_options&.additional_headers }.compact
             end
             V2::Problem::ProblemInfoV2.from_json(json_object: response)

@@ -13,11 +13,24 @@ export declare namespace Gemspec {
         gemName: string;
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
+        hasFileBasedDependencies?: boolean;
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ clientName, gemName, dependencies, sdkVersion }: Gemspec.Init) {
-        const globalDependencies: ExternalDependency[] = [];
+    constructor({ clientName, gemName, dependencies, sdkVersion, hasFileBasedDependencies = false }: Gemspec.Init) {
+        const globalDependencies: ExternalDependency[] = [
+            new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
+            new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
+            new ExternalDependency({ packageName: "async-http-faraday", specifier: "~>", version: "0.12" })
+        ];
+        if (hasFileBasedDependencies) {
+            globalDependencies.push(
+                ...[
+                    new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
+                    new ExternalDependency({ packageName: "farady-multipart", specifier: "~>", version: "1.0" })
+                ]
+            );
+        }
 
         const gemBlock = [
             new Expression({
