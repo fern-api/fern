@@ -34,6 +34,10 @@ export class FileUploadUtility extends Class_ {
             type: GenericClassReference,
             variableType: VariableType.LOCAL
         });
+        const faradayFilePartCr = new ClassReference({
+            name: "Faraday::Multipart::FilePart",
+            import_: new Import({ from: "faraday/multipart", isExternal: true })
+        });
         const convertToFaradayMultipart = new Function_({
             name: "as_faraday_multipart",
             isStatic: true,
@@ -100,10 +104,7 @@ export class FileUploadUtility extends Class_ {
                     ]
                 }),
                 new FunctionInvocation({
-                    onObject: new ClassReference({
-                        name: "Faraday::Multipart::FilePart",
-                        import_: new Import({ from: "faraday/multipart", isExternal: true })
-                    }),
+                    onObject: faradayFilePartCr,
                     baseFunction: new Function_({ name: "new", functionBody: [] }),
                     arguments_: [
                         new Argument({
@@ -122,7 +123,8 @@ export class FileUploadUtility extends Class_ {
             parameters: [
                 // TODO(P0): we should allow for multiple types on a property so that we can support file uploads as IO or String
                 fileProperty.toParameter({})
-            ]
+            ],
+            returnValue: faradayFilePartCr
         });
 
         super({

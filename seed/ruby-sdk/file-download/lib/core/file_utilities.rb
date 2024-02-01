@@ -1,13 +1,13 @@
 # frozen_string_literal: true
 
-require "mini_mime"
 require "faraday/multipart"
+require "mini_mime"
 
 module SeedFileDownloadClient
   # Utility class for managing files.
   class FileUtilities
     # @param file_like [IO] The file to be uploaded, or a string path to the file.
-    # @return []
+    # @return [Faraday::Multipart::FilePart]
     def self.as_faraday_multipart(file_like:)
       path = if file_like.has_attribute?(path)
                file_like.path
