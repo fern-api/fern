@@ -8,7 +8,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get details for a linked account.",
       "errorStatusCode": [],
       "examples": [
@@ -158,7 +157,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns the account token for the end user with the provided public token.",
       "errorStatusCode": [],
       "examples": [
@@ -260,7 +258,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of models and actions available for an account.",
       "errorStatusCode": [],
       "examples": [
@@ -362,7 +359,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`BankInfo\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -893,7 +889,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`BankInfo\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -1188,7 +1183,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Benefit\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -1546,7 +1540,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`Benefit\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -1778,7 +1771,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Company\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -2078,7 +2070,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`Company\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -2248,7 +2239,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Delete a linked account.",
       "errorStatusCode": [],
       "examples": [
@@ -2314,7 +2304,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`EmployeePayrollRun\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -2797,7 +2786,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns an \`EmployeePayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -3049,7 +3037,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Employee\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -5568,7 +5555,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates an \`Employee\` object with the given values.",
       "errorStatusCode": [],
       "examples": [
@@ -6071,7 +6057,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns an \`Employee\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -8207,7 +8192,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Ignores a specific row based on the \`model_id\` in the url. These records will have their properties set to null, and will not be updated in future syncs. The "reason" and "message" fields in the request body will be stored for audit purposes.",
       "errorStatusCode": [],
       "examples": [
@@ -8330,7 +8314,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns metadata for \`Employee\` POSTs.",
       "errorStatusCode": [],
       "examples": [
@@ -8461,7 +8444,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Employment\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -9108,7 +9090,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns an \`Employment\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -9595,7 +9576,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a remote key.",
       "errorStatusCode": [],
       "examples": [
@@ -9687,7 +9667,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Group\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -10078,7 +10057,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`Group\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -10319,7 +10297,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets issues.",
       "errorStatusCode": [],
       "examples": [
@@ -10710,7 +10687,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a specific issue.",
       "errorStatusCode": [],
       "examples": [
@@ -10832,7 +10808,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a link token to be used when linking a new end user.",
       "errorStatusCode": [],
       "examples": [
@@ -10949,7 +10924,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "List linked accounts for your organization.",
       "errorStatusCode": [],
       "examples": [
@@ -11381,7 +11355,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Location\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -11748,7 +11721,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`Location\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -12028,7 +12000,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Pull data from an endpoint not currently supported by Merge.",
       "errorStatusCode": [],
       "examples": [
@@ -12179,7 +12150,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`PayGroup\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -12479,7 +12449,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`PayGroup\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -12642,7 +12611,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`PayrollRun\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -13187,7 +13155,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`PayrollRun\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -13465,7 +13432,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Exchange remote keys.",
       "errorStatusCode": [],
       "examples": [
@@ -13557,7 +13523,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get a linked account's selective syncs.",
       "errorStatusCode": [],
       "examples": [
@@ -13725,7 +13690,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Replace a linked account's selective syncs.",
       "errorStatusCode": [],
       "examples": [
@@ -13927,7 +13891,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get metadata for the conditions available to a linked account.",
       "errorStatusCode": [],
       "examples": [
@@ -14215,7 +14178,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get syncing status. Possible values: \`DISABLED\`, \`DONE\`, \`FAILED\`, \`PARTIALLY_SYNCED\`, \`PAUSED\`, \`SYNCING\`",
       "errorStatusCode": [],
       "examples": [
@@ -14359,7 +14321,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Force re-sync of all models. This is available for all organizations via the dashboard. Force re-sync is also available programmatically via API for monthly, quarterly, and highest sync frequency customers on the Core, Professional, or Enterprise plans. Doing so will consume a sync credit for the relevant linked account.",
       "errorStatusCode": [],
       "examples": [
@@ -14448,7 +14409,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`Team\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -14806,7 +14766,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`Team\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -15010,7 +14969,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`TimeOff\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -15680,7 +15638,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a \`TimeOff\` object with the given values.",
       "errorStatusCode": [],
       "examples": [
@@ -15972,7 +15929,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`TimeOffBalance\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -16467,7 +16423,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`TimeOffBalance\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -16734,7 +16689,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a \`TimeOff\` object with the given \`id\`.",
       "errorStatusCode": [],
       "examples": [
@@ -17131,7 +17085,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns metadata for \`TimeOff\` POSTs.",
       "errorStatusCode": [],
       "examples": [
@@ -17262,7 +17215,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of \`WebhookReceiver\` objects.",
       "errorStatusCode": [],
       "examples": [
@@ -17351,7 +17303,6 @@ exports[`open api parser merge parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a \`WebhookReceiver\` object with the given values.",
       "errorStatusCode": [],
       "examples": [

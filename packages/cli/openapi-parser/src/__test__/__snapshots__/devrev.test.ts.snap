@@ -8,7 +8,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the download URL for the artifact.",
       "errorStatusCode": [
         400,
@@ -106,7 +105,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates an artifact and generates an upload URL for its data.
 ",
       "errorStatusCode": [
@@ -210,7 +208,6 @@ exports[`open api parser devrev parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a JWT corresponding to the requested token type for the
 authenticated user.
 ",
@@ -343,7 +340,6 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes the token that matches the given token ID issued under the
 given Dev organization.
 ",
@@ -406,7 +402,6 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the token metadata corresponding to the given token ID under the
 given Dev organization.
 ",
@@ -520,7 +515,6 @@ given Dev organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the token metadata for all the tokens corresponding to the given
 token type issued for a given subject.
 ",
@@ -672,7 +666,6 @@ subject.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Revokes all the tokens that matches the given token type created by the
 authenticated user.
 ",
@@ -740,7 +733,6 @@ authenticated user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates token metadata of a token issued under a given Dev
 organization.
 ",
@@ -855,7 +847,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new enterprise authentication connection for a Dev
 organization. This authentication connection will not be enabled by
 default for the organization and the user will need to explicitly
@@ -921,7 +912,6 @@ enterprise connections can be created by an organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes an authentication connection. Only enterprise connections which
 are explicitly set up for a Dev organization can be deleted. Default
 connections can not be deleted using this method.
@@ -994,7 +984,6 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details for an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1060,7 +1049,6 @@ connections can not be deleted using this method.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists all the authentication connections available for a Dev
 organization. This list will include both social and enterprise
 connections which are either available by default or are explicitly
@@ -1130,7 +1118,6 @@ created by the user.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Enable or disable an authentication connection for a Dev organization.
 Currently, only 1 authentication connection can be enabled at a time.
 When a new authentication connection is enabled, the connection which
@@ -1209,7 +1196,6 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates an authentication connection.",
       "errorStatusCode": [
         400,
@@ -1270,7 +1256,6 @@ disabled.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists users within your organization.",
       "errorStatusCode": [
         400,
@@ -1505,7 +1490,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the authenticated user's information.",
       "errorStatusCode": [
         400,
@@ -1594,7 +1578,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates new [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1653,7 +1636,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a [part](https://devrev.ai/docs/product/parts).",
       "errorStatusCode": [
         400,
@@ -1749,7 +1731,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -1815,7 +1796,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists a collection of [parts](https://devrev.ai/docs/product/parts).
 ",
       "errorStatusCode": [
@@ -2081,7 +2061,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a [part's](https://devrev.ai/docs/product/parts) information.
 ",
       "errorStatusCode": [
@@ -2142,7 +2121,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a Rev organization in the authenticated user's Dev
 organization.
 ",
@@ -2245,7 +2223,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes the Rev organization.",
       "errorStatusCode": [
         400,
@@ -2341,7 +2318,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2444,7 +2420,6 @@ organization.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the list of Rev organizations' information belonging to the
 authenticated user's Dev Organization which the user is also authorized
 to access.
@@ -2782,7 +2757,6 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates the Rev organization's information.",
       "errorStatusCode": [
         400,
@@ -2884,7 +2858,6 @@ them.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new tag, which is used to create associations between objects
 and a logical concept denoted by the tag's name.
 ",
@@ -2990,7 +2963,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a tag.",
       "errorStatusCode": [
         400,
@@ -3086,7 +3058,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a tag's information.",
       "errorStatusCode": [
         400,
@@ -3196,7 +3167,6 @@ and a logical concept denoted by the tag's name.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the available tags.",
       "errorStatusCode": [
         400,
@@ -3340,7 +3310,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a tag's information.",
       "errorStatusCode": [
         400,
@@ -3449,7 +3418,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3508,7 +3476,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3573,7 +3540,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the timeline entries for an object.",
       "errorStatusCode": [
         400,
@@ -3747,7 +3713,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates an entry on an object's timeline.",
       "errorStatusCode": [
         400,
@@ -3806,7 +3771,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates a new webhook target.",
       "errorStatusCode": [
         400,
@@ -3921,7 +3885,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes the requested webhook.",
       "errorStatusCode": [
         400,
@@ -4017,7 +3980,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets the requested webhook's information.",
       "errorStatusCode": [
         400,
@@ -4138,7 +4100,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists the webhooks.",
       "errorStatusCode": [
         400,
@@ -4203,7 +4164,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates the requested webhook.",
       "errorStatusCode": [
         400,
@@ -4327,7 +4287,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates new work ([issue](https://devrev.ai/docs/product/build),
 [ticket](https://devrev.ai/docs/product/support)) item.
 ",
@@ -4388,7 +4347,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Deletes a work item.",
       "errorStatusCode": [
         400,
@@ -4484,7 +4442,6 @@ used.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Exports a collection of work items.",
       "errorStatusCode": [
         400,
@@ -4844,7 +4801,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Gets a work item's information.",
       "errorStatusCode": [
         400,
@@ -4909,7 +4865,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Lists a collection of work items.",
       "errorStatusCode": [
         400,
@@ -5324,7 +5279,6 @@ organizations.
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Updates a work item's information.",
       "errorStatusCode": [
         400,

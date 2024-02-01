@@ -8,7 +8,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Sort and filter jobs.",
       "errorStatusCode": [],
       "examples": [
@@ -222,7 +221,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Start a new batch job.",
       "errorStatusCode": [],
       "examples": [
@@ -344,7 +342,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the JSON predictions of a completed job.",
       "errorStatusCode": [],
       "examples": [
@@ -433,7 +430,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the artifacts ZIP of a completed job.",
       "errorStatusCode": [],
       "examples": [],
@@ -480,7 +476,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the request details and state of a given job.",
       "errorStatusCode": [],
       "examples": [],
