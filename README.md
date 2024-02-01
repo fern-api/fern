@@ -44,7 +44,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern), by 
 
 ```yml
 - name: fernapi/fern-go-sdk
-  version: 0.9.0
+  version: 0.13.0
   output:
     location: local-file-system
     path: ../../generated/go
@@ -61,6 +61,24 @@ on the local filesystem. The Go generator needs to know where to resolve its imp
 statements from, so you will either need to add an import path or module configuration
 to do so.
 
+### Package name
+
+You can customzie the name of the package generated with the following `generators.yml` configuration:
+
+```yaml
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-sdk
+        version: 0.13.0
+        config:
+          packageName: acme
+        output:
+          location: local-file-system
+          path: ../../generated/go
+```
+
 ### Import path
 
 > This is recommended if you plan to depend on the generated Go SDK from within your project,
@@ -75,7 +93,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.4.0
+        version: 0.13.0
         config:
           importPath: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>/generated/go
         output:
@@ -101,7 +119,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.4.0
+        version: 0.13.0
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
@@ -123,7 +141,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.4.0
+        version: 0.13.0
         config:
           module:
             path: github.com/<YOUR_ORGANIZATION>/<YOUR_REPOSITORY>
@@ -149,7 +167,7 @@ option described above.
 
 ## Explicit Null
 
-By default, it's impossible to send an explicit JSON `null` for optional parameters. You can opt-in to 
+By default, it's impossible to send an explicit JSON `null` for optional parameters. You can opt-in to
 generating a generic `Optional[T]` type that can be used to distinguish between a `nil` value (nothing
 is sent), a non-`nil` value (the value is sent), and an explicit null (a `null` value is sent). This is
 particularly useful for `PATCH` endpoints.
@@ -177,7 +195,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.4.0
+        version: 0.13.0
         config:
           enableExplicitNull: true
         output:
@@ -191,7 +209,7 @@ Note that this feature requires generics, so the generated `go.mod` will be upgr
 
 All generator releases are published in the [Releases section of the GitHub repository](https://github.com/fern-api/fern-go/releases). You can directly use these version numbers in your generator configuration files.
 
-For instance, if you want to use version `0.3.0` of the Go generator:
+For instance, if you want to use version `0.12.1` of the Go generator:
 
 ```yaml
 default-group: local
@@ -199,7 +217,7 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.3.0
+        version: 0.12.1
         output:
           location: local-file-system
           path: ../../generated/go
