@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
+exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
 {
   "definitionFiles": {
-    "user.yml": {
+    "auth/user.yml": {
       "imports": {
-        "root": "__package__.yml",
+        "user": "../user.yml",
       },
       "service": {
         "auth": false,
@@ -13,7 +13,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
         "endpoints": {
           "get": {
             "auth": false,
-            "docs": undefined,
+            "docs": "This endpoint should be in \`auth/user.yml\`",
             "examples": [
               {
                 "response": {
@@ -22,28 +22,25 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
               },
             ],
             "method": "GET",
-            "path": "/user",
+            "path": "/auth/user",
             "response": {
               "docs": "Success",
-              "type": "root.User",
+              "type": "user.User",
             },
           },
-          "get_all": {
-            "auth": false,
-            "docs": undefined,
-            "examples": [
-              {
-                "response": {
-                  "body": [],
-                },
-              },
-            ],
-            "method": "GET",
-            "path": "/users",
-            "response": {
-              "docs": "Success",
-              "type": "list<root.User>",
-            },
+        },
+      },
+    },
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "types": {
+        "User": {
+          "docs": "This user object should be in user.yml",
+          "properties": {
+            "associatedPersons": "optional<list<root.Person>>",
+            "id": "optional<string>",
           },
         },
       },
@@ -51,7 +48,7 @@ exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
   },
   "packageMarkerFile": {
     "types": {
-      "User": {
+      "Person": {
         "docs": undefined,
         "properties": {
           "id": "optional<string>",
