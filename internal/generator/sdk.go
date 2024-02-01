@@ -994,11 +994,11 @@ func (f *fileWriter) WriteClient(
 		if endpoint.RequestIsBytes {
 			if endpoint.RequestIsOptional {
 				f.P("var requestBuffer io.Reader")
-				f.P("if ", endpoint.RequestParameterName, " != nil {")
-				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestParameterName, ")")
+				f.P("if ", endpoint.RequestBytesParameterName, " != nil {")
+				f.P("requestBuffer = bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
 				f.P("}")
 			} else {
-				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestParameterName, ")")
+				f.P("requestBuffer := bytes.NewBuffer(", endpoint.RequestBytesParameterName, ")")
 			}
 			f.P()
 		}
@@ -1164,6 +1164,7 @@ type endpoint struct {
 	ImportPath                  string
 	OptionsParameterName        string
 	RequestParameterName        string
+	RequestBytesParameterName   string
 	RequestValueName            string
 	RequestIsBytes              bool
 	RequestIsOptional           bool
@@ -1253,28 +1254,31 @@ func (f *fileWriter) endpointFromIR(
 
 	// Format the rest of the request parameters.
 	var (
-		contentType          = ""
-		requestParameterName = ""
-		requestValueName     = ""
-		requestIsBytes       = false
-		requestIsOptional    = false
+		contentType               = ""
+		requestParameterName      = ""
+		requestBytesParameterName = ""
+		requestValueName          = ""
+		requestIsBytes            = false
+		requestIsOptional         = false
 	)
 	if irEndpoint.SdkRequest != nil {
 		if needsRequestParameter(irEndpoint) {
 			var requestType string
+			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			if requestBody := irEndpoint.SdkRequest.Shape.JustRequestBody; requestBody != nil {
 				switch requestBody.Type {
 				case "typeReference":
 					requestType = typeReferenceToGoType(requestBody.TypeReference.RequestBodyType, f.types, scope, f.baseImportPath, "" /* The type is always imported */, false)
 				case "bytes":
 					contentType = "application/octet-stream"
-					if requestBody.Bytes.ContentType != nil {
-						contentType = *requestBody.Bytes.ContentType
+					if irEndpoint.RequestBody.Bytes.ContentType != nil {
+						contentType = *irEndpoint.RequestBody.Bytes.ContentType
 					}
 					requestType = "[]byte"
 					requestValueName = "requestBuffer"
 					requestIsBytes = true
 					requestIsOptional = requestBody.Bytes.IsOptional
+					requestBytesParameterName = requestParameterName
 				default:
 					return nil, fmt.Errorf("%s requests are not supported yet", requestBody.Type)
 				}
@@ -1282,8 +1286,21 @@ func (f *fileWriter) endpointFromIR(
 			if irEndpoint.SdkRequest.Shape.Wrapper != nil {
 				requestImportPath := fernFilepathToImportPath(f.baseImportPath, fernFilepath)
 				requestType = fmt.Sprintf("*%s.%s", scope.AddImport(requestImportPath), irEndpoint.SdkRequest.Shape.Wrapper.WrapperName.PascalCase.UnsafeName)
+				if irEndpoint.RequestBody != nil && irEndpoint.RequestBody.Bytes != nil {
+					contentType = "application/octet-stream"
+					if irEndpoint.RequestBody.Bytes.ContentType != nil {
+						contentType = *irEndpoint.RequestBody.Bytes.ContentType
+					}
+					requestValueName = "requestBuffer"
+					requestIsBytes = true
+					requestIsOptional = irEndpoint.RequestBody.Bytes.IsOptional
+					requestBytesParameterName = fmt.Sprintf(
+						"%s.%s",
+						requestParameterName,
+						irEndpoint.SdkRequest.Shape.Wrapper.BodyKey.PascalCase.UnsafeName,
+					)
+				}
 			}
-			requestParameterName = irEndpoint.SdkRequest.RequestParameterName.CamelCase.SafeName
 			signatureParameters = append(
 				signatureParameters,
 				&signatureParameter{
@@ -1441,6 +1458,7 @@ func (f *fileWriter) endpointFromIR(
 		ImportPath:                  importPath,
 		OptionsParameterName:        "options",
 		RequestParameterName:        requestParameterName,
+		RequestBytesParameterName:   requestBytesParameterName,
 		RequestValueName:            requestValueName,
 		RequestIsBytes:              requestIsBytes,
 		RequestIsOptional:           requestIsOptional,
@@ -1997,7 +2015,12 @@ func (r *requestBodyVisitor) VisitFileUpload(fileUpload *ir.FileUploadRequest) e
 }
 
 func (r *requestBodyVisitor) VisitBytes(bytes *ir.BytesRequest) error {
-	// TODO: Add support for bytes request bodies within an in-lined request.
+	r.writer.P(
+		r.bodyField,
+		" ",
+		"[]byte",
+		" `json:\"-\"`",
+	)
 	return nil
 }
 
