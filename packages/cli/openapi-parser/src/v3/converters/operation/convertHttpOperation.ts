@@ -90,7 +90,7 @@ export function convertHttpOperation({
     });
 
     const availability = getFernAvailability(operation);
-    const examples = getFernExamples(operation);
+    const examples = [...getFernExamples(operation)];
     const readmeCodeSamples = getReadmeCodeSamples(operation);
     if (readmeCodeSamples.length > 0) {
         examples.push({
