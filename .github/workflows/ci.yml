@@ -138,6 +138,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
       - name: Install Fern
         run: npm install -g fern-api
 
