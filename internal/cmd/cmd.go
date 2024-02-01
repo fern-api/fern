@@ -60,6 +60,7 @@ type Config struct {
 	Version                    string
 	IrFilepath                 string
 	ImportPath                 string
+	PackageName                string
 	Module                     *generator.ModuleConfig
 	Writer                     *writer.Config
 }
@@ -195,6 +196,7 @@ func newConfig(configFilename string) (*Config, error) {
 		Version:                    outputVersionFromGeneratorConfig(config),
 		IrFilepath:                 config.IrFilepath,
 		ImportPath:                 customConfig.ImportPath,
+		PackageName:                customConfig.PackageName,
 		Module:                     moduleConfig,
 		Writer:                     writerConfig,
 	}, nil
@@ -238,6 +240,7 @@ type customConfig struct {
 	EnableExplicitNull         bool          `json:"enableExplicitNull,omitempty"`
 	IncludeLegacyClientOptions bool          `json:"includeLegacyClientOptions,omitempty"`
 	ImportPath                 string        `json:"importPath,omitempty"`
+	PackageName                string        `json:"packageName,omitempty"`
 	Module                     *moduleConfig `json:"module,omitempty"`
 }
 

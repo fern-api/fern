@@ -10,6 +10,7 @@ type Config struct {
 	Version                    string
 	IRFilepath                 string
 	ImportPath                 string
+	PackageName                string
 
 	// If not specified, a go.mod and go.sum will not be generated.
 	ModuleConfig *ModuleConfig
@@ -41,6 +42,7 @@ func NewConfig(
 	version string,
 	irFilepath string,
 	importPath string,
+	packageName string,
 	moduleConfig *ModuleConfig,
 ) (*Config, error) {
 	return &Config{
@@ -52,6 +54,7 @@ func NewConfig(
 		Version:                    version,
 		IRFilepath:                 irFilepath,
 		ImportPath:                 importPath,
+		PackageName:                packageName,
 		ModuleConfig:               moduleConfig,
 	}, nil
 }
