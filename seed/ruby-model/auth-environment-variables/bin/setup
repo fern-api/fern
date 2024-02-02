@@ -1,7 +1,11 @@
-#!/usr/bin/env ruby
-# frozen_string_literal: true
+#!/usr/bin/env bash
+set -euo pipefail
+IFS=$'
+	'
+set -vx
 
-require "bundler/setup"
+bundle install
+p"
 require "seed_auth_environment_variables_client"
 
 # You can add fixtures and/or initialization code here to make experimenting

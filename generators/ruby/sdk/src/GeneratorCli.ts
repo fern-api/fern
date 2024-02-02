@@ -59,7 +59,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 gemName,
                 [],
                 sdkVersion,
-                hasFileUploadEndpoints(intermediateRepresentation) ||
+                hasFileUploadEndpoints(intermediateRepresentation) === true ||
                     intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
             )
         );
@@ -119,7 +119,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             sdkVersion,
             this.generatedClasses,
             this.flattenedProperties,
-            hasFileUploadEndpoints(intermediateRepresentation) ||
+            hasFileUploadEndpoints(intermediateRepresentation) === true ||
                 intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
         ).generateFiles();
         this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
