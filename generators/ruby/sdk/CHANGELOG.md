@@ -9,8 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.2] - 2024-02-01
 
-- Improvement: Support output mode block configuration
-- Improvement: Consolidate imports for easier gem usage
+- Improvement: Consolidate imports into the main file for easier gem usage, as opposed to directly importing the specific file (e.g. `require "fern" vs. require "fern/types/folder_a/object"`)
+
+- Improvement: Added `rubygems` output block to generators.yml. To publish your ruby gem, setup your generators.ym like this:
+
+```yaml
+# generators.yml
+
+groups:
+ - name: ...
+    version: ...
+    location:
+       output: rubygems
+       api-key: ${API_KEY}
+       package-name: "petstore"
+```
 
 ## [0.0.1] - 2024-02-01
 
