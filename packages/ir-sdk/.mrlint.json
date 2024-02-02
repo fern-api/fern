@@ -1,4 +1,11 @@
 {
   "type": "library",
-  "private": true
+  "private": true,
+  "rules": {
+    "package-json": {
+      "scripts": {
+        "generate": "fern generate --api ir-types-latest --local"
+      }
+    }
+  }
 }
