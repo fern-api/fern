@@ -4914,7 +4914,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageDependencies": [\
             ["@fern-api/ruby-codegen", "workspace:generators/ruby/codegen"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/ir-sdk", "workspace:packages/ir-sdk"],\
+            ["@fern-fern/ir-sdk", "npm:0.0.3294"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5267,6 +5267,13 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3277-543cd2fc1a-d9a619d9ed.zip/node_modules/@fern-fern/ir-sdk/",\
           "packageDependencies": [\
             ["@fern-fern/ir-sdk", "npm:0.0.3277"]\
+          ],\
+          "linkType": "HARD"\
+        }],\
+        ["npm:0.0.3294", {\
+          "packageLocation": "./.yarn/cache/@fern-fern-ir-sdk-npm-0.0.3294-fcd876af76-f7efe8a483.zip/node_modules/@fern-fern/ir-sdk/",\
+          "packageDependencies": [\
+            ["@fern-fern/ir-sdk", "npm:0.0.3294"]\
           ],\
           "linkType": "HARD"\
         }]\

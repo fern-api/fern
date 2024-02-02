@@ -1,5 +1,4 @@
 import { assertNever } from "@fern-api/core-utils";
-import { TaskContext } from "@fern-api/task-context";
 import {
     ExampleEndpointCall,
     ExamplePathParameter,
@@ -7,7 +6,8 @@ import {
     HttpEndpoint,
     IntermediateRepresentation,
     NameAndWireValue
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { TaskContext } from "@fern-api/task-context";
 import express, { Request, Response } from "express";
 import getPort from "get-port";
 import { IncomingHttpHeaders } from "http";

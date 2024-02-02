@@ -1,6 +1,5 @@
 import { Audiences as ConfigAudiences } from "@fern-api/config-management-commons";
 import { assertNever, noop } from "@fern-api/core-utils";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ContainerType,
     DeclaredServiceName,
@@ -14,7 +13,8 @@ import {
     HttpService,
     StreamingResponseChunkType,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { IdGenerator } from "../IdGenerator";
 import { getPropertiesForAudience } from "../utils/getPropertiesForAudience";
 import { FilteredIr, FilteredIrImpl } from "./FilteredIr";

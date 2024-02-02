@@ -3055,7 +3055,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/ir-sdk": "workspace:*"
+    "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3386,6 +3386,13 @@ __metadata:
   version: 0.0.3277
   resolution: "@fern-fern/ir-sdk@npm:0.0.3277"
   checksum: d9a619d9ed602d34ad0da974b684d877076b420fcf20c43a58cb2a8e270afedb97a61bd610a3726b5977cd1c8f4ca17a0315edb22fbbad047e080742c5ea142a
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:0.0.3294":
+  version: 0.0.3294
+  resolution: "@fern-fern/ir-sdk@npm:0.0.3294"
+  checksum: f7efe8a48396243a0fabc0efbbe15217f0aa1e5fa7380e0636c2aab47c2eab1a13c3a79d6ca863ddc928773a18f325985030cfe58c353a6dce828dc06ec8724a
   languageName: node
   linkType: hard
 

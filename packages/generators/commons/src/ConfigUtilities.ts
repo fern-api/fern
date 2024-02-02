@@ -1,5 +1,5 @@
+import { HttpPath, PathParameter } from "@fern-api/ir-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { HttpPath, PathParameter } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 
 export function getSdkVersion(config: FernGeneratorExec.GeneratorConfig): string | undefined {
