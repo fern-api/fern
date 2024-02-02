@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "submission_id_not_found"
 require_relative "custom_test_cases_unsupported"
+require_relative "submission_id_not_found"
 require_relative "unexpected_language_error"
 
 module SeedTraceClient

@@ -1,4 +1,4 @@
-import { AbsoluteFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { format } from "util";
 import { Import } from "../Import";
 
@@ -76,14 +76,24 @@ export abstract class AstNode {
         this.text.push("");
     }
 
-    public write(startingTabSpaces = 0, filePath?: AbsoluteFilePath): string {
+    public write({
+        startingTabSpaces = 0,
+        filePath,
+        pathPrefix
+    }: {
+        startingTabSpaces?: number;
+        filePath?: AbsoluteFilePath;
+        pathPrefix?: RelativeFilePath;
+    }): string {
         if (this.writeImports) {
             this.getImports().forEach((i) =>
                 this.addText({
                     stringContent:
                         filePath !== undefined
                             ? i.writeRelative(startingTabSpaces, filePath)
-                            : i.write(startingTabSpaces),
+                            : pathPrefix !== undefined
+                            ? i.writeAbsolute(startingTabSpaces, pathPrefix)
+                            : i.write({ startingTabSpaces }),
                     startingTabSpaces
                 })
             );

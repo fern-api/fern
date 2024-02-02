@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "movie_id"
 require_relative "../../commons/types/types/tag"
+
+require_relative "movie_id"
 require "json"
 
 module SeedExamplesClient

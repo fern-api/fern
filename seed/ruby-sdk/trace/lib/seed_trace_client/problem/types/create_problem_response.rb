@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "create_problem_error"
 require_relative "../../commons/types/problem_id"
+require_relative "create_problem_error"
 
 module SeedTraceClient
   module Problem

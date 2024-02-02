@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "exception_info"
-require_relative "code_execution_update"
-require_relative "terminated_response"
 require_relative "../../commons/types/problem_id"
+require_relative "code_execution_update"
+require_relative "exception_info"
+require_relative "terminated_response"
 
 module SeedTraceClient
   module Submission

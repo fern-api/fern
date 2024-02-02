@@ -74,16 +74,18 @@ export class Class_ extends AstNode {
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
         const classVariableAccessors =
             this.properties.length > 0
-                ? `attr_reader ${this.properties.map((prop) => prop.write()).join(", ")}`
+                ? `attr_reader ${this.properties.map((prop) => prop.write({})).join(", ")}`
                 : undefined;
         this.addText({
             stringContent: classVariableAccessors,
             startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
         });
         this.expressions.map((exp) =>
-            this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+            this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
-        this.functions.map((fun) => this.addText({ stringContent: fun.write(this.tabSizeSpaces + startingTabSpaces) }));
+        this.functions.map((fun) =>
+            this.addText({ stringContent: fun.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
+        );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 

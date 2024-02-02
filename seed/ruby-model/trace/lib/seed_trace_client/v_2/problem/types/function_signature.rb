@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "void_function_signature"
 require_relative "non_void_function_signature"
+require_relative "void_function_signature"
 require_relative "void_function_signature_that_takes_actual_result"
 
 module SeedTraceClient

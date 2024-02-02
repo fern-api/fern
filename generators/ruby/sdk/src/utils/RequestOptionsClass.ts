@@ -86,14 +86,14 @@ export class RequestOptions extends Class_ {
                 if_: {
                     rightSide: new FunctionInvocation({
                         // TODO: Do this field access on the client better
-                        onObject: `${requestOptionsVariable.write()}.${this.timeoutProperty.name}`,
+                        onObject: `${requestOptionsVariable.write({})}.${this.timeoutProperty.name}`,
                         baseFunction: new Function_({ name: "nil?", functionBody: [] })
                     }),
                     operation: "!",
                     expressions: [
                         new Expression({
                             leftSide: `${faradayBlockArg}.options.timeout`,
-                            rightSide: `${requestOptionsVariable.write()}.${this.timeoutProperty.name}`,
+                            rightSide: `${requestOptionsVariable.write({})}.${this.timeoutProperty.name}`,
                             isAssignment: true
                         })
                     ]
@@ -104,16 +104,16 @@ export class RequestOptions extends Class_ {
 
     // Probably do conditional sets here as well
     public getAdditionalHeaderProperties(requestOptionsVariable: Variable): string {
-        return `${requestOptionsVariable.write()}&.${this.additionalHeaderProperty.name}`;
+        return `${requestOptionsVariable.write({})}&.${this.additionalHeaderProperty.name}`;
     }
 
     // Just add to the map and compact it
     public getAdditionalQueryProperties(requestOptionsVariable: Variable): string {
-        return `${requestOptionsVariable.write()}&.${this.additionalQueryProperty.name}`;
+        return `${requestOptionsVariable.write({})}&.${this.additionalQueryProperty.name}`;
     }
 
     // Just add to the map and compact it
     public getAdditionalBodyProperties(requestOptionsVariable: Variable): string {
-        return `${requestOptionsVariable.write()}&.${this.additionalBodyProperty.name}`;
+        return `${requestOptionsVariable.write({})}&.${this.additionalBodyProperty.name}`;
     }
 }

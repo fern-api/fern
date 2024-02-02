@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "non_void_function_definition"
 require_relative "assert_correctness_check"
+
+require_relative "non_void_function_definition"
 require "json"
 
 module SeedTraceClient
