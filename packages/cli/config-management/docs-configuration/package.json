@@ -29,10 +29,10 @@
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
     "@fern-api/core-utils": "workspace:*",
-    "@fern-api/fdr-sdk": "0.46.1-18-g26596cb",
+    "@fern-api/fdr-sdk": "0.46.1-19-g5e3bf66",
     "@fern-api/fs-utils": "workspace:*",
     "@fern-api/task-context": "workspace:*",
-    "@fern-fern/docs-config": "0.0.70",
+    "@fern-fern/docs-config": "0.0.74",
     "js-yaml": "^4.1.0",
     "tinycolor2": "^1.6.0"
   },
