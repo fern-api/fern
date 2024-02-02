@@ -23,7 +23,7 @@ Fern is a platform for generating Stripe-level SDKs (client libraries) and Docs 
 
 ### 🌿 SDKs (API Clients)
 
-Our generators read in your OpenAPI spec as input and output SDKs. Fern handles publishing the generated SDKs to GitHub and package managers like NPM and PyPI.
+Our generators read in your OpenAPI spec to input and output SDKs. Fern handles publishing the generated SDKs to GitHub and package managers like NPM and PyPI.
 
 Developers choose Fern over the [openapi-generator](https://github.com/OpenAPITools/openapi-generator) project because
 1. Quality: Fern generates idiomatic code that feels handwritten
