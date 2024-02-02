@@ -6,7 +6,7 @@ groups:
         version: 0.8.13
         output:
           location: local-file-system
-          path: ../../../src
+          path: ../../../src/sdk
         config:
           outputSourceFiles: true
           includeUtilsOnUnionMembers: true
