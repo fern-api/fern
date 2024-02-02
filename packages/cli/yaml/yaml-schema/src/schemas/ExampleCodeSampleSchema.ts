@@ -1,14 +1,39 @@
 import { z } from "zod";
 import { WithNameAndDocsSchema } from "./WithNameAndDocsSchema";
 
-export const SupportedLanguageSchema = z.enum(["curl", "python", "javascript", "js", "node", "typescript", "ts", "go"]);
+// be sure to keep this in sync with the list of Fern's SDKs
+export const SupportedSdkLanguageSchema = z.enum([
+    "curl",
+    "python",
+    "javascript",
+    "typescript",
+    "go",
+    "ruby",
+    "csharp",
+    "java",
+    "js", // alias to javascript
+    "node", // alias to javascript
+    "ts", // alias to typescript
+    "node-ts", // alias to typescript
+    "golang", // alias to go
+    "c#", // alias to csharp
+    "dotnet", // alias to csharp
+    "jvm" // alias to java
+]);
 
-export type SupportedLanguageSchema = z.infer<typeof SupportedLanguageSchema>;
+export type SupportedSdkLanguageSchema = z.infer<typeof SupportedSdkLanguageSchema>;
 
-export const ExampleCodeSampleSchema = WithNameAndDocsSchema.extend({
-    language: z.union([SupportedLanguageSchema, z.string()]),
+const ExampleCodeSampleSchemaSdk = WithNameAndDocsSchema.extend({
+    sdk: SupportedSdkLanguageSchema,
+    code: z.string()
+});
+
+const ExampleCodeSampleSchemaLanguage = WithNameAndDocsSchema.extend({
+    language: z.string(),
     code: z.string(),
     install: z.optional(z.string())
 });
+
+export const ExampleCodeSampleSchema = z.union([ExampleCodeSampleSchemaSdk, ExampleCodeSampleSchemaLanguage]);
 
 export type ExampleCodeSampleSchema = z.infer<typeof ExampleCodeSampleSchema>;

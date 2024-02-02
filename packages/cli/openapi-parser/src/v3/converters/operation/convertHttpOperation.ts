@@ -96,7 +96,7 @@ export function convertHttpOperation({
         examples.push({
             codeSamples: readmeCodeSamples,
             name: undefined,
-            docs: undefined,
+            description: undefined,
             pathParameters: undefined,
             queryParameters: undefined,
             headers: undefined,

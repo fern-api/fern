@@ -93,43 +93,64 @@ types:
 
   CustomCodeSample:
     availability: in-development
+    union:
+      language: CustomCodeSampleLanguage
+      sdk: CustomCodeSampleSdk
+
+  CustomCodeSampleLanguage:
+    docs: |
+      This is intended to co-exist with the auto-generated code samples.
+    extends: commons.WithDescription
     properties:
       name:
         type: optional<string>
         docs: Override the example name.
-      docs: optional<string>
-      language: SupportedLanguage
-      code:
-        type: string
-        docs: |
-          The code sample. 
-          This is a string because we want to support code samples that are not valid JSON.
+      language: string
+      code: string
       install:
         type: optional<string>
         docs: |
           The command to install the dependencies for the code sample.
           For example, `npm install` or `pip install -r requirements.txt`.
 
-  SupportedLanguage:
-    docs: Syntax highlighting.
+  CustomCodeSampleSdk:
+    docs: |
+      This will be used to replace the auto-generated code samples.
+    extends: commons.WithDescription
+    properties:
+      name:
+        type: optional<string>
+        docs: Override the example name.
+      sdk: optional<SupportedSdkLanguage>
+      code: string
+
+  # be sure to keep this in sync with the SupportedSdkLanguage enum
+  SupportedSdkLanguage:
     enum:
       - curl
       - python
       - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
       - js # alias to javascript
       - node # alias to javascript
-      - typescript
       - ts # alias to typescript
-      - go
+      - nodets # alias to typescript
+      - golang # alias to go
+      - dotnet # alias to csharp
+      - jvm # alias to java
 
   EndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
       PartialObjectExamples).
+    extends: commons.WithDescription
     properties:
       name: optional<string>
-      docs: optional<string>
       pathParameters: optional<list<PathParameterExample>>
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>

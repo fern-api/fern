@@ -209,17 +209,54 @@ types:
         availability: in-development
         type: optional<list<ExampleCodeSample>>
         docs: |
-          Hand-written code samples for this endpoint.These code samples should match the 
+          Hand-written code samples for this endpoint. These code samples should match the 
           example that it's attached to, so that we can spin up an API Playground with
           the code sample that's being displayed in the API Reference.
 
   ExampleCodeSample:
+    availability: in-development
+    union:
+      language: ExampleCodeSampleLanguage
+      sdk: ExampleCodeSampleSdk
+
+  ExampleCodeSampleLanguage:
+    docs: |
+      This is intended to co-exist with the auto-generated code samples.
     extends: commons.WithDocs
     properties:
-      name: optional<commons.Name>
+      name:
+        type: optional<commons.Name>
+        docs: Override the example name.
       language: string
       code: string
-      install: optional<string>
+      install:
+        type: optional<string>
+        docs: |
+          The command to install the dependencies for the code sample.
+          For example, `npm install` or `pip install -r requirements.txt`.
+
+  ExampleCodeSampleSdk:
+    docs: |
+      This will be used to replace the auto-generated code samples.
+    extends: commons.WithDocs
+    properties:
+      name:
+        type: optional<commons.Name>
+        docs: Override the example name.
+      sdk: optional<SupportedSdkLanguage>
+      code: string
+
+  # be sure to keep this in sync with the list of supported Fern SDK languages
+  SupportedSdkLanguage:
+    enum:
+      - curl
+      - python
+      - javascript
+      - typescript
+      - go
+      - ruby
+      - csharp
+      - java
 
   ExamplePathParameter:
     properties:

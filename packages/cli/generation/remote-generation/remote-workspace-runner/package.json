@@ -43,7 +43,7 @@
     "@fern-api/workspace-loader": "workspace:*",
     "@fern-fern/docs-config": "0.0.53",
     "@fern-fern/fiddle-sdk": "^0.0.386",
-    "@fern-fern/ir-sdk": "0.0.3294",
+    "@fern-fern/ir-sdk": "0.0.3295",
     "axios": "^0.27.2",
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",
