@@ -69,7 +69,7 @@ Get started [here](https://github.com/fern-api/docs-starter).
 Generators are process that take your OpenAPI or Fern Definition as input and output artifacts (generated SDKs, 
 postman collections, server boilerplate, etc.). Below you can find a list of all of Fern's generators.
 
-| Generator ID                  | Outputs...                   | Latest Version | Changelog                                                 | Entrypoint                                                          |
+| Generator ID                  | Output                       | Latest Version | Changelog                                                 | Entrypoint                                                          |
 | ---------------------------   | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------- |
 | `fernapi/fern-python-sdk`     | Python SDK                   | 0.8.0          | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
 | `fernapi/fern-pydantic-model` | Pydantic Models              | 0.7.7          | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py) |
