@@ -133,11 +133,11 @@ The result would be:
 import { IMDb, IMDbClient } from "imdb";
 ```
 
-### timeoutInSeconds
+### defaultTimeoutInSeconds
 
-- `timeoutInSeconds`: Allows you to control the timeout of the generated client. The timeout is measured in seconds. This is useful for long-running operations. Set to `infinity` to disable timeouts.
+- `defaultTimeoutInSeconds`: Allows you to control the timeout of the generated client. The timeout is measured in seconds. This is useful for long-running operations. Set to `"infinity"` to disable timeouts.
 
-**Type**: integer or `infinity`<br />
+**Type**: integer or `"infinity"`<br />
 **Default**: `60`
 
 ```yaml 
@@ -147,7 +147,7 @@ config:
 
 ```yaml 
 config: 
-  timeoutInSeconds: infinity
+  defaultTimeoutInSeconds: "infinity"
 ```
 
 ### noSerdeLayer
