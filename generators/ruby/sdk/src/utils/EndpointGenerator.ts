@@ -296,9 +296,12 @@ export class EndpointGenerator {
                                         })
                                     ]
                                 });
-                                if (prop.type.some((cr) => cr === FileClassReference)) {
+                                const isFileReference = prop.type.some((cr) => cr === FileClassReference);
+                                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                                if (isFileReference) {
                                     return [
                                         prop.wireValue ?? prop.name,
+                                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                                         prop.isOptional
                                             ? new ConditionalStatement({
                                                   if_: {
