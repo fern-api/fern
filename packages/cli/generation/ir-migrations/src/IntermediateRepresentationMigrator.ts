@@ -1,8 +1,7 @@
 import { GeneratorName } from "@fern-api/generators-configuration";
+import { IntermediateRepresentation, serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { isVersionAhead } from "@fern-api/semver-utils";
 import { TaskContext } from "@fern-api/task-context";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
 import { GeneratorNameAndVersion } from "./IrMigrationContext";
 import { V10_TO_V9_MIGRATION } from "./migrations/v10-to-v9/migrateFromV10ToV9";
 import { V11_TO_V10_MIGRATION } from "./migrations/v11-to-v10/migrateFromV11ToV10";

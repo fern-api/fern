@@ -1,11 +1,4 @@
 import { assertNever, isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import {
-    isRawObjectDefinition,
-    RawSchemas,
-    visitRawTypeDeclaration,
-    visitRawTypeReference
-} from "@fern-api/yaml-schema";
 import {
     DeclaredTypeName,
     ExampleContainer,
@@ -17,7 +10,14 @@ import {
     ExampleTypeReferenceShape,
     ExampleTypeShape,
     PrimitiveType
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import {
+    isRawObjectDefinition,
+    RawSchemas,
+    visitRawTypeDeclaration,
+    visitRawTypeReference
+} from "@fern-api/yaml-schema";
 import { validateTypeReferenceExample } from "../../examples/validateTypeReferenceExample";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";

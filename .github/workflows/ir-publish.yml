@@ -1,0 +1,26 @@
+name: ir-publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "packages/ir-sdk/fern/apis/ir-types-latest/**"
+
+jobs:
+  sdks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Release IR SDKs
+        env:
+          FERN_TOKEN: ${{ secrets.FERN_TOKEN }}
+        run: |
+          cd packages/ir-sdk
+          fern generate --api ir-types-latest --group sdks --log-level debug
