@@ -1,4 +1,3 @@
-/* eslint-disable jest/no-commented-out-tests */
 import { AbsoluteFilePath, doesPathExist, join, RelativeFilePath } from "@fern-api/fs-utils";
 import stripAnsi from "strip-ansi";
 import { runFernCli } from "../../utils/runFernCli";
