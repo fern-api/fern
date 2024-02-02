@@ -4,7 +4,6 @@ import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext, getSdkVersion, hasFileUploadEndpoints } from "@fern-api/generator-commons";
 import {
     Class_,
-    generateBinDir,
     GeneratedFile,
     generateGemConfig,
     generateGemfile,
@@ -64,7 +63,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             )
         );
         boilerPlateFiles.push(generateGemConfig(clientName));
-        boilerPlateFiles.push(...generateBinDir(gemName));
+        // boilerPlateFiles.push(...generateBinDir(gemName));
 
         this.generatedFiles.push(...boilerPlateFiles);
     }

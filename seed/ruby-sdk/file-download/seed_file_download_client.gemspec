@@ -20,6 +20,4 @@ Gem::Specification.new do |spec|
   spec.add_dependency "async-http-faraday", "~> 0.12"
   spec.add_dependency "faraday", "~> 2.7"
   spec.add_dependency "faraday-retry", "~> 2.2"
-  spec.add_dependency "farady-multipart", "~> 1.0"
-  spec.add_dependency "mini_mime", "~> 1.1"
 end
