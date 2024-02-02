@@ -12,3 +12,4 @@
 
 # Ignore everything in packages/ir-sdk
 !packages/ir-sdk/**
+
