@@ -15,7 +15,7 @@ describe("fern generate", () => {
             cwd: pathOfDirectory
         });
 
-        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/typescript")))).toBe(true);
+        expect(await doesPathExist(join(pathOfDirectory, RelativeFilePath.of("generated/sdks/typescript")))).toBe(true);
     }, 180_000);
 
     it("missing docs page", async () => {
@@ -30,23 +30,4 @@ describe("fern generate", () => {
                 .trim()
         ).toMatchSnapshot();
     });
-
-    // if (process.env.CIRCLE_BRANCH === "main") {
-    //     for (const fixtureName of FIXTURES) {
-    //         // eslint-disable-next-line jest/expect-expect, jest/no-commented-out-tests
-    //         it(
-    //             // eslint-disable-next-line jest/valid-title
-    //             fixtureName,
-    //             async () => {
-    //                 await runFernCli(["generate", "--docs", "--log-level", "debug"], {
-    //                     cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
-    //                 });
-    //                 await runFernCli(["generate", "--docs", "--preview", "--log-level", "debug"], {
-    //                     cwd: join(fixturesDir, RelativeFilePath.of(fixtureName)),
-    //                 });
-    //             },
-    //             180_000
-    //         );
-    //     }
-    // }
 });
