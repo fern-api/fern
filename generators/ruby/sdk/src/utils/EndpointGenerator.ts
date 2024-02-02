@@ -296,10 +296,10 @@ export class EndpointGenerator {
                                         })
                                     ]
                                 });
-                                if (prop.type.some((cr) => cr === FileClassReference) === true) {
+                                if (prop.type.some((cr) => cr === FileClassReference)) {
                                     return [
                                         prop.wireValue ?? prop.name,
-                                        prop.isOptional === true
+                                        prop.isOptional
                                             ? new ConditionalStatement({
                                                   if_: {
                                                       leftSide: new FunctionInvocation({
