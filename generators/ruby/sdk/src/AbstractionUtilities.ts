@@ -42,6 +42,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
 import { EndpointGenerator } from "./utils/EndpointGenerator";
+import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
@@ -64,7 +65,8 @@ export function generateEndpoints(
     irBasePath: string,
     serviceBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
-    flattenedProperties: Map<TypeId, ObjectProperty[]>
+    flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    fileUploadUtility: FileUploadUtility
 ): Function_[] {
     return endpoints.map((endpoint) => {
         // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
@@ -86,7 +88,8 @@ export function generateEndpoints(
             requestOptionsVariable,
             requestOptions,
             crf,
-            generatedClasses
+            generatedClasses,
+            fileUploadUtility
         );
 
         const functionCore: AstNode[] = [
@@ -146,6 +149,7 @@ export function generateRootPackage(
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    fileUploadUtility: FileUploadUtility,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -171,7 +175,8 @@ export function generateRootPackage(
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
                   generatedClasses,
-                  flattenedProperties
+                  flattenedProperties,
+                  fileUploadUtility
               )
             : [],
         includeInitializer: false,
@@ -229,7 +234,8 @@ export function generateRootPackage(
                   irBasePath,
                   generateRubyPathTemplate(rootService.pathParameters, rootService.basePath),
                   generatedClasses,
-                  flattenedProperties
+                  flattenedProperties,
+                  fileUploadUtility
               )
             : [],
         includeInitializer: false,
@@ -364,7 +370,8 @@ export function generateService(
     requestOptions: RequestOptions,
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
-    flattenedProperties: Map<TypeId, ObjectProperty[]>
+    flattenedProperties: Map<TypeId, ObjectProperty[]>,
+    fileUploadUtility: FileUploadUtility
 ): ClientClassPair {
     const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
     const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
@@ -388,7 +395,8 @@ export function generateService(
             irBasePath,
             serviceBasePath,
             generatedClasses,
-            flattenedProperties
+            flattenedProperties,
+            fileUploadUtility
         )
     });
 
@@ -410,7 +418,8 @@ export function generateService(
             irBasePath,
             serviceBasePath,
             generatedClasses,
-            flattenedProperties
+            flattenedProperties,
+            fileUploadUtility
         )
     });
 
@@ -482,7 +491,8 @@ function generateRequestClientInitializer(
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
     isMultiBaseUrlEnvironments: boolean,
-    defaultEnvironment?: string
+    defaultEnvironment?: string,
+    hasFileBasedDependencies = false
 ): Function_ {
     const allHeaders = new Map([
         // SDK Default Headers
@@ -574,6 +584,21 @@ function generateRequestClientInitializer(
                     import_: new Import({ from: "async/http/faraday", isExternal: true })
                 }),
                 isAssignment: true
+            })
+        );
+    }
+
+    if (hasFileBasedDependencies) {
+        faradayConfiguration.push(
+            new Expression({
+                leftSide: "faraday.request",
+                rightSide: new Expression({
+                    rightSide: new ClassReference({
+                        name: ":multipart",
+                        import_: new Import({ from: "faraday/multipart", isExternal: true })
+                    })
+                }),
+                isAssignment: false
             })
         );
     }
@@ -671,7 +696,8 @@ export function generateRequestClients(
     headersGenerator: HeadersGenerator,
     environmentCr: ClassReference | undefined,
     isMultiBaseUrlEnvironments: boolean,
-    defaultEnvironment: string | undefined
+    defaultEnvironment: string | undefined,
+    hasFileBasedDependencies: boolean | undefined
 ): [Class_, Class_] {
     const faradayReference = new ClassReference({
         name: "Faraday",
@@ -701,7 +727,8 @@ export function generateRequestClients(
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
-            defaultEnvironment
+            defaultEnvironment,
+            hasFileBasedDependencies
         )
     });
 
@@ -720,7 +747,8 @@ export function generateRequestClients(
             headersGenerator,
             environmentCr,
             isMultiBaseUrlEnvironments,
-            defaultEnvironment
+            defaultEnvironment,
+            hasFileBasedDependencies
         )
     });
 

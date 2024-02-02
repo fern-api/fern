@@ -36,13 +36,10 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          metadata = struct.metadata.to_h.to_json
-          metadata = V2::Problem::TestCaseMetadata.from_json(json_object: metadata)
-          implementation = struct.implementation.to_h.to_json
-          implementation = V2::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
+          metadata = struct.metadata
+          implementation = struct.implementation
           arguments = struct.arguments
-          expects = struct.expects.to_h.to_json
-          expects = V2::Problem::TestCaseExpects.from_json(json_object: expects)
+          expects = struct.expects
           new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
               additional_properties: struct)
         end

@@ -44,9 +44,16 @@ export function generateGemspec(
     clientName: string,
     gemName: string,
     extraDependencies: ExternalDependency[],
-    sdkVersion?: string
+    sdkVersion?: string,
+    hasFileBasedDependencies = false
 ): GeneratedRubyFile {
-    const gemspec = new Gemspec({ clientName, gemName, dependencies: extraDependencies, sdkVersion });
+    const gemspec = new Gemspec({
+        clientName,
+        gemName,
+        dependencies: extraDependencies,
+        sdkVersion,
+        hasFileBasedDependencies
+    });
     return new GeneratedRubyFile({
         rootNode: gemspec,
         directoryPrefix: RelativeFilePath.of("."),

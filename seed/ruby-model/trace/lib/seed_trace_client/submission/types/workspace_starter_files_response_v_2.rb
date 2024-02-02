@@ -23,10 +23,7 @@ module SeedTraceClient
       # @return [Submission::WorkspaceStarterFilesResponseV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        files_by_language = struct.filesByLanguage.transform_values do |_k, v|
-          v = v.to_h.to_json
-          LANGUAGE.key(v)
-        end
+        files_by_language = struct.filesByLanguage
         new(files_by_language: files_by_language, additional_properties: struct)
       end
 

@@ -27,10 +27,8 @@ module SeedTraceClient
       # @return [Commons::MapType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        key_type = struct.keyType.to_h.to_json
-        key_type = Commons::VariableType.from_json(json_object: key_type)
-        value_type = struct.valueType.to_h.to_json
-        value_type = Commons::VariableType.from_json(json_object: value_type)
+        key_type = struct.keyType
+        value_type = struct.valueType
         new(key_type: key_type, value_type: value_type, additional_properties: struct)
       end
 

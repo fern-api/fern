@@ -37,7 +37,8 @@ enum RubyClass {
     OBJECT = "Object",
     JSON = "JSON",
     OPENSTRUCT = "OpenStruct",
-    VOID = "Void"
+    VOID = "Void",
+    FILE = "IO"
 }
 
 export declare namespace ClassReference {
@@ -122,6 +123,8 @@ export const VoidClassReference = new ClassReference({ name: RubyClass.VOID });
 export const BooleanClassReference = new ClassReference({ name: RubyClass.BOOLEAN });
 export const StringClassReference = new ClassReference({ name: RubyClass.STRING });
 export const LongClassReference = new ClassReference({ name: RubyClass.LONG });
+export const FileClassReference = new ClassReference({ name: RubyClass.FILE });
+export const B64StringClassReference = new ClassReference({ name: RubyClass.BASE64 });
 export const NilValue = "nil";
 
 export declare namespace SerializableObjectReference {
@@ -547,7 +550,7 @@ export class ClassReferenceFactory {
             dateTime: () => new DateReference({ type: "DateTime" }),
             date: () => new DateReference({ type: "Date" }),
             uuid: () => new ClassReference({ name: RubyClass.UUID }),
-            base64: () => new ClassReference({ name: RubyClass.BASE64 }),
+            base64: () => B64StringClassReference,
             _other: () => {
                 throw new Error("Unexpected primitive type: " + primitive);
             }

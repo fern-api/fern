@@ -34,8 +34,8 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         session_id = struct.sessionId
         execution_session_url = struct.executionSessionUrl
-        language = LANGUAGE.key(struct.language)
-        status = EXECUTION_SESSION_STATUS.key(struct.status)
+        language = struct.language
+        status = struct.status
         new(session_id: session_id, execution_session_url: execution_session_url, language: language, status: status,
             additional_properties: struct)
       end

@@ -1,4 +1,4 @@
-import { HttpPath, PathParameter } from "@fern-api/ir-sdk";
+import { HttpPath, IntermediateRepresentation, PathParameter } from "@fern-api/ir-sdk";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { format } from "util";
 
@@ -32,4 +32,11 @@ export function generatePathTemplate(
     }
     // Strip leading and trailing slashes
     return pathParametersTemplate.replaceAll(/^\/+|\/+$/g, "");
+}
+export function hasFileUploadEndpoints(ir: IntermediateRepresentation): boolean {
+    return Object.entries(ir.services)
+        .flatMap(([_, service]) => service.endpoints)
+        .some((endpoint) => {
+            return endpoint.requestBody?.type === "fileUpload";
+        });
 }

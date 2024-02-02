@@ -27,12 +27,8 @@ module SeedTraceClient
       # @return [Submission::WorkspaceFiles]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        main_file = struct.mainFile.to_h.to_json
-        main_file = Commons::FileInfo.from_json(json_object: main_file)
-        read_only_files = struct.readOnlyFiles.map do |v|
-          v = v.to_h.to_json
-          Commons::FileInfo.from_json(json_object: v)
-        end
+        main_file = struct.mainFile
+        read_only_files = struct.readOnlyFiles
         new(main_file: main_file, read_only_files: read_only_files, additional_properties: struct)
       end
 

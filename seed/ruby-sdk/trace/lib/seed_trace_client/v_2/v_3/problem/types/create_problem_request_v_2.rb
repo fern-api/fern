@@ -51,20 +51,11 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             problem_name = struct.problemName
-            problem_description = struct.problemDescription.to_h.to_json
-            problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
-            custom_files = struct.customFiles.to_h.to_json
-            custom_files = V2::V3::Problem::CustomFiles.from_json(json_object: custom_files)
-            custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
-              v = v.to_h.to_json
-              V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
-            end
-            testcases = struct.testcases.map do |v|
-              v = v.to_h.to_json
-              V2::V3::Problem::TestCaseV2.from_json(json_object: v)
-            end
-            supported_languages = struct.supportedLanguages.to_h.to_json
-            supported_languages = Set.new(supported_languages)
+            problem_description = struct.problemDescription
+            custom_files = struct.customFiles
+            custom_test_case_templates = struct.customTestCaseTemplates
+            testcases = struct.testcases
+            supported_languages = struct.supportedLanguages
             is_public = struct.isPublic
             new(problem_name: problem_name, problem_description: problem_description, custom_files: custom_files,
                 custom_test_case_templates: custom_test_case_templates, testcases: testcases, supported_languages: supported_languages, is_public: is_public, additional_properties: struct)

@@ -28,7 +28,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
-        status = EXECUTION_SESSION_STATUS.key(struct.status)
+        status = struct.status
         new(submission_id: submission_id, status: status, additional_properties: struct)
       end
 

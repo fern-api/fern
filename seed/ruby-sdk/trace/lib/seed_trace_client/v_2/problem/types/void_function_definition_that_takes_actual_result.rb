@@ -30,12 +30,8 @@ module SeedTraceClient
         # @return [V2::Problem::VoidFunctionDefinitionThatTakesActualResult]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          additional_parameters = struct.additionalParameters.map do |v|
-            v = v.to_h.to_json
-            V2::Problem::Parameter.from_json(json_object: v)
-          end
-          code = struct.code.to_h.to_json
-          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
+          additional_parameters = struct.additionalParameters
+          code = struct.code
           new(additional_parameters: additional_parameters, code: code, additional_properties: struct)
         end
 

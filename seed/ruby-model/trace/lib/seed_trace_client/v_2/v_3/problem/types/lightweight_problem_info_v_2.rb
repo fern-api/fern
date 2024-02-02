@@ -39,8 +39,7 @@ module SeedTraceClient
             problem_id = struct.problemId
             problem_name = struct.problemName
             problem_version = struct.problemVersion
-            variable_types = struct.variableTypes.to_h.to_json
-            variable_types = Set.new(variable_types)
+            variable_types = struct.variableTypes
             new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
                 variable_types: variable_types, additional_properties: struct)
           end

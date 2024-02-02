@@ -28,9 +28,8 @@ module SeedTraceClient
       # @return [Submission::WorkspaceSubmissionUpdate]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        update_time = DateTime.parse(struct.updateTime)
-        update_info = struct.updateInfo.to_h.to_json
-        update_info = Submission::WorkspaceSubmissionUpdateInfo.from_json(json_object: update_info)
+        update_time = struct.updateTime
+        update_info = struct.updateInfo
         new(update_time: update_time, update_info: update_info, additional_properties: struct)
       end
 

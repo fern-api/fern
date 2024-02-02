@@ -30,10 +30,8 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseWithActualResultImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            get_actual_result = struct.getActualResult.to_h.to_json
-            get_actual_result = V2::V3::Problem::NonVoidFunctionDefinition.from_json(json_object: get_actual_result)
-            assert_correctness_check = struct.assertCorrectnessCheck.to_h.to_json
-            assert_correctness_check = V2::V3::Problem::AssertCorrectnessCheck.from_json(json_object: assert_correctness_check)
+            get_actual_result = struct.getActualResult
+            assert_correctness_check = struct.assertCorrectnessCheck
             new(get_actual_result: get_actual_result, assert_correctness_check: assert_correctness_check,
                 additional_properties: struct)
           end

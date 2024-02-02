@@ -2,7 +2,6 @@
 
 module SeedFileUploadClient
   module Gemconfig
-    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""
