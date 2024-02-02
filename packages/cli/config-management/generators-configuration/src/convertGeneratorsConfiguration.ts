@@ -198,10 +198,10 @@ async function convertOutputMode({
             throw new Error("Nuget is not supported");
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
-                FernFiddle.remoteGen.PublishOutputModeV2.rubygemOverride({
+                FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
                     registryUrl: generator.output.url ?? "https://rubygems.org/",
                     packageName: generator.output["package-name"],
-                    apiKey: generator.output["api-key"]
+                    apiKey: generator.output["api-key"] ?? ""
                 })
             );
         default:
