@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "dummy/client"
+require_relative "seed_no_environment_client/dummy/client"
 require "async/http/faraday"
 
 module SeedNoEnvironmentClient

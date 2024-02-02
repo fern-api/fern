@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "../../commons/types/problem_id"
 require_relative "types/lightweight_problem_info_v_2"
 require_relative "types/problem_info_v_2"
-require_relative "../../commons/types/problem_id"
 require "async"
 
 module SeedTraceClient

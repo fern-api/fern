@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "service/client"
+require_relative "seed_bearer_token_environment_variable_client/service/client"
 require "async/http/faraday"
 
 module SeedBearerTokenEnvironmentVariableClient

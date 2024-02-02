@@ -2,9 +2,9 @@
 
 require_relative "types/response"
 require "json"
+require_relative "../types/optional_string_response"
 require_relative "../types/string_response"
 require_relative "types/optional_with_docs"
-require_relative "../types/optional_string_response"
 require "async"
 
 module SeedResponsePropertyClient

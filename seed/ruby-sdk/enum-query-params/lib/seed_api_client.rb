@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "svc/client"
+require_relative "seed_api_client/svc/client"
 require "async/http/faraday"
 
 module SeedApiClient

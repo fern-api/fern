@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "no_headers/client"
-require_relative "only_literal_headers/client"
-require_relative "with_non_literal_headers/client"
+require_relative "seed_literal_headers_client/no_headers/client"
+require_relative "seed_literal_headers_client/only_literal_headers/client"
+require_relative "seed_literal_headers_client/with_non_literal_headers/client"
 require "async/http/faraday"
 
 module SeedLiteralHeadersClient

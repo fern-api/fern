@@ -101,7 +101,7 @@ export function generateEndpoints(
                     leftSide: responseVariable,
                     rightSide: new FunctionInvocation({
                         // TODO: Do this field access on the client better
-                        onObject: `${requestClientVariable.write()}.conn`,
+                        onObject: `${requestClientVariable.write({})}.conn`,
                         baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
                         arguments_: [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
                         block: generator.getFaradayBlock(requestClientVariable)
@@ -277,8 +277,22 @@ export function generateRootPackage(
         })
     });
 
-    const rootNode = Module_.wrapInModules(clientName, [clientClass, asyncClientClass]);
-    return new GeneratedRubyFile({ rootNode, directoryPrefix: RelativeFilePath.of("."), name: `${gemName}` });
+    const allTypeImports = Array.from(crf.generatedReferences.entries())
+        .map(([_, cr]) => cr.import_)
+        .filter((i) => i !== undefined) as Import[];
+    const rootNode = Module_.wrapInModules(
+        clientName,
+        [clientClass, asyncClientClass],
+        undefined,
+        true,
+        allTypeImports
+    );
+    return new GeneratedRubyFile({
+        rootNode,
+        directoryPrefix: RelativeFilePath.of("."),
+        nestImportsInDirectory: RelativeFilePath.of(gemName),
+        name: `${gemName}`
+    });
 }
 
 export function generateSubpackage(

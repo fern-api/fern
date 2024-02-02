@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 
 require_relative "../submission/types/submission_id"
+require_relative "../submission/types/test_case_result_with_stdout"
 require_relative "../submission/types/test_submission_status"
 require_relative "../submission/types/test_submission_update"
-require_relative "../submission/types/workspace_submission_status"
-require_relative "../submission/types/workspace_submission_update"
-require_relative "../submission/types/test_case_result_with_stdout"
 require_relative "../submission/types/trace_response"
-require_relative "../v_2/problem/types/test_case_id"
 require_relative "../submission/types/trace_response_v_2"
 require_relative "../submission/types/workspace_run_details"
+require_relative "../submission/types/workspace_submission_status"
+require_relative "../submission/types/workspace_submission_update"
+require_relative "../v_2/problem/types/test_case_id"
 require "async"
 
 module SeedTraceClient

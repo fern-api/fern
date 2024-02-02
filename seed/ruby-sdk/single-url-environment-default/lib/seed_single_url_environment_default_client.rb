@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "dummy/client"
+require_relative "seed_single_url_environment_default_client/dummy/client"
 require "async/http/faraday"
 
 module SeedSingleUrlEnvironmentDefaultClient

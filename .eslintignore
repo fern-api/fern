@@ -6,3 +6,5 @@ dist
 generated
 bundle.c?js
 .pnp*
+packages/ir-sdk/**
+

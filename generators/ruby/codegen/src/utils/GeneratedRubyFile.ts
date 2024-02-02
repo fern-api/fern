@@ -20,6 +20,9 @@ export declare namespace GeneratedRubyFile {
         isTestFile?: boolean;
         isConfigurationFile?: boolean;
         fileExtension?: string;
+        // TODO: This is a temporary solution to allow for the generation of the imports within a subdir
+        // DO NOT USE
+        nestImportsInDirectory?: RelativeFilePath;
     }
 }
 export class GeneratedRubyFile extends GeneratedFile {
@@ -32,7 +35,8 @@ export class GeneratedRubyFile extends GeneratedFile {
         location,
         isTestFile = false,
         isConfigurationFile = false,
-        fileExtension = "rb"
+        fileExtension = "rb",
+        nestImportsInDirectory
     }: GeneratedRubyFile.Init) {
         // Path needs lib or test, if test: test/ is relative path
         // otherwise, relative path is:
@@ -57,7 +61,16 @@ export class GeneratedRubyFile extends GeneratedFile {
             fileName,
             join(RelativeFilePath.of(updatedPrefix), directoryPrefix, RelativeFilePath.of(filePath)),
             FROZEN_STRING_PREFIX +
-                nodesToWrite.map((node) => node.write(0, AbsoluteFilePath.of("/" + filePath))).join("\n")
+                nodesToWrite
+                    .map((node) =>
+                        node.write({
+                            startingTabSpaces: 0,
+                            filePath:
+                                nestImportsInDirectory === undefined ? AbsoluteFilePath.of("/" + filePath) : undefined,
+                            pathPrefix: nestImportsInDirectory
+                        })
+                    )
+                    .join("\n")
         );
 
         this.rootNode = nodesToWrite;

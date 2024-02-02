@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "ec_2/client"
-require_relative "s_3/client"
+require_relative "seed_multi_url_environment_client/ec_2/client"
+require_relative "seed_multi_url_environment_client/s_3/client"
 require "async/http/faraday"
 
 module SeedMultiUrlEnvironmentClient

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "date"
-require_relative "types/playlist_create_request"
 require_relative "types/playlist"
+require_relative "types/playlist_create_request"
 require_relative "types/playlist_id"
 require_relative "types/update_playlist_request"
 require "async"

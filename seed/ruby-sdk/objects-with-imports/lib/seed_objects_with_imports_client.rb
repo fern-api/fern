@@ -1,7 +1,12 @@
 # frozen_string_literal: true
 
-require "faraday"
+require_relative "seed_objects_with_imports_client/commons/metadata/types/metadata"
+require_relative "seed_objects_with_imports_client/file/directory/types/directory"
+require_relative "seed_objects_with_imports_client/file/types/file"
+require_relative "seed_objects_with_imports_client/types/node"
+require_relative "seed_objects_with_imports_client/types/tree"
 require "async/http/faraday"
+require "faraday"
 
 module SeedObjectsWithImportsClient
   class Client

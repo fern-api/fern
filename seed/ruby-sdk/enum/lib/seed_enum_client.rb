@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "inlined_request/client"
-require_relative "path_param/client"
-require_relative "query_param/client"
+require_relative "seed_enum_client/inlined_request/client"
+require_relative "seed_enum_client/path_param/client"
+require_relative "seed_enum_client/query_param/client"
 require "async/http/faraday"
 
 module SeedEnumClient

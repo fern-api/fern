@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "error_info"
 require_relative "workspace_run_details"
 require_relative "workspace_traced_update"
-require_relative "error_info"
 
 module SeedTraceClient
   module Submission

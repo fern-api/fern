@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "../../types/object/types/object_with_optional_field"
-require_relative "../../types/object/types/object_with_required_field"
-require_relative "../../types/object/types/object_with_map_of_map"
 require_relative "../../types/object/types/nested_object_with_optional_field"
 require_relative "../../types/object/types/nested_object_with_required_field"
+require_relative "../../types/object/types/object_with_map_of_map"
+require_relative "../../types/object/types/object_with_optional_field"
+require_relative "../../types/object/types/object_with_required_field"
 require "async"
 
 module SeedExhaustiveClient

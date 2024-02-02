@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "seed_error_property_client/errors/types/property_based_error_test_body"
 require "faraday"
-require_relative "property_based_error/client"
+require_relative "seed_error_property_client/property_based_error/client"
 require "async/http/faraday"
 
 module SeedErrorPropertyClient

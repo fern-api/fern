@@ -1,9 +1,16 @@
 # frozen_string_literal: true
 
+require_relative "seed_audiences_client/commons/types/imported"
+require_relative "seed_audiences_client/folder_a/service/types/response"
+require_relative "seed_audiences_client/folder_b/common/types/foo"
+require_relative "seed_audiences_client/folder_c/common/types/foo"
+require_relative "seed_audiences_client/foo/types/filtered_type"
+require_relative "seed_audiences_client/foo/types/importing_type"
+require_relative "seed_audiences_client/foo/types/optional_string"
 require "faraday"
-require_relative "folder_a/service/client"
-require_relative "folder_aclient"
-require_relative "foo/client"
+require_relative "seed_audiences_client/folder_a/service/client"
+require_relative "seed_audiences_client/folder_aclient"
+require_relative "seed_audiences_client/foo/client"
 require "async/http/faraday"
 
 module SeedAudiencesClient

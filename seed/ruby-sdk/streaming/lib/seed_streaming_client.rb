@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "seed_streaming_client/dummy/types/stream_response"
 require "faraday"
-require_relative "dummy/client"
+require_relative "seed_streaming_client/dummy/client"
 require "async/http/faraday"
 
 module SeedStreamingClient

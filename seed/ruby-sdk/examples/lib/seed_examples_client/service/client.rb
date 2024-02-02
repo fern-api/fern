@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "../types/types/movie_id"
 require_relative "../types/types/movie"
+
 require_relative "../types/types/metadata"
+require_relative "../types/types/movie_id"
 require "async"
 
 module SeedExamplesClient

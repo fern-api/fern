@@ -356,9 +356,9 @@ export class HashInstance extends AstNode {
         const hashContents = Array.from(this.contents.entries());
         this.addText({
             stringContent: `{ ${this.additionalHashes
-                .map((ah) => format("**%s", ah instanceof AstNode ? ah.write() : ah))
+                .map((ah) => format("**%s", ah instanceof AstNode ? ah.write({}) : ah))
                 .join(", ")}${hashContents.length > 0 && this.additionalHashes.length > 0 ? ", " : ""}${hashContents
-                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write() : `'${v}'`))
+                .map(([k, v]) => k + ": " + (v instanceof AstNode ? v.write({}) : `'${v}'`))
                 .join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
@@ -477,7 +477,7 @@ export class DateReference extends ClassReference {
 
 export class ClassReferenceFactory {
     private typeDeclarations: Map<TypeId, TypeDeclaration>;
-    private generatedReferences: Map<TypeId, ClassReference>;
+    public generatedReferences: Map<TypeId, ClassReference>;
 
     constructor(typeDeclarations: Map<TypeId, TypeDeclaration>) {
         this.typeDeclarations = typeDeclarations;

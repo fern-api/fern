@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "types/optional_string"
 require_relative "types/importing_type"
+
+require_relative "types/optional_string"
 require "async"
 
 module SeedAudiencesClient

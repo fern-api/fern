@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "seed_basic_auth_client/errors/types/unauthorized_request_error_body"
 require "faraday"
-require_relative "basic_auth/client"
+require_relative "seed_basic_auth_client/basic_auth/client"
 require "async/http/faraday"
 
 module SeedBasicAuthClient

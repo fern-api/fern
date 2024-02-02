@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "faraday"
 require "async/http/faraday"
+require "faraday"
 
 module SeedBearerTokenEnvironmentVariableClient
   class RequestClient

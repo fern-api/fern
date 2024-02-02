@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "seed_undiscriminated_unions_client/union/types/my_union"
 require "faraday"
-require_relative "union/client"
+require_relative "seed_undiscriminated_unions_client/union/client"
 require "async/http/faraday"
 
 module SeedUndiscriminatedUnionsClient

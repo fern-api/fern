@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
+require_relative "seed_api_client/a/d/types/types/foo"
 require "faraday"
-require_relative "a/b/client"
-require_relative "a/c/client"
-require_relative "aclient"
-require_relative "folder/client"
+require_relative "seed_api_client/a/b/client"
+require_relative "seed_api_client/a/c/client"
+require_relative "seed_api_client/aclient"
+require_relative "seed_api_client/folder/client"
 require "async/http/faraday"
 
 module SeedApiClient

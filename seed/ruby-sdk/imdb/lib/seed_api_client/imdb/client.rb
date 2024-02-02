@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "types/create_movie_request"
-require_relative "types/movie_id"
 require_relative "types/movie"
+require_relative "types/movie_id"
 require "async"
 
 module SeedApiClient

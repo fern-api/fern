@@ -1,5 +1,5 @@
+import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-api/ir-sdk";
 import { isInlineRequestBody, parseRawBytesType, RawSchemas } from "@fern-api/yaml-schema";
-import { SdkRequest, SdkRequestBodyType, SdkRequestShape } from "@fern-fern/ir-sdk/api";
 import { size } from "lodash-es";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "payment/client"
+require_relative "seed_idempotency_headers_client/payment/client"
 require "async/http/faraday"
 
 module SeedIdempotencyHeadersClient

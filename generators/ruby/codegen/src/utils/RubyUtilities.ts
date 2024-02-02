@@ -123,6 +123,9 @@ export function generateRubocopConfig(): GeneratedFile {
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes
+
+Style/RequireOrder:
+  Enabled: true
   
 Style/StringLiteralsInInterpolation:
   Enabled: true

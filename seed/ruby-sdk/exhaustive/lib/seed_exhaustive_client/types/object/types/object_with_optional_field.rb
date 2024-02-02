@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "date"
-require "set"
 require "json"
+require "set"
 
 module SeedExhaustiveClient
   module Types

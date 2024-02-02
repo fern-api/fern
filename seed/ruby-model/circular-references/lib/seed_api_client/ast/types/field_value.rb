@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "object_value"
 require_relative "container_value"
+require_relative "object_value"
 
 module SeedApiClient
   module Ast

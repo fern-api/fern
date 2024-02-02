@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+require_relative "../commons/types/problem_id"
+require_relative "../commons/types/variable_type"
 require_relative "types/create_problem_request"
 require_relative "types/create_problem_response"
-require_relative "../commons/types/problem_id"
+require_relative "types/get_default_starter_files_response"
 require_relative "types/update_problem_response"
 require_relative "types/variable_type_and_name"
-require_relative "../commons/types/variable_type"
-require_relative "types/get_default_starter_files_response"
 require "async"
 
 module SeedTraceClient

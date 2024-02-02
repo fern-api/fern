@@ -2,7 +2,7 @@
 
 require "faraday"
 require "faraday/multipart"
-require_relative "service/client"
+require_relative "seed_file_download_client/service/client"
 require "async/http/faraday"
 
 module SeedFileDownloadClient

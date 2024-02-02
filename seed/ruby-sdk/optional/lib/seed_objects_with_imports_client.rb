@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
-require_relative "optional/client"
+require_relative "seed_objects_with_imports_client/optional/client"
 require "async/http/faraday"
 
 module SeedObjectsWithImportsClient

@@ -57,7 +57,7 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
             clientName,
             generatorContext,
             intermediateRepresentation
-        ).generateFiles();
+        ).generateFiles(true);
         this.generatedFiles.push(...Array.from(generatedTypeFiles.values()));
     }
 

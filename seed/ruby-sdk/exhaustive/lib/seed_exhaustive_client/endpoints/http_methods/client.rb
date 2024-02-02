@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../../types/object/types/object_with_required_field"
 require_relative "../../types/object/types/object_with_optional_field"
+
+require_relative "../../types/object/types/object_with_required_field"
 require "async"
 
 module SeedExhaustiveClient

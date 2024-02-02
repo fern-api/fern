@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../../types/object/types/object_with_required_field"
-require "set"
 require "async"
+require "set"
 
 module SeedExhaustiveClient
   module Endpoints

@@ -1,7 +1,11 @@
 # frozen_string_literal: true
 
-require "faraday"
+require_relative "seed_alias_client/types/type"
+
+require_relative "seed_alias_client/types/object"
+require_relative "seed_alias_client/types/type_id"
 require "async/http/faraday"
+require "faraday"
 
 module SeedAliasClient
   class Client

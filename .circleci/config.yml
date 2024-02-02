@@ -117,17 +117,6 @@ jobs:
           command: |
             yarn workspace @fern-api/cli publish:cli:prod --tag latest
 
-  publish-ir-sdk:
-    docker:
-      - image: cimg/node:18.8.0
-    steps:
-      - checkout
-      - run:
-          name: Publish ir sdks
-          command: |
-            export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
-            npx fern-api generate --api ir-types-v31 --group sdks
-
 workflows:
   version: 2
   build:
@@ -175,11 +164,3 @@ workflows:
             - auth0-prod
             - posthog
 
-      - publish-ir-sdk:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /.*/
-          context:
-            - fern-tokens

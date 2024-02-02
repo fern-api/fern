@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "date"
 require "async"
+require "date"
 
 module SeedExhaustiveClient
   module Endpoints

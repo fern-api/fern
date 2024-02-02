@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
+require "async/http/faraday"
 require "faraday"
 require "faraday/multipart"
-require "async/http/faraday"
 
 module SeedFileDownloadClient
   class RequestClient
