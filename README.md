@@ -61,7 +61,7 @@ Check out docs built with Fern:
 - [docs.superagent.sh](https://docs.superagent.sh/)
 - [docs.propexo.com](https://docs.propexo.com/)
 
-Get started [here](https://github.com/fern-api/docs-starter)
+Get started [here](https://github.com/fern-api/docs-starter). 
 
 
 ## Generators
