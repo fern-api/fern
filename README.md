@@ -181,6 +181,11 @@ errors:
     type: MovieId
 ```
 
+Checkout open source projects that are using Fern Definitions: 
+ - [Metriport](https://github.com/metriport/metriport/tree/develop/fern/definition)
+ - [Rivet](https://github.com/rivet-gg/rivet/tree/main/fern/definition)
+ - [Revert](https://github.com/revertinc/revert/tree/main/fern/definition)
+
 ## Community
 
 [Join our Discord!](https://discord.com/invite/JkkXumPzcG) We are here to answer questions and help you get the most out of Fern.
