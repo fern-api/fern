@@ -29,7 +29,7 @@ describe("fern generate --local", () => {
         });
 
         // write custom files and override
-        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/typescript"));
+        const absolutePathToLocalOutput = join(pathOfDirectory, RelativeFilePath.of("generated/sdk/typescript"));
 
         const absolutePathToFernignore = join(absolutePathToLocalOutput, RelativeFilePath.of(FERNIGNORE_FILENAME));
         await writeFile(absolutePathToFernignore, FERNIGNORE_FILECONTENTS);
