@@ -18,12 +18,6 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
 };
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
-    // TODO(fern-api): Dependent on update to Fiddle def: https://github.com/fern-api/fiddle/blob/main/fern/apis/generator-exec/definition/logging.yml#L26
-    // private registry: FernGeneratorExec.RegistryType;
-    // constructor(registry: FernGeneratorExec.RegistryType) {
-    //     this.registry = registry;
-    // }
-
     public async runCli(): Promise<void> {
         const pathToConfig = process.argv[process.argv.length - 1];
         if (pathToConfig == null) {
@@ -90,7 +84,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         await loadIntermediateRepresentation(config.irFilepath)
                     );
                 },
-                github: async (githubOutputMode) => {
+                github: async (githubOutputMode: FernGeneratorExec.GithubOutputMode) => {
                     await this.writeForGithub(
                         config,
                         customConfig,

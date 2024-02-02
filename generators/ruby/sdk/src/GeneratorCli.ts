@@ -1,7 +1,7 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
-import { GeneratorContext, getSdkVersion, hasFileUploadEndpoints } from "@fern-api/generator-commons";
+import { GeneratorContext, getPackageName, getSdkVersion, hasFileUploadEndpoints } from "@fern-api/generator-commons";
 import {
     Class_,
     GeneratedFile,
@@ -30,21 +30,11 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     }
 
     private generateRepositoryBoilerPlate(
+        gemName: string,
+        clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const gemName = getGemName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName,
-            customConfig.gemName
-        );
-        const clientName = getClientName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName
-        );
         const sdkVersion = getSdkVersion(config);
 
         const boilerPlateFiles = [];
@@ -69,50 +59,28 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
     }
 
     private generateTypes(
-        config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig,
+        gemName: string,
+        clientName: string,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
-        const generatedTypes = new TypesGenerator(
-            getGemName(
-                config.organization,
-                intermediateRepresentation.apiName.pascalCase.safeName,
-                customConfig.clientClassName,
-                customConfig.gemName
-            ),
-            getClientName(
-                config.organization,
-                intermediateRepresentation.apiName.pascalCase.safeName,
-                customConfig.clientClassName
-            ),
-            generatorContext,
-            intermediateRepresentation
-        );
+        const generatedTypes = new TypesGenerator(gemName, clientName, generatorContext, intermediateRepresentation);
         this.generatedFiles.push(...Array.from(generatedTypes.generateFiles().values()));
         this.generatedClasses = generatedTypes.getResolvedClasses();
         this.flattenedProperties = generatedTypes.flattenedProperties;
     }
 
     private generateClients(
+        gemName: string,
+        clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubySdkCustomConfig,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
         const sdkVersion = getSdkVersion(config);
         const generatedClientFiles = new ClientsGenerator(
-            getGemName(
-                config.organization,
-                intermediateRepresentation.apiName.pascalCase.safeName,
-                customConfig.clientClassName,
-                customConfig.gemName
-            ),
-            getClientName(
-                config.organization,
-                intermediateRepresentation.apiName.pascalCase.safeName,
-                customConfig.clientClassName
-            ),
+            gemName,
+            clientName,
             generatorContext,
             intermediateRepresentation,
             sdkVersion,
@@ -130,12 +98,23 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ) {
+        const gemName = getGemName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName,
+            getPackageName(config)
+        );
+        const clientName = getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
         generatorContext.logger.debug("Generating boilerplate");
-        this.generateRepositoryBoilerPlate(config, customConfig, intermediateRepresentation);
+        this.generateRepositoryBoilerPlate(gemName, clientName, config, intermediateRepresentation);
         generatorContext.logger.debug("Generating types");
-        this.generateTypes(config, customConfig, generatorContext, intermediateRepresentation);
+        this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation);
         generatorContext.logger.debug("Generating clients");
-        this.generateClients(config, customConfig, generatorContext, intermediateRepresentation);
+        this.generateClients(gemName, clientName, config, generatorContext, intermediateRepresentation);
     }
 
     protected async publishPackage(

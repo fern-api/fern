@@ -10,7 +10,7 @@ import { GeneratedRubyFile } from "./GeneratedRubyFile";
 import { TYPES_DIRECTORY } from "./RubyConstants";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return snakeCase(gemName ?? getClientName(organization, apiName, clientClassName));
+    return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
