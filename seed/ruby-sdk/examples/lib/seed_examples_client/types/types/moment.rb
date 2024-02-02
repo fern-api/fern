@@ -31,8 +31,8 @@ module SeedExamplesClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct.id
-        date = Date.parse(struct.date)
-        datetime = DateTime.parse(struct.datetime)
+        date = struct.date
+        datetime = struct.datetime
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 

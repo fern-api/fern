@@ -30,10 +30,8 @@ module SeedTraceClient
           # @return [V2::V3::Problem::GetGeneratedTestCaseFileRequest]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            template = struct.template.to_h.to_json
-            template = V2::V3::Problem::TestCaseTemplate.from_json(json_object: template)
-            test_case = struct.testCase.to_h.to_json
-            test_case = V2::V3::Problem::TestCaseV2.from_json(json_object: test_case)
+            template = struct.template
+            test_case = struct.testCase
             new(template: template, test_case: test_case, additional_properties: struct)
           end
 

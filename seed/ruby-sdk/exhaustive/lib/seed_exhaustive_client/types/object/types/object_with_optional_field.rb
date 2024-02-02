@@ -66,13 +66,12 @@ module SeedExhaustiveClient
           long = struct.long
           double = struct.double
           bool = struct.bool
-          datetime = DateTime.parse(struct.datetime)
-          date = Date.parse(struct.date)
+          datetime = struct.datetime
+          date = struct.date
           uuid = struct.uuid
           base_64 = struct.base64
           list = struct.list
-          set = struct.set.to_h.to_json
-          set = Set.new(set)
+          set = struct.set
           map = struct.map
           new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
               uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)

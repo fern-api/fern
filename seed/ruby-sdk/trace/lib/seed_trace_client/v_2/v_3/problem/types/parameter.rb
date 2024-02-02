@@ -35,8 +35,7 @@ module SeedTraceClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             parameter_id = struct.parameterId
             name = struct.name
-            variable_type = struct.variableType.to_h.to_json
-            variable_type = Commons::VariableType.from_json(json_object: variable_type)
+            variable_type = struct.variableType
             new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
           end
 

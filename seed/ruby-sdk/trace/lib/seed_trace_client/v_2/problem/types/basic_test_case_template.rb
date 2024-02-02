@@ -38,8 +38,7 @@ module SeedTraceClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           template_id = struct.templateId
           name = struct.name
-          description = struct.description.to_h.to_json
-          description = V2::Problem::TestCaseImplementationDescription.from_json(json_object: description)
+          description = struct.description
           expected_value_parameter_id = struct.expectedValueParameterId
           new(template_id: template_id, name: name, description: description,
               expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)

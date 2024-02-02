@@ -27,8 +27,7 @@ module SeedTraceClient
       # @return [Submission::TestCaseResultWithStdout]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result = struct.result.to_h.to_json
-        result = Submission::TestCaseResult.from_json(json_object: result)
+        result = struct.result
         stdout = struct.stdout
         new(result: result, stdout: stdout, additional_properties: struct)
       end

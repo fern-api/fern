@@ -22,6 +22,7 @@ import {
     generateSubpackage,
     getDefaultEnvironmentUrl
 } from "./AbstractionUtilities";
+import { FileUploadUtility } from "./utils/FileUploadUtility";
 import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
@@ -38,6 +39,7 @@ export class ClientsGenerator {
     private clientName: string;
     private gemName: string;
     private sdkVersion: string | undefined;
+    private hasFileBasedDependencies: boolean;
     private intermediateRepresentation: IntermediateRepresentation;
     private crf: ClassReferenceFactory;
     private headersGenerator: HeadersGenerator;
@@ -52,7 +54,8 @@ export class ClientsGenerator {
         intermediateRepresentation: IntermediateRepresentation,
         sdkVersion: string | undefined,
         generatedClasses: Map<TypeId, Class_>,
-        flattenedProperties: Map<TypeId, ObjectProperty[]>
+        flattenedProperties: Map<TypeId, ObjectProperty[]>,
+        hasFileBasedDependencies: boolean
     ) {
         this.types = new Map();
 
@@ -61,6 +64,7 @@ export class ClientsGenerator {
         this.intermediateRepresentation = intermediateRepresentation;
         this.clientName = clientName;
         this.gemName = gemName;
+        this.hasFileBasedDependencies = hasFileBasedDependencies;
 
         this.generatedClasses = generatedClasses;
         this.flattenedProperties = flattenedProperties;
@@ -111,7 +115,8 @@ export class ClientsGenerator {
             this.headersGenerator,
             environmentClass?.classReference,
             this.intermediateRepresentation.environments?.environments.type === "multipleBaseUrls",
-            this.defaultEnvironment
+            this.defaultEnvironment,
+            this.hasFileBasedDependencies
         );
         const requestsModule = Module_.wrapInModules(this.clientName, [
             syncClientClass,
@@ -125,6 +130,18 @@ export class ClientsGenerator {
                 name: "requests"
             })
         );
+
+        const fileUtilityClass = new FileUploadUtility();
+        if (this.hasFileBasedDependencies) {
+            const fileUtilityModule = Module_.wrapInModules(this.clientName, fileUtilityClass);
+            clientFiles.push(
+                new GeneratedRubyFile({
+                    rootNode: fileUtilityModule,
+                    directoryPrefix: RelativeFilePath.of("core"),
+                    name: fileUtilityClass.classReference.name
+                })
+            );
+        }
 
         const subpackageClassReferences = new Map<SubpackageId, ClientClassPair>();
         // 1. Generate service files, these are the classes that query the endpoints
@@ -160,7 +177,8 @@ export class ClientsGenerator {
                 requestOptionsClass,
                 irBasePath,
                 generatedClasses,
-                flattenedProperties
+                flattenedProperties,
+                fileUtilityClass
             );
             const serviceModule = Module_.wrapInModules(
                 clientName,
@@ -294,6 +312,7 @@ export class ClientsGenerator {
                 this.irBasePath,
                 this.generatedClasses,
                 this.flattenedProperties,
+                fileUtilityClass,
                 this.services.get(this.intermediateRepresentation.rootPackage.service ?? "")
             )
         );

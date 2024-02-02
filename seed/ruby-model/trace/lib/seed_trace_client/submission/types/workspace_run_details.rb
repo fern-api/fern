@@ -31,10 +31,8 @@ module SeedTraceClient
       # @return [Submission::WorkspaceRunDetails]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_v_2 = struct.exceptionV2.to_h.to_json
-        exception_v_2 = Submission::ExceptionV2.from_json(json_object: exception_v_2)
-        exception = struct.exception.to_h.to_json
-        exception = Submission::ExceptionInfo.from_json(json_object: exception)
+        exception_v_2 = struct.exceptionV2
+        exception = struct.exception
         stdout = struct.stdout
         new(exception_v_2: exception_v_2, exception: exception, stdout: stdout, additional_properties: struct)
       end

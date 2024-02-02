@@ -58,24 +58,13 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         problem_id = struct.problemId
-        problem_description = struct.problemDescription.to_h.to_json
-        problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+        problem_description = struct.problemDescription
         problem_name = struct.problemName
         problem_version = struct.problemVersion
-        files = struct.files.transform_values do |_k, v|
-          v = v.to_h.to_json
-          LANGUAGE.key(v)
-        end
-        input_params = struct.inputParams.map do |v|
-          v = v.to_h.to_json
-          Problem::VariableTypeAndName.from_json(json_object: v)
-        end
-        output_type = struct.outputType.to_h.to_json
-        output_type = Commons::VariableType.from_json(json_object: output_type)
-        testcases = struct.testcases.map do |v|
-          v = v.to_h.to_json
-          Commons::TestCaseWithExpectedResult.from_json(json_object: v)
-        end
+        files = struct.files
+        input_params = struct.inputParams
+        output_type = struct.outputType
+        testcases = struct.testcases
         method_name = struct.methodName
         supports_custom_test_cases = struct.supportsCustomTestCases
         new(problem_id: problem_id, problem_description: problem_description, problem_name: problem_name,

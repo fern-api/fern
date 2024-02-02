@@ -25,8 +25,7 @@ module SeedAudiencesClient
         # @return [FolderB::Common::Foo]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          foo = struct.foo.to_h.to_json
-          foo = FolderC::Common::Foo.from_json(json_object: foo)
+          foo = struct.foo
           new(foo: foo, additional_properties: struct)
         end
 

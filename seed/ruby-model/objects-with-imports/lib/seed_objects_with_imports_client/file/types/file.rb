@@ -31,7 +31,7 @@ module SeedObjectsWithImportsClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
         contents = struct.contents
-        info = FILE_INFO.key(struct.info)
+        info = struct.info
         new(name: name, contents: contents, info: info, additional_properties: struct)
       end
 

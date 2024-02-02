@@ -31,10 +31,8 @@ module SeedTraceClient
       # @return [Submission::TestCaseResult]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        expected_result = struct.expectedResult.to_h.to_json
-        expected_result = Commons::VariableValue.from_json(json_object: expected_result)
-        actual_result = struct.actualResult.to_h.to_json
-        actual_result = Submission::ActualResult.from_json(json_object: actual_result)
+        expected_result = struct.expectedResult
+        actual_result = struct.actualResult
         passed = struct.passed
         new(expected_result: expected_result, actual_result: actual_result, passed: passed,
             additional_properties: struct)

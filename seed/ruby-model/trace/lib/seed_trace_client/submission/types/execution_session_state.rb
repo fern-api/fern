@@ -44,8 +44,8 @@ module SeedTraceClient
         session_id = struct.sessionId
         is_warm_instance = struct.isWarmInstance
         aws_task_id = struct.awsTaskId
-        language = LANGUAGE.key(struct.language)
-        status = EXECUTION_SESSION_STATUS.key(struct.status)
+        language = struct.language
+        status = struct.status
         new(last_time_contacted: last_time_contacted, session_id: session_id, is_warm_instance: is_warm_instance,
             aws_task_id: aws_task_id, language: language, status: status, additional_properties: struct)
       end

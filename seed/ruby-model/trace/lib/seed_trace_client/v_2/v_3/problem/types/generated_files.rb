@@ -31,18 +31,9 @@ module SeedTraceClient
           # @return [V2::V3::Problem::GeneratedFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            generated_test_case_files = struct.generatedTestCaseFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
-            end
-            generated_template_files = struct.generatedTemplateFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
-            end
-            other = struct.other.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
-            end
+            generated_test_case_files = struct.generatedTestCaseFiles
+            generated_template_files = struct.generatedTemplateFiles
+            other = struct.other
             new(generated_test_case_files: generated_test_case_files,
                 generated_template_files: generated_template_files, other: other, additional_properties: struct)
           end

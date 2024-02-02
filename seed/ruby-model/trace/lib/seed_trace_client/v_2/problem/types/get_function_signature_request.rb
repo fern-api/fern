@@ -25,8 +25,7 @@ module SeedTraceClient
         # @return [V2::Problem::GetFunctionSignatureRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          function_signature = struct.functionSignature.to_h.to_json
-          function_signature = V2::Problem::FunctionSignature.from_json(json_object: function_signature)
+          function_signature = struct.functionSignature
           new(function_signature: function_signature, additional_properties: struct)
         end
 

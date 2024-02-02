@@ -35,14 +35,10 @@ module SeedTraceClient
       # @return [Submission::TestSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        updates = struct.updates.map do |v|
-          v = v.to_h.to_json
-          Submission::TestSubmissionUpdate.from_json(json_object: v)
-        end
+        updates = struct.updates
         problem_id = struct.problemId
         problem_version = struct.problemVersion
-        problem_info = struct.problemInfo.to_h.to_json
-        problem_info = V2::Problem::ProblemInfoV2.from_json(json_object: problem_info)
+        problem_info = struct.problemInfo
         new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info,
             additional_properties: struct)
       end

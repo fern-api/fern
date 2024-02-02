@@ -38,14 +38,9 @@ module SeedTraceClient
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
             method_name = struct.methodName
-            signature = struct.signature.to_h.to_json
-            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
-            additional_files = struct.additionalFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
-            end
-            basic_test_case_template = struct.basicTestCaseTemplate.to_h.to_json
-            basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
+            signature = struct.signature
+            additional_files = struct.additionalFiles
+            basic_test_case_template = struct.basicTestCaseTemplate
             new(method_name: method_name, signature: signature, additional_files: additional_files,
                 basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end

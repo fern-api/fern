@@ -24,10 +24,7 @@ module SeedTraceClient
         # @return [V2::Problem::FunctionImplementationForMultipleLanguages]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          code_by_language = struct.codeByLanguage.transform_values do |_k, v|
-            v = v.to_h.to_json
-            LANGUAGE.key(v)
-          end
+          code_by_language = struct.codeByLanguage
           new(code_by_language: code_by_language, additional_properties: struct)
         end
 

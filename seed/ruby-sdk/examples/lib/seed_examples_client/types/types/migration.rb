@@ -27,7 +27,7 @@ module SeedExamplesClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         name = struct.name
-        status = MIGRATION_STATUS.key(struct.status)
+        status = struct.status
         new(name: name, status: status, additional_properties: struct)
       end
 

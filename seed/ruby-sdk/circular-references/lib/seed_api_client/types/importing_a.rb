@@ -23,8 +23,7 @@ module SeedApiClient
     # @return [ImportingA]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
-      a = struct.a.to_h.to_json
-      a = A::A.from_json(json_object: a)
+      a = struct.a
       new(a: a, additional_properties: struct)
     end
 
