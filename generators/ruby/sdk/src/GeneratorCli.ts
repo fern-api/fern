@@ -1,6 +1,5 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
-import { AbstractGeneratorCli } from "@fern-api/generator-cli";
 import { GeneratorContext, getPackageName, getSdkVersion, hasFileUploadEndpoints } from "@fern-api/generator-commons";
 import {
     Class_,
@@ -14,6 +13,7 @@ import {
     getClientName,
     getGemName
 } from "@fern-api/ruby-codegen";
+import { AbstractGeneratorCli } from "@fern-api/ruby-generator-cli";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import { IntermediateRepresentation, ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { execSync } from "child_process";

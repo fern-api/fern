@@ -3,9 +3,9 @@
   "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
   "include": ["./src"],
   "references": [
+    { "path": "../../../packages/cli/logger" },
     { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/generators/commons" },
-    { "path": "../cli" },
-    { "path": "../codegen" }
+    { "path": "../../../packages/commons/logging-execa" },
+    { "path": "../../../packages/generators/commons" }
   ]
 }

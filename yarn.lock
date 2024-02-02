@@ -2346,9 +2346,9 @@ __metadata:
   resolution: "@fern-api/fern-ruby-model@workspace:generators/ruby/model"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generator-cli": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
+    "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
@@ -2377,9 +2377,9 @@ __metadata:
   dependencies:
     "@fern-api/fern-ruby-model": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generator-cli": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
+    "@fern-api/ruby-generator-cli": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
@@ -2412,28 +2412,6 @@ __metadata:
     eslint: ^8.56.0
     jest: ^29.7.0
     json-stream-stringify: ^3.0.1
-    organize-imports-cli: ^0.10.0
-    prettier: ^2.7.1
-    tmp-promise: ^3.0.3
-    typescript: 4.6.4
-  languageName: unknown
-  linkType: soft
-
-"@fern-api/generator-cli@workspace:*, @fern-api/generator-cli@workspace:packages/generators/cli":
-  version: 0.0.0-use.local
-  resolution: "@fern-api/generator-cli@workspace:packages/generators/cli"
-  dependencies:
-    "@fern-api/fs-utils": "workspace:*"
-    "@fern-api/generator-commons": "workspace:*"
-    "@fern-api/logger": "workspace:*"
-    "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
-    "@fern-fern/ir-sdk": 0.0.3294
-    "@types/jest": ^29.0.3
-    "@types/node": ^18.7.18
-    depcheck: ^1.4.6
-    eslint: ^8.56.0
-    jest: ^29.7.0
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
     tmp-promise: ^3.0.3
@@ -3050,6 +3028,28 @@ __metadata:
     lodash-es: ^4.17.21
     organize-imports-cli: ^0.10.0
     prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/ruby-generator-cli@workspace:*, @fern-api/ruby-generator-cli@workspace:generators/ruby/cli":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/ruby-generator-cli@workspace:generators/ruby/cli"
+  dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/ir-sdk": 0.0.3294
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    tmp-promise: ^3.0.3
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
