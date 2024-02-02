@@ -15,7 +15,7 @@ on:
   workflow_dispatch:
     inputs:
       generator:
-        description: "The generator to publish"
+        description: "The generator to publish a dev release for"
         required: true
         type: choice
         options:
