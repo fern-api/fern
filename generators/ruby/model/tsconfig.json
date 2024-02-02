@@ -4,8 +4,8 @@
   "include": ["./src"],
   "references": [
     { "path": "../../../packages/commons/fs-utils" },
-    { "path": "../../../packages/generators/cli" },
     { "path": "../../../packages/generators/commons" },
+    { "path": "../cli" },
     { "path": "../codegen" }
   ]
 }

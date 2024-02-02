@@ -132,6 +132,11 @@ function newDummyPublishOutputConfig(version: string): FernGeneratorExec.Generat
                     password: "",
                     registryUrl: "",
                     username: ""
+                },
+                rubygems: {
+                    registryUrl: "",
+                    apiKey: "",
+                    packageName: ""
                 }
             },
             version
