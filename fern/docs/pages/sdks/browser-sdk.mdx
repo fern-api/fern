@@ -1,9 +1,10 @@
 [Source code](https://github.com/fern-api/fern-typescript)
 
-**Latest version**: `0.8.13`
+**Latest version**: `0.9.5`
 
 The TypeScript Browser SDK generator outputs a fully functional TypeScript/JavaScript
-SDK for usage in the browser. It can publish the SDK to npmjs.org (or any other npm repository).
+SDK for usage in the browser. It can publish the SDK to [npmjs.org](https://npmjs.org)
+(or any other Node package repository).
 
 ## Local
 
@@ -13,14 +14,14 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-browser-sdk
-        version: 0.8.13
+        version: 0.9.5
         output:
           location: local-file-system
-          path: ../../generated/sdk/browser
+          path: ../generated/sdk/browser
 ```
 </CodeBlock>
 
-## Publish an Internal Package
+## Publish an internal package
 
 Publish the generated SDK to a private NPM hosted by Fern. Available on the Starter plan.
 
@@ -37,7 +38,7 @@ groups:
 ```
 </CodeBlock>
 
-## Publish a Public Package
+## Publish a public package
 
 <CodeBlock title="generators.yml">
 ```yaml
@@ -45,7 +46,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-typescript-browser-sdk
-        version: 0.8.13
+        version: 0.9.5
         output:
           location: npm
           package-name: imdb-browser # replace imdb with your package name
