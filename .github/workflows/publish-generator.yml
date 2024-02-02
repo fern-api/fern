@@ -342,9 +342,9 @@ jobs:
         if: ${{ inputs.generator == 'ruby-sdk' }}
         run: |
           projectVersion=$(cat generators/ruby/sdk/VERSION)
-          sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion
-          echo "VERSION=$projectVersion-$sha_short" >> $GITHUB_ENV
+          commitNumber$(git log --oneline | wc -l )
+          echo $projectVersion-$commitNumber
+          echo "VERSION=$projectVersion-$commitNumber" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
