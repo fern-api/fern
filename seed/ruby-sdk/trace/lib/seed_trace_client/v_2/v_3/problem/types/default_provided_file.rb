@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "file_info_v_2"
 require_relative "../../../../commons/types/variable_type"
+
+require_relative "file_info_v_2"
 require "json"
 
 module SeedTraceClient

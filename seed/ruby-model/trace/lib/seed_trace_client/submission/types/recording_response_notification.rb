@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
 require_relative "lightweight_stackframe_information"
+
+require_relative "submission_id"
 require_relative "traced_file"
 require "json"
 

@@ -55,19 +55,21 @@ export class FunctionInvocation extends AstNode {
                 startingTabSpaces
             });
             this.block.expressions.forEach((exp) =>
-                this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+                this.addText({
+                    stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+                })
             );
             this.addText({ stringContent: BLOCK_END, startingTabSpaces });
         }
     }
 
     private writeArgmuments(): string {
-        return `(${this.arguments_.map((a) => a.write()).join(", ")})`;
+        return `(${this.arguments_.map((a) => a.write({})).join(", ")})`;
     }
 
     // When writing the definition
     public writeInternal(startingTabSpaces: number): void {
-        const className = this.onObject instanceof AstNode ? this.onObject.write() : this.onObject;
+        const className = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
         this.addText({
             stringContent: className,
             templateString: this.optionalSafeCall ? "%s&." : "%s.",

@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "test_submission_update"
 require_relative "../../commons/types/problem_id"
+
 require_relative "../../v_2/problem/types/problem_info_v_2"
+
+require_relative "test_submission_update"
 require "json"
 
 module SeedTraceClient

@@ -4,8 +4,8 @@ require_relative "../../../problem/types/problem_description"
 require_relative "custom_files"
 require_relative "test_case_template"
 require_relative "test_case_v_2"
-require "set"
 require "json"
+require "set"
 
 module SeedTraceClient
   module V2

@@ -28,9 +28,9 @@ export class Expression extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.yardoc?.write(startingTabSpaces) });
-        const leftString = this.leftSide instanceof AstNode ? this.leftSide.write() : this.leftSide;
-        const rightString = this.rightSide instanceof AstNode ? this.rightSide.write() : this.rightSide;
+        this.addText({ stringContent: this.yardoc?.write({ startingTabSpaces }) });
+        const leftString = this.leftSide instanceof AstNode ? this.leftSide.write({}) : this.leftSide;
+        const rightString = this.rightSide instanceof AstNode ? this.rightSide.write({}) : this.rightSide;
         if (this.leftSide !== undefined) {
             this.addText({ stringContent: leftString, startingTabSpaces });
         }

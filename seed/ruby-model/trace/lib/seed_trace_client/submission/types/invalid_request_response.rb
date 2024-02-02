@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "submission_request"
 require_relative "invalid_request_cause"
+
+require_relative "submission_request"
 require "json"
 
 module SeedTraceClient

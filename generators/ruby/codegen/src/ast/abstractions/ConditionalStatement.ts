@@ -35,17 +35,18 @@ export class ConditionalStatement extends AstNode {
             });
         } else {
             this.addText({
-                stringContent: condition.leftSide instanceof AstNode ? condition.leftSide.write() : condition.leftSide,
+                stringContent:
+                    condition.leftSide instanceof AstNode ? condition.leftSide.write({}) : condition.leftSide,
                 templateString: `${type} %s`,
                 startingTabSpaces
             });
         }
         this.addText({
-            stringContent: condition.rightSide instanceof AstNode ? condition.rightSide.write() : condition.rightSide,
+            stringContent: condition.rightSide instanceof AstNode ? condition.rightSide.write({}) : condition.rightSide,
             appendToLastString: true
         });
         condition.expressions.forEach((exp) =>
-            this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
     }
 
@@ -55,7 +56,7 @@ export class ConditionalStatement extends AstNode {
             startingTabSpaces
         });
         expressions.forEach((exp) =>
-            this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
     }
 
