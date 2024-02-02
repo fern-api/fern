@@ -262,6 +262,9 @@ jobs:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
+      - name: Install
+        run: yarn install
+
       - name: Build CLI
         working-directory: ./generators/ruby/model
         run: yarn dist:cli
@@ -302,6 +305,9 @@ jobs:
         with:
           username: fernapi
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Install
+        run: yarn install
 
       - name: Build CLI
         working-directory: ./generators/ruby/sdk
