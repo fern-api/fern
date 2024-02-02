@@ -32,7 +32,7 @@ export class Argument extends AstNode {
     public writeInternal(): void {
         this.addText({ stringContent: this.name, templateString: "%s: " });
         this.addText({
-            stringContent: this.value instanceof AstNode ? this.value.write() : this.value,
+            stringContent: this.value instanceof AstNode ? this.value.write({}) : this.value,
             appendToLastString: true
         });
     }

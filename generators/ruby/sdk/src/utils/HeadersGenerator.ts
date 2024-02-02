@@ -168,7 +168,7 @@ export class HeadersGenerator {
                   })
                 : new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
 
-        return ['"Authorization"', `Bearer #{${bearerValue.write()}}`];
+        return ['"Authorization"', `Bearer #{${bearerValue.write({})}}`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
@@ -198,12 +198,12 @@ export class HeadersGenerator {
                 new Argument({
                     isNamed: false,
                     type: StringClassReference,
-                    value: `"#{${userName.write()}}:#{${password.write()}}"`
+                    value: `"#{${userName.write({})}}:#{${password.write({})}}"`
                 })
             ]
         });
 
-        return ['"Authorization"', `Basic #{${b64.write()}}`];
+        return ['"Authorization"', `Basic #{${b64.write({})}}`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
@@ -225,7 +225,7 @@ export class HeadersGenerator {
 
         return [
             `"${has.name.wireValue}"`,
-            `${has.prefix !== undefined ? has.prefix + " " : ""} #{${headerValue.write()}}`
+            `${has.prefix !== undefined ? has.prefix + " " : ""} #{${headerValue.write({})}}`
         ];
     }
 

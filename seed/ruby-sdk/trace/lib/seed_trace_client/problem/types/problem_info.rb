@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 require_relative "../../commons/types/problem_id"
+require_relative "../../commons/types/test_case_with_expected_result"
+require_relative "../../commons/types/variable_type"
 require_relative "problem_description"
 require_relative "variable_type_and_name"
-require_relative "../../commons/types/variable_type"
-require_relative "../../commons/types/test_case_with_expected_result"
 require "json"
 
 module SeedTraceClient

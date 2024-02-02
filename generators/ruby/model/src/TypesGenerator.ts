@@ -22,6 +22,7 @@ import {
     generateUndiscriminatedUnionFromTypeDeclaration,
     generateUnionFromTypeDeclaration
 } from "./AbstractionUtilities";
+import { RootFile } from "./RootFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
@@ -110,6 +111,16 @@ export class TypesGenerator {
                           throw new Error("Attempting to type declaration for an unknown type.");
                       }
                   });
+    }
+
+    // Create a main file for the gem, this just contains imports to all the types
+    private generateRootFile(): GeneratedRubyFile {
+        return new GeneratedRubyFile({
+            rootNode: new RootFile(Array.from(this.classReferenceFactory.generatedReferences.values())),
+            directoryPrefix: RelativeFilePath.of("."),
+            nestImportsInDirectory: RelativeFilePath.of(this.gemName),
+            name: this.gemName
+        });
     }
 
     private generateAliasFile(
@@ -222,8 +233,8 @@ export class TypesGenerator {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
-    public generateFiles(): Map<TypeId, GeneratedRubyFile> {
-        const typeFiles = new Map<TypeId, GeneratedRubyFile>();
+    public generateFiles(includeRootImports = false): GeneratedRubyFile[] {
+        const typeFiles: GeneratedRubyFile[] = [];
         for (const [typeId, typeDeclaration] of this.types.entries()) {
             const generatedFile = typeDeclaration.shape._visit<GeneratedRubyFile | undefined>({
                 alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
@@ -236,8 +247,12 @@ export class TypesGenerator {
             });
 
             if (generatedFile != null) {
-                typeFiles.set(typeId, generatedFile);
+                typeFiles.push(generatedFile);
             }
+        }
+
+        if (includeRootImports) {
+            typeFiles.push(this.generateRootFile());
         }
 
         return typeFiles;

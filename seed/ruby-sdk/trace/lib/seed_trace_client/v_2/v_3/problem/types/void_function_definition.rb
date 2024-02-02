@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "parameter"
 require_relative "function_implementation_for_multiple_languages"
+
+require_relative "parameter"
 require "json"
 
 module SeedTraceClient

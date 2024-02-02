@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
-require_relative "submission_id"
-require_relative "../../commons/types/debug_variable_value"
 require_relative "expression_location"
+
+require_relative "../../commons/types/debug_variable_value"
 require_relative "stack_information"
+
+require_relative "submission_id"
 require "json"
 
 module SeedTraceClient

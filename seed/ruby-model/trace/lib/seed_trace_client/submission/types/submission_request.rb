@@ -2,9 +2,9 @@
 
 require "json"
 require_relative "initialize_problem_request"
+require_relative "stop_request"
 require_relative "submit_request_v_2"
 require_relative "workspace_submit_request"
-require_relative "stop_request"
 
 module SeedTraceClient
   module Submission

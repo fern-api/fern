@@ -45,7 +45,7 @@ export class Parameter extends AstNode {
     }
 
     public writeInternal(): void {
-        const defaultString = this.defaultValue instanceof Variable ? this.defaultValue.write() : this.defaultValue;
+        const defaultString = this.defaultValue instanceof Variable ? this.defaultValue.write({}) : this.defaultValue;
         this.addText({
             stringContent: this.name,
             templateString: this.isBlock ? "&%s" : this.isNamed ? "%s:" : undefined

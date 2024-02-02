@@ -34,13 +34,13 @@ export class CaseStatement extends AstNode {
             startingTabSpaces
         });
         expressions.forEach((exp) =>
-            this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
-            stringContent: this.case_ instanceof AstNode ? this.case_.write() : this.case_,
+            stringContent: this.case_ instanceof AstNode ? this.case_.write({}) : this.case_,
             templateString: "case %s",
             startingTabSpaces
         });
