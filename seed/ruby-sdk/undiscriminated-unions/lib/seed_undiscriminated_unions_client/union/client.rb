@@ -9,7 +9,7 @@ module SeedUndiscriminatedUnionsClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [UnionClient]
+      # @return [Union::UnionClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -32,7 +32,7 @@ module SeedUndiscriminatedUnionsClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncUnionClient]
+      # @return [Union::AsyncUnionClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

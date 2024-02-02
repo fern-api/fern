@@ -8,7 +8,7 @@ module SeedBytesClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [ServiceClient]
+      # @return [Service::ServiceClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -31,7 +31,7 @@ module SeedBytesClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncServiceClient]
+      # @return [Service::AsyncServiceClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

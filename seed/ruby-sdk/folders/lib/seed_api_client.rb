@@ -10,13 +10,15 @@ require "async/http/faraday"
 
 module SeedApiClient
   class Client
+    attr_reader :client, :client
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @client = Client.initialize(request_client: request_client)
-      @client = Client.initialize(request_client: request_client)
+      request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @client = A::Client.new(request_client: request_client)
+      @client = Folder::Client.new(request_client: request_client)
     end
 
     # @param request_options [RequestOptions]
@@ -30,13 +32,15 @@ module SeedApiClient
   end
 
   class AsyncClient
+    attr_reader :async_client, :async_client
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_client = AsyncClient.initialize(client: request_client)
-      @async_client = AsyncClient.initialize(request_client: request_client)
+      AsyncRequestClient.new(headers: headers, base_url: base_url, conn: conn)
+      @async_client = A::AsyncClient.new(client: request_client)
+      @async_client = Folder::AsyncClient.new(request_client: request_client)
     end
 
     # @param request_options [RequestOptions]

@@ -8,7 +8,7 @@ module SeedMultiUrlEnvironmentClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [S3Client]
+      # @return [S3::S3Client]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -32,7 +32,7 @@ module SeedMultiUrlEnvironmentClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncS3Client]
+      # @return [S3::AsyncS3Client]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

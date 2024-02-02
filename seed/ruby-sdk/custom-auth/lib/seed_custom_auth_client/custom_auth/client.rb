@@ -8,7 +8,7 @@ module SeedCustomAuthClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [CustomAuthClient]
+      # @return [CustomAuth::CustomAuthClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -41,7 +41,7 @@ module SeedCustomAuthClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncCustomAuthClient]
+      # @return [CustomAuth::AsyncCustomAuthClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

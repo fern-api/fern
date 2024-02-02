@@ -9,7 +9,7 @@ module SeedExamplesClient
         attr_reader :request_client
 
         # @param request_client [RequestClient]
-        # @return [ServiceClient]
+        # @return [Health::Service::ServiceClient]
         def initialize(request_client:)
           # @type [RequestClient]
           @request_client = request_client
@@ -41,7 +41,7 @@ module SeedExamplesClient
         attr_reader :request_client
 
         # @param request_client [AsyncRequestClient]
-        # @return [AsyncServiceClient]
+        # @return [Health::Service::AsyncServiceClient]
         def initialize(request_client:)
           # @type [AsyncRequestClient]
           @request_client = request_client

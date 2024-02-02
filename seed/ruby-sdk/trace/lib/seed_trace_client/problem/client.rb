@@ -15,7 +15,7 @@ module SeedTraceClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [ProblemClient]
+      # @return [Problem::ProblemClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -104,7 +104,7 @@ module SeedTraceClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncProblemClient]
+      # @return [Problem::AsyncProblemClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

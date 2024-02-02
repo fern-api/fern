@@ -8,7 +8,7 @@ module SeedUnknownAsAnyClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [UnknownClient]
+      # @return [Unknown::UnknownClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -30,7 +30,7 @@ module SeedUnknownAsAnyClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncUnknownClient]
+      # @return [Unknown::AsyncUnknownClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

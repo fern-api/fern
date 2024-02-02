@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_file_upload_client"
+  spec.version = SeedFileUploadClient::Gemconfig::VERSION
   spec.authors = SeedFileUploadClient::Gemconfig::AUTHORS
   spec.email = SeedFileUploadClient::Gemconfig::EMAIL
   spec.summary = SeedFileUploadClient::Gemconfig::SUMMARY
@@ -19,7 +20,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
   spec.add_dependency "async-http-faraday", "~> 0.12"
   spec.add_dependency "faraday", "~> 2.7"
+  spec.add_dependency "faraday-multipart", "~> 1.0"
   spec.add_dependency "faraday-retry", "~> 2.2"
-  spec.add_dependency "farady-multipart", "~> 1.0"
   spec.add_dependency "mini_mime", "~> 1.1"
 end

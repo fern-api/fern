@@ -9,7 +9,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [InlinedRequestsClient]
+      # @return [InlinedRequests::InlinedRequestsClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -52,7 +52,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncInlinedRequestsClient]
+      # @return [InlinedRequests::AsyncInlinedRequestsClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

@@ -8,7 +8,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [ReqWithHeadersClient]
+      # @return [ReqWithHeaders::ReqWithHeadersClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -36,7 +36,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncReqWithHeadersClient]
+      # @return [ReqWithHeaders::AsyncReqWithHeadersClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

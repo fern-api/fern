@@ -58,7 +58,8 @@ export class Class_ extends AstNode {
                         isAssignment: true,
                         yardoc
                     });
-                })
+                }),
+                invocationName: "new"
             });
             functions = [this.initializer, ...functions];
         } else if (initializerOverride !== undefined) {

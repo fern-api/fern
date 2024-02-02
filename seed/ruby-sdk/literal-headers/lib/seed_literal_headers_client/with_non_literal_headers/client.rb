@@ -8,7 +8,7 @@ module SeedLiteralHeadersClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [WithNonLiteralHeadersClient]
+      # @return [WithNonLiteralHeaders::WithNonLiteralHeadersClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -39,7 +39,7 @@ module SeedLiteralHeadersClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncWithNonLiteralHeadersClient]
+      # @return [WithNonLiteralHeaders::AsyncWithNonLiteralHeadersClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

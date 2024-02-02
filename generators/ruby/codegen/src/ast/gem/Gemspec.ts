@@ -27,7 +27,7 @@ export class Gemspec extends FunctionInvocation {
             globalDependencies.push(
                 ...[
                     new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
-                    new ExternalDependency({ packageName: "farady-multipart", specifier: "~>", version: "1.0" })
+                    new ExternalDependency({ packageName: "faraday-multipart", specifier: "~>", version: "1.0" })
                 ]
             );
         }
@@ -48,6 +48,18 @@ export class Gemspec extends FunctionInvocation {
                     leftSide: "spec.version",
                     rightSide: new ClassReference({
                         name: `"${sdkVersion}"`,
+                        import_: new Import({ from: "lib/gemconfig" })
+                    }),
+                    isAssignment: true
+                })
+            );
+        } else {
+            // Allow for people to use the gemconfig if no version is found
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.version",
+                    rightSide: new ClassReference({
+                        name: `${clientName}::Gemconfig::VERSION`,
                         import_: new Import({ from: "lib/gemconfig" })
                     }),
                     isAssignment: true

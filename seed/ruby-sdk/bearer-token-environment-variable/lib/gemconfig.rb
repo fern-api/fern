@@ -2,6 +2,7 @@
 
 module SeedBearerTokenEnvironmentVariableClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

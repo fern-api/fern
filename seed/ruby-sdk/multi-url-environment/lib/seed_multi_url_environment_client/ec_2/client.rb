@@ -8,7 +8,7 @@ module SeedMultiUrlEnvironmentClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [Ec2Client]
+      # @return [Ec2::Ec2Client]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -32,7 +32,7 @@ module SeedMultiUrlEnvironmentClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncEc2Client]
+      # @return [Ec2::AsyncEc2Client]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

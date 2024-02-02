@@ -79,7 +79,7 @@ export class Yardoc extends AstNode {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s [Hash] ", startingTabSpaces });
             this.addText({
                 stringContent:
-                    parameter.documentation ??
+                    parameter.documentation?.replaceAll("\n", "") ??
                     `Request of type ${parameter.type.map((param) => param.typeHint).join(", ")}, as a Hash`,
                 appendToLastString: true
             });
@@ -99,7 +99,7 @@ export class Yardoc extends AstNode {
     private writeParameterAsClass(parameter: Parameter, startingTabSpaces: number): void {
         if (parameter.isBlock) {
             this.addText({ stringContent: parameter.name, templateString: "# @yield", startingTabSpaces });
-            this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+            this.addText({ stringContent: parameter.documentation?.replaceAll("\n", ""), appendToLastString: true });
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
             this.addText({
@@ -107,7 +107,7 @@ export class Yardoc extends AstNode {
                 templateString: " [%s] ",
                 appendToLastString: true
             });
-            this.addText({ stringContent: parameter.documentation, appendToLastString: true });
+            this.addText({ stringContent: parameter.documentation?.replaceAll("\n", ""), appendToLastString: true });
         }
     }
 
@@ -121,9 +121,11 @@ export class Yardoc extends AstNode {
                         ? this.reference.type.typeHint
                         : this.reference.type;
                 const documentation =
-                    this.reference.type instanceof Property ? this.reference.type.documentation : undefined;
+                    this.reference.type instanceof Property
+                        ? this.reference.type.documentation?.replaceAll("\n", "")
+                        : undefined;
                 this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
-                this.addText({ stringContent: documentation, appendToLastString: true });
+                this.addText({ stringContent: documentation?.replaceAll("\n", ""), appendToLastString: true });
             } else {
                 this.reference.parameters.forEach((parameter) => {
                     if (parameter.describeAsHashInYardoc) {

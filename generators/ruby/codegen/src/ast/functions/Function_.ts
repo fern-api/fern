@@ -16,6 +16,7 @@ export declare namespace Function_ {
         returnValue?: ClassReference | ClassReference[];
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
+        invocationName?: string;
     }
 }
 export class Function_ extends AstNode {
@@ -29,6 +30,8 @@ export class Function_ extends AstNode {
     public isStatic: boolean;
     public yardoc: Yardoc;
 
+    public invocationName: string | undefined;
+
     constructor({
         name,
         functionBody,
@@ -38,6 +41,7 @@ export class Function_ extends AstNode {
         isAsync = false,
         isStatic = false,
         returnValue,
+        invocationName,
         ...rest
     }: Function_.Init) {
         super(rest);
@@ -47,6 +51,7 @@ export class Function_ extends AstNode {
         this.functionBody = functionBody;
         this.isAsync = isAsync;
         this.isStatic = isStatic;
+        this.invocationName = invocationName;
 
         this.yardoc = new Yardoc({
             reference: { name: "docString", parameters, returnValue: this.returnValue },

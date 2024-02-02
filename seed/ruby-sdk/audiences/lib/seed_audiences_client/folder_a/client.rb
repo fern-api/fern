@@ -8,9 +8,9 @@ module SeedAudiencesClient
       attr_reader :request_client
 
       # @param client [RequestClient]
-      # @return []
+      # @return [FolderA::Client]
       def initialize(client:)
-        @service_client = ServiceClient.initialize(request_client: @request_client)
+        @service_client = FolderA::Service::ServiceClient.new(request_client: @request_client)
       end
     end
 
@@ -18,9 +18,9 @@ module SeedAudiencesClient
       attr_reader :client
 
       # @param client [AsyncRequestClient]
-      # @return []
+      # @return [FolderA::AsyncClient]
       def initialize(client:)
-        @async_service_client = AsyncServiceClient.initialize(request_client: @request_client)
+        @async_service_client = FolderA::Service::AsyncServiceClient.new(request_client: @request_client)
       end
     end
   end

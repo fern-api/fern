@@ -8,7 +8,7 @@ module SeedNurseryApiClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [PackageClient]
+      # @return [Package::PackageClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -30,7 +30,7 @@ module SeedNurseryApiClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncPackageClient]
+      # @return [Package::AsyncPackageClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

@@ -8,7 +8,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [NoAuthClient]
+      # @return [NoAuth::NoAuthClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -31,7 +31,7 @@ module SeedExhaustiveClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncNoAuthClient]
+      # @return [NoAuth::AsyncNoAuthClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

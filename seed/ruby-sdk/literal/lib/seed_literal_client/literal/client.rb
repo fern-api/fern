@@ -11,7 +11,7 @@ module SeedLiteralClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [LiteralClient]
+      # @return [Literal::LiteralClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -58,7 +58,7 @@ module SeedLiteralClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncLiteralClient]
+      # @return [Literal::AsyncLiteralClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

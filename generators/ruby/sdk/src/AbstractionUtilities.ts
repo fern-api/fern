@@ -12,6 +12,7 @@ import {
     Function_,
     GeneratedRubyFile,
     GenericClassReference,
+    getBreadcrumbsFromFilepath,
     getLocationForServiceDeclaration,
     getLocationFromFernFilepath,
     HashInstance,
@@ -170,6 +171,9 @@ export function generateRootPackage(
     });
     const clientClass = new Class_({
         classReference,
+        properties: syncSubpackages.map(
+            (sp) => new Property({ name: snakeCase(sp.classReference.name), type: sp.classReference })
+        ),
         functions: rootService
             ? generateEndpoints(
                   crf,
@@ -187,13 +191,14 @@ export function generateRootPackage(
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             functionBody: [
                 new Expression({
                     leftSide: requestClientVariable,
                     rightSide: new FunctionInvocation({
                         onObject: requestClient.classReference,
                         baseFunction: requestClient.initializer,
-                        arguments_: requestClient.properties.map((prop) => prop.toArgument(prop.name, true))
+                        arguments_: requestClient.initializer?.parameters.map((param) => param.toArgument(param.name))
                     }),
                     isAssignment: true
                 }),
@@ -214,7 +219,8 @@ export function generateRootPackage(
                     });
                 })
             ],
-            parameters: requestClient.initializer?.parameters
+            parameters: requestClient.initializer?.parameters,
+            returnValue: classReference
         })
     });
 
@@ -224,11 +230,15 @@ export function generateRootPackage(
         type: asyncRequestClient.classReference,
         variableType: VariableType.LOCAL
     });
+    const asyncClassReference = new ClassReference({
+        name: "AsyncClient",
+        import_: new Import({ from: gemName, isExternal: false })
+    });
     const asyncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "AsyncClient",
-            import_: new Import({ from: gemName, isExternal: false })
-        }),
+        classReference: asyncClassReference,
+        properties: asyncSubpackages.map(
+            (sp) => new Property({ name: snakeCase(sp.classReference.name), type: sp.classReference })
+        ),
         functions: rootService
             ? generateEndpoints(
                   crf,
@@ -246,6 +256,7 @@ export function generateRootPackage(
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             functionBody: [
                 new Expression({
                     leftSide: asyncRequestClientVariable,
@@ -273,7 +284,8 @@ export function generateRootPackage(
                     });
                 })
             ],
-            parameters: asyncRequestClient.initializer?.parameters
+            parameters: asyncRequestClient.initializer?.parameters,
+            returnValue: asyncClassReference
         })
     });
 
@@ -303,18 +315,22 @@ export function generateSubpackage(
     asyncSubpackages: Class_[] = []
 ): ClientClassPair {
     const location = getLocationFromFernFilepath(package_.fernFilepath) + "client";
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath);
 
     // Add Client class
     const requestClientProperty = new Property({ name: "request_client", type: requestClientCr });
+    const syncClassReference = new ClassReference({
+        name: "Client",
+        import_: new Import({ from: location, isExternal: false }),
+        moduleBreadcrumbs
+    });
     const syncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "Client",
-            import_: new Import({ from: location, isExternal: false })
-        }),
+        classReference: syncClassReference,
         properties: [requestClientProperty],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
             functionBody: subpackages.map((sp) => {
                 const subpackageClassVariable = new Variable({
@@ -337,21 +353,25 @@ export function generateSubpackage(
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: requestClientCr })]
+            parameters: [new Parameter({ name: "client", type: requestClientCr })],
+            returnValue: syncClassReference
         })
     });
 
     // Add Async Client class
     const asyncRequestClientProperty = new Property({ name: "request_client", type: asyncRequestClientCr });
+    const asyncClassReference = new ClassReference({
+        name: "AsyncClient",
+        import_: new Import({ from: location, isExternal: false }),
+        moduleBreadcrumbs
+    });
     const asyncClientClass = new Class_({
-        classReference: new ClassReference({
-            name: "AsyncClient",
-            import_: new Import({ from: location, isExternal: false })
-        }),
+        classReference: asyncClassReference,
         properties: [new Property({ name: "client", type: asyncRequestClientCr })],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
+            invocationName: "new",
             // Initialize each subpackage
             functionBody: asyncSubpackages.map((sp) => {
                 const subpackageClassVariable = new Variable({
@@ -374,7 +394,8 @@ export function generateSubpackage(
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: asyncRequestClientCr })]
+            parameters: [new Parameter({ name: "client", type: asyncRequestClientCr })],
+            returnValue: asyncClassReference
         })
     });
 
@@ -394,6 +415,7 @@ export function generateService(
 ): ClientClassPair {
     const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
     const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
+    const moduleBreadcrumbs = getBreadcrumbsFromFilepath(service.name.fernFilepath);
 
     // Add Client class
     const serviceBasePath = generateRubyPathTemplate(service.pathParameters, service.basePath);
@@ -401,7 +423,8 @@ export function generateService(
     const syncClientClass = new Class_({
         classReference: new ClassReference({
             name: `${serviceName}Client`,
-            import_
+            import_,
+            moduleBreadcrumbs
         }),
         properties: [requestClientProperty],
         includeInitializer: true,
@@ -424,7 +447,8 @@ export function generateService(
     const asyncClientClass = new Class_({
         classReference: new ClassReference({
             name: `Async${serviceName}Client`,
-            import_
+            import_,
+            moduleBreadcrumbs
         }),
         properties: [asyncRequestClientProperty],
         includeInitializer: true,
@@ -657,6 +681,7 @@ function generateRequestClientInitializer(
 
     return new Function_({
         name: "initialize",
+        invocationName: "new",
         parameters: [
             ...functionParams,
             // Select sample of the request overrides object properties

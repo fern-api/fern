@@ -9,7 +9,7 @@ module SeedApiClient
         attr_reader :request_client
 
         # @param request_client [RequestClient]
-        # @return [Client]
+        # @return [A::C::Client]
         def initialize(request_client:)
           # @type [RequestClient]
           @request_client = request_client
@@ -29,7 +29,7 @@ module SeedApiClient
         attr_reader :request_client
 
         # @param request_client [AsyncRequestClient]
-        # @return [AsyncClient]
+        # @return [A::C::AsyncClient]
         def initialize(request_client:)
           # @type [AsyncRequestClient]
           @request_client = request_client

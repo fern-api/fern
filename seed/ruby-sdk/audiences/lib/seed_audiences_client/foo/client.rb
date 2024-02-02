@@ -11,7 +11,7 @@ module SeedAudiencesClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [FooClient]
+      # @return [Foo::FooClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -41,7 +41,7 @@ module SeedAudiencesClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncFooClient]
+      # @return [Foo::AsyncFooClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

@@ -40,6 +40,10 @@ export function getLocationFromFernFilepath(fernFilepath: FernFilepath): string 
     return [...fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName)].join("/");
 }
 
+export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath): string[] {
+    return fernFilepath.allParts.map((pathPart) => pathPart.pascalCase.safeName);
+}
+
 export function generateGemspec(
     clientName: string,
     gemName: string,
@@ -71,6 +75,7 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
         child: new Module_({
             name: "Gemconfig",
             child: [
+                new Expression({ leftSide: "VERSION", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze', isAssignment: true }),
                 new Expression({ leftSide: "EMAIL", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "SUMMARY", rightSide: '""', isAssignment: true }),

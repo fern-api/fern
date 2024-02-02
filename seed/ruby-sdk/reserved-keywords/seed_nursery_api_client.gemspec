@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_nursery_api_client"
+  spec.version = SeedNurseryApiClient::Gemconfig::VERSION
   spec.authors = SeedNurseryApiClient::Gemconfig::AUTHORS
   spec.email = SeedNurseryApiClient::Gemconfig::EMAIL
   spec.summary = SeedNurseryApiClient::Gemconfig::SUMMARY

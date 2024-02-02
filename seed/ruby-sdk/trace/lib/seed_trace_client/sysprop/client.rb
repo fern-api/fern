@@ -8,7 +8,7 @@ module SeedTraceClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [SyspropClient]
+      # @return [Sysprop::SyspropClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -47,7 +47,7 @@ module SeedTraceClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncSyspropClient]
+      # @return [Sysprop::AsyncSyspropClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

@@ -8,7 +8,7 @@ module SeedObjectsWithImportsClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [OptionalClient]
+      # @return [Optional::OptionalClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -30,7 +30,7 @@ module SeedObjectsWithImportsClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncOptionalClient]
+      # @return [Optional::AsyncOptionalClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

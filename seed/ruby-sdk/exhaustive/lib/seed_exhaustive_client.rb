@@ -26,32 +26,37 @@ require "async/http/faraday"
 
 module SeedExhaustiveClient
   class Client
+    attr_reader :client, :inlined_requests_client, :no_auth_client, :no_req_body_client, :req_with_headers_client
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return []
+    # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @client = Client.initialize(request_client: request_client)
-      @inlined_requests_client = InlinedRequestsClient.initialize(request_client: request_client)
-      @no_auth_client = NoAuthClient.initialize(request_client: request_client)
-      @no_req_body_client = NoReqBodyClient.initialize(request_client: request_client)
-      @req_with_headers_client = ReqWithHeadersClient.initialize(request_client: request_client)
+      request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token)
+      @client = Endpoints::Client.new(request_client: request_client)
+      @inlined_requests_client = InlinedRequests::InlinedRequestsClient.new(request_client: request_client)
+      @no_auth_client = NoAuth::NoAuthClient.new(request_client: request_client)
+      @no_req_body_client = NoReqBody::NoReqBodyClient.new(request_client: request_client)
+      @req_with_headers_client = ReqWithHeaders::ReqWithHeadersClient.new(request_client: request_client)
     end
   end
 
   class AsyncClient
+    attr_reader :async_client, :async_inlined_requests_client, :async_no_auth_client, :async_no_req_body_client,
+                :async_req_with_headers_client
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return []
+    # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_client = AsyncClient.initialize(client: request_client)
-      @async_inlined_requests_client = AsyncInlinedRequestsClient.initialize(request_client: request_client)
-      @async_no_auth_client = AsyncNoAuthClient.initialize(request_client: request_client)
-      @async_no_req_body_client = AsyncNoReqBodyClient.initialize(request_client: request_client)
-      @async_req_with_headers_client = AsyncReqWithHeadersClient.initialize(request_client: request_client)
+      AsyncRequestClient.new(headers: headers, base_url: base_url, conn: conn)
+      @async_client = Endpoints::AsyncClient.new(client: request_client)
+      @async_inlined_requests_client = InlinedRequests::AsyncInlinedRequestsClient.new(request_client: request_client)
+      @async_no_auth_client = NoAuth::AsyncNoAuthClient.new(request_client: request_client)
+      @async_no_req_body_client = NoReqBody::AsyncNoReqBodyClient.new(request_client: request_client)
+      @async_req_with_headers_client = ReqWithHeaders::AsyncReqWithHeadersClient.new(request_client: request_client)
     end
   end
 end

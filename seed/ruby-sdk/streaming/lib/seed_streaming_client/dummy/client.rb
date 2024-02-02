@@ -6,7 +6,7 @@ module SeedStreamingClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [DummyClient]
+      # @return [Dummy::DummyClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -17,7 +17,7 @@ module SeedStreamingClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncDummyClient]
+      # @return [Dummy::AsyncDummyClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

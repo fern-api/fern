@@ -217,44 +217,51 @@ require "async/http/faraday"
 
 module SeedTraceClient
   class Client
+    attr_reader :client, :admin_client, :homepage_client, :migration_client, :playlist_client, :problem_client,
+                :submission_client, :sysprop_client
+
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
-    # @return []
+    # @return [Client]
     def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil,
                    x_random_header: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @client = Client.initialize(request_client: request_client)
-      @admin_client = AdminClient.initialize(request_client: request_client)
-      @homepage_client = HomepageClient.initialize(request_client: request_client)
-      @migration_client = MigrationClient.initialize(request_client: request_client)
-      @playlist_client = PlaylistClient.initialize(request_client: request_client)
-      @problem_client = ProblemClient.initialize(request_client: request_client)
-      @submission_client = SubmissionClient.initialize(request_client: request_client)
-      @sysprop_client = SyspropClient.initialize(request_client: request_client)
+      request_client = RequestClient.new(environment: environment, max_retries: max_retries,
+                                         timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
+      @client = V2::Client.new(request_client: request_client)
+      @admin_client = Admin::AdminClient.new(request_client: request_client)
+      @homepage_client = Homepage::HomepageClient.new(request_client: request_client)
+      @migration_client = Migration::MigrationClient.new(request_client: request_client)
+      @playlist_client = Playlist::PlaylistClient.new(request_client: request_client)
+      @problem_client = Problem::ProblemClient.new(request_client: request_client)
+      @submission_client = Submission::SubmissionClient.new(request_client: request_client)
+      @sysprop_client = Sysprop::SyspropClient.new(request_client: request_client)
     end
   end
 
   class AsyncClient
+    attr_reader :async_client, :async_admin_client, :async_homepage_client, :async_migration_client,
+                :async_playlist_client, :async_problem_client, :async_submission_client, :async_sysprop_client
+
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param x_random_header [String]
-    # @return []
+    # @return [AsyncClient]
     def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil,
                    x_random_header: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_client = AsyncClient.initialize(request_client: request_client)
-      @async_admin_client = AsyncAdminClient.initialize(request_client: request_client)
-      @async_homepage_client = AsyncHomepageClient.initialize(request_client: request_client)
-      @async_migration_client = AsyncMigrationClient.initialize(request_client: request_client)
-      @async_playlist_client = AsyncPlaylistClient.initialize(request_client: request_client)
-      @async_problem_client = AsyncProblemClient.initialize(request_client: request_client)
-      @async_submission_client = AsyncSubmissionClient.initialize(request_client: request_client)
-      @async_sysprop_client = AsyncSyspropClient.initialize(request_client: request_client)
+      AsyncRequestClient.new(headers: headers, base_url: base_url, conn: conn)
+      @async_client = V2::AsyncClient.new(request_client: request_client)
+      @async_admin_client = Admin::AsyncAdminClient.new(request_client: request_client)
+      @async_homepage_client = Homepage::AsyncHomepageClient.new(request_client: request_client)
+      @async_migration_client = Migration::AsyncMigrationClient.new(request_client: request_client)
+      @async_playlist_client = Playlist::AsyncPlaylistClient.new(request_client: request_client)
+      @async_problem_client = Problem::AsyncProblemClient.new(request_client: request_client)
+      @async_submission_client = Submission::AsyncSubmissionClient.new(request_client: request_client)
+      @async_sysprop_client = Sysprop::AsyncSyspropClient.new(request_client: request_client)
     end
   end
 end

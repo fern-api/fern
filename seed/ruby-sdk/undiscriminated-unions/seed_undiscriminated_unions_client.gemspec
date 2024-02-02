@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_undiscriminated_unions_client"
+  spec.version = SeedUndiscriminatedUnionsClient::Gemconfig::VERSION
   spec.authors = SeedUndiscriminatedUnionsClient::Gemconfig::AUTHORS
   spec.email = SeedUndiscriminatedUnionsClient::Gemconfig::EMAIL
   spec.summary = SeedUndiscriminatedUnionsClient::Gemconfig::SUMMARY

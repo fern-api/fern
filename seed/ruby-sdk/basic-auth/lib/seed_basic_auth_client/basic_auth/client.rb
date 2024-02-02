@@ -8,7 +8,7 @@ module SeedBasicAuthClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [BasicAuthClient]
+      # @return [BasicAuth::BasicAuthClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -43,7 +43,7 @@ module SeedBasicAuthClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncBasicAuthClient]
+      # @return [BasicAuth::AsyncBasicAuthClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

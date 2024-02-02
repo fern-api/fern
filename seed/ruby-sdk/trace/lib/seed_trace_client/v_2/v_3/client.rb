@@ -9,9 +9,9 @@ module SeedTraceClient
         attr_reader :request_client
 
         # @param client [RequestClient]
-        # @return []
+        # @return [V2::V3::Client]
         def initialize(client:)
-          @problem_client = ProblemClient.initialize(request_client: @request_client)
+          @problem_client = V2::V3::Problem::ProblemClient.new(request_client: @request_client)
         end
       end
 
@@ -19,9 +19,9 @@ module SeedTraceClient
         attr_reader :client
 
         # @param client [AsyncRequestClient]
-        # @return []
+        # @return [V2::V3::AsyncClient]
         def initialize(client:)
-          @async_problem_client = AsyncProblemClient.initialize(request_client: @request_client)
+          @async_problem_client = V2::V3::Problem::AsyncProblemClient.new(request_client: @request_client)
         end
       end
     end

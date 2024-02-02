@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_multi_url_environment_client"
+  spec.version = SeedMultiUrlEnvironmentClient::Gemconfig::VERSION
   spec.authors = SeedMultiUrlEnvironmentClient::Gemconfig::AUTHORS
   spec.email = SeedMultiUrlEnvironmentClient::Gemconfig::EMAIL
   spec.summary = SeedMultiUrlEnvironmentClient::Gemconfig::SUMMARY

@@ -2,6 +2,7 @@
 
 module SeedCustomAuthClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

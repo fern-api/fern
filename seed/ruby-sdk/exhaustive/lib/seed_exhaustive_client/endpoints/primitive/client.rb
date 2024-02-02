@@ -10,7 +10,7 @@ module SeedExhaustiveClient
         attr_reader :request_client
 
         # @param request_client [RequestClient]
-        # @return [PrimitiveClient]
+        # @return [Endpoints::Primitive::PrimitiveClient]
         def initialize(request_client:)
           # @type [RequestClient]
           @request_client = request_client
@@ -131,7 +131,7 @@ module SeedExhaustiveClient
         attr_reader :request_client
 
         # @param request_client [AsyncRequestClient]
-        # @return [AsyncPrimitiveClient]
+        # @return [Endpoints::Primitive::AsyncPrimitiveClient]
         def initialize(request_client:)
           # @type [AsyncRequestClient]
           @request_client = request_client

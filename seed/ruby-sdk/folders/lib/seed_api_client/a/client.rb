@@ -9,10 +9,10 @@ module SeedApiClient
       attr_reader :request_client
 
       # @param client [RequestClient]
-      # @return []
+      # @return [A::Client]
       def initialize(client:)
-        @client = Client.initialize(request_client: @request_client)
-        @client = Client.initialize(request_client: @request_client)
+        @client = A::B::Client.new(request_client: @request_client)
+        @client = A::C::Client.new(request_client: @request_client)
       end
     end
 
@@ -20,10 +20,10 @@ module SeedApiClient
       attr_reader :client
 
       # @param client [AsyncRequestClient]
-      # @return []
+      # @return [A::AsyncClient]
       def initialize(client:)
-        @async_client = AsyncClient.initialize(request_client: @request_client)
-        @async_client = AsyncClient.initialize(request_client: @request_client)
+        @async_client = A::B::AsyncClient.new(request_client: @request_client)
+        @async_client = A::C::AsyncClient.new(request_client: @request_client)
       end
     end
   end

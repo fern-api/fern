@@ -8,7 +8,7 @@ module SeedErrorPropertyClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [PropertyBasedErrorClient]
+      # @return [PropertyBasedError::PropertyBasedErrorClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -28,7 +28,7 @@ module SeedErrorPropertyClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncPropertyBasedErrorClient]
+      # @return [PropertyBasedError::AsyncPropertyBasedErrorClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

@@ -2,6 +2,7 @@
 
 module SeedEnumClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

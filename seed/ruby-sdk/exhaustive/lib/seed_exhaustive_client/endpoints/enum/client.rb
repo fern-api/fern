@@ -9,7 +9,7 @@ module SeedExhaustiveClient
         attr_reader :request_client
 
         # @param request_client [RequestClient]
-        # @return [EnumClient]
+        # @return [Endpoints::Enum::EnumClient]
         def initialize(request_client:)
           # @type [RequestClient]
           @request_client = request_client
@@ -33,7 +33,7 @@ module SeedExhaustiveClient
         attr_reader :request_client
 
         # @param request_client [AsyncRequestClient]
-        # @return [AsyncEnumClient]
+        # @return [Endpoints::Enum::AsyncEnumClient]
         def initialize(request_client:)
           # @type [AsyncRequestClient]
           @request_client = request_client

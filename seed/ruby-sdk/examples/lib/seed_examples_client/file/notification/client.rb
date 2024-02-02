@@ -9,9 +9,9 @@ module SeedExamplesClient
         attr_reader :request_client
 
         # @param client [RequestClient]
-        # @return []
+        # @return [File::Notification::Client]
         def initialize(client:)
-          @service_client = ServiceClient.initialize(request_client: @request_client)
+          @service_client = File::Notification::Service::ServiceClient.new(request_client: @request_client)
         end
       end
 
@@ -19,9 +19,9 @@ module SeedExamplesClient
         attr_reader :client
 
         # @param client [AsyncRequestClient]
-        # @return []
+        # @return [File::Notification::AsyncClient]
         def initialize(client:)
-          @async_service_client = AsyncServiceClient.initialize(request_client: @request_client)
+          @async_service_client = File::Notification::Service::AsyncServiceClient.new(request_client: @request_client)
         end
       end
     end

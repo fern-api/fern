@@ -8,7 +8,7 @@ module SeedApiClient
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [SvcClient]
+      # @return [Svc::SvcClient]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -31,7 +31,7 @@ module SeedApiClient
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [AsyncSvcClient]
+      # @return [Svc::AsyncSvcClient]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client
