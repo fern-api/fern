@@ -46,7 +46,7 @@ For additional language support, visit [the Fern issues](https://github.com/fern
 
 ### 🌿 API Documentation
 
-Fern will build and host a documentation website with an auto-generated API reference. Write additional pages in markdown and have them versioned with git. Search, SEO, dark mode, and more are provided out-of-the-box.
+Fern can build and host a documentation website with an auto-generated API reference. Write additional pages in Markdown and version them with git. Search, SEO, dark mode, and more are provided out of the box.
 
 Browse docs built with Fern:
 
