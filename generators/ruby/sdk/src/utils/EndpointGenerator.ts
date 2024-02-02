@@ -296,10 +296,10 @@ export class EndpointGenerator {
                                         })
                                     ]
                                 });
-                                if (prop.type.some((cr) => cr === FileClassReference) === true) {
+                                if (prop.type.some((cr) => cr === FileClassReference)) {
                                     return [
                                         prop.wireValue ?? prop.name,
-                                        prop.isOptional === true
+                                        prop.isOptional
                                             ? new ConditionalStatement({
                                                   if_: {
                                                       leftSide: new FunctionInvocation({
@@ -431,9 +431,7 @@ export class EndpointGenerator {
             this.endpoint.response?._visit<ClassReference>({
                 json: (jr: JsonResponse) => this.crf.fromTypeReference(jr.responseBodyType),
                 fileDownload: () => VoidClassReference,
-                streaming: () => {
-                    throw new Error("Streaming not yet supported.");
-                },
+                streaming: () => VoidClassReference,
                 text: () => StringClassReference,
                 _other: () => {
                     throw new Error("Unknown response type.");
@@ -503,5 +501,18 @@ export class EndpointGenerator {
                 throw new Error("Unknown response type.");
             }
         });
+    }
+
+    // TODO: log this skipping
+    public static isStreamingResponse(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?._visit<boolean>({
+                json: () => false,
+                fileDownload: () => false,
+                streaming: () => true,
+                text: () => false,
+                _other: () => false
+            }) ?? false
+        );
     }
 }

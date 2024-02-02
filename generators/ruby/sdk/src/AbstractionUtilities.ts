@@ -68,73 +68,78 @@ export function generateEndpoints(
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility
 ): Function_[] {
-    return endpoints.map((endpoint) => {
-        // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
-        const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
-            .filter((pathPart) => pathPart !== "")
-            .join("/");
-        const responseVariable = new Variable({
-            name: "response",
-            type: GenericClassReference,
-            variableType: VariableType.LOCAL
-        });
-        const requestOptionsVariable = new Variable({
-            name: "request_options",
-            type: requestOptions.classReference,
-            variableType: VariableType.LOCAL
-        });
-        const generator = new EndpointGenerator(
-            endpoint,
-            requestOptionsVariable,
-            requestOptions,
-            crf,
-            generatedClasses,
-            fileUploadUtility
-        );
+    return endpoints
+        .map((endpoint) => {
+            if (EndpointGenerator.isStreamingResponse(endpoint)) {
+                return;
+            }
+            // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
+            const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
+                .filter((pathPart) => pathPart !== "")
+                .join("/");
+            const responseVariable = new Variable({
+                name: "response",
+                type: GenericClassReference,
+                variableType: VariableType.LOCAL
+            });
+            const requestOptionsVariable = new Variable({
+                name: "request_options",
+                type: requestOptions.classReference,
+                variableType: VariableType.LOCAL
+            });
+            const generator = new EndpointGenerator(
+                endpoint,
+                requestOptionsVariable,
+                requestOptions,
+                crf,
+                generatedClasses,
+                fileUploadUtility
+            );
 
-        const functionCore: AstNode[] = [
-            new Expression({
-                leftSide: responseVariable,
-                rightSide: new FunctionInvocation({
-                    // TODO: Do this field access on the client better
-                    onObject: `${requestClientVariable.write()}.conn`,
-                    baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                    arguments_: [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
-                    block: generator.getFaradayBlock(requestClientVariable)
+            const functionCore: AstNode[] = [
+                new Expression({
+                    leftSide: responseVariable,
+                    rightSide: new FunctionInvocation({
+                        // TODO: Do this field access on the client better
+                        onObject: `${requestClientVariable.write()}.conn`,
+                        baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
+                        arguments_: [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
+                        block: generator.getFaradayBlock(requestClientVariable)
+                    }),
+                    isAssignment: true
                 }),
-                isAssignment: true
-            }),
-            // TODO: parse and throw the custom exception here. Disable the faraday middleware that does this generically.
-            ...(generator.getResponseExpressions(responseVariable) ?? [])
-        ];
+                // TODO: parse and throw the custom exception here. Disable the faraday middleware that does this generically.
+                ...(generator.getResponseExpressions(responseVariable) ?? [])
+            ];
 
-        return new Function_({
-            name: endpoint.name.snakeCase.safeName,
-            parameters: [
-                ...generator.getEndpointParameters(),
-                // Optional request_options, e.g. the per-request customizer, optional
-                new Parameter({
-                    name: requestOptionsVariable.name,
-                    type: requestOptionsVariable.type,
-                    isOptional: true
-                })
-            ],
-            functionBody: isAsync
-                ? [
-                      new FunctionInvocation({
-                          onObject: new ClassReference({
-                              name: "Async",
-                              import_: new Import({ from: "async", isExternal: true })
-                          }),
-                          block: { expressions: functionCore }
-                      })
-                  ]
-                : functionCore,
-            returnValue: generator.getResponseType(),
-            crf,
-            flattenedProperties
-        });
-    });
+            return new Function_({
+                name: endpoint.name.snakeCase.safeName,
+                parameters: [
+                    ...generator.getEndpointParameters(),
+                    // Optional request_options, e.g. the per-request customizer, optional
+                    new Parameter({
+                        name: requestOptionsVariable.name,
+                        type: requestOptionsVariable.type,
+                        isOptional: true
+                    })
+                ],
+                functionBody: isAsync
+                    ? [
+                          new FunctionInvocation({
+                              onObject: new ClassReference({
+                                  name: "Async",
+                                  import_: new Import({ from: "async", isExternal: true })
+                              }),
+                              block: { expressions: functionCore }
+                          })
+                      ]
+                    : functionCore,
+                returnValue: generator.getResponseType(),
+                crf,
+                flattenedProperties
+            });
+        })
+        .filter((fun) => fun !== undefined) as Function_[];
 }
 
 export function generateRootPackage(
