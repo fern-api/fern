@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "exception_v_2"
 require_relative "exception_info"
+
+require_relative "exception_v_2"
 require "json"
 
 module SeedTraceClient

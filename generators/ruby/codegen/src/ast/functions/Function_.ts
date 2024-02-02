@@ -56,13 +56,13 @@ export class Function_ extends AstNode {
     }
 
     private writeParameters(): string | undefined {
-        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write()).join(", ")})` : undefined;
+        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write({})).join(", ")})` : undefined;
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
         this.addText({
-            stringContent: this.yardoc.write(startingTabSpaces),
+            stringContent: this.yardoc.write({ startingTabSpaces }),
             templateString: this.documentation !== undefined ? "#\n%s" : undefined,
             startingTabSpaces: this.documentation !== undefined ? startingTabSpaces : 0
         });
@@ -73,7 +73,7 @@ export class Function_ extends AstNode {
         });
         this.addText({ stringContent: this.writeParameters(), appendToLastString: true, startingTabSpaces });
         this.functionBody.map((exp) =>
-            this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+            this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }

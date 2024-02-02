@@ -296,10 +296,10 @@ export class EndpointGenerator {
                                         })
                                     ]
                                 });
-                                if (prop.type.some((cr) => cr === FileClassReference) === true) {
+                                if (prop.type.some((cr) => cr === FileClassReference)) {
                                     return [
                                         prop.wireValue ?? prop.name,
-                                        prop.isOptional === true
+                                        prop.isOptional
                                             ? new ConditionalStatement({
                                                   if_: {
                                                       leftSide: new FunctionInvocation({
@@ -359,14 +359,14 @@ export class EndpointGenerator {
                         if_: {
                             leftSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
-                                onObject: `${requestClientVariable.write()}.${prop.name}`,
+                                onObject: `${requestClientVariable.write({})}.${prop.name}`,
                                 baseFunction: new Function_({ name: "nil?", functionBody: [] })
                             }),
                             operation: "!",
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
-                                    rightSide: `${requestClientVariable.write()}.${prop.name}`,
+                                    rightSide: `${requestClientVariable.write({})}.${prop.name}`,
                                     isAssignment: true
                                 })
                             ]
@@ -380,7 +380,7 @@ export class EndpointGenerator {
             expressions.push(
                 new Expression({
                     leftSide: `${this.blockArg}.options.on_data`,
-                    rightSide: this.streamProcessingBlock.write(),
+                    rightSide: this.streamProcessingBlock.write({}),
                     isAssignment: true
                 })
             );
@@ -399,7 +399,7 @@ export class EndpointGenerator {
             this.endpoint.baseUrl !== undefined
                 ? new Expression({
                       leftSide: `${this.blockArg}.url`,
-                      rightSide: `${requestClientVariable.write()}.default_environment[${this.endpoint.baseUrl}]`,
+                      rightSide: `${requestClientVariable.write({})}.default_environment[${this.endpoint.baseUrl}]`,
                       isAssignment: true
                   })
                 : undefined;

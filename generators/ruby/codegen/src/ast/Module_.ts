@@ -8,23 +8,26 @@ export declare namespace Module_ {
     export interface Init extends AstNode.Init {
         name: string;
         child?: Module_ | Class_ | AstNode | AstNode[];
+        arbitraryImports?: Import[];
     }
 }
 
 export class Module_ extends AstNode {
     public name: string;
     public children?: AstNode[];
+    public arbitraryImports?: Import[];
 
-    constructor({ name, child, ...rest }: Module_.Init) {
+    constructor({ name, child, arbitraryImports, ...rest }: Module_.Init) {
         super(rest);
         this.name = name;
         this.children = child instanceof AstNode ? [child] : child;
+        this.arbitraryImports = arbitraryImports;
     }
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: this.name, templateString: "module %s", startingTabSpaces });
         this.children?.forEach((child) =>
-            this.addText({ stringContent: child.write(this.tabSizeSpaces + startingTabSpaces) })
+            this.addText({ stringContent: child.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
@@ -33,7 +36,8 @@ export class Module_ extends AstNode {
         rootModule: string,
         child: T,
         path?: FernFilepath,
-        includeFullPath = true
+        includeFullPath = true,
+        arbitraryImports?: Import[]
     ): Module_ | T {
         const moduleBreadcrumbs = path ? Module_.getModulePathFromTypeName(path, includeFullPath) : [];
         let moduleWrappedItem: Module_ | T = child;
@@ -42,7 +46,8 @@ export class Module_ extends AstNode {
                 (moduleWrappedItem = new Module_({
                     name: mod,
                     child: moduleWrappedItem,
-                    writeImports: rootModule === mod
+                    writeImports: rootModule === mod,
+                    arbitraryImports: rootModule === mod ? arbitraryImports : undefined
                 }))
         );
 
@@ -56,7 +61,7 @@ export class Module_ extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        let imports = new Set<Import>();
+        let imports = new Set<Import>(this.arbitraryImports);
         this.children?.forEach((c) => (imports = new Set([...imports, ...c.getImports()])));
         return imports;
     }

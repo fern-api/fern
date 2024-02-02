@@ -2,16 +2,16 @@
 
 require "json"
 require_relative "building_executor_response"
-require_relative "running_response"
 require_relative "errored_response"
-require_relative "stopped_response"
+require_relative "finished_response"
 require_relative "graded_response"
 require_relative "graded_response_v_2"
-require_relative "workspace_ran_response"
-require_relative "recording_response_notification"
-require_relative "recorded_response_notification"
 require_relative "invalid_request_response"
-require_relative "finished_response"
+require_relative "recorded_response_notification"
+require_relative "recording_response_notification"
+require_relative "running_response"
+require_relative "stopped_response"
+require_relative "workspace_ran_response"
 
 module SeedTraceClient
   module Submission

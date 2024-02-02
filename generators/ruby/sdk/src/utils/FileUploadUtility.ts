@@ -53,7 +53,7 @@ export class FileUploadUtility extends Class_ {
                         expressions: [
                             new Expression({
                                 leftSide: pathVariable,
-                                rightSide: `${fileVariable.write()}.path`,
+                                rightSide: `${fileVariable.write({})}.path`,
                                 isAssignment: true
                             })
                         ]
@@ -90,7 +90,7 @@ export class FileUploadUtility extends Class_ {
                         expressions: [
                             new Expression({
                                 leftSide: mimeTypeVariable,
-                                rightSide: `${mimeTypeVariable.write()}.content_type`,
+                                rightSide: `${mimeTypeVariable.write({})}.content_type`,
                                 isAssignment: true
                             })
                         ]

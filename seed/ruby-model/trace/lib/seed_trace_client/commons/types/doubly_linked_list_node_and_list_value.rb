@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "node_id"
 require_relative "doubly_linked_list_value"
+
+require_relative "node_id"
 require "json"
 
 module SeedTraceClient

@@ -1,8 +1,9 @@
 # frozen_string_literal: true
 
-require_relative "test_case_metadata"
 require_relative "test_case_implementation_reference"
+
 require_relative "test_case_expects"
+require_relative "test_case_metadata"
 require "json"
 
 module SeedTraceClient
