@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.0.1] - 2024-02-01
+
+- Improvement: Support client generation (async and async) as well as most endpoint types (except streaming)
+
 ## [0.0.0] - 2024-01-30
 
 - Chore: Intialize this changelog
