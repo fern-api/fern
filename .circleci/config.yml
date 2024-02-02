@@ -2,20 +2,6 @@ version: 2.1
 orbs:
   node: circleci/node@5.0.1
 jobs:
-  live-test-dev:
-    docker:
-      - image: cimg/node:18.8.0
-    steps:
-      - checkout
-      - node/install-packages:
-          pkg-manager: yarn-berry
-      - run:
-          name: Live Test (dev)
-          command: |
-            yarn workspace @fern-api/cli dist:cli:dev
-            cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
-            ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"
-
   live-test:
     docker:
       - image: cimg/node:18.8.0
@@ -131,29 +117,10 @@ jobs:
           command: |
             yarn workspace @fern-api/cli publish:cli:prod --tag latest
 
-  publish-ir-sdk:
-    docker:
-      - image: cimg/node:18.8.0
-    steps:
-      - checkout
-      - run:
-          name: Publish ir sdks
-          command: |
-            export FERN_TOKEN="$FERN_ORG_TOKEN_PROD"
-            npx fern-api generate --api ir-types-v31 --group sdks
-
 workflows:
   version: 2
   build:
     jobs:
-      - live-test-dev:
-          filters:
-            tags:
-              only: /.*/
-          context:
-            - auth0-dev
-            - fern-tokens
-
       - live-test:
           filters:
             branches:
@@ -165,6 +132,17 @@ workflows:
             - fern-tokens
             - posthog
 
+      - publish-rc:
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
+          context:
+            - npm
+            - auth0-prod
+            - posthog
+
       - publish-dev:
           filters:
             branches:
@@ -173,19 +151,6 @@ workflows:
             - npm
             - auth0-dev
 
-      - publish-rc:
-          filters:
-            branches:
-              ignore: /.*/
-            tags:
-              only: /^([0-9]+)\.([0-9]+)\.([0-9]+)-rc([0-9]+)$/
-          requires:
-            - live-test-dev
-          context:
-            - npm
-            - auth0-prod
-            - posthog
-
       - publish:
           filters:
             branches:
@@ -193,20 +158,9 @@ workflows:
             tags:
               only: /^([0-9]+)\.([0-9]+)\.([0-9]+)$/
           requires:
-            - live-test-dev
             - live-test
           context:
             - npm
             - auth0-prod
             - posthog
 
-      - publish-ir-sdk:
-          filters:
-            branches:
-              only: main
-            tags:
-              only: /.*/
-          requires:
-            - live-test-dev
-          context:
-            - fern-tokens

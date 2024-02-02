@@ -30,6 +30,7 @@ export async function runRemoteGenerationForGenerator({
     const intermediateRepresentation = await generateIntermediateRepresentation({
         workspace,
         generationLanguage: generatorInvocation.language,
+        smartCasing: generatorInvocation.smartCasing,
         disableExamples: generatorInvocation.disableExamples,
         audiences
     });

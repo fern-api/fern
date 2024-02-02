@@ -58,13 +58,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -4348,8 +4348,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -4426,8 +4426,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -4871,8 +4871,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -4949,8 +4949,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -5338,8 +5338,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -5416,8 +5416,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -5805,8 +5805,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -5883,8 +5883,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -5948,8 +5948,8 @@ exports[`generate IR 1`] = `
               },
               "originalName": "http-methods",
               "pascalCase": {
-                "safeName": "HttpMethods",
-                "unsafeName": "HttpMethods",
+                "safeName": "HTTPMethods",
+                "unsafeName": "HTTPMethods",
               },
               "screamingSnakeCase": {
                 "safeName": "HTTP_METHODS",
@@ -5968,8 +5968,8 @@ exports[`generate IR 1`] = `
             },
             "originalName": "http-methods",
             "pascalCase": {
-              "safeName": "HttpMethods",
-              "unsafeName": "HttpMethods",
+              "safeName": "HTTPMethods",
+              "unsafeName": "HTTPMethods",
             },
             "screamingSnakeCase": {
               "safeName": "HTTP_METHODS",
@@ -9726,13 +9726,13 @@ exports[`generate IR 1`] = `
           "method": "POST",
           "name": {
             "camelCase": {
-              "safeName": "getAndReturnUuid",
-              "unsafeName": "getAndReturnUuid",
+              "safeName": "getAndReturnUUID",
+              "unsafeName": "getAndReturnUUID",
             },
             "originalName": "getAndReturnUUID",
             "pascalCase": {
-              "safeName": "GetAndReturnUuid",
-              "unsafeName": "GetAndReturnUuid",
+              "safeName": "GetAndReturnUUID",
+              "unsafeName": "GetAndReturnUUID",
             },
             "screamingSnakeCase": {
               "safeName": "GET_AND_RETURN_UUID",
@@ -12100,8 +12100,8 @@ exports[`generate IR 1`] = `
             },
             "originalName": "http-methods",
             "pascalCase": {
-              "safeName": "HttpMethods",
-              "unsafeName": "HttpMethods",
+              "safeName": "HTTPMethods",
+              "unsafeName": "HTTPMethods",
             },
             "screamingSnakeCase": {
               "safeName": "HTTP_METHODS",
@@ -12120,8 +12120,8 @@ exports[`generate IR 1`] = `
           },
           "originalName": "http-methods",
           "pascalCase": {
-            "safeName": "HttpMethods",
-            "unsafeName": "HttpMethods",
+            "safeName": "HTTPMethods",
+            "unsafeName": "HTTPMethods",
           },
           "screamingSnakeCase": {
             "safeName": "HTTP_METHODS",
@@ -12162,8 +12162,8 @@ exports[`generate IR 1`] = `
         },
         "originalName": "http-methods",
         "pascalCase": {
-          "safeName": "HttpMethods",
-          "unsafeName": "HttpMethods",
+          "safeName": "HTTPMethods",
+          "unsafeName": "HTTPMethods",
         },
         "screamingSnakeCase": {
           "safeName": "HTTP_METHODS",
@@ -14860,8 +14860,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "uuid",
                 "pascalCase": {
-                  "safeName": "Uuid",
-                  "unsafeName": "Uuid",
+                  "safeName": "UUID",
+                  "unsafeName": "UUID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "UUID",

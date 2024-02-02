@@ -19,8 +19,8 @@ describe("migrateFromV9ToV8", () => {
                 },
                 originalName: "api",
                 pascalCase: {
-                    safeName: "Api",
-                    unsafeName: "Api"
+                    safeName: "API",
+                    unsafeName: "API"
                 },
                 screamingSnakeCase: {
                     safeName: "API",
@@ -40,13 +40,13 @@ describe("migrateFromV9ToV8", () => {
                 errorInstanceIdKey: {
                     name: {
                         camelCase: {
-                            safeName: "errorInstanceId",
-                            unsafeName: "errorInstanceId"
+                            safeName: "errorInstanceID",
+                            unsafeName: "errorInstanceID"
                         },
                         originalName: "errorInstanceId",
                         pascalCase: {
-                            safeName: "ErrorInstanceId",
-                            unsafeName: "ErrorInstanceId"
+                            safeName: "ErrorInstanceID",
+                            unsafeName: "ErrorInstanceID"
                         },
                         screamingSnakeCase: {
                             safeName: "ERROR_INSTANCE_ID",

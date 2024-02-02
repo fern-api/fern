@@ -1,5 +1,4 @@
-import { FernIr } from "@fern-fern/ir-sdk";
-import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName, DeclaredServiceName, DeclaredTypeName, FernFilepath, FernIr } from "@fern-api/ir-sdk";
 
 export const IdGenerator = {
     generateTypeId: (typeName: Omit<DeclaredTypeName, "typeId">): FernIr.commons.TypeId => {

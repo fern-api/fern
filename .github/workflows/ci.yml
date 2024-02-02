@@ -1,6 +1,9 @@
 name: ci
 
 on:
+  push:
+    branches:
+      - main
   pull_request:
     paths:
       - "packages/**"
@@ -126,3 +129,33 @@ jobs:
 
       - name: Ensure no changes to git-tracked files
         run: git --no-pager diff --exit-code
+
+  live-test-dev:
+    environment: Fern Dev
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install
+        run: yarn install
+
+      - name: Install Fern
+        run: npm install -g fern-api
+
+      - name: Check API definition is valid
+        env:
+          FORCE_COLOR: "2"
+          FERN_ORG_TOKEN_DEV: ${{ secrets.FERN_ORG_TOKEN_DEV }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          AUTH0_CLIENT_ID: ${{ secrets.AUTH0_CLIENT_ID }}
+        run: |
+          yarn workspace @fern-api/cli dist:cli:dev
+          cli_path="$(yarn workspace @fern-api/cli bin fern:dev)"
+          ./scripts/live-test.sh "$cli_path" "$FERN_ORG_TOKEN_DEV"

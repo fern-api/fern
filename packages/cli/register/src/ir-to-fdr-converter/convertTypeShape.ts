@@ -1,5 +1,5 @@
 import { APIV1Write } from "@fern-api/fdr-sdk";
-import { FernIr as Ir } from "@fern-fern/ir-sdk";
+import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { convertIrAvailability } from "./convertPackage";
 
 export function convertTypeShape(irType: Ir.types.Type): APIV1Write.TypeShape {

@@ -6,7 +6,7 @@ import { Plugin } from "@redocly/openapi-core/lib/config";
 import { NodeType } from "@redocly/openapi-core/lib/types";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import { merge } from "lodash-es";
+import { mergeWith } from "lodash-es";
 import { OpenAPI } from "openapi-types";
 import { FernOpenAPIExtension } from "./v3/extensions/fernExtensions";
 
@@ -92,7 +92,11 @@ export async function loadOpenAPI({
         } catch (err) {
             return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
         }
-        const merged = merge({}, parsed, parsedOverrides) as OpenAPI.Document;
+
+        // Rather than merging nested arrarys, we replace them with the overrides
+        const merged = mergeWith({}, parsed, parsedOverrides, (obj, src) =>
+            Array.isArray(obj) && Array.isArray(src) ? [...src] : undefined
+        ) as OpenAPI.Document;
         return merged;
     }
     return parsed;

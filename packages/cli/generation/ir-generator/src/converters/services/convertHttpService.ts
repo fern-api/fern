@@ -1,6 +1,4 @@
 import { assertNever } from "@fern-api/core-utils";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isVariablePathParameter, RawSchemas } from "@fern-api/yaml-schema";
 import {
     HttpEndpoint,
     HttpHeader,
@@ -10,7 +8,9 @@ import {
     PathParameterLocation,
     ResponseErrors,
     TypeReference
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import { isVariablePathParameter, RawSchemas } from "@fern-api/yaml-schema";
 import urlJoin from "url-join";
 import { FernFileContext } from "../../FernFileContext";
 import { IdGenerator } from "../../IdGenerator";

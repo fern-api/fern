@@ -5,7 +5,7 @@ import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-mi
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";
@@ -17,7 +17,8 @@ export async function generateIrForWorkspaces({
     cliContext,
     generationLanguage,
     audiences,
-    version
+    version,
+    smartCasing
 }: {
     project: Project;
     irFilepath: AbsoluteFilePath;
@@ -25,6 +26,7 @@ export async function generateIrForWorkspaces({
     generationLanguage: GenerationLanguage | undefined;
     audiences: Audiences;
     version: string | undefined;
+    smartCasing: boolean;
 }): Promise<void> {
     await Promise.all(
         project.apiWorkspaces.map(async (workspace) => {
@@ -38,6 +40,7 @@ export async function generateIrForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage,
+                    smartCasing,
                     disableExamples: false,
                     audiences,
                     version
@@ -59,12 +62,14 @@ async function getIntermediateRepresentation({
     context,
     generationLanguage,
     audiences,
+    smartCasing,
     disableExamples,
     version
 }: {
     workspace: FernWorkspace;
     context: TaskContext;
     generationLanguage: GenerationLanguage | undefined;
+    smartCasing: boolean;
     disableExamples: boolean;
     audiences: Audiences;
     version: string | undefined;
@@ -74,6 +79,7 @@ async function getIntermediateRepresentation({
         context,
         generationLanguage,
         audiences,
+        smartCasing,
         disableExamples
     });
 

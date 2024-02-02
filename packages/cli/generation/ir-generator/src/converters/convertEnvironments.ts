@@ -1,4 +1,3 @@
-import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import {
     Environments,
     EnvironmentsConfig,
@@ -6,7 +5,8 @@ import {
     MultipleBaseUrlsEnvironments,
     SingleBaseUrlEnvironment,
     SingleBaseUrlEnvironments
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { RawSchemas, visitRawEnvironmentDeclaration } from "@fern-api/yaml-schema";
 import { CasingsGenerator } from "../casings/CasingsGenerator";
 
 export function convertEnvironments({

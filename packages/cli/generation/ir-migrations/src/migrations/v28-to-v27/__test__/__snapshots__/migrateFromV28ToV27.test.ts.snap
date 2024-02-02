@@ -6,13 +6,13 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
   "apiDocs": undefined,
   "apiName": {
     "camelCase": {
-      "safeName": "simpleApi",
-      "unsafeName": "simpleApi",
+      "safeName": "simpleAPI",
+      "unsafeName": "simpleAPI",
     },
     "originalName": "simple-api",
     "pascalCase": {
-      "safeName": "SimpleApi",
-      "unsafeName": "SimpleApi",
+      "safeName": "SimpleAPI",
+      "unsafeName": "SimpleAPI",
     },
     "screamingSnakeCase": {
       "safeName": "SIMPLE_API",
@@ -33,13 +33,13 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -555,8 +555,8 @@ exports[`migrateFromV28ToV27 snapshot 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",

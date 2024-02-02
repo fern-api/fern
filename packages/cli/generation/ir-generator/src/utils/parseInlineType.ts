@@ -1,5 +1,5 @@
+import { ContainerType, TypeReference } from "@fern-api/ir-sdk";
 import { RawSchemas, recursivelyVisitRawTypeReference } from "@fern-api/yaml-schema";
-import { ContainerType, TypeReference } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "./parseTypeName";
 

@@ -1,11 +1,8 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
 imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     listPets:
       path: /v1/pets
@@ -24,7 +21,6 @@ service:
       examples:
         - response:
             body: []
-
     createPets:
       path: /v1/pets
       method: POST
@@ -32,7 +28,6 @@ service:
       display-name: Create a pet
       examples:
         - {}
-
     showPetById:
       path: /v1/pets/{petId}
       method: GET

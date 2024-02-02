@@ -1,10 +1,10 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { createLoggingExecutable } from "@fern-api/logging-execa";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import { cp, readdir, readFile } from "fs/promises";
 import tmp from "tmp-promise";
 import { GeneratorNotificationServiceImpl } from "./GeneratorNotificationService";

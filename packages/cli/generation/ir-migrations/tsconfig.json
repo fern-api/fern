@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../../commons/core-utils" },
     { "path": "../../../commons/fs-utils" },
+    { "path": "../../../ir-sdk" },
     { "path": "../../config-management/generators-configuration" },
     { "path": "../../logger" },
     { "path": "../../semver-utils" },
