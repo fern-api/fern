@@ -32,7 +32,6 @@
     "@fern-api/logger": "workspace:*",
     "@fern-api/logging-execa": "workspace:*",
     "@fern-fern/generator-exec-sdk": "^0.0.538",
-    "@fern-fern/ir-sdk": "0.0.3294",
     "tmp-promise": "^3.0.3",
     "zod": "^3.22.3"
   },

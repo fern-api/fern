@@ -6,7 +6,6 @@
     { "path": "../../../packages/cli/logger" },
     { "path": "../../../packages/commons/fs-utils" },
     { "path": "../../../packages/commons/logging-execa" },
-    { "path": "../../../packages/generators/commons" },
-    { "path": "../../../packages/ir-sdk" }
+    { "path": "../../../packages/generators/commons" }
   ]
 }
