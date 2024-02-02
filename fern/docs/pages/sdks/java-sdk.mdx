@@ -1,6 +1,5 @@
-[Source code](https://github.com/fern-api/fern-java)
-
-**Latest version**: `0.5.15`
+[Source code](https://github.com/fern-api/fern-java)<br />
+**Latest version**: `0.6.1`
 
 The Java SDK generator outputs a fully functional Java
 SDK. It can publish the SDK to Maven Central (or any other Maven repository).
@@ -15,14 +14,14 @@ groups:
   local:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.15
+        version: 0.6.1
         output:
           location: local-file-system
-          path: ../../generated/sdk/java
+          path: ../generated/sdk/java
 ```
 </CodeBlock>
 
-## Publish an Internal Package
+## Publish an internal package
 
 Publish the generated SDK to a private Maven repository hosted by Fern. Available on the Starter plan.
 
@@ -32,14 +31,14 @@ groups:
   internal:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.15
+        version: 0.6.1
         output:
           location: npm.buildwithfern.com
           package-name: @fern-imdb/api # replace with your package name
 ```
 </CodeBlock>
 
-## Publish a Public Package
+## Publish a public package
 
 Publish the generated SDK to Maven Central. Available on the Starter plan.
 
@@ -49,7 +48,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-java-sdk
-        version: 0.5.15
+        version: 0.6.1
         output:
           location: maven
           # replace with your coordinate
