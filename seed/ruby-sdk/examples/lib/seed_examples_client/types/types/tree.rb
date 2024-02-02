@@ -24,10 +24,7 @@ module SeedExamplesClient
       # @return [Types::Tree]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        nodes = struct.nodes.map do |v|
-          v = v.to_h.to_json
-          Types::Node.from_json(json_object: v)
-        end
+        nodes = struct.nodes
         new(nodes: nodes, additional_properties: struct)
       end
 

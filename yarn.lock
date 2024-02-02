@@ -2381,7 +2381,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.472
-    "@fern-fern/ir-sdk": 0.0.3277
+    "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18

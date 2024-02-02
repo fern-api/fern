@@ -10,21 +10,21 @@ export enum VariableType {
 export declare namespace Variable {
     export interface Init extends AstNode.Init {
         name: string;
-        type: ClassReference;
+        type: ClassReference | ClassReference[];
         variableType: VariableType;
         isOptional?: boolean;
     }
 }
 export class Variable extends AstNode {
     public name: string;
-    public type: ClassReference;
+    public type: ClassReference[];
     public variableType: VariableType;
     public isOptional: boolean;
 
     constructor({ name, type, variableType, isOptional = false, ...rest }: Variable.Init) {
         super(rest);
         this.name = name;
-        this.type = type;
+        this.type = type instanceof ClassReference ? [type] : type;
         this.variableType = variableType;
         this.isOptional = isOptional;
     }
@@ -46,6 +46,12 @@ export class Variable extends AstNode {
     }
 
     public fromJson(): FunctionInvocation | undefined {
-        return this.type.fromJson(this);
+        const classReferences = this.type;
+        // Do not support calling fromJson when there are multiple class references
+        if (classReferences.length === 0) {
+            const classReference = classReferences.at(0);
+            return classReference !== undefined ? classReference.fromJson(this) : undefined;
+        }
+        return undefined;
     }
 }

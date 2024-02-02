@@ -29,8 +29,7 @@ module SeedExhaustiveClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           string = struct.string
-          nested_object = struct.NestedObject.to_h.to_json
-          nested_object = Types::Object::ObjectWithOptionalField.from_json(json_object: nested_object)
+          nested_object = struct.NestedObject
           new(string: string, nested_object: nested_object, additional_properties: struct)
         end
 

@@ -1,10 +1,9 @@
 import { TypesGenerator } from "@fern-api/fern-ruby-model";
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { AbstractGeneratorCli } from "@fern-api/generator-cli";
-import { GeneratorContext, getSdkVersion } from "@fern-api/generator-commons";
+import { GeneratorContext, getSdkVersion, hasFileUploadEndpoints } from "@fern-api/generator-commons";
 import {
     Class_,
-    generateBinDir,
     GeneratedFile,
     generateGemConfig,
     generateGemfile,
@@ -53,9 +52,18 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
         boilerPlateFiles.push(generateRubocopConfig());
         boilerPlateFiles.push(generateGemfile());
         boilerPlateFiles.push(generateReadme());
-        boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion));
+        boilerPlateFiles.push(
+            generateGemspec(
+                clientName,
+                gemName,
+                [],
+                sdkVersion,
+                hasFileUploadEndpoints(intermediateRepresentation) === true ||
+                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
+            )
+        );
         boilerPlateFiles.push(generateGemConfig(clientName));
-        boilerPlateFiles.concat(generateBinDir(gemName));
+        // boilerPlateFiles.push(...generateBinDir(gemName));
 
         this.generatedFiles.push(...boilerPlateFiles);
     }
@@ -109,7 +117,9 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             intermediateRepresentation,
             sdkVersion,
             this.generatedClasses,
-            this.flattenedProperties
+            this.flattenedProperties,
+            hasFileUploadEndpoints(intermediateRepresentation) === true ||
+                intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
         ).generateFiles();
         this.generatedFiles.push(...Array.from(generatedClientFiles.values()));
     }

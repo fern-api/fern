@@ -11,6 +11,7 @@ import {
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
+import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
@@ -156,8 +157,9 @@ export class SerializableObject extends Class_ {
 
     private static createValidateRawFunction(properties: Property[] | undefined): Function_ {
         const parameterName = "obj";
-        const functionBody =
-            properties?.map((prop) => prop.type.validateRaw(`${parameterName}.${prop.name}`, prop.isOptional)) ?? [];
+        const functionBody = properties
+            ?.map((prop) => prop.type[0]?.validateRaw(`${parameterName}.${prop.name}`, prop.isOptional))
+            .filter((p) => p !== undefined) as AstNode[];
         const validateRawDocumentation =
             "Leveraged for Union-type generation, validate_raw attempts to parse the given hash and check each fields type against the current object's property definitions.";
         return new Function_({

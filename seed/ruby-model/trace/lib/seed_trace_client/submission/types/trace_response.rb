@@ -46,12 +46,9 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
         line_number = struct.lineNumber
-        return_value = struct.returnValue.to_h.to_json
-        return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
-        expression_location = struct.expressionLocation.to_h.to_json
-        expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
-        stack = struct.stack.to_h.to_json
-        stack = Submission::StackInformation.from_json(json_object: stack)
+        return_value = struct.returnValue
+        expression_location = struct.expressionLocation
+        stack = struct.stack
         stdout = struct.stdout
         new(submission_id: submission_id, line_number: line_number, return_value: return_value,
             expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)

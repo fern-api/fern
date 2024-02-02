@@ -29,10 +29,8 @@ module SeedTraceClient
         # @return [V2::Problem::NonVoidFunctionDefinition]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          signature = struct.signature.to_h.to_json
-          signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
-          code = struct.code.to_h.to_json
-          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
+          signature = struct.signature
+          code = struct.code
           new(signature: signature, code: code, additional_properties: struct)
         end
 

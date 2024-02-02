@@ -29,12 +29,8 @@ module SeedTraceClient
         # @return [V2::Problem::NonVoidFunctionSignature]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameters = struct.parameters.map do |v|
-            v = v.to_h.to_json
-            V2::Problem::Parameter.from_json(json_object: v)
-          end
-          return_type = struct.returnType.to_h.to_json
-          return_type = Commons::VariableType.from_json(json_object: return_type)
+          parameters = struct.parameters
+          return_type = struct.returnType
           new(parameters: parameters, return_type: return_type, additional_properties: struct)
         end
 

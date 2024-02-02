@@ -30,10 +30,8 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            description = struct.description.to_h.to_json
-            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
-            function = struct.function.to_h.to_json
-            function = V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
+            description = struct.description
+            function = struct.function
             new(description: description, function: function, additional_properties: struct)
           end
 
