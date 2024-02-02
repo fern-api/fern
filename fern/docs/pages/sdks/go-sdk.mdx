@@ -1,6 +1,5 @@
-[Source code](https://github.com/fern-api/fern-go)
-
-**Latest version**: `0.9.2`
+[Source code](https://github.com/fern-api/fern-go)<br />
+**Latest version**: `0.12.0`
 
 The Go SDK generator outputs a fully functional Go SDK.
 
@@ -14,10 +13,10 @@ groups:
   local:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.9.2
+        version: 0.12.0
         output:
           location: local-file-system
-          path: ../../generated/sdk/go
+          path: ../generated/sdk/go
 ```
 </CodeBlock>
 
@@ -31,7 +30,7 @@ groups:
   publish:
     generators:
       - name: fernapi/fern-go-sdk
-        version: 0.9.2
+        version: 0.12.0
         github:
           repository: fern-imdb/imdb-go # replace imdb with your organization
 ```
