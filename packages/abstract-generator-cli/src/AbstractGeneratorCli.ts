@@ -141,6 +141,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 )
             );
+            // eslint-disable-next-line no-console
+            console.log("Sent success event to coordinator");
         } catch (e) {
             await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
@@ -149,6 +151,8 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                     })
                 )
             );
+            // eslint-disable-next-line no-console
+            console.log("Sent error event to coordinator");
             throw e;
         }
     }
