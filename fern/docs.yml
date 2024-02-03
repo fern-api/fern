@@ -1,6 +1,7 @@
 instances:
-  - url: fern.docs.buildwithfern.com
-    custom-domain: docs.buildwithfern.com
+  # - url: fern.docs.buildwithfern.com
+  #   custom-domain: docs.buildwithfern.com
+  - url: fern.docs.dev.buildwithfern.com
 
 title: Fern | Documentation
 
@@ -10,7 +11,7 @@ tabs:
     icon: "fa-solid fa-globe"
   api-definition:
     display-name: API Definition
-    icon: "fa-solid fa-pen-to-square"    
+    icon: "fa-solid fa-pen-to-square"
   sdks:
     display-name: Generate SDKs
     icon: "fa-solid fa-code"
@@ -75,7 +76,7 @@ navigation:
           - page: Publishing to Maven Central
             path: ./docs/pages/guides/publish-to-maven-central.mdx
       - section: Changelog
-        contents: 
+        contents:
           - page: December 2023
             path: ./docs/pages/changelog/december-2023.mdx
   - tab: api-definition
@@ -107,7 +108,7 @@ navigation:
             path: ./docs/pages/fern-definition/examples.mdx
           - page: Audiences
             path: ./docs/pages/fern-definition/audiences.mdx
-          - page: Availability 
+          - page: Availability
             path: ./docs/pages/fern-definition/availability.mdx
           - page: api.yml reference
             path: ./docs/pages/fern-definition/api-yml.mdx
@@ -137,12 +138,12 @@ navigation:
     layout:
       - section: Overview
         contents:
-          - page: Fern Docs Quickstart 
+          - page: Fern Docs Quickstart
             path: ./docs/pages/docs/quickstart.mdx
           - page: Writing Content
             path: ./docs/pages/docs/writing-content.mdx
       - section: Configurations
-        contents: 
+        contents:
           - page: Overview
             path: ./docs/pages/docs/configurations-overview.mdx
           - page: Custom Domain
@@ -180,7 +181,7 @@ navigation:
           - page: Go
             path: ./docs/pages/server-boilerplate/go.mdx
           - page: DotNet
-            path: ./docs/pages/server-boilerplate/dotnet.mdx  
+            path: ./docs/pages/server-boilerplate/dotnet.mdx
           - page: Ruby on Rails
             path: ./docs/pages/server-boilerplate/ruby-on-rails.mdx
           - page: Flask
