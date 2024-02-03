@@ -3040,10 +3040,12 @@ __metadata:
     depcheck: ^1.4.6
     eslint: ^8.56.0
     form-data: ^4.0.0
+    image-size: ^1.1.1
     jest: ^29.7.0
     lodash-es: ^4.17.21
     mime-types: ^2.1.35
     organize-imports-cli: ^0.10.0
+    plaiceholder: ^3.0.0
     prettier: ^2.7.1
     terminal-link: ^3.0.0
     tmp-promise: ^3.0.3
@@ -9944,6 +9946,17 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"image-size@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "image-size@npm:1.1.1"
+  dependencies:
+    queue: 6.0.2
+  bin:
+    image-size: bin/image-size.js
+  checksum: 23b3a515dded89e7f967d52b885b430d6a5a903da954fce703130bfb6069d738d80e6588efd29acfaf5b6933424a56535aa7bf06867e4ebd0250c2ee51f19a4a
+  languageName: node
+  linkType: hard
+
 "immer@npm:^9.0.15":
   version: 9.0.15
   resolution: "immer@npm:9.0.15"
@@ -13716,6 +13729,15 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
+"plaiceholder@npm:^3.0.0":
+  version: 3.0.0
+  resolution: "plaiceholder@npm:3.0.0"
+  peerDependencies:
+    sharp: ">= 0.30.6"
+  checksum: 783072104ff1ca388f7662048a901d02d04ba0884442400d8142ff60ec3c39c40baf80729f0187ca9f057eac8c8382a86d57eb61a08bf40b0d2bf7c7762a71e2
+  languageName: node
+  linkType: hard
+
 "please-upgrade-node@npm:^3.2.0":
   version: 3.2.0
   resolution: "please-upgrade-node@npm:3.2.0"
@@ -14057,6 +14079,15 @@ env-cmd@toddbluhm/env-cmd:
   version: 1.2.3
   resolution: "queue-microtask@npm:1.2.3"
   checksum: b676f8c040cdc5b12723ad2f91414d267605b26419d5c821ff03befa817ddd10e238d22b25d604920340fd73efd8ba795465a0377c4adf45a4a41e4234e42dc4
+  languageName: node
+  linkType: hard
+
+"queue@npm:6.0.2":
+  version: 6.0.2
+  resolution: "queue@npm:6.0.2"
+  dependencies:
+    inherits: ~2.0.3
+  checksum: ebc23639248e4fe40a789f713c20548e513e053b3dc4924b6cb0ad741e3f264dcff948225c8737834dd4f9ec286dbc06a1a7c13858ea382d9379f4303bcc0916
   languageName: node
   linkType: hard
 

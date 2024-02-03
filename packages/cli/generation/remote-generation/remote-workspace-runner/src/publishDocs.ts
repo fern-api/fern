@@ -1,11 +1,12 @@
 import { FernToken } from "@fern-api/auth";
 import { createFdrService } from "@fern-api/core";
-import { assertNever, entries } from "@fern-api/core-utils";
+import { assertNever, entries, isNonNullish } from "@fern-api/core-utils";
 import {
     DocsNavigationConfiguration,
     DocsNavigationItem,
     FontConfig,
     ImageReference,
+    JavascriptConfig,
     ParsedDocsConfiguration,
     parseDocsConfiguration,
     TypographyConfig,
@@ -22,8 +23,11 @@ import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fer
 import axios from "axios";
 import chalk from "chalk";
 import { readFile } from "fs/promises";
+import { imageSize } from "image-size";
 import * as mime from "mime-types";
+import { getPlaiceholder } from "plaiceholder";
 import terminalLink from "terminal-link";
+import { promisify } from "util";
 
 export async function publishDocs({
     token,
@@ -61,9 +65,24 @@ export async function publishDocs({
         absoluteFilepathToDocsConfig: docsWorkspace.absoluteFilepathToDocsConfig
     });
 
-    const filepathsToUpload = getFilepathsToUpload(parsedDocsConfig);
+    // images where sizes cannot be inferred are uploaded as normal files.
+    // images where sizes can be inferred are also uploaded as normal files, but their sizes are submitted to the registry.
+    const [imageFilepathsWithSizesToUpload, unsizedImageFilepathsToUpload] = await getImageFilepathsToUpload(
+        parsedDocsConfig
+    );
+    context.logger.debug(
+        "Absolute filepaths of images to upload:",
+        imageFilepathsWithSizesToUpload.map((image) => image.filePath).join(", ")
+    );
+
+    // unsizedImageFilepathsToUpload are tracked alongside normal non-image files
+    const filepathsToUpload = [...getFilepathsToUpload(parsedDocsConfig), ...unsizedImageFilepathsToUpload];
     context.logger.debug("Absolute filepaths to upload:", filepathsToUpload.join(", "));
 
+    const relativeImageFilepathsWithSizesToUpload = imageFilepathsWithSizesToUpload.map((imageFilePath) => ({
+        ...imageFilePath,
+        filePath: convertAbsoluteFilepathToFdrFilepath(imageFilePath.filePath, parsedDocsConfig)
+    }));
     const relativeFilepathsToUpload = filepathsToUpload.map((filepath) =>
         convertAbsoluteFilepathToFdrFilepath(filepath, parsedDocsConfig)
     );
@@ -74,7 +93,8 @@ export async function publishDocs({
     if (preview) {
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsPreviewRegister({
             orgId: organization,
-            filepaths: relativeFilepathsToUpload
+            filepaths: relativeFilepathsToUpload,
+            images: relativeImageFilepathsWithSizesToUpload
         });
         if (startDocsRegisterResponse.ok) {
             urlToOutput = startDocsRegisterResponse.body.previewUrl;
@@ -86,7 +106,8 @@ export async function publishDocs({
             authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
             apiId: "",
             orgId: organization,
-            filepaths: relativeFilepathsToUpload
+            filepaths: relativeFilepathsToUpload,
+            images: relativeImageFilepathsWithSizesToUpload
         });
     }
 
@@ -107,8 +128,8 @@ export async function publishDocs({
 
     const { docsRegistrationId, uploadUrls } = startDocsRegisterResponse.body;
 
-    await Promise.all(
-        filepathsToUpload.map(async (filepathToUpload) => {
+    await Promise.all([
+        ...filepathsToUpload.map(async (filepathToUpload) => {
             const uploadUrl = uploadUrls[convertAbsoluteFilepathToFdrFilepath(filepathToUpload, parsedDocsConfig)];
             if (uploadUrl == null) {
                 context.failAndThrow(`Failed to upload ${filepathToUpload}`, "Upload URL is missing");
@@ -120,8 +141,21 @@ export async function publishDocs({
                     }
                 });
             }
+        }),
+        ...imageFilepathsWithSizesToUpload.map(async ({ filePath: imageFilepathToUpload }) => {
+            const uploadUrl = uploadUrls[convertAbsoluteFilepathToFdrFilepath(imageFilepathToUpload, parsedDocsConfig)];
+            if (uploadUrl == null) {
+                context.failAndThrow(`Failed to upload ${imageFilepathToUpload}`, "Upload URL is missing");
+            } else {
+                const mimeType = mime.lookup(imageFilepathToUpload);
+                await axios.put(uploadUrl.uploadUrl, await readFile(imageFilepathToUpload), {
+                    headers: {
+                        "Content-Type": mimeType === false ? "application/octet-stream" : mimeType
+                    }
+                });
+            }
         })
-    );
+    ]);
 
     const registerDocsRequest = await constructRegisterDocsRequest({
         parsedDocsConfig,
@@ -289,7 +323,9 @@ async function convertDocsConfiguration({
             uploadUrls,
             context
         }),
-        layout: parsedDocsConfig.layout
+        layout: parsedDocsConfig.layout,
+        css: parsedDocsConfig.css,
+        js: convertJavascriptConfiguration(parsedDocsConfig.js, uploadUrls, parsedDocsConfig)
     };
 }
 
@@ -511,6 +547,31 @@ function convertDocsTypographyConfiguration({
     };
 }
 
+function convertJavascriptConfiguration(
+    jsConfiguration: JavascriptConfig | undefined,
+    uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>,
+    parsedDocsConfig: ParsedDocsConfiguration
+): DocsV1Write.JsConfig | undefined {
+    if (jsConfiguration == null) {
+        return;
+    }
+    return {
+        files: jsConfiguration.files
+            .map(({ absolutePath, strategy }) => {
+                const filepath = convertAbsoluteFilepathToFdrFilepath(absolutePath, parsedDocsConfig);
+                const file = uploadUrls[filepath];
+                if (file == null) {
+                    return;
+                }
+                return {
+                    fileId: file.fileId,
+                    strategy
+                };
+            })
+            .filter(isNonNullish)
+    };
+}
+
 function convertFont({
     font,
     parsedDocsConfig,
@@ -700,7 +761,36 @@ function getFernWorkspaceForApiSection({
     throw new Error("Failed to load API Definition referenced in docs");
 }
 
-function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): AbsoluteFilePath[] {
+const sizeOf = promisify(imageSize);
+
+interface ImageFileAbsoluteFilePath {
+    type: "filepath";
+    value: AbsoluteFilePath;
+}
+function isFilePath(imageFile: ImageFile): imageFile is ImageFileAbsoluteFilePath {
+    return imageFile.type === "filepath";
+}
+
+interface ImageFileMetadata {
+    type: "image";
+    value: AbsoluteImageFilePath;
+}
+function isImage(imageFile: ImageFile): imageFile is ImageFileMetadata {
+    return imageFile.type === "image";
+}
+
+type ImageFile = ImageFileAbsoluteFilePath | ImageFileMetadata;
+
+interface AbsoluteImageFilePath {
+    filePath: AbsoluteFilePath;
+    width: number;
+    height: number;
+    blurDataUrl: string;
+}
+
+async function getImageFilepathsToUpload(
+    parsedDocsConfig: ParsedDocsConfiguration
+): Promise<[AbsoluteImageFilePath[], AbsoluteFilePath[]]> {
     const filepaths: AbsoluteFilePath[] = [];
 
     if (parsedDocsConfig.logo?.dark != null) {
@@ -719,6 +809,31 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
         filepaths.push(parsedDocsConfig.backgroundImage.filepath);
     }
 
+    const imageFilepathsAndSizesToUpload = await Promise.all(
+        filepaths.map(async (filePath): Promise<ImageFile> => {
+            const [{ base64 }, size] = await Promise.all([
+                readFile(filePath).then((file) => getPlaiceholder(file)),
+                sizeOf(filePath)
+            ]);
+            if (size == null || size.height == null || size.width == null) {
+                return { type: "filepath", value: filePath };
+            }
+            return {
+                type: "image",
+                value: { filePath, width: size.width, height: size.height, blurDataUrl: base64 }
+            };
+        })
+    );
+
+    const imagesWithSize = imageFilepathsAndSizesToUpload.filter(isImage).map((image) => image.value);
+    const imagesWithoutSize = imageFilepathsAndSizesToUpload.filter(isFilePath).map((image) => image.value);
+
+    return [imagesWithSize, imagesWithoutSize];
+}
+
+function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): AbsoluteFilePath[] {
+    const filepaths: AbsoluteFilePath[] = [];
+
     const typographyConfiguration = parsedDocsConfig.typography;
 
     typographyConfiguration?.headingsFont?.variants.forEach((variant) => {
@@ -731,6 +846,10 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 
     typographyConfiguration?.codeFont?.variants.forEach((variant) => {
         filepaths.push(variant.absolutePath);
+    });
+
+    parsedDocsConfig.js?.files.forEach((file) => {
+        filepaths.push(file.absolutePath);
     });
 
     return filepaths;

@@ -48,8 +48,10 @@
     "chalk": "^5.0.1",
     "decompress": "^4.2.1",
     "form-data": "^4.0.0",
+    "image-size": "^1.1.1",
     "lodash-es": "^4.17.21",
     "mime-types": "^2.1.35",
+    "plaiceholder": "^3.0.0",
     "terminal-link": "^3.0.0",
     "tmp-promise": "^3.0.3",
     "url-join": "^5.0.0"

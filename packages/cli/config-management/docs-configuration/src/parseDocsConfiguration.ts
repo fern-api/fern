@@ -10,10 +10,12 @@ import yaml from "js-yaml";
 import tinycolor from "tinycolor2";
 import { getAllPages } from "./getAllPages";
 import {
+    AbsoluteJsFileConfig,
     DocsNavigationConfiguration,
     DocsNavigationItem,
     FontConfig,
     ImageReference,
+    JavascriptConfig,
     ParsedDocsConfiguration,
     TabbedDocsNavigation,
     TypographyConfig,
@@ -36,18 +38,20 @@ export async function parseDocsConfiguration({
         instances,
         navigation,
         colors,
-        favicon,
-        backgroundImage,
-        logo,
+        favicon: faviconRef,
+        backgroundImage: backgroundImageRef,
+        logo: rawLogo,
         navbarLinks,
         title,
-        typography,
+        typography: rawTypography,
         tabs,
         versions,
-        layout
+        layout,
+        css: rawCssConfig,
+        js
     } = rawDocsConfiguration;
 
-    const convertedNavigation = await getNavigationConfiguration({
+    const convertedNavigationPromise = getNavigationConfiguration({
         versions,
         navigation,
         absolutePathToFernFolder,
@@ -55,56 +59,130 @@ export async function parseDocsConfiguration({
         context
     });
 
+    const pagesPromise = convertedNavigationPromise.then((convertedNavigation) =>
+        getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder })
+    );
+
+    const logo =
+        rawLogo != null
+            ? {
+                  dark:
+                      rawLogo.dark != null
+                          ? await convertImageReference({
+                                rawImageReference: rawLogo.dark,
+                                absoluteFilepathToDocsConfig
+                            })
+                          : undefined,
+                  light:
+                      rawLogo.light != null
+                          ? await convertImageReference({
+                                rawImageReference: rawLogo.light,
+                                absoluteFilepathToDocsConfig
+                            })
+                          : undefined,
+                  height: rawLogo.height,
+                  href: rawLogo.href != null ? rawLogo.href : undefined
+              }
+            : undefined;
+
+    const faviconPromise =
+        faviconRef != null
+            ? convertImageReference({ rawImageReference: faviconRef, absoluteFilepathToDocsConfig })
+            : undefined;
+
+    const backgroundImagePromise =
+        backgroundImageRef != null
+            ? convertImageReference({
+                  rawImageReference: backgroundImageRef,
+                  absoluteFilepathToDocsConfig
+              })
+            : undefined;
+
+    const typographyPromise =
+        rawTypography != null
+            ? convertTypographyConfiguration({
+                  rawTypography,
+                  absoluteFilepathToDocsConfig
+              })
+            : undefined;
+
+    const cssPromise = convertCssConfig(rawCssConfig);
+
+    const [convertedNavigation, pages, favicon, backgroundImage, typography, css] = await Promise.all([
+        convertedNavigationPromise,
+        pagesPromise,
+        faviconPromise,
+        backgroundImagePromise,
+        typographyPromise,
+        cssPromise
+    ]);
+
     return {
         instances,
         absoluteFilepath: absoluteFilepathToDocsConfig,
-        pages: await getAllPages({ navigation: convertedNavigation, absolutePathToFernFolder }),
+        pages,
         navigation: convertedNavigation,
         title,
         tabs,
-        logo:
-            logo != null
-                ? {
-                      dark:
-                          logo.dark != null
-                              ? await convertImageReference({
-                                    rawImageReference: logo.dark,
-                                    absoluteFilepathToDocsConfig
-                                })
-                              : undefined,
-                      light:
-                          logo.light != null
-                              ? await convertImageReference({
-                                    rawImageReference: logo.light,
-                                    absoluteFilepathToDocsConfig
-                                })
-                              : undefined,
-                      height: logo.height,
-                      href: logo.href != null ? logo.href : undefined
-                  }
-                : undefined,
-        favicon:
-            favicon != null
-                ? await convertImageReference({ rawImageReference: favicon, absoluteFilepathToDocsConfig })
-                : undefined,
-        backgroundImage:
-            backgroundImage != null
-                ? await convertImageReference({
-                      rawImageReference: backgroundImage,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined,
+        logo,
+        favicon,
+        backgroundImage,
         colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
-        typography:
-            typography != null
-                ? await convertTypographyConfiguration({
-                      rawTypography: typography,
-                      absoluteFilepathToDocsConfig
-                  })
-                : undefined,
-        layout: convertLayoutConfig(layout)
+        typography,
+        layout: convertLayoutConfig(layout),
+        css,
+        js: convertJsConfig(js)
     };
+}
+
+async function convertCssConfig(css: RawDocs.CssConfig | undefined): Promise<ParsedDocsConfiguration["css"]> {
+    if (css == null) {
+        return undefined;
+    }
+    const cssFilePaths = typeof css === "string" ? [css] : css;
+    return {
+        inline: await Promise.all(
+            cssFilePaths.map(async (cssFilePath) => {
+                const content = await readFile(cssFilePath);
+                return content.toString();
+            })
+        )
+    };
+}
+
+function isRemoteJsConfig(
+    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
+): config is DocsV1Write.JsRemoteConfig {
+    return Object.hasOwn(config, "url");
+}
+
+function isFileJsConfig(
+    config: RawDocs.JsRemoteConfig | RawDocs.JsFileConfigSettings
+): config is RawDocs.JsFileConfigSettings {
+    return Object.hasOwn(config, "path");
+}
+
+function convertJsConfig(js: RawDocs.JsConfig | undefined): JavascriptConfig {
+    const remote: DocsV1Write.JsRemoteConfig[] = [];
+    const files: AbsoluteJsFileConfig[] = [];
+    if (js == null) {
+        return { files: [] };
+    }
+
+    const configs = Array.isArray(js) ? js : [js];
+
+    for (const config of configs) {
+        if (typeof config === "string") {
+            files.push({ absolutePath: AbsoluteFilePath.of(config) });
+        } else if (isRemoteJsConfig(config)) {
+            remote.push(config);
+        } else if (isFileJsConfig(config)) {
+            files.push({ absolutePath: AbsoluteFilePath.of(config.path), strategy: config.strategy });
+        }
+    }
+
+    return { remote, files };
 }
 
 function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfiguration["layout"] {

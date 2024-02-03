@@ -22,6 +22,18 @@ export interface ParsedDocsConfiguration {
     layout: WithoutQuestionMarks<DocsV1Write.DocsLayoutConfig> | undefined;
     /* filepath of page to contents */
     pages: Record<RelativeFilePath, string>;
+    css: DocsV1Write.CssConfig | undefined;
+    js: JavascriptConfig | undefined;
+}
+
+export interface AbsoluteJsFileConfig {
+    absolutePath: AbsoluteFilePath;
+    strategy?: DocsV1Write.JsScriptStrategy;
+}
+
+export interface JavascriptConfig {
+    remote?: DocsV1Write.JsRemoteConfig[];
+    files: AbsoluteJsFileConfig[];
 }
 
 export interface DocsColorsConfiguration {
