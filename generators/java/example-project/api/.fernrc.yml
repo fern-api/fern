@@ -1,0 +1,15 @@
+name: example-api
+definition: src
+generators:
+  - name: fernapi/fern-java
+    version: 0.0.67
+    generate: true
+    config:
+      packagePrefix: com.fern.example
+      mode: server
+      serverFrameworks: spring,jersey
+  - name: fernapi/fern-postman
+    version: 0.0.9
+    generate:
+      enabled: true
+      output: generated-postman/collection.json

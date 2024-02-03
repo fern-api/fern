@@ -1,0 +1,13 @@
+irVersion: v29
+docker: java-spring:latest
+dockerCommand: ./gradlew :spring-server-generator:dockerTagLatest
+language: java
+generatorType: Server
+defaultOutputMode: local_files
+allowedFailures:
+  - bytes
+  - file-download
+  - file-upload
+  - plain-text
+  - response-property
+  - streaming

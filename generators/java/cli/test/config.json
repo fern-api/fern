@@ -1,0 +1,5 @@
+{
+  "outputDirectory": "/output",
+  "packagePrefix": "com",
+  "irFilepath": "/fern/ir.json"
+}

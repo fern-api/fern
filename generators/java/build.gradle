@@ -1,0 +1,81 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.20.0'
+    }
+}
+
+plugins {
+    id "com.palantir.consistent-versions" version "2.19.0"
+    id "com.palantir.git-version" version "3.0.0"
+    id "org.inferred.processors" version "3.7.0"
+    id "com.jfrog.artifactory" version "5.1.14"
+    id "com.palantir.baseline" version "5.35.0"
+    id "com.palantir.java-format" version "2.24.0"
+    id 'maven-publish'
+}
+
+group 'io.github.fern-api'
+version gitVersion()
+
+apply plugin: 'com.palantir.baseline'
+apply plugin: 'com.palantir.consistent-versions'
+apply plugin: 'com.palantir.git-version'
+
+allprojects {
+
+    apply plugin: "org.inferred.processors"
+    apply plugin: "maven-publish"
+    apply plugin: "com.jfrog.artifactory"
+    apply plugin: "java-library"
+    apply plugin: 'com.palantir.java-format'
+
+    version rootProject.version
+    group rootProject.group
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://maven.buildwithfern.com"
+        }
+        maven {
+            url "https://maven-dev.buildwithfern.com"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.errorprone.disable 'StrictUnusedVariable'
+        options.errorprone.disable 'PreferSafeLoggableExceptions'
+        options.errorprone.disable 'Slf4jConstantLogMessage'
+        options.errorprone.disable 'PreferSafeLogger'
+    }
+
+    sourceCompatibility = 11
+
+}
+
+artifactory {
+    contextUrl = 'https://usebirch.jfrog.io/artifactory'
+    publish {
+        contextUrl = 'https://usebirch.jfrog.io/artifactory'
+        repository {
+            repoKey = 'default-maven-local'
+            username = "$System.env.JFROG_USERNAME"
+            password = "$System.env.JFROG_API_KEY"
+        }
+        defaults {
+            publishArtifacts = true
+        }
+    }
+}
