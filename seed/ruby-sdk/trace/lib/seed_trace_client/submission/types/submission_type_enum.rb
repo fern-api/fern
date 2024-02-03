@@ -3,6 +3,6 @@
 module SeedTraceClient
   module Submission
     # @type [Hash{String => String}]
-    SUBMISSION_TYPE_ENUM = { test: "TEST" }.frozen
+    SUBMISSION_TYPE_ENUM = { test: "TEST" }.freeze
   end
 end

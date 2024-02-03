@@ -3,6 +3,6 @@
 module SeedExamplesClient
   module Types
     # @type [Hash{String => String}]
-    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.frozen
+    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.freeze
   end
 end

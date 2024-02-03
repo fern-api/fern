@@ -3,6 +3,6 @@
 module SeedApiClient
   module Ast
     # @type [Hash{String => String}]
-    PRIMITIVE_VALUE = { string: "STRING", number: "NUMBER" }.frozen
+    PRIMITIVE_VALUE = { string: "STRING", number: "NUMBER" }.freeze
   end
 end

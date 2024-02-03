@@ -3,6 +3,6 @@
 module SeedTraceClient
   module Playlist
     # @type [Hash{String => String}]
-    RESERVED_KEYWORD_ENUM = { is: "is", as: "as" }.frozen
+    RESERVED_KEYWORD_ENUM = { is: "is", as: "as" }.freeze
   end
 end

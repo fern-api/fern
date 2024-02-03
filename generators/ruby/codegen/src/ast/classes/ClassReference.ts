@@ -362,7 +362,7 @@ export class HashInstance extends AstNode {
                 .join(", ")} }`
         });
         this.addText({ stringContent: this.shouldCompact ? ".compact" : undefined, appendToLastString: true });
-        this.addText({ stringContent: this.isFrozen ? ".frozen" : undefined, appendToLastString: true });
+        this.addText({ stringContent: this.isFrozen ? ".freeze" : undefined, appendToLastString: true });
     }
 }
 

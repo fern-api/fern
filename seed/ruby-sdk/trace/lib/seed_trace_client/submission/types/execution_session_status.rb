@@ -10,6 +10,6 @@ module SeedTraceClient
       running_container: "RUNNING_CONTAINER",
       live_container: "LIVE_CONTAINER",
       failed_to_launch: "FAILED_TO_LAUNCH"
-    }.frozen
+    }.freeze
   end
 end

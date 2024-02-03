@@ -3,6 +3,6 @@
 module SeedObjectsWithImportsClient
   module File
     # @type [Hash{String => String}]
-    FILE_INFO = { regular: "REGULAR", directory: "DIRECTORY" }.frozen
+    FILE_INFO = { regular: "REGULAR", directory: "DIRECTORY" }.freeze
   end
 end
