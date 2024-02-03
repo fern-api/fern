@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!DOCTYPE suppressions PUBLIC
+        "-//Checkstyle//DTD SuppressionFilter Configuration 1.2//EN"
+        "https://checkstyle.org/dtds/suppressions_1_2.dtd">
+
+<!-- IMPORTANT ECLIPSE NOTE: If you change this file, you must restart Eclipse
+ for your changes to take effect in its Checkstyle integration. -->
+<suppressions>
+    <!-- Do not lint class which is mostly copied -->
+    <suppress files=".*StrictUnusedVariable.java" checks="." />
+
+    <!-- We have a special whitelist for AssertJ's assertThat method in test code, but we need it in prod code -->
+    <suppress files="src/main/java/com/palantir/baseline/refaster" checks="AvoidStaticImport" />
+
+    <supress files=".*" checks="AbbreviationAsWordInName" />
+</suppressions>

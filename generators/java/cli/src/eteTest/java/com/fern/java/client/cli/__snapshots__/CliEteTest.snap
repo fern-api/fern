@@ -1,0 +1,3331 @@
+basic[.gitignore]=[
+*.class
+.project
+.gradle
+.classpath
+.checkstyle
+.settings
+.node
+build
+
+# IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+out/
+
+# Eclipse/IntelliJ APT
+generated_src/
+generated_testSrc/
+generated/
+
+bin
+build
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/BearerAuth.java]=[
+package com.fern.basic.client;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@Value.Style(
+    visibility = Value.Style.ImplementationVisibility.PACKAGE,
+    jdkOnly = true
+)
+public abstract class BearerAuth {
+  @Value.Parameter
+  @JsonValue
+  public abstract String getToken();
+
+  @Override
+  public final String toString() {
+    return "Bearer " + getToken();
+  }
+
+  public static BearerAuth valueOf(String token) {
+    return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/FernBasicClient.java]=[
+package com.fern.basic.client;
+
+import com.fern.basic.client.auth.AuthServiceClient;
+import com.fern.basic.client.blog.PostsServiceClient;
+import com.fern.basic.client.dummy.service.DummyServiceClient;
+import java.lang.String;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.Supplier;
+
+public final class FernBasicClient {
+  private final Supplier<AuthServiceClient> authServiceClient;
+
+  private final Supplier<PostsServiceClient> postsServiceClient;
+
+  private final Supplier<DummyServiceClient> dummyServiceClient;
+
+  public FernBasicClient(String url) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(url));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(url));
+  }
+
+  public FernBasicClient(String url, BearerAuth auth) {
+    this.postsServiceClient = memoize(() -> new PostsServiceClient(url, auth));
+    this.dummyServiceClient = memoize(() -> new DummyServiceClient(url, auth));
+    this.authServiceClient = memoize(() -> new AuthServiceClient(url, auth));
+  }
+
+  public final AuthServiceClient auth() {
+    return this.authServiceClient.get();
+  }
+
+  public final PostsServiceClient blog() {
+    return this.postsServiceClient.get();
+  }
+
+  public final DummyServiceClient dummyService() {
+    return this.dummyServiceClient.get();
+  }
+
+  private static <T> Supplier<T> memoize(Supplier<T> delegate) {
+    AtomicReference<T> value = new AtomicReference<>();
+    return () ->  {
+      T val = value.get();
+      if (val == null) {
+        val = value.updateAndGet(cur -> cur == null ? Objects.requireNonNull(delegate.get()) : cur);
+      }
+      return val;
+    } ;
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/auth/AuthService.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/auth")
+interface AuthService {
+  @GET
+  @Path("/")
+  void getAuth(@HeaderParam("Authorization") BearerAuth bearer) throws GetAuthException;
+
+  static AuthService getClient(String url) {
+    return Feign.builder()
+        .contract(new OptionalAwareContract(new JAXRSContract()))
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .errorDecoder(new AuthServiceErrorDecoder()).target(AuthService.class, url);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/auth/AuthServiceClient.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.auth.endpoints.GetAuth;
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import java.lang.RuntimeException;
+import java.lang.String;
+import java.util.Optional;
+
+public final class AuthServiceClient {
+  private final AuthService service;
+
+  private final Optional<BearerAuth> auth;
+
+  public AuthServiceClient(String url) {
+    this.service = AuthService.getClient(url);
+    this.auth = Optional.empty();
+  }
+
+  public AuthServiceClient(String url, BearerAuth auth) {
+    this.service = AuthService.getClient(url);
+    this.auth = Optional.of(auth);
+  }
+
+  public void getAuth(GetAuth.Request request) throws GetAuthException {
+    BearerAuth authValue = request.getAuthOverride().orElseGet(() -> this.auth.orElseThrow(() -> new RuntimeException("Auth is required for getAuth")));
+    this.service.getAuth(authValue);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/auth/AuthServiceErrorDecoder.java]=[
+package com.fern.basic.client.auth;
+
+import com.fern.basic.client.auth.exceptions.GetAuthException;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.RuntimeException;
+import java.lang.String;
+
+final class AuthServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    try {
+      if (methodKey.contains("getAuth")) {
+        return decodeException(response, GetAuthException.class);
+      }
+    }
+    catch (IOException e) {
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/auth/endpoints/GetAuth.java]=[
+package com.fern.basic.client.auth.endpoints;
+
+import com.fern.basic.client.BearerAuth;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+public final class GetAuth {
+  private GetAuth() {
+  }
+
+  public static final class Request {
+    private final Optional<BearerAuth> authOverride;
+
+    private int _cachedHashCode;
+
+    Request(Optional<BearerAuth> authOverride) {
+      this.authOverride = authOverride;
+    }
+
+    public Optional<BearerAuth> getAuthOverride() {
+      return authOverride;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return authOverride.equals(other.authOverride);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.authOverride);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetAuth.Request{" + "authOverride: " + authOverride + "}";
+    }
+
+    public static Builder builder() {
+      return new Builder();
+    }
+
+    public static final class Builder {
+      private Optional<BearerAuth> authOverride = Optional.empty();
+
+      private Builder() {
+      }
+
+      public Builder from(Request other) {
+        authOverride(other.getAuthOverride());
+        return this;
+      }
+
+      public Builder authOverride(Optional<BearerAuth> authOverride) {
+        this.authOverride = authOverride;
+        return this;
+      }
+
+      public Builder authOverride(BearerAuth authOverride) {
+        this.authOverride = Optional.of(authOverride);
+        return this;
+      }
+
+      public Request build() {
+        return new Request(authOverride);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/auth/exceptions/GetAuthException.java]=[
+package com.fern.basic.client.auth.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = GetAuthException.Deserializer.class
+)
+public final class GetAuthException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private GetAuthException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static GetAuthException other(Object unknownValue, int statusCode) {
+    return new GetAuthException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "GetAuthException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<GetAuthException> {
+    @Override
+    public GetAuthException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new GetAuthException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/PostsService.java]=[
+package com.fern.basic.client.blog;
+
+import com.fern.basic.client.blog.exceptions.CreatePostException;
+import com.fern.basic.client.blog.exceptions.GetPostException;
+import com.fern.basic.model.blog.BlogPost;
+import com.fern.basic.model.blog.CreatePostRequest;
+import com.fern.basic.model.blog.PostId;
+import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/posts")
+interface PostsService {
+  @POST
+  @Path("/create")
+  void createPost(CreatePostRequest body) throws CreatePostException;
+
+  @GET
+  @Path("/{postId}")
+  BlogPost getPost(@PathParam("postId") PostId postId) throws GetPostException;
+
+  static PostsService getClient(String url) {
+    return Feign.builder()
+        .contract(new OptionalAwareContract(new JAXRSContract()))
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .errorDecoder(new PostsServiceErrorDecoder()).target(PostsService.class, url);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/PostsServiceClient.java]=[
+package com.fern.basic.client.blog;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.blog.endpoints.CreatePost;
+import com.fern.basic.client.blog.endpoints.GetPost;
+import com.fern.basic.client.blog.exceptions.CreatePostException;
+import com.fern.basic.client.blog.exceptions.GetPostException;
+import com.fern.basic.model.blog.BlogPost;
+import java.lang.String;
+import java.util.Optional;
+
+public final class PostsServiceClient {
+  private final PostsService service;
+
+  private final Optional<BearerAuth> auth;
+
+  public PostsServiceClient(String url) {
+    this.service = PostsService.getClient(url);
+    this.auth = Optional.empty();
+  }
+
+  public PostsServiceClient(String url, BearerAuth auth) {
+    this.service = PostsService.getClient(url);
+    this.auth = Optional.of(auth);
+  }
+
+  public void createPost(CreatePost.Request request) throws CreatePostException {
+    this.service.createPost(request.getBody());
+  }
+
+  public BlogPost getPost(GetPost.Request request) throws GetPostException {
+    return this.service.getPost(request.getPostId());
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/PostsServiceErrorDecoder.java]=[
+package com.fern.basic.client.blog;
+
+import com.fern.basic.client.blog.exceptions.CreatePostException;
+import com.fern.basic.client.blog.exceptions.GetPostException;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.RuntimeException;
+import java.lang.String;
+
+final class PostsServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    try {
+      if (methodKey.contains("createPost")) {
+        return decodeException(response, CreatePostException.class);
+      }
+      if (methodKey.contains("getPost")) {
+        return decodeException(response, GetPostException.class);
+      }
+    }
+    catch (IOException e) {
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/endpoints/CreatePost.java]=[
+package com.fern.basic.client.blog.endpoints;
+
+import com.fern.basic.model.blog.CreatePostRequest;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+public final class CreatePost {
+  private CreatePost() {
+  }
+
+  public static final class Request {
+    private final CreatePostRequest body;
+
+    private int _cachedHashCode;
+
+    Request(CreatePostRequest body) {
+      this.body = body;
+    }
+
+    public CreatePostRequest getBody() {
+      return body;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return body.equals(other.body);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.body);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "CreatePost.Request{" + "body: " + body + "}";
+    }
+
+    public static BodyStage builder() {
+      return new Builder();
+    }
+
+    public interface BodyStage {
+      _FinalStage body(CreatePostRequest body);
+
+      Builder from(Request other);
+    }
+
+    public interface _FinalStage {
+      Request build();
+    }
+
+    public static final class Builder implements BodyStage, _FinalStage {
+      private CreatePostRequest body;
+
+      private Builder() {
+      }
+
+      @Override
+      public Builder from(Request other) {
+        body(other.getBody());
+        return this;
+      }
+
+      @Override
+      public _FinalStage body(CreatePostRequest body) {
+        this.body = body;
+        return this;
+      }
+
+      @Override
+      public Request build() {
+        return new Request(body);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/endpoints/GetPost.java]=[
+package com.fern.basic.client.blog.endpoints;
+
+import com.fern.basic.model.blog.PostId;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+public final class GetPost {
+  private GetPost() {
+  }
+
+  public static final class Request {
+    private final PostId postId;
+
+    private int _cachedHashCode;
+
+    Request(PostId postId) {
+      this.postId = postId;
+    }
+
+    public PostId getPostId() {
+      return postId;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return postId.equals(other.postId);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.postId);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetPost.Request{" + "postId: " + postId + "}";
+    }
+
+    public static PostIdStage builder() {
+      return new Builder();
+    }
+
+    public interface PostIdStage {
+      _FinalStage postId(PostId postId);
+
+      Builder from(Request other);
+    }
+
+    public interface _FinalStage {
+      Request build();
+    }
+
+    public static final class Builder implements PostIdStage, _FinalStage {
+      private PostId postId;
+
+      private Builder() {
+      }
+
+      @Override
+      public Builder from(Request other) {
+        postId(other.getPostId());
+        return this;
+      }
+
+      @Override
+      public _FinalStage postId(PostId postId) {
+        this.postId = postId;
+        return this;
+      }
+
+      @Override
+      public Request build() {
+        return new Request(postId);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/errors/GeneratorsDoNotExistError.java]=[
+package com.fern.basic.client.blog.errors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.basic.model.blog.GeneratorIdAndVersion;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.List;
+
+public final class GeneratorsDoNotExistError {
+  private final List<GeneratorIdAndVersion> value;
+
+  private GeneratorsDoNotExistError(List<GeneratorIdAndVersion> value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public List<GeneratorIdAndVersion> get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof GeneratorsDoNotExistError && this.value.equals(((GeneratorsDoNotExistError) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistError of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistError(value);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/errors/PostNotFoundError.java]=[
+package com.fern.basic.client.blog.errors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.basic.model.blog.PostNotFoundErrorBody;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class PostNotFoundError {
+  private final PostNotFoundErrorBody value;
+
+  private PostNotFoundError(PostNotFoundErrorBody value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public PostNotFoundErrorBody get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof PostNotFoundError && this.value.equals(((PostNotFoundError) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostNotFoundError of(PostNotFoundErrorBody value) {
+    return new PostNotFoundError(value);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/errors/UnauthorizedError.java]=[
+package com.fern.basic.client.blog.errors;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fern.basic.model.blog.UnauthorizedErrorBody;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class UnauthorizedError {
+  private final UnauthorizedErrorBody value;
+
+  private UnauthorizedError(UnauthorizedErrorBody value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public UnauthorizedErrorBody get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof UnauthorizedError && this.value.equals(((UnauthorizedError) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static UnauthorizedError of(UnauthorizedErrorBody value) {
+    return new UnauthorizedError(value);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/exceptions/CreatePostException.java]=[
+package com.fern.basic.client.blog.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = CreatePostException.Deserializer.class
+)
+public final class CreatePostException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private CreatePostException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static CreatePostException other(Object unknownValue, int statusCode) {
+    return new CreatePostException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "CreatePostException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<CreatePostException> {
+    @Override
+    public CreatePostException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new CreatePostException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/blog/exceptions/GetPostException.java]=[
+package com.fern.basic.client.blog.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.basic.client.blog.errors.PostNotFoundError;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+import java.util.UUID;
+
+@JsonDeserialize(
+    using = GetPostException.Deserializer.class
+)
+public final class GetPostException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private GetPostException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static GetPostException postNotFoundError(PostNotFoundError value) {
+    return new GetPostException(new PostNotFoundErrorValue(value), 400);
+  }
+
+  public static GetPostException other(Object unknownValue, int statusCode) {
+    return new GetPostException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isPostNotFoundError() {
+    return value instanceof PostNotFoundErrorValue;
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<PostNotFoundError> getPostNotFoundError() {
+    if (isPostNotFoundError()) {
+      return Optional.of(((PostNotFoundErrorValue) value).value);
+    }
+    return Optional.empty();
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitPostNotFoundError(PostNotFoundError postNotFoundError);
+
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonSubTypes(@JsonSubTypes.Type(PostNotFoundErrorValue.class))
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  @JsonTypeName("Optional[PostNotFoundError]")
+  private static final class PostNotFoundErrorValue implements Value {
+    private PostNotFoundError value;
+
+    private String errorInstanceId;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.PROPERTIES
+    )
+    private PostNotFoundErrorValue(@JsonProperty("value") PostNotFoundError value,
+        @JsonProperty("_errorInstanceId") String errorInstanceId) {
+      this.value = value;
+      this.errorInstanceId = errorInstanceId;
+    }
+
+    private PostNotFoundErrorValue(PostNotFoundError value) {
+      this.value = value;
+      this.errorInstanceId = UUID.randomUUID().toString();
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitPostNotFoundError(value);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof PostNotFoundErrorValue && equalTo((PostNotFoundErrorValue) other);
+    }
+
+    private boolean equalTo(PostNotFoundErrorValue other) {
+      return value.equals(other.value) && errorInstanceId.equals(other.errorInstanceId);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.value, this.errorInstanceId);
+    }
+
+    @Override
+    public String toString() {
+      return "GetPostException{" + "value: " + value + ", errorInstanceId: " + errorInstanceId + "}";
+    }
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "GetPostException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<GetPostException> {
+    @Override
+    public GetPostException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new GetPostException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/DummyService.java]=[
+package com.fern.basic.client.dummy.service;
+
+import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
+import com.fern.basic.model.dummy.service.DummyId;
+import com.fern.java.jackson.ClientObjectMappers;
+import com.fern.java.jersey.contracts.OptionalAwareContract;
+import feign.Feign;
+import feign.jackson.JacksonDecoder;
+import feign.jackson.JacksonEncoder;
+import feign.jaxrs.JAXRSContract;
+import java.lang.String;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/dummy")
+interface DummyService {
+  @GET
+  @Path("/")
+  void getDummy(DummyId body) throws GetDummyException;
+
+  @GET
+  @Path("/health")
+  void health() throws HealthException;
+
+  static DummyService getClient(String url) {
+    return Feign.builder()
+        .contract(new OptionalAwareContract(new JAXRSContract()))
+        .decoder(new JacksonDecoder(ClientObjectMappers.JSON_MAPPER))
+        .encoder(new JacksonEncoder(ClientObjectMappers.JSON_MAPPER))
+        .errorDecoder(new DummyServiceErrorDecoder()).target(DummyService.class, url);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/DummyServiceClient.java]=[
+package com.fern.basic.client.dummy.service;
+
+import com.fern.basic.client.BearerAuth;
+import com.fern.basic.client.dummy.service.endpoints.GetDummy;
+import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
+import java.lang.String;
+import java.util.Optional;
+
+public final class DummyServiceClient {
+  private final DummyService service;
+
+  private final Optional<BearerAuth> auth;
+
+  public DummyServiceClient(String url) {
+    this.service = DummyService.getClient(url);
+    this.auth = Optional.empty();
+  }
+
+  public DummyServiceClient(String url, BearerAuth auth) {
+    this.service = DummyService.getClient(url);
+    this.auth = Optional.of(auth);
+  }
+
+  public void getDummy(GetDummy.Request request) throws GetDummyException {
+    this.service.getDummy(request.getBody());
+  }
+
+  public void health() throws HealthException {
+    this.service.health();
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/DummyServiceErrorDecoder.java]=[
+package com.fern.basic.client.dummy.service;
+
+import com.fern.basic.client.dummy.service.exceptions.GetDummyException;
+import com.fern.basic.client.dummy.service.exceptions.HealthException;
+import com.fern.java.jackson.ClientObjectMappers;
+import feign.Response;
+import feign.codec.ErrorDecoder;
+import java.io.IOException;
+import java.lang.Class;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.RuntimeException;
+import java.lang.String;
+
+final class DummyServiceErrorDecoder implements ErrorDecoder {
+  @Override
+  public Exception decode(String methodKey, Response response) {
+    try {
+      if (methodKey.contains("getDummy")) {
+        return decodeException(response, GetDummyException.class);
+      }
+      if (methodKey.contains("health")) {
+        return decodeException(response, HealthException.class);
+      }
+    }
+    catch (IOException e) {
+    }
+    return new RuntimeException("Failed to read response body. Received status " + response.status() + " for method " + methodKey);
+  }
+
+  private static <T extends Exception> Exception decodeException(Response response, Class<T> clazz)
+      throws IOException {
+    return ClientObjectMappers.JSON_MAPPER.reader().withAttribute("statusCode", response.status()).readValue(response.body().asInputStream(), clazz);
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/endpoints/GetDummy.java]=[
+package com.fern.basic.client.dummy.service.endpoints;
+
+import com.fern.basic.model.dummy.service.DummyId;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+public final class GetDummy {
+  private GetDummy() {
+  }
+
+  public static final class Request {
+    private final DummyId body;
+
+    private int _cachedHashCode;
+
+    Request(DummyId body) {
+      this.body = body;
+    }
+
+    public DummyId getBody() {
+      return body;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof Request && equalTo((Request) other);
+    }
+
+    private boolean equalTo(Request other) {
+      return body.equals(other.body);
+    }
+
+    @Override
+    public int hashCode() {
+      if (_cachedHashCode == 0) {
+        _cachedHashCode = Objects.hash(this.body);
+      }
+      return _cachedHashCode;
+    }
+
+    @Override
+    public String toString() {
+      return "GetDummy.Request{" + "body: " + body + "}";
+    }
+
+    public static BodyStage builder() {
+      return new Builder();
+    }
+
+    public interface BodyStage {
+      _FinalStage body(DummyId body);
+
+      Builder from(Request other);
+    }
+
+    public interface _FinalStage {
+      Request build();
+    }
+
+    public static final class Builder implements BodyStage, _FinalStage {
+      private DummyId body;
+
+      private Builder() {
+      }
+
+      @Override
+      public Builder from(Request other) {
+        body(other.getBody());
+        return this;
+      }
+
+      @Override
+      public _FinalStage body(DummyId body) {
+        this.body = body;
+        return this;
+      }
+
+      @Override
+      public Request build() {
+        return new Request(body);
+      }
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/exceptions/GetDummyException.java]=[
+package com.fern.basic.client.dummy.service.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = GetDummyException.Deserializer.class
+)
+public final class GetDummyException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private GetDummyException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static GetDummyException other(Object unknownValue, int statusCode) {
+    return new GetDummyException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "GetDummyException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<GetDummyException> {
+    @Override
+    public GetDummyException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new GetDummyException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[fern-client/src/main/java/com/fern/basic/client/dummy/service/exceptions/HealthException.java]=[
+package com.fern.basic.client.dummy.service.exceptions;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.io.IOException;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+import java.util.Optional;
+
+@JsonDeserialize(
+    using = HealthException.Deserializer.class
+)
+public final class HealthException extends Exception {
+  private final Value value;
+
+  private int statusCode;
+
+  private HealthException(Value value, int statusCode) {
+    this.value = value;
+    this.statusCode = statusCode;
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public int getStatusCode() {
+    return this.statusCode;
+  }
+
+  public static HealthException other(Object unknownValue, int statusCode) {
+    return new HealthException(new UnknownErrorValue(unknownValue), statusCode);
+  }
+
+  public boolean isOther() {
+    return value instanceof UnknownErrorValue;
+  }
+
+  public Optional<Object> getOther() {
+    if (isOther()) {
+      return Optional.of(((UnknownErrorValue) value).unknownValue);
+    }
+    return Optional.empty();
+  }
+
+  public interface Visitor<T> {
+    T visitOtherError(Object errorBody);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      property = "_error",
+      visible = true,
+      defaultImpl = UnknownErrorValue.class
+  )
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface Value {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  private static final class UnknownErrorValue implements Value {
+    private Object unknownValue;
+
+    @JsonCreator(
+        mode = JsonCreator.Mode.DELEGATING
+    )
+    UnknownErrorValue(@JsonProperty("unknownValue") Object unknownValue) {
+      this.unknownValue = unknownValue;
+    }
+
+    @Override
+    public <T> T visit(Visitor<T> visitor) {
+      return visitor.visitOtherError(unknownValue);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+      if (this == other) return true;
+      return other instanceof UnknownErrorValue && equalTo((UnknownErrorValue) other);
+    }
+
+    private boolean equalTo(UnknownErrorValue other) {
+      return unknownValue.equals(other.unknownValue);
+    }
+
+    @Override
+    public int hashCode() {
+      return Objects.hash(this.unknownValue);
+    }
+
+    @Override
+    public String toString() {
+      return "HealthException{" + "unknownValue: " + unknownValue + "}";
+    }
+  }
+
+  static final class Deserializer extends JsonDeserializer<HealthException> {
+    @Override
+    public HealthException deserialize(JsonParser p, DeserializationContext ctx) throws
+        IOException {
+      Value value = ctx.readValue(p, Value.class);
+      int statusCode = (int) ctx.getAttribute("statusCode");
+      return new HealthException(value, statusCode);
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/Age.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class Age {
+  private final int value;
+
+  private Age(int value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public int get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof Age && this.value == ((Age) other).value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Integer.hashCode(value);
+  }
+
+  @Override
+  public String toString() {
+    return Integer.toString(value);
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static Age of(int value) {
+    return new Age(value);
+  }
+
+  public static Age valueOf(String value) {
+    return of(Integer.parseInt(value));
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/Author.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
+import org.immutables.value.Value;
+
+@Value.Enclosing
+public final class Author {
+  private final InternalValue value;
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  private Author(InternalValue value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  InternalValue getInternalValue() {
+    return value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof Author && equalTo((Author) other));
+  }
+
+  private boolean equalTo(Author other) {
+    return this.value.equals(other.value);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hashCode(this.value);
+  }
+
+  public static Author anonymous() {
+    return new Author(InternalAnonymousValue.of());
+  }
+
+  public static Author name(String value) {
+    return new Author(InternalNameValue.of(value));
+  }
+
+  public boolean isAnonymous() {
+    return value instanceof InternalAnonymousValue;
+  }
+
+  public boolean isName() {
+    return value instanceof InternalNameValue;
+  }
+
+  public Optional<String> getName() {
+    if (isName()) {
+      return Optional.of(((InternalNameValue) value).name());
+    }
+    return Optional.empty();
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    return value.visit(visitor);
+  }
+
+  public interface Visitor<T> {
+    T visitAnonymous();
+
+    T visitName(String value);
+
+    T visitUnknown(String unknownType);
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.PROPERTY,
+      property = "type",
+      visible = true,
+      defaultImpl = Unknown.class
+  )
+  @JsonSubTypes({
+      @JsonSubTypes.Type(value = InternalAnonymousValue.class, name = "anonymous"),
+      @JsonSubTypes.Type(value = InternalNameValue.class, name = "name")
+  })
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface InternalValue {
+    <T> T visit(Visitor<T> visitor);
+  }
+
+  @Value.Immutable
+  @JsonTypeName("anonymous")
+  @JsonDeserialize(
+      as = ImmutableAuthor.InternalAnonymousValue.class
+  )
+  interface InternalAnonymousValue extends InternalValue {
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitAnonymous();
+    }
+
+    static InternalAnonymousValue of() {
+      return ImmutableAuthor.InternalAnonymousValue.builder().build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("name")
+  @JsonDeserialize(
+      as = ImmutableAuthor.InternalNameValue.class
+  )
+  interface InternalNameValue extends InternalValue {
+    @JsonProperty("name")
+    String name();
+
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitName(name());
+    }
+
+    static InternalNameValue of(String value) {
+      return ImmutableAuthor.InternalNameValue.builder().name(value).build();
+    }
+  }
+
+  @Value.Immutable
+  @JsonDeserialize(
+      as = ImmutableAuthor.Unknown.class
+  )
+  interface Unknown extends InternalValue {
+    @JsonValue
+    Map<String, Object> value();
+
+    default String type() {
+      return value().get("type").toString();
+    }
+
+    @Override
+    default <T> T visit(Visitor<T> visitor) {
+      return visitor.visitUnknown(type());
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/BlogPost.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = BlogPost.Builder.class
+)
+public final class BlogPost {
+  private final PostId id;
+
+  private final PostType type;
+
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private int _cachedHashCode;
+
+  BlogPost(PostId id, PostType type, String title, Author author, String content) {
+    this.id = id;
+    this.type = type;
+    this.title = title;
+    this.author = author;
+    this.content = content;
+  }
+
+  @JsonProperty("id")
+  public PostId getId() {
+    return id;
+  }
+
+  @JsonProperty("type")
+  public PostType getType() {
+    return type;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof BlogPost && equalTo((BlogPost) other);
+  }
+
+  private boolean equalTo(BlogPost other) {
+    return id.equals(other.id) && type.equals(other.type) && title.equals(other.title) && author.equals(other.author) && content.equals(other.content);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id, this.type, this.title, this.author, this.content);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "BlogPost{" + "id: " + id + ", type: " + type + ", title: " + title + ", author: " + author + ", content: " + content + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    TypeStage id(PostId id);
+
+    Builder from(BlogPost other);
+  }
+
+  public interface TypeStage {
+    TitleStage type(PostType type);
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    _FinalStage content(String content);
+  }
+
+  public interface _FinalStage {
+    BlogPost build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder implements IdStage, TypeStage, TitleStage, AuthorStage, ContentStage, _FinalStage {
+    private PostId id;
+
+    private PostType type;
+
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(BlogPost other) {
+      id(other.getId());
+      type(other.getType());
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public TypeStage id(PostId id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("type")
+    public TitleStage type(PostType type) {
+      this.type = type;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public _FinalStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    public BlogPost build() {
+      return new BlogPost(id, type, title, author, content);
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/CreatePostRequest.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.annotation.Nulls;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Integer;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = CreatePostRequest.Builder.class
+)
+public final class CreatePostRequest {
+  private final String title;
+
+  private final Author author;
+
+  private final String content;
+
+  private final PostType postType;
+
+  private final int _switch;
+
+  private final Map<String, Integer> ratings;
+
+  private int _cachedHashCode;
+
+  CreatePostRequest(String title, Author author, String content, PostType postType, int _switch,
+      Map<String, Integer> ratings) {
+    this.title = title;
+    this.author = author;
+    this.content = content;
+    this.postType = postType;
+    this._switch = _switch;
+    this.ratings = ratings;
+  }
+
+  @JsonProperty("title")
+  public String getTitle() {
+    return title;
+  }
+
+  @JsonProperty("author")
+  public Author getAuthor() {
+    return author;
+  }
+
+  @JsonProperty("content")
+  public String getContent() {
+    return content;
+  }
+
+  @JsonProperty("postType")
+  public PostType getPostType() {
+    return postType;
+  }
+
+  @JsonProperty("switch")
+  public int getSwitch() {
+    return _switch;
+  }
+
+  @JsonProperty("ratings")
+  public Map<String, Integer> getRatings() {
+    return ratings;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof CreatePostRequest && equalTo((CreatePostRequest) other);
+  }
+
+  private boolean equalTo(CreatePostRequest other) {
+    return title.equals(other.title) && author.equals(other.author) && content.equals(other.content) && postType.equals(other.postType) && _switch == other._switch && ratings.equals(other.ratings);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.title, this.author, this.content, this.postType, this._switch, this.ratings);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "CreatePostRequest{" + "title: " + title + ", author: " + author + ", content: " + content + ", postType: " + postType + ", _switch: " + _switch + ", ratings: " + ratings + "}";
+  }
+
+  public static TitleStage builder() {
+    return new Builder();
+  }
+
+  public interface TitleStage {
+    AuthorStage title(String title);
+
+    Builder from(CreatePostRequest other);
+  }
+
+  public interface AuthorStage {
+    ContentStage author(Author author);
+  }
+
+  public interface ContentStage {
+    PostTypeStage content(String content);
+  }
+
+  public interface PostTypeStage {
+    SwitchStage postType(PostType postType);
+  }
+
+  public interface SwitchStage {
+    _FinalStage _switch(int _switch);
+  }
+
+  public interface _FinalStage {
+    CreatePostRequest build();
+
+    _FinalStage ratings(Map<String, Integer> ratings);
+
+    _FinalStage putAllRatings(Map<String, Integer> ratings);
+
+    _FinalStage ratings(String key, Integer value);
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder implements TitleStage, AuthorStage, ContentStage, PostTypeStage, SwitchStage, _FinalStage {
+    private String title;
+
+    private Author author;
+
+    private String content;
+
+    private PostType postType;
+
+    private int _switch;
+
+    private Map<String, Integer> ratings = new LinkedHashMap<>();
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(CreatePostRequest other) {
+      title(other.getTitle());
+      author(other.getAuthor());
+      content(other.getContent());
+      postType(other.getPostType());
+      _switch(other.getSwitch());
+      ratings(other.getRatings());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("title")
+    public AuthorStage title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("author")
+    public ContentStage author(Author author) {
+      this.author = author;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("content")
+    public PostTypeStage content(String content) {
+      this.content = content;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("postType")
+    public SwitchStage postType(PostType postType) {
+      this.postType = postType;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("switch")
+    public _FinalStage _switch(int _switch) {
+      this._switch = _switch;
+      return this;
+    }
+
+    @Override
+    public _FinalStage ratings(String key, Integer value) {
+      this.ratings.put(key, value);
+      return this;
+    }
+
+    @Override
+    public _FinalStage putAllRatings(Map<String, Integer> ratings) {
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
+    @JsonSetter(
+        value = "ratings",
+        nulls = Nulls.SKIP
+    )
+    public _FinalStage ratings(Map<String, Integer> ratings) {
+      this.ratings.clear();
+      this.ratings.putAll(ratings);
+      return this;
+    }
+
+    @Override
+    public CreatePostRequest build() {
+      return new CreatePostRequest(title, author, content, postType, _switch, ratings);
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/GeneratorIdAndVersion.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSetter;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Objects;
+
+@JsonDeserialize(
+    builder = GeneratorIdAndVersion.Builder.class
+)
+public final class GeneratorIdAndVersion {
+  private final String id;
+
+  private final String version;
+
+  private int _cachedHashCode;
+
+  GeneratorIdAndVersion(String id, String version) {
+    this.id = id;
+    this.version = version;
+  }
+
+  @JsonProperty("id")
+  public String getId() {
+    return id;
+  }
+
+  @JsonProperty("version")
+  public String getVersion() {
+    return version;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    if (this == other) return true;
+    return other instanceof GeneratorIdAndVersion && equalTo((GeneratorIdAndVersion) other);
+  }
+
+  private boolean equalTo(GeneratorIdAndVersion other) {
+    return id.equals(other.id) && version.equals(other.version);
+  }
+
+  @Override
+  public int hashCode() {
+    if (_cachedHashCode == 0) {
+      _cachedHashCode = Objects.hash(this.id, this.version);
+    }
+    return _cachedHashCode;
+  }
+
+  @Override
+  public String toString() {
+    return "GeneratorIdAndVersion{" + "id: " + id + ", version: " + version + "}";
+  }
+
+  public static IdStage builder() {
+    return new Builder();
+  }
+
+  public interface IdStage {
+    VersionStage id(String id);
+
+    Builder from(GeneratorIdAndVersion other);
+  }
+
+  public interface VersionStage {
+    _FinalStage version(String version);
+  }
+
+  public interface _FinalStage {
+    GeneratorIdAndVersion build();
+  }
+
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  public static final class Builder implements IdStage, VersionStage, _FinalStage {
+    private String id;
+
+    private String version;
+
+    private Builder() {
+    }
+
+    @Override
+    public Builder from(GeneratorIdAndVersion other) {
+      id(other.getId());
+      version(other.getVersion());
+      return this;
+    }
+
+    @Override
+    @JsonSetter("id")
+    public VersionStage id(String id) {
+      this.id = id;
+      return this;
+    }
+
+    @Override
+    @JsonSetter("version")
+    public _FinalStage version(String version) {
+      this.version = version;
+      return this;
+    }
+
+    @Override
+    public GeneratorIdAndVersion build() {
+      return new GeneratorIdAndVersion(id, version);
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/GeneratorsDoNotExistError.java]=[
+package com.fern.basic.model.blog;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class GeneratorsDoNotExistError extends HttpException {
+  GeneratorsDoNotExistErrorBody body;
+
+  public GeneratorsDoNotExistError(GeneratorsDoNotExistErrorBody body) {
+    this.body = body;
+  }
+
+  public GeneratorsDoNotExistErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 400;
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/GeneratorsDoNotExistErrorBody.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.List;
+
+public final class GeneratorsDoNotExistErrorBody {
+  private final List<GeneratorIdAndVersion> value;
+
+  private GeneratorsDoNotExistErrorBody(List<GeneratorIdAndVersion> value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public List<GeneratorIdAndVersion> get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof GeneratorsDoNotExistErrorBody && this.value.equals(((GeneratorsDoNotExistErrorBody) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static GeneratorsDoNotExistErrorBody of(List<GeneratorIdAndVersion> value) {
+    return new GeneratorsDoNotExistErrorBody(value);
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/GetPostFailedResponse.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import com.fasterxml.jackson.annotation.JsonTypeName;
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.exception.HttpException;
+import java.lang.Exception;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Enclosing
+public final class GetPostFailedResponse {
+  private final InternalValue value;
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  private GetPostFailedResponse(InternalValue value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  InternalValue getInternalValue() {
+    return value;
+  }
+
+  public final Exception getException() {
+    return value.getException();
+  }
+
+  public static GetPostFailedResponse postNotFoundError(PostNotFoundError value) {
+    return new GetPostFailedResponse(InternalPostNotFoundErrorValue.of(value));
+  }
+
+  @JsonTypeInfo(
+      use = JsonTypeInfo.Id.NAME,
+      include = JsonTypeInfo.As.PROPERTY,
+      property = "_error",
+      visible = true
+  )
+  @JsonSubTypes(@JsonSubTypes.Type(value = InternalPostNotFoundErrorValue.class, name = "PostNotFoundError"))
+  @JsonIgnoreProperties(
+      ignoreUnknown = true
+  )
+  private interface InternalValue<T extends HttpException> {
+    @JsonIgnore
+    T getException();
+
+    @JsonProperty("_errorInstanceId")
+    default String getErrorInstanceId() {
+      return getException().getErrorInstanceId();
+    }
+  }
+
+  @Value.Immutable
+  @JsonTypeName("PostNotFoundError")
+  @JsonDeserialize(
+      as = GetPostFailedResponse.InternalPostNotFoundErrorValue.class
+  )
+  interface InternalPostNotFoundErrorValue extends InternalValue<PostNotFoundError> {
+    @Value.Derived
+    @JsonUnwrapped
+    default PostNotFoundErrorBody body() {
+      return getException().getBody();
+    }
+
+    static InternalPostNotFoundErrorValue of(PostNotFoundError value) {
+      return ImmutableGetPostFailedResponse.InternalPostNotFoundErrorValue.builder().exception(value).build();
+    }
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/PostId.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class PostId {
+  private final String value;
+
+  private PostId(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof PostId && this.value.equals(((PostId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostId of(String value) {
+    return new PostId(value);
+  }
+
+  public static PostId valueOf(String value) {
+    return of(value);
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/PostNotFoundError.java]=[
+package com.fern.basic.model.blog;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class PostNotFoundError extends HttpException {
+  PostNotFoundErrorBody body;
+
+  public PostNotFoundError(PostNotFoundErrorBody body) {
+    this.body = body;
+  }
+
+  public PostNotFoundErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 400;
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/PostNotFoundErrorBody.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class PostNotFoundErrorBody {
+  private final PostNotFoundErrorBody value;
+
+  private PostNotFoundErrorBody(PostNotFoundErrorBody value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public PostNotFoundErrorBody get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof PostNotFoundErrorBody && this.value.equals(((PostNotFoundErrorBody) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostNotFoundErrorBody of(PostNotFoundErrorBody value) {
+    return new PostNotFoundErrorBody(value);
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/PostType.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+import java.util.Locale;
+import javax.annotation.Nonnull;
+
+public final class PostType {
+  public static final PostType LONG = new PostType(Value.LONG, "LONG");
+
+  public static final PostType SHORT = new PostType(Value.SHORT, "SHORT");
+
+  public static final PostType MEDIUM = new PostType(Value.MEDIUM, "med.med");
+
+  private final Value value;
+
+  private final String string;
+
+  PostType(Value value, String string) {
+    this.value = value;
+    this.string = string;
+  }
+
+  public Value getEnumValue() {
+    return value;
+  }
+
+  @Override
+  @JsonValue
+  public String toString() {
+    return this.string;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return (this == other) 
+      || (other instanceof PostType && this.string.equals(((PostType) other).string));
+  }
+
+  @Override
+  public int hashCode() {
+    return this.string.hashCode();
+  }
+
+  public <T> T visit(Visitor<T> visitor) {
+    switch (value) {
+      case LONG:
+        return visitor.visitLong();
+      case SHORT:
+        return visitor.visitShort();
+      case MEDIUM:
+        return visitor.visitMedium();
+      case UNKNOWN:
+      default:
+        return visitor.visitUnknown(string);
+    }
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static PostType valueOf(@Nonnull String value) {
+    String upperCasedValue = value.toUpperCase(Locale.ROOT);
+    switch (upperCasedValue) {
+      case "LONG":
+        return LONG;
+      case "SHORT":
+        return SHORT;
+      case "med.med":
+        return MEDIUM;
+      default:
+        return new PostType(Value.UNKNOWN, upperCasedValue);
+    }
+  }
+
+  public enum Value {
+    LONG,
+
+    SHORT,
+
+    MEDIUM,
+
+    UNKNOWN
+  }
+
+  public interface Visitor<T> {
+    T visitLong();
+
+    T visitShort();
+
+    T visitMedium();
+
+    T visitUnknown(String unknownType);
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/UnauthorizedError.java]=[
+package com.fern.basic.model.blog;
+
+import com.fern.java.exception.HttpException;
+import java.lang.Override;
+
+public final class UnauthorizedError extends HttpException {
+  UnauthorizedErrorBody body;
+
+  public UnauthorizedError(UnauthorizedErrorBody body) {
+    this.body = body;
+  }
+
+  public UnauthorizedErrorBody getBody() {
+    return body;
+  }
+
+  @Override
+  public int getStatusCode() {
+    return 403;
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/blog/UnauthorizedErrorBody.java]=[
+package com.fern.basic.model.blog;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class UnauthorizedErrorBody {
+  private final UnauthorizedErrorBody value;
+
+  private UnauthorizedErrorBody(UnauthorizedErrorBody value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public UnauthorizedErrorBody get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof UnauthorizedErrorBody && this.value.equals(((UnauthorizedErrorBody) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value.toString();
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static UnauthorizedErrorBody of(UnauthorizedErrorBody value) {
+    return new UnauthorizedErrorBody(value);
+  }
+}
+
+]
+
+
+basic[fern-model/src/main/java/com/fern/basic/model/dummy/service/DummyId.java]=[
+package com.fern.basic.model.dummy.service;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Object;
+import java.lang.Override;
+import java.lang.String;
+
+public final class DummyId {
+  private final String value;
+
+  private DummyId(String value) {
+    this.value = value;
+  }
+
+  @JsonValue
+  public String get() {
+    return this.value;
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    return this == other || (other instanceof DummyId && this.value.equals(((DummyId) other).value));
+  }
+
+  @Override
+  public int hashCode() {
+    return value.hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return value;
+  }
+
+  @JsonCreator(
+      mode = JsonCreator.Mode.DELEGATING
+  )
+  public static DummyId of(String value) {
+    return new DummyId(value);
+  }
+
+  public static DummyId valueOf(String value) {
+    return of(value);
+  }
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/AbstractServiceRegistry.java]=[
+package com.fern.basic.server;
+
+import com.fern.basic.server.auth.AuthService;
+import com.fern.basic.server.blog.PostNotFoundErrorExceptionMapper;
+import com.fern.basic.server.blog.PostsService;
+import com.fern.basic.server.dummy.service.DummyService;
+import org.glassfish.jersey.server.ResourceConfig;
+
+public abstract class AbstractServiceRegistry extends ResourceConfig {
+  public AbstractServiceRegistry() {
+    register(DefaultExceptionMapper.class);
+    register(PostNotFoundErrorExceptionMapper.class);
+  }
+
+  public AbstractServiceRegistry(AuthService authService, PostsService postsService,
+      DummyService dummyService) {
+    this();
+    register(authService);
+    register(postsService);
+    register(dummyService);
+  }
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/BearerAuth.java]=[
+package com.fern.basic.server;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@Value.Style(
+    visibility = Value.Style.ImplementationVisibility.PACKAGE,
+    jdkOnly = true
+)
+public abstract class BearerAuth {
+  @Value.Parameter
+  @JsonValue
+  public abstract String getToken();
+
+  @Override
+  public final String toString() {
+    return "Bearer " + getToken();
+  }
+
+  public static BearerAuth valueOf(String token) {
+    return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/DefaultExceptionMapper.java]=[
+package com.fern.basic.server;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Exception;
+import java.lang.Override;
+import java.lang.String;
+import java.util.UUID;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class DefaultExceptionMapper implements ExceptionMapper<Exception> {
+  private static final Logger log = LoggerFactory.getLogger(DefaultExceptionMapper.class);
+
+  @Override
+  public Response toResponse(Exception e) {
+    DefaultExceptionBody body = DefaultExceptionBody.create();
+    log.error("Error handling request. ErrorInstanceId= {}", body.errorInstanceId(), e);
+    return Response.status(500).entity(body).build();
+  }
+
+  @Value.Immutable
+  @AliasImmutablesStyle
+  @JsonDeserialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  @JsonSerialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  interface DefaultExceptionBody {
+    @JsonProperty("_error")
+    default String errorType() {
+      return "_unknown";
+    }
+
+    @JsonProperty("_errorInstanceId")
+    default String errorInstanceId() {
+      return UUID.randomUUID().toString();
+    }
+
+    static DefaultExceptionBody create() {
+      return ImmutableDefaultExceptionBody.of();
+    }
+  }
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/auth/AuthService.java]=[
+package com.fern.basic.server.auth;
+
+import com.fern.basic.server.BearerAuth;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/auth")
+public interface AuthService {
+  @GET
+  @Path("/")
+  void getAuth(@HeaderParam("Authorization") BearerAuth bearer);
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/blog/PostNotFoundErrorExceptionMapper.java]=[
+package com.fern.basic.server.blog;
+
+import com.fern.basic.model.blog.PostNotFoundError;
+import com.fern.java.jersey.ResourceInfoUtils;
+import java.lang.Override;
+import javax.ws.rs.container.ResourceInfo;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.ext.ExceptionMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public final class PostNotFoundErrorExceptionMapper implements ExceptionMapper<PostNotFoundError> {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
+  @Context
+  ResourceInfo resourceInfo;
+
+  @Override
+  public Response toResponse(PostNotFoundError e) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
+    if (ResourceInfoUtils.getInterfaceNames(resourceInfo).contains("PostsService")) {
+      if (ResourceInfoUtils.getMethodName(resourceInfo).contains("getPost")) {
+        return Response.status(e.getStatusCode()).entity(com.fern.basic.model.blog.GetPostFailedResponse.postNotFoundError(e)).build();
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/blog/PostsService.java]=[
+package com.fern.basic.server.blog;
+
+import com.fern.basic.model.blog.BlogPost;
+import com.fern.basic.model.blog.CreatePostRequest;
+import com.fern.basic.model.blog.PostId;
+import com.fern.basic.model.blog.PostNotFoundError;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/posts")
+public interface PostsService {
+  @POST
+  @Path("/create")
+  void createPost(CreatePostRequest request);
+
+  @GET
+  @Path("/{postId}")
+  BlogPost getPost(@PathParam("postId") PostId postId) throws PostNotFoundError;
+}
+
+]
+
+
+basic[fern-server-jersey/src/main/java/com/fern/basic/server/dummy/service/DummyService.java]=[
+package com.fern.basic.server.dummy.service;
+
+import com.fern.basic.model.dummy.service.DummyId;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
+
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Path("/dummy")
+public interface DummyService {
+  @GET
+  @Path("/")
+  void getDummy(DummyId request);
+
+  @GET
+  @Path("/health")
+  void health();
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/model/blog/PostNotFoundErrorExceptionMapper.java]=[
+package com.fern.basic.model.blog;
+
+import com.fern.java.spring.HandlerMethodUtils;
+import java.lang.Object;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@Order(Ordered.HIGHEST_PRECEDENCE)
+@ControllerAdvice
+public final class PostNotFoundErrorExceptionMapper extends ResponseEntityExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(PostNotFoundErrorExceptionMapper.class);
+
+  @ExceptionHandler(PostNotFoundError.class)
+  public ResponseEntity<Object> handle(PostNotFoundError e, HandlerMethod handlerMethod) {
+    log.info("Error handling request. ErrorInstanceId= {}", e.getErrorInstanceId(), e);
+    if (HandlerMethodUtils.getInterfaceNames(handlerMethod).contains("PostsService")) {
+      if (HandlerMethodUtils.getMethodName(handlerMethod).contains("getPost")) {
+        return new ResponseEntity<>(GetPostFailedResponse.postNotFoundError(e), HttpStatus.valueOf(e.getStatusCode()));
+      }
+    }
+    return null;
+  }
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/server/BearerAuth.java]=[
+package com.fern.basic.server;
+
+import com.fasterxml.jackson.annotation.JsonValue;
+import java.lang.Override;
+import java.lang.String;
+import org.immutables.value.Value;
+
+@Value.Immutable
+@Value.Style(
+    visibility = Value.Style.ImplementationVisibility.PACKAGE,
+    jdkOnly = true
+)
+public abstract class BearerAuth {
+  @Value.Parameter
+  @JsonValue
+  public abstract String getToken();
+
+  @Override
+  public final String toString() {
+    return "Bearer " + getToken();
+  }
+
+  public static BearerAuth valueOf(String token) {
+    return ImmutableBearerAuth.of(token.startsWith("Bearer ") ? token.substring(7) : token);
+  }
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/server/DefaultExceptionMapper.java]=[
+package com.fern.basic.server;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fern.java.immutables.AliasImmutablesStyle;
+import java.lang.Exception;
+import java.lang.Object;
+import java.lang.String;
+import java.util.UUID;
+import org.immutables.value.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+@ControllerAdvice
+public final class DefaultExceptionMapper extends ResponseEntityExceptionHandler {
+  private static final Logger log = LoggerFactory.getLogger(DefaultExceptionMapper.class);
+
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<Object> handleException(Exception e) {
+    DefaultExceptionBody body = DefaultExceptionBody.create();
+    log.error("Error handling request. ErrorInstanceId= {}", body.errorInstanceId(), e);
+    return new ResponseEntity<>(body, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @Value.Immutable
+  @AliasImmutablesStyle
+  @JsonDeserialize(
+      as = ImmutableDefaultExceptionBody.class
+  )
+  interface DefaultExceptionBody {
+    @JsonProperty("_error")
+    default String errorType() {
+      return "_unknown";
+    }
+
+    @JsonProperty("_errorInstanceId")
+    default String errorInstanceId() {
+      return UUID.randomUUID().toString();
+    }
+
+    static DefaultExceptionBody create() {
+      return ImmutableDefaultExceptionBody.of();
+    }
+  }
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/server/auth/AuthService.java]=[
+package com.fern.basic.server.auth;
+
+import com.fern.basic.server.BearerAuth;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/auth",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface AuthService {
+  @GetMapping("/")
+  void getAuth(@RequestHeader("Authorization") BearerAuth bearer);
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/server/blog/PostsService.java]=[
+package com.fern.basic.server.blog;
+
+import com.fern.basic.model.blog.BlogPost;
+import com.fern.basic.model.blog.CreatePostRequest;
+import com.fern.basic.model.blog.PostId;
+import com.fern.basic.model.blog.PostNotFoundError;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/posts",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface PostsService {
+  @PostMapping("/create")
+  void createPost(@RequestBody CreatePostRequest request);
+
+  @GetMapping("/{postId}")
+  BlogPost getPost(@PathVariable("postId") PostId postId) throws PostNotFoundError;
+}
+
+]
+
+
+basic[fern-server-spring/src/main/java/com/fern/basic/server/dummy/service/DummyService.java]=[
+package com.fern.basic.server.dummy.service;
+
+import com.fern.basic.model.dummy.service.DummyId;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping(
+    path = "/dummy",
+    consumes = "application/json",
+    produces = "application/json"
+)
+public interface DummyService {
+  @GetMapping("/")
+  void getDummy(@RequestBody DummyId request);
+
+  @GetMapping("/health")
+  void health();
+}
+
+]

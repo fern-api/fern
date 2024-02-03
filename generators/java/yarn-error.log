@@ -1,0 +1,34 @@
+Arguments: 
+  /opt/homebrew/Cellar/node@18/18.18.0/bin/node /Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/bin/yarn.js seed test --workspace sdk
+
+PATH: 
+  /Users/dsinghvi/Library/pnpm:/opt/homebrew/opt/node@18/bin:/Users/dsinghvi/.pyenv/shims:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/share/dotnet:~/.dotnet/tools:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.18.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: Failed to replace env in config: ${YARN_NPM_AUTH_TOKEN}
+      at /Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:94933:13
+      at String.replace (<anonymous>)
+      at envReplace (/Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:94928:16)
+      at Function.normalizeConfig (/Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:31938:69)
+      at NpmRegistry.<anonymous> (/Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:31968:34)
+      at Generator.next (<anonymous>)
+      at step (/Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:310:30)
+      at /Users/dsinghvi/.cache/node/corepack/yarn/1.22.19/lib/cli.js:321:13
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
