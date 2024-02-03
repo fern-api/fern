@@ -15,7 +15,7 @@
 
 </div>
 
-Fern is an open-source toolkit that simplifies the design, build, and consumption of REST APIs. It allows you to effortlessly generate SDKs and API documentation.
+Fern is an open-source toolkit that allows you to effortlessly generate SDKs and API documentation.
 
 <div align="center">
     <img src="/fern/docs/images/overview.png" width="700" alt="Overview Diagram">
@@ -28,28 +28,34 @@ _Note: Fern requires **Node 18** or higher_
 The Fern toolkit is available as a command line interface (CLI). To install it, run:
 
 ```bash
+npm install -g fern-api
+```
+
+Initialize Fern with your OpenAPI spec: 
+
+```bash
 fern init --openapi ./path/to/openapi.yml
 # or
 fern init --openapi https://petstore.swagger.io/v2/swagger.json
 ```
 
-This will generate an OpenAPI-based Fern project:
+Your directory should look like the following: 
 
 ```yaml
 fern/
 ├─ fern.config.json
 ├─ generators.yml # generators you're using
 └─ openapi/
-  └─ openapi.json # your openapi definition
+  └─ openapi.json # your openapi document
 ```
 
-To invoke the generator, run:
+Finally, to invoke the generator, run:
 
 ```bash
 fern generate
 ```
 
-Once complete, you'll see your SDK in `/generated/sdks/typescript/`.
+🎉 Once the command completes, you'll see your SDK in `/generated/sdks/typescript`.
 
 ## 🌿 API Documentation
 
@@ -63,11 +69,10 @@ Check out docs built with Fern:
 
 Get started [here](https://github.com/fern-api/docs-starter). 
 
-
 ## Generators
 
-Generators are process that take your OpenAPI or Fern Definition as input and output artifacts (generated SDKs, 
-postman collections, server boilerplate, etc.). Below you can find a list of all of Fern's generators.
+Generators are process that take your API Definition as input and output artifacts (SDKs, 
+Postman Collections, Server boilerplate, etc.). Below you can find a list of all of Fern's generators.
 
 | Generator ID                  | Output                       | Latest Version | Changelog                                                 | Entrypoint                                                          |
 | ---------------------------   | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------- |
@@ -85,13 +90,15 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 
 `fern check`: validate your API definition and Fern configuration.
 
-`fern generate`: run the generators specified in `generators.yml`.
+`fern generate`: run the generators specified in `generators.yml` in the cloud.
+
+`fern generate --local`: run the generators specified in `generators.yml` in docker locally.
 
 `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
 
 ## Customer Showcase
 
-See how developer-focused companies benefit from Fern.
+See developer-focused companies that use Fern.
 
 [![Customer Showcase](/fern/docs/images/showcase.png)](https://buildwithfern.com/showcase)
 
@@ -100,13 +107,12 @@ See how developer-focused companies benefit from Fern.
 
 ### API First 
 
-Fern supports developers and teams that want to be API First or Spec first. 
+Fern supports developers and teams that want to be API-first or Spec-first. 
 
-Define your API, and Fern will generate models, networking code and boilerplate application code. The generated code adds 
+Define your API, and use Fern to generate models, networking code and boilerplate application code. The generated code adds 
 type safety to your API implementation - if your backend doesn't implement the API correctly, it won't compile.
 
 Frameworks currently supported:
-
 - [Express](https://github.com/fern-api/fern-typescript)
 - [Spring Boot](https://github.com/fern-api/fern-java)
 - [FastAPI](./generators/python)
@@ -115,8 +121,8 @@ For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfe
 
 ### Fern Definition
 
-While we are big fans of OpenAPI, we know it isn't the *easiest* format to read and write. If you have 
-similar frustrations, give the Fern Definition a try. 
+While we are big fans of OpenAPI, we know it isn't the *easiest* format to read and write. If you're looking for an alternative, 
+give the Fern Definition a try. 
 
 Install the Fern CLI and initialize a Fern Project. 
 
