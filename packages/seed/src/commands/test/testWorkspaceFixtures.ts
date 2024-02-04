@@ -285,7 +285,7 @@ async function testWithWriteToDisk({
             outputVersion,
             outputMode,
             fixtureName: fixture,
-            keepDocker,
+            keepDocker
         });
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script on ${fixture}`);

@@ -100,7 +100,7 @@ function addTestCommand(cli: Argv) {
                     docker: parsedDockerImage,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel,
-                    keepDocker: argv.keepDocker,
+                    keepDocker: argv.keepDocker
                 });
             } else {
                 await testWorkspaceFixtures({
@@ -113,7 +113,7 @@ function addTestCommand(cli: Argv) {
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel,
                     taskContextFactory,
-                    keepDocker: argv.keepDocker,
+                    keepDocker: argv.keepDocker
                 });
             }
         }
