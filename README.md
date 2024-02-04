@@ -76,14 +76,14 @@ Postman Collections, Server boilerplate, etc.). Below you can find a list of all
 
 | Generator ID                  | Output                       | Latest Version | Changelog                                                 | Entrypoint                                                                      |
 | ---------------------------   | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `fernapi/fern-python-sdk`     | Python SDK                   | 0.8.0          | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-pydantic-model` | Pydantic Models              | 0.7.7          | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-fastapi-server` | FastAPI boilerplate          | 0.7.7          | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-openapi`        | OpenAPI Spec                 | 0.0.30         | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
-| `fernapi/fern-ruby-model`     | Ruby Models                  | 0.0.6          | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                    |
-| `fernapi/fern-java-sdk`       | Java SDK                     | 0.6.1          | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/java-model`          | Java Models                  | 0.6.1          | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)      | [Cli.java](./generators/java/model/src/main/java/com/fern/java/model/Cli.java)  |
-| `fernapi/fern-java-spring`    | Spring boilerplate           | 0.6.1          | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)     | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java)|
+| `fernapi/fern-python-sdk`     | Python SDK                   | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-pydantic-model` | Pydantic Models              | `0.7.7`        | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-fastapi-server` | FastAPI boilerplate          | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-openapi`        | OpenAPI Spec                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
+| `fernapi/fern-ruby-model`     | Ruby Models                  | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                    |
+| `fernapi/fern-java-sdk`       | Java SDK                     | `0.6.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/java-model`          | Java Models                  | `0.6.1`        | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)      | [Cli.java](./generators/java/model/src/main/java/com/fern/java/model/Cli.java)  |
+| `fernapi/fern-java-spring`    | Spring boilerplate           | `0.6.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)     | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java)|
 
 ## CLI Commands
 
