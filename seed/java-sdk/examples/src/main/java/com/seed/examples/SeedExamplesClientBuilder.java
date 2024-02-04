@@ -9,10 +9,15 @@ import com.seed.examples.core.Environment;
 public final class SeedExamplesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
     private Environment environment;
 
+    /**
+     * Sets token
+     */
     public SeedExamplesClientBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+        this.token = token;
         return this;
     }
 
@@ -27,6 +32,7 @@ public final class SeedExamplesClientBuilder {
     }
 
     public SeedExamplesClient build() {
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);
         return new SeedExamplesClient(clientOptionsBuilder.build());
     }

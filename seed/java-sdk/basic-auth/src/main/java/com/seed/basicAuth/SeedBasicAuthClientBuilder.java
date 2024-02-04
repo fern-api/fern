@@ -10,12 +10,15 @@ import java.util.Base64;
 public final class SeedBasicAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String username = null;
+
+    private String password = null;
+
     private Environment environment;
 
     public SeedBasicAuthClientBuilder credentials(String username, String password) {
-        String unencodedToken = username + ":" + password;
-        String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
-        this.clientOptionsBuilder.addHeader("Authorization", "Basic " + encodedToken);
+        this.username = username;
+        this.password = password;
         return this;
     }
 
@@ -25,6 +28,15 @@ public final class SeedBasicAuthClientBuilder {
     }
 
     public SeedBasicAuthClient build() {
+        if (this.username == null) {
+            throw new RuntimeException("Please provide username");
+        }
+        if (this.password == null) {
+            throw new RuntimeException("Please provide password");
+        }
+        String unencodedToken = username + ":" + password;
+        String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
         clientOptionsBuilder.environment(this.environment);
         return new SeedBasicAuthClient(clientOptionsBuilder.build());
     }

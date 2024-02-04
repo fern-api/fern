@@ -9,15 +9,25 @@ import com.seed.trace.core.Environment;
 public final class SeedTraceClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
+    private String xRandomHeader = null;
+
     private Environment environment = Environment.PROD;
 
+    /**
+     * Sets token
+     */
     public SeedTraceClientBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+        this.token = token;
         return this;
     }
 
+    /**
+     * Sets xRandomHeader
+     */
     public SeedTraceClientBuilder xRandomHeader(String xRandomHeader) {
-        this.clientOptionsBuilder.addHeader("X-Random-Header", xRandomHeader);
+        this.xRandomHeader = xRandomHeader;
         return this;
     }
 
@@ -32,6 +42,8 @@ public final class SeedTraceClientBuilder {
     }
 
     public SeedTraceClient build() {
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
+        this.clientOptionsBuilder.addHeader("X-Random-Header", this.xRandomHeader);
         clientOptionsBuilder.environment(this.environment);
         return new SeedTraceClient(clientOptionsBuilder.build());
     }

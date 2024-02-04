@@ -9,15 +9,25 @@ import com.seed.literalHeaders.core.Environment;
 public final class SeedLiteralHeadersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String apiHeader = null;
+
+    private String apiTest = null;
+
     private Environment environment;
 
+    /**
+     * Sets apiHeader
+     */
     public SeedLiteralHeadersClientBuilder apiHeader(String apiHeader) {
-        this.clientOptionsBuilder.addHeader("X-API-Header", apiHeader);
+        this.apiHeader = apiHeader;
         return this;
     }
 
+    /**
+     * Sets apiTest
+     */
     public SeedLiteralHeadersClientBuilder apiTest(String apiTest) {
-        this.clientOptionsBuilder.addHeader("X-API-Test", apiTest);
+        this.apiTest = apiTest;
         return this;
     }
 
@@ -27,6 +37,8 @@ public final class SeedLiteralHeadersClientBuilder {
     }
 
     public SeedLiteralHeadersClient build() {
+        this.clientOptionsBuilder.addHeader("X-API-Header", this.apiHeader);
+        this.clientOptionsBuilder.addHeader("X-API-Test", this.apiTest);
         clientOptionsBuilder.environment(this.environment);
         return new SeedLiteralHeadersClient(clientOptionsBuilder.build());
     }
