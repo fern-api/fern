@@ -45,6 +45,11 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
+                .option("keepDocker", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Keeps the docker container after the tests are finished"
+                })
                 .option("update", {
                     type: "boolean",
                     alias: "u",
@@ -94,7 +99,8 @@ function addTestCommand(cli: Argv) {
                     language: workspace.workspaceConfig.language,
                     docker: parsedDockerImage,
                     logLevel: argv["log-level"],
-                    numDockers: argv.parallel
+                    numDockers: argv.parallel,
+                    keepDocker: argv.keepDocker,
                 });
             } else {
                 await testWorkspaceFixtures({
@@ -106,7 +112,8 @@ function addTestCommand(cli: Argv) {
                     scripts: workspace.workspaceConfig.scripts,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel,
-                    taskContextFactory
+                    taskContextFactory,
+                    keepDocker: argv.keepDocker,
                 });
             }
         }

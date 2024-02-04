@@ -23,7 +23,8 @@ export async function runDockerForWorkspace({
     irVersion,
     outputVersion,
     outputMode,
-    fixtureName
+    fixtureName,
+    keepDocker,
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -35,6 +36,7 @@ export async function runDockerForWorkspace({
     outputVersion?: string;
     outputMode: OutputMode;
     fixtureName: string;
+    keepDocker: boolean | undefined;
 }): Promise<void> {
     const generatorGroup: GeneratorGroup = {
         groupName: "test",
@@ -56,7 +58,7 @@ export async function runDockerForWorkspace({
         organization: DUMMY_ORGANIZATION,
         workspace,
         generatorGroup,
-        keepDocker: true,
+        keepDocker: keepDocker ?? false,
         context: taskContext,
         irVersionOverride: irVersion,
         outputVersionOverride: outputVersion

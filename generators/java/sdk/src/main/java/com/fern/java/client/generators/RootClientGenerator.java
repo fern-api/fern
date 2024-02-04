@@ -19,6 +19,7 @@ package com.fern.java.client.generators;
 import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
+import com.fern.ir.model.auth.EnvironmentVariable;
 import com.fern.ir.model.auth.HeaderAuthScheme;
 import com.fern.ir.model.commons.TypeId;
 import com.fern.java.AbstractGeneratorContext;
@@ -37,9 +38,11 @@ import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.TypeSpec;
 import java.util.Base64;
 import java.util.Map;
+import java.util.Optional;
 import javax.lang.model.element.Modifier;
 
 public final class RootClientGenerator extends AbstractFileGenerator {
@@ -120,20 +123,21 @@ public final class RootClientGenerator extends AbstractFileGenerator {
     }
 
     private TypeSpec getClientBuilder() {
-        TypeSpec.Builder typeSpecBuilder =
+        TypeSpec.Builder clientBuilder =
                 TypeSpec.classBuilder(builderName).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        MethodSpec.Builder buildMethod =
+                MethodSpec.methodBuilder("build").addModifiers(Modifier.PUBLIC).returns(className);
 
-        typeSpecBuilder.addField(
-                FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
-                        .addModifiers(Modifier.PRIVATE)
-                        .initializer("$T.builder()", generatedClientOptions.getClassName())
-                        .build());
+        clientBuilder.addField(FieldSpec.builder(generatedClientOptions.builderClassName(), CLIENT_OPTIONS_BUILDER_NAME)
+                .addModifiers(Modifier.PRIVATE)
+                .initializer("$T.builder()", generatedClientOptions.getClassName())
+                .build());
 
         FieldSpec.Builder environmentFieldBuilder = FieldSpec.builder(
                         generatedEnvironmentsClass.getClassName(), ENVIRONMENT_FIELD_NAME)
                 .addModifiers(Modifier.PRIVATE);
 
-        AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(typeSpecBuilder);
+        AuthSchemeHandler authSchemeHandler = new AuthSchemeHandler(clientBuilder, buildMethod);
         generatorContext.getIr().getAuth().getSchemes().forEach(authScheme -> authScheme.visit(authSchemeHandler));
         generatorContext.getIr().getHeaders().forEach(httpHeader -> {
             authSchemeHandler.visitHeader(HeaderAuthScheme.builder()
@@ -155,14 +159,14 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .addParameter(generatedEnvironmentsClass.getClassName(), "environment")
                     .returns(builderName)
                     .build();
-            typeSpecBuilder.addMethod(environmentMethod.toBuilder()
+            clientBuilder.addMethod(environmentMethod.toBuilder()
                     .addStatement("this.$L = $L", ENVIRONMENT_FIELD_NAME, "environment")
                     .addStatement("return this")
                     .build());
         }
 
         FieldSpec environmentField = environmentFieldBuilder.build();
-        typeSpecBuilder.addField(environmentField);
+        clientBuilder.addField(environmentField);
 
         if (generatedEnvironmentsClass.info() instanceof SingleUrlEnvironmentClass) {
             SingleUrlEnvironmentClass singleUrlEnvironmentClass =
@@ -172,7 +176,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                     .addParameter(String.class, "url")
                     .returns(builderName)
                     .build();
-            typeSpecBuilder.addMethod(urlMethod.toBuilder()
+            clientBuilder.addMethod(urlMethod.toBuilder()
                     .addStatement(
                             "this.$L = $T.$N($L)",
                             ENVIRONMENT_FIELD_NAME,
@@ -203,13 +207,9 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                             .addStatement("return this")
                             .build();
                 })
-                .forEach(typeSpecBuilder::addMethod);
+                .forEach(clientBuilder::addMethod);
 
-        MethodSpec buildMethod = MethodSpec.methodBuilder("build")
-                .addModifiers(Modifier.PUBLIC)
-                .returns(className)
-                .build();
-        typeSpecBuilder.addMethod(buildMethod.toBuilder()
+        clientBuilder.addMethod(buildMethod
                 .addStatement(
                         "$L.$N(this.$N)",
                         CLIENT_OPTIONS_BUILDER_NAME,
@@ -218,7 +218,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 .addStatement("return new $T($L.build())", className, CLIENT_OPTIONS_BUILDER_NAME)
                 .build());
 
-        return typeSpecBuilder.build();
+        return clientBuilder.build();
     }
 
     private static String getRootClientName(AbstractGeneratorContext<?, ?> generatorContext) {
@@ -234,43 +234,111 @@ public final class RootClientGenerator extends AbstractFileGenerator {
 
     private final class AuthSchemeHandler implements AuthScheme.Visitor<Void> {
 
-        private final TypeSpec.Builder builder;
+        private final TypeSpec.Builder clientBuilder;
+        private final MethodSpec.Builder buildMethod;
+        private final boolean isMandatory;
 
-        private AuthSchemeHandler(TypeSpec.Builder builder) {
-            this.builder = builder;
+        private AuthSchemeHandler(TypeSpec.Builder clientBuilder, MethodSpec.Builder buildMethod) {
+            this.clientBuilder = clientBuilder;
+            this.buildMethod = buildMethod;
+            this.isMandatory = clientGeneratorContext.getIr().getSdkConfig().getIsAuthMandatory();
         }
 
         @Override
         public Void visitBearer(BearerAuthScheme bearer) {
-            MethodSpec tokenMethod = MethodSpec.methodBuilder(
-                            bearer.getToken().getCamelCase().getSafeName())
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, bearer.getToken().getCamelCase().getSafeName())
-                    .returns(builderName)
-                    .build();
-            builder.addMethod(tokenMethod.toBuilder()
-                    .addStatement(
-                            "this.$L.addHeader($S, $S + $L)",
-                            CLIENT_OPTIONS_BUILDER_NAME,
-                            "Authorization",
-                            "Bearer ",
-                            bearer.getToken().getCamelCase().getSafeName())
-                    .addStatement("return this")
-                    .build());
+            String fieldName = bearer.getToken().getCamelCase().getSafeName();
+            createSetter(fieldName, bearer.getTokenEnvVar());
+            if (isMandatory) {
+                this.buildMethod
+                        .beginControlFlow("if ($L == null)", fieldName)
+                        .addStatement(
+                                "throw new RuntimeException($S)",
+                                bearer.getTokenEnvVar().isEmpty()
+                                        ? getErrorMessage(fieldName)
+                                        : getErrorMessage(
+                                                fieldName,
+                                                bearer.getTokenEnvVar().get()))
+                        .endControlFlow();
+            }
+            this.buildMethod.addStatement(
+                    "this.$L.addHeader($S, $S + this.$L)",
+                    CLIENT_OPTIONS_BUILDER_NAME,
+                    "Authorization",
+                    "Bearer ",
+                    fieldName);
             return null;
         }
 
         @Override
         public Void visitBasic(BasicAuthScheme basic) {
-            MethodSpec tokenMethod = MethodSpec.methodBuilder("credentials")
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(
-                            String.class, basic.getUsername().getCamelCase().getSafeName())
-                    .addParameter(
-                            String.class, basic.getPassword().getCamelCase().getSafeName())
-                    .returns(builderName)
+            // username
+            String usernameFieldName = basic.getUsername().getCamelCase().getSafeName();
+            FieldSpec.Builder usernameField =
+                    FieldSpec.builder(String.class, usernameFieldName).addModifiers(Modifier.PRIVATE);
+            if (basic.getUsernameEnvVar().isPresent()) {
+                usernameField.initializer(
+                        "System.getenv($S)", basic.getUsernameEnvVar().get().get());
+            } else {
+                usernameField.initializer("null");
+            }
+            ParameterSpec usernameParam = ParameterSpec.builder(String.class, usernameFieldName)
+                    .addJavadoc(
+                            basic.getUsernameEnvVar().isPresent()
+                                    ? "Defaults to the "
+                                            + basic.getUsernameEnvVar().get().get() + " environment variable."
+                                    : "Set " + usernameFieldName)
                     .build();
-            builder.addMethod(tokenMethod.toBuilder()
+
+            // password
+            String passwordFieldName = basic.getPassword().getCamelCase().getSafeName();
+            FieldSpec.Builder passwordField =
+                    FieldSpec.builder(String.class, passwordFieldName).addModifiers(Modifier.PRIVATE);
+            if (basic.getPasswordEnvVar().isPresent()) {
+                passwordField.initializer(
+                        "System.getenv($S)", basic.getPasswordEnvVar().get().get());
+            } else {
+                passwordField.initializer("null");
+            }
+            ParameterSpec passwordParam = ParameterSpec.builder(String.class, passwordFieldName)
+                    .addJavadoc(
+                            basic.getPasswordEnvVar().isPresent()
+                                    ? "Defaults to the "
+                                            + basic.getPasswordEnvVar().get().get() + " environment variable."
+                                    : "Set " + passwordFieldName)
+                    .build();
+
+            // add setter method
+            this.clientBuilder.addMethod(MethodSpec.methodBuilder("credentials")
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(usernameParam)
+                    .addParameter(passwordParam)
+                    .returns(builderName)
+                    .build());
+
+            if (isMandatory) {
+                this.buildMethod
+                        .beginControlFlow("if (this.$L == null)", usernameFieldName)
+                        .addStatement(
+                                "throw new RuntimeException($S)",
+                                basic.getUsernameEnvVar().isEmpty()
+                                        ? getErrorMessage(usernameFieldName)
+                                        : getErrorMessage(
+                                                usernameFieldName,
+                                                basic.getUsernameEnvVar().get()))
+                        .endControlFlow();
+                this.buildMethod
+                        .beginControlFlow("if (this.$L == null)", passwordFieldName)
+                        .addStatement(
+                                "throw new RuntimeException($S)",
+                                basic.getPasswordEnvVar().isEmpty()
+                                        ? getErrorMessage(passwordFieldName)
+                                        : getErrorMessage(
+                                                passwordFieldName,
+                                                basic.getPasswordEnvVar().get()))
+                        .endControlFlow();
+            }
+
+            this.buildMethod
                     .addStatement(
                             "String unencodedToken = $L + \":\" + $L",
                             basic.getUsername().getCamelCase().getSafeName(),
@@ -282,42 +350,75 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                             "this.$L.addHeader($S, $S + $L)",
                             CLIENT_OPTIONS_BUILDER_NAME,
                             "Authorization",
-                            "Basic ",
-                            "encodedToken")
-                    .addStatement("return this")
-                    .build());
+                            "Bearer ",
+                            "encodedToken");
             return null;
         }
 
         @Override
         public Void visitHeader(HeaderAuthScheme header) {
-            String headerCamelCase = header.getName().getName().getCamelCase().getSafeName();
-            MethodSpec tokenMethod = MethodSpec.methodBuilder(headerCamelCase)
-                    .addModifiers(Modifier.PUBLIC)
-                    .addParameter(String.class, headerCamelCase)
-                    .returns(builderName)
-                    .build();
+            String fieldName = header.getName().getName().getCamelCase().getSafeName();
+            createSetter(fieldName, header.getHeaderEnvVar());
+            if (isMandatory) {
+                this.buildMethod
+                        .beginControlFlow("if ($L == null)", fieldName)
+                        .addStatement(
+                                "throw new RuntimeException($S)",
+                                header.getHeaderEnvVar().isEmpty()
+                                        ? getErrorMessage(fieldName)
+                                        : getErrorMessage(
+                                                fieldName,
+                                                header.getHeaderEnvVar().get()))
+                        .endControlFlow();
+            }
             if (header.getPrefix().isPresent()) {
-                builder.addMethod(tokenMethod.toBuilder()
-                        .addStatement(
-                                "this.$L.addHeader($S, $S + $L)",
-                                CLIENT_OPTIONS_BUILDER_NAME,
-                                header.getName().getWireValue(),
-                                header.getPrefix().get(),
-                                headerCamelCase)
-                        .addStatement("return this")
-                        .build());
+                this.buildMethod.addStatement(
+                        "this.$L.addHeader($S, $S + this.$L)",
+                        CLIENT_OPTIONS_BUILDER_NAME,
+                        header.getName().getWireValue(),
+                        header.getPrefix().get(),
+                        fieldName);
             } else {
-                builder.addMethod(tokenMethod.toBuilder()
-                        .addStatement(
-                                "this.$L.addHeader($S, $L)",
-                                CLIENT_OPTIONS_BUILDER_NAME,
-                                header.getName().getWireValue(),
-                                headerCamelCase)
-                        .addStatement("return this")
-                        .build());
+                this.buildMethod.addStatement(
+                        "this.$L.addHeader($S, this.$L)",
+                        CLIENT_OPTIONS_BUILDER_NAME,
+                        header.getName().getWireValue(),
+                        fieldName);
             }
             return null;
+        }
+
+        private void createSetter(String fieldName, Optional<EnvironmentVariable> environmentVariable) {
+            FieldSpec.Builder field = FieldSpec.builder(String.class, fieldName).addModifiers(Modifier.PRIVATE);
+            if (environmentVariable.isPresent()) {
+                field.initializer(
+                        "System.getenv($S)", environmentVariable.get().get());
+            } else {
+                field.initializer("null");
+            }
+            clientBuilder.addField(field.build());
+            MethodSpec.Builder setter = MethodSpec.methodBuilder(fieldName)
+                    .addModifiers(Modifier.PUBLIC)
+                    .addParameter(String.class, fieldName)
+                    .returns(builderName)
+                    .addJavadoc("Sets $L", fieldName)
+                    .addStatement("this.$L = $L", fieldName, fieldName)
+                    .addStatement("return this");
+            if (environmentVariable.isPresent()) {
+                setter.addJavadoc(
+                        ".\nDefaults to the $L environment variable.",
+                        environmentVariable.get().get());
+            }
+            clientBuilder.addMethod(setter.build());
+        }
+
+        private String getErrorMessage(String fieldName) {
+            return "Please provide " + fieldName;
+        }
+
+        private String getErrorMessage(String fieldName, EnvironmentVariable environmentVariable) {
+            return "Please provide " + fieldName + " or set the " + environmentVariable.get() + " "
+                    + "environment variable.";
         }
 
         @Override

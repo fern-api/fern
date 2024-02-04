@@ -9,10 +9,15 @@ import com.seed.singleUrlEnvironmentNoDefault.core.Environment;
 public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
     private Environment environment;
 
+    /**
+     * Sets token
+     */
     public SeedSingleUrlEnvironmentNoDefaultClientBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+        this.token = token;
         return this;
     }
 
@@ -27,6 +32,10 @@ public final class SeedSingleUrlEnvironmentNoDefaultClientBuilder {
     }
 
     public SeedSingleUrlEnvironmentNoDefaultClient build() {
+        if (token == null) {
+            throw new RuntimeException("Please provide token");
+        }
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);
         return new SeedSingleUrlEnvironmentNoDefaultClient(clientOptionsBuilder.build());
     }

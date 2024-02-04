@@ -9,10 +9,15 @@ import com.seed.exhaustive.core.Environment;
 public final class SeedExhaustiveClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
     private Environment environment;
 
+    /**
+     * Sets token
+     */
     public SeedExhaustiveClientBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+        this.token = token;
         return this;
     }
 
@@ -22,6 +27,7 @@ public final class SeedExhaustiveClientBuilder {
     }
 
     public SeedExhaustiveClient build() {
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);
         return new SeedExhaustiveClient(clientOptionsBuilder.build());
     }

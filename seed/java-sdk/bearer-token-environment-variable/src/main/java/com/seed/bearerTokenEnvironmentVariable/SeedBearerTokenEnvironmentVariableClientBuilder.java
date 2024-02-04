@@ -9,10 +9,16 @@ import com.seed.bearerTokenEnvironmentVariable.core.Environment;
 public final class SeedBearerTokenEnvironmentVariableClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String apiKey = System.getenv("COURIER_API_KEY");
+
     private Environment environment;
 
+    /**
+     * Sets apiKey.
+     * Defaults to the COURIER_API_KEY environment variable.
+     */
     public SeedBearerTokenEnvironmentVariableClientBuilder apiKey(String apiKey) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + apiKey);
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -22,6 +28,10 @@ public final class SeedBearerTokenEnvironmentVariableClientBuilder {
     }
 
     public SeedBearerTokenEnvironmentVariableClient build() {
+        if (apiKey == null) {
+            throw new RuntimeException("Please provide apiKey or set the COURIER_API_KEY environment variable.");
+        }
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.apiKey);
         clientOptionsBuilder.environment(this.environment);
         return new SeedBearerTokenEnvironmentVariableClient(clientOptionsBuilder.build());
     }

@@ -9,10 +9,15 @@ import com.seed.idempotencyHeaders.core.Environment;
 public final class SeedIdempotencyHeadersClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String token = null;
+
     private Environment environment;
 
+    /**
+     * Sets token
+     */
     public SeedIdempotencyHeadersClientBuilder token(String token) {
-        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + token);
+        this.token = token;
         return this;
     }
 
@@ -22,6 +27,10 @@ public final class SeedIdempotencyHeadersClientBuilder {
     }
 
     public SeedIdempotencyHeadersClient build() {
+        if (token == null) {
+            throw new RuntimeException("Please provide token");
+        }
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + this.token);
         clientOptionsBuilder.environment(this.environment);
         return new SeedIdempotencyHeadersClient(clientOptionsBuilder.build());
     }

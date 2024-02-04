@@ -12,12 +12,10 @@ public final class SeedBasicAuthClientBuilder {
 
     private Environment environment;
 
-    public SeedBasicAuthClientBuilder credentials(String username, String password) {
-        String unencodedToken = username + ":" + password;
-        String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
-        this.clientOptionsBuilder.addHeader("Authorization", "Basic " + encodedToken);
-        return this;
-    }
+    /**
+     * @param username Set username@param password Set password
+     */
+    public SeedBasicAuthClientBuilder credentials(String username, String password) {}
 
     public SeedBasicAuthClientBuilder url(String url) {
         this.environment = Environment.custom(url);
@@ -25,6 +23,15 @@ public final class SeedBasicAuthClientBuilder {
     }
 
     public SeedBasicAuthClient build() {
+        if (this.username == null) {
+            throw new RuntimeException("Please provide username");
+        }
+        if (this.password == null) {
+            throw new RuntimeException("Please provide password");
+        }
+        String unencodedToken = username + ":" + password;
+        String encodedToken = Base64.getEncoder().encodeToString(unencodedToken.getBytes());
+        this.clientOptionsBuilder.addHeader("Authorization", "Bearer " + encodedToken);
         clientOptionsBuilder.environment(this.environment);
         return new SeedBasicAuthClient(clientOptionsBuilder.build());
     }

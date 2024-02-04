@@ -9,10 +9,16 @@ import com.seed.authEnvironmentVariables.core.Environment;
 public final class SeedAuthEnvironmentVariablesClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String apiKey = System.getenv("FERN_API_KEY");
+
     private Environment environment;
 
+    /**
+     * Sets apiKey.
+     * Defaults to the FERN_API_KEY environment variable.
+     */
     public SeedAuthEnvironmentVariablesClientBuilder apiKey(String apiKey) {
-        this.clientOptionsBuilder.addHeader("X-FERN-API-KEY", apiKey);
+        this.apiKey = apiKey;
         return this;
     }
 
@@ -22,6 +28,10 @@ public final class SeedAuthEnvironmentVariablesClientBuilder {
     }
 
     public SeedAuthEnvironmentVariablesClient build() {
+        if (apiKey == null) {
+            throw new RuntimeException("Please provide apiKey or set the FERN_API_KEY environment variable.");
+        }
+        this.clientOptionsBuilder.addHeader("X-FERN-API-KEY", this.apiKey);
         clientOptionsBuilder.environment(this.environment);
         return new SeedAuthEnvironmentVariablesClient(clientOptionsBuilder.build());
     }
