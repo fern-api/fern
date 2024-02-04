@@ -8,6 +8,7 @@ import com.seed.fileUpload.core.ClientOptions;
 import com.seed.fileUpload.core.ObjectMappers;
 import com.seed.fileUpload.core.RequestOptions;
 import com.seed.fileUpload.resources.service.requests.JustFileRequet;
+import com.seed.fileUpload.resources.service.requests.JustFileWithQueryParamsRequet;
 import com.seed.fileUpload.resources.service.requests.MyRequest;
 import java.io.File;
 import java.io.IOException;
@@ -126,6 +127,55 @@ public class ServiceClient {
         }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl)
+                .method("POST", body.build())
+                .headers(Headers.of(clientOptions.headers(requestOptions)));
+        Request okhttpRequest = _requestBuilder.build();
+        try {
+            Response response =
+                    clientOptions.httpClient().newCall(okhttpRequest).execute();
+            if (response.isSuccessful()) {
+                return;
+            }
+            throw new ApiError(
+                    response.code(),
+                    ObjectMappers.JSON_MAPPER.readValue(response.body().string(), Object.class));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void justFileWithQueryParams(File file, JustFileWithQueryParamsRequet request) {
+        justFileWithQueryParams(file, request, null);
+    }
+
+    public void justFileWithQueryParams(
+            File file, JustFileWithQueryParamsRequet request, RequestOptions requestOptions) {
+        HttpUrl.Builder httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
+                .newBuilder()
+                .addPathSegments("just-file-with-query-params");
+        if (request.getMaybeString().isPresent()) {
+            httpUrl.addQueryParameter("maybeString", request.getMaybeString().get());
+        }
+        httpUrl.addQueryParameter("integer", Integer.toString(request.getInteger()));
+        if (request.getMaybeInteger().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "maybeInteger", request.getMaybeInteger().get().toString());
+        }
+        httpUrl.addQueryParameter("listOfStrings", request.getListOfStrings());
+        if (request.getOptionalListOfStrings().isPresent()) {
+            httpUrl.addQueryParameter(
+                    "optionalListOfStrings", request.getOptionalListOfStrings().get());
+        }
+        MultipartBody.Builder body = new MultipartBody.Builder().setType(MultipartBody.FORM);
+        try {
+            String fileMimeType = Files.probeContentType(file.toPath());
+            MediaType fileMediaType = fileMimeType != null ? MediaType.parse(mimeType) : null;
+            body.addFormDataPart("file", file.getName(), RequestBody.create(fileMediaType, file));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        Request.Builder _requestBuilder = new Request.Builder()
+                .url(httpUrl.build())
                 .method("POST", body.build())
                 .headers(Headers.of(clientOptions.headers(requestOptions)));
         Request okhttpRequest = _requestBuilder.build();
