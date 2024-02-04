@@ -23,6 +23,7 @@ import com.fern.ir.model.http.SdkRequest;
 import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
 import com.fern.java.output.GeneratedObjectMapper;
@@ -95,10 +96,10 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             builder.add(".method($S, null)\n", httpEndpoint.getMethod().toString());
         }
         builder.add(
-                ".headers($T.of($L.$N($L)))\n",
+                ".headers($T.of($L.$L($L)))\n",
                 Headers.class,
                 clientOptionsMember.name,
-                clientOptions.headers(),
+                ClientOptionsGenerator.HEADERS_METHOD_NAME,
                 REQUEST_OPTIONS_PARAMETER_NAME);
         if (sendContentType) {
             builder.add(
