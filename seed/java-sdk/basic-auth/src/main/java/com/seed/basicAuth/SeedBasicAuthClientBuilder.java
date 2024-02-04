@@ -10,9 +10,17 @@ import java.util.Base64;
 public final class SeedBasicAuthClientBuilder {
     private ClientOptions.Builder clientOptionsBuilder = ClientOptions.builder();
 
+    private String username = null;
+
+    private String password = null;
+
     private Environment environment;
 
-    public SeedBasicAuthClientBuilder credentials(String username, String password) {}
+    public SeedBasicAuthClientBuilder credentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+        return this;
+    }
 
     public SeedBasicAuthClientBuilder url(String url) {
         this.environment = Environment.custom(url);

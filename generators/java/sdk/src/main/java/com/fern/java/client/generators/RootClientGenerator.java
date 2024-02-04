@@ -281,8 +281,7 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             } else {
                 usernameField.initializer("null");
             }
-            ParameterSpec usernameParam = ParameterSpec.builder(String.class, usernameFieldName)
-                    .build();
+            this.clientBuilder.addField(usernameField.build());
 
             // password
             String passwordFieldName = basic.getPassword().getCamelCase().getSafeName();
@@ -294,14 +293,21 @@ public final class RootClientGenerator extends AbstractFileGenerator {
             } else {
                 passwordField.initializer("null");
             }
-            ParameterSpec passwordParam = ParameterSpec.builder(String.class, passwordFieldName)
-                    .build();
+            this.clientBuilder.addField(passwordField.build());
+
 
             // add setter method
+            ParameterSpec usernameParam = ParameterSpec.builder(String.class, usernameFieldName)
+                    .build();
+            ParameterSpec passwordParam = ParameterSpec.builder(String.class, passwordFieldName)
+                    .build();
             this.clientBuilder.addMethod(MethodSpec.methodBuilder("credentials")
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(usernameParam)
                     .addParameter(passwordParam)
+                    .addStatement("this.$L = $L", usernameFieldName, usernameFieldName)
+                    .addStatement("this.$L = $L", passwordFieldName, passwordFieldName)
+                    .addStatement("return this")
                     .returns(builderName)
                     .build());
 
