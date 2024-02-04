@@ -1,20 +1,4 @@
-<br/>
-<div align="center">
-  <a href="https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=logo">
-    <img src="fern-logo.png" height="50" align="center" alt="header" />
-  </a>
-  
-  <br/>
-
 # Java Generator
-
-[![Contributors](https://img.shields.io/github/contributors/fern-api/fern-java.svg)](https://GitHub.com/fern-api/fern-java/graphs/contributors/)
-[![Pulls-opened](https://img.shields.io/github/issues-pr/fern-api/fern-java.svg)](https://GitHub.com/fern-api/fern-java/pulls?q=is%3Aissue+is%3Aopened)
-[![Pulls-merged](https://img.shields.io/github/issues-search/fern-api/fern-java?label=merged%20pull%20requests&query=is%3Apr%20is%3Aclosed%20is%3Amerged&color=darkviolet)](https://github.com/fern-api/fern-java/pulls?q=is%3Apr+is%3Aclosed+is%3Amerged)
-
-[![Discord](https://img.shields.io/badge/Join%20Our%20Community-black?logo=discord)](https://discord.com/invite/JkkXumPzcG)
-
-</div>
 
 This repository contains the source for the [Fern]([https://buildwithfern.com](https://www.buildwithfern.com/?utm_source=github&utm_medium=readme&utm_campaign=fern-java&utm_content=repo-contains)) generators that produce Java artifacts:
 
