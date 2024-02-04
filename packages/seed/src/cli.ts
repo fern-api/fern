@@ -42,7 +42,7 @@ function addTestCommand(cli: Argv) {
                 .option("fixture", {
                     type: "array",
                     string: true,
-                    default: undefined,
+                    default: FIXTURES,
                     choices: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
@@ -107,7 +107,7 @@ function addTestCommand(cli: Argv) {
             } else {
                 await testWorkspaceFixtures({
                     workspace,
-                    fixtures: argv.fixture != null ? argv.fixture : FIXTURES,
+                    fixtures: argv.fixture,
                     irVersion: workspace.workspaceConfig.irVersion,
                     language: workspace.workspaceConfig.language,
                     docker: parsedDockerImage,
