@@ -7,7 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/types/api";
-import { OutputMode } from "@fern-fern/seed-config/api";
+import { OutputMode } from "../../config/api";
 import { ParsedDockerName } from "../../cli";
 
 const DUMMY_ORGANIZATION = "seed";

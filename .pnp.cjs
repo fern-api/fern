@@ -4975,7 +4975,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.400"],\
-            ["@fern-fern/seed-config", "npm:0.0.15"],\
             ["@types/find-up", "npm:4.0.0"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
@@ -5583,15 +5582,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@types/url-join", "npm:4.0.1"],\
             ["axios", "npm:0.27.2"],\
             ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }]\
-      ]],\
-      ["@fern-fern/seed-config", [\
-        ["npm:0.0.15", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-seed-config-npm-0.0.15-0d14dfa300-522500dcd3.zip/node_modules/@fern-fern/seed-config/",\
-          "packageDependencies": [\
-            ["@fern-fern/seed-config", "npm:0.0.15"]\
           ],\
           "linkType": "HARD"\
         }]\

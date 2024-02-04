@@ -3114,7 +3114,6 @@ __metadata:
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
     "@fern-fern/fiddle-sdk": ^0.0.400
-    "@fern-fern/seed-config": 0.0.15
     "@types/find-up": ^4.0.0
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -3635,13 +3634,6 @@ __metadata:
     axios: 0.27.2
     url-join: 4.0.1
   checksum: 6031648c9c26599c2018de51ffaff024f18ae03f524ba4d77c1c83ad032cf7d0f95f1e39aef93f11620f2af8a8a890e2da6b301b7b716607757eeb3dbec8a7fd
-  languageName: node
-  linkType: hard
-
-"@fern-fern/seed-config@npm:0.0.15":
-  version: 0.0.15
-  resolution: "@fern-fern/seed-config@npm:0.0.15"
-  checksum: 522500dcd3a33e9d74ee0c64950183cc65d847b7a5ddcfc1724fa858816a9afef015a124be97a72714d358c1b8846542c7407cd198cc51885e6dcce5bf4ccee7
   languageName: node
   linkType: hard
 

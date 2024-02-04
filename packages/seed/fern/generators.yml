@@ -5,8 +5,8 @@ groups:
       - name: fernapi/fern-typescript-node-sdk
         version: 0.7.4-rc3-3-gd2356023
         output:
-          location: npm
-          url: npm.buildwithfern.com
-          package-name: '@fern-fern/seed-config'
+          location: local-file-system
+          path: ../src/config
         config:
+          outputSourceFiles: true
           noSerdeLayer: true

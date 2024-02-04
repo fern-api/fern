@@ -1,6 +1,8 @@
 irVersion: v29
 docker: java-client:latest
-dockerCommand: ./gradlew :client-generator:dockerTagLatest
+dockerCommand: 
+  - cd generators/java
+  - ./gradlew :client-generator:dockerTagLatest
 language: java
 generatorType: SDK
 defaultOutputMode: github
