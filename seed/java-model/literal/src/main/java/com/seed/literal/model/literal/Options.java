@@ -25,7 +25,7 @@ public final class Options {
 
     @JsonProperty("id")
     public String getId() {
-        return options;
+        return "options";
     }
 
     @JsonProperty("enabled")

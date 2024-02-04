@@ -59,7 +59,7 @@ public interface EnrichedObjectProperty {
             literal().get().visit(new Literal.Visitor<Void>() {
                 @Override
                 public Void visitString(String string) {
-                    getterBuilder.addStatement("return $L", string);
+                    getterBuilder.addStatement("return $S", string);
                     return null;
                 }
 

@@ -87,7 +87,7 @@ public final class ExtendedMovie implements IMovie {
     @JsonProperty("type")
     @java.lang.Override
     public String getType() {
-        return movie;
+        return "movie";
     }
 
     @JsonProperty("tag")

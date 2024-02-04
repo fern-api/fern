@@ -40,7 +40,9 @@ function addTestCommand(cli: Argv) {
                     description: "Path to the api directory"
                 })
                 .option("fixture", {
-                    type: "string",
+                    type: "array",
+                    string: true,
+                    default: undefined,
                     choices: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
@@ -105,7 +107,7 @@ function addTestCommand(cli: Argv) {
             } else {
                 await testWorkspaceFixtures({
                     workspace,
-                    fixtures: argv.fixture != null ? [argv.fixture] : FIXTURES,
+                    fixtures: argv.fixture != null ? argv.fixture : FIXTURES,
                     irVersion: workspace.workspaceConfig.irVersion,
                     language: workspace.workspaceConfig.language,
                     docker: parsedDockerImage,

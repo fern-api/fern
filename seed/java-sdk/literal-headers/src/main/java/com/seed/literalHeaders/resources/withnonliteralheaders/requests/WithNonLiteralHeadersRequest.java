@@ -24,26 +24,18 @@ public final class WithNonLiteralHeadersRequest {
 
     private final Optional<Integer> maybeInteger;
 
-    private final Boolean trueServiceHeader;
-
     private final String nonLiteralEndpointHeader;
-
-    private final Boolean trueEndpointHeader;
 
     private final Map<String, Object> additionalProperties;
 
     private WithNonLiteralHeadersRequest(
             int integer,
             Optional<Integer> maybeInteger,
-            Boolean trueServiceHeader,
             String nonLiteralEndpointHeader,
-            Boolean trueEndpointHeader,
             Map<String, Object> additionalProperties) {
         this.integer = integer;
         this.maybeInteger = maybeInteger;
-        this.trueServiceHeader = trueServiceHeader;
         this.nonLiteralEndpointHeader = nonLiteralEndpointHeader;
-        this.trueEndpointHeader = trueEndpointHeader;
         this.additionalProperties = additionalProperties;
     }
 
@@ -64,7 +56,7 @@ public final class WithNonLiteralHeadersRequest {
 
     @JsonProperty("trueServiceHeader")
     public Boolean getTrueServiceHeader() {
-        return trueServiceHeader;
+        return true;
     }
 
     @JsonProperty("nonLiteralEndpointHeader")
@@ -79,7 +71,7 @@ public final class WithNonLiteralHeadersRequest {
 
     @JsonProperty("trueEndpointHeader")
     public Boolean getTrueEndpointHeader() {
-        return trueEndpointHeader;
+        return true;
     }
 
     @java.lang.Override
@@ -96,19 +88,12 @@ public final class WithNonLiteralHeadersRequest {
     private boolean equalTo(WithNonLiteralHeadersRequest other) {
         return integer == other.integer
                 && maybeInteger.equals(other.maybeInteger)
-                && trueServiceHeader.equals(other.trueServiceHeader)
-                && nonLiteralEndpointHeader.equals(other.nonLiteralEndpointHeader)
-                && trueEndpointHeader.equals(other.trueEndpointHeader);
+                && nonLiteralEndpointHeader.equals(other.nonLiteralEndpointHeader);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(
-                this.integer,
-                this.maybeInteger,
-                this.trueServiceHeader,
-                this.nonLiteralEndpointHeader,
-                this.trueEndpointHeader);
+        return Objects.hash(this.integer, this.maybeInteger, this.nonLiteralEndpointHeader);
     }
 
     @java.lang.Override
@@ -121,21 +106,13 @@ public final class WithNonLiteralHeadersRequest {
     }
 
     public interface IntegerStage {
-        TrueServiceHeaderStage integer(int integer);
+        NonLiteralEndpointHeaderStage integer(int integer);
 
         Builder from(WithNonLiteralHeadersRequest other);
     }
 
-    public interface TrueServiceHeaderStage {
-        NonLiteralEndpointHeaderStage trueServiceHeader(Boolean trueServiceHeader);
-    }
-
     public interface NonLiteralEndpointHeaderStage {
-        TrueEndpointHeaderStage nonLiteralEndpointHeader(String nonLiteralEndpointHeader);
-    }
-
-    public interface TrueEndpointHeaderStage {
-        _FinalStage trueEndpointHeader(Boolean trueEndpointHeader);
+        _FinalStage nonLiteralEndpointHeader(String nonLiteralEndpointHeader);
     }
 
     public interface _FinalStage {
@@ -147,19 +124,10 @@ public final class WithNonLiteralHeadersRequest {
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)
-    public static final class Builder
-            implements IntegerStage,
-                    TrueServiceHeaderStage,
-                    NonLiteralEndpointHeaderStage,
-                    TrueEndpointHeaderStage,
-                    _FinalStage {
+    public static final class Builder implements IntegerStage, NonLiteralEndpointHeaderStage, _FinalStage {
         private int integer;
 
-        private Boolean trueServiceHeader;
-
         private String nonLiteralEndpointHeader;
-
-        private Boolean trueEndpointHeader;
 
         private Optional<Integer> maybeInteger = Optional.empty();
 
@@ -172,37 +140,21 @@ public final class WithNonLiteralHeadersRequest {
         public Builder from(WithNonLiteralHeadersRequest other) {
             integer(other.getInteger());
             maybeInteger(other.getMaybeInteger());
-            trueServiceHeader(other.getTrueServiceHeader());
             nonLiteralEndpointHeader(other.getNonLiteralEndpointHeader());
-            trueEndpointHeader(other.getTrueEndpointHeader());
             return this;
         }
 
         @java.lang.Override
         @JsonSetter("integer")
-        public TrueServiceHeaderStage integer(int integer) {
+        public NonLiteralEndpointHeaderStage integer(int integer) {
             this.integer = integer;
             return this;
         }
 
         @java.lang.Override
-        @JsonSetter("trueServiceHeader")
-        public NonLiteralEndpointHeaderStage trueServiceHeader(Boolean trueServiceHeader) {
-            this.trueServiceHeader = trueServiceHeader;
-            return this;
-        }
-
-        @java.lang.Override
         @JsonSetter("nonLiteralEndpointHeader")
-        public TrueEndpointHeaderStage nonLiteralEndpointHeader(String nonLiteralEndpointHeader) {
+        public _FinalStage nonLiteralEndpointHeader(String nonLiteralEndpointHeader) {
             this.nonLiteralEndpointHeader = nonLiteralEndpointHeader;
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter("trueEndpointHeader")
-        public _FinalStage trueEndpointHeader(Boolean trueEndpointHeader) {
-            this.trueEndpointHeader = trueEndpointHeader;
             return this;
         }
 
@@ -222,12 +174,7 @@ public final class WithNonLiteralHeadersRequest {
         @java.lang.Override
         public WithNonLiteralHeadersRequest build() {
             return new WithNonLiteralHeadersRequest(
-                    integer,
-                    maybeInteger,
-                    trueServiceHeader,
-                    nonLiteralEndpointHeader,
-                    trueEndpointHeader,
-                    additionalProperties);
+                    integer, maybeInteger, nonLiteralEndpointHeader, additionalProperties);
         }
     }
 }
