@@ -22,6 +22,7 @@ jobs:
           java-version: "11"
 
       - name: Build with Gradle
+        working-directory: ./generators/java
         run: ./gradlew compileJava
 
   test:
@@ -37,6 +38,7 @@ jobs:
           java-version: "11"
 
       - name: Build with Gradle
+        working-directory: ./generators/java
         env:
           TERM: dumb
         run: ./gradlew test
@@ -56,4 +58,5 @@ jobs:
       - env:
           TERM: dumb
         name: Build with Gradle
+        working-directory: ./generators/java
         run: ./gradlew check -x test
