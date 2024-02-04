@@ -20,6 +20,7 @@ import com.fern.ir.model.auth.AuthScheme;
 import com.fern.ir.model.auth.BasicAuthScheme;
 import com.fern.ir.model.auth.BearerAuthScheme;
 import com.fern.ir.model.auth.HeaderAuthScheme;
+import com.fern.ir.model.commons.NameAndWireValue;
 import com.fern.ir.model.http.HttpHeader;
 import com.fern.java.AbstractGeneratorContext;
 import com.fern.java.generators.AbstractFileGenerator;
@@ -33,15 +34,15 @@ import com.squareup.javapoet.ParameterSpec;
 import com.squareup.javapoet.ParameterizedTypeName;
 import com.squareup.javapoet.TypeSpec;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 
 public final class RequestOptionsGenerator extends AbstractFileGenerator {
-
-    private static final String REQUEST_OPTIONS_CLASS_NAME = "RequestOptions";
 
     private static final FieldSpec HEADERS_FIELD = FieldSpec.builder(
                     ParameterizedTypeName.get(Map.class, String.class, String.class),
@@ -50,13 +51,18 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     Modifier.FINAL)
             .build();
 
+    private final List<HttpHeader> additionalHeaders;
     private final ClassName builderClassName;
 
-    public RequestOptionsGenerator(AbstractGeneratorContext<?, ?> generatorContext) {
-        super(
-                generatorContext.getPoetClassNameFactory().getCoreClassName(REQUEST_OPTIONS_CLASS_NAME),
-                generatorContext);
+    public RequestOptionsGenerator(AbstractGeneratorContext<?, ?> generatorContext, ClassName className) {
+        this(generatorContext, className, Collections.emptyList());
+    }
+
+    public RequestOptionsGenerator(
+            AbstractGeneratorContext<?, ?> generatorContext, ClassName className, List<HttpHeader> additionalHeaders) {
+        super(className, generatorContext);
         this.builderClassName = className.nestedClass("Builder");
+        this.additionalHeaders = additionalHeaders;
     }
 
     @Override
@@ -71,12 +77,12 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                         "$T headers = new $T<>()",
                         ParameterizedTypeName.get(Map.class, String.class, String.class),
                         HashMap.class);
-
+        HeaderHandler headerHandler = new HeaderHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
         AuthSchemeHandler authSchemeHandler =
-                new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock);
-        List<AuthSchemeFieldAndMethods> fields = new ArrayList<>();
+                new AuthSchemeHandler(requestOptionsTypeSpec, builderTypeSpec, getHeadersCodeBlock, headerHandler);
+        List<RequestOption> fields = new ArrayList<>();
         for (AuthScheme authScheme : generatorContext.getIr().getAuth().getSchemes()) {
-            AuthSchemeFieldAndMethods fieldAndMethods = authScheme.visit(authSchemeHandler);
+            RequestOption fieldAndMethods = authScheme.visit(authSchemeHandler);
             // TODO(dsinghvi): Support basic auth and remove null check
             if (fieldAndMethods != null) {
                 fields.add(fieldAndMethods);
@@ -88,6 +94,10 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     .valueType(httpHeader.getValueType())
                     .build());
             fields.add(authScheme.visit(authSchemeHandler));
+        }
+
+        for (HttpHeader httpHeader : this.additionalHeaders) {
+            fields.add(headerHandler.visitHeader(httpHeader));
         }
 
         String constructorArgs =
@@ -105,8 +115,9 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                                         authSchemeFields.builderField.type, authSchemeFields.builderField.name)
                                 .build())
                         .collect(Collectors.toList()));
-        for (AuthSchemeFieldAndMethods authScheme : fields) {
-            constructorBuilder.addStatement("this.$L = $L", authScheme.builderField.name, authScheme.builderField.name);
+        for (RequestOption requestOption : fields) {
+            constructorBuilder.addStatement(
+                    "this.$L = $L", requestOption.builderField.name, requestOption.builderField.name);
         }
         requestOptionsTypeSpec.addMethod(constructorBuilder.build());
         requestOptionsTypeSpec.addMethod(MethodSpec.methodBuilder("getHeaders")
@@ -130,33 +141,36 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                 .build();
     }
 
-    private class AuthSchemeFieldAndMethods {
+    private static class RequestOption {
         private final FieldSpec builderField;
         private final FieldSpec requestOptionsField;
 
-        AuthSchemeFieldAndMethods(FieldSpec builderField, FieldSpec requestOptionsField) {
+        RequestOption(FieldSpec builderField, FieldSpec requestOptionsField) {
             this.builderField = builderField;
             this.requestOptionsField = requestOptionsField;
         }
     }
 
-    private class AuthSchemeHandler implements AuthScheme.Visitor<AuthSchemeFieldAndMethods> {
+    private final class AuthSchemeHandler implements AuthScheme.Visitor<RequestOption> {
 
         private final TypeSpec.Builder requestOptionsTypeSpec;
         private final TypeSpec.Builder builderTypeSpec;
         private final CodeBlock.Builder getHeadersCodeBlock;
+        private final HeaderHandler headerHandler;
 
         private AuthSchemeHandler(
                 TypeSpec.Builder requestOptionsTypeSpec,
                 TypeSpec.Builder builderTypeSpec,
-                CodeBlock.Builder getHeadersCodeBlock) {
+                CodeBlock.Builder getHeadersCodeBlock,
+                HeaderHandler headerHandler) {
             this.requestOptionsTypeSpec = requestOptionsTypeSpec;
             this.builderTypeSpec = builderTypeSpec;
             this.getHeadersCodeBlock = getHeadersCodeBlock;
+            this.headerHandler = headerHandler;
         }
 
         @Override
-        public AuthSchemeFieldAndMethods visitBearer(BearerAuthScheme bearer) {
+        public RequestOption visitBearer(BearerAuthScheme bearer) {
             FieldSpec builderField = FieldSpec.builder(
                             String.class, bearer.getToken().getCamelCase().getSafeName(), Modifier.PRIVATE)
                     .initializer("null")
@@ -191,26 +205,57 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                             requestOptionsField.name)
                     .endControlFlow();
 
-            return new AuthSchemeFieldAndMethods(builderField, requestOptionsField);
+            return new RequestOption(builderField, requestOptionsField);
         }
 
         @Override
-        public AuthSchemeFieldAndMethods visitBasic(BasicAuthScheme basic) {
+        public RequestOption visitBasic(BasicAuthScheme basic) {
             return null;
         }
 
         @Override
-        public AuthSchemeFieldAndMethods visitHeader(HeaderAuthScheme header) {
+        public RequestOption visitHeader(HeaderAuthScheme header) {
+            return headerHandler.visitAuthScheme(header);
+        }
+
+        @Override
+        public RequestOption _visitUnknown(Object unknownType) {
+            throw new RuntimeException("Encountered unknown auth scheme");
+        }
+    }
+
+    private final class HeaderHandler {
+
+        private final TypeSpec.Builder requestOptionsTypeSpec;
+        private final TypeSpec.Builder builderTypeSpec;
+        private final CodeBlock.Builder getHeadersCodeBlock;
+
+        private HeaderHandler(
+                TypeSpec.Builder requestOptionsTypeSpec,
+                TypeSpec.Builder builderTypeSpec,
+                CodeBlock.Builder getHeadersCodeBlock) {
+            this.requestOptionsTypeSpec = requestOptionsTypeSpec;
+            this.builderTypeSpec = builderTypeSpec;
+            this.getHeadersCodeBlock = getHeadersCodeBlock;
+        }
+
+        public RequestOption visitHeader(HttpHeader header) {
+            return requestOptionForHeader(header.getName(), Optional.empty());
+        }
+
+        public RequestOption visitAuthScheme(HeaderAuthScheme header) {
+            return requestOptionForHeader(header.getName(), header.getPrefix());
+        }
+
+        private RequestOption requestOptionForHeader(NameAndWireValue headerName, Optional<String> headerPrefix) {
             FieldSpec builderField = FieldSpec.builder(
-                            String.class,
-                            header.getName().getName().getCamelCase().getSafeName(),
-                            Modifier.PRIVATE)
+                            String.class, headerName.getName().getCamelCase().getSafeName(), Modifier.PRIVATE)
                     .initializer("null")
                     .build();
             builderTypeSpec.addField(builderField);
 
             MethodSpec builderMethodSpec = MethodSpec.methodBuilder(
-                            header.getName().getName().getCamelCase().getSafeName())
+                            headerName.getName().getCamelCase().getSafeName())
                     .addModifiers(Modifier.PUBLIC)
                     .addParameter(builderField.type, builderField.name)
                     .addStatement("this.$L = $L", builderField.name, builderField.name)
@@ -221,7 +266,7 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
 
             FieldSpec requestOptionsField = FieldSpec.builder(
                             String.class,
-                            header.getName().getName().getCamelCase().getSafeName(),
+                            headerName.getName().getCamelCase().getSafeName(),
                             Modifier.PRIVATE,
                             Modifier.FINAL)
                     .build();
@@ -232,26 +277,21 @@ public final class RequestOptionsGenerator extends AbstractFileGenerator {
                     .addStatement(
                             "$N.put($S, $L)",
                             HEADERS_FIELD,
-                            header.getName().getWireValue(),
-                            header.getPrefix()
+                            headerName.getWireValue(),
+                            headerPrefix
                                     .map(prefix -> "\"" + prefix + " \"" + "this."
-                                            + header.getName()
+                                            + headerName
                                                     .getName()
                                                     .getCamelCase()
                                                     .getSafeName())
                                     .orElseGet(() -> "this."
-                                            + header.getName()
+                                            + headerName
                                                     .getName()
                                                     .getCamelCase()
                                                     .getSafeName()))
                     .endControlFlow();
 
-            return new AuthSchemeFieldAndMethods(builderField, requestOptionsField);
-        }
-
-        @Override
-        public AuthSchemeFieldAndMethods _visitUnknown(Object unknownType) {
-            throw new RuntimeException("Encountered unknown auth scheme");
+            return new RequestOption(builderField, requestOptionsField);
         }
     }
 }

@@ -35,6 +35,7 @@ import com.fern.java.output.gradle.ParsedGradleDependency;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -149,9 +150,19 @@ public final class Cli
         GeneratedEnvironmentsClass generatedEnvironmentsClass = environmentGenerator.generateFile();
         this.addGeneratedFile(generatedEnvironmentsClass);
 
-        RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(context);
+        RequestOptionsGenerator requestOptionsGenerator = new RequestOptionsGenerator(
+                context, context.getPoetClassNameFactory().getRequestOptionsClassName());
         GeneratedJavaFile generatedRequestOptions = requestOptionsGenerator.generateFile();
         this.addGeneratedFile(generatedRequestOptions);
+
+        if (!ir.getIdempotencyHeaders().isEmpty()) {
+            RequestOptionsGenerator idempotentRequestOptionsGenerator = new RequestOptionsGenerator(
+                    context,
+                    context.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                    ir.getIdempotencyHeaders());
+            GeneratedJavaFile generatedIdempotentRequestOptions = idempotentRequestOptionsGenerator.generateFile();
+            this.addGeneratedFile(generatedIdempotentRequestOptions);
+        }
 
         RetryInterceptorGenerator retryInterceptorGenerator = new RetryInterceptorGenerator(context);
         this.addGeneratedFile(retryInterceptorGenerator.generateFile());

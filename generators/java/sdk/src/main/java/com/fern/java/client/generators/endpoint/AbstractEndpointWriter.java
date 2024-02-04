@@ -97,7 +97,6 @@ public abstract class AbstractEndpointWriter {
     private final MethodSpec.Builder endpointMethodBuilder;
     private final GeneratedObjectMapper generatedObjectMapper;
     private final GeneratedEnvironmentsClass generatedEnvironmentsClass;
-    private final GeneratedJavaFile requestOptionsFile;
     private final Set<String> endpointParameterNames = new HashSet<>();
 
     public AbstractEndpointWriter(
@@ -107,8 +106,7 @@ public abstract class AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedClientOptions generatedClientOptions,
-            GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedJavaFile requestOptionsFile) {
+            GeneratedEnvironmentsClass generatedEnvironmentsClass) {
         this.httpService = httpService;
         this.httpEndpoint = httpEndpoint;
         this.clientOptionsField = clientOptionsField;
@@ -119,7 +117,6 @@ public abstract class AbstractEndpointWriter {
         this.endpointMethodBuilder = MethodSpec.methodBuilder(
                         httpEndpoint.getName().get().getCamelCase().getSafeName())
                 .addModifiers(Modifier.PUBLIC);
-        this.requestOptionsFile = requestOptionsFile;
     }
 
     public final HttpEndpointMethodSpecs generate() {
@@ -147,9 +144,17 @@ public abstract class AbstractEndpointWriter {
         // Step 3: Add path parameters
         endpointMethodBuilder.addParameters(pathParameters);
         endpointMethodBuilder.addParameters(additionalParameters);
-        endpointMethodBuilder.addParameter(
-                ParameterSpec.builder(requestOptionsFile.getClassName(), REQUEST_OPTIONS_PARAMETER_NAME)
-                        .build());
+        if (httpEndpoint.getIdempotent()) {
+            endpointMethodBuilder.addParameter(ParameterSpec.builder(
+                            clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                            REQUEST_OPTIONS_PARAMETER_NAME)
+                    .build());
+        } else {
+            endpointMethodBuilder.addParameter(ParameterSpec.builder(
+                            clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                            REQUEST_OPTIONS_PARAMETER_NAME)
+                    .build());
+        }
 
         // Step 4: Get http client initializer
         HttpUrlBuilder httpUrlBuilder = new HttpUrlBuilder(
