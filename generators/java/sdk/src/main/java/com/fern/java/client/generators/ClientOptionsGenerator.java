@@ -38,12 +38,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import okhttp3.OkHttpClient;
 
 public final class ClientOptionsGenerator extends AbstractFileGenerator {
+
+    public static final String HEADERS_METHOD_NAME = "headers";
 
     private static final String CLIENT_OPTIONS_CLASS_NAME = "ClientOptions";
 
@@ -93,7 +96,8 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
     @Override
     public GeneratedClientOptions generateFile() {
         MethodSpec environmentGetter = createGetter(environmentField);
-        MethodSpec headersGetter = getHeadersGetter();
+        MethodSpec headersFromRequestOptions = headersFromRequestOptions();
+        Optional<MethodSpec> headersFromIdempotentRequestOptions = headersFromIdempotentRequestOptions();
         MethodSpec httpClientGetter = createGetter(OKHTTP_CLIENT_FIELD);
         Map<VariableId, FieldSpec> variableFields = getVariableFields();
         Map<VariableId, MethodSpec> variableGetters = getVariableGetters(variableFields);
@@ -103,7 +107,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .stream()
                 .map(val -> CodeBlock.of("$S", val).toString())
                 .collect(Collectors.joining(", "));
-        TypeSpec clientOptionsTypeSpec = TypeSpec.classBuilder(className)
+        TypeSpec.Builder clientOptionsBuilder = TypeSpec.classBuilder(className)
                 .addModifiers(Modifier.PUBLIC, Modifier.FINAL)
                 .addField(environmentField)
                 .addField(HEADERS_FIELD)
@@ -141,7 +145,13 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                                 "\n"))
                         .build())
                 .addMethod(environmentGetter)
-                .addMethod(headersGetter)
+                .addMethod(headersFromRequestOptions);
+
+        if (headersFromIdempotentRequestOptions.isPresent()) {
+            clientOptionsBuilder.addMethod(headersFromIdempotentRequestOptions.get());
+        }
+
+        TypeSpec clientOptions = clientOptionsBuilder
                 .addMethod(httpClientGetter)
                 .addMethods(variableGetters.values())
                 .addMethod(MethodSpec.methodBuilder("builder")
@@ -152,23 +162,40 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .addType(createBuilder(variableFields))
                 .build();
         JavaFile environmentsFile =
-                JavaFile.builder(className.packageName(), clientOptionsTypeSpec).build();
+                JavaFile.builder(className.packageName(), clientOptions).build();
         return GeneratedClientOptions.builder()
                 .className(className)
                 .javaFile(environmentsFile)
                 .environment(environmentGetter)
-                .headers(headersGetter)
                 .httpClient(httpClientGetter)
                 .builderClassName(builderClassName)
                 .putAllVariableGetters(variableGetters)
                 .build();
     }
 
-    private MethodSpec getHeadersGetter() {
-        return MethodSpec.methodBuilder(HEADERS_FIELD.name)
+    private MethodSpec headersFromRequestOptions() {
+        return constructHeadersMethod()
+                .addParameter(
+                        clientGeneratorContext.getPoetClassNameFactory().getRequestOptionsClassName(),
+                        REQUEST_OPTIONS_PARAMETER_NAME)
+                .build();
+    }
+
+    private Optional<MethodSpec> headersFromIdempotentRequestOptions() {
+        if (!clientGeneratorContext.getIr().getIdempotencyHeaders().isEmpty()) {
+            return Optional.of(constructHeadersMethod()
+                    .addParameter(
+                            clientGeneratorContext.getPoetClassNameFactory().getIdempotentRequestOptionsClassName(),
+                            REQUEST_OPTIONS_PARAMETER_NAME)
+                    .build());
+        }
+        return Optional.empty();
+    }
+
+    private MethodSpec.Builder constructHeadersMethod() {
+        return MethodSpec.methodBuilder(HEADERS_METHOD_NAME)
                 .addModifiers(Modifier.PUBLIC)
                 .returns(HEADERS_FIELD.type)
-                .addParameter(requestOptionsFile.getClassName(), REQUEST_OPTIONS_PARAMETER_NAME)
                 .addStatement("$T values = new $T<>(this.$L)", HEADERS_FIELD.type, HashMap.class, HEADERS_FIELD.name)
                 .beginControlFlow("$L.forEach((key, supplier) -> ", HEADER_SUPPLIERS_FIELD.name)
                 .addStatement("values.put(key, supplier.get())")
@@ -176,8 +203,7 @@ public final class ClientOptionsGenerator extends AbstractFileGenerator {
                 .beginControlFlow("if ($L != null)", REQUEST_OPTIONS_PARAMETER_NAME)
                 .addStatement("values.putAll($L.getHeaders())", REQUEST_OPTIONS_PARAMETER_NAME)
                 .endControlFlow()
-                .addStatement("return values")
-                .build();
+                .addStatement("return values");
     }
 
     private TypeSpec createBuilder(Map<VariableId, FieldSpec> variableFields) {

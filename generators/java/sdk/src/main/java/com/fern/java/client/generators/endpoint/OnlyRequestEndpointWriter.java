@@ -27,6 +27,7 @@ import com.fern.java.client.ClientGeneratorContext;
 import com.fern.java.client.GeneratedClientOptions;
 import com.fern.java.client.GeneratedEnvironmentsClass;
 import com.fern.java.client.GeneratedWrappedRequest;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
@@ -181,10 +182,10 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(")\n")
                     .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName())
                     .add(
-                            ".headers($T.of($L.$N($L)))\n",
+                            ".headers($T.of($L.$L($L)))\n",
                             Headers.class,
                             clientOptionsMember.name,
-                            clientOptions.headers(),
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
             if (sendContentType) {
                 sdkRequestBodyType.visit(new SdkRequestBodyType.Visitor<Void>() {
@@ -226,10 +227,10 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                     .add(")\n")
                     .add(".method($S, $L)\n", httpEndpoint.getMethod().toString(), getOkhttpRequestBodyName())
                     .add(
-                            ".headers($T.of($L.$N($L)))\n",
+                            ".headers($T.of($L.$L($L)))\n",
                             Headers.class,
                             clientOptionsMember.name,
-                            clientOptions.headers(),
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             REQUEST_OPTIONS_PARAMETER_NAME);
             builder.add(
                     ".addHeader($S, $S)\n",

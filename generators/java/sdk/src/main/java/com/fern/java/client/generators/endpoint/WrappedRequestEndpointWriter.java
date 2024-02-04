@@ -31,6 +31,7 @@ import com.fern.java.client.GeneratedWrappedRequest.FileUploadRequestBodyGetters
 import com.fern.java.client.GeneratedWrappedRequest.InlinedRequestBodyGetters;
 import com.fern.java.client.GeneratedWrappedRequest.JsonFileUploadProperty;
 import com.fern.java.client.GeneratedWrappedRequest.ReferencedRequestBodyGetter;
+import com.fern.java.client.generators.ClientOptionsGenerator;
 import com.fern.java.client.generators.CoreMediaTypesGenerator;
 import com.fern.java.generators.object.EnrichedObjectProperty;
 import com.fern.java.output.GeneratedJavaFile;
@@ -184,10 +185,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
         if (sendContentType && !isFileUpload) {
             requestBodyCodeBlock
                     .add(
-                            ".headers($T.of($L.$N($L)))\n",
+                            ".headers($T.of($L.$L($L)))\n",
                             Headers.class,
                             clientOptionsMember.name,
-                            clientOptions.headers(),
+                            ClientOptionsGenerator.HEADERS_METHOD_NAME,
                             AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME)
                     .add(
                             ".addHeader($S, $S);\n",
@@ -195,10 +196,10 @@ public final class WrappedRequestEndpointWriter extends AbstractEndpointWriter {
                             AbstractEndpointWriter.APPLICATION_JSON_HEADER);
         } else {
             requestBodyCodeBlock.add(
-                    ".headers($T.of($L.$N($L)));\n",
+                    ".headers($T.of($L.$L($L)));\n",
                     Headers.class,
                     clientOptionsMember.name,
-                    clientOptions.headers(),
+                    ClientOptionsGenerator.HEADERS_METHOD_NAME,
                     AbstractEndpointWriter.REQUEST_OPTIONS_PARAMETER_NAME);
         }
         requestBodyCodeBlock.unindent();

@@ -46,6 +46,17 @@ public final class ClientOptions {
         return values;
     }
 
+    public Map<String, String> headers(IdempotentRequestOptions requestOptions) {
+        Map<String, String> values = new HashMap<>(this.headers);
+        headerSuppliers.forEach((key, supplier) -> {
+            values.put(key, supplier.get());
+        });
+        if (requestOptions != null) {
+            values.putAll(requestOptions.getHeaders());
+        }
+        return values;
+    }
+
     public OkHttpClient httpClient() {
         return this.httpClient;
     }

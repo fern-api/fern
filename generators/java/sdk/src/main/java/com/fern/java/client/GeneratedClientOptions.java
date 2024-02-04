@@ -30,8 +30,6 @@ public abstract class GeneratedClientOptions extends AbstractGeneratedJavaFile {
 
     public abstract MethodSpec environment();
 
-    public abstract MethodSpec headers();
-
     public abstract MethodSpec httpClient();
 
     public abstract Map<VariableId, MethodSpec> variableGetters();
