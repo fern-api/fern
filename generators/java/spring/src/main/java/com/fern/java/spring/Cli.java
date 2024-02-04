@@ -48,10 +48,10 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class SpringGeneratorCli
+public final class Cli
         extends AbstractGeneratorCli<SpringCustomConfig, SpringDownloadFilesCustomConfig> {
 
-    private static final Logger log = LoggerFactory.getLogger(SpringGeneratorCli.class);
+    private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
     private final List<String> subprojects = new ArrayList<>();
 
@@ -192,7 +192,7 @@ public final class SpringGeneratorCli
     }
 
     public static void main(String... args) {
-        SpringGeneratorCli cli = new SpringGeneratorCli();
+        Cli cli = new Cli();
         cli.run(args);
     }
 }

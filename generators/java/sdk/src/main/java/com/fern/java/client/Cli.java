@@ -54,15 +54,15 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public final class ClientGeneratorCli
+public final class Cli
         extends AbstractGeneratorCli<JavaSdkCustomConfig, JavaSdkDownloadFilesCustomConfig> {
 
-    private static final Logger log = LoggerFactory.getLogger(ClientGeneratorCli.class);
+    private static final Logger log = LoggerFactory.getLogger(Cli.class);
 
     private final List<String> subprojects = new ArrayList<>();
     private final List<AbstractGradleDependency> dependencies = new ArrayList<>();
 
-    public ClientGeneratorCli() {
+    public Cli() {
         this.dependencies.addAll(List.of(
                 ParsedGradleDependency.builder()
                         .type(GradleDependencyType.API)
@@ -275,7 +275,7 @@ public final class ClientGeneratorCli
     }
 
     public static void main(String... args) {
-        ClientGeneratorCli cli = new ClientGeneratorCli();
+        Cli cli = new Cli();
         cli.run(args);
     }
 }

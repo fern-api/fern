@@ -36,7 +36,7 @@ import com.fern.java.output.gradle.ParsedGradleDependency;
 import java.util.Collections;
 import java.util.List;
 
-public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
+public final class Cli extends AbstractGeneratorCli<CustomConfig, DownloadFilesCustomConfig> {
 
     @Override
     public void runInDownloadFilesModeHook(
@@ -134,7 +134,7 @@ public final class ModelGeneratorCli extends AbstractGeneratorCli<CustomConfig, 
     }
 
     public static void main(String... args) {
-        ModelGeneratorCli cli = new ModelGeneratorCli();
+        Cli cli = new Cli();
         cli.run(args);
     }
 }
