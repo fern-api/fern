@@ -5,6 +5,7 @@ package com.seed.idempotencyHeaders.resources.payment;
 
 import com.seed.idempotencyHeaders.core.ApiError;
 import com.seed.idempotencyHeaders.core.ClientOptions;
+import com.seed.idempotencyHeaders.core.IdempotentRequestOptions;
 import com.seed.idempotencyHeaders.core.MediaTypes;
 import com.seed.idempotencyHeaders.core.ObjectMappers;
 import com.seed.idempotencyHeaders.core.RequestOptions;
@@ -28,7 +29,7 @@ public class PaymentClient {
         return create(request, null);
     }
 
-    public UUID create(CreatePaymentRequest request, RequestOptions requestOptions) {
+    public UUID create(CreatePaymentRequest request, IdempotentRequestOptions requestOptions) {
         HttpUrl httpUrl = HttpUrl.parse(this.clientOptions.environment().getUrl())
                 .newBuilder()
                 .addPathSegments("payment")

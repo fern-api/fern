@@ -105,7 +105,6 @@ public final class ClientGeneratorUtils {
                         generatedClientOptions,
                         clientOptionsField,
                         generatedEnvironmentsClass,
-                        requestOptionsFile,
                         allGeneratedInterfaces);
                 HttpEndpointMethodSpecs httpEndpointMethodSpecs = httpEndpointMethodSpecFactory.create();
                 if (httpEndpointMethodSpecs.getNoRequestBodyMethodSpec().isPresent()) {

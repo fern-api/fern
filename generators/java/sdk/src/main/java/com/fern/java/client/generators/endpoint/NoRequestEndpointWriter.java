@@ -45,8 +45,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
             ClientGeneratorContext clientGeneratorContext,
             FieldSpec clientOptionsField,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
-            GeneratedClientOptions generatedClientOptions,
-            GeneratedJavaFile requestOptionsFile) {
+            GeneratedClientOptions generatedClientOptions) {
         super(
                 httpService,
                 httpEndpoint,
@@ -54,8 +53,7 @@ public final class NoRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass,
-                requestOptionsFile);
+                generatedEnvironmentsClass);
     }
 
     @Override

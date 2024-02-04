@@ -61,8 +61,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             SdkRequestBodyType sdkRequestBodyType,
-            SdkRequest sdkRequest,
-            GeneratedJavaFile requestOptionsFile) {
+            SdkRequest sdkRequest) {
         super(
                 httpService,
                 httpEndpoint,
@@ -70,8 +69,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass,
-                requestOptionsFile);
+                generatedEnvironmentsClass);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestBodyType = sdkRequestBodyType;
@@ -88,8 +86,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
             GeneratedClientOptions generatedClientOptions,
             GeneratedEnvironmentsClass generatedEnvironmentsClass,
             GeneratedWrappedRequest generatedWrappedRequest,
-            SdkRequest sdkRequest,
-            GeneratedJavaFile requestOptionsFile) {
+            SdkRequest sdkRequest) {
         super(
                 httpService,
                 httpEndpoint,
@@ -97,8 +94,7 @@ public final class OnlyRequestEndpointWriter extends AbstractEndpointWriter {
                 clientGeneratorContext,
                 clientOptionsField,
                 generatedClientOptions,
-                generatedEnvironmentsClass,
-                requestOptionsFile);
+                generatedEnvironmentsClass);
         this.clientGeneratorContext = clientGeneratorContext;
         this.httpEndpoint = httpEndpoint;
         this.sdkRequestBodyType = null;
