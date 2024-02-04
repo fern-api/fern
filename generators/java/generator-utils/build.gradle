@@ -1,6 +1,4 @@
 dependencies {
-    implementation project(':runtime-utils:immutables-utils')
-
     api 'com.squareup:javapoet'
     api 'com.fern.fern:irV29'
     api 'com.fern.fern:generator-exec-client'
