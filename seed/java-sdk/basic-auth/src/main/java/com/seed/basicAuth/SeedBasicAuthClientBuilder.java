@@ -12,9 +12,6 @@ public final class SeedBasicAuthClientBuilder {
 
     private Environment environment;
 
-    /**
-     * @param username Set username@param password Set password
-     */
     public SeedBasicAuthClientBuilder credentials(String username, String password) {}
 
     public SeedBasicAuthClientBuilder url(String url) {

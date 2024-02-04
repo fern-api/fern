@@ -282,11 +282,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 usernameField.initializer("null");
             }
             ParameterSpec usernameParam = ParameterSpec.builder(String.class, usernameFieldName)
-                    .addJavadoc(
-                            basic.getUsernameEnvVar().isPresent()
-                                    ? "Defaults to the "
-                                            + basic.getUsernameEnvVar().get().get() + " environment variable."
-                                    : "Set " + usernameFieldName)
                     .build();
 
             // password
@@ -300,11 +295,6 @@ public final class RootClientGenerator extends AbstractFileGenerator {
                 passwordField.initializer("null");
             }
             ParameterSpec passwordParam = ParameterSpec.builder(String.class, passwordFieldName)
-                    .addJavadoc(
-                            basic.getPasswordEnvVar().isPresent()
-                                    ? "Defaults to the "
-                                            + basic.getPasswordEnvVar().get().get() + " environment variable."
-                                    : "Set " + passwordFieldName)
                     .build();
 
             // add setter method
