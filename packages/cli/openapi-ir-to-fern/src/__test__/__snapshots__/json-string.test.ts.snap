@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`json-string json-string simple 1`] = `
+{
+  "definitionFiles": {},
+  "packageMarkerFile": {
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+          "metadata": "optional<unknown>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test \`json-string\` example",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

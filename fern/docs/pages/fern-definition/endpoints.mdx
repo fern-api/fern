@@ -1,12 +1,12 @@
-In Fern, you organize related endpoints into a **Service.** This grouping
+In Fern, you organize related endpoints into a **Service**. This grouping
 improves clarity and makes the generated SDKs more idiomatic.
 
-## Service Definition
+## Service definition
 
 Each service defines:
 
-1. A **base-path**: A common prefix for all the endpoints's HTTP paths
-2. Whether the service requires [authentication](./api-yml#authentication)
+1. A **base-path**: A common prefix for all the endpoints' HTTP paths
+2. Whether the service requires [authentication](/api-definition/fern-definition/api-yml-reference#authentication)
 3. **Endpoints**
 
 <CodeBlock title="user.yml">
@@ -22,7 +22,7 @@ service:
 
 An endpoint includes:
 
-- A **URL path** (optionally including path parameters)
+- A **URL path** (_Optionally including path parameters_)
 - An **HTTP Method**
 - **Request information** _(Optional)_
   - **Query-parameters**
@@ -31,7 +31,7 @@ An endpoint includes:
 - **Successful (200) response** information _(Optional)_
 - **Error (non-200) responses** that this endpoint might return _(Optional)_
 
-## URL Path
+## URL path
 
 Each endpoint has a URL path.
 
@@ -55,7 +55,7 @@ The full path for the endpoint is the concatenation of:
 
 ### Path parameters
 
-You can supply path parameters for your endpoints to create dynamic URLs.
+Supply path parameters for your endpoints to create dynamic URLs.
 
 <CodeBlock title="user.yml">
 ```yaml
@@ -88,7 +88,6 @@ service:
 
 Each endpoint can specify query parameters:
 
-
 <CodeBlock title="user.yml">
 ```yaml
 service:
@@ -108,8 +107,8 @@ service:
 
 ### `allow-multiple`
 
-You can use `allow-multiple` to specify that a query parameter is allowed
-multiple times in the URL, e.g., `?filter=jane&filter=smith`. This will alter
+Use `allow-multiple` to specify that a query parameter is allowed
+multiple times in the URL, as in `?filter=jane&filter=smith`. This will alter
 the generated SDKs so that consumers can provide multiple values for the query
 parameter.
 
@@ -204,7 +203,7 @@ service:
 
 ### Inlining a request body
 
-If the request body is an object, you can **inline the type declaration.** This
+If the request body is an object, you can **inline the type declaration**. This
 makes the generated SDKs a bit more idiomatic.
 
 <CodeBlock title="user.yml">
@@ -274,7 +273,7 @@ types:
 ## Error responses
 
 Endpoints can specify error responses, which detail the non-200 responses that
-the endpoint might return
+the endpoint might return.
 
 <CodeBlock title="user.yml">
 ```yaml

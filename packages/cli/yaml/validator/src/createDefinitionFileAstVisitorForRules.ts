@@ -62,6 +62,7 @@ export function createDefinitionFileAstVisitorForRules({
         ...createAstNodeVisitor("exampleType"),
         ...createAstNodeVisitor("exampleTypeReference"),
         ...createAstNodeVisitor("exampleHttpEndpointCall"),
+        ...createAstNodeVisitor("exampleCodeSample"),
         ...createAstNodeVisitor("exampleHeaders"),
         ...createAstNodeVisitor("examplePathParameters"),
         ...createAstNodeVisitor("exampleQueryParameters"),

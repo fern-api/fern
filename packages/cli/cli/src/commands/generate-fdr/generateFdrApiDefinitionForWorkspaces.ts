@@ -31,7 +31,9 @@ export async function generateFdrApiDefinitionForWorkspaces({
                     workspace: fernWorkspace,
                     context,
                     generationLanguage: undefined,
-                    audiences
+                    audiences,
+                    smartCasing: false,
+                    disableExamples: false
                 });
 
                 const apiDefinition = convertIrToFdrApi(intermediateRepresentation, {});

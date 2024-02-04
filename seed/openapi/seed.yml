@@ -1,0 +1,17 @@
+irVersion: v23
+docker: fernapi/fern-openapi:latest
+dockerCommand: yarn workspace @fern-api/openapi-generator dockerTagLatest
+generatorType: Documentation
+defaultOutputMode: local_files
+fixtures:
+  imdb:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        customOverrides:
+          info: 
+            license: MIT
+      outputFolder: custom-overrides
+    - customConfig:
+        format: json
+      outputFolder: json-format

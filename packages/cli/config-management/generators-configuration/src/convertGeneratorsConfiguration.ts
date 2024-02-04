@@ -91,6 +91,8 @@ async function convertGenerator({
         version: generator.version,
         config: generator.config,
         outputMode: await convertOutputMode({ absolutePathToGeneratorsConfiguration, generator }),
+        smartCasing: generator["smart-casing"] ?? false,
+        disableExamples: generator["disable-examples"] ?? false,
         absolutePathToLocalOutput:
             generator.output?.location === "local-file-system"
                 ? resolve(dirname(absolutePathToGeneratorsConfiguration), generator.output.path)
@@ -192,6 +194,16 @@ async function convertOutputMode({
                     coordinate: generator.output["package-name"]
                 })
             );
+        case "nuget":
+            throw new Error("Nuget is not supported");
+        case "rubygems":
+            return FernFiddle.OutputMode.publishV2(
+                FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
+                    registryUrl: generator.output.url ?? "https://rubygems.org/",
+                    packageName: generator.output["package-name"],
+                    apiKey: generator.output["api-key"] ?? ""
+                })
+            );
         default:
             assertNever(generator.output);
     }
@@ -207,9 +219,13 @@ async function getGithubLicense({
     if (typeof githubLicense === "string") {
         switch (githubLicense) {
             case "MIT":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Mit);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Mit
+                });
             case "Apache-2.0":
-                return FernFiddle.GithubLicense.id(FernFiddle.GithubLicenseId.Apache2);
+                return FernFiddle.GithubLicense.basic({
+                    id: FernFiddle.GithubLicenseId.Apache2
+                });
             default:
                 assertNever(githubLicense);
         }
@@ -219,7 +235,9 @@ async function getGithubLicense({
         RelativeFilePath.of(githubLicense.custom)
     );
     const licenseContent = await readFile(absolutePathToLicense);
-    return FernFiddle.GithubLicense.file(licenseContent.toString());
+    return FernFiddle.GithubLicense.custom({
+        contents: licenseContent.toString()
+    });
 }
 
 function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubPublishInfo {
@@ -264,6 +282,14 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                               password: output.password ?? ""
                           }
             });
+        case "nuget":
+            throw new Error("Nuget is not supported");
+        case "rubygems":
+            return FernFiddle.GithubPublishInfo.rubygems({
+                registryUrl: output.url ?? "https://rubygems.org/",
+                packageName: output["package-name"],
+                apiKey: output["api-key"]
+            });
         default:
             assertNever(output);
     }
@@ -281,6 +307,9 @@ function getLanguageFromGeneratorName(generatorName: string) {
     }
     if (generatorName.includes("go")) {
         return GenerationLanguage.GO;
+    }
+    if (generatorName.includes("ruby")) {
+        return GenerationLanguage.RUBY;
     }
     return undefined;
 }

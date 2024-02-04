@@ -1,0 +1,241 @@
+{
+  "info": {
+    "name": "Response Property",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get Movie",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Movie Docs",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Movie Name",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Movie Metadata",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Optional Movie",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Optional Movie Docs",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "_type": "endpoint",
+          "name": "Get Optional Movie Name",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/movie",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "movie"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "\"example\"",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

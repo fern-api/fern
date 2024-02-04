@@ -9,4 +9,4 @@ export const PypiOutputLocationSchema = z.strictObject({
     password: z.optional(z.string())
 });
 
-export type PostmanOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>;
+export type PypiOutputLocationSchema = z.infer<typeof PypiOutputLocationSchema>;

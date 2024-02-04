@@ -7,7 +7,7 @@ import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { GithubPublishInfo, PublishOutputModeV2 } from "@fern-fern/fiddle-sdk/types/api";
-import { OutputMode } from "@fern-fern/seed-config/api";
+import { OutputMode } from "../../config/api";
 import { ParsedDockerName } from "../../cli";
 
 const DUMMY_ORGANIZATION = "seed";
@@ -23,7 +23,8 @@ export async function runDockerForWorkspace({
     irVersion,
     outputVersion,
     outputMode,
-    fixtureName
+    fixtureName,
+    keepDocker
 }: {
     absolutePathToOutput: AbsoluteFilePath;
     docker: ParsedDockerName;
@@ -35,6 +36,7 @@ export async function runDockerForWorkspace({
     outputVersion?: string;
     outputMode: OutputMode;
     fixtureName: string;
+    keepDocker: boolean | undefined;
 }): Promise<void> {
     const generatorGroup: GeneratorGroup = {
         groupName: "test",
@@ -46,7 +48,9 @@ export async function runDockerForWorkspace({
                 config: customConfig,
                 outputMode: getOutputMode({ outputMode, language, fixtureName }),
                 absolutePathToLocalOutput: absolutePathToOutput,
-                language
+                language,
+                smartCasing: false,
+                disableExamples: false
             }
         ]
     };
@@ -54,7 +58,7 @@ export async function runDockerForWorkspace({
         organization: DUMMY_ORGANIZATION,
         workspace,
         generatorGroup,
-        keepDocker: true,
+        keepDocker: keepDocker ?? false,
         context: taskContext,
         irVersionOverride: irVersion,
         outputVersionOverride: outputVersion
@@ -113,6 +117,8 @@ function getGithubPublishInfo({
             });
         case "go":
             return undefined;
+        case "ruby":
+            return undefined;
         default:
             assertNever(language);
     }
@@ -148,6 +154,8 @@ function getPublishInfo({
             });
         case "go":
             throw new Error("Seed doesn't support publish mode in Go!");
+        case "ruby":
+            throw new Error("Seed doesn't support publish mode in Ruby!");
         default:
             assertNever(language);
     }

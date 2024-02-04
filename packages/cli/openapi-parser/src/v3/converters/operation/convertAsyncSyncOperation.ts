@@ -3,6 +3,7 @@ import { EndpointWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { AsyncFernExtensionSchema } from "../../extensions/getFernAsyncExtension";
+import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { isReferenceObject } from "../../utils/isReferenceObject";
 import { OperationContext } from "../contexts";
 import { convertHttpOperation } from "./convertHttpOperation";
@@ -62,6 +63,8 @@ export function convertAsyncSyncOperation({
     asyncOperation.headers.push({
         name: headerToIgnore,
         schema: Schema.literal({
+            nameOverride: undefined,
+            generatedName: getGeneratedTypeName([headerToIgnore]),
             description: null,
             value: LiteralSchemaValue.string(headerValue),
             groupName: undefined

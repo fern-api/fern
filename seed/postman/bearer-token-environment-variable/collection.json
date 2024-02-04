@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "Bearer Token Environment Variable",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{token}}",
+        "type": "string"
+      }
+    ]
+  },
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Get With Bearer Token",
+          "request": {
+            "description": "GET request with custom api key",
+            "url": {
+              "raw": "{{baseUrl}}/apiKey",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "apiKey"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [],
+            "method": "GET",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

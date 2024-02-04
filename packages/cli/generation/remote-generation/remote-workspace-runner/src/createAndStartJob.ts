@@ -2,6 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { createFiddleService, getFiddleOrigin } from "@fern-api/core";
 import { stringifyLargeObject } from "@fern-api/fs-utils";
 import { GeneratorInvocation } from "@fern-api/generators-configuration";
+import { IntermediateRepresentation } from "@fern-api/ir-sdk";
 import {
     migrateIntermediateRepresentationForGenerator,
     migrateIntermediateRepresentationThroughVersion
@@ -10,7 +11,6 @@ import { TaskContext } from "@fern-api/task-context";
 import { APIWorkspace } from "@fern-api/workspace-loader";
 import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { Fetcher } from "@fern-fern/fiddle-sdk/core";
-import { IntermediateRepresentation } from "@fern-fern/ir-sdk/api";
 import axios, { AxiosError } from "axios";
 import FormData from "form-data";
 import urlJoin from "url-join";

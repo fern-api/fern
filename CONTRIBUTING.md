@@ -16,21 +16,22 @@ Write code! We've got lots of open issues - feel free to volunteer for one by co
 
 ## Writing Documentation
 
-Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in 
+Our documentation is powered by Fern's Docs product. All of the configuration for the docs lives in
 [docs.yml](./fern/docs.yml).
 
-To edit the docs, you can modify `docs.yml` or any of the markdown that it references. 
+To edit the docs, you can modify `docs.yml` or any of the markdown that it references.
 
-To validate that the docs, run: 
+To validate that the docs, run:
+
 ```
 npm install -g fern-api
 fern check
 ```
 
-When you make a PR to update the docs, a PR preview link will be generated which will allow you 
-to test if your changes came out as intended. 
+When you make a PR to update the docs, a PR preview link will be generated which will allow you
+to test if your changes came out as intended.
 
-## Local Development 
+## Local Development
 
 Our repo is a monorepo that relies on [Yarn workspaces](https://yarnpkg.com/features/workspaces) and [Yarn Plug'n'Play](https://yarnpkg.com/features/pnp) to run smoothly.
 
@@ -60,13 +61,11 @@ yarn
 2. Open the Command Palette (Cmd+Shift+P on Mac) and select `Typescript: Select TypeScript Version...`
 3. Choose `Use Workspace Version`
 
-This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which
-is modified to work with Yarn PNP.
+This tells VSCode to rely on the version of TypeScript that lives in `.yarn/sdks/typescript`, which is modified to work with Yarn PNP.
 
 **Step 5: Install Husky**
 
-Run `yarn husky install` from the root of the repo and this will configure pre-commit hooks that will
-lint your changes.
+Run `yarn husky install` from the root of the repo and this will configure pre-commit hooks that will lint your changes.
 
 ### Compiling
 

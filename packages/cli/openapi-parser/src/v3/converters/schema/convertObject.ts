@@ -4,7 +4,7 @@ import {
     ObjectPropertyConflictInfo,
     ReferencedSchema
 } from "@fern-fern/openapi-ir-model/finalIr";
-import { ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
+import { NamedFullExample, ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
@@ -31,7 +31,8 @@ export function convertObject({
     allOf,
     context,
     propertiesToExclude,
-    groupName
+    groupName,
+    fullExamples
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -44,6 +45,7 @@ export function convertObject({
     context: AbstractOpenAPIV3ParserContext;
     propertiesToExclude: Set<string>;
     groupName: SdkGroupName | undefined;
+    fullExamples: undefined | NamedFullExample[];
 }): SchemaWithExample {
     const allRequired = [...(required ?? [])];
     const propertiesToConvert = { ...properties };
@@ -102,11 +104,15 @@ export function convertObject({
     const convertedProperties = Object.entries(propertiesToConvert).map(([propertyName, propertySchema]) => {
         const isRequired = allRequired.includes(propertyName);
         const audiences = getExtension<string[]>(propertySchema, FernOpenAPIExtension.AUDIENCES) ?? [];
+        const propertyBreadcrumbs = [...breadcrumbs, propertyName];
+        const generatedName = getGeneratedPropertyName(propertyBreadcrumbs);
         const schema = isRequired
-            ? convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName])
+            ? convertSchema(propertySchema, false, context, propertyBreadcrumbs)
             : SchemaWithExample.optional({
+                  nameOverride,
+                  generatedName,
                   description: undefined,
-                  value: convertSchema(propertySchema, false, context, [...breadcrumbs, propertyName]),
+                  value: convertSchema(propertySchema, false, context, propertyBreadcrumbs),
                   groupName
               });
 
@@ -157,7 +163,8 @@ export function convertObject({
         description,
         allOf: parents.map((parent) => parent.convertedSchema),
         allOfPropertyConflicts,
-        groupName
+        groupName,
+        fullExamples
     });
 }
 
@@ -169,7 +176,8 @@ export function wrapObject({
     description,
     allOf,
     allOfPropertyConflicts,
-    groupName
+    groupName,
+    fullExamples
 }: {
     nameOverride: string | undefined;
     generatedName: string;
@@ -179,9 +187,12 @@ export function wrapObject({
     allOf: ReferencedSchema[];
     allOfPropertyConflicts: AllOfPropertyConflict[];
     groupName: SdkGroupName | undefined;
+    fullExamples: undefined | NamedFullExample[];
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.object({
                 description,
                 properties,
@@ -189,7 +200,8 @@ export function wrapObject({
                 generatedName,
                 allOf,
                 allOfPropertyConflicts,
-                groupName
+                groupName,
+                fullExamples
             }),
             description,
             groupName
@@ -202,7 +214,8 @@ export function wrapObject({
         generatedName,
         allOf,
         allOfPropertyConflicts,
-        groupName
+        groupName,
+        fullExamples
     });
 }
 

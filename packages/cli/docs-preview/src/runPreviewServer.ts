@@ -28,7 +28,7 @@ export async function runPreviewServer({
             basePath: ""
         },
         definition: docsDefinition,
-        lightModeEnabled: docsDefinition.config.colorsV3.type !== "dark"
+        lightModeEnabled: docsDefinition.config.colorsV3?.type !== "dark"
     };
 
     app.post("/v2/registry/docs/load-with-url", async (_, res) => {

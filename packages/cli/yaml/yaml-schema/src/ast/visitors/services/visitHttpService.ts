@@ -390,6 +390,20 @@ async function visitExampleEndpointCall({
             await visitor.errorReference?.(example.response.error, [...nodePathForResponse, "error"]);
         }
     }
+
+    if (example["code-samples"] != null) {
+        for (const [index, codeSample] of example["code-samples"].entries()) {
+            await visitor.exampleCodeSample?.(
+                {
+                    service,
+                    endpoint,
+                    example,
+                    sample: codeSample
+                },
+                [...nodePathForExample, { key: "code-samples", arrayIndex: index }]
+            );
+        }
+    }
 }
 
 export async function visitPathParameters({

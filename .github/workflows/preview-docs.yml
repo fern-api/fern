@@ -3,9 +3,16 @@ name: preview-docs
 on:
   pull_request:
     paths:
-      - "fern/**"
+      - "fern/docs/**"
+      - "fern/apis/public-api/**"
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      prNumber:
+        description: "Pull Request Number"
+        required: true
+        default: ""
 
 jobs:
   run:

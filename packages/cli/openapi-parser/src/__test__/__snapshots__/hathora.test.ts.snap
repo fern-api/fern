@@ -8,11 +8,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -34,10 +38,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetAppsResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -61,12 +68,131 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "appName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "authConfiguration": {
+                "properties": {
+                  "anonymous": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "google": {
+                    "properties": {
+                      "clientId": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "nickname": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appSecret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "authConfiguration": {
+                "properties": {
+                  "anonymous": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "google": {
+                    "properties": {
+                      "clientId": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "nickname": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "orgId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateAppRequest",
       "headers": [],
       "internal": undefined,
@@ -78,6 +204,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -106,7 +233,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "google",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "createAppRequestAuthConfigurationGoogle",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "allOf": [],
@@ -123,7 +252,9 @@ exports[`open api parser hathora parse open api 1`] = `
                             "key": "clientId",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "CreateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -144,7 +275,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "nickname",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "createAppRequestAuthConfigurationNickname",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -163,7 +296,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "anonymous",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "createAppRequestAuthConfigurationAnonymous",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -186,7 +321,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "appName",
               "schema": {
                 "description": undefined,
+                "generatedName": "CreateAppRequestAppName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -203,6 +340,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -225,13 +363,143 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "appName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "authConfiguration": {
+                "properties": {
+                  "anonymous": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "google": {
+                    "properties": {
+                      "clientId": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "nickname": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appSecret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "authConfiguration": {
+                "properties": {
+                  "anonymous": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "google": {
+                    "properties": {
+                      "clientId": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "nickname": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "orgId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "UpdateAppRequest",
       "headers": [],
       "internal": undefined,
@@ -257,6 +525,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -285,7 +554,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "google",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "updateAppRequestAuthConfigurationGoogle",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "allOf": [],
@@ -302,7 +573,9 @@ exports[`open api parser hathora parse open api 1`] = `
                             "key": "clientId",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "UpdateAppRequestAuthConfigurationGoogleClientId",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -323,7 +596,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "nickname",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "updateAppRequestAuthConfigurationNickname",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -342,7 +617,9 @@ exports[`open api parser hathora parse open api 1`] = `
                     "key": "anonymous",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "updateAppRequestAuthConfigurationAnonymous",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "type": "optional",
                       "value": {
                         "description": undefined,
@@ -365,7 +642,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "appName",
               "schema": {
                 "description": undefined,
+                "generatedName": "UpdateAppRequestAppName",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -382,6 +661,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -404,11 +684,105 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appName": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "appSecret": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "authConfiguration": {
+                "properties": {
+                  "anonymous": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                  "google": {
+                    "properties": {
+                      "clientId": {
+                        "primitive": {
+                          "string": "string",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "nickname": {
+                    "properties": {},
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "orgId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetAppInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -435,6 +809,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -457,6 +832,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -464,13 +840,16 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -518,11 +897,45 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "token": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LoginAnonymousRequest",
       "headers": [],
       "internal": undefined,
@@ -549,6 +962,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -565,7 +979,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "generatedName": "LoginAnonymousResponseToken",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -590,11 +1006,56 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "nickname": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "token": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LoginNicknameRequest",
       "headers": [],
       "internal": undefined,
@@ -620,6 +1081,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -635,7 +1097,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "nickname",
               "schema": {
                 "description": undefined,
+                "generatedName": "LoginNicknameRequestNickname",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -652,6 +1116,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -668,7 +1133,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "generatedName": "LoginNicknameResponseToken",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -693,12 +1160,57 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "idToken": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "token": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "LoginGoogleRequest",
       "headers": [],
       "internal": undefined,
@@ -724,6 +1236,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -739,7 +1252,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "idToken",
               "schema": {
                 "description": undefined,
+                "generatedName": "LoginGoogleRequestIdToken",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -756,6 +1271,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -772,7 +1288,9 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "token",
               "schema": {
                 "description": undefined,
+                "generatedName": "LoginGoogleResponseToken",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -797,19 +1315,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -850,10 +1372,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetBuildsResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -877,11 +1402,91 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "buildId",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "buildId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "imageSize": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "regionalContainerTags": {
+                "array": [],
+                "type": "array",
+              },
+              "status": {
+                "enum": "created",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetBuildInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -921,6 +1526,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -943,13 +1549,83 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "buildId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "imageSize": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "regionalContainerTags": {
+                "array": [],
+                "type": "array",
+              },
+              "status": {
+                "enum": "created",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateBuildRequest",
       "headers": [],
       "internal": undefined,
@@ -976,6 +1652,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -998,6 +1675,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -1066,6 +1744,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1074,13 +1753,16 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1151,19 +1833,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1204,10 +1890,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetDeploymentsResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -1231,11 +1920,123 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "deploymentId",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "buildId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "containerPort": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "deploymentId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "env": {
+                "array": [],
+                "type": "array",
+              },
+              "planName": {
+                "enum": "tiny",
+                "type": "enum",
+              },
+              "requestedCPU": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "requestedMemoryMB": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "roomsPerProcess": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "transportType": {
+                "enum": "tcp",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetDeploymentInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -1275,6 +2076,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1297,13 +2099,155 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
         422,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "buildId",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "containerPort": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "env": {
+                "array": [],
+                "type": "array",
+              },
+              "planName": {
+                "enum": "tiny",
+                "type": "enum",
+              },
+              "roomsPerProcess": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "transportType": {
+                "enum": "tcp",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "buildId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "containerPort": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "deploymentId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "env": {
+                "array": [],
+                "type": "array",
+              },
+              "planName": {
+                "enum": "tiny",
+                "type": "enum",
+              },
+              "requestedCPU": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "requestedMemoryMB": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "roomsPerProcess": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "transportType": {
+                "enum": "tcp",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateDeploymentRequest",
       "headers": [],
       "internal": undefined,
@@ -1342,6 +2286,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "description": undefined,
           "generatedName": "CreateDeploymentRequest",
@@ -1355,6 +2300,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1377,11 +2323,15 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": undefined,
@@ -1403,6 +2353,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1425,6 +2376,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1433,7 +2385,54 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "CreatePrivateLobbyDeprecatedRequest",
       "headers": [
         {
@@ -1442,7 +2441,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePrivateLobbyDeprecatedRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1478,7 +2479,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePrivateLobbyDeprecatedRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1496,11 +2499,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePrivateLobbyDeprecatedRequestLocal",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "CreatePrivateLobbyDeprecatedRequestLocal",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1513,6 +2520,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1535,6 +2543,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1543,7 +2552,54 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "region",
+              "value": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "CreatePublicLobbyDeprecatedRequest",
       "headers": [
         {
@@ -1552,7 +2608,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePublicLobbyDeprecatedRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1588,7 +2646,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePublicLobbyDeprecatedRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1606,11 +2666,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePublicLobbyDeprecatedRequestLocal",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "CreatePublicLobbyDeprecatedRequestLocal",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1623,6 +2687,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1645,6 +2710,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1652,24 +2718,27 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [
             {
               "name": "Authorization",
               "value": {
                 "primitive": {
-                  "string": "authorization",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
               },
             },
           ],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1700,7 +2769,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListActivePublicLobbiesDeprecatedRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1736,11 +2807,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListActivePublicLobbiesDeprecatedRequestLocal",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ListActivePublicLobbiesDeprecatedRequestLocal",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -1754,7 +2829,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListActivePublicLobbiesDeprecatedRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1771,10 +2848,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "ListActivePublicLobbiesDeprecatedResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -1798,6 +2878,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1806,7 +2887,125 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreatePrivateLobbyRequest",
       "headers": [
         {
@@ -1815,7 +3014,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePrivateLobbyRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1851,7 +3052,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePrivateLobbyRequestRoomId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -1867,6 +3070,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -1882,10 +3086,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "generatedName": "CreatePrivateLobbyRequestInitialConfig",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "CreatePrivateLobbyRequestInitialConfigKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -1893,8 +3100,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "CreatePrivateLobbyRequestInitialConfigValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -1921,6 +3131,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -1943,6 +3154,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1951,7 +3163,125 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreatePublicLobbyRequest",
       "headers": [
         {
@@ -1960,7 +3290,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePublicLobbyRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1996,7 +3328,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreatePublicLobbyRequestRoomId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2012,6 +3346,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2027,10 +3362,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "generatedName": "CreatePublicLobbyRequestInitialConfig",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "CreatePublicLobbyRequestInitialConfigKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2038,8 +3376,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "CreatePublicLobbyRequestInitialConfigValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -2066,6 +3407,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2088,6 +3430,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2096,7 +3439,125 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateLocalLobbyRequest",
       "headers": [
         {
@@ -2105,7 +3566,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreateLocalLobbyRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2141,7 +3604,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreateLocalLobbyRequestRoomId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2157,6 +3622,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2172,10 +3638,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "generatedName": "CreateLocalLobbyRequestInitialConfig",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "CreateLocalLobbyRequestInitialConfigKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2183,8 +3652,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "CreateLocalLobbyRequestInitialConfigValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -2211,6 +3683,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2233,6 +3706,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2241,7 +3715,129 @@ exports[`open api parser hathora parse open api 1`] = `
         429,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [
+            {
+              "name": "Authorization",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "visibility": {
+                "enum": "public",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "CreateLobbyRequest",
       "headers": [
         {
@@ -2250,7 +3846,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreateLobbyRequestAuthorization",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2286,7 +3884,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "CreateLobbyRequestRoomId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2302,6 +3902,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2350,10 +3951,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "initialConfig",
               "schema": {
                 "description": undefined,
+                "generatedName": "CreateLobbyRequestInitialConfig",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "CreateLobbyRequestInitialConfigKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2361,8 +3965,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "CreateLobbyRequestInitialConfigValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -2389,6 +3996,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2411,17 +4019,21 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2472,7 +4084,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "ListActivePublicLobbiesRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2489,10 +4103,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "ListActivePublicLobbiesResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -2516,11 +4133,106 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetLobbyInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -2560,6 +4272,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2582,12 +4295,126 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
         422,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "state": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "properties": {
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "createdAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "createdBy": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "initialConfig": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "map": [],
+                      "type": "map",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "local": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "visibility": {
+                "enum": "private",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "SetLobbyStateRequest",
       "headers": [],
       "internal": undefined,
@@ -2626,6 +4453,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -2641,10 +4469,13 @@ exports[`open api parser hathora parse open api 1`] = `
               "key": "state",
               "schema": {
                 "description": undefined,
+                "generatedName": "SetLobbyStateRequestState",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "SetLobbyStateRequestStateKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -2652,8 +4483,11 @@ exports[`open api parser hathora parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
+                  "generatedName": "SetLobbyStateRequestStateValue",
+                  "nameOverride": undefined,
                   "type": "unknown",
                 },
               },
@@ -2666,6 +4500,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -2688,6 +4523,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -2719,11 +4555,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForAppRequestFollow",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForAppRequestFollow",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2737,11 +4577,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForAppRequestTailLines",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForAppRequestTailLines",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2755,7 +4599,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForAppRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -2785,6 +4631,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -2829,11 +4676,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForProcessRequestFollow",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForProcessRequestFollow",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2847,11 +4698,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForProcessRequestTailLines",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForProcessRequestTailLines",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2877,6 +4732,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -2921,11 +4777,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForDeploymentRequestFollow",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForDeploymentRequestFollow",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2939,11 +4799,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetLogsForDeploymentRequestTailLines",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetLogsForDeploymentRequestTailLines",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2969,6 +4833,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -2976,13 +4841,16 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2992,27 +4860,14 @@ exports[`open api parser hathora parse open api 1`] = `
               "name": "processId",
               "value": {
                 "primitive": {
-                  "string": "process-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
               },
             },
           ],
-          "queryParameters": [
-            {
-              "name": "metrics",
-              "value": {
-                "array": [
-                  {
-                    "enum": "cpu",
-                    "type": "enum",
-                  },
-                ],
-                "type": "array",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {},
@@ -3061,11 +4916,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetMetricsRequestMetrics",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetMetricsRequestMetrics",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -3084,11 +4943,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetMetricsRequestEnd",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetMetricsRequestEnd",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3102,11 +4965,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetMetricsRequestStart",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetMetricsRequestStart",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3120,11 +4987,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetMetricsRequestStep",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetMetricsRequestStep",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3137,6 +5008,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3159,19 +5031,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3222,7 +5098,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetRunningProcessesRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -3239,10 +5117,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetRunningProcessesResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3266,19 +5147,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3329,7 +5214,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetStoppedProcessesRequestRegion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -3346,10 +5233,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetStoppedProcessesResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3373,11 +5263,129 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "processId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "activeConnections": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "deploymentId": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "draining": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "egressedBytes": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "host": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "port": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "processId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+              "roomSlotsAvailable": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "roomsPerProcess": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "startingAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetProcessInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -3417,6 +5425,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3439,12 +5448,49 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": {
+            "properties": {
+              "region": {
+                "enum": "Seattle",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+          "response": {
+            "primitive": {
+              "string": "string",
+              "type": "string",
+            },
+            "type": "primitive",
+          },
+        },
+      ],
       "generatedRequestName": "CreateRoomRequest",
       "headers": [],
       "internal": undefined,
@@ -3470,6 +5516,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "request": {
         "contentType": undefined,
         "description": undefined,
+        "fullExamples": [],
         "schema": {
           "allOf": [],
           "allOfPropertyConflicts": [],
@@ -3500,6 +5547,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3522,11 +5570,96 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "appId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "roomId",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "allocations": {
+                "array": [],
+                "type": "array",
+              },
+              "appId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "currentAllocation": {
+                "properties": {
+                  "processId": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "roomAllocationId": {
+                    "primitive": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "scheduledAt": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "roomId": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "status": {
+                "enum": "scheduling",
+                "type": "enum",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetRoomInfoRequest",
       "headers": [],
       "internal": undefined,
@@ -3566,6 +5699,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -3588,19 +5722,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3610,7 +5748,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "name": "processId",
               "value": {
                 "primitive": {
-                  "string": "process-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3664,10 +5802,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetActiveRoomsForProcessResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3691,19 +5832,23 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3713,7 +5858,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "name": "processId",
               "value": {
                 "primitive": {
-                  "string": "process-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3767,10 +5912,13 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
+          "generatedName": "GetInactiveRoomsForProcessResponse",
           "groupName": undefined,
+          "nameOverride": undefined,
           "type": "array",
           "value": {
             "description": undefined,
@@ -3794,6 +5942,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3801,13 +5950,16 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3817,7 +5969,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "name": "roomId",
               "value": {
                 "primitive": {
-                  "string": "room-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3878,6 +6030,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -3885,13 +6038,16 @@ exports[`open api parser hathora parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "appId",
               "value": {
                 "primitive": {
-                  "string": "app-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3901,7 +6057,7 @@ exports[`open api parser hathora parse open api 1`] = `
               "name": "roomId",
               "value": {
                 "primitive": {
-                  "string": "room-id",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3962,6 +6118,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4008,6 +6165,7 @@ exports[`open api parser hathora parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Ok",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "description": undefined,
@@ -4034,7 +6192,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "generatedName": "UnauthorizedErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -4050,7 +6210,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "generatedName": "NotFoundErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -4066,7 +6228,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "generatedName": "UnprocessableEntityErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -4082,7 +6246,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "generatedName": "TooManyRequestsErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -4098,7 +6264,9 @@ exports[`open api parser hathora parse open api 1`] = `
       "nameOverride": null,
       "schema": {
         "description": undefined,
+        "generatedName": "InternalServerErrorBody",
         "groupName": undefined,
+        "nameOverride": undefined,
         "schema": {
           "example": undefined,
           "maxLength": undefined,
@@ -4173,7 +6341,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "port",
           "schema": {
             "description": undefined,
+            "generatedName": "ActiveConnectionInfoPort",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -4187,7 +6357,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "host",
           "schema": {
             "description": undefined,
+            "generatedName": "ActiveConnectionInfoHost",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4215,7 +6387,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "AppId": {
       "description": undefined,
+      "generatedName": "AppId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -4238,11 +6412,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedBy",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationDeletedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ApplicationDeletedBy",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -4259,11 +6437,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationDeletedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ApplicationDeletedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4278,7 +6460,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationCreatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4292,7 +6476,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationCreatedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4335,7 +6521,9 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "google",
                 "schema": {
                   "description": undefined,
+                  "generatedName": "applicationAuthConfigurationGoogle",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "optional",
                   "value": {
                     "allOf": [],
@@ -4352,7 +6540,9 @@ exports[`open api parser hathora parse open api 1`] = `
                         "key": "clientId",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "ApplicationAuthConfigurationGoogleClientId",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -4373,7 +6563,9 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "nickname",
                 "schema": {
                   "description": undefined,
+                  "generatedName": "applicationAuthConfigurationNickname",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "optional",
                   "value": {
                     "description": undefined,
@@ -4392,7 +6584,9 @@ exports[`open api parser hathora parse open api 1`] = `
                 "key": "anonymous",
                 "schema": {
                   "description": undefined,
+                  "generatedName": "applicationAuthConfigurationAnonymous",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "optional",
                   "value": {
                     "description": undefined,
@@ -4415,7 +6609,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appSecret",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationAppSecret",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4431,7 +6627,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appId",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationAppId",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4447,7 +6645,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "appName",
           "schema": {
             "description": undefined,
+            "generatedName": "ApplicationAppName",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4508,7 +6708,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "regionalContainerTags",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildRegionalContainerTags",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "allOf": [],
@@ -4525,7 +6727,9 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "containerTag",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "BuildRegionalContainerTagsItemContainerTag",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4560,7 +6764,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "imageSize",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildImageSize",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -4613,11 +6819,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "deletedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildDeletedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "BuildDeletedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4632,11 +6842,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "finishedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildFinishedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "BuildFinishedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4651,11 +6865,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildStartedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "BuildStartedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -4670,7 +6888,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildCreatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4684,7 +6904,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "generatedName": "BuildCreatedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4726,7 +6948,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "BuildId": {
       "description": undefined,
+      "generatedName": "BuildId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "type": "double",
       },
@@ -4786,7 +7010,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentCreatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -4800,7 +7026,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentCreatedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -4816,7 +7044,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "requestedMemoryMB",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentRequestedMemoryMb",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -4830,7 +7060,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "requestedCPU",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentRequestedCpu",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -4897,7 +7129,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "env",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentConfigEnv",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "allOf": [],
@@ -4914,7 +7148,9 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "value",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "DeploymentConfigEnvItemValue",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4930,7 +7166,9 @@ exports[`open api parser hathora parse open api 1`] = `
                   "key": "name",
                   "schema": {
                     "description": undefined,
+                    "generatedName": "DeploymentConfigEnvItemName",
                     "groupName": undefined,
+                    "nameOverride": undefined,
                     "schema": {
                       "maxLength": undefined,
                       "minLength": undefined,
@@ -4951,7 +7189,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomsPerProcess",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentConfigRoomsPerProcess",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -4993,7 +7233,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "containerPort",
           "schema": {
             "description": undefined,
+            "generatedName": "DeploymentConfigContainerPort",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5005,7 +7247,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "DeploymentId": {
       "description": undefined,
+      "generatedName": "DeploymentId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "type": "double",
       },
@@ -5013,7 +7257,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "DiscoveryResponse": {
       "description": undefined,
+      "generatedName": "DiscoveryResponse",
       "groupName": undefined,
+      "nameOverride": undefined,
       "type": "array",
       "value": {
         "allOf": [],
@@ -5030,7 +7276,9 @@ exports[`open api parser hathora parse open api 1`] = `
             "key": "port",
             "schema": {
               "description": undefined,
+              "generatedName": "DiscoveryResponseItemPort",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -5044,7 +7292,9 @@ exports[`open api parser hathora parse open api 1`] = `
             "key": "host",
             "schema": {
               "description": undefined,
+              "generatedName": "DiscoveryResponseItemHost",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5086,14 +7336,19 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "state",
           "schema": {
             "description": undefined,
+            "generatedName": "lobbyState",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "LobbyState",
               "groupName": undefined,
               "key": {
                 "description": undefined,
+                "generatedName": "LobbyStateKey",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -5101,8 +7356,11 @@ exports[`open api parser hathora parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "nameOverride": undefined,
               "type": "map",
               "value": {
+                "generatedName": "LobbyStateValue",
+                "nameOverride": undefined,
                 "type": "unknown",
               },
             },
@@ -5115,10 +7373,13 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "initialConfig",
           "schema": {
             "description": undefined,
+            "generatedName": "LobbyInitialConfig",
             "groupName": undefined,
             "key": {
               "description": undefined,
+              "generatedName": "LobbyInitialConfigKey",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -5126,8 +7387,11 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "type": "primitive",
             },
+            "nameOverride": undefined,
             "type": "map",
             "value": {
+              "generatedName": "LobbyInitialConfigValue",
+              "nameOverride": undefined,
               "type": "unknown",
             },
           },
@@ -5139,7 +7403,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdAt",
           "schema": {
             "description": undefined,
+            "generatedName": "LobbyCreatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -5153,7 +7419,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "createdBy",
           "schema": {
             "description": undefined,
+            "generatedName": "LobbyCreatedBy",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5169,7 +7437,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "local",
           "schema": {
             "description": undefined,
+            "generatedName": "LobbyLocal",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5302,7 +7572,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "value",
           "schema": {
             "description": undefined,
+            "generatedName": "MetricValueValue",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5316,7 +7588,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "timestamp",
           "schema": {
             "description": undefined,
+            "generatedName": "MetricValueTimestamp",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5344,7 +7618,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "OrgId": {
       "description": undefined,
+      "generatedName": "OrgId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5409,7 +7685,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "currentAllocation",
           "schema": {
             "description": undefined,
+            "generatedName": "PickRoomExcludeKeyofRoomAllocationsCurrentAllocation",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -5472,7 +7750,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "egressedBytes",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessEgressedBytes",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5486,11 +7766,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "idleSince",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessIdleSince",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ProcessIdleSince",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5505,7 +7789,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "activeConnections",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessActiveConnections",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5519,7 +7805,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomSlotsAvailable",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessRoomSlotsAvailable",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5533,7 +7821,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "draining",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessDraining",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -5547,11 +7837,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "terminatedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessTerminatedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ProcessTerminatedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5566,11 +7860,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "stoppingAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessStoppingAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ProcessStoppingAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5585,11 +7883,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startedAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessStartedAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "ProcessStartedAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -5604,7 +7906,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "startingAt",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessStartingAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -5618,7 +7922,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "roomsPerProcess",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessRoomsPerProcess",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5632,7 +7938,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "port",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessPort",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5646,7 +7954,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "host",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessHost",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -5716,7 +8026,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "ProcessId": {
       "description": undefined,
+      "generatedName": "ProcessId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -5748,7 +8060,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "rooms",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessWithRoomsRooms",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -5767,7 +8081,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "totalRooms",
           "schema": {
             "description": undefined,
+            "generatedName": "ProcessWithRoomsTotalRooms",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -5792,11 +8108,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "cpu",
           "schema": {
             "description": undefined,
+            "generatedName": "recordPartialMetricNameMetricValueArrayCpu",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RecordPartialMetricNameMetricValueArrayCpu",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5816,11 +8136,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "memory",
           "schema": {
             "description": undefined,
+            "generatedName": "recordPartialMetricNameMetricValueArrayMemory",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RecordPartialMetricNameMetricValueArrayMemory",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5840,11 +8164,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "rate_egress",
           "schema": {
             "description": undefined,
+            "generatedName": "recordPartialMetricNameMetricValueArrayRateEgress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RecordPartialMetricNameMetricValueArrayRateEgress",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5864,11 +8192,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "total_egress",
           "schema": {
             "description": undefined,
+            "generatedName": "recordPartialMetricNameMetricValueArrayTotalEgress",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "RecordPartialMetricNameMetricValueArrayTotalEgress",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -5978,7 +8310,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "currentAllocation",
           "schema": {
             "description": undefined,
+            "generatedName": "RoomCurrentAllocation",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
@@ -6011,7 +8345,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "allocations",
           "schema": {
             "description": undefined,
+            "generatedName": "RoomAllocations",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -6069,11 +8405,15 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "unscheduledAt",
           "schema": {
             "description": undefined,
+            "generatedName": "RoomAllocationUnscheduledAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "RoomAllocationUnscheduledAt",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "type": "datetime",
               },
@@ -6088,7 +8428,9 @@ exports[`open api parser hathora parse open api 1`] = `
           "key": "scheduledAt",
           "schema": {
             "description": undefined,
+            "generatedName": "RoomAllocationScheduledAt",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "datetime",
             },
@@ -6128,7 +8470,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "RoomAllocationId": {
       "description": undefined,
+      "generatedName": "RoomAllocationId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,
@@ -6138,7 +8482,9 @@ exports[`open api parser hathora parse open api 1`] = `
     },
     "RoomId": {
       "description": undefined,
+      "generatedName": "RoomId",
       "groupName": undefined,
+      "nameOverride": undefined,
       "schema": {
         "maxLength": undefined,
         "minLength": undefined,

@@ -97,17 +97,17 @@ groups:
   local:
     generators:
       - name: fernapi/fern-typescript-node-sdk
-        version: 0.7.2
+        version: 0.9.5
         output:
           location: local-file-system
-          path: ../generated/typescript
+          path: ../generated/sdks/typescript
       - name: fernapi/fern-java-sdk
         version: 0.5.7
       - name: fernapi/fern-postman
         version: 0.0.45
         output:
           location: local-file-system
-          path: ../generated/postman
+          path: ../postman
 ",
         "name": "generators.yml",
         "type": "file",

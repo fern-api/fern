@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
-import { FernIr as Ir } from "@fern-fern/ir-sdk";
+import { FernIr as Ir } from "@fern-api/ir-sdk";
 import { startCase } from "lodash-es";
 import { convertTypeReference } from "./convertTypeShape";
 
@@ -394,7 +394,13 @@ function convertExampleEndpointCall(
                 throw new Error("Unknown ExampleResponse: " + irExample.response.type);
             }
         }),
-        responseBody: irExample.response.body?.jsonExample
+        responseBody: irExample.response.body?.jsonExample,
+        codeSamples: irExample.codeSamples?.map((codeSample) => ({
+            name: codeSample.name?.originalName,
+            language: codeSample.language,
+            code: codeSample.code,
+            install: codeSample.install
+        }))
     };
 }
 

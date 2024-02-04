@@ -19,9 +19,9 @@ types:
         type: set<commons.SchemaId>
         docs: Whether the schema is directly referenced from a response, parameters, or other schemas
       securitySchemes: map<commons.SecuritySchemeId, commons.SecurityScheme>
-  
-  Tags: 
-    properties: 
+
+  Tags:
+    properties:
       tagsById: map<commons.TagId, commons.Tag>
       orderedTagIds: optional<list<commons.TagId>>
 
@@ -91,17 +91,49 @@ types:
       server: list<commons.Server>
       examples: list<EndpointExample>
 
+  CustomCodeSample:
+    availability: in-development
+    extends: commons.WithDescription
+    properties:
+      language: SupportedLanguage
+      code:
+        type: string
+        docs: |
+          The code sample. 
+          This is a string because we want to support code samples that are not valid JSON.
+      name: optional<string>
+      install:
+        type: optional<string>
+        docs: |
+          The command to install the dependencies for the code sample.
+          For example, `npm install` or `pip install -r requirements.txt`.
+
+  SupportedLanguage:
+    docs: Syntax highlighting.
+    enum:
+      - curl
+      - python
+      - javascript
+      - js # alias to javascript
+      - node # alias to javascript
+      - typescript
+      - ts # alias to typescript
+      - go
+
   EndpointExample:
     docs: |
       A complete example associated with the endpoint. All child
       examples will be fully complete (i.e. there will be no
       PartialObjectExamples).
     properties:
+      name: optional<string>
+      docs: optional<string>
       pathParameters: optional<list<PathParameterExample>>
       queryParameters: optional<list<QueryParameterExample>>
       headers: optional<list<HeaderExample>>
       request: optional<example.FullExample>
       response: optional<example.FullExample>
+      codeSamples: list<CustomCodeSample>
 
   PathParameterExample:
     properties:
@@ -234,11 +266,12 @@ types:
       literal: LiteralSchema
       oneOf: OneOfSchema
       nullable: NullableSchema
-      unknown: {}
+      unknown: commons.WithName
 
   PrimitiveSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       schema: PrimitiveSchemaValue
@@ -261,8 +294,9 @@ types:
       maxLength: optional<integer>
 
   LiteralSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: LiteralSchemaValue
@@ -313,30 +347,34 @@ types:
       differentSchema: boolean
 
   ArraySchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   MapSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       key: PrimitiveSchema
       value: Schema
 
   OptionalSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema
 
   NullableSchema:
-    extends: 
+    extends:
       - commons.WithDescription
+      - commons.WithName
       - commons.WithSdkGroupName
     properties:
       value: Schema

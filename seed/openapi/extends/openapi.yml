@@ -1,0 +1,50 @@
+openapi: 3.0.1
+info:
+  title: extends
+  version: ''
+paths: {}
+components:
+  schemas:
+    ExampleType:
+      title: ExampleType
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example
+      required:
+        - name
+      allOf:
+        - $ref: '#/components/schemas/Docs'
+    NestedType:
+      title: NestedType
+      type: object
+      properties:
+        name:
+          type: string
+          example: NestedExample
+      required:
+        - name
+      allOf:
+        - $ref: '#/components/schemas/JSON'
+    Docs:
+      title: Docs
+      type: object
+      properties:
+        docs:
+          type: string
+          example: Types extend this type to include a docs property.
+      required:
+        - docs
+    JSON:
+      title: JSON
+      type: object
+      properties:
+        raw:
+          type: string
+          example: '{"docs": true, "json": true}'
+      required:
+        - raw
+      allOf:
+        - $ref: '#/components/schemas/Docs'
+  securitySchemes: {}

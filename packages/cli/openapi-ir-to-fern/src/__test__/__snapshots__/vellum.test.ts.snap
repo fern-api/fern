@@ -18,6 +18,26 @@ exports[`open api parser vellum simple 1`] = `
 
 Used to retrieve a deployment given its ID or name.
 ",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "active_model_version_ids": [],
+                    "created": "2024-01-15T09:30:00Z",
+                    "environment": "DEVELOPMENT",
+                    "id": "string",
+                    "label": "string",
+                    "last_deployed_on": "2024-01-15T09:30:00Z",
+                    "model_type": "GENERATE",
+                    "name": "string",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v1/deployments/{id}",
             "path-parameters": {
@@ -48,6 +68,47 @@ Used to retrieve a deployment given its ID or name.
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Creates a new document index.",
+            "examples": [
+              {
+                "name": "Index Using Instructor Model",
+                "request": {
+                  "environment": "DEVELOPMENT",
+                  "indexing_config": {
+                    "chunking": {
+                      "chunker_config": {
+                        "character_limit": 1000,
+                        "min_overlap_ratio": 0.5,
+                      },
+                      "chunker_name": "sentence-chunker",
+                    },
+                    "vectorizer": {
+                      "config": {
+                        "instruction_document_text_type": "plain_text",
+                        "instruction_domain": "",
+                        "instruction_query_text_type": "plain_text",
+                      },
+                      "model_name": "hkunlp/instructor-xl",
+                    },
+                  },
+                  "label": "My Document Index",
+                  "name": "my-document-index",
+                  "status": "ACTIVE",
+                },
+                "response": {
+                  "body": {
+                    "created": "2024-01-15T09:30:00Z",
+                    "environment": "DEVELOPMENT",
+                    "id": "string",
+                    "indexing_config": {
+                      "string": {},
+                    },
+                    "label": "string",
+                    "name": "string",
+                    "status": "ACTIVE",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/document-indexes",
             "request": {
@@ -116,13 +177,9 @@ Used to list documents. Optionally filter on supported fields.
 ",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
                   },
@@ -220,6 +277,26 @@ Upload a document to be indexed and used for search.
             "docs": "<strong style="background-color:#ffc107; color:white; padding:4px; border-radius:4px">Unstable</strong>
 
 Compiles the prompt backing the model version using the provided input values.",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "request": {
+                  "input_values": {
+                    "string": {},
+                  },
+                },
+                "response": {
+                  "body": {
+                    "prompt": {
+                      "num_tokens": 1,
+                      "text": "string",
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/model-versions/{id}/compile-prompt",
             "path-parameters": {
@@ -254,6 +331,44 @@ Compiles the prompt backing the model version using the provided input values.",
 
 Used to retrieve a model version given its ID.
 ",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "build_config": {
+                      "base_model": "string",
+                      "sandbox_snapshot": {
+                        "id": "string",
+                      },
+                    },
+                    "created": "2024-01-15T09:30:00Z",
+                    "exec_config": {
+                      "input_variables": [],
+                      "parameters": {
+                        "frequency_penalty": 1.1,
+                        "max_tokens": 1,
+                        "presence_penalty": 1.1,
+                        "temperature": 1.1,
+                        "top_p": 1.1,
+                      },
+                      "prompt_block_data": {
+                        "blocks": [],
+                        "version": 1,
+                      },
+                    },
+                    "external_id": "string",
+                    "id": "string",
+                    "label": "string",
+                    "model_type": "GENERATE",
+                    "provider": "ANTHROPIC",
+                    "status": "CREATING",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v1/model-versions/{id}",
             "path-parameters": {
@@ -289,6 +404,54 @@ partners, not directly by Vellum users.
 Under the hood, this endpoint creates a new sandbox, a new model version, and a new deployment.",
             "errors": [
               "root.ConflictError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "label": "string",
+                  "model": "string",
+                  "name": "string",
+                  "parameters": {
+                    "frequency_penalty": 1.1,
+                    "max_tokens": 1,
+                    "presence_penalty": 1.1,
+                    "temperature": 1.1,
+                    "top_p": 1.1,
+                  },
+                  "prompt": {
+                    "input_variables": [],
+                    "prompt_block_data": {
+                      "blocks": [],
+                      "version": 1,
+                    },
+                  },
+                  "provider": "ANTHROPIC",
+                },
+                "response": {
+                  "body": {
+                    "deployment": {
+                      "id": "string",
+                      "label": "string",
+                      "name": "string",
+                    },
+                    "model_version": {
+                      "id": "string",
+                      "label": "string",
+                    },
+                    "prompt": {
+                      "id": "string",
+                      "label": "string",
+                    },
+                    "sandbox": {
+                      "id": "string",
+                      "label": "string",
+                    },
+                    "sandbox_snapshot": {
+                      "id": "string",
+                    },
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/v1/registered-prompts/register",
@@ -362,14 +525,10 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
 Deletes an existing scenario from a sandbox, keying off of the provided scenario id.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
-                  "scenario_id": "scenario-id",
+                  "id": "string",
+                  "scenario_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -397,6 +556,41 @@ is found, a new scenario will be appended to the end.
 
 Note that a full replacement of the scenario is performed, so any fields not provided will be removed
 or overwritten with default values.",
+            "examples": [
+              {
+                "name": "Basic Example",
+                "path-parameters": {
+                  "id": "string",
+                },
+                "request": {
+                  "inputs": [
+                    {
+                      "key": "var_1",
+                      "type": "TEXT",
+                      "value": "Hello, world!",
+                    },
+                    {
+                      "key": "var_2",
+                      "type": "TEXT",
+                      "value": "Why hello, there!",
+                    },
+                  ],
+                  "label": "Scenario 1",
+                  "metric_input_params": {
+                    "params": {},
+                  },
+                },
+                "response": {
+                  "body": {
+                    "id": "string",
+                    "inputs": [],
+                    "metric_input_params": {
+                      "params": {},
+                    },
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v1/sandboxes/{id}/scenarios",
             "path-parameters": {
@@ -448,14 +642,10 @@ or overwritten with default values.",
 Deletes an existing test case for a test suite, keying off of the test case id.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
-                  "test_case_id": "test-case-id",
+                  "id": "string",
+                  "test_case_id": "string",
                 },
-                "query-parameters": undefined,
-                "request": undefined,
-                "response": undefined,
               },
             ],
             "method": "DELETE",
@@ -485,19 +675,21 @@ Note that a full replacement of the test case is performed, so any fields not pr
 or overwritten with default values.",
             "examples": [
               {
-                "headers": undefined,
                 "path-parameters": {
-                  "id": "id",
+                  "id": "string",
                 },
-                "query-parameters": undefined,
                 "request": {
                   "evaluation_params": {},
-                  "input_values": {},
+                  "input_values": {
+                    "string": {},
+                  },
                 },
                 "response": {
                   "body": {
                     "evaluation_params": {},
-                    "input_values": {},
+                    "input_values": {
+                      "string": {},
+                    },
                   },
                 },
               },
@@ -626,28 +818,15 @@ Generate a completion using a previously defined deployment.
           ],
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "options": {
                   "logprobs": "ALL",
                 },
-                "requests": [
-                  {
-                    "input_values": {},
-                  },
-                ],
+                "requests": [],
               },
               "response": {
                 "body": {
-                  "results": [
-                    {
-                      "data": {
-                        "completions": [],
-                      },
-                    },
-                  ],
+                  "results": [],
                 },
               },
             },
@@ -743,6 +922,28 @@ Perform a search against a document index.
             "NotFoundError",
             "InternalServerError",
           ],
+          "examples": [
+            {
+              "request": {
+                "options": {
+                  "filters": {},
+                  "result_merging": {
+                    "enabled": true,
+                  },
+                  "weights": {
+                    "keywords": 1.1,
+                    "semantic_similarity": 1.1,
+                  },
+                },
+                "query": "string",
+              },
+              "response": {
+                "body": {
+                  "results": [],
+                },
+              },
+            },
+          ],
           "method": "POST",
           "path": "/v1/search",
           "request": {
@@ -790,13 +991,9 @@ Used to submit feedback regarding the quality of previously generated completion
           ],
           "examples": [
             {
-              "headers": undefined,
-              "path-parameters": undefined,
-              "query-parameters": undefined,
               "request": {
                 "actuals": [],
               },
-              "response": undefined,
             },
           ],
           "method": "POST",

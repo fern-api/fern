@@ -1,0 +1,27 @@
+openapi: 3.0.1
+info:
+  title: bearer-token-environment-variable
+  version: ''
+paths:
+  /apiKey:
+    get:
+      description: GET request with custom api key
+      operationId: service_getWithBearerToken
+      tags:
+        - Service
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+      security:
+        - BearerAuth: []
+components:
+  schemas: {}
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer

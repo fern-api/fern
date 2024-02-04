@@ -49,7 +49,7 @@ Let's walk through the [Fern FastAPI Starter](https://github.com/fern-api/fastap
 
 ### Step 1: Define the API
 
-<CodeBlock title = "fern/api/definition/imdb.yml">
+<CodeBlock title="fern/api/definition/imdb.yml">
 ```yaml 
 service:
   auth: false
@@ -91,7 +91,7 @@ errors:
 
 This generates all the boilerplate code into [generated/](https://github.com/fern-api/fastapi-starter/tree/main/backend/src/fern_fastapi_starter/api/generated).
 
-<CodeBlock title = "terminal">
+<CodeBlock title="terminal">
 ```bash
 $ fern generate
 [api]: fernapi/fern-fastapi-starter Downloaded to backend/src/fern_fastapi_starter/api/generated
@@ -105,7 +105,7 @@ $ fern generate
 
 Notice you only need to provide the business logic. Just implement the function, and Fern takes care of the rest.
 
-<CodeBlock title = "backend/src/fern_fastapi_starter/movies_service.py">
+<CodeBlock title="backend/src/fern_fastapi_starter/movies_service.py">
 ```python 
 from .generated.fern import AbstractMoviesService, Movie, MovieDoesNotExistError, MovieId
 
@@ -136,17 +136,17 @@ register(app, imdb=MoviesService())
 
 ### Step 4: Compile
 
-The type checker will warn you if you make mistakes implementing your API.
+The type checker will warn you if you make mistakes implementing your API:
 
-![Invalid return value](../images/invalid_return_value.png)
+![Invalid return value](https://fern-image-hosting.s3.amazonaws.com/fern/invalid_return_value.png)
 
 If you change the signature of the endpoint method, you'll get an error:
 
-![Invalid signature](../images/invalid_signature.png)
+![Invalid signature](https://fern-image-hosting.s3.amazonaws.com/fern/invalid_signature.png)
 
 You can use the command line to check for compile errors:
 
-<CodeBlock title = "terminal">
+<CodeBlock title="terminal">
 ```bash
 $ poetry run mypy
 Success: no issues found in 24 source files
@@ -155,7 +155,7 @@ Success: no issues found in 24 source files
 
 ### Step 5: Run the server
 
-<CodeBlock title = "terminal">
+<CodeBlock title="terminal">
 ```bash
 $ poetry run start
 INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
@@ -168,7 +168,7 @@ INFO:     Application startup complete.
 
 ### Step 6: Hit the API 🚀
 
-<CodeBlock title = "terminal">
+<CodeBlock title="terminal">
 ```bash
 $ curl --location --request GET --silent 'localhost:8080/movies/titanic' | jq .
 {

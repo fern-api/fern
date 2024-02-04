@@ -1,0 +1,43 @@
+openapi: 3.0.1
+info:
+  title: nursery-api
+  version: ''
+paths:
+  /:
+    post:
+      operationId: package_test
+      tags:
+        - Package
+      parameters:
+        - name: for
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: ''
+components:
+  schemas:
+    Package:
+      title: Package
+      type: object
+      properties:
+        name:
+          type: string
+      required:
+        - name
+    Record:
+      title: Record
+      type: object
+      properties:
+        foo:
+          type: object
+          additionalProperties:
+            type: string
+        3d:
+          type: integer
+      required:
+        - foo
+        - 3d
+  securitySchemes: {}

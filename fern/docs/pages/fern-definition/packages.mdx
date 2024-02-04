@@ -25,11 +25,12 @@ client.imdb.getRating("goodwill-hunting");
 client.persons.director.get("christopher-nolan");
 ```
 
-## Package Configuration
+## Package configuration
 
 Each package can have a special file called `__package__.yml`. Just like any
-other definition file, it can contain [imports](imports),
-[types](types), [endpoints](endpoints), and [errors](errors).
+other definition file, it can contain [imports](/api-definition/fern-definition/imports),
+[types](/api-definition/fern-definition/types), [endpoints](/api-definition/fern-definition/endpoints),
+and [errors](/api-definition/fern-definition/errors).
 
 Endpoints in `__package__.yml` will appear at the root of the package.
 For example, the following generated SDK
@@ -40,7 +41,7 @@ const client = new Client();
 client.submitRating("goodwill-hunting", 9.5);
 ```
 
-would have a fern directory
+would have a `fern` directory
 
 ```yaml
 fern/
@@ -51,7 +52,7 @@ fern/
   └─ api.yml
 ```
 
-that contains the following `__package__.yml`
+that contains the following `__package__.yml`:
 
 <CodeBlock title="__package__.yml">
 ```yaml 
@@ -76,10 +77,10 @@ Each package has its own namespace. This means you can reuse type names and
 error names across packages.
 
 This is useful when versioning your APIs. For example, when you want to
-increment your API version you can just copy the existing API
+increment your API version, you can just copy the existing API
 to a new package and start making changes. If the new API version reuses
 certain types or errors, that's okay because the two APIs live in different
-packagess.
+packages.
 
 ```yaml
 fern/
@@ -100,7 +101,7 @@ fern/
 of your services. This is relevant when you want to control the display 
 of your documentation. 
 
-For example, let's say you have the following Fern Directory: 
+For example, let's say you have the following Fern Directory:
 
 ```yaml
 fern/
@@ -113,8 +114,8 @@ fern/
 ```
 
 Your API will be sorted alphabetically: projects, roles, then users. If you 
-want to control the navigation you can add a `__package__.yml` file 
-and configure the order 
+want to control the navigation, you can add a `__package__.yml` file 
+and configure the order.
 
 <CodeBlock title="__package__.yml">
 ```yaml
@@ -125,7 +126,7 @@ navigation:
 ```
 </CodeBlock>
 
-Note the fern directory structure will now look like 
+Note the `fern` directory structure will now look like:
 
 ```yaml
 fern/

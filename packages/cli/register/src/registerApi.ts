@@ -25,7 +25,9 @@ export async function registerApi({
     const ir = await generateIntermediateRepresentation({
         workspace,
         audiences,
-        generationLanguage: undefined
+        generationLanguage: undefined,
+        smartCasing: false,
+        disableExamples: false
     });
 
     const fdrService = createFdrService({

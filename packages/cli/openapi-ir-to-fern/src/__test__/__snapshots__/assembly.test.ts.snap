@@ -57,6 +57,20 @@ exports[`open api parser assembly simple 1`] = `
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "final_model": "default",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lemur/v3/generate/action-items",
             "request": {
@@ -80,6 +94,20 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "request_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "deleted": true,
+                    "request_id": "string",
+                    "request_id_to_purge": "string",
+                  },
+                },
+              },
             ],
             "method": "DELETE",
             "path": "/lemur/v3/{request_id}",
@@ -105,6 +133,21 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "final_model": "default",
+                  "questions": [],
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": [],
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/question-answer",
@@ -141,6 +184,20 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "final_model": "default",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/lemur/v3/generate/summary",
             "request": {
@@ -176,6 +233,21 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "request": {
+                  "final_model": "default",
+                  "prompt": "string",
+                  "transcript_ids": [],
+                },
+                "response": {
+                  "body": {
+                    "request_id": "string",
+                    "response": "string",
+                  },
+                },
+              },
             ],
             "method": "POST",
             "path": "/lemur/v3/generate/task",
@@ -223,6 +295,18 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "expires_in": 1,
+                },
+                "response": {
+                  "body": {
+                    "token": "string",
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v2/realtime/token",
             "request": {
@@ -266,6 +350,47 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "request": {
+                  "audio_url": "string",
+                  "boost_param": "low",
+                  "language_code": "en",
+                  "redact_pii_sub": "entity_type",
+                  "summary_model": "informative",
+                  "summary_type": "bullets",
+                },
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [],
+                    },
+                    "content_safety_labels": {
+                      "results": [],
+                      "status": "success",
+                    },
+                    "iab_categories_result": {
+                      "results": [],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_sub": "entity_type",
+                    "status": "queued",
+                    "summarization": true,
+                    "webhook_auth": true,
+                  },
+                },
+              },
+            ],
             "method": "POST",
             "path": "/v2/transcript",
             "request": {
@@ -301,6 +426,42 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [],
+                    },
+                    "content_safety_labels": {
+                      "results": [],
+                      "status": "success",
+                    },
+                    "iab_categories_result": {
+                      "results": [],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_sub": "entity_type",
+                    "status": "queued",
+                    "summarization": true,
+                    "webhook_auth": true,
+                  },
+                },
+              },
+            ],
             "method": "DELETE",
             "path": "/v2/transcript/{transcript_id}",
             "path-parameters": {
@@ -325,6 +486,42 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "acoustic_model": "string",
+                    "audio_url": "string",
+                    "auto_highlights": true,
+                    "auto_highlights_result": {
+                      "results": [],
+                    },
+                    "content_safety_labels": {
+                      "results": [],
+                      "status": "success",
+                    },
+                    "iab_categories_result": {
+                      "results": [],
+                      "status": "success",
+                      "summary": {
+                        "string": 1.1,
+                      },
+                    },
+                    "id": "string",
+                    "language_code": "en",
+                    "language_model": "string",
+                    "redact_pii": true,
+                    "redact_pii_sub": "entity_type",
+                    "status": "queued",
+                    "summarization": true,
+                    "webhook_auth": true,
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}",
@@ -351,6 +548,21 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "audio_duration": 1.1,
+                    "confidence": 1.1,
+                    "id": "string",
+                    "paragraphs": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/paragraphs",
             "path-parameters": {
@@ -376,6 +588,19 @@ The LLM response data, as well as any context provided in the original request w
               "root.InternalServerError",
               "root.ServiceUnavailableError",
             ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "redacted_audio_url": "string",
+                    "status": "redacted_audio_ready",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/redacted-audio",
             "path-parameters": {
@@ -400,6 +625,21 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "path-parameters": {
+                  "transcript_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "audio_duration": 1.1,
+                    "confidence": 1.1,
+                    "id": "string",
+                    "sentences": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript/{transcript_id}/sentences",
@@ -455,6 +695,24 @@ The LLM response data, as well as any context provided in the original request w
               "root.TooManyRequestsError",
               "root.InternalServerError",
               "root.ServiceUnavailableError",
+            ],
+            "examples": [
+              {
+                "query-parameters": {
+                  "status": "queued",
+                },
+                "response": {
+                  "body": {
+                    "page_details": {
+                      "current_url": "string",
+                      "limit": 1,
+                      "prev_url": "string",
+                      "result_count": 1,
+                    },
+                    "transcripts": [],
+                  },
+                },
+              },
             ],
             "method": "GET",
             "path": "/v2/transcript",

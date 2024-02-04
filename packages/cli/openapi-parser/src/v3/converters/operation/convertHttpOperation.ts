@@ -6,6 +6,7 @@ import { OpenAPIExtension } from "../../extensions/extensions";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExtension } from "../../extensions/getExtension";
 import { getFernAvailability } from "../../extensions/getFernAvailability";
+import { getFernCodeSamples, getReadmeCodeSamples } from "../../extensions/getFernCodeSamples";
 import { getGeneratedTypeName } from "../../utils/getSchemaName";
 import { OperationContext } from "../contexts";
 import { convertServer } from "../convertServer";
@@ -112,7 +113,8 @@ export function convertHttpOperation({
         authed: isEndpointAuthed(operation, document),
         availability,
         method,
-        path
+        path,
+        customCodeSamples: [...getFernCodeSamples(operation), ...getReadmeCodeSamples(operation)]
     };
 }
 

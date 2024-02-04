@@ -1,0 +1,59 @@
+{
+  "info": {
+    "name": "Api Wide Base Path",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": null
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "auth": null,
+  "item": [
+    {
+      "_type": "container",
+      "description": null,
+      "name": "Service",
+      "item": [
+        {
+          "_type": "endpoint",
+          "name": "Post",
+          "request": {
+            "description": null,
+            "url": {
+              "raw": "{{baseUrl}}/:serviceParam/:endpointParam",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                ":serviceParam",
+                ":endpointParam"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "key": "serviceParam",
+                  "value": "",
+                  "description": null
+                },
+                {
+                  "key": "endpointParam",
+                  "value": "",
+                  "description": null
+                }
+              ]
+            },
+            "header": [],
+            "method": "POST",
+            "auth": null,
+            "body": null
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

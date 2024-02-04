@@ -21,6 +21,7 @@
     { "path": "../cli/init" },
     { "path": "../cli/logger" },
     { "path": "../cli/login" },
+    { "path": "../cli/mock" },
     { "path": "../cli/openapi-ir-to-fern" },
     { "path": "../cli/openapi-parser" },
     { "path": "../cli/posthog-manager" },

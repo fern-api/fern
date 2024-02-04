@@ -1,0 +1,28 @@
+{
+  "type": "cli",
+  "cliName": "fern-postman-cli",
+  "environment": {
+    "environments": {
+      "prod": {
+        "cliName": "fern-postman",
+        "cliPackageName": "@fern-api/postman-generator"
+      }
+    },
+    "variables": []
+  },
+  "rules": {
+    "depcheck": {
+      "ignores": ["webpack", "webpack-cli", "ts-loader", "@fern-fern/ir-sdk"],
+      "ignore-patterns": ["docker/bundle.js"]
+    },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    },
+    "package-json": {
+      "scripts": {
+        "dockerTagLatest": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:latest .",
+        "dockerTagVersion": "yarn dist:cli && docker build -f ./Dockerfile -t fernapi/fern-postman:${0} ."
+      }
+    }
+  }
+}

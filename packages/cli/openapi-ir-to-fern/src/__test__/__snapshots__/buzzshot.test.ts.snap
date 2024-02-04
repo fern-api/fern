@@ -16,13 +16,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -50,13 +46,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -100,13 +92,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -142,13 +130,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -176,13 +160,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -210,13 +190,9 @@ exports[`open api parser buzzshot simple 1`] = `
             "docs": "",
             "examples": [
               {
-                "headers": undefined,
-                "path-parameters": undefined,
-                "query-parameters": undefined,
-                "request": undefined,
                 "response": {
                   "body": {
-                    "count": 123,
+                    "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
                   },
@@ -242,6 +218,18 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveAccount": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "name": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/accounts/{id}",
             "path-parameters": {
@@ -258,6 +246,23 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGame": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "complete": {
+                      "completed_at": "2024-01-15T09:30:00Z",
+                    },
+                    "date": "string",
+                    "extra_fields": [],
+                    "time": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/games/{id}",
             "path-parameters": {
@@ -295,6 +300,20 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveGroup": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "date": "string",
+                    "players": [],
+                    "time": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/groups/{id}",
             "path-parameters": {
@@ -324,6 +343,18 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrieveLocation": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "name": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/rooms/{id}",
             "path-parameters": {
@@ -340,6 +371,19 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePhoto": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "photo_id": "string",
+                },
+                "response": {
+                  "body": {
+                    "original_image": "string",
+                    "processed": [],
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/photos/{photo_id}",
             "path-parameters": {
@@ -356,6 +400,20 @@ exports[`open api parser buzzshot simple 1`] = `
           "retrievePlayer": {
             "auth": false,
             "docs": "",
+            "examples": [
+              {
+                "path-parameters": {
+                  "id": "string",
+                },
+                "response": {
+                  "body": {
+                    "email": "string",
+                    "extra_fields": [],
+                    "phone": "string",
+                  },
+                },
+              },
+            ],
             "method": "GET",
             "path": "/api/v2/players/{id}",
             "path-parameters": {

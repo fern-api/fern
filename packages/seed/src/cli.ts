@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
 import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -8,6 +7,7 @@ import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { testCustomFixture } from "./commands/test/testCustomFixture";
 import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
 import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
+import { runScript } from "./runScript";
 
 void tryRunCli();
 
@@ -45,6 +45,11 @@ function addTestCommand(cli: Argv) {
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
                 })
+                .option("keepDocker", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Keeps the docker container after the tests are finished"
+                })
                 .option("update", {
                     type: "boolean",
                     alias: "u",
@@ -70,21 +75,18 @@ function addTestCommand(cli: Argv) {
 
             const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
 
-            // build docker iamge
             const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-            const dockerCommand = workspace.workspaceConfig.dockerCommand;
-            if (dockerCommand != null) {
+            if (workspace.workspaceConfig.dockerCommand != null) {
                 const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
-                const spaceDelimitedCommand = dockerCommand.split(" ");
-                await loggingExeca(
-                    workspaceTaskContext.logger,
-                    spaceDelimitedCommand[0] ?? dockerCommand,
-                    spaceDelimitedCommand.slice(1),
-                    {
-                        cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
-                        doNotPipeOutput: false
-                    }
-                );
+                await runScript({
+                    commands:
+                        typeof workspace.workspaceConfig.dockerCommand === "string"
+                            ? [workspace.workspaceConfig.dockerCommand]
+                            : workspace.workspaceConfig.dockerCommand,
+                    logger: workspaceTaskContext.logger,
+                    workingDir: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
+                    doNotPipeOutput: false
+                });
             }
 
             if (argv.customFixture != null) {
@@ -97,7 +99,8 @@ function addTestCommand(cli: Argv) {
                     language: workspace.workspaceConfig.language,
                     docker: parsedDockerImage,
                     logLevel: argv["log-level"],
-                    numDockers: argv.parallel
+                    numDockers: argv.parallel,
+                    keepDocker: argv.keepDocker
                 });
             } else {
                 await testWorkspaceFixtures({
@@ -106,11 +109,11 @@ function addTestCommand(cli: Argv) {
                     irVersion: workspace.workspaceConfig.irVersion,
                     language: workspace.workspaceConfig.language,
                     docker: parsedDockerImage,
-                    dockerCommand: workspace.workspaceConfig.dockerCommand,
                     scripts: workspace.workspaceConfig.scripts,
                     logLevel: argv["log-level"],
                     numDockers: argv.parallel,
-                    taskContextFactory
+                    taskContextFactory,
+                    keepDocker: argv.keepDocker
                 });
             }
         }

@@ -1,0 +1,21 @@
+irVersion: v31
+docker: fernapi/fern-java-model:latest
+dockerCommand: 
+  - cd generators/java
+  - ./gradlew :model:distTar
+  - docker build -f model/Dockerfile -t fernapi/fern-java-model:latest model/
+language: java
+generatorType: Model
+defaultOutputMode: github
+scripts:
+  - docker: fernapi/java-seed
+    commands:
+      - source "$HOME/.sdkman/bin/sdkman-init.sh"
+      - sdk use java 11.0.21-zulu
+      - gradle compileJava
+allowedFailures:
+  - enum
+  - exhaustive
+  - extends
+  - reserved-keywords
+  - trace

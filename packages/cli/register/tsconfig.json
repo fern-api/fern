@@ -5,6 +5,7 @@
   "references": [
     { "path": "../../commons/core-utils" },
     { "path": "../../core" },
+    { "path": "../../ir-sdk" },
     { "path": "../auth" },
     { "path": "../config-management/commons" },
     { "path": "../generation/ir-generator" },

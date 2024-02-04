@@ -3,17 +3,13 @@
 exports[`validate petstore 1`] = `
 [
   {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-types:
+    "contents": "types:
   Pet:
     properties:
       id: integer
       name: string
       tag: optional<string>
-
   Pets: list<Pet>
-
   Error:
     properties:
       code: integer
@@ -28,21 +24,18 @@ error-discrimination:
   strategy: status-code
 display-name: Swagger Petstore
 environments:
-  Default: http://petstore.swagger.io/v1
+  Default: http://petstore.swagger.io
 default-environment: Default
 ",
     "name": "api.yml",
     "type": "file",
   },
   {
-    "contents": "# yaml-language-server: $schema=https://raw.githubusercontent.com/fern-api/fern/main/fern.schema.json
-
-imports:
+    "contents": "imports:
   root: __package__.yml
-
 service:
   auth: false
-  base-path: ""
+  base-path: ''
   endpoints:
     listPets:
       path: /v1/pets
@@ -61,7 +54,6 @@ service:
       examples:
         - response:
             body: []
-
     createPets:
       path: /v1/pets
       method: POST
@@ -69,7 +61,6 @@ service:
       display-name: Create a pet
       examples:
         - {}
-
     showPetById:
       path: /v1/pets/{petId}
       method: GET
@@ -82,6 +73,13 @@ service:
       response:
         docs: Expected response to a valid request
         type: root.Pet
+      examples:
+        - path-parameters:
+            petId: string
+          response:
+            body:
+              id: 1
+              name: string
 ",
     "name": "pets.yml",
     "type": "file",

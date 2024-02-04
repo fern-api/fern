@@ -26,6 +26,8 @@ export interface GeneratorInvocation {
     config: unknown;
     outputMode: FernFiddle.remoteGen.OutputMode;
     absolutePathToLocalOutput: AbsoluteFilePath | undefined;
+    smartCasing: boolean;
+    disableExamples: boolean;
     language: GenerationLanguage | undefined;
 }
 
@@ -33,7 +35,8 @@ export const GenerationLanguage = {
     TYPESCRIPT: "typescript",
     JAVA: "java",
     PYTHON: "python",
-    GO: "go"
+    GO: "go",
+    RUBY: "ruby"
 } as const;
 
 export type GenerationLanguage = Values<typeof GenerationLanguage>;

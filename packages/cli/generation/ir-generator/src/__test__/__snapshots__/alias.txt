@@ -33,13 +33,13 @@ exports[`generate IR 1`] = `
     "errorInstanceIdKey": {
       "name": {
         "camelCase": {
-          "safeName": "errorInstanceId",
-          "unsafeName": "errorInstanceId",
+          "safeName": "errorInstanceID",
+          "unsafeName": "errorInstanceID",
         },
         "originalName": "errorInstanceId",
         "pascalCase": {
-          "safeName": "ErrorInstanceId",
-          "unsafeName": "ErrorInstanceId",
+          "safeName": "ErrorInstanceID",
+          "unsafeName": "ErrorInstanceID",
         },
         "screamingSnakeCase": {
           "safeName": "ERROR_INSTANCE_ID",
@@ -149,8 +149,8 @@ exports[`generate IR 1`] = `
                           },
                           "originalName": "id",
                           "pascalCase": {
-                            "safeName": "Id",
-                            "unsafeName": "Id",
+                            "safeName": "ID",
+                            "unsafeName": "ID",
                           },
                           "screamingSnakeCase": {
                             "safeName": "ID",
@@ -217,13 +217,13 @@ exports[`generate IR 1`] = `
                             },
                             "name": {
                               "camelCase": {
-                                "safeName": "typeId",
-                                "unsafeName": "typeId",
+                                "safeName": "typeID",
+                                "unsafeName": "typeID",
                               },
                               "originalName": "TypeId",
                               "pascalCase": {
-                                "safeName": "TypeId",
-                                "unsafeName": "TypeId",
+                                "safeName": "TypeID",
+                                "unsafeName": "TypeID",
                               },
                               "screamingSnakeCase": {
                                 "safeName": "TYPE_ID",
@@ -472,8 +472,8 @@ exports[`generate IR 1`] = `
                     },
                     "originalName": "id",
                     "pascalCase": {
-                      "safeName": "Id",
-                      "unsafeName": "Id",
+                      "safeName": "ID",
+                      "unsafeName": "ID",
                     },
                     "screamingSnakeCase": {
                       "safeName": "ID",
@@ -540,13 +540,13 @@ exports[`generate IR 1`] = `
                       },
                       "name": {
                         "camelCase": {
-                          "safeName": "typeId",
-                          "unsafeName": "typeId",
+                          "safeName": "typeID",
+                          "unsafeName": "typeID",
                         },
                         "originalName": "TypeId",
                         "pascalCase": {
-                          "safeName": "TypeId",
-                          "unsafeName": "TypeId",
+                          "safeName": "TypeID",
+                          "unsafeName": "TypeID",
                         },
                         "screamingSnakeCase": {
                           "safeName": "TYPE_ID",
@@ -675,8 +675,8 @@ exports[`generate IR 1`] = `
                 },
                 "originalName": "id",
                 "pascalCase": {
-                  "safeName": "Id",
-                  "unsafeName": "Id",
+                  "safeName": "ID",
+                  "unsafeName": "ID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "ID",
@@ -698,13 +698,13 @@ exports[`generate IR 1`] = `
               },
               "name": {
                 "camelCase": {
-                  "safeName": "typeId",
-                  "unsafeName": "typeId",
+                  "safeName": "typeID",
+                  "unsafeName": "typeID",
                 },
                 "originalName": "TypeId",
                 "pascalCase": {
-                  "safeName": "TypeId",
-                  "unsafeName": "TypeId",
+                  "safeName": "TypeID",
+                  "unsafeName": "TypeID",
                 },
                 "screamingSnakeCase": {
                   "safeName": "TYPE_ID",
@@ -802,13 +802,13 @@ exports[`generate IR 1`] = `
         },
         "name": {
           "camelCase": {
-            "safeName": "typeId",
-            "unsafeName": "typeId",
+            "safeName": "typeID",
+            "unsafeName": "typeID",
           },
           "originalName": "TypeId",
           "pascalCase": {
-            "safeName": "TypeId",
-            "unsafeName": "TypeId",
+            "safeName": "TypeID",
+            "unsafeName": "TypeID",
           },
           "screamingSnakeCase": {
             "safeName": "TYPE_ID",

@@ -34,10 +34,18 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.7.2"
     },
     [GeneratorName.TYPESCRIPT_NODE_SDK]: {
-        version: "0.7.2"
+        version: "0.9.5",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/typescript"
+        }
     },
     [GeneratorName.TYPESCRIPT_BROWSER_SDK]: {
-        version: "0.7.2"
+        version: "0.9.5",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/typescript"
+        }
     },
     [GeneratorName.PYTHON_PYDANTIC]: {
         version: "0.6.0"
@@ -50,7 +58,11 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         }
     },
     [GeneratorName.PYTHON_SDK]: {
-        version: "0.6.0"
+        version: "0.8.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/python"
+        }
     },
     [GeneratorName.GO_FIBER]: {
         version: "0.9.0"
@@ -62,10 +74,20 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.9.0",
         output: {
             location: "local-file-system",
-            path: "../generated/go"
+            path: "../sdks/go"
         },
         config: {
             importPath: "go-mod-path/generated/go"
+        }
+    },
+    [GeneratorName.RUBY_MODEL]: {
+        version: "0.0.1"
+    },
+    [GeneratorName.RUBY_SDK]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/ruby"
         }
     },
     [GeneratorName.OPENAPI]: {
@@ -75,7 +97,7 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         },
         output: {
             location: "local-file-system",
-            path: "../generated/openapi"
+            path: "../openapi"
         }
     },
     [GeneratorName.STOPLIGHT]: {
@@ -88,14 +110,14 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         version: "0.0.45",
         output: {
             location: "local-file-system",
-            path: "../generated/postman"
+            path: "../postman"
         }
     },
     [GeneratorName.OPENAPI_PYTHON_CLIENT]: {
         version: "0.0.11",
         output: {
             location: "local-file-system",
-            path: "../generated/python"
+            path: "../sdks/python"
         },
         config: {
             format: "yaml"

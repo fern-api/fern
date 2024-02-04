@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`x-fern-resolutions x-fern-resolutions simple 1`] = `
+{
+  "definitionFiles": {
+    "user.yml": {
+      "imports": {
+        "root": "__package__.yml",
+      },
+      "service": {
+        "auth": false,
+        "base-path": "",
+        "endpoints": {
+          "get": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": {},
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/user",
+            "response": {
+              "docs": "Success",
+              "type": "root.User",
+            },
+          },
+          "get_all": {
+            "auth": false,
+            "docs": undefined,
+            "examples": [
+              {
+                "response": {
+                  "body": [],
+                },
+              },
+            ],
+            "method": "GET",
+            "path": "/users",
+            "response": {
+              "docs": "Success",
+              "type": "list<root.User>",
+            },
+          },
+        },
+      },
+    },
+  },
+  "packageMarkerFile": {
+    "types": {
+      "User": {
+        "docs": undefined,
+        "properties": {
+          "id": "optional<string>",
+        },
+      },
+    },
+  },
+  "rootApiFile": {
+    "display-name": "Test extension \`x-fern-sdk-group-name\` for schemas",
+    "error-discrimination": {
+      "strategy": "status-code",
+    },
+    "name": "api",
+  },
+}
+`;

@@ -1,6 +1,6 @@
 import { assertNever } from "@fern-api/core-utils";
+import { HttpResponse, JsonResponse, ObjectProperty, StreamingResponseChunkType } from "@fern-api/ir-sdk";
 import { isRawTextType, parseRawFileType, parseRawTextType, RawSchemas } from "@fern-api/yaml-schema";
-import { HttpResponse, JsonResponse, ObjectProperty, StreamingResponseChunkType } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { ResolvedType } from "../../resolvers/ResolvedType";
 import { TypeResolver } from "../../resolvers/TypeResolver";

@@ -14,6 +14,8 @@ export interface FernDefinitionBuilder {
 
     addGlobalHeader({ name, schema }: { name: string; schema: RawSchemas.HttpHeaderSchema }): void;
 
+    addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void;
+
     addEnvironment({ name, schema }: { name: string; schema: RawSchemas.EnvironmentSchema }): void;
 
     setDefaultEnvironment(name: string): void;
@@ -141,6 +143,13 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
         this.rootApiFile.headers[name] = schema;
     }
 
+    public addVariable({ name, schema }: { name: string; schema: RawSchemas.VariableDeclarationSchema }): void {
+        if (this.rootApiFile.variables == null) {
+            this.rootApiFile.variables = {};
+        }
+        this.rootApiFile.variables[name] = schema;
+    }
+
     public addImport({
         file,
         fileToImport
@@ -251,6 +260,37 @@ export class FernDefinitionBuilderImpl implements FernDefinitionBuilder {
                 };
             }
         }
+
+        if (this.rootApiFile.environments != null) {
+            this.rootApiFile.environments = {
+                ...Object.fromEntries(
+                    Object.entries(this.rootApiFile.environments).map(([env, url]) => {
+                        if (typeof url === "string") {
+                            return [env, url.substring(0, url.length - basePath.length)];
+                        } else if (isSingleBaseUrl(url)) {
+                            return [
+                                env,
+                                {
+                                    url: url.url.substring(0, url.url.length - basePath.length)
+                                }
+                            ];
+                        } else {
+                            return [
+                                env,
+                                {
+                                    urls: Object.fromEntries(
+                                        Object.entries(url.urls).map(([name, url]) => {
+                                            return [name, url.substring(0, url.length - basePath.length)];
+                                        })
+                                    )
+                                }
+                            ];
+                        }
+                    })
+                )
+            };
+        }
+
         const definition: FernDefinition = {
             rootApiFile: this.rootApiFile,
             packageMarkerFile: this.packageMarkerFile,

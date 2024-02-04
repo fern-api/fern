@@ -5,6 +5,8 @@ import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserCon
 import { convertSchema } from "../convertSchemas";
 
 export function convertArray({
+    nameOverride,
+    generatedName,
     breadcrumbs,
     item,
     description,
@@ -12,6 +14,8 @@ export function convertArray({
     context,
     groupName
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     breadcrumbs: string[];
     item: OpenAPIV3.ReferenceObject | OpenAPIV3.SchemaObject | undefined;
     description: string | undefined;
@@ -21,9 +25,17 @@ export function convertArray({
 }): SchemaWithExample {
     const itemSchema =
         item == null
-            ? SchemaWithExample.unknown({ description: undefined, example: undefined, groupName })
+            ? SchemaWithExample.unknown({
+                  nameOverride,
+                  generatedName,
+                  description: undefined,
+                  example: undefined,
+                  groupName
+              })
             : convertSchema(item, false, context, [...breadcrumbs, "Item"]);
     return wrapArray({
+        nameOverride,
+        generatedName,
         groupName,
         itemSchema,
         wrapAsNullable,
@@ -32,11 +44,15 @@ export function convertArray({
 }
 
 export function wrapArray({
+    nameOverride,
+    generatedName,
     itemSchema,
     wrapAsNullable,
     description,
     groupName
 }: {
+    nameOverride: string | undefined;
+    generatedName: string;
     itemSchema: SchemaWithExample;
     wrapAsNullable: boolean;
     description: string | undefined;
@@ -44,7 +60,11 @@ export function wrapArray({
 }): SchemaWithExample {
     if (wrapAsNullable) {
         return SchemaWithExample.nullable({
+            nameOverride,
+            generatedName,
             value: SchemaWithExample.array({
+                nameOverride,
+                generatedName,
                 value: itemSchema,
                 description,
                 groupName
@@ -54,6 +74,8 @@ export function wrapArray({
         });
     }
     return SchemaWithExample.array({
+        nameOverride,
+        generatedName,
         value: itemSchema,
         description,
         groupName

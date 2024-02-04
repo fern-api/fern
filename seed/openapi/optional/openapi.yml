@@ -1,0 +1,29 @@
+openapi: 3.0.1
+info:
+  title: objects-with-imports
+  version: ''
+paths:
+  /send-optional-body:
+    post:
+      operationId: optional_sendOptionalBody
+      tags:
+        - Optional
+      parameters: []
+      responses:
+        '200':
+          description: Id of the created resource
+          content:
+            application/json:
+              schema:
+                type: string
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+              nullable: true
+components:
+  schemas: {}
+  securitySchemes: {}

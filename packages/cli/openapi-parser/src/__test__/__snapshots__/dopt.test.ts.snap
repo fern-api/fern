@@ -8,6 +8,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -15,7 +16,134 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "uid",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "fields": {
+                "array": [],
+                "type": "array",
+              },
+              "kind": {
+                "literal": {
+                  "string": "block",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "sid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "state": {
+                "properties": {
+                  "active": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "entered": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "exited": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "transitioned": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "string",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "boolean": true,
+                        "type": "boolean",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
+              "type": {
+                "enum": "custom",
+                "type": "enum",
+              },
+              "uid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "version": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "FindBlocksRequest",
       "headers": [],
       "internal": undefined,
@@ -28,7 +156,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "FindBlocksRequestUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -46,7 +176,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "FindBlocksRequestVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -59,7 +191,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "FindBlocksRequestUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -73,6 +207,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -89,7 +224,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "kind",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseKind",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "string": "block",
@@ -104,7 +241,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "uid",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseUid",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -120,7 +259,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "sid",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseSid",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -136,7 +277,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "version",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseVersion",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -163,7 +306,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "active",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "FindBlocksResponseStateActive",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -177,7 +322,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "entered",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "FindBlocksResponseStateEntered",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -191,7 +338,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "exited",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "FindBlocksResponseStateExited",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -209,11 +358,15 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "containerUid",
               "schema": {
                 "description": undefined,
+                "generatedName": "findBlocksResponseContainerUid",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "FindBlocksResponseContainerUid",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -230,10 +383,13 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "transitioned",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseTransitioned",
                 "groupName": undefined,
                 "key": {
                   "description": undefined,
+                  "generatedName": "FindBlocksResponseTransitionedKey",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -241,10 +397,13 @@ exports[`open api parser dopt parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
                   "description": undefined,
+                  "generatedName": "FindBlocksResponseTransitionedValue",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "schema": {
                     "type": "boolean",
                   },
@@ -310,7 +469,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "fields",
               "schema": {
                 "description": undefined,
+                "generatedName": "FindBlocksResponseFields",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "oneOf": {
@@ -336,7 +497,9 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemBooleanSid",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -352,11 +515,15 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemBooleanValue",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "generatedName": "FindBlocksResponseFieldsItemBooleanValue",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -382,7 +549,9 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemNumberSid",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -398,11 +567,15 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemNumberValue",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "generatedName": "FindBlocksResponseFieldsItemNumberValue",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "type": "double",
                                 },
@@ -428,7 +601,9 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "sid",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemStringSid",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "schema": {
                                 "maxLength": undefined,
                                 "minLength": undefined,
@@ -444,11 +619,15 @@ exports[`open api parser dopt parse open api 1`] = `
                             "key": "value",
                             "schema": {
                               "description": undefined,
+                              "generatedName": "FindBlocksResponseFieldsItemStringValue",
                               "groupName": undefined,
+                              "nameOverride": undefined,
                               "type": "nullable",
                               "value": {
                                 "description": undefined,
+                                "generatedName": "FindBlocksResponseFieldsItemStringValue",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "maxLength": undefined,
                                   "minLength": undefined,
@@ -484,6 +663,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -491,54 +671,7 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [
-        {
-          "headers": [],
-          "pathParameters": [
-            {
-              "name": "uid",
-              "value": {
-                "primitive": {
-                  "string": "uid",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "queryParameters": [
-            {
-              "name": "transitions",
-              "value": {
-                "array": [],
-                "type": "array",
-              },
-            },
-            {
-              "name": "version",
-              "value": {
-                "primitive": {
-                  "double": 1.1,
-                  "type": "double",
-                },
-                "type": "primitive",
-              },
-            },
-            {
-              "name": "userIdentifier",
-              "value": {
-                "primitive": {
-                  "string": "user-identifier",
-                  "type": "string",
-                },
-                "type": "primitive",
-              },
-            },
-          ],
-          "request": undefined,
-          "response": undefined,
-        },
-      ],
+      "examples": [],
       "generatedRequestName": "BlockTransitionsRequest",
       "headers": [],
       "internal": undefined,
@@ -551,7 +684,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionsRequestUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -569,11 +704,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionsRequestTransitions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "generatedName": "BlockTransitionsRequestTransitionsItem",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -589,7 +728,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionsRequestVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -602,7 +743,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionsRequestUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -617,11 +760,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionsRequestGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "BlockTransitionsRequestGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -646,6 +793,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -653,7 +801,125 @@ exports[`open api parser dopt parse open api 1`] = `
         404,
         500,
       ],
-      "examples": [],
+      "examples": [
+        {
+          "codeSamples": [],
+          "docs": undefined,
+          "headers": [],
+          "name": undefined,
+          "pathParameters": [
+            {
+              "name": "sid",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "queryParameters": [
+            {
+              "name": "version",
+              "value": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "include",
+              "value": {
+                "literal": {
+                  "string": "block",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+            },
+            {
+              "name": "userIdentifier",
+              "value": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
+          "request": undefined,
+          "response": {
+            "properties": {
+              "kind": {
+                "literal": {
+                  "string": "flow",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "sid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "state": {
+                "properties": {
+                  "finished": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "started": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "stopped": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+              "type": {
+                "literal": {
+                  "string": "flow",
+                  "type": "string",
+                },
+                "type": "literal",
+              },
+              "uid": {
+                "primitive": {
+                  "string": "string",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "version": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+            },
+            "type": "object",
+          },
+        },
+      ],
       "generatedRequestName": "GetFlowRequest",
       "headers": [],
       "internal": undefined,
@@ -666,7 +932,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "sid",
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestSid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -684,7 +952,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -697,11 +967,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestInclude",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetFlowRequestInclude",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "literal",
               "value": {
                 "string": "block",
@@ -716,7 +990,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -731,11 +1007,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "GetFlowRequestGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -750,6 +1030,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "requestNameOverride": undefined,
       "response": {
         "description": "Default Response",
+        "fullExamples": [],
         "responseProperty": undefined,
         "schema": {
           "allOf": [],
@@ -766,7 +1047,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "kind",
               "schema": {
                 "description": undefined,
+                "generatedName": "GetFlowResponseKind",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "string": "flow",
@@ -781,7 +1064,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "type",
               "schema": {
                 "description": undefined,
+                "generatedName": "GetFlowResponseType",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "literal",
                 "value": {
                   "string": "flow",
@@ -796,7 +1081,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "uid",
               "schema": {
                 "description": undefined,
+                "generatedName": "GetFlowResponseUid",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -812,7 +1099,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "sid",
               "schema": {
                 "description": undefined,
+                "generatedName": "GetFlowResponseSid",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -828,7 +1117,9 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "version",
               "schema": {
                 "description": undefined,
+                "generatedName": "GetFlowResponseVersion",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "schema": {
                   "type": "double",
                 },
@@ -855,7 +1146,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "stopped",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "GetFlowResponseStateStopped",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -869,7 +1162,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "started",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "GetFlowResponseStateStarted",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -883,7 +1178,9 @@ exports[`open api parser dopt parse open api 1`] = `
                     "key": "finished",
                     "schema": {
                       "description": undefined,
+                      "generatedName": "GetFlowResponseStateFinished",
                       "groupName": undefined,
+                      "nameOverride": undefined,
                       "schema": {
                         "type": "boolean",
                       },
@@ -901,11 +1198,15 @@ exports[`open api parser dopt parse open api 1`] = `
               "key": "blocks",
               "schema": {
                 "description": undefined,
+                "generatedName": "getFlowResponseBlocks",
                 "groupName": undefined,
+                "nameOverride": undefined,
                 "type": "optional",
                 "value": {
                   "description": undefined,
+                  "generatedName": "GetFlowResponseBlocks",
                   "groupName": undefined,
+                  "nameOverride": undefined,
                   "type": "array",
                   "value": {
                     "allOf": [],
@@ -922,7 +1223,9 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "kind",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemKind",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "type": "literal",
                           "value": {
                             "string": "block",
@@ -937,7 +1240,9 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "uid",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemUid",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -953,7 +1258,9 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "sid",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemSid",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "schema": {
                             "maxLength": undefined,
                             "minLength": undefined,
@@ -969,7 +1276,9 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "version",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemVersion",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "schema": {
                             "type": "double",
                           },
@@ -996,7 +1305,9 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "active",
                               "schema": {
                                 "description": undefined,
+                                "generatedName": "GetFlowResponseBlocksItemStateActive",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -1010,7 +1321,9 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "entered",
                               "schema": {
                                 "description": undefined,
+                                "generatedName": "GetFlowResponseBlocksItemStateEntered",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -1024,7 +1337,9 @@ exports[`open api parser dopt parse open api 1`] = `
                               "key": "exited",
                               "schema": {
                                 "description": undefined,
+                                "generatedName": "GetFlowResponseBlocksItemStateExited",
                                 "groupName": undefined,
+                                "nameOverride": undefined,
                                 "schema": {
                                   "type": "boolean",
                                 },
@@ -1042,11 +1357,15 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "containerUid",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "getFlowResponseBlocksItemContainerUid",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "type": "optional",
                           "value": {
                             "description": undefined,
+                            "generatedName": "GetFlowResponseBlocksItemContainerUid",
                             "groupName": undefined,
+                            "nameOverride": undefined,
                             "schema": {
                               "maxLength": undefined,
                               "minLength": undefined,
@@ -1063,10 +1382,13 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "transitioned",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemTransitioned",
                           "groupName": undefined,
                           "key": {
                             "description": undefined,
+                            "generatedName": "GetFlowResponseBlocksItemTransitionedKey",
                             "groupName": undefined,
+                            "nameOverride": undefined,
                             "schema": {
                               "maxLength": undefined,
                               "minLength": undefined,
@@ -1074,10 +1396,13 @@ exports[`open api parser dopt parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "nameOverride": undefined,
                           "type": "map",
                           "value": {
                             "description": undefined,
+                            "generatedName": "GetFlowResponseBlocksItemTransitionedValue",
                             "groupName": undefined,
+                            "nameOverride": undefined,
                             "schema": {
                               "type": "boolean",
                             },
@@ -1143,7 +1468,9 @@ exports[`open api parser dopt parse open api 1`] = `
                         "key": "fields",
                         "schema": {
                           "description": undefined,
+                          "generatedName": "GetFlowResponseBlocksItemFields",
                           "groupName": undefined,
+                          "nameOverride": undefined,
                           "type": "array",
                           "value": {
                             "oneOf": {
@@ -1169,7 +1496,9 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanSid",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1185,11 +1514,15 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanValue",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "generatedName": "GetFlowResponseBlocksItemFieldsItemBooleanValue",
                                           "groupName": undefined,
+                                          "nameOverride": undefined,
                                           "schema": {
                                             "type": "boolean",
                                           },
@@ -1215,7 +1548,9 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberSid",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1231,11 +1566,15 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberValue",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "generatedName": "GetFlowResponseBlocksItemFieldsItemNumberValue",
                                           "groupName": undefined,
+                                          "nameOverride": undefined,
                                           "schema": {
                                             "type": "double",
                                           },
@@ -1261,7 +1600,9 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "sid",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemStringSid",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "schema": {
                                           "maxLength": undefined,
                                           "minLength": undefined,
@@ -1277,11 +1618,15 @@ exports[`open api parser dopt parse open api 1`] = `
                                       "key": "value",
                                       "schema": {
                                         "description": undefined,
+                                        "generatedName": "GetFlowResponseBlocksItemFieldsItemStringValue",
                                         "groupName": undefined,
+                                        "nameOverride": undefined,
                                         "type": "nullable",
                                         "value": {
                                           "description": undefined,
+                                          "generatedName": "GetFlowResponseBlocksItemFieldsItemStringValue",
                                           "groupName": undefined,
+                                          "nameOverride": undefined,
                                           "schema": {
                                             "maxLength": undefined,
                                             "minLength": undefined,
@@ -1323,6 +1668,7 @@ exports[`open api parser dopt parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
+      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -1332,13 +1678,16 @@ exports[`open api parser dopt parse open api 1`] = `
       ],
       "examples": [
         {
+          "codeSamples": [],
+          "docs": undefined,
           "headers": [],
+          "name": undefined,
           "pathParameters": [
             {
               "name": "uid",
               "value": {
                 "primitive": {
-                  "string": "uid",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1367,7 +1716,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "user-identifier",
+                  "string": "string",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1390,7 +1739,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "name": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentRequestUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1446,7 +1797,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentRequestVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1459,7 +1812,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentRequestUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1474,11 +1829,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "parameterNameOverride": undefined,
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentRequestGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "nullable",
             "value": {
               "description": undefined,
+              "generatedName": "FlowIntentRequestGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1506,6 +1865,8 @@ exports[`open api parser dopt parse open api 1`] = `
       "generatedName": "BadRequestError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "BadRequestError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -1514,6 +1875,8 @@ exports[`open api parser dopt parse open api 1`] = `
       "generatedName": "UnauthorizedError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "UnauthorizedError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -1522,6 +1885,8 @@ exports[`open api parser dopt parse open api 1`] = `
       "generatedName": "NotFoundError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "NotFoundError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -1530,6 +1895,8 @@ exports[`open api parser dopt parse open api 1`] = `
       "generatedName": "InternalServerError",
       "nameOverride": null,
       "schema": {
+        "generatedName": "InternalServerError",
+        "nameOverride": undefined,
         "type": "unknown",
       },
     },
@@ -1579,7 +1946,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "generatedName": "BadRequestErrorResponseBodyDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1606,11 +1975,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "transitions",
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionQueryStringTransitions",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
+              "generatedName": "BlockTransitionQueryStringTransitionsItem",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1627,7 +2000,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionQueryStringVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1641,7 +2016,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionQueryStringUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1657,11 +2034,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "blockTransitionQueryStringGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "BlockTransitionQueryStringGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1689,7 +2070,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "BlockTransitionRequestParamsUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1716,7 +2099,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentQueryStringVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1730,7 +2115,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentQueryStringUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1746,11 +2133,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "flowIntentQueryStringGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "FlowIntentQueryStringGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1778,7 +2169,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "FlowIntentRequestParamsUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1844,7 +2237,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "GetBlockQueryStringVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1858,7 +2253,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "GetBlockQueryStringUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1885,7 +2282,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "uid",
           "schema": {
             "description": undefined,
+            "generatedName": "GetBlockRequestParamsUid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1912,7 +2311,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "version",
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowQueryStringVersion",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "double",
             },
@@ -1926,11 +2327,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "include",
           "schema": {
             "description": undefined,
+            "generatedName": "getFlowQueryStringInclude",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "GetFlowQueryStringInclude",
               "groupName": undefined,
+              "nameOverride": undefined,
               "type": "literal",
               "value": {
                 "string": "block",
@@ -1946,7 +2351,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "userIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowQueryStringUserIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1962,11 +2369,15 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "groupIdentifier",
           "schema": {
             "description": undefined,
+            "generatedName": "getFlowQueryStringGroupIdentifier",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
+              "generatedName": "GetFlowQueryStringGroupIdentifier",
               "groupName": undefined,
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -1994,7 +2405,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "sid",
           "schema": {
             "description": undefined,
+            "generatedName": "GetFlowRequestParamsSid",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2021,7 +2434,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "application",
           "schema": {
             "description": undefined,
+            "generatedName": "HealthCheckResponseBodyApplication",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2037,7 +2452,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "status",
           "schema": {
             "description": undefined,
+            "generatedName": "HealthCheckResponseBodyStatus",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "type": "int",
             },
@@ -2062,7 +2479,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "generatedName": "InternalServerErrorResponseBodyCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "literal",
             "value": {
               "string": "internal_server_error",
@@ -2077,7 +2496,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "generatedName": "InternalServerErrorResponseBodyDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2104,7 +2525,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "generatedName": "NotFoundErrorResponseBodyCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "literal",
             "value": {
               "string": "not_found_error",
@@ -2119,7 +2542,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "generatedName": "NotFoundErrorResponseBodyDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2146,7 +2571,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "generatedName": "TimeoutErrorResponseBodyCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "literal",
             "value": {
               "string": "internal_server_error",
@@ -2161,7 +2588,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "generatedName": "TimeoutErrorResponseBodyDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2188,7 +2617,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "code",
           "schema": {
             "description": undefined,
+            "generatedName": "UnauthorizedErrorResponseBodyCode",
             "groupName": undefined,
+            "nameOverride": undefined,
             "type": "literal",
             "value": {
               "string": "unauthorized_error",
@@ -2203,7 +2634,9 @@ exports[`open api parser dopt parse open api 1`] = `
           "key": "details",
           "schema": {
             "description": undefined,
+            "generatedName": "UnauthorizedErrorResponseBodyDetails",
             "groupName": undefined,
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
