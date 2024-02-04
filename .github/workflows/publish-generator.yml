@@ -12,6 +12,9 @@ on:
       - "generators/postman/VERSION"
       - "generators/ruby/model/VERSION"
       - "generators/ruby/sdk/VERSION"
+      - "generators/java/sdk/VERSION"
+      - "generators/java/model/VERSION"
+      - "generators/java/spring/VERSION"
   workflow_dispatch:
     inputs:
       generator:
@@ -33,6 +36,9 @@ jobs:
       postman: ${{ steps.filter.outputs.postman }}
       ruby-model: ${{ steps.filter.outputs.ruby-model }}
       ruby-sdk: ${{ steps.filter.outputs.ruby-sdk }}
+      java-sdk: ${{ steps.filter.outputs.java-sdk }}
+      java-model: ${{ steps.filter.outputs.java-model }}
+      spring: ${{ steps.filter.outputs.spring }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -46,6 +52,9 @@ jobs:
             postman: 'generators/postman/VERSION'
             ruby-model: 'generators/ruby/model/VERSION'
             ruby-sdk: 'generators/ruby/sdk/VERSION'
+            java-sdk: 'generators/java/sdk/VERSION'
+            java-model: 'generators/java/model/VERSION'
+            spring: 'generators/java/spring/VERSION'            
 
   pydantic-model:
     runs-on: ubuntu-latest
@@ -357,3 +366,111 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: fernapi/fern-ruby-sdk:${{env.VERSION}}
+
+  java-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-sdk == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :sdk:distTar
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/java/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/sdk
+          file: ./generators/java/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-java-sdk:${{env.VERSION}}
+
+  java-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :model:distTar
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/java/model/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/model
+          file: ./generators/java/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/java-model:${{env.VERSION}}
+
+  java-spring:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :spring:distTar
+
+      - name: Print Version
+        run: |
+          projectVersion=$(cat generators/java/spring/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/spring
+          file: ./generators/java/spring/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-java-spring:${{env.VERSION}}

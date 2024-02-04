@@ -1,11 +1,5 @@
 rootProject.name = 'fern-java-plugins'
 
-include 'runtime-utils:immutables-utils'
-include 'runtime-utils:jersey-utils'
-include 'runtime-utils:exception-utils'
-include 'runtime-utils:jackson-utils'
-include 'runtime-utils:spring-utils'
-
 include 'model'
 include 'sdk'
 include 'spring'

@@ -6,7 +6,6 @@ plugins {
 
 dependencies {
     implementation project(':generator-utils')
-    implementation project(':runtime-utils:jersey-utils')
 
     implementation 'ch.qos.logback:logback-classic'
     implementation 'com.squareup.okhttp3:okhttp'

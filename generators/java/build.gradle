@@ -49,7 +49,4 @@ allprojects {
     }
 
     sourceCompatibility = 11
-
 }
-
-
