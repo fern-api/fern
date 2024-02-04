@@ -23,23 +23,20 @@ import java.util.Objects;
     builder = Options.Builder.class
 )
 public final class Options {
-  private final Boolean enabled;
-
   private final Map<String, String> values;
 
-  private Options(Boolean enabled, Map<String, String> values) {
-    this.enabled = enabled;
+  private Options(Map<String, String> values) {
     this.values = values;
   }
 
   @JsonProperty("id")
   public String getId() {
-    return "options";
+    return options;
   }
 
   @JsonProperty("enabled")
   public Boolean getEnabled() {
-    return enabled;
+    return true;
   }
 
   @JsonProperty("values")
@@ -54,12 +51,12 @@ public final class Options {
   }
 
   private boolean equalTo(Options other) {
-    return enabled.equals(other.enabled) && values.equals(other.values);
+    return values.equals(other.values);
   }
 
   @java.lang.Override
   public int hashCode() {
-    return Objects.hash(this.enabled, this.values);
+    return Objects.hash(this.values);
   }
 
   @java.lang.Override
@@ -67,77 +64,46 @@ public final class Options {
     return ObjectMappers.stringify(this);
   }
 
-  public static EnabledStage builder() {
+  public static Builder builder() {
     return new Builder();
-  }
-
-  public interface EnabledStage {
-    _FinalStage enabled(Boolean enabled);
-
-    Builder from(Options other);
-  }
-
-  public interface _FinalStage {
-    Options build();
-
-    _FinalStage values(Map<String, String> values);
-
-    _FinalStage putAllValues(Map<String, String> values);
-
-    _FinalStage values(String key, String value);
   }
 
   @JsonIgnoreProperties(
       ignoreUnknown = true
   )
-  public static final class Builder implements EnabledStage, _FinalStage {
-    private Boolean enabled;
-
+  public static final class Builder {
     private Map<String, String> values = new LinkedHashMap<>();
 
     private Builder() {
     }
 
-    @java.lang.Override
     public Builder from(Options other) {
-      enabled(other.getEnabled());
       values(other.getValues());
       return this;
     }
 
-    @java.lang.Override
-    @JsonSetter("enabled")
-    public _FinalStage enabled(Boolean enabled) {
-      this.enabled = enabled;
-      return this;
-    }
-
-    @java.lang.Override
-    public _FinalStage values(String key, String value) {
-      this.values.put(key, value);
-      return this;
-    }
-
-    @java.lang.Override
-    public _FinalStage putAllValues(Map<String, String> values) {
-      this.values.putAll(values);
-      return this;
-    }
-
-    @java.lang.Override
     @JsonSetter(
         value = "values",
         nulls = Nulls.SKIP
     )
-    public _FinalStage values(Map<String, String> values) {
+    public Builder values(Map<String, String> values) {
       this.values.clear();
       this.values.putAll(values);
       return this;
     }
 
-    @java.lang.Override
+    public Builder putAllValues(Map<String, String> values) {
+      this.values.putAll(values);
+      return this;
+    }
+
+    public Builder values(String key, String value) {
+      this.values.put(key, value);
+      return this;
+    }
+
     public Options build() {
-      return new Options(enabled, values);
+      return new Options(values);
     }
   }
 }

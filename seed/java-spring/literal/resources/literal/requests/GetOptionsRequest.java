@@ -4,92 +4,29 @@
 
 package resources.literal.requests;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSetter;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import core.ObjectMappers;
 import java.lang.Boolean;
 import java.lang.Object;
 import java.lang.String;
-import java.util.Objects;
 
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-@JsonDeserialize(
-    builder = GetOptionsRequest.Builder.class
-)
 public final class GetOptionsRequest {
-  private final Boolean dryRun;
-
-  private GetOptionsRequest(Boolean dryRun) {
-    this.dryRun = dryRun;
+  private GetOptionsRequest() {
   }
 
   @JsonProperty("dryRun")
   public Boolean getDryRun() {
-    return dryRun;
+    return true;
   }
 
   @java.lang.Override
   public boolean equals(Object other) {
     if (this == other) return true;
-    return other instanceof GetOptionsRequest && equalTo((GetOptionsRequest) other);
-  }
-
-  private boolean equalTo(GetOptionsRequest other) {
-    return dryRun.equals(other.dryRun);
-  }
-
-  @java.lang.Override
-  public int hashCode() {
-    return Objects.hash(this.dryRun);
+    return other instanceof GetOptionsRequest;
   }
 
   @java.lang.Override
   public String toString() {
     return ObjectMappers.stringify(this);
-  }
-
-  public static DryRunStage builder() {
-    return new Builder();
-  }
-
-  public interface DryRunStage {
-    _FinalStage dryRun(Boolean dryRun);
-
-    Builder from(GetOptionsRequest other);
-  }
-
-  public interface _FinalStage {
-    GetOptionsRequest build();
-  }
-
-  @JsonIgnoreProperties(
-      ignoreUnknown = true
-  )
-  public static final class Builder implements DryRunStage, _FinalStage {
-    private Boolean dryRun;
-
-    private Builder() {
-    }
-
-    @java.lang.Override
-    public Builder from(GetOptionsRequest other) {
-      dryRun(other.getDryRun());
-      return this;
-    }
-
-    @java.lang.Override
-    @JsonSetter("dryRun")
-    public _FinalStage dryRun(Boolean dryRun) {
-      this.dryRun = dryRun;
-      return this;
-    }
-
-    @java.lang.Override
-    public GetOptionsRequest build() {
-      return new GetOptionsRequest(dryRun);
-    }
   }
 }
