@@ -1,8 +1,9 @@
 irVersion: v29
-docker: java-client:latest
+docker: fernapi/fern-java-sdk:latest
 dockerCommand: 
   - cd generators/java
-  - ./gradlew :client-generator:dockerTagLatest
+  - ./gradlew :sdk:distTar
+  - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
 language: java
 generatorType: SDK
 defaultOutputMode: github

@@ -22,16 +22,36 @@ import java.util.Optional;
 public final class FindRequest {
     private final Optional<String> optionalString;
 
+    private final Optional<String> publicProperty;
+
+    private final Optional<Integer> privateProperty;
+
     private final Map<String, Object> additionalProperties;
 
-    private FindRequest(Optional<String> optionalString, Map<String, Object> additionalProperties) {
+    private FindRequest(
+            Optional<String> optionalString,
+            Optional<String> publicProperty,
+            Optional<Integer> privateProperty,
+            Map<String, Object> additionalProperties) {
         this.optionalString = optionalString;
+        this.publicProperty = publicProperty;
+        this.privateProperty = privateProperty;
         this.additionalProperties = additionalProperties;
     }
 
     @JsonProperty("optionalString")
     public Optional<String> getOptionalString() {
         return optionalString;
+    }
+
+    @JsonProperty("publicProperty")
+    public Optional<String> getPublicProperty() {
+        return publicProperty;
+    }
+
+    @JsonProperty("privateProperty")
+    public Optional<Integer> getPrivateProperty() {
+        return privateProperty;
     }
 
     @java.lang.Override
@@ -46,12 +66,14 @@ public final class FindRequest {
     }
 
     private boolean equalTo(FindRequest other) {
-        return optionalString.equals(other.optionalString);
+        return optionalString.equals(other.optionalString)
+                && publicProperty.equals(other.publicProperty)
+                && privateProperty.equals(other.privateProperty);
     }
 
     @java.lang.Override
     public int hashCode() {
-        return Objects.hash(this.optionalString);
+        return Objects.hash(this.optionalString, this.publicProperty, this.privateProperty);
     }
 
     @java.lang.Override
@@ -67,6 +89,10 @@ public final class FindRequest {
     public static final class Builder {
         private Optional<String> optionalString = Optional.empty();
 
+        private Optional<String> publicProperty = Optional.empty();
+
+        private Optional<Integer> privateProperty = Optional.empty();
+
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -74,6 +100,8 @@ public final class FindRequest {
 
         public Builder from(FindRequest other) {
             optionalString(other.getOptionalString());
+            publicProperty(other.getPublicProperty());
+            privateProperty(other.getPrivateProperty());
             return this;
         }
 
@@ -88,8 +116,30 @@ public final class FindRequest {
             return this;
         }
 
+        @JsonSetter(value = "publicProperty", nulls = Nulls.SKIP)
+        public Builder publicProperty(Optional<String> publicProperty) {
+            this.publicProperty = publicProperty;
+            return this;
+        }
+
+        public Builder publicProperty(String publicProperty) {
+            this.publicProperty = Optional.of(publicProperty);
+            return this;
+        }
+
+        @JsonSetter(value = "privateProperty", nulls = Nulls.SKIP)
+        public Builder privateProperty(Optional<Integer> privateProperty) {
+            this.privateProperty = privateProperty;
+            return this;
+        }
+
+        public Builder privateProperty(Integer privateProperty) {
+            this.privateProperty = Optional.of(privateProperty);
+            return this;
+        }
+
         public FindRequest build() {
-            return new FindRequest(optionalString, additionalProperties);
+            return new FindRequest(optionalString, publicProperty, privateProperty, additionalProperties);
         }
     }
 }

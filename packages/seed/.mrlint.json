@@ -16,7 +16,7 @@
       "scripts": {
         "dist:cli": "yarn compile && node build.cjs && cp -R ../../test-definitions/fern dist",
         "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public",
-        "generate": "fern generate"
+        "generate": "fern generate --local"
       }
     }
   },

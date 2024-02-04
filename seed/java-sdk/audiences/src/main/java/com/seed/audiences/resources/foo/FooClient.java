@@ -5,11 +5,14 @@ package com.seed.audiences.resources.foo;
 
 import com.seed.audiences.core.ApiError;
 import com.seed.audiences.core.ClientOptions;
+import com.seed.audiences.core.MediaTypes;
 import com.seed.audiences.core.ObjectMappers;
 import com.seed.audiences.core.RequestOptions;
 import com.seed.audiences.resources.foo.requests.FindRequest;
 import com.seed.audiences.resources.foo.types.ImportingType;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import okhttp3.Headers;
 import okhttp3.HttpUrl;
 import okhttp3.Request;
@@ -35,9 +38,23 @@ public class FooClient {
             httpUrl.addQueryParameter(
                     "optionalString", request.getOptionalString().get());
         }
+        Map<String, Object> properties = new HashMap<>();
+        if (request.getPublicProperty().isPresent()) {
+            properties.put("publicProperty", request.getPublicProperty());
+        }
+        if (request.getPrivateProperty().isPresent()) {
+            properties.put("privateProperty", request.getPrivateProperty());
+        }
+        RequestBody body;
+        try {
+            body = RequestBody.create(
+                    ObjectMappers.JSON_MAPPER.writeValueAsBytes(properties), MediaTypes.APPLICATION_JSON);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Request.Builder _requestBuilder = new Request.Builder()
                 .url(httpUrl.build())
-                .method("POST", RequestBody.create("", null))
+                .method("POST", body)
                 .headers(Headers.of(clientOptions.headers(requestOptions)))
                 .addHeader("Content-Type", "application/json");
         Request okhttpRequest = _requestBuilder.build();

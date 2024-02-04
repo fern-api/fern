@@ -5,8 +5,10 @@
 package resources.foo;
 
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import resources.foo.requests.FindRequest;
 import resources.foo.types.ImportingType;
 import resources.foo.types.OptionalString;
 
@@ -16,7 +18,9 @@ import resources.foo.types.OptionalString;
 public interface FooService {
   @PostMapping(
       value = "",
-      produces = "application/json"
+      produces = "application/json",
+      consumes = "application/json"
   )
-  ImportingType find(@RequestParam("optionalString") OptionalString optionalString);
+  ImportingType find(@RequestParam("optionalString") OptionalString optionalString,
+      @RequestBody FindRequest body);
 }
