@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fern.ir.model.commons.Name;
 import com.fern.ir.model.types.ContainerType;
 import com.fern.ir.model.types.Literal;
+import com.fern.ir.model.types.Literal.Visitor;
 import com.fern.ir.model.types.ObjectProperty;
 import com.fern.java.immutables.StagedBuilderImmutablesStyle;
 import com.fern.java.utils.JavaDocUtils;
@@ -33,11 +34,11 @@ public interface EnrichedObjectProperty {
 
     Optional<String> docs();
 
-    Optional<String> literalValue();
+    Optional<Literal> literal();
 
     @Value.Lazy
     default Optional<FieldSpec> fieldSpec() {
-        if (literalValue().isPresent()) {
+        if (literal().isPresent()) {
             return Optional.empty();
         }
         return Optional.of(FieldSpec.builder(
@@ -54,8 +55,25 @@ public interface EnrichedObjectProperty {
                         KeyWordUtils.getKeyWordCompatibleMethodName("get" + pascalCaseKey()))
                 .addModifiers(Modifier.PUBLIC)
                 .returns(poetTypeName());
-        if (literalValue().isPresent()) {
-            getterBuilder.addStatement("return $S", literalValue().get());
+        if (literal().isPresent()) {
+            literal().get().visit(new Literal.Visitor<Void>() {
+                @Override
+                public Void visitString(String string) {
+                    getterBuilder.addStatement("return $S", string);
+                    return null;
+                }
+
+                @Override
+                public Void visitBoolean(boolean boolean_) {
+                    getterBuilder.addStatement("return $L", boolean_);
+                    return null;
+                }
+
+                @Override
+                public Void _visitUnknown(Object unknownType) {
+                    return null;
+                }
+            });
         } else {
             getterBuilder.addStatement("return $L", fieldSpec().get().name);
         }
@@ -79,11 +97,10 @@ public interface EnrichedObjectProperty {
 
     static EnrichedObjectProperty of(ObjectProperty objectProperty, boolean fromInterface, TypeName poetTypeName) {
         Name name = objectProperty.getName().getName();
-        Optional<String> maybeLiteral = objectProperty
+        Optional<Literal> maybeLiteral = objectProperty
                 .getValueType()
                 .getContainer()
-                .flatMap(ContainerType::getLiteral)
-                .flatMap(Literal::getString);
+                .flatMap(ContainerType::getLiteral);
         return EnrichedObjectProperty.builder()
                 .camelCaseKey(name.getCamelCase().getSafeName())
                 .pascalCaseKey(name.getPascalCase().getSafeName())
@@ -91,7 +108,7 @@ public interface EnrichedObjectProperty {
                 .fromInterface(fromInterface)
                 .wireKey(objectProperty.getName().getWireValue())
                 .docs(objectProperty.getDocs())
-                .literalValue(maybeLiteral)
+                .literal(maybeLiteral)
                 .build();
     }
 }
