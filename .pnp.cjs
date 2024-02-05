@@ -4447,7 +4447,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.7.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["zod", "npm:3.22.4"],\
-            ["zod-to-json-schema", "virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.14.1"]\
+            ["zod-to-json-schema", "virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
         }]\
@@ -21177,17 +21177,17 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["zod-to-json-schema", [\
-        ["npm:3.14.1", {\
-          "packageLocation": "./.yarn/cache/zod-to-json-schema-npm-3.14.1-c35e839296-8c15ff5eef.zip/node_modules/zod-to-json-schema/",\
+        ["npm:3.22.4", {\
+          "packageLocation": "./.yarn/cache/zod-to-json-schema-npm-3.22.4-3029e7b2c2-22f89d505c.zip/node_modules/zod-to-json-schema/",\
           "packageDependencies": [\
-            ["zod-to-json-schema", "npm:3.14.1"]\
+            ["zod-to-json-schema", "npm:3.22.4"]\
           ],\
           "linkType": "SOFT"\
         }],\
-        ["virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.14.1", {\
-          "packageLocation": "./.yarn/__virtual__/zod-to-json-schema-virtual-a48ef18c32/0/cache/zod-to-json-schema-npm-3.14.1-c35e839296-8c15ff5eef.zip/node_modules/zod-to-json-schema/",\
+        ["virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.22.4", {\
+          "packageLocation": "./.yarn/__virtual__/zod-to-json-schema-virtual-b6578d4e83/0/cache/zod-to-json-schema-npm-3.22.4-3029e7b2c2-22f89d505c.zip/node_modules/zod-to-json-schema/",\
           "packageDependencies": [\
-            ["zod-to-json-schema", "virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.14.1"],\
+            ["zod-to-json-schema", "virtual:593b1529666d29e4c8b5b598693331273eef8807da03784038f1f938c9c78a31a430ed7e1a377bf4493de1d433ac30ac86b08bb4c9ec6f320cfbd07a6ee1dac6#npm:3.22.4"],\
             ["@types/zod", null],\
             ["zod", "npm:3.22.4"]\
           ],\

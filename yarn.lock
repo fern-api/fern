@@ -2620,7 +2620,7 @@ __metadata:
     prettier: ^2.7.1
     typescript: 4.6.4
     zod: ^3.22.3
-    zod-to-json-schema: 3.14.1
+    zod-to-json-schema: 3.22.4
   languageName: unknown
   linkType: soft
 
@@ -17068,12 +17068,12 @@ env-cmd@toddbluhm/env-cmd:
   languageName: node
   linkType: hard
 
-"zod-to-json-schema@npm:3.14.1":
-  version: 3.14.1
-  resolution: "zod-to-json-schema@npm:3.14.1"
+"zod-to-json-schema@npm:3.22.4":
+  version: 3.22.4
+  resolution: "zod-to-json-schema@npm:3.22.4"
   peerDependencies:
-    zod: ^3.14.4
-  checksum: 8c15ff5eef0da041a5435bd1f471e040747ccb003982586a6f3a2402057fcf0681b138d0ac531c1c1b60481fd0e2741ade8ddeeb5a8d7f3539092d219bb8b9be
+    zod: ^3.22.4
+  checksum: 22f89d505cc3d93020de38e4471362fbecd73a8df58017553ad57fb14e69b6f2f88bcdfe9f84b291442ed0654f97344d517af291d23848e43e6e208ee23dac2b
   languageName: node
   linkType: hard
 
