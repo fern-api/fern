@@ -30,9 +30,10 @@ module SeedExamplesClient
       # @return [Types::Moment]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         id = struct.id
-        date = Date.parse(struct.date)
-        datetime = DateTime.parse(struct.datetime)
+        date = Date.parse(parsed_json["date"])
+        datetime = DateTime.parse(parsed_json["datetime"])
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 

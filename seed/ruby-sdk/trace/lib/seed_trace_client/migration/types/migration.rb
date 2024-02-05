@@ -27,8 +27,9 @@ module SeedTraceClient
       # @return [Migration::Migration]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = struct.name
-        status = Migration::MIGRATION_STATUS.key(struct.status) || struct.status
+        status = Migration::MIGRATION_STATUS.key(parsed_json["status"]) || parsed_json["status"]
         new(name: name, status: status, additional_properties: struct)
       end
 

@@ -82,18 +82,23 @@ module SeedObjectClient
     # @return [Type]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
+      parsed_json = JSON.parse(json_object)
       one = struct.one
       two = struct.two
       three = struct.three
       four = struct.four
       five = struct.five
-      six = DateTime.parse(struct.six)
-      seven = Date.parse(struct.seven)
+      six = DateTime.parse(parsed_json["six"])
+      seven = Date.parse(parsed_json["seven"])
       eight = struct.eight
       nine = struct.nine
       ten = struct.ten
-      eleven = struct.eleven.to_h.to_json
-      eleven = Set.new(eleven)
+      if parsed_json["eleven"].nil?
+        eleven = nil
+      else
+        eleven = parsed_json["eleven"].to_json
+        eleven = Set.new(eleven)
+      end
       twelve = struct.twelve
       thirteen = struct.thirteen
       fourteen = struct.fourteen
@@ -101,8 +106,12 @@ module SeedObjectClient
       sixteen = struct.sixteen
       seventeen = struct.seventeen
       eighteen = struct.eighteen
-      nineteen = struct.nineteen.to_h.to_json
-      nineteen = Name.from_json(json_object: nineteen)
+      if parsed_json["nineteen"].nil?
+        nineteen = nil
+      else
+        nineteen = parsed_json["nineteen"].to_json
+        nineteen = Name.from_json(json_object: nineteen)
+      end
       new(one: one, two: two, three: three, four: four, five: five, six: six, seven: seven, eight: eight, nine: nine,
           ten: ten, eleven: eleven, twelve: twelve, thirteen: thirteen, fourteen: fourteen, fifteen: fifteen, sixteen: sixteen, seventeen: seventeen, eighteen: eighteen, nineteen: nineteen, additional_properties: struct)
     end

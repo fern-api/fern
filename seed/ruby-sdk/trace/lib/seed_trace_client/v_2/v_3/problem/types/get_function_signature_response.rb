@@ -26,8 +26,9 @@ module SeedTraceClient
           # @return [V2::V3::Problem::GetFunctionSignatureResponse]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            function_by_language = struct.functionByLanguage.transform_values do |_k, v|
-              v = v.to_h.to_json
+            parsed_json = JSON.parse(json_object)
+            function_by_language = parsed_json["functionByLanguage"].transform_values do |_k, v|
+              v = v.to_json
               Commons::LANGUAGE.key(v) || v
             end
             new(function_by_language: function_by_language, additional_properties: struct)

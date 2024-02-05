@@ -26,6 +26,7 @@ module SeedExamplesClient
       # @return [Types::File]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         name = struct.name
         contents = struct.contents
         new(name: name, contents: contents, additional_properties: struct)

@@ -27,8 +27,9 @@ module SeedTraceClient
       # @return [Submission::UnexpectedLanguageError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        expected_language = Commons::LANGUAGE.key(struct.expectedLanguage) || struct.expectedLanguage
-        actual_language = Commons::LANGUAGE.key(struct.actualLanguage) || struct.actualLanguage
+        parsed_json = JSON.parse(json_object)
+        expected_language = Commons::LANGUAGE.key(parsed_json["expectedLanguage"]) || parsed_json["expectedLanguage"]
+        actual_language = Commons::LANGUAGE.key(parsed_json["actualLanguage"]) || parsed_json["actualLanguage"]
         new(expected_language: expected_language, actual_language: actual_language, additional_properties: struct)
       end
 

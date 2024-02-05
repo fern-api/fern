@@ -35,10 +35,11 @@ module SeedTraceClient
       # @return [Submission::WorkspaceSubmitRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        language = Commons::LANGUAGE.key(struct.language) || struct.language
-        submission_files = struct.submissionFiles.map do |v|
-          v = v.to_h.to_json
+        language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
+        submission_files = parsed_json["submissionFiles"].map do |v|
+          v = v.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
         user_id = struct.userId

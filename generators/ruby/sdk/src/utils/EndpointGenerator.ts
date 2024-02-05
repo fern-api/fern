@@ -14,7 +14,6 @@ import {
     GenericClassReference,
     HashInstance,
     JsonClassReference,
-    OpenStructClassReference,
     Parameter,
     Property,
     StringClassReference,
@@ -468,7 +467,7 @@ export class EndpointGenerator {
                     response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
-                            // Turn to struct, then get the field, then reconvert to JSON (to_h.to_json)
+                            // Turn to struct, then get the field, then reconvert to JSON (to_json)
                             const nestedResponseValueVariable = new Variable({
                                 name: "nested_response_json",
                                 type: GenericClassReference,
@@ -476,30 +475,22 @@ export class EndpointGenerator {
                             });
                             return [
                                 new Expression({
-                                    leftSide: nestedResponseValueVariable,
+                                    leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
-                                        onObject: new FunctionInvocation({
-                                            onObject: JsonClassReference,
-                                            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                                            arguments_: [
-                                                new Argument({
-                                                    value: responseVariableBody,
-                                                    type: GenericClassReference,
-                                                    isNamed: false
-                                                }),
-                                                new Argument({
-                                                    name: "object_class",
-                                                    value: "OpenStruct",
-                                                    type: OpenStructClassReference,
-                                                    isNamed: true
-                                                })
-                                            ]
-                                        }),
-                                        baseFunction: new Function_({
-                                            name: `${jrbwp.responseProperty.name.wireValue}.to_h.to_json`,
-                                            functionBody: []
-                                        })
+                                        onObject: JsonClassReference,
+                                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                        arguments_: [
+                                            new Argument({
+                                                value: responseVariableBody,
+                                                type: GenericClassReference,
+                                                isNamed: false
+                                            })
+                                        ]
                                     })
+                                }),
+                                new Expression({
+                                    leftSide: nestedResponseValueVariable,
+                                    rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`
                                 }),
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
