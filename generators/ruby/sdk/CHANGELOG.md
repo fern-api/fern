@@ -7,7 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.0.3] - 2024-02-02
+## [0.0.4] - 2024-02-05
+
+- This release contains no changes to the API.
+
+- Bug fixes: ensures files are written at the gem name path over client name, and addresses string escaping on one of the Fern headers.
+
+## [0.0.3] - 2024-02-05
 
 - This release contains no changes to the API.
 

@@ -14,7 +14,11 @@ module SeedLiteralHeadersClient
     # @param api_test [Boolean]
     # @return [RequestClient]
     def initialize(api_header:, api_test:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedLiteralHeadersClient",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
       @headers["X-API-Header"] = api_header unless api_header.nil?
       @headers["X-API-Test"] = api_test unless api_test.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -35,7 +39,11 @@ module SeedLiteralHeadersClient
     # @param api_test [Boolean]
     # @return [AsyncRequestClient]
     def initialize(api_header:, api_test:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedLiteralHeadersClient",
+        "X-Fern-SDK-Version": "0.0.1"
+      }
       @headers["X-API-Header"] = api_header unless api_header.nil?
       @headers["X-API-Test"] = api_test unless api_test.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|

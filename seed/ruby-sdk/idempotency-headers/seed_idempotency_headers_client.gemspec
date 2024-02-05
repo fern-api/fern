@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_idempotency_headers_client"
-  spec.version = SeedIdempotencyHeadersClient::Gemconfig::VERSION
+  spec.version = "0.0.1"
   spec.authors = SeedIdempotencyHeadersClient::Gemconfig::AUTHORS
   spec.email = SeedIdempotencyHeadersClient::Gemconfig::EMAIL
   spec.summary = SeedIdempotencyHeadersClient::Gemconfig::SUMMARY

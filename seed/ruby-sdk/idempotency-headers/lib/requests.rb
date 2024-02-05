@@ -16,6 +16,7 @@ module SeedIdempotencyHeadersClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedIdempotencyHeadersClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -38,6 +39,7 @@ module SeedIdempotencyHeadersClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedIdempotencyHeadersClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

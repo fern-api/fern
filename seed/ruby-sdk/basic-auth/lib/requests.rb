@@ -17,6 +17,7 @@ module SeedBasicAuthClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBasicAuthClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Basic #{Base64.encode64("#{username}:#{password}")})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -40,6 +41,7 @@ module SeedBasicAuthClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBasicAuthClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Basic #{Base64.encode64("#{username}:#{password}")})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

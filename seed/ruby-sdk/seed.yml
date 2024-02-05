@@ -3,7 +3,7 @@ docker: fernapi/fern-ruby-sdk:latest
 dockerCommand: yarn workspace @fern-api/fern-ruby-sdk dockerTagLatest
 language: ruby
 generatorType: sdk
-defaultOutputMode: local_files
+defaultOutputMode: github
 fixtures: []
 scripts: []
 allowedFailures:

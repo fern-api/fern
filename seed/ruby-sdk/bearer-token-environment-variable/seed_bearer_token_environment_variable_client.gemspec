@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_bearer_token_environment_variable_client"
-  spec.version = SeedBearerTokenEnvironmentVariableClient::Gemconfig::VERSION
+  spec.version = "0.0.1"
   spec.authors = SeedBearerTokenEnvironmentVariableClient::Gemconfig::AUTHORS
   spec.email = SeedBearerTokenEnvironmentVariableClient::Gemconfig::EMAIL
   spec.summary = SeedBearerTokenEnvironmentVariableClient::Gemconfig::SUMMARY

@@ -118,7 +118,10 @@ function getGithubPublishInfo({
         case "go":
             return undefined;
         case "ruby":
-            return undefined;
+            return FernFiddle.GithubPublishInfo.rubygems({
+                packageName: `fern_${fixtureName}`,
+                registryUrl: ""
+            });
         default:
             assertNever(language);
     }
