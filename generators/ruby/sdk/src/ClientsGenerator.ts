@@ -79,7 +79,7 @@ export class ClientsGenerator {
 
         this.services = new Map(Object.entries(intermediateRepresentation.services));
         this.subpackages = new Map(Object.entries(intermediateRepresentation.subpackages));
-        this.locationGenerator = new LocationGenerator(this.clientName);
+        this.locationGenerator = new LocationGenerator(this.gemName);
         this.crf = new ClassReferenceFactory(this.types, this.locationGenerator);
         this.headersGenerator = new HeadersGenerator(
             this.intermediateRepresentation.headers,

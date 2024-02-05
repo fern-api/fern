@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_file_download_client"
-  spec.version = SeedFileDownloadClient::Gemconfig::VERSION
+  spec.version = "0.0.1"
   spec.authors = SeedFileDownloadClient::Gemconfig::AUTHORS
   spec.email = SeedFileDownloadClient::Gemconfig::EMAIL
   spec.summary = SeedFileDownloadClient::Gemconfig::SUMMARY

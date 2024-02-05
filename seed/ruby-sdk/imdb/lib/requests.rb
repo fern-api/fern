@@ -13,7 +13,12 @@ module SeedApiClient
     # @param token [String]
     # @return [RequestClient]
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedApiClient", "Authorization": "Bearer #{token}" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedApiClient",
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
+      }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true
@@ -31,7 +36,12 @@ module SeedApiClient
     # @param token [String]
     # @return [AsyncRequestClient]
     def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedApiClient", "Authorization": "Bearer #{token}" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedApiClient",
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
+      }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
         faraday.response :raise_error, include_request: true

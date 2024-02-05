@@ -19,7 +19,12 @@ module SeedTraceClient
                    x_random_header: nil)
       @default_environment = environment
       @base_url = environment
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedTraceClient", "Authorization": "Bearer #{token}" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedTraceClient",
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
+      }
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
         faraday.request :json
@@ -43,7 +48,12 @@ module SeedTraceClient
                    x_random_header: nil)
       @default_environment = environment
       @base_url = environment
-      @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedTraceClient", "Authorization": "Bearer #{token}" }
+      @headers = {
+        "X-Fern-Language": "Ruby",
+        "X-Fern-SDK-Name": "SeedTraceClient",
+        "X-Fern-SDK-Version": "0.0.1",
+        "Authorization": "Bearer #{token}"
+      }
       @headers["X-Random-Header"] = x_random_header unless x_random_header.nil?
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
         faraday.request :json

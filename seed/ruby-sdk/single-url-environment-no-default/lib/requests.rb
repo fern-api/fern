@@ -20,6 +20,7 @@ module SeedSingleUrlEnvironmentNoDefaultClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedSingleUrlEnvironmentNoDefaultClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|
@@ -45,6 +46,7 @@ module SeedSingleUrlEnvironmentNoDefaultClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedSingleUrlEnvironmentNoDefaultClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": "Bearer #{token}"
       }
       @conn = Faraday.new(@base_url, headers: @headers) do |faraday|

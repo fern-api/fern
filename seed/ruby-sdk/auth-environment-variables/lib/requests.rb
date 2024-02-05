@@ -16,6 +16,7 @@ module SeedAuthEnvironmentVariablesClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedAuthEnvironmentVariablesClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -38,6 +39,7 @@ module SeedAuthEnvironmentVariablesClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedAuthEnvironmentVariablesClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "X-FERN-API-KEY": (api_key || ENV["FERN_API_KEY"]).to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

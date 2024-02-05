@@ -16,6 +16,7 @@ module SeedBearerTokenEnvironmentVariableClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBearerTokenEnvironmentVariableClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -38,6 +39,7 @@ module SeedBearerTokenEnvironmentVariableClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBearerTokenEnvironmentVariableClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|

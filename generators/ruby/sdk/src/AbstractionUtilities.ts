@@ -559,7 +559,7 @@ function generateRequestClientInitializer(
         [`"${sdkConfig.platformHeaders.sdkName}"`, clientName]
     ]);
     if (sdkVersion !== undefined) {
-        allHeaders.set(sdkConfig.platformHeaders.sdkVersion, sdkVersion);
+        allHeaders.set(`"${sdkConfig.platformHeaders.sdkVersion}"`, sdkVersion);
     }
 
     // If "all" then require the param and always put it in, if optional

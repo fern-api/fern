@@ -16,6 +16,7 @@ module SeedCustomAuthClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "X-API-KEY": custom_auth_scheme.to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
@@ -38,6 +39,7 @@ module SeedCustomAuthClient
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "X-API-KEY": custom_auth_scheme.to_s
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
