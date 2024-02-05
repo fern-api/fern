@@ -27,7 +27,8 @@ module SeedTraceClient
       # @return [Commons::ListType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        value_type = struct.valueType
+        value_type = struct.valueType.to_h.to_json
+        value_type = Commons::VariableType.from_json(json_object: value_type)
         is_fixed_length = struct.isFixedLength
         new(value_type: value_type, is_fixed_length: is_fixed_length, additional_properties: struct)
       end

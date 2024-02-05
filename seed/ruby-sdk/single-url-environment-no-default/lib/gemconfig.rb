@@ -2,6 +2,7 @@
 
 module SeedSingleUrlEnvironmentNoDefaultClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

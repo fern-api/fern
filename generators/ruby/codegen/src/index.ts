@@ -23,5 +23,6 @@ export * from "./ast/Variable";
 export { Yardoc } from "./ast/Yardoc";
 export * from "./utils/GeneratedFile";
 export * from "./utils/GeneratedRubyFile";
+export * from "./utils/LocationGenerator";
 export * from "./utils/RubyConstants";
 export * from "./utils/RubyUtilities";

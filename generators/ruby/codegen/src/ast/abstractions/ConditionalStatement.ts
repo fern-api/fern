@@ -1,4 +1,5 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
+import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 
@@ -28,23 +29,24 @@ export class ConditionalStatement extends AstNode {
     }
 
     private writeCondition(startingTabSpaces: number, condition: Condition, type: "if" | "elsif" | "else"): void {
-        if (condition.operation === "!" && condition.leftSide === undefined) {
+        const updatedType =
+            condition.operation === "!" && (condition.leftSide === undefined || condition.rightSide === undefined)
+                ? "unless"
+                : type;
+        const leftString = condition.leftSide instanceof AstNode ? condition.leftSide.write({}) : condition.leftSide;
+        const rightString =
+            condition.rightSide instanceof AstNode ? condition.rightSide.write({}) : condition.rightSide;
+        this.addText({
+            stringContent: leftString ?? rightString,
+            templateString: `${updatedType} %s`,
+            startingTabSpaces
+        });
+        if (condition.leftSide !== undefined && condition.rightSide !== undefined) {
             this.addText({
-                stringContent: "unless ",
-                startingTabSpaces
-            });
-        } else {
-            this.addText({
-                stringContent:
-                    condition.leftSide instanceof AstNode ? condition.leftSide.write({}) : condition.leftSide,
-                templateString: `${type} %s`,
+                stringContent: rightString,
                 startingTabSpaces
             });
         }
-        this.addText({
-            stringContent: condition.rightSide instanceof AstNode ? condition.rightSide.write({}) : condition.rightSide,
-            appendToLastString: true
-        });
         condition.expressions.forEach((exp) =>
             this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
@@ -73,11 +75,19 @@ export class ConditionalStatement extends AstNode {
 
     public getImports(): Set<Import> {
         let imports = new Set<Import>();
-        [
-            ...this.if_.expressions,
-            ...Array.from(this.elseIf?.values() ?? []).flatMap((condition) => condition.expressions),
-            ...(this.else_ ?? [])
-        ].forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+        (
+            [
+                this.if_.leftSide,
+                this.if_.rightSide,
+                ...this.if_.expressions,
+                ...Array.from(this.elseIf?.values() ?? []).flatMap((condition) => [
+                    condition.leftSide,
+                    condition.rightSide,
+                    ...condition.expressions
+                ]),
+                ...(this.else_ ?? [])
+            ].filter((node) => node instanceof AstNode && !(node instanceof Class_)) as AstNode[]
+        ).forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
         return imports;
     }
 }

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/user_id"
-
-require_relative "../../commons/types/problem_id"
 require_relative "playlist_id"
+require_relative "../../commons/types/user_id"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient

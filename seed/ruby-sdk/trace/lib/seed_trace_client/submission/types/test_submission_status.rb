@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "running_submission_state"
 require_relative "error_info"
 
 module SeedTraceClient
@@ -32,7 +33,7 @@ module SeedTraceClient
                  when "errored"
                    Submission::ErrorInfo.from_json(json_object: json_object.value)
                  when "running"
-                   RUNNING_SUBMISSION_STATE.key(json_object.value)
+                   Submission::RUNNING_SUBMISSION_STATE.key(json_object.value) || json_object.value
                  when "testCaseIdToState"
                    json_object.value
                  else
@@ -71,7 +72,7 @@ module SeedTraceClient
         when "errored"
           Submission::ErrorInfo.validate_raw(obj: obj)
         when "running"
-          obj.is_a?(RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
+          obj.is_a?(Submission::RUNNING_SUBMISSION_STATE) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         when "testCaseIdToState"
           obj.is_a?(Hash) != false || raise("Passed value for field obj is not the expected type, validation failed.")
         else
@@ -98,7 +99,7 @@ module SeedTraceClient
         new(member: member, discriminant: "errored")
       end
 
-      # @param member [Hash{String => String}]
+      # @param member [RUNNING_SUBMISSION_STATE]
       # @return [Submission::TestSubmissionStatus]
       def self.running(member:)
         new(member: member, discriminant: "running")

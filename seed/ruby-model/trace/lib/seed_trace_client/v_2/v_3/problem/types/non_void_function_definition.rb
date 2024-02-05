@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "function_implementation_for_multiple_languages"
-
 require_relative "non_void_function_signature"
+require_relative "function_implementation_for_multiple_languages"
 require "json"
 
 module SeedTraceClient
@@ -31,8 +30,10 @@ module SeedTraceClient
           # @return [V2::V3::Problem::NonVoidFunctionDefinition]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            signature = struct.signature
-            code = struct.code
+            signature = struct.signature.to_h.to_json
+            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+            code = struct.code.to_h.to_json
+            code = V2::V3::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
             new(signature: signature, code: code, additional_properties: struct)
           end
 

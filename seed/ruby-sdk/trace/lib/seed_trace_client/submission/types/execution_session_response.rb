@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../../commons/types/language"
+require_relative "execution_session_status"
 require "json"
 
 module SeedTraceClient
@@ -9,8 +11,8 @@ module SeedTraceClient
 
       # @param session_id [String]
       # @param execution_session_url [String]
-      # @param language [Hash{String => String}]
-      # @param status [Hash{String => String}]
+      # @param language [LANGUAGE]
+      # @param status [EXECUTION_SESSION_STATUS]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::ExecutionSessionResponse]
       def initialize(session_id:, language:, status:, execution_session_url: nil, additional_properties: nil)
@@ -18,9 +20,9 @@ module SeedTraceClient
         @session_id = session_id
         # @type [String]
         @execution_session_url = execution_session_url
-        # @type [Hash{String => String}]
+        # @type [LANGUAGE]
         @language = language
-        # @type [Hash{String => String}]
+        # @type [EXECUTION_SESSION_STATUS]
         @status = status
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -34,8 +36,8 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         session_id = struct.sessionId
         execution_session_url = struct.executionSessionUrl
-        language = struct.language
-        status = struct.status
+        language = Commons::LANGUAGE.key(struct.language) || struct.language
+        status = Submission::EXECUTION_SESSION_STATUS.key(struct.status) || struct.status
         new(session_id: session_id, execution_session_url: execution_session_url, language: language, status: status,
             additional_properties: struct)
       end
@@ -47,8 +49,8 @@ module SeedTraceClient
         {
           "sessionId": @session_id,
           "executionSessionUrl": @execution_session_url,
-          "language": @language,
-          "status": @status
+          "language": Commons::LANGUAGE[@language] || @language,
+          "status": Submission::EXECUTION_SESSION_STATUS[@status] || @status
         }.to_json
       end
 
@@ -59,8 +61,8 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         obj.session_id.is_a?(String) != false || raise("Passed value for field obj.session_id is not the expected type, validation failed.")
         obj.execution_session_url&.is_a?(String) != false || raise("Passed value for field obj.execution_session_url is not the expected type, validation failed.")
-        obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
-        obj.status.is_a?(EXECUTION_SESSION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.status.is_a?(Submission::EXECUTION_SESSION_STATUS) != false || raise("Passed value for field obj.status is not the expected type, validation failed.")
       end
     end
   end

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../../commons/types/variable_type"
-
 require_relative "parameter_id"
+require_relative "../../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
@@ -35,7 +34,8 @@ module SeedTraceClient
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parameter_id = struct.parameterId
           name = struct.name
-          variable_type = struct.variableType
+          variable_type = struct.variableType.to_h.to_json
+          variable_type = Commons::VariableType.from_json(json_object: variable_type)
           new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
         end
 

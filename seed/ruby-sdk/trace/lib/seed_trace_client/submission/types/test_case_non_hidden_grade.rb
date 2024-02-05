@@ -35,8 +35,10 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         passed = struct.passed
-        actual_result = struct.actualResult
-        exception = struct.exception
+        actual_result = struct.actualResult.to_h.to_json
+        actual_result = Commons::VariableValue.from_json(json_object: actual_result)
+        exception = struct.exception.to_h.to_json
+        exception = Submission::ExceptionV2.from_json(json_object: exception)
         stdout = struct.stdout
         new(passed: passed, actual_result: actual_result, exception: exception, stdout: stdout,
             additional_properties: struct)

@@ -11,6 +11,7 @@ import {
     VoidClassReference
 } from "../classes/ClassReference";
 import { Class_ } from "../classes/Class_";
+import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
 import { FunctionInvocation } from "../functions/FunctionInvocation";
 import { Function_ } from "../functions/Function_";
@@ -78,7 +79,7 @@ export class DiscriminatedUnion extends Class_ {
         memberProperty: Property,
         unionSubclass: DiscriminatedUnion.Subclass
     ): Expression {
-        const rightSide = unionSubclass.unionPropertiesType._visit<FunctionInvocation | string>({
+        const rightSide = unionSubclass.unionPropertiesType._visit<AstNode | string>({
             samePropertiesAsObject: () => unionSubclass.classReference?.fromJson(jsonParameter) ?? jsonParameter,
             singleProperty: (sutp: SingleUnionTypeProperty) =>
                 unionSubclass.classReference?.fromJson(`${jsonParameter}.${sutp.name.wireValue}`) ??
@@ -175,10 +176,12 @@ export class DiscriminatedUnion extends Class_ {
                     contents: new Map([[discriminantField, discriminantProperty.toVariable()]]),
                     // Take the member property and spread it into this hash that includes the discriminant
                     additionalHashes: [
-                        new FunctionInvocation({
-                            baseFunction: new Function_({ name: "to_json", functionBody: [] }),
-                            onObject: memberProperty.toVariable()
-                        })
+                        {
+                            value: new FunctionInvocation({
+                                baseFunction: new Function_({ name: "to_json", functionBody: [] }),
+                                onObject: memberProperty.toVariable()
+                            })
+                        }
                     ]
                 }),
             singleProperty: (sutp: SingleUnionTypeProperty) =>

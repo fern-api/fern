@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "function_implementation_for_multiple_languages"
-
 require_relative "parameter"
+require_relative "function_implementation_for_multiple_languages"
 require "json"
 
 module SeedTraceClient
@@ -30,8 +29,12 @@ module SeedTraceClient
         # @return [V2::Problem::VoidFunctionDefinition]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameters = struct.parameters
-          code = struct.code
+          parameters = struct.parameters.map do |v|
+            v = v.to_h.to_json
+            V2::Problem::Parameter.from_json(json_object: v)
+          end
+          code = struct.code.to_h.to_json
+          code = V2::Problem::FunctionImplementationForMultipleLanguages.from_json(json_object: code)
           new(parameters: parameters, code: code, additional_properties: struct)
         end
 

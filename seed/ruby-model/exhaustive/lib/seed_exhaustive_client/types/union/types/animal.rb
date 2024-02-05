@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "json"
-require_relative "cat"
 require_relative "dog"
+require_relative "cat"
 
 module SeedExhaustiveClient
   module Types

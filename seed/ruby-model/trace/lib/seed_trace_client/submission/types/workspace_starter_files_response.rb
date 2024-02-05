@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "../../commons/types/language"
 
 module SeedTraceClient
   module Submission
     class WorkspaceStarterFilesResponse
       attr_reader :files, :additional_properties
 
-      # @param files [Hash{LANGUAGE => LANGUAGE}]
+      # @param files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::WorkspaceStarterFilesResponse]
       def initialize(files:, additional_properties: nil)
-        # @type [Hash{LANGUAGE => LANGUAGE}]
+        # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
         @files = files
         # @type [OpenStruct] Additional properties unmapped to the current class definition
         @additional_properties = additional_properties
@@ -23,7 +24,10 @@ module SeedTraceClient
       # @return [Submission::WorkspaceStarterFilesResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        files = struct.files
+        files = struct.files.transform_values do |_k, v|
+          v = v.to_h.to_json
+          Commons::LANGUAGE.key(v) || v
+        end
         new(files: files, additional_properties: struct)
       end
 

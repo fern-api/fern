@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
+require_relative "submission_id"
+require_relative "traced_file"
 require_relative "../../commons/types/debug_variable_value"
 require_relative "expression_location"
 require_relative "stack_information"
-require_relative "submission_id"
-require_relative "traced_file"
 require "json"
 
 module SeedTraceClient
@@ -50,10 +50,14 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
         line_number = struct.lineNumber
-        file = struct.file
-        return_value = struct.returnValue
-        expression_location = struct.expressionLocation
-        stack = struct.stack
+        file = struct.file.to_h.to_json
+        file = Submission::TracedFile.from_json(json_object: file)
+        return_value = struct.returnValue.to_h.to_json
+        return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
+        expression_location = struct.expressionLocation.to_h.to_json
+        expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
+        stack = struct.stack.to_h.to_json
+        stack = Submission::StackInformation.from_json(json_object: stack)
         stdout = struct.stdout
         new(submission_id: submission_id, line_number: line_number, file: file, return_value: return_value,
             expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)

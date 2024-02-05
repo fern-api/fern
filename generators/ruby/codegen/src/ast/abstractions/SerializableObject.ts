@@ -3,6 +3,7 @@ import {
     ArrayReference,
     ClassReference,
     DateReference,
+    EnumReference,
     GenericClassReference,
     HashInstance,
     HashReference,
@@ -77,9 +78,9 @@ export class SerializableObject extends Class_ {
 
                 const hasFromJson =
                     variable.fromJson() !== undefined &&
-                    !(prop.type instanceof ArrayReference) &&
-                    !(prop.type instanceof HashReference) &&
-                    !(prop.type instanceof DateReference);
+                    !(prop.type[0] instanceof ArrayReference) &&
+                    !(prop.type[0] instanceof HashReference) &&
+                    !(prop.type[0] instanceof DateReference);
                 if (hasFromJson) {
                     // If there's a special fromJson, then cast the object back to JSON before proceeding
                     const variable = new Variable({
@@ -141,7 +142,13 @@ export class SerializableObject extends Class_ {
                 baseFunction: new Function_({ name: "to_json", functionBody: [] }),
                 onObject: new HashInstance({
                     contents: new Map(
-                        properties?.map((prop) => [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()])
+                        properties?.map((prop) => {
+                            if (prop.type[0] instanceof EnumReference) {
+                                return [`"${prop.wireValue ?? prop.name}"`, prop.type[0].toJson(prop.toVariable())];
+                            }
+                            // TODO: confirm enums are the only special case here
+                            return [`"${prop.wireValue ?? prop.name}"`, prop.toVariable()];
+                        })
                     )
                 })
             })

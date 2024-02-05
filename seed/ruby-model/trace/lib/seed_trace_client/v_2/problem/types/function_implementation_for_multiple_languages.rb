@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
@@ -8,11 +9,11 @@ module SeedTraceClient
       class FunctionImplementationForMultipleLanguages
         attr_reader :code_by_language, :additional_properties
 
-        # @param code_by_language [Hash{LANGUAGE => LANGUAGE}]
+        # @param code_by_language [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::FunctionImplementationForMultipleLanguages]
         def initialize(code_by_language:, additional_properties: nil)
-          # @type [Hash{LANGUAGE => LANGUAGE}]
+          # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
           @code_by_language = code_by_language
           # @type [OpenStruct] Additional properties unmapped to the current class definition
           @additional_properties = additional_properties
@@ -24,7 +25,10 @@ module SeedTraceClient
         # @return [V2::Problem::FunctionImplementationForMultipleLanguages]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          code_by_language = struct.codeByLanguage
+          code_by_language = struct.codeByLanguage.transform_values do |_k, v|
+            v = v.to_h.to_json
+            Commons::LANGUAGE.key(v) || v
+          end
           new(code_by_language: code_by_language, additional_properties: struct)
         end
 

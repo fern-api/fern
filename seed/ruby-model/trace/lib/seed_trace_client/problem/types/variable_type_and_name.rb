@@ -27,7 +27,8 @@ module SeedTraceClient
       # @return [Problem::VariableTypeAndName]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        variable_type = struct.variableType
+        variable_type = struct.variableType.to_h.to_json
+        variable_type = Commons::VariableType.from_json(json_object: variable_type)
         name = struct.name
         new(variable_type: variable_type, name: name, additional_properties: struct)
       end
