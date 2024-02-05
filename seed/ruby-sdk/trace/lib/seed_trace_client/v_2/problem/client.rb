@@ -30,7 +30,7 @@ module SeedTraceClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
         response.body.map do |v|
-          v = v.to_h.to_json
+          v = v.to_json
           V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
         end
       end
@@ -47,7 +47,7 @@ module SeedTraceClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
         response.body.map do |v|
-          v = v.to_h.to_json
+          v = v.to_json
           V2::Problem::ProblemInfoV2.from_json(json_object: v)
         end
       end
@@ -110,7 +110,7 @@ module SeedTraceClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           end
           response.body.map do |v|
-            v = v.to_h.to_json
+            v = v.to_json
             V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
           end
         end
@@ -132,7 +132,7 @@ module SeedTraceClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           end
           response.body.map do |v|
-            v = v.to_h.to_json
+            v = v.to_json
             V2::Problem::ProblemInfoV2.from_json(json_object: v)
           end
         end

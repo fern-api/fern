@@ -19,6 +19,7 @@ import { Function_ } from "../functions/Function_";
 import { Parameter } from "../Parameter";
 import { Property } from "../Property";
 import { Variable, VariableType } from "../Variable";
+import { ConditionalStatement } from "./ConditionalStatement";
 
 const additional_properties_property = new Property({
     name: "additional_properties",
@@ -47,7 +48,7 @@ export class SerializableObject extends Class_ {
         properties: Property[] | undefined,
         classReference: ClassReference
     ): Function_ {
-        const functionBody = [
+        const functionBody: AstNode[] = [
             new Expression({
                 leftSide: "struct",
                 rightSide: new FunctionInvocation({
@@ -69,15 +70,35 @@ export class SerializableObject extends Class_ {
                 }),
                 isAssignment: true
             }),
+            new Expression({
+                leftSide: "parsed_json",
+                rightSide: new FunctionInvocation({
+                    onObject: JsonClassReference,
+                    baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                    arguments_: [
+                        new Argument({
+                            value: "json_object",
+                            type: GenericClassReference,
+                            isNamed: false
+                        })
+                    ]
+                }),
+                isAssignment: true
+            }),
             ...(properties?.flatMap((prop) => {
-                const variable = new Variable({
+                const structVariable = new Variable({
                     name: `struct.${prop.wireValue}`,
+                    variableType: VariableType.LOCAL,
+                    type: prop.type
+                });
+                const parsedJsonVariable = new Variable({
+                    name: `parsed_json["${prop.wireValue}"]`,
                     variableType: VariableType.LOCAL,
                     type: prop.type
                 });
 
                 const hasFromJson =
-                    variable.fromJson() !== undefined &&
+                    parsedJsonVariable.fromJson() !== undefined &&
                     !(prop.type[0] instanceof ArrayReference) &&
                     !(prop.type[0] instanceof HashReference) &&
                     !(prop.type[0] instanceof DateReference);
@@ -89,29 +110,43 @@ export class SerializableObject extends Class_ {
                         type: prop.type
                     });
 
-                    return [
-                        new Expression({
-                            leftSide: variable.name,
-                            rightSide: new FunctionInvocation({
-                                onObject: `struct.${prop.wireValue}`,
-                                baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                    const toJsonIfPresent = new ConditionalStatement({
+                        if_: {
+                            leftSide: new FunctionInvocation({
+                                onObject: parsedJsonVariable,
+                                baseFunction: new Function_({
+                                    name: "nil?",
+                                    functionBody: []
+                                }),
+                                optionalSafeCall: false
                             }),
-                            isAssignment: true
-                        }),
-                        new Expression({
-                            leftSide: prop.name,
-                            rightSide: variable.fromJson() ?? variable,
-                            isAssignment: true
-                        })
-                    ];
+                            operation: "!",
+                            expressions: [
+                                new Expression({
+                                    leftSide: variable.name,
+                                    rightSide: new FunctionInvocation({
+                                        onObject: parsedJsonVariable,
+                                        baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                                    }),
+                                    isAssignment: true
+                                }),
+                                new Expression({
+                                    leftSide: prop.name,
+                                    rightSide: variable.fromJson() ?? variable,
+                                    isAssignment: true
+                                })
+                            ]
+                        },
+                        else_: [new Expression({ leftSide: prop.name, rightSide: "nil", isAssignment: true })]
+                    });
+
+                    return toJsonIfPresent;
                 } else {
-                    return [
-                        new Expression({
-                            leftSide: prop.name,
-                            rightSide: variable.fromJson() ?? variable,
-                            isAssignment: true
-                        })
-                    ];
+                    return new Expression({
+                        leftSide: prop.name,
+                        rightSide: parsedJsonVariable.fromJson() ?? structVariable,
+                        isAssignment: true
+                    });
                 }
             }) ?? []),
             new FunctionInvocation({

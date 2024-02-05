@@ -29,14 +29,14 @@ module SeedApiClient
         member = case struct.type
                  when "list"
                    json_object.value.map do |v|
-                     v = v.to_h.to_json
+                     v = v.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end
                  when "optional"
                    Ast::FieldValue.from_json(json_object: json_object.value)
                  else
                    json_object.map do |v|
-                     v = v.to_h.to_json
+                     v = v.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end
                  end

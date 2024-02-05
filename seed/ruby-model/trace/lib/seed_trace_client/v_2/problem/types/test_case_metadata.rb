@@ -31,6 +31,7 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseMetadata]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          JSON.parse(json_object)
           id = struct.id
           name = struct.name
           hidden = struct.hidden

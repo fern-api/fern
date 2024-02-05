@@ -33,7 +33,7 @@ module SeedTraceClient
                      V2::Problem::BasicCustomFiles.from_json(json_object: json_object)
                    when "custom"
                      json_object.value.transform_values do |_k, v|
-                       v = v.to_h.to_json
+                       v = v.to_json
                        Commons::LANGUAGE.key(v) || v
                      end
                    else

@@ -48,21 +48,30 @@ module SeedTraceClient
       # @return [Problem::CreateProblemRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         problem_name = struct.problemName
-        problem_description = struct.problemDescription.to_h.to_json
-        problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
-        files = struct.files.transform_values do |_k, v|
-          v = v.to_h.to_json
+        if parsed_json["problemDescription"].nil?
+          problem_description = nil
+        else
+          problem_description = parsed_json["problemDescription"].to_json
+          problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+        end
+        files = parsed_json["files"].transform_values do |_k, v|
+          v = v.to_json
           Commons::LANGUAGE.key(v) || v
         end
-        input_params = struct.inputParams.map do |v|
-          v = v.to_h.to_json
+        input_params = parsed_json["inputParams"].map do |v|
+          v = v.to_json
           Problem::VariableTypeAndName.from_json(json_object: v)
         end
-        output_type = struct.outputType.to_h.to_json
-        output_type = Commons::VariableType.from_json(json_object: output_type)
-        testcases = struct.testcases.map do |v|
-          v = v.to_h.to_json
+        if parsed_json["outputType"].nil?
+          output_type = nil
+        else
+          output_type = parsed_json["outputType"].to_json
+          output_type = Commons::VariableType.from_json(json_object: output_type)
+        end
+        testcases = parsed_json["testcases"].map do |v|
+          v = v.to_json
           Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
         method_name = struct.methodName

@@ -25,8 +25,9 @@ module SeedTraceClient
         # @return [V2::Problem::GetBasicSolutionFileResponse]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          solution_file_by_language = struct.solutionFileByLanguage.transform_values do |_k, v|
-            v = v.to_h.to_json
+          parsed_json = JSON.parse(json_object)
+          solution_file_by_language = parsed_json["solutionFileByLanguage"].transform_values do |_k, v|
+            v = v.to_json
             Commons::LANGUAGE.key(v) || v
           end
           new(solution_file_by_language: solution_file_by_language, additional_properties: struct)

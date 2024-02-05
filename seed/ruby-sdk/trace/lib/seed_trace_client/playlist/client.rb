@@ -73,7 +73,7 @@ module SeedTraceClient
         }.compact
       end
       response.body.map do |v|
-        v = v.to_h.to_json
+        v = v.to_json
         Playlist::Playlist.from_json(json_object: v)
       end
     end
@@ -197,7 +197,7 @@ module SeedTraceClient
           }.compact
         end
         response.body.map do |v|
-          v = v.to_h.to_json
+          v = v.to_json
           Playlist::Playlist.from_json(json_object: v)
         end
       end

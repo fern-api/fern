@@ -35,17 +35,22 @@ module SeedTraceClient
       # @return [Submission::TestSubmissionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         problem_id = struct.problemId
-        default_test_cases = struct.defaultTestCases.map do |v|
-          v = v.to_h.to_json
+        default_test_cases = parsed_json["defaultTestCases"].map do |v|
+          v = v.to_json
           Commons::TestCase.from_json(json_object: v)
         end
-        custom_test_cases = struct.customTestCases.map do |v|
-          v = v.to_h.to_json
+        custom_test_cases = parsed_json["customTestCases"].map do |v|
+          v = v.to_json
           Commons::TestCase.from_json(json_object: v)
         end
-        status = struct.status.to_h.to_json
-        status = Submission::TestSubmissionStatus.from_json(json_object: status)
+        if parsed_json["status"].nil?
+          status = nil
+        else
+          status = parsed_json["status"].to_json
+          status = Submission::TestSubmissionStatus.from_json(json_object: status)
+        end
         new(problem_id: problem_id, default_test_cases: default_test_cases, custom_test_cases: custom_test_cases,
             status: status, additional_properties: struct)
       end

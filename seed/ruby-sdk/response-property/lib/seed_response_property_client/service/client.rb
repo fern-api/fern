@@ -28,7 +28,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["data"].to_json
       Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -41,7 +42,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).docs.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["docs"].to_json
       Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -54,7 +56,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["data"].to_json
       StringResponse.from_json(json_object: nested_response_json)
     end
 
@@ -67,7 +70,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).metadata.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["metadata"].to_json
       Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -80,7 +84,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["data"].to_json
       Service::Response.from_json(json_object: nested_response_json)
     end
 
@@ -93,7 +98,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).docs.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["docs"].to_json
       Service::WithDocs.from_json(json_object: nested_response_json)
     end
 
@@ -106,7 +112,8 @@ module SeedResponsePropertyClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
-      nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+      parsed_json JSON.parse(response.body)
+      nested_response_json parsed_json["data"].to_json
       StringResponse.from_json(json_object: nested_response_json)
     end
   end
@@ -131,7 +138,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["data"].to_json
         Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -146,7 +154,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).docs.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["docs"].to_json
         Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -161,7 +170,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["data"].to_json
         StringResponse.from_json(json_object: nested_response_json)
       end
     end
@@ -176,7 +186,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).metadata.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["metadata"].to_json
         Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -191,7 +202,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["data"].to_json
         Service::Response.from_json(json_object: nested_response_json)
       end
     end
@@ -206,7 +218,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).docs.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["docs"].to_json
         Service::WithDocs.from_json(json_object: nested_response_json)
       end
     end
@@ -221,7 +234,8 @@ module SeedResponsePropertyClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
-        nested_response_json JSON.parse(response.body, object_class: OpenStruct).data.to_h.to_json
+        parsed_json JSON.parse(response.body)
+        nested_response_json parsed_json["data"].to_json
         StringResponse.from_json(json_object: nested_response_json)
       end
     end

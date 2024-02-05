@@ -25,6 +25,7 @@ module SeedObjectClient
     # @return [Name]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
+      JSON.parse(json_object)
       id = struct.id
       value = struct.value
       new(id: id, value: value, additional_properties: struct)

@@ -27,6 +27,7 @@ module SeedTraceClient
       # @return [Commons::BinaryTreeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         root = struct.root
         nodes = struct.nodes
         new(root: root, nodes: nodes, additional_properties: struct)

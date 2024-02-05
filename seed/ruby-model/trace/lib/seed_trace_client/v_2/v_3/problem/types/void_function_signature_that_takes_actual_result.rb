@@ -30,12 +30,17 @@ module SeedTraceClient
           # @return [V2::V3::Problem::VoidFunctionSignatureThatTakesActualResult]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            parameters = struct.parameters.map do |v|
-              v = v.to_h.to_json
+            parsed_json = JSON.parse(json_object)
+            parameters = parsed_json["parameters"].map do |v|
+              v = v.to_json
               V2::V3::Problem::Parameter.from_json(json_object: v)
             end
-            actual_result_type = struct.actualResultType.to_h.to_json
-            actual_result_type = Commons::VariableType.from_json(json_object: actual_result_type)
+            if parsed_json["actualResultType"].nil?
+              actual_result_type = nil
+            else
+              actual_result_type = parsed_json["actualResultType"].to_json
+              actual_result_type = Commons::VariableType.from_json(json_object: actual_result_type)
+            end
             new(parameters: parameters, actual_result_type: actual_result_type, additional_properties: struct)
           end
 

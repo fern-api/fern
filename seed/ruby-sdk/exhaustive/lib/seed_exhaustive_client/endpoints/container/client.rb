@@ -42,7 +42,7 @@ module SeedExhaustiveClient
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
         response.body.map do |v|
-          v = v.to_h.to_json
+          v = v.to_json
           Types::Object::ObjectWithRequiredField.from_json(json_object: v)
         end
       end
@@ -152,7 +152,7 @@ module SeedExhaustiveClient
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
           response.body.map do |v|
-            v = v.to_h.to_json
+            v = v.to_json
             Types::Object::ObjectWithRequiredField.from_json(json_object: v)
           end
         end

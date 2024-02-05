@@ -38,7 +38,7 @@ module SeedTraceClient
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
       end
       response.body.transform_values do |_k, v|
-        v = v.to_h.to_json
+        v = v.to_json
         Commons::LANGUAGE.key(v) || v
       end
     end
@@ -80,7 +80,7 @@ module SeedTraceClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
         response.body.transform_values do |_k, v|
-          v = v.to_h.to_json
+          v = v.to_json
           Commons::LANGUAGE.key(v) || v
         end
       end

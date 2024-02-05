@@ -29,9 +29,10 @@ module SeedTraceClient
       # @return [Submission::TraceResponsesPage]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         offset = struct.offset
-        trace_responses = struct.traceResponses.map do |v|
-          v = v.to_h.to_json
+        trace_responses = parsed_json["traceResponses"].map do |v|
+          v = v.to_json
           Submission::TraceResponse.from_json(json_object: v)
         end
         new(offset: offset, trace_responses: trace_responses, additional_properties: struct)
