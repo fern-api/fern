@@ -4,8 +4,8 @@ require_relative "../../../problem/types/problem_description"
 require_relative "custom_files"
 require_relative "test_case_template"
 require_relative "test_case_v_2"
-require "json"
 require "set"
+require "json"
 
 module SeedTraceClient
   module V2
@@ -19,7 +19,7 @@ module SeedTraceClient
         # @param custom_files [V2::Problem::CustomFiles]
         # @param custom_test_case_templates [Array<V2::Problem::TestCaseTemplate>]
         # @param testcases [Array<V2::Problem::TestCaseV2>]
-        # @param supported_languages [Set<LANGUAGE>]
+        # @param supported_languages [Set<Commons::LANGUAGE>]
         # @param is_public [Boolean]
         # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
         # @return [V2::Problem::CreateProblemRequestV2]
@@ -35,7 +35,7 @@ module SeedTraceClient
           @custom_test_case_templates = custom_test_case_templates
           # @type [Array<V2::Problem::TestCaseV2>]
           @testcases = testcases
-          # @type [Set<LANGUAGE>]
+          # @type [Set<Commons::LANGUAGE>]
           @supported_languages = supported_languages
           # @type [Boolean]
           @is_public = is_public
@@ -50,11 +50,20 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           problem_name = struct.problemName
-          problem_description = struct.problemDescription
-          custom_files = struct.customFiles
-          custom_test_case_templates = struct.customTestCaseTemplates
-          testcases = struct.testcases
-          supported_languages = struct.supportedLanguages
+          problem_description = struct.problemDescription.to_h.to_json
+          problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+          custom_files = struct.customFiles.to_h.to_json
+          custom_files = V2::Problem::CustomFiles.from_json(json_object: custom_files)
+          custom_test_case_templates = struct.customTestCaseTemplates.map do |v|
+            v = v.to_h.to_json
+            V2::Problem::TestCaseTemplate.from_json(json_object: v)
+          end
+          testcases = struct.testcases.map do |v|
+            v = v.to_h.to_json
+            V2::Problem::TestCaseV2.from_json(json_object: v)
+          end
+          supported_languages = struct.supportedLanguages.to_h.to_json
+          supported_languages = Set.new(supported_languages)
           is_public = struct.isPublic
           new(problem_name: problem_name, problem_description: problem_description, custom_files: custom_files,
               custom_test_case_templates: custom_test_case_templates, testcases: testcases, supported_languages: supported_languages, is_public: is_public, additional_properties: struct)

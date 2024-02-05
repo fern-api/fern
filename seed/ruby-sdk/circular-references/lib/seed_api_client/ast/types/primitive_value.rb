@@ -2,7 +2,7 @@
 
 module SeedApiClient
   module Ast
-    # @type [Hash{String => String}]
+    # @type [PRIMITIVE_VALUE]
     PRIMITIVE_VALUE = { string: "STRING", number: "NUMBER" }.freeze
   end
 end

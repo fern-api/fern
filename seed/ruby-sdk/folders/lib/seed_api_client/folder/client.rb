@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative "../../requests"
 require "async"
 
 module SeedApiClient
@@ -18,8 +19,8 @@ module SeedApiClient
       # @return [Void]
       def foo(request_options: nil)
         @request_client.conn.post("/") do |req|
-          req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-          req.headers = { **req.headers, **request_options&.additional_headers }.compact
+          req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+          req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
       end
     end
@@ -37,10 +38,10 @@ module SeedApiClient
       # @param request_options [RequestOptions]
       # @return [Void]
       def foo(request_options: nil)
-        Async.call do
+        Async do
           @request_client.conn.post("/") do |req|
-            req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-            req.headers = { **req.headers, **request_options&.additional_headers }.compact
+            req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+            req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           end
         end
       end

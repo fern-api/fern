@@ -29,7 +29,8 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         test_case_id = struct.testCaseId
-        grade = struct.grade
+        grade = struct.grade.to_h.to_json
+        grade = Submission::TestCaseGrade.from_json(json_object: grade)
         new(test_case_id: test_case_id, grade: grade, additional_properties: struct)
       end
 

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "test_case_implementation"
-
 require_relative "test_case_template_id"
+require_relative "test_case_implementation"
 require "json"
 
 module SeedTraceClient
@@ -36,7 +35,8 @@ module SeedTraceClient
             struct = JSON.parse(json_object, object_class: OpenStruct)
             template_id = struct.templateId
             name = struct.name
-            implementation = struct.implementation
+            implementation = struct.implementation.to_h.to_json
+            implementation = V2::V3::Problem::TestCaseImplementation.from_json(json_object: implementation)
             new(template_id: template_id, name: name, implementation: implementation, additional_properties: struct)
           end
 

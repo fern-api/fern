@@ -63,8 +63,8 @@ export class FunctionInvocation extends AstNode {
         }
     }
 
-    private writeArgmuments(): string {
-        return `(${this.arguments_.map((a) => a.write({})).join(", ")})`;
+    private writeArgmuments(): string | undefined {
+        return this.arguments_.length > 0 ? `(${this.arguments_.map((a) => a.write({})).join(", ")})` : undefined;
     }
 
     // When writing the definition
@@ -72,11 +72,11 @@ export class FunctionInvocation extends AstNode {
         const className = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
         this.addText({
             stringContent: className,
-            templateString: this.optionalSafeCall ? "%s&." : "%s.",
             startingTabSpaces
         });
         this.addText({
             stringContent: this.baseFunction?.invocationName ?? this.baseFunction?.name,
+            templateString: className === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
             startingTabSpaces,
             appendToLastString: true
         });

@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../../commons/types/variable_type"
-
 require_relative "file_info_v_2"
+require_relative "../../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
@@ -30,8 +29,12 @@ module SeedTraceClient
         # @return [V2::Problem::DefaultProvidedFile]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          file = struct.file
-          related_types = struct.relatedTypes
+          file = struct.file.to_h.to_json
+          file = V2::Problem::FileInfoV2.from_json(json_object: file)
+          related_types = struct.relatedTypes.map do |v|
+            v = v.to_h.to_json
+            Commons::VariableType.from_json(json_object: v)
+          end
           new(file: file, related_types: related_types, additional_properties: struct)
         end
 

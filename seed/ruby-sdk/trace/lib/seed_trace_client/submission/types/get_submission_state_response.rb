@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "date"
+require_relative "../../commons/types/language"
 require_relative "submission_type_state"
 require "json"
 
@@ -11,7 +12,7 @@ module SeedTraceClient
 
       # @param time_submitted [DateTime]
       # @param submission [String]
-      # @param language [Hash{String => String}]
+      # @param language [LANGUAGE]
       # @param submission_type_state [Submission::SubmissionTypeState]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
       # @return [Submission::GetSubmissionStateResponse]
@@ -20,7 +21,7 @@ module SeedTraceClient
         @time_submitted = time_submitted
         # @type [String]
         @submission = submission
-        # @type [Hash{String => String}]
+        # @type [LANGUAGE]
         @language = language
         # @type [Submission::SubmissionTypeState]
         @submission_type_state = submission_type_state
@@ -34,10 +35,11 @@ module SeedTraceClient
       # @return [Submission::GetSubmissionStateResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        time_submitted = struct.timeSubmitted
+        time_submitted = DateTime.parse(struct.timeSubmitted)
         submission = struct.submission
-        language = struct.language
-        submission_type_state = struct.submissionTypeState
+        language = Commons::LANGUAGE.key(struct.language) || struct.language
+        submission_type_state = struct.submissionTypeState.to_h.to_json
+        submission_type_state = Submission::SubmissionTypeState.from_json(json_object: submission_type_state)
         new(time_submitted: time_submitted, submission: submission, language: language,
             submission_type_state: submission_type_state, additional_properties: struct)
       end
@@ -49,7 +51,7 @@ module SeedTraceClient
         {
           "timeSubmitted": @time_submitted,
           "submission": @submission,
-          "language": @language,
+          "language": Commons::LANGUAGE[@language] || @language,
           "submissionTypeState": @submission_type_state
         }.to_json
       end
@@ -61,7 +63,7 @@ module SeedTraceClient
       def self.validate_raw(obj:)
         obj.time_submitted&.is_a?(DateTime) != false || raise("Passed value for field obj.time_submitted is not the expected type, validation failed.")
         obj.submission.is_a?(String) != false || raise("Passed value for field obj.submission is not the expected type, validation failed.")
-        obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         Submission::SubmissionTypeState.validate_raw(obj: obj.submission_type_state)
       end
     end

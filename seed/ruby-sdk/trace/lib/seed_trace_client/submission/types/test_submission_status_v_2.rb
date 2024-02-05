@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/problem_id"
-
-require_relative "../../v_2/problem/types/problem_info_v_2"
-
 require_relative "test_submission_update"
+require_relative "../../commons/types/problem_id"
+require_relative "../../v_2/problem/types/problem_info_v_2"
 require "json"
 
 module SeedTraceClient
@@ -37,10 +35,14 @@ module SeedTraceClient
       # @return [Submission::TestSubmissionStatusV2]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        updates = struct.updates
+        updates = struct.updates.map do |v|
+          v = v.to_h.to_json
+          Submission::TestSubmissionUpdate.from_json(json_object: v)
+        end
         problem_id = struct.problemId
         problem_version = struct.problemVersion
-        problem_info = struct.problemInfo
+        problem_info = struct.problemInfo.to_h.to_json
+        problem_info = V2::Problem::ProblemInfoV2.from_json(json_object: problem_info)
         new(updates: updates, problem_id: problem_id, problem_version: problem_version, problem_info: problem_info,
             additional_properties: struct)
       end

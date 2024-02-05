@@ -31,7 +31,8 @@ module SeedObjectsWithImportsClient
       struct = JSON.parse(json_object, object_class: OpenStruct)
       id = struct.id
       label = struct.label
-      metadata = struct.metadata
+      metadata = struct.metadata.to_h.to_json
+      metadata = Commons::Metadata::Metadata.from_json(json_object: metadata)
       new(id: id, label: label, metadata: metadata, additional_properties: struct)
     end
 

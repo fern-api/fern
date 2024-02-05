@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Submission
-    # @type [Hash{String => String}]
+    # @type [SUBMISSION_TYPE_ENUM]
     SUBMISSION_TYPE_ENUM = { test: "TEST" }.freeze
   end
 end

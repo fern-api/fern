@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Commons
-    # @type [Hash{String => String}]
+    # @type [LANGUAGE]
     LANGUAGE = { java: "JAVA", javascript: "JAVASCRIPT", python: "PYTHON" }.freeze
   end
 end

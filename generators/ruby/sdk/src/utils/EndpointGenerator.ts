@@ -112,7 +112,7 @@ export class EndpointGenerator {
                                 wireValue: prop.name.wireValue,
                                 type: crf.fromTypeReference(prop.valueType),
                                 isOptional: isTypeOptional(prop.valueType),
-                                documentation: prop instanceof Property ? prop.documentation : undefined
+                                documentation: prop instanceof Property ? prop.documentation : prop.docs
                             });
                         })
                     ];
@@ -185,9 +185,13 @@ export class EndpointGenerator {
 
     public getEndpointParameters(): Parameter[] {
         const params = [
-            ...this.pathParametersAsProperties.map((pathProp) => pathProp.toParameter({})),
-            ...this.queryParametersAsProperties.map((queryProp) => queryProp.toParameter({})),
-            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({})),
+            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({ describeAsHashInYardoc: true })),
+            ...this.pathParametersAsProperties.map((pathProp) =>
+                pathProp.toParameter({ describeAsHashInYardoc: true })
+            ),
+            ...this.queryParametersAsProperties.map((queryProp) =>
+                queryProp.toParameter({ describeAsHashInYardoc: true })
+            ),
             ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true }))
         ];
         if (this.streamProcessingBlock !== undefined) {
@@ -210,7 +214,7 @@ export class EndpointGenerator {
                     ])
                 ),
                 // Expand the existing headers hash, then the additionalheaders params
-                additionalHashes: ["req.headers", additionalHeadersProperty],
+                additionalHashes: [{ value: "req.headers" }, { value: additionalHeadersProperty, defaultValue: "{}" }],
                 shouldCompact: true
             }),
             isAssignment: true
@@ -229,7 +233,7 @@ export class EndpointGenerator {
                               qp.toVariable(VariableType.LOCAL)
                           ])
                       ),
-                      additionalHashes: [additionalQueryProperty],
+                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
                       shouldCompact: true
                   }),
                   isAssignment: true
@@ -244,7 +248,10 @@ export class EndpointGenerator {
         }
 
         const referenceBodyHash = new HashInstance({
-            additionalHashes: [prop.name, additionalBodyProperty],
+            additionalHashes: [
+                { value: prop.name, defaultValue: "{}" },
+                { value: additionalBodyProperty, defaultValue: "{}" }
+            ],
             shouldCompact: true
         });
         return [
@@ -267,7 +274,7 @@ export class EndpointGenerator {
                                 prop.toVariable(VariableType.LOCAL)
                             ])
                         ),
-                        additionalHashes: [additionalBodyProperty],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
                     return [
@@ -323,7 +330,7 @@ export class EndpointGenerator {
                                 return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)];
                             })
                         ),
-                        additionalHashes: [additionalBodyProperty],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
 
@@ -353,23 +360,27 @@ export class EndpointGenerator {
         return;
     }
 
-    public getFaradayBlock(requestClientVariable: Variable): BlockConfiguration {
+    public getFaradayBlock(
+        requestClientVariable: Variable,
+        path: string,
+        shouldOverwriteUrl: boolean
+    ): BlockConfiguration {
         const expressions: AstNode[] = [
             ...this.requestOptions.getAdditionalRequestOverrides(this.requestOptionsVariable, this.blockArg),
             ...this.requestOptions.headerProperties.map(
                 (prop) =>
                     new ConditionalStatement({
                         if_: {
-                            leftSide: new FunctionInvocation({
+                            rightSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
-                                onObject: `${requestClientVariable.write({})}.${prop.name}`,
+                                onObject: `${this.requestOptionsVariable.write({})}&.${prop.name}`,
                                 baseFunction: new Function_({ name: "nil?", functionBody: [] })
                             }),
                             operation: "!",
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
-                                    rightSide: `${requestClientVariable.write({})}.${prop.name}`,
+                                    rightSide: `${this.requestOptionsVariable.write({})}.${prop.name}`,
                                     isAssignment: true
                                 })
                             ]
@@ -398,14 +409,15 @@ export class EndpointGenerator {
         if (body !== undefined) {
             expressions.push(...body);
         }
-        const url =
-            this.endpoint.baseUrl !== undefined
-                ? new Expression({
-                      leftSide: `${this.blockArg}.url`,
-                      rightSide: `${requestClientVariable.write({})}.default_environment[${this.endpoint.baseUrl}]`,
-                      isAssignment: true
-                  })
-                : undefined;
+        const url = shouldOverwriteUrl
+            ? new Expression({
+                  leftSide: `${this.blockArg}.url`,
+                  rightSide: `"#{${requestClientVariable.write({})}.default_environment[:${
+                      this.endpoint.baseUrl
+                  }]}/${path}"`,
+                  isAssignment: false
+              })
+            : undefined;
         if (url !== undefined) {
             expressions.push(url);
         }
@@ -444,11 +456,16 @@ export class EndpointGenerator {
     }
 
     public getResponseExpressions(responseVariable: Variable): AstNode[] | undefined {
+        const responseVariableBody = new Variable({
+            name: `${responseVariable.name}.body`,
+            type: GenericClassReference,
+            variableType: VariableType.LOCAL
+        });
         return this.endpoint.response?._visit<AstNode[]>({
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariable) ?? responseVariable],
+                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
                             // Turn to struct, then get the field, then reconvert to JSON (to_h.to_json)
@@ -466,7 +483,7 @@ export class EndpointGenerator {
                                             baseFunction: new Function_({ name: "parse", functionBody: [] }),
                                             arguments_: [
                                                 new Argument({
-                                                    value: "json_object",
+                                                    value: responseVariableBody,
                                                     type: GenericClassReference,
                                                     isNamed: false
                                                 }),
@@ -487,7 +504,7 @@ export class EndpointGenerator {
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
                         } else {
-                            return [responseCr.fromJson(responseVariable) ?? responseVariable];
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
                         }
                     },
                     _other: () => {
@@ -499,7 +516,7 @@ export class EndpointGenerator {
             streaming: () => {
                 throw new Error("Streaming not yet supported.");
             },
-            text: () => [responseVariable],
+            text: () => [responseVariableBody],
             _other: () => {
                 throw new Error("Unknown response type.");
             }

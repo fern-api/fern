@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require "json"
-
 require "set"
+require "json"
 
 module SeedExamplesClient
   module Types

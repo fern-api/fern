@@ -1,27 +1,24 @@
 # frozen_string_literal: true
 
+require_relative "../../../requests"
 require_relative "problem/client"
 
 module SeedTraceClient
   module V2
     module V3
       class Client
-        attr_reader :request_client
-
-        # @param client [RequestClient]
+        # @param request_client [RequestClient]
         # @return [V2::V3::Client]
-        def initialize(client:)
-          @problem_client = V2::V3::Problem::ProblemClient.new(request_client: @request_client)
+        def initialize(request_client:)
+          @problem = V2::V3::ProblemClient.new(request_client: request_client)
         end
       end
 
       class AsyncClient
-        attr_reader :client
-
-        # @param client [AsyncRequestClient]
+        # @param request_client [RequestClient]
         # @return [V2::V3::AsyncClient]
-        def initialize(client:)
-          @async_problem_client = V2::V3::Problem::AsyncProblemClient.new(request_client: @request_client)
+        def initialize(request_client:)
+          @problem = V2::V3::AsyncProblemClient.new(request_client: request_client)
         end
       end
     end

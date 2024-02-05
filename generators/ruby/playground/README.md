@@ -29,10 +29,22 @@ gem build playground.gemspec
 gem install playground-0.0.0.gem
 
 irb
-    irb(main):001>
-    irb(main):002>
-    ...
+~ irb(main):001>
+~ irb(main):002>
+~ ...
 ```
+
+## Running tests
+
+If you are looking to run any tests you run within the `test/` directory, you can do so by running:
+
+```sh
+bundle exec ruby test/test_playground.rb
+```
+
+Similar to Poetry for Python, Bundler is running the command listed after `exec` within a virtual environment with the specified dependencies.
+
+Note that these tests already depend on the `playground` gem, so you will need to build and install it locally if you have not done so already. Instructions to do so can be found above in **CLI testing**.
 
 ## Installation for this Gem
 

@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require "async/http/faraday"
+require_relative "environment"
 require "faraday"
+require "faraday/retry"
+require "async/http/faraday"
 
 module SeedMultiUrlEnvironmentClient
   class RequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -29,7 +31,7 @@ module SeedMultiUrlEnvironmentClient
   end
 
   class AsyncRequestClient
-    attr_reader :headers, :base_url, :conn
+    attr_reader :headers, :default_environment, :conn
 
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
@@ -48,26 +50,24 @@ module SeedMultiUrlEnvironmentClient
         faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
         faraday.options.timeout = timeout_in_seconds
-        faraday.adapter = :async_http
+        faraday.adapter :async_http
       end
     end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :timeout_in_seconds, :token, :additional_headers, :additional_query_parameters,
-                :additional_body_parameters
+    attr_reader :token, :additional_headers, :additional_query_parameters, :additional_body_parameters,
+                :timeout_in_seconds
 
-    # @param timeout_in_seconds [Long]
     # @param token [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
+    # @param timeout_in_seconds [Long]
     # @return [RequestOptions]
-    def initialize(token:, timeout_in_seconds: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil)
-      # @type [Long]
-      @timeout_in_seconds = timeout_in_seconds
+    def initialize(token: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
       # @type [String]
       @token = token
       # @type [Hash{String => Object}]
@@ -76,6 +76,8 @@ module SeedMultiUrlEnvironmentClient
       @additional_query_parameters = additional_query_parameters
       # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
+      # @type [Long]
+      @timeout_in_seconds = timeout_in_seconds
     end
   end
 end

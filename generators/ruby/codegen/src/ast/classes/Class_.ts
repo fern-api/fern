@@ -71,7 +71,9 @@ export class Class_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
+        this.documentation?.forEach((doc) =>
+            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
+        );
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
         const classVariableAccessors =
             this.properties.length > 0
@@ -95,7 +97,6 @@ export class Class_ extends AstNode {
         this.functions.forEach((fun) => (imports = new Set([...imports, ...fun.getImports()])));
         this.properties.forEach((prop) => (imports = new Set([...imports, ...prop.getImports()])));
         this.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
-
         // Do not import self
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
     }

@@ -28,7 +28,10 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         id = struct.id
-        params = struct.params
+        params = struct.params.map do |v|
+          v = v.to_h.to_json
+          Commons::VariableValue.from_json(json_object: v)
+        end
         new(id: id, params: params, additional_properties: struct)
       end
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require "date"
-require "json"
 require "set"
+require "json"
 
 module SeedExhaustiveClient
   module Types
@@ -66,12 +66,13 @@ module SeedExhaustiveClient
           long = struct.long
           double = struct.double
           bool = struct.bool
-          datetime = struct.datetime
-          date = struct.date
+          datetime = DateTime.parse(struct.datetime)
+          date = Date.parse(struct.date)
           uuid = struct.uuid
           base_64 = struct.base64
           list = struct.list
-          set = struct.set
+          set = struct.set.to_h.to_json
+          set = Set.new(set)
           map = struct.map
           new(string: string, integer: integer, long: long, double: double, bool: bool, datetime: datetime, date: date,
               uuid: uuid, base_64: base_64, list: list, set: set, map: map, additional_properties: struct)

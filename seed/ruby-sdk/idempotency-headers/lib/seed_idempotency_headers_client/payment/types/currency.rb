@@ -2,7 +2,7 @@
 
 module SeedIdempotencyHeadersClient
   module Payment
-    # @type [Hash{String => String}]
+    # @type [CURRENCY]
     CURRENCY = { usd: "USD", yen: "YEN" }.freeze
   end
 end

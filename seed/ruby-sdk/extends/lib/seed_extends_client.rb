@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "seed_extends_client/types/docs"
-require_relative "seed_extends_client/types/example_type"
-require_relative "seed_extends_client/types/json"
-require_relative "seed_extends_client/types/nested_type"
-require "async/http/faraday"
+require_relative "types_export"
+require_relative "requests"
 require "faraday"
+require "faraday/retry"
+require "async/http/faraday"
 
 module SeedExtendsClient
   class Client
@@ -13,7 +12,7 @@ module SeedExtendsClient
     # @param timeout_in_seconds [Long]
     # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 
@@ -22,7 +21,7 @@ module SeedExtendsClient
     # @param timeout_in_seconds [Long]
     # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      AsyncRequestClient.new(headers: headers, base_url: base_url, conn: conn)
+      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 end

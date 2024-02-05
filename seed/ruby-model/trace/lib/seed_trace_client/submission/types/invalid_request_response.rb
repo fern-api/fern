@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "invalid_request_cause"
-
 require_relative "submission_request"
+require_relative "invalid_request_cause"
 require "json"
 
 module SeedTraceClient
@@ -29,8 +28,10 @@ module SeedTraceClient
       # @return [Submission::InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        request = struct.request
-        cause = struct.cause
+        request = struct.request.to_h.to_json
+        request = Submission::SubmissionRequest.from_json(json_object: request)
+        cause = struct.cause.to_h.to_json
+        cause = Submission::InvalidRequestCause.from_json(json_object: cause)
         new(request: request, cause: cause, additional_properties: struct)
       end
 

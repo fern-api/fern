@@ -37,7 +37,7 @@ export class Argument extends AstNode {
         });
     }
 
-    public fromJson(): FunctionInvocation | undefined {
+    public fromJson(): AstNode | undefined {
         return;
     }
 }

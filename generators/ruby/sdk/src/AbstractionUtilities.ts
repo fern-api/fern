@@ -1,4 +1,3 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { generatePathTemplate } from "@fern-api/generator-commons";
 import {
     Argument,
@@ -13,11 +12,10 @@ import {
     GeneratedRubyFile,
     GenericClassReference,
     getBreadcrumbsFromFilepath,
-    getLocationForServiceDeclaration,
-    getLocationFromFernFilepath,
     HashInstance,
     HashReference,
     Import,
+    LocationGenerator,
     LongClassReference,
     Module_,
     Parameter,
@@ -48,6 +46,7 @@ import { HeadersGenerator } from "./utils/HeadersGenerator";
 import { RequestOptions } from "./utils/RequestOptionsClass";
 
 export interface ClientClassPair {
+    subpackageName: string;
     syncClientClass: Class_;
     asyncClientClass: Class_;
 }
@@ -97,6 +96,7 @@ export function generateEndpoints(
                 fileUploadUtility
             );
 
+            const shouldOverwriteUrl = endpoint.baseUrl !== undefined;
             const functionCore: AstNode[] = [
                 new Expression({
                     leftSide: responseVariable,
@@ -104,8 +104,10 @@ export function generateEndpoints(
                         // TODO: Do this field access on the client better
                         onObject: `${requestClientVariable.write({})}.conn`,
                         baseFunction: new Function_({ name: endpoint.method.toLowerCase(), functionBody: [] }),
-                        arguments_: [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
-                        block: generator.getFaradayBlock(requestClientVariable)
+                        arguments_: shouldOverwriteUrl
+                            ? []
+                            : [new Argument({ isNamed: false, value: `"/${path}"`, type: StringClassReference })],
+                        block: generator.getFaradayBlock(requestClientVariable, path, shouldOverwriteUrl)
                     }),
                     isAssignment: true
                 }),
@@ -137,7 +139,8 @@ export function generateEndpoints(
                     : functionCore,
                 returnValue: generator.getResponseType(),
                 crf,
-                flattenedProperties
+                flattenedProperties,
+                documentation: endpoint.docs
             });
         })
         .filter((fun) => fun !== undefined) as Function_[];
@@ -150,12 +153,14 @@ export function generateRootPackage(
     asyncRequestClient: Class_,
     requestOptions: RequestOptions,
     crf: ClassReferenceFactory,
-    syncSubpackages: Class_[],
-    asyncSubpackages: Class_[],
+    syncSubpackages: Map<string, Class_>,
+    asyncSubpackages: Map<string, Class_>,
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
     fileUploadUtility: FileUploadUtility,
+    typeExporterLocation: string,
+    environmentClass?: ClassReference,
     rootService?: HttpService
 ): GeneratedRubyFile {
     const classReference = new ClassReference({
@@ -167,12 +172,12 @@ export function generateRootPackage(
     const requestClientVariable = new Variable({
         name: "request_client",
         type: requestClient.classReference,
-        variableType: VariableType.LOCAL
+        variableType: VariableType.INSTANCE
     });
     const clientClass = new Class_({
         classReference,
-        properties: syncSubpackages.map(
-            (sp) => new Property({ name: snakeCase(sp.classReference.name), type: sp.classReference })
+        properties: Array.from(syncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
         ),
         functions: rootService
             ? generateEndpoints(
@@ -202,9 +207,9 @@ export function generateRootPackage(
                     }),
                     isAssignment: true
                 }),
-                ...syncSubpackages.map((sp) => {
+                ...Array.from(syncSubpackages.entries()).map(([spName, sp]) => {
                     const spInstanceVar = new Variable({
-                        name: snakeCase(sp.classReference.name),
+                        name: snakeCase(spName),
                         type: sp.classReference,
                         variableType: VariableType.INSTANCE
                     });
@@ -213,7 +218,9 @@ export function generateRootPackage(
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
                             baseFunction: sp.initializer,
-                            arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
+                            arguments_: sp.initializer?.parameters.map((param) =>
+                                param.toArgument(requestClientVariable)
+                            )
                         }),
                         isAssignment: true
                     });
@@ -228,7 +235,7 @@ export function generateRootPackage(
     const asyncRequestClientVariable = new Variable({
         name: "async_request_client",
         type: asyncRequestClient.classReference,
-        variableType: VariableType.LOCAL
+        variableType: VariableType.INSTANCE
     });
     const asyncClassReference = new ClassReference({
         name: "AsyncClient",
@@ -236,13 +243,13 @@ export function generateRootPackage(
     });
     const asyncClientClass = new Class_({
         classReference: asyncClassReference,
-        properties: asyncSubpackages.map(
-            (sp) => new Property({ name: snakeCase(sp.classReference.name), type: sp.classReference })
+        properties: Array.from(asyncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
         ),
         functions: rootService
             ? generateEndpoints(
                   crf,
-                  requestClientVariable,
+                  asyncRequestClientVariable,
                   rootService.endpoints,
                   requestOptions,
                   false,
@@ -263,13 +270,15 @@ export function generateRootPackage(
                     rightSide: new FunctionInvocation({
                         onObject: asyncRequestClient.classReference,
                         baseFunction: asyncRequestClient.initializer,
-                        arguments_: asyncRequestClient.properties.map((prop) => prop.toArgument(prop.name, true))
+                        arguments_: asyncRequestClient.initializer?.parameters.map((param) =>
+                            param.toArgument(param.name)
+                        )
                     }),
                     isAssignment: true
                 }),
-                ...asyncSubpackages.map((sp) => {
+                ...Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
                     const spInstanceVar = new Variable({
-                        name: snakeCase(sp.classReference.name),
+                        name: snakeCase(spName),
                         type: sp.classReference,
                         variableType: VariableType.INSTANCE
                     });
@@ -278,7 +287,9 @@ export function generateRootPackage(
                         rightSide: new FunctionInvocation({
                             onObject: sp.classReference,
                             baseFunction: sp.initializer,
-                            arguments_: sp.properties.map((prop) => prop.toArgument(requestClientVariable, true))
+                            arguments_: sp.initializer?.parameters.map((param) =>
+                                param.toArgument(asyncRequestClientVariable)
+                            )
                         }),
                         isAssignment: true
                     });
@@ -289,32 +300,31 @@ export function generateRootPackage(
         })
     });
 
-    const allTypeImports = Array.from(crf.generatedReferences.entries())
-        .map(([_, cr]) => cr.import_)
-        .filter((i) => i !== undefined) as Import[];
+    const maybeEnvironmentImport = environmentClass?.import_;
+    const typeExporterImport = new Import({ from: typeExporterLocation, isExternal: false });
     const rootNode = Module_.wrapInModules(
         clientName,
         [clientClass, asyncClientClass],
         undefined,
         true,
-        allTypeImports
+        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
     );
     return new GeneratedRubyFile({
         rootNode,
-        directoryPrefix: RelativeFilePath.of("."),
-        nestImportsInDirectory: RelativeFilePath.of(gemName),
-        name: `${gemName}`
+        fullPath: `${gemName}`
     });
 }
 
 export function generateSubpackage(
+    subpackageName: Name,
     package_: Package,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
-    subpackages: Class_[] = [],
-    asyncSubpackages: Class_[] = []
+    locationGenerator: LocationGenerator,
+    subpackages: Map<string, Class_> = new Map(),
+    asyncSubpackages: Map<string, Class_> = new Map()
 ): ClientClassPair {
-    const location = getLocationFromFernFilepath(package_.fernFilepath) + "client";
+    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath) + "client";
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath);
 
     // Add Client class
@@ -326,15 +336,14 @@ export function generateSubpackage(
     });
     const syncClientClass = new Class_({
         classReference: syncClassReference,
-        properties: [requestClientProperty],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
             // Initialize each subpackage
-            functionBody: subpackages.map((sp) => {
+            functionBody: Array.from(subpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
-                    name: snakeCase(sp.classReference.name),
+                    name: snakeCase(spName),
                     type: sp.classReference,
                     variableType: VariableType.INSTANCE
                 });
@@ -346,15 +355,16 @@ export function generateSubpackage(
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
                                   arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(requestClientProperty.toVariable(), true)
+                                      prop.toArgument(requestClientProperty.toVariable(VariableType.LOCAL), true)
                                   )
                               })
                             : sp.classReference,
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: requestClientCr })],
-            returnValue: syncClassReference
+            parameters: [requestClientProperty.toParameter({})],
+            returnValue: syncClassReference,
+            documentation: package_.docs
         })
     });
 
@@ -367,15 +377,14 @@ export function generateSubpackage(
     });
     const asyncClientClass = new Class_({
         classReference: asyncClassReference,
-        properties: [new Property({ name: "client", type: asyncRequestClientCr })],
         includeInitializer: false,
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
             // Initialize each subpackage
-            functionBody: asyncSubpackages.map((sp) => {
+            functionBody: Array.from(asyncSubpackages.entries()).map(([spName, sp]) => {
                 const subpackageClassVariable = new Variable({
-                    name: snakeCase(sp.classReference.name),
+                    name: snakeCase(spName),
                     type: sp.classReference,
                     variableType: VariableType.INSTANCE
                 });
@@ -387,19 +396,19 @@ export function generateSubpackage(
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
                                   arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(asyncRequestClientProperty.toVariable(), true)
+                                      prop.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL), true)
                                   )
                               })
                             : sp.classReference,
                     isAssignment: true
                 });
             }),
-            parameters: [new Parameter({ name: "client", type: asyncRequestClientCr })],
+            parameters: [requestClientProperty.toParameter({})],
             returnValue: asyncClassReference
         })
     });
 
-    return { syncClientClass, asyncClientClass };
+    return { subpackageName: subpackageName.pascalCase.safeName, syncClientClass, asyncClientClass };
 }
 
 export function generateService(
@@ -411,10 +420,14 @@ export function generateService(
     irBasePath: string,
     generatedClasses: Map<TypeId, Class_>,
     flattenedProperties: Map<TypeId, ObjectProperty[]>,
-    fileUploadUtility: FileUploadUtility
+    fileUploadUtility: FileUploadUtility,
+    locationGenerator: LocationGenerator
 ): ClientClassPair {
     const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
-    const import_ = new Import({ from: getLocationForServiceDeclaration(service.name), isExternal: false });
+    const import_ = new Import({
+        from: locationGenerator.getLocationForServiceDeclaration(service.name),
+        isExternal: false
+    });
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(service.name.fernFilepath);
 
     // Add Client class
@@ -466,7 +479,7 @@ export function generateService(
         )
     });
 
-    return { syncClientClass, asyncClientClass };
+    return { subpackageName: serviceName, syncClientClass, asyncClientClass };
 }
 
 // Need to create the environment file and then reference back to them via default_env@specified_url
@@ -494,7 +507,10 @@ export function getDefaultEnvironmentUrl(environmentsConfig?: EnvironmentsConfig
 // Actually might just be: be able to reference the default + create the files, it looks like endpoints
 export function generateEnvironmentConstants(environmentsConfig: EnvironmentsConfig): Class_ {
     return new Class_({
-        classReference: new ClassReference({ name: "Environment", location: "environment" }),
+        classReference: new ClassReference({
+            name: "Environment",
+            import_: new Import({ from: "environment", isExternal: false })
+        }),
         expressions: environmentsConfig.environments._visit<Expression[]>({
             singleBaseUrl: (sbue: SingleBaseUrlEnvironments) =>
                 sbue.environments.map(
@@ -595,42 +611,7 @@ function generateRequestClientInitializer(
     });
 
     const retryOptions = new HashInstance({ contents: new Map([["max", retriesVariable]]) });
-    const faradayConfiguration = [
-        new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
-        new Expression({
-            leftSide: "faraday.request",
-            rightSide: new Expression({
-                leftSide: new ClassReference({
-                    name: ":retry",
-                    import_: new Import({ from: "faraday/retry", isExternal: true })
-                }),
-                rightSide: retryOptions,
-                operation: ", "
-            }),
-            isAssignment: false
-        }),
-        // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
-        new Expression({
-            leftSide: "faraday.response",
-            rightSide: ":raise_error, include_request: true",
-            isAssignment: false
-        }),
-        new Expression({ leftSide: "faraday.options.timeout", rightSide: "timeout_in_seconds", isAssignment: true })
-    ];
-
-    if (isAsync) {
-        faradayConfiguration.push(
-            new Expression({
-                leftSide: "faraday.adapter",
-                rightSide: new ClassReference({
-                    name: ":async_http",
-                    import_: new Import({ from: "async/http/faraday", isExternal: true })
-                }),
-                isAssignment: true
-            })
-        );
-    }
-
+    const faradayConfiguration = [];
     if (hasFileBasedDependencies) {
         faradayConfiguration.push(
             new Expression({
@@ -640,6 +621,43 @@ function generateRequestClientInitializer(
                         name: ":multipart",
                         import_: new Import({ from: "faraday/multipart", isExternal: true })
                     })
+                }),
+                isAssignment: false
+            })
+        );
+    }
+    faradayConfiguration.push(
+        ...[
+            new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
+            new Expression({
+                leftSide: "faraday.request",
+                rightSide: new Expression({
+                    leftSide: new ClassReference({
+                        name: ":retry",
+                        import_: new Import({ from: "faraday/retry", isExternal: true })
+                    }),
+                    rightSide: retryOptions,
+                    operation: ", "
+                }),
+                isAssignment: false
+            }),
+            // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
+            new Expression({
+                leftSide: "faraday.response",
+                rightSide: ":raise_error, include_request: true",
+                isAssignment: false
+            }),
+            new Expression({ leftSide: "faraday.options.timeout", rightSide: "timeout_in_seconds", isAssignment: true })
+        ]
+    );
+
+    if (isAsync) {
+        faradayConfiguration.push(
+            new Expression({
+                leftSide: "faraday.adapter",
+                rightSide: new ClassReference({
+                    name: ":async_http",
+                    import_: new Import({ from: "async/http/faraday", isExternal: true })
                 }),
                 isAssignment: false
             })
@@ -753,11 +771,17 @@ export function generateRequestClients(
             name: "headers",
             type: new HashReference({ keyType: StringClassReference, valueType: StringClassReference })
         }),
-        new Property({ name: "base_url", type: StringClassReference }),
+        new Property({
+            name: isMultiBaseUrlEnvironments ? "default_environment" : "base_url",
+            type: StringClassReference
+        }),
         new Property({ name: "conn", type: faradayReference })
     ];
     // Add Client class
-    const clientClassReference = new ClassReference({ name: "RequestClient", location: "requests" });
+    const clientClassReference = new ClassReference({
+        name: "RequestClient",
+        import_: new Import({ from: "requests", isExternal: false })
+    });
     const clientClass = new Class_({
         classReference: clientClassReference,
         properties: clientProperties,
@@ -777,7 +801,10 @@ export function generateRequestClients(
     });
 
     // Add Async Client class
-    const asyncClientClassReference = new ClassReference({ name: "AsyncRequestClient", location: "requests" });
+    const asyncClientClassReference = new ClassReference({
+        name: "AsyncRequestClient",
+        import_: new Import({ from: "requests", isExternal: false })
+    });
     const asyncClientClass = new Class_({
         classReference: asyncClientClassReference,
         properties: clientProperties,

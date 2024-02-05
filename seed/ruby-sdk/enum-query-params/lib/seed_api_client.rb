@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
+require_relative "requests"
 require "faraday"
+require "faraday/retry"
 require_relative "seed_api_client/svc/client"
 require "async/http/faraday"
 

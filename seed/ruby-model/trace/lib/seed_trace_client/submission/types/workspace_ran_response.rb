@@ -29,7 +29,8 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         submission_id = struct.submissionId
-        run_details = struct.runDetails
+        run_details = struct.runDetails.to_h.to_json
+        run_details = Submission::WorkspaceRunDetails.from_json(json_object: run_details)
         new(submission_id: submission_id, run_details: run_details, additional_properties: struct)
       end
 

@@ -48,6 +48,9 @@ export class Expression extends AstNode {
         if (this.rightSide instanceof AstNode) {
             imports = new Set([...imports, ...this.rightSide.getImports()]);
         }
+        if (this.leftSide instanceof AstNode) {
+            imports = new Set([...imports, ...this.leftSide.getImports()]);
+        }
         return imports;
     }
 }

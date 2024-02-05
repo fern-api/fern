@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require "async/http/faraday"
 require "faraday"
+require "faraday/retry"
+require "async/http/faraday"
 
 module SeedBasicAuthClient
   class RequestClient
@@ -46,27 +47,25 @@ module SeedBasicAuthClient
         faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
         faraday.options.timeout = timeout_in_seconds
-        faraday.adapter = :async_http
+        faraday.adapter :async_http
       end
     end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :timeout_in_seconds, :username, :password, :additional_headers, :additional_query_parameters,
-                :additional_body_parameters
+    attr_reader :username, :password, :additional_headers, :additional_query_parameters, :additional_body_parameters,
+                :timeout_in_seconds
 
-    # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
+    # @param timeout_in_seconds [Long]
     # @return [RequestOptions]
-    def initialize(username:, password:, timeout_in_seconds: nil, additional_headers: nil,
-                   additional_query_parameters: nil, additional_body_parameters: nil)
-      # @type [Long]
-      @timeout_in_seconds = timeout_in_seconds
+    def initialize(username: nil, password: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
       # @type [String]
       @username = username
       # @type [String]
@@ -77,6 +76,8 @@ module SeedBasicAuthClient
       @additional_query_parameters = additional_query_parameters
       # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
+      # @type [Long]
+      @timeout_in_seconds = timeout_in_seconds
     end
   end
 end

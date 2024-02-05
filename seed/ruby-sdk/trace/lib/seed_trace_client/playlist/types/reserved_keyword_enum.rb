@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Playlist
-    # @type [Hash{String => String}]
+    # @type [RESERVED_KEYWORD_ENUM]
     RESERVED_KEYWORD_ENUM = { is: "is", as: "as" }.freeze
   end
 end

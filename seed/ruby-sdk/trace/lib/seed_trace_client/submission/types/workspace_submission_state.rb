@@ -24,7 +24,8 @@ module SeedTraceClient
       # @return [Submission::WorkspaceSubmissionState]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        status = struct.status
+        status = struct.status.to_h.to_json
+        status = Submission::WorkspaceSubmissionStatus.from_json(json_object: status)
         new(status: status, additional_properties: struct)
       end
 

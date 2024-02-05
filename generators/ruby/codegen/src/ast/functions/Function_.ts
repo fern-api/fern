@@ -65,11 +65,13 @@ export class Function_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
+        this.documentation?.forEach((doc) =>
+            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
+        );
         this.addText({
             stringContent: this.yardoc.write({ startingTabSpaces }),
-            templateString: this.documentation !== undefined ? "#\n%s" : undefined,
-            startingTabSpaces: this.documentation !== undefined ? startingTabSpaces : 0
+            templateString: this.documentation !== undefined && this.documentation.length > 0 ? "#\n%s" : undefined,
+            startingTabSpaces: this.documentation !== undefined && this.documentation.length > 0 ? startingTabSpaces : 0
         });
         this.addText({
             stringContent: this.isStatic ? `self.${this.name}` : this.name,

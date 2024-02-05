@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-require_relative "seed_objects_with_imports_client/commons/metadata/types/metadata"
-require_relative "seed_objects_with_imports_client/file/directory/types/directory"
-require_relative "seed_objects_with_imports_client/file/types/file"
-require_relative "seed_objects_with_imports_client/types/node"
-require_relative "seed_objects_with_imports_client/types/tree"
-require "async/http/faraday"
+require_relative "types_export"
+require_relative "requests"
 require "faraday"
+require "faraday/retry"
+require "async/http/faraday"
 
 module SeedObjectsWithImportsClient
   class Client
@@ -14,7 +12,7 @@ module SeedObjectsWithImportsClient
     # @param timeout_in_seconds [Long]
     # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 
@@ -23,7 +21,7 @@ module SeedObjectsWithImportsClient
     # @param timeout_in_seconds [Long]
     # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      AsyncRequestClient.new(headers: headers, base_url: base_url, conn: conn)
+      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 end

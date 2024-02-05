@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "../../../commons/types/language"
 require_relative "basic_custom_files"
 
 module SeedTraceClient
@@ -33,7 +34,7 @@ module SeedTraceClient
                    when "custom"
                      json_object.value.transform_values do |_k, v|
                        v = v.to_h.to_json
-                       LANGUAGE.key(v)
+                       Commons::LANGUAGE.key(v) || v
                      end
                    else
                      V2::Problem::BasicCustomFiles.from_json(json_object: json_object)
@@ -85,7 +86,7 @@ module SeedTraceClient
           new(member: member, discriminant: "basic")
         end
 
-        # @param member [Hash{LANGUAGE => LANGUAGE}]
+        # @param member [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
         # @return [V2::Problem::CustomFiles]
         def self.custom(member:)
           new(member: member, discriminant: "custom")

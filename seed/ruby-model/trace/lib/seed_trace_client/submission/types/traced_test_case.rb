@@ -27,7 +27,8 @@ module SeedTraceClient
       # @return [Submission::TracedTestCase]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        result = struct.result
+        result = struct.result.to_h.to_json
+        result = Submission::TestCaseResultWithStdout.from_json(json_object: result)
         trace_responses_size = struct.traceResponsesSize
         new(result: result, trace_responses_size: trace_responses_size, additional_properties: struct)
       end

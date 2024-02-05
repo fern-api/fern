@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Submission
-    # @type [Hash{String => String}]
+    # @type [RUNNING_SUBMISSION_STATE]
     RUNNING_SUBMISSION_STATE = {
       queueing_submission: "QUEUEING_SUBMISSION",
       killing_historical_submissions: "KILLING_HISTORICAL_SUBMISSIONS",

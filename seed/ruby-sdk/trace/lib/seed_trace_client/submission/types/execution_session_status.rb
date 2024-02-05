@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Submission
-    # @type [Hash{String => String}]
+    # @type [EXECUTION_SESSION_STATUS]
     EXECUTION_SESSION_STATUS = {
       creating_container: "CREATING_CONTAINER",
       provisioning_container: "PROVISIONING_CONTAINER",

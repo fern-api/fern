@@ -1,5 +1,5 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
-import { ClassReference, ClassReferenceFactory } from "./classes/ClassReference";
+import { ArrayReference, ClassReference, ClassReferenceFactory } from "./classes/ClassReference";
 import { AstNode } from "./core/AstNode";
 import { Parameter } from "./Parameter";
 import { Property } from "./Property";
@@ -69,20 +69,45 @@ export class Yardoc extends AstNode {
         }
     }
 
+    private writeMultilineYardocComment(documentation?: string[], defaultComment?: string): void {
+        documentation?.forEach((doc, index) => {
+            const trimmedDoc = doc.trim();
+            this.addText({
+                stringContent: trimmedDoc.length > 0 ? trimmedDoc : undefined,
+                templateString: index > 0 ? "#  " : undefined,
+                appendToLastString: index === 0
+            });
+        }) ?? this.addText({ stringContent: defaultComment, appendToLastString: true });
+    }
+
     private writeParameterAsHash(parameter: Parameter, startingTabSpaces: number): void {
-        const typeId = parameter.type[0]?.resolvedTypeId;
-        const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
+        // TODO: handle multitype better with hashes
+        if (parameter.type.length > 1) {
+            return this.writeParameterAsClass(parameter, startingTabSpaces);
+        }
+
+        let typeId = parameter.type[0]?.resolvedTypeId;
+        let isArray = false;
         const classFactory = this.crf;
+        // TODO: handle nested hashes better
+        if (parameter.type[0] instanceof ArrayReference && parameter.type[0].innerType instanceof ClassReference) {
+            isArray = true;
+            typeId = parameter.type[0].innerType.resolvedTypeId;
+        }
+        const properties: ObjectProperty[] | undefined = this.flattenedProperties?.get(typeId ?? "");
+
         if (typeId === undefined || properties === undefined || classFactory === undefined) {
             this.writeParameterAsClass(parameter, startingTabSpaces);
         } else {
-            this.addText({ stringContent: parameter.name, templateString: "# @param %s [Hash] ", startingTabSpaces });
             this.addText({
-                stringContent:
-                    parameter.documentation?.replaceAll("\n", "") ??
-                    `Request of type ${parameter.type.map((param) => param.typeHint).join(", ")}, as a Hash`,
-                appendToLastString: true
+                stringContent: parameter.name,
+                templateString: isArray ? "# @param %s [Array<Hash>] " : "# @param %s [Hash] ",
+                startingTabSpaces
             });
+            this.writeMultilineYardocComment(
+                parameter.documentation,
+                `Request of type ${parameter.type.map((param) => param.typeHint).join(", ")}, as a Hash`
+            );
             properties.forEach((prop) => {
                 const classReference = classFactory.fromTypeReference(prop.valueType);
                 this.writeHashContents(
@@ -99,7 +124,7 @@ export class Yardoc extends AstNode {
     private writeParameterAsClass(parameter: Parameter, startingTabSpaces: number): void {
         if (parameter.isBlock) {
             this.addText({ stringContent: parameter.name, templateString: "# @yield", startingTabSpaces });
-            this.addText({ stringContent: parameter.documentation?.replaceAll("\n", ""), appendToLastString: true });
+            this.writeMultilineYardocComment(parameter.documentation);
         } else {
             this.addText({ stringContent: parameter.name, templateString: "# @param %s", startingTabSpaces });
             this.addText({
@@ -107,7 +132,7 @@ export class Yardoc extends AstNode {
                 templateString: " [%s] ",
                 appendToLastString: true
             });
-            this.addText({ stringContent: parameter.documentation?.replaceAll("\n", ""), appendToLastString: true });
+            this.writeMultilineYardocComment(parameter.documentation);
         }
     }
 
@@ -120,12 +145,10 @@ export class Yardoc extends AstNode {
                         : this.reference.type instanceof ClassReference
                         ? this.reference.type.typeHint
                         : this.reference.type;
-                const documentation =
-                    this.reference.type instanceof Property
-                        ? this.reference.type.documentation?.replaceAll("\n", "")
-                        : undefined;
                 this.addText({ stringContent: typeName, templateString: "# @type [%s] ", startingTabSpaces });
-                this.addText({ stringContent: documentation?.replaceAll("\n", ""), appendToLastString: true });
+                this.writeMultilineYardocComment(
+                    this.reference.type instanceof Property ? this.reference.type.documentation : []
+                );
             } else {
                 this.reference.parameters.forEach((parameter) => {
                     if (parameter.describeAsHashInYardoc) {

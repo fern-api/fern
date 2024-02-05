@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require_relative "../../../commons/types/problem_id"
-require "json"
 require "set"
+require "json"
 
 module SeedTraceClient
   module V2
@@ -38,7 +38,8 @@ module SeedTraceClient
           problem_id = struct.problemId
           problem_name = struct.problemName
           problem_version = struct.problemVersion
-          variable_types = struct.variableTypes
+          variable_types = struct.variableTypes.to_h.to_json
+          variable_types = Set.new(variable_types)
           new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
               variable_types: variable_types, additional_properties: struct)
         end
