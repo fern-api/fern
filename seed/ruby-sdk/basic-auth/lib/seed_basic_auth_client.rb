@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_basic_auth_client/basic_auth/client"
-require "async/http/faraday"
 
 module SeedBasicAuthClient
   class Client
@@ -16,7 +13,7 @@ module SeedBasicAuthClient
     # @param username [String]
     # @param password [String]
     # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
+    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           username: username, password: password)
       @basic_auth = BasicAuthClient.new(request_client: @request_client)
@@ -31,7 +28,7 @@ module SeedBasicAuthClient
     # @param username [String]
     # @param password [String]
     # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
+    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      username: username, password: password)
       @basic_auth = AsyncBasicAuthClient.new(request_client: @async_request_client)

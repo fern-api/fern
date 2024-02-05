@@ -2,12 +2,8 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require_relative "seed_audiences_client/folder_aclient"
-require_relative "seed_audiences_client/folder_a/service/client"
+require_relative "seed_audiences_client/folder_a/client"
 require_relative "seed_audiences_client/foo/client"
-require "async/http/faraday"
 
 module SeedAudiencesClient
   class Client

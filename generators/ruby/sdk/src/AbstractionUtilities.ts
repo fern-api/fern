@@ -324,7 +324,7 @@ export function generateSubpackage(
     subpackages: Map<string, Class_> = new Map(),
     asyncSubpackages: Map<string, Class_> = new Map()
 ): ClientClassPair {
-    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath) + "client";
+    const location = locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client");
     const moduleBreadcrumbs = getBreadcrumbsFromFilepath(package_.fernFilepath);
 
     // Add Client class
@@ -556,9 +556,7 @@ function generateRequestClientInitializer(
     const allHeaders = new Map([
         // SDK Default Headers
         [`"${sdkConfig.platformHeaders.language}"`, "Ruby"],
-        [`"${sdkConfig.platformHeaders.sdkName}"`, clientName],
-        // Auth Default Headers
-        ...headersGenerator.getAuthHeaders()
+        [`"${sdkConfig.platformHeaders.sdkName}"`, clientName]
     ]);
     if (sdkVersion !== undefined) {
         allHeaders.set(sdkConfig.platformHeaders.sdkVersion, sdkVersion);
@@ -567,50 +565,46 @@ function generateRequestClientInitializer(
     // If "all" then require the param and always put it in, if optional
     // just add the header if it's there headers["name"] = value if value
     let authHeaders = new Map();
-    const authHeaderSetters: Expression[] = [];
-
-    const authHeaderProperties = headersGenerator.getAuthHeadersAsProperties();
-
+    const authHeaderSetters: AstNode[] = [];
+    let headersToSet = headersGenerator.getAdditionalHeadersAsProperties();
     if (headersGenerator.isAuthRequired) {
         authHeaders = new Map(headersGenerator.getAuthHeaders());
     } else {
-        // Make an if statement for each auth scheme that adds the header if present
-        authHeaderProperties.forEach(
-            (prop) =>
-                new ConditionalStatement({
-                    if_: {
-                        rightSide: new FunctionInvocation({
-                            onObject: prop.name,
-                            baseFunction: new Function_({ name: "nil?", functionBody: [] })
-                        }),
-                        operation: "!",
-                        expressions: [
-                            new FunctionInvocation({
-                                onObject: "@headers",
-                                baseFunction: new Function_({ name: "store", functionBody: [] }),
-                                arguments_: [
-                                    new Argument({
-                                        isNamed: false,
-                                        value: prop.wireValue ?? prop.name,
-                                        type: StringClassReference
-                                    }),
-                                    new Argument({ isNamed: false, value: prop.name, type: StringClassReference })
-                                ]
-                            })
-                        ]
-                    }
-                })
-        );
+        headersToSet = [...headersGenerator.getAuthHeadersAsProperties(), ...headersToSet];
     }
+    // Make an if statement for each auth scheme that adds the header if present
+    headersToSet.forEach((prop) =>
+        authHeaderSetters.push(
+            new ConditionalStatement({
+                if_: {
+                    rightSide: new FunctionInvocation({
+                        onObject: prop.name,
+                        baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                    }),
+                    operation: "!",
+                    expressions: [
+                        new Expression({
+                            leftSide: `@headers["${prop.wireValue ?? prop.name}"]`,
+                            rightSide: prop.name,
+                            isAssignment: true
+                        })
+                    ]
+                }
+            })
+        )
+    );
 
-    const retriesVariable = new Variable({
+    const retriesProperty = new Property({
         name: "max_retries",
         type: LongClassReference,
         isOptional: true,
-        variableType: VariableType.LOCAL
+        documentation: "The number of times to retry a failed request, defaults to 2."
     });
+    const timeoutProperty = new Property({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true });
 
-    const retryOptions = new HashInstance({ contents: new Map([["max", retriesVariable]]) });
+    const retryOptions = new HashInstance({
+        contents: new Map([["max", retriesProperty.toVariable(VariableType.LOCAL)]])
+    });
     const faradayConfiguration = [];
     if (hasFileBasedDependencies) {
         faradayConfiguration.push(
@@ -629,25 +623,12 @@ function generateRequestClientInitializer(
     faradayConfiguration.push(
         ...[
             new Expression({ leftSide: "faraday.request", rightSide: ":json", isAssignment: false }),
-            new Expression({
-                leftSide: "faraday.request",
-                rightSide: new Expression({
-                    leftSide: new ClassReference({
-                        name: ":retry",
-                        import_: new Import({ from: "faraday/retry", isExternal: true })
-                    }),
-                    rightSide: retryOptions,
-                    operation: ", "
-                }),
-                isAssignment: false
-            }),
             // TODO: parse and throw the custom exception within the endpoint function. Disable this faraday middleware that does this generically.
             new Expression({
                 leftSide: "faraday.response",
                 rightSide: ":raise_error, include_request: true",
                 isAssignment: false
-            }),
-            new Expression({ leftSide: "faraday.options.timeout", rightSide: "timeout_in_seconds", isAssignment: true })
+            })
         ]
     );
 
@@ -663,6 +644,53 @@ function generateRequestClientInitializer(
             })
         );
     }
+
+    const initialRequestOverrides: Property[] = [retriesProperty, timeoutProperty];
+    faradayConfiguration.push(
+        new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: retriesProperty.toVariable(VariableType.LOCAL).write({}),
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new Expression({
+                        leftSide: "faraday.request",
+                        rightSide: new Expression({
+                            leftSide: new ClassReference({
+                                name: ":retry",
+                                import_: new Import({ from: "faraday/retry", isExternal: true })
+                            }),
+                            rightSide: retryOptions,
+                            operation: ", "
+                        }),
+                        isAssignment: false
+                    })
+                ]
+            }
+        })
+    );
+    faradayConfiguration.push(
+        new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new Expression({
+                        leftSide: "faraday.options.timeout",
+                        rightSide: timeoutProperty.toVariable(VariableType.LOCAL).write({}),
+                        isAssignment: true
+                    })
+                ]
+            }
+        })
+    );
 
     const functionParams = [];
     const functionBody = [];
@@ -703,13 +731,7 @@ function generateRequestClientInitializer(
         parameters: [
             ...functionParams,
             // Select sample of the request overrides object properties
-            new Parameter({
-                name: "max_retries",
-                type: LongClassReference,
-                isOptional: true,
-                documentation: "The number of times to retry a failed request, defaults to 2."
-            }),
-            new Parameter({ name: "timeout_in_seconds", type: LongClassReference, isOptional: true }),
+            ...initialRequestOverrides.map((prop) => prop.toParameter({})),
             // Auth headers
             ...headersGenerator.getAuthHeadersAsParameters(),
             // Global headers

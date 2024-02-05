@@ -5,8 +5,6 @@ require "set"
 require_relative "types/maybe_list"
 require_relative "types/maybe_list_or_set"
 require_relative "types/my_object"
-require "faraday/multipart"
-require "mini_mime"
 require_relative "../../core/file_utilities"
 require "async"
 
@@ -48,7 +46,7 @@ module SeedFileUploadClient
           maybeString: maybe_string,
           integer: integer,
           file: FileUtilities.as_faraday_multipart(file_like: file),
-          maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) if maybe_file.nil?),
+          maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) unless maybe_file.nil?),
           maybeInteger: maybe_integer,
           listOfStrings: list_of_strings,
           setOfStrings: set_of_strings,
@@ -144,7 +142,7 @@ module SeedFileUploadClient
             maybeString: maybe_string,
             integer: integer,
             file: FileUtilities.as_faraday_multipart(file_like: file),
-            maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) if maybe_file.nil?),
+            maybeFile: (FileUtilities.as_faraday_multipart(file_like: maybe_file) unless maybe_file.nil?),
             maybeInteger: maybe_integer,
             listOfStrings: list_of_strings,
             setOfStrings: set_of_strings,

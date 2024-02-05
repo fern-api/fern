@@ -71,26 +71,26 @@ export class HeadersGenerator {
                     new Parameter({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Parameter({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 _other: () => {

@@ -2,11 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/multipart"
-require "faraday/retry"
 require_relative "seed_file_download_client/service/client"
-require "async/http/faraday"
 
 module SeedFileDownloadClient
   class Client

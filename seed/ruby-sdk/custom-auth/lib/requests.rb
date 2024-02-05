@@ -12,7 +12,7 @@ module SeedCustomAuthClient
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [RequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
+    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
@@ -20,9 +20,9 @@ module SeedCustomAuthClient
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end
@@ -34,7 +34,7 @@ module SeedCustomAuthClient
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [AsyncRequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
+    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedCustomAuthClient",
@@ -42,10 +42,10 @@ module SeedCustomAuthClient
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
         faraday.adapter :async_http
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end

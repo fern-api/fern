@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_api_wide_base_path_client/service/client"
-require "async/http/faraday"
 
 module SeedApiWideBasePathClient
   class Client

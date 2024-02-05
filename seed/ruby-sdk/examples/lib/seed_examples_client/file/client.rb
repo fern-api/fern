@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "../../requests"
-require_relative "notificationclient"
-require_relative "notification/service/client"
+require_relative "notification/client"
 require_relative "service/client"
 
 module SeedExamplesClient

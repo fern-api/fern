@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_nursery_api_client/package/client"
-require "async/http/faraday"
 
 module SeedNurseryApiClient
   class Client

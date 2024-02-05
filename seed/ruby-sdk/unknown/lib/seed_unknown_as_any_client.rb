@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_unknown_as_any_client/unknown/client"
-require "async/http/faraday"
 
 module SeedUnknownAsAnyClient
   class Client

@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_idempotency_headers_client/payment/client"
-require "async/http/faraday"
 
 module SeedIdempotencyHeadersClient
   class Client
@@ -15,7 +12,7 @@ module SeedIdempotencyHeadersClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           token: token)
       @payment = PaymentClient.new(request_client: @request_client)
@@ -29,7 +26,7 @@ module SeedIdempotencyHeadersClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      token: token)
       @payment = AsyncPaymentClient.new(request_client: @async_request_client)

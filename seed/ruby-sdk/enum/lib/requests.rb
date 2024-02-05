@@ -15,9 +15,9 @@ module SeedEnumClient
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedEnumClient" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end
@@ -32,10 +32,10 @@ module SeedEnumClient
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedEnumClient" }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
         faraday.adapter :async_http
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end

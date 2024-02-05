@@ -15,11 +15,13 @@ module SeedLiteralHeadersClient
     # @return [RequestClient]
     def initialize(api_header:, api_test:, max_retries: nil, timeout_in_seconds: nil)
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
+      @headers["X-API-Header"] = api_header unless api_header.nil?
+      @headers["X-API-Test"] = api_test unless api_test.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end
@@ -34,12 +36,14 @@ module SeedLiteralHeadersClient
     # @return [AsyncRequestClient]
     def initialize(api_header:, api_test:, max_retries: nil, timeout_in_seconds: nil)
       @headers = { "X-Fern-Language": "Ruby", "X-Fern-SDK-Name": "SeedLiteralHeadersClient" }
+      @headers["X-API-Header"] = api_header unless api_header.nil?
+      @headers["X-API-Test"] = api_test unless api_test.nil?
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
         faraday.adapter :async_http
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end

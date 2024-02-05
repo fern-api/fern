@@ -1,6 +1,7 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
+import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
@@ -89,7 +90,13 @@ export class Function_ extends AstNode {
         let imports = new Set<Import>();
         this.parameters.forEach((param) => (imports = new Set([...imports, ...param.getImports()])));
         this.returnValue.forEach((rv) => (imports = new Set([...imports, ...rv.getImports()])));
-        this.functionBody.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+
+        this.functionBody.forEach((exp) => {
+            if (exp instanceof Class_) {
+                return;
+            }
+            imports = new Set([...imports, ...exp.getImports()]);
+        });
         return imports;
     }
 }

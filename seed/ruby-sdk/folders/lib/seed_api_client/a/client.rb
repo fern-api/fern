@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 require_relative "../../requests"
 require_relative "c/client"
-require_relative "../../requests"
 
 module SeedApiClient
   module A

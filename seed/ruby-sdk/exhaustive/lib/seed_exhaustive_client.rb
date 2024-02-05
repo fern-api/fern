@@ -2,21 +2,11 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require_relative "seed_exhaustive_client/endpointsclient"
-require_relative "seed_exhaustive_client/endpoints/container/client"
-require_relative "seed_exhaustive_client/endpoints/enum/client"
-require_relative "seed_exhaustive_client/endpoints/http_methods/client"
-require_relative "seed_exhaustive_client/endpoints/object/client"
-require_relative "seed_exhaustive_client/endpoints/params/client"
-require_relative "seed_exhaustive_client/endpoints/primitive/client"
-require_relative "seed_exhaustive_client/endpoints/union/client"
+require_relative "seed_exhaustive_client/endpoints/client"
 require_relative "seed_exhaustive_client/inlined_requests/client"
 require_relative "seed_exhaustive_client/no_auth/client"
 require_relative "seed_exhaustive_client/no_req_body/client"
 require_relative "seed_exhaustive_client/req_with_headers/client"
-require "async/http/faraday"
 
 module SeedExhaustiveClient
   class Client
@@ -26,7 +16,7 @@ module SeedExhaustiveClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           token: token)
       @endpoints = Endpoints::Client.new(request_client: @request_client)
@@ -44,7 +34,7 @@ module SeedExhaustiveClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      token: token)
       @endpoints = Endpoints::AsyncClient.new(request_client: @async_request_client)

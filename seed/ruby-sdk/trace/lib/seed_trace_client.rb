@@ -2,8 +2,6 @@
 require_relative "environment"
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_trace_client/v_2/client"
 require_relative "seed_trace_client/admin/client"
 require_relative "seed_trace_client/homepage/client"
@@ -13,9 +11,6 @@ require_relative "seed_trace_client/problem/client"
 require_relative "seed_trace_client/submission/client"
 require_relative "seed_trace_client/sysprop/client"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require "async/http/faraday"
 
 module SeedTraceClient
   class Client
@@ -26,7 +21,7 @@ module SeedTraceClient
     # @param token [String] 
     # @param x_random_header [String] 
     # @return [Client]
-    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil, x_random_header: nil)
+    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token:, x_random_header: nil)
       @request_client = RequestClient.new(environment: environment, max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
       @ = V2::Client.new(request_client: @request_client)
       @admin = AdminClient.new(request_client: @request_client)
@@ -46,7 +41,7 @@ module SeedTraceClient
     # @param token [String] 
     # @param x_random_header [String] 
     # @return [AsyncClient]
-    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil, x_random_header: nil)
+    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token:, x_random_header: nil)
       @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
       @ = V2::AsyncClient.new(request_client: @async_request_client)
       @admin = AsyncAdminClient.new(request_client: @async_request_client)

@@ -2,12 +2,9 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_literal_headers_client/no_headers/client"
 require_relative "seed_literal_headers_client/only_literal_headers/client"
 require_relative "seed_literal_headers_client/with_non_literal_headers/client"
-require "async/http/faraday"
 
 module SeedLiteralHeadersClient
   class Client

@@ -1,5 +1,6 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
+import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 import { Variable } from "../Variable";
@@ -69,14 +70,14 @@ export class FunctionInvocation extends AstNode {
 
     // When writing the definition
     public writeInternal(startingTabSpaces: number): void {
-        const className = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
+        const onObject = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
         this.addText({
-            stringContent: className,
+            stringContent: onObject,
             startingTabSpaces
         });
         this.addText({
             stringContent: this.baseFunction?.invocationName ?? this.baseFunction?.name,
-            templateString: className === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
+            templateString: onObject === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
             startingTabSpaces,
             appendToLastString: true
         });
@@ -85,12 +86,15 @@ export class FunctionInvocation extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        let imports = this.baseFunction?.getImports() ?? new Set<Import>();
+        let imports = new Set<Import>();
         if (this.onObject instanceof AstNode) {
             imports = new Set([...imports, ...this.onObject.getImports()]);
         }
+
         this.arguments_.forEach((arg) => (imports = new Set([...imports, ...arg.getImports()])));
-        this.block?.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+        this.block?.expressions
+            .filter((exp) => !(exp instanceof Class_))
+            .forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
         return imports;
     }
 }

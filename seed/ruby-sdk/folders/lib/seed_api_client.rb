@@ -1,16 +1,10 @@
 # frozen_string_literal: true
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require_relative "seed_api_client/aclient"
-require_relative "seed_api_client/a/c/client"
+require_relative "seed_api_client/a/client"
 require_relative "seed_api_client/folder/client"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require "async/http/faraday"
-require_relative "seed_api_client/aclient"
+require_relative "seed_api_client/a/client"
 
 module SeedApiClient
   class Client

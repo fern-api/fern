@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_custom_auth_client/custom_auth/client"
-require "async/http/faraday"
 
 module SeedCustomAuthClient
   class Client
@@ -15,7 +12,7 @@ module SeedCustomAuthClient
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
+    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           custom_auth_scheme: custom_auth_scheme)
       @custom_auth = CustomAuthClient.new(request_client: @request_client)
@@ -29,7 +26,7 @@ module SeedCustomAuthClient
     # @param timeout_in_seconds [Long]
     # @param custom_auth_scheme [String]
     # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, custom_auth_scheme: nil)
+    def initialize(custom_auth_scheme:, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      custom_auth_scheme: custom_auth_scheme)
       @custom_auth = AsyncCustomAuthClient.new(request_client: @async_request_client)

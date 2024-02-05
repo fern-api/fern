@@ -8,6 +8,8 @@ import { Module_ } from "../ast/Module_";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
 
+export const MINIMUM_RUBY_VERSION = "2.7";
+
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
     return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
 }
@@ -99,7 +101,7 @@ export function generateGitignore(): GeneratedFile {
 
 export function generateRubocopConfig(): GeneratedFile {
     const content = `AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: ${MINIMUM_RUBY_VERSION}
   
 Style/StringLiterals:
   Enabled: true

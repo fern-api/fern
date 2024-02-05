@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_bearer_token_environment_variable_client/service/client"
-require "async/http/faraday"
 
 module SeedBearerTokenEnvironmentVariableClient
   class Client
@@ -15,7 +12,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [Client]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                           api_key: api_key)
       @service = ServiceClient.new(request_client: @request_client)
@@ -29,7 +26,7 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [AsyncClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
                                                      api_key: api_key)
       @service = AsyncServiceClient.new(request_client: @async_request_client)

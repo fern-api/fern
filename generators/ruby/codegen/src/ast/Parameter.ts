@@ -65,7 +65,8 @@ export class Parameter extends AstNode {
             name: this.name,
             type: this.type,
             value,
-            isNamed: this.isNamed
+            isNamed: this.isNamed,
+            documentation: this.documentation
         });
     }
 }

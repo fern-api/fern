@@ -1,5 +1,6 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
+import { MINIMUM_RUBY_VERSION } from "../../utils/RubyUtilities";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
 import { ExternalDependency } from "../ExternalDependency";
@@ -116,7 +117,7 @@ export class Gemspec extends FunctionInvocation {
                     }),
                     new Expression({
                         leftSide: "spec.required_ruby_version",
-                        rightSide: '">= 2.7.0"',
+                        rightSide: `">= ${MINIMUM_RUBY_VERSION}.0"`,
                         isAssignment: true
                     }),
                     new Expression({

@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_undiscriminated_unions_client/union/client"
-require "async/http/faraday"
 
 module SeedUndiscriminatedUnionsClient
   class Client

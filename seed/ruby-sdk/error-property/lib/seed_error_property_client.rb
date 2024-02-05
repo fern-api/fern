@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_error_property_client/property_based_error/client"
-require "async/http/faraday"
 
 module SeedErrorPropertyClient
   class Client

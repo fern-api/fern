@@ -2,10 +2,7 @@
 
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_streaming_client/dummy/client"
-require "async/http/faraday"
 
 module SeedStreamingClient
   class Client

@@ -3,16 +3,9 @@
 require_relative "environment"
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
-require_relative "seed_examples_client/fileclient"
-require_relative "seed_examples_client/file/notificationclient"
-require_relative "seed_examples_client/file/notification/service/client"
-require_relative "seed_examples_client/file/service/client"
-require_relative "seed_examples_client/healthclient"
-require_relative "seed_examples_client/health/service/client"
+require_relative "seed_examples_client/file/client"
+require_relative "seed_examples_client/health/client"
 require_relative "seed_examples_client/service/client"
-require "async/http/faraday"
 
 module SeedExamplesClient
   class Client
@@ -23,7 +16,7 @@ module SeedExamplesClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [Client]
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(environment: environment, max_retries: max_retries,
                                           timeout_in_seconds: timeout_in_seconds, token: token)
       @file = File::Client.new(request_client: @request_client)
@@ -53,7 +46,7 @@ module SeedExamplesClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [AsyncClient]
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries,
                                                      timeout_in_seconds: timeout_in_seconds, token: token)
       @file = File::AsyncClient.new(request_client: @async_request_client)

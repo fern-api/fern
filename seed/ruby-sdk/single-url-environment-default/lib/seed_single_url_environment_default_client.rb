@@ -3,10 +3,7 @@
 require_relative "environment"
 require_relative "types_export"
 require_relative "requests"
-require "faraday"
-require "faraday/retry"
 require_relative "seed_single_url_environment_default_client/dummy/client"
-require "async/http/faraday"
 
 module SeedSingleUrlEnvironmentDefaultClient
   class Client
@@ -17,7 +14,7 @@ module SeedSingleUrlEnvironmentDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [Client]
-    def initialize(environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
       @request_client = RequestClient.new(environment: environment, max_retries: max_retries,
                                           timeout_in_seconds: timeout_in_seconds, token: token)
       @dummy = DummyClient.new(request_client: @request_client)
@@ -32,7 +29,7 @@ module SeedSingleUrlEnvironmentDefaultClient
     # @param timeout_in_seconds [Long]
     # @param token [String]
     # @return [AsyncClient]
-    def initialize(environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil, token: nil)
+    def initialize(token:, environment: Environment::PRODUCTION, max_retries: nil, timeout_in_seconds: nil)
       @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries,
                                                      timeout_in_seconds: timeout_in_seconds, token: token)
       @dummy = AsyncDummyClient.new(request_client: @async_request_client)
