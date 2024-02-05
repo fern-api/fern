@@ -106,6 +106,7 @@ class RootClientGenerator:
             is_async=False,
             generated_root_client=generated_root_client,
         )
+        source_file.add_arbitrary_code(AST.CodeWriter(retryer))
         if self._is_default_body_parameter_used:
             source_file.add_arbitrary_code(AST.CodeWriter(self._write_default_param))
         source_file.add_class_declaration(
@@ -425,7 +426,11 @@ class RootClientGenerator:
                                     (
                                         "timeout",
                                         AST.Expression(f"{self._timeout_constructor_parameter_name}"),
-                                    )
+                                    ),
+                                    (
+                                        "transport",
+                                        AST.Expression("Retry()"),
+                                    ),
                                 ],
                             ),
                             right=AST.Expression(f"{RootClientGenerator.HTTPX_CLIENT_CONSTRUCTOR_PARAMETER_NAME}"),
@@ -559,3 +564,55 @@ class RootClientGenerator:
                 async_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._async_class_name))),
                 sync_instantiation=AST.Expression(AST.CodeWriter(client_snippet_writer(self._class_name))),
             )
+
+
+# Add retryer logic
+retryer = """
+import time
+
+# Because this rate limiter doesn't block all requests, we need a relatively high limit to cope with racing threads.
+retry_limit = 10
+
+class Retry(httpx.HTTPTransport):
+    def handle_request(
+        self,
+        request: httpx.Request,
+    ) -> httpx.Response:
+        retry = 0
+        resp = None
+        while retry < retry_limit:
+            retry += 1
+            try:
+                if resp is not None:
+                    resp.close()
+                resp = super().handle_request(request)
+            # Retry on request exception
+            except Exception as e:
+                print("httpx {} exception {} caught - retrying".format(request.url, e))
+                time.sleep(1)
+                continue
+            # Retry on 429
+            if resp.status_code == 429:
+                retry_delay = resp.headers.get("Retry-After")
+                print("httpx {} 429 response - retrying after {}s".format(request.url, retry_delay))
+                # Sleep for the requested amount of time
+                time.sleep(int(retry_delay))
+                continue
+            # Retry on 502
+            if resp.status_code == 502:
+                print("httpx {} 502 response - retrying after 30s".format(request.url))
+                time.sleep(30)
+                continue
+            content_type = resp.headers.get("Content-Type")
+            if content_type is not None:
+                mime_type, _, _ = content_type.partition(";")
+                if mime_type == 'application/json':
+                    try:
+                        resp.read()
+                        resp.json()
+                    except Exception as e:
+                        print("httpx {} response not valid json '{}' - retrying".format(request.url, e))
+                        continue
+            break
+        return resp
+"""
