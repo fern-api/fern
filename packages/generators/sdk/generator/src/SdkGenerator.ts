@@ -7,6 +7,7 @@ import {
     convertExportedFilePathToFilePath,
     CoreUtilitiesManager,
     DependencyManager,
+    DependencyType,
     ExportedDirectory,
     ExportedFilePath,
     ExportsManager,
@@ -57,6 +58,7 @@ export declare namespace SdkGenerator {
         intermediateRepresentation: IntermediateRepresentation;
         context: GeneratorContext;
         npmPackage: NpmPackage | undefined;
+        generateJestTests: boolean;
         config: Config;
     }
 
@@ -89,6 +91,9 @@ export class SdkGenerator {
     private intermediateRepresentation: IntermediateRepresentation;
     private config: SdkGenerator.Config;
     private npmPackage: NpmPackage | undefined;
+    private generateJestTests: boolean;
+    private extraFiles: Record<string, string> = {};
+    private extraScripts: Record<string, string> = {};
 
     private endpointSnippets: FernGeneratorExec.Endpoint[] = [];
 
@@ -128,11 +133,19 @@ export class SdkGenerator {
     private genericAPISdkErrorGenerator: GenericAPISdkErrorGenerator;
     private timeoutSdkErrorGenerator: TimeoutSdkErrorGenerator;
 
-    constructor({ namespaceExport, intermediateRepresentation, context, npmPackage, config }: SdkGenerator.Init) {
+    constructor({
+        namespaceExport,
+        intermediateRepresentation,
+        context,
+        npmPackage,
+        config,
+        generateJestTests,
+    }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
         this.config = config;
         this.npmPackage = npmPackage;
+        this.generateJestTests = generateJestTests;
 
         this.exportsManager = new ExportsManager();
         this.coreUtilitiesManager = new CoreUtilitiesManager();
@@ -300,6 +313,30 @@ export class SdkGenerator {
         this.exportsManager.writeExportsToProject(this.rootDirectory);
         this.context.logger.debug("Generated exports");
 
+        if (this.generateJestTests) {
+            this.dependencyManager.addDependency("jest", "^29.7.0", { type: DependencyType.DEV });
+            this.dependencyManager.addDependency("@types/jest", "^29.5.5", { type: DependencyType.DEV });
+            this.dependencyManager.addDependency("ts-jest", "^29.1.1", { type: DependencyType.DEV });
+
+            this.extraFiles["tests/client.test.ts"] = `/**
+* This is a test file for the SDK.
+* 
+* Add any tests here and make sure to mark this file
+* in \`.fernignore\`. 
+*/
+describe("test", () => {
+    it("default", () => {
+        expect(true).toBe(true);
+    });
+});`;
+            this.extraFiles["jest.config.js"] = `/** @type {import('ts-jest').JestConfigWithTsJest} */
+module.exports = {
+    preset: "ts-jest",
+    testEnvironment: "node",
+};`;
+            this.extraScripts.test = "jest";
+        }
+
         if (this.config.snippetFilepath != null) {
             this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
@@ -319,6 +356,8 @@ export class SdkGenerator {
                   tsMorphProject: this.project,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
+                  extraFiles: this.extraFiles,
+                  extraScripts: this.extraScripts,
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -327,6 +366,8 @@ export class SdkGenerator {
                   outputEsm: this.config.outputEsm,
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
+                  extraFiles: this.extraFiles,
+                  extraScripts: this.extraScripts,
               });
     }
 

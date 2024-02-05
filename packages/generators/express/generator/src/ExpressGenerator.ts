@@ -237,6 +237,8 @@ export class ExpressGenerator {
             outputEsm: this.config.outputEsm,
             extraDependencies: {},
             extraDevDependencies: {},
+            extraFiles: {},
+            extraScripts: {},
         });
     }
 

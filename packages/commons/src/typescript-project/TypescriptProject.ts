@@ -1,4 +1,5 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
+import { string } from "@fern-typescript/zurg";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
@@ -10,8 +11,10 @@ import { PersistedTypescriptProject } from "./PersistedTypescriptProject";
 export declare namespace TypescriptProject {
     export interface Init {
         tsMorphProject: Project;
+        extraFiles: Record<string, string>;
         extraDependencies: Record<string, string>;
         extraDevDependencies: Record<string, string>;
+        extraScripts: Record<string, string>;
     }
 }
 
@@ -23,11 +26,21 @@ export abstract class TypescriptProject {
     protected tsMorphProject: Project;
     protected extraDependencies: Record<string, string>;
     protected extraDevDependencies: Record<string, string>;
+    protected extraFiles: Record<string, string>;
+    protected extraScripts: Record<string, string>;
 
-    constructor({ tsMorphProject, extraDependencies, extraDevDependencies }: TypescriptProject.Init) {
+    constructor({
+        tsMorphProject,
+        extraDependencies,
+        extraDevDependencies,
+        extraFiles,
+        extraScripts,
+    }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
         this.extraDevDependencies = extraDevDependencies;
+        this.extraFiles = extraFiles;
+        this.extraScripts = extraScripts;
     }
 
     public async persist(): Promise<PersistedTypescriptProject> {
@@ -36,6 +49,11 @@ export abstract class TypescriptProject {
         // eslint-disable-next-line no-console
         console.log("Persisted typescript project to " + directoryOnDiskToWriteTo);
         await this.writeSrcToVolume();
+
+        for (const [filepath, fileContents] of Object.entries(this.extraFiles)) {
+            await this.writeFileToVolume(RelativeFilePath.of(filepath), fileContents);
+        }
+
         await this.addFilesToVolume();
         await this.writeVolumeToDisk(directoryOnDiskToWriteTo);
 

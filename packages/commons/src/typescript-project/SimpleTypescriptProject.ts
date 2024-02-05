@@ -148,6 +148,14 @@ export class SimpleTypescriptProject extends TypescriptProject {
             },
         };
 
+        packageJson = {
+            ...packageJson,
+            scripts: {
+                ...packageJson.scripts,
+                ...this.extraScripts,
+            },
+        };
+
         packageJson = produce(packageJson, (draft) => {
             if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
                 draft.dependencies = {

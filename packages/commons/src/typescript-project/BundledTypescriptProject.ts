@@ -227,6 +227,14 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
         packageJson = {
             ...packageJson,
+            scripts: {
+                ...packageJson.scripts,
+                ...this.extraScripts,
+            },
+        };
+
+        packageJson = {
+            ...packageJson,
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,
