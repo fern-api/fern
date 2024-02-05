@@ -193,7 +193,7 @@ public final class Type {
 
     @JsonProperty("eighteen")
     public String getEighteen() {
-        return eighteen;
+        return "eighteen";
     }
 
     @JsonProperty("nineteen")
