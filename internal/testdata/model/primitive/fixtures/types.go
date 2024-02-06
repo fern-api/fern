@@ -10,15 +10,15 @@ import (
 )
 
 type Type struct {
-	One   int       `json:"one"`
-	Two   float64   `json:"two"`
-	Three string    `json:"three"`
-	Four  bool      `json:"four"`
-	Five  int64     `json:"five"`
-	Six   time.Time `json:"six"`
-	Seven time.Time `json:"seven"`
-	Eight uuid.UUID `json:"eight"`
-	Nine  []byte    `json:"nine"`
+	One   int       `json:"one" url:"one"`
+	Two   float64   `json:"two" url:"two"`
+	Three string    `json:"three" url:"three"`
+	Four  bool      `json:"four" url:"four"`
+	Five  int64     `json:"five" url:"five"`
+	Six   time.Time `json:"six" url:"six"`
+	Seven time.Time `json:"seven" url:"seven" format:"date"`
+	Eight uuid.UUID `json:"eight" url:"eight"`
+	Nine  []byte    `json:"nine" url:"nine"`
 }
 
 func (t *Type) String() string {

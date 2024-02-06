@@ -7,7 +7,7 @@ import (
 )
 
 type UploadRequest struct {
-	Status string `json:"status"`
+	Status string `json:"status" url:"status"`
 	fern   string
 }
 
@@ -39,5 +39,5 @@ func (u *UploadRequest) MarshalJSON() ([]byte, error) {
 }
 
 type UploadMultiRequest struct {
-	Status string `json:"status"`
+	Status string `json:"status" url:"status"`
 }

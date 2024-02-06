@@ -21,8 +21,8 @@ type GetUsersRequest struct {
 }
 
 type User struct {
-	Name string   `json:"name"`
-	Tags []string `json:"tags,omitempty"`
+	Name string   `json:"name" url:"name"`
+	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 }
 
 func (u *User) String() string {

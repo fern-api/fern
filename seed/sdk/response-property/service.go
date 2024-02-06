@@ -11,7 +11,7 @@ import (
 type OptionalStringResponse = *StringResponse
 
 type StringResponse struct {
-	Data string `json:"data"`
+	Data string `json:"data" url:"data"`
 
 	_rawJSON json.RawMessage
 }
@@ -42,9 +42,9 @@ func (s *StringResponse) String() string {
 type OptionalWithDocs = *WithDocs
 
 type Response struct {
-	Metadata map[string]string `json:"metadata,omitempty"`
-	Docs     string            `json:"docs"`
-	Data     *Movie            `json:"data,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Docs     string            `json:"docs" url:"docs"`
+	Data     *Movie            `json:"data,omitempty" url:"data,omitempty"`
 
 	_rawJSON json.RawMessage
 }

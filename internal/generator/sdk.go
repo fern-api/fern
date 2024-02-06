@@ -39,6 +39,12 @@ var (
 
 	//go:embed sdk/core/retrier.go
 	retrierFile string
+
+	//go:embed sdk/core/query.go
+	queryFile string
+
+	//go:embed sdk/core/query_test.go
+	queryTestFile string
 )
 
 // WriteOptionalHelpers writes the Optional[T] helper functions.
@@ -882,26 +888,13 @@ func (f *fileWriter) WriteClient(
 		f.P(urlStatement)
 		if len(endpoint.QueryParameters) > 0 {
 			f.P()
-			f.P("queryParams := make(url.Values)")
+			f.P("queryParams, err := core.QueryValues(", endpoint.RequestParameterName, ")")
+			f.P("if err != nil {")
+			f.P("return ", endpoint.ErrorReturnValues)
+			f.P("}")
 			for _, queryParameter := range endpoint.QueryParameters {
-				valueTypeFormat := formatForValueType(queryParameter.ValueType)
-				if queryParameter.AllowMultiple {
-					requestField := valueTypeFormat.Prefix + "value" + valueTypeFormat.Suffix
-					f.P("for _, value := range ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "{")
-					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-					f.P("}")
-				} else if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
+				if isLiteral := (queryParameter.ValueType.Container != nil && queryParameter.ValueType.Container.Literal != nil); isLiteral {
 					f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, literalToValue(queryParameter.ValueType.Container.Literal), "))")
-				} else {
-					requestField := valueTypeFormat.Prefix + endpoint.RequestParameterName + "." + queryParameter.Name.Name.PascalCase.UnsafeName + valueTypeFormat.Suffix
-					if valueTypeFormat.IsOptional {
-						// The only query parameter that can't use the default value approach is base64 (aka a []byte).
-						f.P("if ", endpoint.RequestParameterName, ".", queryParameter.Name.Name.PascalCase.UnsafeName, "!= nil {")
-						f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-						f.P("}")
-					} else {
-						f.P(`queryParams.Add("`, queryParameter.Name.WireValue, `", fmt.Sprintf("%v", `, requestField, "))")
-					}
 				}
 			}
 			f.P("if len(queryParams) > 0 {")
@@ -1617,7 +1610,7 @@ func (f *fileWriter) WriteRequestType(
 			continue
 		}
 		goType := typeReferenceToGoType(header.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
-		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\"`")
+		f.P(header.Name.Name.PascalCase.UnsafeName, " ", goType, " `json:\"-\" url:\"-\"`")
 	}
 	for _, queryParam := range endpoint.QueryParameters {
 		value := typeReferenceToGoType(queryParam.ValueType, f.types, f.scope, f.baseImportPath, importPath, false)
@@ -1635,7 +1628,7 @@ func (f *fileWriter) WriteRequestType(
 			)
 			continue
 		}
-		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, " `json:\"-\"`")
+		f.P(queryParam.Name.Name.PascalCase.UnsafeName, " ", value, urlTagForType(queryParam.Name.WireValue, queryParam.ValueType, f.types))
 	}
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
@@ -1984,7 +1977,7 @@ func (r *requestBodyVisitor) VisitReference(reference *ir.HttpRequestBodyReferen
 		r.bodyField,
 		" ",
 		typeReferenceToGoType(reference.RequestBodyType, r.types, r.scope, r.baseImportPath, r.importPath, false),
-		" `json:\"-\"`",
+		" `json:\"-\" url:\"-\"`",
 	)
 	return nil
 }
@@ -2019,7 +2012,7 @@ func (r *requestBodyVisitor) VisitBytes(bytes *ir.BytesRequest) error {
 		r.bodyField,
 		" ",
 		"[]byte",
-		" `json:\"-\"`",
+		" `json:\"-\" url:\"-\"`",
 	)
 	return nil
 }

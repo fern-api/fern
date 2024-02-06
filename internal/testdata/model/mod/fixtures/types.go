@@ -9,8 +9,8 @@ import (
 )
 
 type Foo struct {
-	Name string   `json:"name"`
-	Bar  *bar.Bar `json:"bar,omitempty"`
+	Name string   `json:"name" url:"name"`
+	Bar  *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
 }
 
 func (f *Foo) String() string {

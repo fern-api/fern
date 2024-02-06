@@ -10,7 +10,7 @@ import (
 
 type Bar struct {
 	// This is a Foo field.
-	Foo *Foo `json:"foo,omitempty"`
+	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
 }
 
 func (b *Bar) String() string {
@@ -22,8 +22,8 @@ func (b *Bar) String() string {
 
 // This is a Foo.
 type Foo struct {
-	Id   uuid.UUID `json:"id"`
-	Name string    `json:"name"`
+	Id   uuid.UUID `json:"id" url:"id"`
+	Name string    `json:"name" url:"name"`
 }
 
 func (f *Foo) String() string {

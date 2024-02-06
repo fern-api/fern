@@ -3,5 +3,5 @@
 package api
 
 type GetUserRequest struct {
-	Shallow *bool `json:"-"`
+	Shallow *bool `json:"-" url:"shallow,omitempty"`
 }

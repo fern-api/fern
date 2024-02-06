@@ -88,7 +88,7 @@ func (a *AnotherUnion) Accept(visitor AnotherUnionVisitor) error {
 }
 
 type Bar struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (b *Bar) String() string {
@@ -99,7 +99,7 @@ func (b *Bar) String() string {
 }
 
 type Baz struct {
-	Id string `json:"id"`
+	Id string `json:"id" url:"id"`
 }
 
 func (b *Baz) String() string {
@@ -110,7 +110,7 @@ func (b *Baz) String() string {
 }
 
 type Foo struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (f *Foo) String() string {

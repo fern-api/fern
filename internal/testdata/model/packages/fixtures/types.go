@@ -10,7 +10,7 @@ import (
 )
 
 type Base struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (b *Base) String() string {
@@ -21,7 +21,7 @@ func (b *Base) String() string {
 }
 
 type Value struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (v *Value) String() string {
@@ -32,9 +32,9 @@ func (v *Value) String() string {
 }
 
 type Foo struct {
-	Name  string   `json:"name"`
-	Value *Value   `json:"value,omitempty"`
-	Bar   *bar.Bar `json:"bar,omitempty"`
+	Name  string   `json:"name" url:"name"`
+	Value *Value   `json:"value,omitempty" url:"value,omitempty"`
+	Bar   *bar.Bar `json:"bar,omitempty" url:"bar,omitempty"`
 }
 
 func (f *Foo) String() string {

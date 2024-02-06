@@ -9,8 +9,8 @@ import (
 )
 
 type Organization struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 
 	_rawJSON json.RawMessage
 }

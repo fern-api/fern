@@ -3,11 +3,11 @@
 package api
 
 type UploadOptionalWithHeaderRequest struct {
-	XUploadFileSize int    `json:"-"`
-	Body            []byte `json:"-"`
+	XUploadFileSize int    `json:"-" url:"-"`
+	Body            []byte `json:"-" url:"-"`
 }
 
 type UploadWithHeaderRequest struct {
-	XUploadFileSize int    `json:"-"`
-	Body            []byte `json:"-"`
+	XUploadFileSize int    `json:"-" url:"-"`
+	Body            []byte `json:"-" url:"-"`
 }

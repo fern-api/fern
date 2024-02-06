@@ -9,7 +9,7 @@ import (
 )
 
 type Foo struct {
-	Foo *fixtures.Foo `json:"foo,omitempty"`
+	Foo *fixtures.Foo `json:"foo,omitempty" url:"foo,omitempty"`
 }
 
 func (f *Foo) String() string {

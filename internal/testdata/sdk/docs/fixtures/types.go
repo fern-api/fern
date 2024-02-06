@@ -10,7 +10,7 @@ import (
 
 // A user.
 type User struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 
 	_rawJSON json.RawMessage
 }

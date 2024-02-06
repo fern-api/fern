@@ -9,7 +9,7 @@ import (
 )
 
 type CreateOptionsRequest struct {
-	Values map[string]string `json:"values,omitempty"`
+	Values map[string]string `json:"values,omitempty" url:"values,omitempty"`
 }
 
 type GetOptionsRequest struct {
@@ -155,7 +155,7 @@ func (c *CreateOptionsResponse) Accept(visitor CreateOptionsResponseVisitor) err
 }
 
 type Options struct {
-	Values  map[string]string `json:"values,omitempty"`
+	Values  map[string]string `json:"values,omitempty" url:"values,omitempty"`
 	id      string
 	enabled bool
 

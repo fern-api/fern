@@ -12,7 +12,6 @@ import (
 	io "io"
 	multipart "mime/multipart"
 	http "net/http"
-	url "net/url"
 )
 
 type Client struct {
@@ -219,19 +218,9 @@ func (c *Client) JustFileWithQueryParams(
 	}
 	endpointURL := baseURL + "/" + "just-file-with-query-params"
 
-	queryParams := make(url.Values)
-	if request.MaybeString != nil {
-		queryParams.Add("maybeString", fmt.Sprintf("%v", *request.MaybeString))
-	}
-	queryParams.Add("integer", fmt.Sprintf("%v", request.Integer))
-	if request.MaybeInteger != nil {
-		queryParams.Add("maybeInteger", fmt.Sprintf("%v", *request.MaybeInteger))
-	}
-	for _, value := range request.ListOfStrings {
-		queryParams.Add("listOfStrings", fmt.Sprintf("%v", value))
-	}
-	for _, value := range request.OptionalListOfStrings {
-		queryParams.Add("optionalListOfStrings", fmt.Sprintf("%v", *value))
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return err
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()

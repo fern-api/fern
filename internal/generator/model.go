@@ -711,7 +711,7 @@ func (t *typeVisitor) visitObjectProperties(
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
 		if includeTags {
-			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
+			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType, fullFieldTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
 			continue
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType)
@@ -1096,10 +1096,68 @@ func firstLetterToLower(s string) string {
 	return string(r)
 }
 
-// jsonTagForType returns the JSON tag for the given type. If the value type
-// is a required primitive, then we don't include the omitempty tag so that
-// the default values can be explicitly sent (e.g. "false" for bools).
+// fullFieldTagForType returns the JSON struct tag and query URL struct tag for the given type.
+func fullFieldTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	return structTagForType(
+		wireValue,
+		valueType,
+		types,
+		[]string{"json", "url"},
+	)
+}
+
+// jsonTagForType returns the JSON struct tag for the given type.
 func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	return structTagForType(
+		wireValue,
+		valueType,
+		types,
+		[]string{"json"},
+	)
+}
+
+// urlTagForType returns the query URL struct tag for the given type. The URL tag
+// requires special handling because we need to always set the JSON tag to '-'.
+func urlTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.TypeId]*ir.TypeDeclaration) string {
+	tagFormat := tagFormatForType(valueType, types)
+	structTags := []string{
+		`json:"-"`,
+	}
+	structTags = append(structTags, fmt.Sprintf(tagFormat, "url", wireValue))
+	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+		structTags = append(structTags, formatStructTag)
+	}
+	return fmt.Sprintf("`%s`", strings.Join(structTags, " "))
+}
+
+// structTagForType returns the struct tag associated with the given type, setting the given tags. If the value type
+// is a required primitive, then we don't include the omitempty tag so that the default values can be explicitly sent
+// (e.g. "false" for bools).
+func structTagForType(
+	wireValue string,
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+	tags []string,
+) string {
+	tagFormat := tagFormatForType(valueType, types)
+	var structTags []string
+	for _, tag := range tags {
+		structTags = append(structTags, fmt.Sprintf(tagFormat, tag, wireValue))
+	}
+	if formatStructTag := maybeFormatStructTag(valueType); formatStructTag != "" {
+		structTags = append(structTags, formatStructTag)
+	}
+	if len(structTags) == 0 {
+		return ""
+	}
+	return fmt.Sprintf("`%s`", strings.Join(structTags, " "))
+}
+
+// tagFormatForType returns the string format string for the given type's struct tag.
+func tagFormatForType(
+	valueType *ir.TypeReference,
+	types map[ir.TypeId]*ir.TypeDeclaration,
+) string {
 	if valueType != nil {
 		primitive := valueType.Primitive
 		if valueType.Named != nil {
@@ -1109,10 +1167,13 @@ func jsonTagForType(wireValue string, valueType *ir.TypeReference, types map[ir.
 			}
 		}
 		if primitive != "" {
-			return fmt.Sprintf(" `json:%q`", wireValue)
+			return "%s:%q"
 		}
 	}
-	return fmt.Sprintf(" `json:\"%s,omitempty\"`", wireValue)
+	// TODO: Only optional types should include the omitempty tag.
+	//
+	// Ref: https://github.com/fern-api/fern/issues/2738
+	return `%s:"%s,omitempty"`
 }
 
 // unknownToGoType maps the given unknown into its Go-equivalent.
@@ -1184,6 +1245,29 @@ func primitiveToUndiscriminatedUnionField(primitive ir.PrimitiveType) string {
 	default:
 		return "Any"
 	}
+}
+
+// maybeFormatStructTag returns the layout struct tag for [optional] date types.
+// Note that we don't need to include a custom layout for DateTime because that
+// is the default format used for time.Time types.
+func maybeFormatStructTag(valueType *ir.TypeReference) string {
+	if valueType.Primitive == ir.PrimitiveTypeDate {
+		return `format:"date"`
+	}
+	if valueType.Type != "container" {
+		return ""
+	}
+	switch valueType.Container.Type {
+	case "list":
+		return maybeFormatStructTag(valueType.Container.List)
+	case "map":
+		return maybeFormatStructTag(valueType.Container.Map.ValueType)
+	case "optional":
+		return maybeFormatStructTag(valueType.Container.Optional)
+	case "set":
+		return maybeFormatStructTag(valueType.Container.Set)
+	}
+	return ""
 }
 
 // typeNameToFieldName maps the given type name (e.g. *foo.Bar) into its embedded field name

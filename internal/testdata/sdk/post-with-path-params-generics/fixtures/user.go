@@ -9,12 +9,12 @@ import (
 )
 
 type SetNameRequest struct {
-	UserName string `json:"userName"`
+	UserName string `json:"userName" url:"userName"`
 }
 
 type SetNameRequestV3 struct {
-	XEndpointHeader string                `json:"-"`
-	Body            *SetNameRequestV3Body `json:"-"`
+	XEndpointHeader string                `json:"-" url:"-"`
+	Body            *SetNameRequestV3Body `json:"-" url:"-"`
 }
 
 func (s *SetNameRequestV3) UnmarshalJSON(data []byte) error {
@@ -31,8 +31,8 @@ func (s *SetNameRequestV3) MarshalJSON() ([]byte, error) {
 }
 
 type SetNameRequestV3Optional struct {
-	XEndpointHeader string                `json:"-"`
-	Body            *SetNameRequestV3Body `json:"-"`
+	XEndpointHeader string                `json:"-" url:"-"`
+	Body            *SetNameRequestV3Body `json:"-" url:"-"`
 }
 
 func (s *SetNameRequestV3Optional) UnmarshalJSON(data []byte) error {
@@ -49,8 +49,8 @@ func (s *SetNameRequestV3Optional) MarshalJSON() ([]byte, error) {
 }
 
 type SetNameRequestV4 struct {
-	XEndpointHeader string   `json:"-"`
-	Body            []string `json:"-"`
+	XEndpointHeader string   `json:"-" url:"-"`
+	Body            []string `json:"-" url:"-"`
 }
 
 func (s *SetNameRequestV4) UnmarshalJSON(data []byte) error {
@@ -67,8 +67,8 @@ func (s *SetNameRequestV4) MarshalJSON() ([]byte, error) {
 }
 
 type SetNameRequestV5 struct {
-	XEndpointHeader string `json:"-"`
-	Body            string `json:"-"`
+	XEndpointHeader string `json:"-" url:"-"`
+	Body            string `json:"-" url:"-"`
 }
 
 func (s *SetNameRequestV5) UnmarshalJSON(data []byte) error {
@@ -88,7 +88,7 @@ func (s *SetNameRequestV5) MarshalJSON() ([]byte, error) {
 }
 
 type Filter struct {
-	Tag string `json:"tag"`
+	Tag string `json:"tag" url:"tag"`
 
 	_rawJSON json.RawMessage
 }
@@ -117,7 +117,7 @@ func (f *Filter) String() string {
 }
 
 type SetNameRequestV3Body struct {
-	UserName string `json:"userName"`
+	UserName string `json:"userName" url:"userName"`
 
 	_rawJSON json.RawMessage
 }
@@ -226,11 +226,11 @@ func (u *Union) Accept(visitor UnionVisitor) error {
 }
 
 type UpdateRequest struct {
-	Tag            string                   `json:"-"`
-	Extra          *string                  `json:"-"`
-	Union          *Union                   `json:"union,omitempty"`
-	Filter         *Filter                  `json:"filter,omitempty"`
-	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty"`
-	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty"`
-	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty"`
+	Tag            string                   `json:"-" url:"tag"`
+	Extra          *string                  `json:"-" url:"extra,omitempty"`
+	Union          *Union                   `json:"union,omitempty" url:"union,omitempty"`
+	Filter         *Filter                  `json:"filter,omitempty" url:"filter,omitempty"`
+	OptionalUnion  *core.Optional[Union]    `json:"optionalUnion,omitempty" url:"optionalUnion,omitempty"`
+	OptionalFilter *core.Optional[Filter]   `json:"optionalFilter,omitempty" url:"optionalFilter,omitempty"`
+	OptionalTags   *core.Optional[[]string] `json:"optionalTags,omitempty" url:"optionalTags,omitempty"`
 }

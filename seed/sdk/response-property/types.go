@@ -9,7 +9,7 @@ import (
 )
 
 type WithMetadata struct {
-	Metadata map[string]string `json:"metadata,omitempty"`
+	Metadata map[string]string `json:"metadata,omitempty" url:"metadata,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -38,8 +38,8 @@ func (w *WithMetadata) String() string {
 }
 
 type Movie struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 
 	_rawJSON json.RawMessage
 }
@@ -68,7 +68,7 @@ func (m *Movie) String() string {
 }
 
 type WithDocs struct {
-	Docs string `json:"docs"`
+	Docs string `json:"docs" url:"docs"`
 
 	_rawJSON json.RawMessage
 }

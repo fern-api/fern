@@ -11,7 +11,7 @@ import (
 )
 
 type Bar struct {
-	Foo *Foo `json:"foo,omitempty"`
+	Foo *Foo `json:"foo,omitempty" url:"foo,omitempty"`
 }
 
 func (b *Bar) String() string {
@@ -36,9 +36,9 @@ type Double = float64
 type DoubleSet = []float64
 
 type Foo struct {
-	Id          uuid.UUID `json:"id"`
-	Name        string    `json:"name"`
-	StringAlias String    `json:"stringAlias"`
+	Id          uuid.UUID `json:"id" url:"id"`
+	Name        string    `json:"name" url:"name"`
+	StringAlias String    `json:"stringAlias" url:"stringAlias"`
 }
 
 func (f *Foo) String() string {

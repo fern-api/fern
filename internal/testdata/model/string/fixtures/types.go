@@ -8,8 +8,8 @@ import (
 )
 
 type Movie struct {
-	Id    string `json:"id"`
-	Title string `json:"title"`
+	Id    string `json:"id" url:"id"`
+	Title string `json:"title" url:"title"`
 }
 
 func (m *Movie) String() string {

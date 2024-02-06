@@ -9,7 +9,7 @@ import (
 )
 
 type Bar struct {
-	Id string `json:"id"`
+	Id string `json:"id" url:"id"`
 
 	_rawJSON json.RawMessage
 }
@@ -38,7 +38,7 @@ func (b *Bar) String() string {
 }
 
 type Foo struct {
-	Id string `json:"id"`
+	Id string `json:"id" url:"id"`
 
 	_rawJSON json.RawMessage
 }

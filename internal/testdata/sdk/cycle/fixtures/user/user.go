@@ -11,8 +11,8 @@ import (
 )
 
 type User struct {
-	Id       identity.Id    `json:"id"`
-	Username *user.Username `json:"username,omitempty"`
+	Id       identity.Id    `json:"id" url:"id"`
+	Username *user.Username `json:"username,omitempty" url:"username,omitempty"`
 
 	_rawJSON json.RawMessage
 }

@@ -3,9 +3,9 @@
 package api
 
 type GetAllUsersRequest struct {
-	XEndpointHeader string   `json:"-"`
-	Tag             int      `json:"-"`
-	Limit           []*int   `json:"-"`
-	Filter          *string  `json:"-"`
-	Series          []string `json:"-"`
+	XEndpointHeader string   `json:"-" url:"-"`
+	Tag             int      `json:"-" url:"tag"`
+	Limit           []*int   `json:"-" url:"limit,omitempty"`
+	Filter          *string  `json:"-" url:"filter,omitempty"`
+	Series          []string `json:"-" url:"series"`
 }

@@ -9,7 +9,6 @@ import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/path-and-query-params/fixtures/option"
 	http "net/http"
-	url "net/url"
 )
 
 type Client struct {
@@ -49,9 +48,9 @@ func (c *Client) GetUser(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v", userId)
 
-	queryParams := make(url.Values)
-	if request.Shallow != nil {
-		queryParams.Add("shallow", fmt.Sprintf("%v", *request.Shallow))
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return "", err
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()

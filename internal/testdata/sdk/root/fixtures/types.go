@@ -9,12 +9,12 @@ import (
 )
 
 type Bar struct {
-	Id      *Id      `json:"id,omitempty"`
-	Name    *string  `json:"name,omitempty"`
-	List    *string  `json:"list,omitempty"`
-	Type    *FooType `json:"type,omitempty"`
-	Request *Request `json:"request,omitempty"`
-	Delay   *string  `json:"delay,omitempty"`
+	Id      *Id      `json:"id,omitempty" url:"id,omitempty"`
+	Name    *string  `json:"name,omitempty" url:"name,omitempty"`
+	List    *string  `json:"list,omitempty" url:"list,omitempty"`
+	Type    *FooType `json:"type,omitempty" url:"type,omitempty"`
+	Request *Request `json:"request,omitempty" url:"request,omitempty"`
+	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -43,14 +43,14 @@ func (b *Bar) String() string {
 }
 
 type Baz struct {
-	Id          *Id     `json:"id,omitempty"`
-	Name        *string `json:"name,omitempty"`
-	List        *string `json:"list,omitempty"`
-	Description *string `json:"description,omitempty"`
+	Id          *Id     `json:"id,omitempty" url:"id,omitempty"`
+	Name        *string `json:"name,omitempty" url:"name,omitempty"`
+	List        *string `json:"list,omitempty" url:"list,omitempty"`
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
 	// This field has documentation, so it should be rendered
 	// just above the field.
 	// Note: Newlines should be preserved.
-	HasDocs *string `json:"hasDocs,omitempty"`
+	HasDocs *string `json:"hasDocs,omitempty" url:"hasDocs,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -79,8 +79,8 @@ func (b *Baz) String() string {
 }
 
 type Error struct {
-	Message   *string  `json:"message,omitempty"`
-	Recursive []*Error `json:"recursive,omitempty"`
+	Message   *string  `json:"message,omitempty" url:"message,omitempty"`
+	Recursive []*Error `json:"recursive,omitempty" url:"recursive,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -109,12 +109,12 @@ func (e *Error) String() string {
 }
 
 type Foo struct {
-	Id      *Id      `json:"id,omitempty"`
-	Name    *string  `json:"name,omitempty"`
-	List    *string  `json:"list,omitempty"`
-	Type    *FooType `json:"type,omitempty"`
-	Request *Request `json:"request,omitempty"`
-	Delay   *string  `json:"delay,omitempty"`
+	Id      *Id      `json:"id,omitempty" url:"id,omitempty"`
+	Name    *string  `json:"name,omitempty" url:"name,omitempty"`
+	List    *string  `json:"list,omitempty" url:"list,omitempty"`
+	Type    *FooType `json:"type,omitempty" url:"type,omitempty"`
+	Request *Request `json:"request,omitempty" url:"request,omitempty"`
+	Delay   *string  `json:"delay,omitempty" url:"delay,omitempty"`
 
 	_rawJSON json.RawMessage
 }
@@ -171,11 +171,11 @@ func (f FooType) Ptr() *FooType {
 }
 
 type Request struct {
-	Url      string                 `json:"url"`
-	Headers  map[string]interface{} `json:"headers,omitempty"`
-	Body     *string                `json:"body,omitempty"`
-	Platform *string                `json:"platform,omitempty"`
-	Unknown  interface{}            `json:"unknown,omitempty"`
+	Url      string                 `json:"url" url:"url"`
+	Headers  map[string]interface{} `json:"headers,omitempty" url:"headers,omitempty"`
+	Body     *string                `json:"body,omitempty" url:"body,omitempty"`
+	Platform *string                `json:"platform,omitempty" url:"platform,omitempty"`
+	Unknown  interface{}            `json:"unknown,omitempty" url:"unknown,omitempty"`
 
 	_rawJSON json.RawMessage
 }

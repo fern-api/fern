@@ -9,7 +9,7 @@ import (
 )
 
 type Config struct {
-	Id string `json:"id"`
+	Id string `json:"id" url:"id"`
 
 	_rawJSON json.RawMessage
 }

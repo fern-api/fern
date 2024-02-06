@@ -3,8 +3,8 @@
 package api
 
 type GetAllUsersRequest struct {
-	XEndpointHeader string `json:"-"`
-	Limit           *int   `json:"-"`
+	XEndpointHeader string `json:"-" url:"-"`
+	Limit           *int   `json:"-" url:"limit,omitempty"`
 	key             string
 }
 

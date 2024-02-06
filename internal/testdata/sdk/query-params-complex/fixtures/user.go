@@ -11,19 +11,19 @@ import (
 )
 
 type GetUsersRequest struct {
-	Id               uuid.UUID  `json:"-"`
-	Date             time.Time  `json:"-"`
-	Deadline         time.Time  `json:"-"`
-	Bytes            []byte     `json:"-"`
-	OptionalId       *uuid.UUID `json:"-"`
-	OptionalDate     *time.Time `json:"-"`
-	OptionalDeadline *time.Time `json:"-"`
-	OptionalBytes    *[]byte    `json:"-"`
+	Id               uuid.UUID  `json:"-" url:"id"`
+	Date             time.Time  `json:"-" url:"date" format:"date"`
+	Deadline         time.Time  `json:"-" url:"deadline"`
+	Bytes            []byte     `json:"-" url:"bytes"`
+	OptionalId       *uuid.UUID `json:"-" url:"optionalId,omitempty"`
+	OptionalDate     *time.Time `json:"-" url:"optionalDate,omitempty" format:"date"`
+	OptionalDeadline *time.Time `json:"-" url:"optionalDeadline,omitempty"`
+	OptionalBytes    *[]byte    `json:"-" url:"optionalBytes,omitempty"`
 }
 
 type User struct {
-	Name string   `json:"name"`
-	Tags []string `json:"tags,omitempty"`
+	Name string   `json:"name" url:"name"`
+	Tags []string `json:"tags,omitempty" url:"tags,omitempty"`
 
 	_rawJSON json.RawMessage
 }

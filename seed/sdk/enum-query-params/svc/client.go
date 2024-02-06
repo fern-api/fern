@@ -4,12 +4,10 @@ package svc
 
 import (
 	context "context"
-	fmt "fmt"
 	fern "github.com/enum-query-params/fern"
 	core "github.com/enum-query-params/fern/core"
 	option "github.com/enum-query-params/fern/option"
 	http "net/http"
-	url "net/url"
 )
 
 type Client struct {
@@ -48,9 +46,9 @@ func (c *Client) Test(
 	}
 	endpointURL := baseURL + "/" + "test"
 
-	queryParams := make(url.Values)
-	for _, value := range request.SomeEnum {
-		queryParams.Add("some-enum", fmt.Sprintf("%v", *value))
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return "", err
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()

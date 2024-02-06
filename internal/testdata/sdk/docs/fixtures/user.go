@@ -4,7 +4,7 @@ package api
 
 type GetNameRequest struct {
 	// Specifies the endpoint key.
-	XEndpointHeader string `json:"-"`
+	XEndpointHeader string `json:"-" url:"-"`
 	// Filters the username.
-	Filter string `json:"-"`
+	Filter string `json:"-" url:"filter"`
 }

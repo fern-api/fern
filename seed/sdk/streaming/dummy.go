@@ -9,12 +9,12 @@ import (
 )
 
 type GenerateStreamRequestzs struct {
-	NumEvents int `json:"num_events"`
+	NumEvents int `json:"num_events" url:"num_events"`
 }
 
 type StreamResponse struct {
-	Id   string  `json:"id"`
-	Name *string `json:"name,omitempty"`
+	Id   string  `json:"id" url:"id"`
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
 
 	_rawJSON json.RawMessage
 }

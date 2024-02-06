@@ -9,7 +9,7 @@ import (
 )
 
 type UserNotFoundErrorBody struct {
-	RequestedUserId string `json:"requestedUserId"`
+	RequestedUserId string `json:"requestedUserId" url:"requestedUserId"`
 
 	_rawJSON json.RawMessage
 }

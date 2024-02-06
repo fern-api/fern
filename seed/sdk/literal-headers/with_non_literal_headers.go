@@ -3,7 +3,7 @@
 package literalheaders
 
 type WithNonLiteralHeadersRequest struct {
-	NonLiteralEndpointHeader string `json:"-"`
+	NonLiteralEndpointHeader string `json:"-" url:"-"`
 	literalEndpointHeader    string
 	trueEndpointHeader       bool
 }

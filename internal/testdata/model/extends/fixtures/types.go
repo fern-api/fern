@@ -9,7 +9,7 @@ import (
 )
 
 type Docs struct {
-	Docs string `json:"docs"`
+	Docs string `json:"docs" url:"docs"`
 }
 
 func (d *Docs) String() string {
@@ -20,8 +20,8 @@ func (d *Docs) String() string {
 }
 
 type ExampleType struct {
-	Docs string `json:"docs"`
-	Name string `json:"name"`
+	Docs string `json:"docs" url:"docs"`
+	Name string `json:"name" url:"name"`
 }
 
 func (e *ExampleType) String() string {
@@ -32,8 +32,8 @@ func (e *ExampleType) String() string {
 }
 
 type Json struct {
-	Docs string `json:"docs"`
-	Raw  string `json:"raw"`
+	Docs string `json:"docs" url:"docs"`
+	Raw  string `json:"raw" url:"raw"`
 }
 
 func (j *Json) String() string {
@@ -44,9 +44,9 @@ func (j *Json) String() string {
 }
 
 type NestedType struct {
-	Docs string `json:"docs"`
-	Raw  string `json:"raw"`
-	Name string `json:"name"`
+	Docs string `json:"docs" url:"docs"`
+	Raw  string `json:"raw" url:"raw"`
+	Name string `json:"name" url:"name"`
 }
 
 func (n *NestedType) String() string {
@@ -70,8 +70,8 @@ func NewNestedUnionFromOne(value *ExampleType) *NestedUnion {
 func (n *NestedUnion) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Docs string `json:"docs"`
-		Raw  string `json:"raw"`
+		Docs string `json:"docs" url:"docs"`
+		Raw  string `json:"raw" url:"raw"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -97,8 +97,8 @@ func (n NestedUnion) MarshalJSON() ([]byte, error) {
 	case "one":
 		var marshaler = struct {
 			Type string `json:"type"`
-			Docs string `json:"docs"`
-			Raw  string `json:"raw"`
+			Docs string `json:"docs" url:"docs"`
+			Raw  string `json:"raw" url:"raw"`
 			*ExampleType
 		}{
 			Type:        n.Type,
@@ -136,7 +136,7 @@ func NewUnionFromOne(value *ExampleType) *Union {
 func (u *Union) UnmarshalJSON(data []byte) error {
 	var unmarshaler struct {
 		Type string `json:"type"`
-		Docs string `json:"docs"`
+		Docs string `json:"docs" url:"docs"`
 	}
 	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
@@ -161,7 +161,7 @@ func (u Union) MarshalJSON() ([]byte, error) {
 	case "one":
 		var marshaler = struct {
 			Type string `json:"type"`
-			Docs string `json:"docs"`
+			Docs string `json:"docs" url:"docs"`
 			*ExampleType
 		}{
 			Type:        u.Type,

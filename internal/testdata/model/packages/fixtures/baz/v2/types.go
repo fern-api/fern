@@ -8,7 +8,7 @@ import (
 )
 
 type Baz struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (b *Baz) String() string {

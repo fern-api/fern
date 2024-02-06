@@ -7,7 +7,7 @@ import (
 )
 
 type Test struct {
-	SomeEnum []*MyEnum `json:"-"`
+	SomeEnum []*MyEnum `json:"-" url:"some-enum,omitempty"`
 }
 
 type MyEnum string

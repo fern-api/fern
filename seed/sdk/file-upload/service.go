@@ -9,26 +9,26 @@ import (
 )
 
 type JustFileWithQueryParamsRequet struct {
-	MaybeString           *string   `json:"-"`
-	Integer               int       `json:"-"`
-	MaybeInteger          *int      `json:"-"`
-	ListOfStrings         []string  `json:"-"`
-	OptionalListOfStrings []*string `json:"-"`
+	MaybeString           *string   `json:"-" url:"maybeString,omitempty"`
+	Integer               int       `json:"-" url:"integer"`
+	MaybeInteger          *int      `json:"-" url:"maybeInteger,omitempty"`
+	ListOfStrings         []string  `json:"-" url:"listOfStrings"`
+	OptionalListOfStrings []*string `json:"-" url:"optionalListOfStrings,omitempty"`
 }
 
 type MyRequest struct {
-	MaybeString            *string         `json:"maybeString,omitempty"`
-	Integer                int             `json:"integer"`
-	MaybeInteger           *int            `json:"maybeInteger,omitempty"`
-	ListOfStrings          []string        `json:"listOfStrings,omitempty"`
-	SetOfStrings           []string        `json:"setOfStrings,omitempty"`
-	OptionalListOfStrings  []string        `json:"optionalListOfStrings,omitempty"`
-	OptionalSetOfStrings   []string        `json:"optionalSetOfStrings,omitempty"`
-	MaybeList              *MaybeList      `json:"maybeList,omitempty"`
-	OptionalMaybeList      *MaybeList      `json:"optionalMaybeList,omitempty"`
-	MaybeListOrSet         *MaybeListOrSet `json:"maybeListOrSet,omitempty"`
-	OptionalMaybeListOrSet *MaybeListOrSet `json:"optionalMaybeListOrSet,omitempty"`
-	ListOfObjects          []*MyObject     `json:"listOfObjects,omitempty"`
+	MaybeString            *string         `json:"maybeString,omitempty" url:"maybeString,omitempty"`
+	Integer                int             `json:"integer" url:"integer"`
+	MaybeInteger           *int            `json:"maybeInteger,omitempty" url:"maybeInteger,omitempty"`
+	ListOfStrings          []string        `json:"listOfStrings,omitempty" url:"listOfStrings,omitempty"`
+	SetOfStrings           []string        `json:"setOfStrings,omitempty" url:"setOfStrings,omitempty"`
+	OptionalListOfStrings  []string        `json:"optionalListOfStrings,omitempty" url:"optionalListOfStrings,omitempty"`
+	OptionalSetOfStrings   []string        `json:"optionalSetOfStrings,omitempty" url:"optionalSetOfStrings,omitempty"`
+	MaybeList              *MaybeList      `json:"maybeList,omitempty" url:"maybeList,omitempty"`
+	OptionalMaybeList      *MaybeList      `json:"optionalMaybeList,omitempty" url:"optionalMaybeList,omitempty"`
+	MaybeListOrSet         *MaybeListOrSet `json:"maybeListOrSet,omitempty" url:"maybeListOrSet,omitempty"`
+	OptionalMaybeListOrSet *MaybeListOrSet `json:"optionalMaybeListOrSet,omitempty" url:"optionalMaybeListOrSet,omitempty"`
+	ListOfObjects          []*MyObject     `json:"listOfObjects,omitempty" url:"listOfObjects,omitempty"`
 }
 
 type MaybeList struct {
@@ -258,7 +258,7 @@ func (m *MaybeListOrSet) Accept(visitor MaybeListOrSetVisitor) error {
 }
 
 type MyObject struct {
-	Foo string `json:"foo"`
+	Foo string `json:"foo" url:"foo"`
 
 	_rawJSON json.RawMessage
 }

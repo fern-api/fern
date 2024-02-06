@@ -9,7 +9,7 @@ import (
 )
 
 type Error struct {
-	Message string `json:"message"`
+	Message string `json:"message" url:"message"`
 
 	_rawJSON json.RawMessage
 }
@@ -38,8 +38,8 @@ func (e *Error) String() string {
 }
 
 type Foo struct {
-	Id   string `json:"id"`
-	Name string `json:"name"`
+	Id   string `json:"id" url:"id"`
+	Name string `json:"name" url:"name"`
 
 	_rawJSON json.RawMessage
 }

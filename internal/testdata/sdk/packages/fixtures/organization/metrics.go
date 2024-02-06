@@ -3,7 +3,7 @@
 package organization
 
 type CreateMetricsTagRequest struct {
-	Number  *int    `json:"number,omitempty"`
-	String  *string `json:"string,omitempty"`
-	Boolean *bool   `json:"boolean,omitempty"`
+	Number  *int    `json:"number,omitempty" url:"number,omitempty"`
+	String  *string `json:"string,omitempty" url:"string,omitempty"`
+	Boolean *bool   `json:"boolean,omitempty" url:"boolean,omitempty"`
 }

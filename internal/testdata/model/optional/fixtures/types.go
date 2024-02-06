@@ -8,8 +8,8 @@ import (
 )
 
 type AnotherType struct {
-	String *string `json:"string,omitempty"`
-	Type   *Type   `json:"type,omitempty"`
+	String *string `json:"string,omitempty" url:"string,omitempty"`
+	Type   *Type   `json:"type,omitempty" url:"type,omitempty"`
 }
 
 func (a *AnotherType) String() string {
@@ -20,7 +20,7 @@ func (a *AnotherType) String() string {
 }
 
 type Type struct {
-	Name string `json:"name"`
+	Name string `json:"name" url:"name"`
 }
 
 func (t *Type) String() string {

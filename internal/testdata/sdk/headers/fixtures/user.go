@@ -8,16 +8,16 @@ import (
 )
 
 type SetNameRequest struct {
-	XEndpointHeader                 string     `json:"-"`
-	XEndpointIdHeader               uuid.UUID  `json:"-"`
-	XEndpointDateHeader             time.Time  `json:"-"`
-	XEndpointDatetimeHeader         time.Time  `json:"-"`
-	XEndpointBytesHeader            []byte     `json:"-"`
-	XEndpointOptionalHeader         *string    `json:"-"`
-	XEndpointOptionalIdHeader       *uuid.UUID `json:"-"`
-	XEndpointOptionalDateHeader     *time.Time `json:"-"`
-	XEndpointOptionalDatetimeHeader *time.Time `json:"-"`
-	XEndpointOptionalBytesHeader    *[]byte    `json:"-"`
+	XEndpointHeader                 string     `json:"-" url:"-"`
+	XEndpointIdHeader               uuid.UUID  `json:"-" url:"-"`
+	XEndpointDateHeader             time.Time  `json:"-" url:"-"`
+	XEndpointDatetimeHeader         time.Time  `json:"-" url:"-"`
+	XEndpointBytesHeader            []byte     `json:"-" url:"-"`
+	XEndpointOptionalHeader         *string    `json:"-" url:"-"`
+	XEndpointOptionalIdHeader       *uuid.UUID `json:"-" url:"-"`
+	XEndpointOptionalDateHeader     *time.Time `json:"-" url:"-"`
+	XEndpointOptionalDatetimeHeader *time.Time `json:"-" url:"-"`
+	XEndpointOptionalBytesHeader    *[]byte    `json:"-" url:"-"`
 	xEndpointFernHeader             string
 }
 
@@ -26,5 +26,5 @@ func (s *SetNameRequest) XEndpointFernHeader() string {
 }
 
 type UpdateNameRequest struct {
-	XEndpointHeader string `json:"-"`
+	XEndpointHeader string `json:"-" url:"-"`
 }

@@ -10,7 +10,7 @@ import (
 )
 
 type Token struct {
-	Username *user.Username `json:"username,omitempty"`
+	Username *user.Username `json:"username,omitempty" url:"username,omitempty"`
 
 	_rawJSON json.RawMessage
 }

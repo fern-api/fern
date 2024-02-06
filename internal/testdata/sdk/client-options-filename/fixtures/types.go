@@ -9,7 +9,7 @@ import (
 )
 
 type ClientOptions struct {
-	Value string `json:"value"`
+	Value string `json:"value" url:"value"`
 
 	_rawJSON json.RawMessage
 }

@@ -9,8 +9,8 @@ import (
 )
 
 type Notification struct {
-	Id      string `json:"id"`
-	Message string `json:"message"`
+	Id      string `json:"id" url:"id"`
+	Message string `json:"message" url:"message"`
 
 	_rawJSON json.RawMessage
 }

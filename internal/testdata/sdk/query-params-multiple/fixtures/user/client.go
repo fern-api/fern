@@ -9,7 +9,6 @@ import (
 	core "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures/core"
 	option "github.com/fern-api/fern-go/internal/testdata/sdk/query-params-multiple/fixtures/option"
 	http "net/http"
-	url "net/url"
 )
 
 type Client struct {
@@ -48,16 +47,9 @@ func (c *Client) GetAllUsers(
 	}
 	endpointURL := baseURL + "/" + "users/all"
 
-	queryParams := make(url.Values)
-	queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
-	for _, value := range request.Limit {
-		queryParams.Add("limit", fmt.Sprintf("%v", *value))
-	}
-	if request.Filter != nil {
-		queryParams.Add("filter", fmt.Sprintf("%v", *request.Filter))
-	}
-	for _, value := range request.Series {
-		queryParams.Add("series", fmt.Sprintf("%v", value))
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return "", err
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()

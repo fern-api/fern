@@ -9,7 +9,7 @@ import (
 )
 
 type OrganizationNotFoundErrorBody struct {
-	RequestedOrganizationId string `json:"requestedOrganizationId"`
+	RequestedOrganizationId string `json:"requestedOrganizationId" url:"requestedOrganizationId"`
 
 	_rawJSON json.RawMessage
 }
@@ -38,7 +38,7 @@ func (o *OrganizationNotFoundErrorBody) String() string {
 }
 
 type UserNotFoundErrorBody struct {
-	RequestedUserId string `json:"requestedUserId"`
+	RequestedUserId string `json:"requestedUserId" url:"requestedUserId"`
 
 	_rawJSON json.RawMessage
 }

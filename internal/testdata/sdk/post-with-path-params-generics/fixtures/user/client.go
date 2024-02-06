@@ -9,7 +9,6 @@ import (
 	context "context"
 	fmt "fmt"
 	http "net/http"
-	url "net/url"
 )
 
 type Client struct {
@@ -276,10 +275,9 @@ func (c *Client) Update(
 	}
 	endpointURL := fmt.Sprintf(baseURL+"/"+"users/%v/update", userId)
 
-	queryParams := make(url.Values)
-	queryParams.Add("tag", fmt.Sprintf("%v", request.Tag))
-	if request.Extra != nil {
-		queryParams.Add("extra", fmt.Sprintf("%v", *request.Extra))
+	queryParams, err := core.QueryValues(request)
+	if err != nil {
+		return "", err
 	}
 	if len(queryParams) > 0 {
 		endpointURL += "?" + queryParams.Encode()
