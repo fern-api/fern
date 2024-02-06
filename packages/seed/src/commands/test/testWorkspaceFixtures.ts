@@ -5,13 +5,13 @@ import { loggingExeca } from "@fern-api/logging-execa";
 import { APIS_DIRECTORY, FERN_DIRECTORY } from "@fern-api/project-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace, loadAPIWorkspace } from "@fern-api/workspace-loader";
-import { OutputMode, ScriptConfig } from "@fern-fern/seed-config/api";
 import fs from "fs";
 import { writeFile } from "fs/promises";
 import { difference, isEqual } from "lodash-es";
 import path from "path";
 import tmp from "tmp-promise";
 import { ParsedDockerName } from "../../cli";
+import { OutputMode, ScriptConfig } from "../../config/api";
 import { SeedWorkspace } from "../../loadSeedWorkspaces";
 import { Semaphore } from "../../Semaphore";
 import { runDockerForWorkspace } from "./runDockerForWorkspace";
@@ -44,18 +44,19 @@ export async function testWorkspaceFixtures({
     docker,
     scripts,
     taskContextFactory,
-    numDockers
+    numDockers,
+    keepDocker
 }: {
     workspace: SeedWorkspace;
     irVersion: string | undefined;
     language: GenerationLanguage | undefined;
     fixtures: string[];
     docker: ParsedDockerName;
-    dockerCommand: string | undefined;
     scripts: ScriptConfig[] | undefined;
     logLevel: LogLevel;
     taskContextFactory: TaskContextFactory;
     numDockers: number;
+    keepDocker: boolean | undefined;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
 
@@ -95,7 +96,8 @@ export async function testWorkspaceFixtures({
                             RelativeFilePath.of(fixtureConfigInstance.outputFolder)
                         ),
                         outputMode: fixtureConfigInstance.outputMode ?? workspace.workspaceConfig.defaultOutputMode,
-                        outputFolder: fixtureConfigInstance.outputFolder
+                        outputFolder: fixtureConfigInstance.outputFolder,
+                        keepDocker
                     })
                 );
             }
@@ -115,7 +117,8 @@ export async function testWorkspaceFixtures({
                     taskContext: taskContextFactory.create(`${workspace.workspaceName}:${fixture}`),
                     outputDir: join(workspace.absolutePathToWorkspace, RelativeFilePath.of(fixture)),
                     outputMode: workspace.workspaceConfig.defaultOutputMode,
-                    outputFolder: fixture
+                    outputFolder: fixture,
+                    keepDocker
                 })
             );
         }
@@ -176,7 +179,8 @@ export async function acquireLocksAndRunTest({
     outputDir,
     absolutePathToWorkspace,
     outputMode,
-    outputFolder
+    outputFolder,
+    keepDocker
 }: {
     id: string;
     lock: Semaphore;
@@ -192,6 +196,7 @@ export async function acquireLocksAndRunTest({
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
     outputFolder: string;
+    keepDocker: boolean | undefined;
 }): Promise<TestResult> {
     taskContext.logger.debug("Acquiring lock...");
     await lock.acquire();
@@ -209,7 +214,8 @@ export async function acquireLocksAndRunTest({
         outputDir,
         absolutePathToWorkspace,
         outputMode,
-        outputFolder
+        outputFolder,
+        keepDocker
     });
     taskContext.logger.debug("Releasing lock...");
     lock.release();
@@ -229,7 +235,8 @@ async function testWithWriteToDisk({
     outputDir,
     absolutePathToWorkspace,
     outputMode,
-    outputFolder
+    outputFolder,
+    keepDocker
 }: {
     id: string;
     fixture: string;
@@ -244,6 +251,7 @@ async function testWithWriteToDisk({
     absolutePathToWorkspace: AbsoluteFilePath;
     outputMode: OutputMode;
     outputFolder: string;
+    keepDocker: boolean | undefined;
 }): Promise<TestResult> {
     try {
         const workspace = await loadAPIWorkspace({
@@ -276,7 +284,8 @@ async function testWithWriteToDisk({
             irVersion,
             outputVersion,
             outputMode,
-            fixtureName: fixture
+            fixtureName: fixture,
+            keepDocker
         });
         for (const script of scripts ?? []) {
             taskContext.logger.info(`Running script on ${fixture}`);

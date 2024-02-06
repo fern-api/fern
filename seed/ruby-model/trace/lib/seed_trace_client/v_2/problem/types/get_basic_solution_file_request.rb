@@ -28,8 +28,14 @@ module SeedTraceClient
         # @return [V2::Problem::GetBasicSolutionFileRequest]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           method_name = struct.methodName
-          signature = struct.signature
+          if parsed_json["signature"].nil?
+            signature = nil
+          else
+            signature = parsed_json["signature"].to_json
+            signature = V2::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
+          end
           new(method_name: method_name, signature: signature, additional_properties: struct)
         end
 

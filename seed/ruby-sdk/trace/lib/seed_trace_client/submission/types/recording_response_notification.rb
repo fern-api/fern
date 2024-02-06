@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "lightweight_stackframe_information"
-
 require_relative "submission_id"
+require_relative "lightweight_stackframe_information"
 require_relative "traced_file"
 require "json"
 
@@ -41,11 +40,22 @@ module SeedTraceClient
       # @return [Submission::RecordingResponseNotification]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         test_case_id = struct.testCaseId
         line_number = struct.lineNumber
-        lightweight_stack_info = struct.lightweightStackInfo
-        traced_file = struct.tracedFile
+        if parsed_json["lightweightStackInfo"].nil?
+          lightweight_stack_info = nil
+        else
+          lightweight_stack_info = parsed_json["lightweightStackInfo"].to_json
+          lightweight_stack_info = Submission::LightweightStackframeInformation.from_json(json_object: lightweight_stack_info)
+        end
+        if parsed_json["tracedFile"].nil?
+          traced_file = nil
+        else
+          traced_file = parsed_json["tracedFile"].to_json
+          traced_file = Submission::TracedFile.from_json(json_object: traced_file)
+        end
         new(submission_id: submission_id, test_case_id: test_case_id, line_number: line_number,
             lightweight_stack_info: lightweight_stack_info, traced_file: traced_file, additional_properties: struct)
       end

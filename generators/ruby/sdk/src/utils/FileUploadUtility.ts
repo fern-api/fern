@@ -45,11 +45,12 @@ export class FileUploadUtility extends Class_ {
                 // Get file path in conditional
                 new ConditionalStatement({
                     if_: {
-                        leftSide: new FunctionInvocation({
+                        rightSide: new FunctionInvocation({
                             onObject: fileVariable,
-                            baseFunction: new Function_({ name: "has_attribute?", functionBody: [] }),
-                            arguments_: [new Argument({ value: "path", type: StringClassReference, isNamed: false })]
+                            baseFunction: new Function_({ name: "is_a?", functionBody: [] }),
+                            arguments_: [new Argument({ value: "String", type: GenericClassReference, isNamed: false })]
                         }),
+                        operation: "!",
                         expressions: [
                             new Expression({
                                 leftSide: pathVariable,
@@ -82,7 +83,7 @@ export class FileUploadUtility extends Class_ {
                 // Default mimetype
                 new ConditionalStatement({
                     if_: {
-                        leftSide: new FunctionInvocation({
+                        rightSide: new FunctionInvocation({
                             onObject: mimeTypeVariable,
                             baseFunction: new Function_({ name: "nil?", functionBody: [] })
                         }),
@@ -98,7 +99,7 @@ export class FileUploadUtility extends Class_ {
                     else_: [
                         new Expression({
                             leftSide: mimeTypeVariable,
-                            rightSide: "application/octet-stream",
+                            rightSide: '"application/octet-stream"',
                             isAssignment: true
                         })
                     ]
@@ -127,7 +128,7 @@ export class FileUploadUtility extends Class_ {
         super({
             classReference: new ClassReference({
                 name: "FileUtilities",
-                import_: new Import({ from: "core/file_utilties", isExternal: false })
+                import_: new Import({ from: "core/file_utilities", isExternal: false })
             }),
             includeInitializer: false,
             properties: [],

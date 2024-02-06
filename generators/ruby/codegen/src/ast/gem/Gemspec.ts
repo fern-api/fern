@@ -1,5 +1,6 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
+import { MINIMUM_RUBY_VERSION } from "../../utils/RubyUtilities";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
 import { ExternalDependency } from "../ExternalDependency";
@@ -27,7 +28,7 @@ export class Gemspec extends FunctionInvocation {
             globalDependencies.push(
                 ...[
                     new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
-                    new ExternalDependency({ packageName: "farady-multipart", specifier: "~>", version: "1.0" })
+                    new ExternalDependency({ packageName: "faraday-multipart", specifier: "~>", version: "1.0" })
                 ]
             );
         }
@@ -48,6 +49,18 @@ export class Gemspec extends FunctionInvocation {
                     leftSide: "spec.version",
                     rightSide: new ClassReference({
                         name: `"${sdkVersion}"`,
+                        import_: new Import({ from: "lib/gemconfig" })
+                    }),
+                    isAssignment: true
+                })
+            );
+        } else {
+            // Allow for people to use the gemconfig if no version is found
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.version",
+                    rightSide: new ClassReference({
+                        name: `${clientName}::Gemconfig::VERSION`,
                         import_: new Import({ from: "lib/gemconfig" })
                     }),
                     isAssignment: true
@@ -104,7 +117,7 @@ export class Gemspec extends FunctionInvocation {
                     }),
                     new Expression({
                         leftSide: "spec.required_ruby_version",
-                        rightSide: '">= 2.7.0"',
+                        rightSide: `">= ${MINIMUM_RUBY_VERSION}.0"`,
                         isAssignment: true
                     }),
                     new Expression({

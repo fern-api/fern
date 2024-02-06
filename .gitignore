@@ -18,7 +18,7 @@ generators/**/tsconfig*tsbuildinfo
 generators/**/out
 
 # don't ignore the ruby lib within the playground
-!packages/**/ruby/playground/lib
+!generators/ruby/playground/lib
 
 # next
 .next

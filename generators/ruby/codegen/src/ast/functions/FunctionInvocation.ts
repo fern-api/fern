@@ -1,5 +1,6 @@
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { Argument } from "../Argument";
+import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 import { Variable } from "../Variable";
@@ -63,30 +64,37 @@ export class FunctionInvocation extends AstNode {
         }
     }
 
-    private writeArgmuments(): string {
-        return `(${this.arguments_.map((a) => a.write({})).join(", ")})`;
+    private writeArgmuments(): string | undefined {
+        return this.arguments_.length > 0 ? `(${this.arguments_.map((a) => a.write({})).join(", ")})` : undefined;
     }
 
     // When writing the definition
     public writeInternal(startingTabSpaces: number): void {
-        const className = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
+        const onObject = this.onObject instanceof AstNode ? this.onObject.write({}) : this.onObject;
         this.addText({
-            stringContent: className,
-            templateString: this.optionalSafeCall ? "%s&." : "%s.",
+            stringContent: onObject,
             startingTabSpaces
         });
-        this.addText({ stringContent: this.baseFunction?.name, startingTabSpaces, appendToLastString: true });
+        this.addText({
+            stringContent: this.baseFunction?.invocationName ?? this.baseFunction?.name,
+            templateString: onObject === undefined ? undefined : this.optionalSafeCall ? "&.%s" : ".%s",
+            startingTabSpaces,
+            appendToLastString: true
+        });
         this.addText({ stringContent: this.writeArgmuments(), appendToLastString: true });
         this.writeBlock(startingTabSpaces);
     }
 
     public getImports(): Set<Import> {
-        let imports = this.baseFunction?.getImports() ?? new Set<Import>();
+        let imports = new Set<Import>();
         if (this.onObject instanceof AstNode) {
             imports = new Set([...imports, ...this.onObject.getImports()]);
         }
+
         this.arguments_.forEach((arg) => (imports = new Set([...imports, ...arg.getImports()])));
-        this.block?.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+        this.block?.expressions
+            .filter((exp) => !(exp instanceof Class_))
+            .forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
         return imports;
     }
 }

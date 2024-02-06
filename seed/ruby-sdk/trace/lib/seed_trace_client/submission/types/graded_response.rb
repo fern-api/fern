@@ -27,6 +27,7 @@ module SeedTraceClient
       # @return [Submission::GradedResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         submission_id = struct.submissionId
         test_cases = struct.testCases
         new(submission_id: submission_id, test_cases: test_cases, additional_properties: struct)

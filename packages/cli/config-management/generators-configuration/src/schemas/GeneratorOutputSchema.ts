@@ -5,6 +5,7 @@ import { NpmOutputLocationSchema } from "./NpmOutputLocationSchema";
 import { NugetOutputLocationSchema } from "./NugetOutputLocationSchema";
 import { PostmanOutputLocationSchema } from "./PostmanOutputLocationSchema";
 import { PypiOutputLocationSchema } from "./PypiOutputLocationSchema";
+import { RubyGemsOutputLocationSchema } from "./RubyGemsOutputLocationSchema";
 
 export const GeneratorOutputSchema = z.discriminatedUnion("location", [
     NpmOutputLocationSchema,
@@ -12,7 +13,8 @@ export const GeneratorOutputSchema = z.discriminatedUnion("location", [
     PypiOutputLocationSchema,
     PostmanOutputLocationSchema,
     LocalFileSystemOutputLocationSchema,
-    NugetOutputLocationSchema
+    NugetOutputLocationSchema,
+    RubyGemsOutputLocationSchema
 ]);
 
 export type GeneratorOutputSchema = z.infer<typeof GeneratorOutputSchema>;

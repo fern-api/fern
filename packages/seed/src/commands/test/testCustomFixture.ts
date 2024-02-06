@@ -15,7 +15,8 @@ export async function testCustomFixture({
     language,
     docker,
     logLevel,
-    numDockers
+    numDockers,
+    keepDocker
 }: {
     pathToFixture: AbsoluteFilePath;
     workspace: SeedWorkspace;
@@ -24,6 +25,7 @@ export async function testCustomFixture({
     docker: ParsedDockerName;
     logLevel: LogLevel;
     numDockers: number;
+    keepDocker: boolean | undefined;
 }): Promise<void> {
     const lock = new Semaphore(numDockers);
     const outputDir = await tmp.dir();
@@ -46,7 +48,8 @@ export async function testCustomFixture({
         outputDir: absolutePathToOutput,
         outputMode: "github",
         outputFolder: "custom",
-        id: "custom"
+        id: "custom",
+        keepDocker
     });
 
     if (result.type === "failure") {

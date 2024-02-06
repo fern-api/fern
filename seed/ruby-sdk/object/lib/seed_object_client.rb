@@ -1,27 +1,24 @@
 # frozen_string_literal: true
 
-require_relative "seed_object_client/types/name"
-
-require_relative "seed_object_client/types/type"
-require "async/http/faraday"
-require "faraday"
+require_relative "types_export"
+require_relative "requests"
 
 module SeedObjectClient
   class Client
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
+      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 
   class AsyncClient
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
+      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
     end
   end
 end

@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_trace_client"
+  spec.version = SeedTraceClient::Gemconfig::VERSION
   spec.authors = SeedTraceClient::Gemconfig::AUTHORS
   spec.email = SeedTraceClient::Gemconfig::EMAIL
   spec.summary = SeedTraceClient::Gemconfig::SUMMARY

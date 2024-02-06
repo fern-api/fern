@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../../commons/types/variable_type"
-
 require_relative "parameter_id"
+require_relative "../../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
@@ -33,9 +32,15 @@ module SeedTraceClient
         # @return [V2::Problem::Parameter]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
+          parsed_json = JSON.parse(json_object)
           parameter_id = struct.parameterId
           name = struct.name
-          variable_type = struct.variableType
+          if parsed_json["variableType"].nil?
+            variable_type = nil
+          else
+            variable_type = parsed_json["variableType"].to_json
+            variable_type = Commons::VariableType.from_json(json_object: variable_type)
+          end
           new(parameter_id: parameter_id, name: name, variable_type: variable_type, additional_properties: struct)
         end
 

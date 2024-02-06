@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Submission
-    # @type [Hash{String => String}]
+    # @type [EXECUTION_SESSION_STATUS]
     EXECUTION_SESSION_STATUS = {
       creating_container: "CREATING_CONTAINER",
       provisioning_container: "PROVISIONING_CONTAINER",
@@ -10,6 +10,6 @@ module SeedTraceClient
       running_container: "RUNNING_CONTAINER",
       live_container: "LIVE_CONTAINER",
       failed_to_launch: "FAILED_TO_LAUNCH"
-    }.frozen
+    }.freeze
   end
 end

@@ -24,6 +24,7 @@ module SeedTraceClient
       # @return [Submission::ExistingSubmissionExecuting]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         submission_id = struct.submissionId
         new(submission_id: submission_id, additional_properties: struct)
       end
