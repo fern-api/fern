@@ -3315,7 +3315,7 @@ __metadata:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/ir-sdk": "workspace:*"
-    "@fern-fern/docs-config": 0.0.53
+    "@fern-fern/docs-config": 0.0.70
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/node": ^18.7.18
@@ -3329,13 +3329,6 @@ __metadata:
     zod: ^3.22.3
   languageName: unknown
   linkType: soft
-
-"@fern-fern/docs-config@npm:0.0.53":
-  version: 0.0.53
-  resolution: "@fern-fern/docs-config@npm:0.0.53"
-  checksum: 3caa333aef65c0d20709ee863f9ea76bef86d21c75d6ba780ced9e72542fbe903e35ef6de638f6c710e633cc8698978648946cebc9dc08c26f41895ddada9c96
-  languageName: node
-  linkType: hard
 
 "@fern-fern/docs-config@npm:0.0.70":
   version: 0.0.70
