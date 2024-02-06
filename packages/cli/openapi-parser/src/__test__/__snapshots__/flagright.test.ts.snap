@@ -27171,7 +27171,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleNature",
       "groupName": undefined,
-      "nameOverride": "Rule nature type",
+      "nameOverride": undefined,
       "type": "enum",
       "values": [
         {
@@ -28212,7 +28212,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionEventMonitoringResult",
       "groupName": undefined,
-      "nameOverride": "",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],

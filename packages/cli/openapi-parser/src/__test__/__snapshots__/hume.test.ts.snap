@@ -1016,7 +1016,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "BurstPredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1037,7 +1037,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "Modality-specific descriptive features and their scores.",
             "generatedName": "BurstPredictionDescriptions",
             "groupName": undefined,
-            "nameOverride": "Descriptions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1299,7 +1299,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "An error message.",
             "generatedName": "ErrorMessage",
             "groupName": undefined,
-            "nameOverride": "Error Message",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -1576,7 +1576,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacePredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1603,7 +1603,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "FACS 2.0 features and their scores.",
               "generatedName": "FacePredictionFacs",
               "groupName": undefined,
-              "nameOverride": "FACS 2.0 Scores",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1631,7 +1631,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "Modality-specific descriptive features and their scores.",
               "generatedName": "FacePredictionDescriptions",
               "groupName": undefined,
-              "nameOverride": "Descriptions Scores",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -1664,7 +1664,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "FacemeshPredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -1791,7 +1791,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "An error message.",
             "generatedName": "FailedMessage",
             "groupName": undefined,
-            "nameOverride": "Error Message",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2406,7 +2406,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "LanguageIdentifySpeakers",
               "groupName": undefined,
-              "nameOverride": "Identify Speakers",
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -2558,7 +2558,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "LanguagePredictionSpeakerConfidence",
               "groupName": undefined,
-              "nameOverride": "Speaker Confidence",
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -2575,7 +2575,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "LanguagePredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -2604,7 +2604,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
 Compared to returning one estimate of sentiment, this enables a more nuanced analysis of a text's meaning. For example, a text with very neutral sentiment would have an average rating of \`5\`. But also a text that could be interpreted as having very positive sentiment or very negative sentiment would also have an average rating of \`5\`. The average sentiment is less informative than the distribution over sentiment, so this API returns a value for each sentiment level.",
               "generatedName": "LanguagePredictionSentiment",
               "groupName": undefined,
-              "nameOverride": "Sentiment Scores",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2632,7 +2632,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Toxicity predictions returned as probabilities that the text can be classified into the following categories: \`toxic\`, \`severe_toxic\`, \`obscene\`, \`threat\`, \`insult\`, and \`identity_hate\`.",
               "generatedName": "LanguagePredictionToxicity",
               "groupName": undefined,
-              "nameOverride": "Toxicity Scores",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -2945,7 +2945,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "NerIdentifySpeakers",
               "groupName": undefined,
-              "nameOverride": "Identify Speakers",
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -3123,7 +3123,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "NerPredictionSpeakerConfidence",
               "groupName": undefined,
-              "nameOverride": "Speaker Confidence",
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3140,7 +3140,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "NerPredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -3627,7 +3627,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Whether to return identifiers for speakers over time. If \`true\`, unique identifiers will be assigned to spoken words to differentiate different speakers. If \`false\`, all speakers will be tagged with an \`unknown\` ID.",
               "generatedName": "ProsodyIdentifySpeakers",
               "groupName": undefined,
-              "nameOverride": "Identify Speakers",
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -3744,7 +3744,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence that this text was spoken by this speaker.",
               "generatedName": "ProsodyPredictionSpeakerConfidence",
               "groupName": undefined,
-              "nameOverride": "Speaker Confidence",
+              "nameOverride": undefined,
               "schema": {
                 "type": "double",
               },
@@ -3761,7 +3761,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "description": "A high-dimensional embedding in emotion space.",
             "generatedName": "ProsodyPredictionEmotions",
             "groupName": undefined,
-            "nameOverride": "Emotions Scores",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -4174,7 +4174,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "An error message.",
               "generatedName": "SourceResultError",
               "groupName": undefined,
-              "nameOverride": "Error Message",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,

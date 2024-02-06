@@ -971,7 +971,7 @@ This includes any permissions granted to said condition set (i.e: any matching c
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Response List Condition Sets V2 Schema  Proj Id   Env Id  Condition Sets Get",
+              "type": "ListConditionSetsResponse",
             },
           },
           "update_condition_set": {
@@ -1124,11 +1124,11 @@ Fields that will be provided will be completely overwritten.",
         },
       },
       "types": {
-        "Response List Condition Sets V2 Schema  Proj Id   Env Id  Condition Sets Get": {
+        "ListConditionSetsResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.PaginatedResult[ConditionSetRead]",
+            "root.PaginatedResultConditionSetRead",
             "list<root.ConditionSetRead>",
           ],
         },
@@ -1232,7 +1232,7 @@ allowed.",
                 "properties": {
                   "conflict_strategy": {
                     "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
-                    "type": "optional<Conflict Strategy>",
+                    "type": "optional<EnvironmentCopyConflictStrategy>",
                   },
                   "scope": {
                     "docs": "Filters to include and exclude copied objects",
@@ -1560,7 +1560,7 @@ allowed.",
         },
       },
       "types": {
-        "Conflict Strategy": {
+        "EnvironmentCopyConflictStrategy": {
           "docs": "Action to take when detecting a conflict when copying. Only applies to copying into an existing environment",
           "enum": [
             "fail",
@@ -4292,7 +4292,7 @@ A resource may also contain:
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Response List Resources V2 Schema  Proj Id   Env Id  Resources Get",
+              "type": "ListResourcesResponse",
             },
           },
           "replace_resource": {
@@ -4524,11 +4524,11 @@ Fields that will be provided will be completely overwritten.",
         },
       },
       "types": {
-        "Response List Resources V2 Schema  Proj Id   Env Id  Resources Get": {
+        "ListResourcesResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.PaginatedResult[ResourceRead]",
+            "root.PaginatedResultResourceRead",
             "list<root.ResourceRead>",
           ],
         },
@@ -5200,7 +5200,7 @@ This includes any permissions granted to said role.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Response List Roles V2 Schema  Proj Id   Env Id  Roles Get",
+              "type": "ListRolesResponse",
             },
           },
           "remove_permissions_from_role": {
@@ -5364,11 +5364,11 @@ Fields that will be provided will be completely overwritten.",
         },
       },
       "types": {
-        "Response List Roles V2 Schema  Proj Id   Env Id  Roles Get": {
+        "ListRolesResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.PaginatedResult[RoleRead]",
+            "root.PaginatedResultRoleRead",
             "list<root.RoleRead>",
           ],
         },
@@ -5649,7 +5649,7 @@ and will return the existing tenant object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.PaginatedResult[UserRead]",
+              "type": "root.PaginatedResultUserRead",
             },
           },
           "list_tenants": {
@@ -5708,7 +5708,7 @@ and will return the existing tenant object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "Response List Tenants V2 Facts  Proj Id   Env Id  Tenants Get",
+              "type": "ListTenantsResponse",
             },
           },
           "update_tenant": {
@@ -5793,11 +5793,11 @@ Fields that will be provided will be completely overwritten.",
         },
       },
       "types": {
-        "Response List Tenants V2 Facts  Proj Id   Env Id  Tenants Get": {
+        "ListTenantsResponse": {
           "discriminated": false,
           "docs": undefined,
           "union": [
-            "root.PaginatedResult[TenantRead]",
+            "root.PaginatedResultTenantRead",
             "list<root.TenantRead>",
           ],
         },
@@ -6474,7 +6474,7 @@ and will return the existing user object in the response body.",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.PaginatedResult[UserRead]",
+              "type": "root.PaginatedResultUserRead",
             },
           },
           "replace_user": {
@@ -7423,7 +7423,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "PaginatedResult[ConditionSetRead]": {
+      "PaginatedResultConditionSetRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -7434,7 +7434,7 @@ Fields that will be provided will be completely overwritten.",
           "total_count": "integer",
         },
       },
-      "PaginatedResult[ResourceRead]": {
+      "PaginatedResultResourceRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -7445,7 +7445,7 @@ Fields that will be provided will be completely overwritten.",
           "total_count": "integer",
         },
       },
-      "PaginatedResult[ResourceRoleRead]": {
+      "PaginatedResultResourceRoleRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -7456,7 +7456,7 @@ Fields that will be provided will be completely overwritten.",
           "total_count": "integer",
         },
       },
-      "PaginatedResult[RoleRead]": {
+      "PaginatedResultRoleRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -7467,7 +7467,7 @@ Fields that will be provided will be completely overwritten.",
           "total_count": "integer",
         },
       },
-      "PaginatedResult[TenantRead]": {
+      "PaginatedResultTenantRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -7478,7 +7478,7 @@ Fields that will be provided will be completely overwritten.",
           "total_count": "integer",
         },
       },
-      "PaginatedResult[UserRead]": {
+      "PaginatedResultUserRead": {
         "docs": undefined,
         "properties": {
           "data": {
@@ -8083,7 +8083,7 @@ The actions represents the ways you can interact with a protected resource.",
         "docs": undefined,
         "union": [
           "list<RoleRead>",
-          "PaginatedResult[RoleRead]",
+          "PaginatedResultRoleRead",
         ],
       },
       "RolesBlock": {

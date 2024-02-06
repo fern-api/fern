@@ -14458,7 +14458,7 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
-      "AttachDecoratorData1JWS": {
+      "AttachDecoratorData1Jws": {
         "docs": undefined,
         "properties": {
           "header": "AttachDecoratorDataJWSHeader",
@@ -14486,7 +14486,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "signatures": {
             "docs": "List of signatures",
-            "type": "optional<list<AttachDecoratorData1JWS>>",
+            "type": "optional<list<AttachDecoratorData1Jws>>",
           },
         },
       },
@@ -14540,12 +14540,28 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "jwt": "optional<jwt>",
-          "jwt_vc": "optional<jwt_vc>",
-          "jwt_vp": "optional<jwt_vp>",
+          "jwt_vc": "optional<ClaimFormatJwtVc>",
+          "jwt_vp": "optional<ClaimFormatJwtVp>",
           "ldp": "optional<ldp>",
-          "ldp_vc": "optional<ldp_vc>",
-          "ldp_vp": "optional<ldp_vp>",
+          "ldp_vc": "optional<ClaimFormatLdpVc>",
+          "ldp_vp": "optional<ClaimFormatLdpVp>",
         },
+      },
+      "ClaimFormatJwtVc": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "ClaimFormatJwtVp": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "ClaimFormatLdpVc": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "ClaimFormatLdpVp": {
+        "docs": undefined,
+        "properties": {},
       },
       "ConnRecord": {
         "docs": undefined,
@@ -14773,14 +14789,42 @@ exports[`open api parser aries simple 1`] = `
             "docs": "LimitDisclosure",
             "type": "optional<string>",
           },
-          "status_active": "optional<status_active>",
-          "status_revoked": "optional<status_revoked>",
-          "status_suspended": "optional<status_suspended>",
+          "status_active": "optional<ConstraintsStatusActive>",
+          "status_revoked": "optional<ConstraintsStatusRevoked>",
+          "status_suspended": "optional<ConstraintsStatusSuspended>",
           "subject_is_issuer": {
             "docs": "SubjectIsIssuer",
-            "type": "optional<subject_is_issuer>",
+            "type": "optional<ConstraintsSubjectIsIssuer>",
           },
         },
+      },
+      "ConstraintsStatusActive": {
+        "enum": [
+          "required",
+          "allowed",
+          "disallowed",
+        ],
+      },
+      "ConstraintsStatusRevoked": {
+        "enum": [
+          "required",
+          "allowed",
+          "disallowed",
+        ],
+      },
+      "ConstraintsStatusSuspended": {
+        "enum": [
+          "required",
+          "allowed",
+          "disallowed",
+        ],
+      },
+      "ConstraintsSubjectIsIssuer": {
+        "docs": "SubjectIsIssuer",
+        "enum": [
+          "required",
+          "preferred",
+        ],
       },
       "CreateWalletResponse": {
         "docs": undefined,
@@ -15104,7 +15148,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "key_type": {
             "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
-            "type": "key_type",
+            "type": "DidCreateOptionsKeyType",
           },
         },
       },
@@ -15188,11 +15232,11 @@ exports[`open api parser aries simple 1`] = `
           "presentation_definition": "optional<PresentationDefinition>",
           "record_ids": {
             "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
-            "type": "optional<record_ids>",
+            "type": "optional<DifPresSpecRecordIds>",
           },
           "reveal_doc": {
             "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
-            "type": "optional<reveal_doc>",
+            "type": "optional<DifPresSpecRevealDoc>",
           },
         },
       },
@@ -15214,6 +15258,13 @@ exports[`open api parser aries simple 1`] = `
         "docs": "To define a key type and/or a did depending on chosen DID method.",
         "type": "DIDCreateOptions",
       },
+      "DidCreateOptionsKeyType": {
+        "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
+        "enum": [
+          "ed25519",
+          "bls12381g2",
+        ],
+      },
       "DidKeyType": {
         "docs": "Key type associated with the DID",
         "enum": [
@@ -15232,6 +15283,14 @@ exports[`open api parser aries simple 1`] = `
       "DidxRequestDidDocAttach": {
         "docs": "As signed attachment, DID Doc associated with DID",
         "type": "AttachDecorator",
+      },
+      "DifPresSpecRecordIds": {
+        "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
+        "properties": {},
+      },
+      "DifPresSpecRevealDoc": {
+        "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
+        "properties": {},
       },
       "Disclose": {
         "docs": undefined,
@@ -15493,11 +15552,11 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "blinded_ms": {
             "docs": "Blinded master secret",
-            "type": "blinded_ms",
+            "type": "IndyCredRequestBlindedMs",
           },
           "blinded_ms_correctness_proof": {
             "docs": "Blinded master secret correctness proof",
-            "type": "blinded_ms_correctness_proof",
+            "type": "IndyCredRequestBlindedMsCorrectnessProof",
           },
           "cred_def_id": {
             "docs": "Credential definition identifier",
@@ -15513,6 +15572,14 @@ exports[`open api parser aries simple 1`] = `
           },
         },
       },
+      "IndyCredRequestBlindedMs": {
+        "docs": "Blinded master secret",
+        "properties": {},
+      },
+      "IndyCredRequestBlindedMsCorrectnessProof": {
+        "docs": "Blinded master secret correctness proof",
+        "properties": {},
+      },
       "IndyCredential": {
         "docs": undefined,
         "properties": {
@@ -15522,7 +15589,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "rev_reg": {
             "docs": "Revocation registry state",
-            "type": "optional<rev_reg>",
+            "type": "optional<IndyCredentialRevReg>",
           },
           "rev_reg_id": {
             "docs": "Revocation registry identifier",
@@ -15538,7 +15605,7 @@ exports[`open api parser aries simple 1`] = `
           },
           "signature_correctness_proof": {
             "docs": "Credential signature correctness proof",
-            "type": "signature_correctness_proof",
+            "type": "IndyCredentialSignatureCorrectnessProof",
           },
           "values": {
             "docs": "Credential attributes",
@@ -15549,6 +15616,14 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<witness>",
           },
         },
+      },
+      "IndyCredentialRevReg": {
+        "docs": "Revocation registry state",
+        "properties": {},
+      },
+      "IndyCredentialSignatureCorrectnessProof": {
+        "docs": "Credential signature correctness proof",
+        "properties": {},
       },
       "IndyCredentialValuesValue": {
         "docs": "Attribute value",
@@ -15585,13 +15660,22 @@ exports[`open api parser aries simple 1`] = `
           },
           "p_type": {
             "docs": "Predicate type",
-            "type": "optional<p_type>",
+            "type": "optional<IndyGeProofPredPType>",
           },
           "value": {
             "docs": "Predicate threshold value",
             "type": "optional<integer>",
           },
         },
+      },
+      "IndyGeProofPredPType": {
+        "docs": "Predicate type",
+        "enum": [
+          "LT",
+          "LE",
+          "GE",
+          "GT",
+        ],
       },
       "IndyKeyCorrectnessProof": {
         "docs": undefined,
@@ -15953,11 +16037,11 @@ exports[`open api parser aries simple 1`] = `
           },
           "self_attested_attrs": {
             "docs": "Proof requested proof self-attested attributes",
-            "type": "optional<self_attested_attrs>",
+            "type": "optional<IndyProofRequestedProofSelfAttestedAttrs>",
           },
           "unrevealed_attrs": {
             "docs": "Unrevealed attributes",
-            "type": "optional<unrevealed_attrs>",
+            "type": "optional<IndyProofRequestedProofUnrevealedAttrs>",
           },
         },
       },
@@ -15999,6 +16083,14 @@ exports[`open api parser aries simple 1`] = `
             "type": "optional<map<string, RawEncoded>>",
           },
         },
+      },
+      "IndyProofRequestedProofSelfAttestedAttrs": {
+        "docs": "Proof requested proof self-attested attributes",
+        "properties": {},
+      },
+      "IndyProofRequestedProofUnrevealedAttrs": {
+        "docs": "Unrevealed attributes",
+        "properties": {},
       },
       "IndyRequestedCredsRequestedAttr": {
         "docs": undefined,
@@ -16927,13 +17019,23 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "feature-type": {
             "docs": "feature type",
-            "type": "feature-type",
+            "type": "QueryItemFeatureType",
           },
           "match": {
             "docs": "match",
             "type": "string",
           },
         },
+      },
+      "QueryItemFeatureType": {
+        "docs": "feature type",
+        "enum": [
+          "protocol",
+          {
+            "name": "GoalCode",
+            "value": "goal-code",
+          },
+        ],
       },
       "RawEncoded": {
         "docs": undefined,
@@ -17845,11 +17947,27 @@ exports[`open api parser aries simple 1`] = `
       "V20CredExRecordByFormat": {
         "docs": undefined,
         "properties": {
-          "cred_issue": "optional<cred_issue>",
-          "cred_offer": "optional<cred_offer>",
-          "cred_proposal": "optional<cred_proposal>",
-          "cred_request": "optional<cred_request>",
+          "cred_issue": "optional<V20CredExRecordByFormatCredIssue>",
+          "cred_offer": "optional<V20CredExRecordByFormatCredOffer>",
+          "cred_proposal": "optional<V20CredExRecordByFormatCredProposal>",
+          "cred_request": "optional<V20CredExRecordByFormatCredRequest>",
         },
+      },
+      "V20CredExRecordByFormatCredIssue": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "V20CredExRecordByFormatCredOffer": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "V20CredExRecordByFormatCredProposal": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "V20CredExRecordByFormatCredRequest": {
+        "docs": undefined,
+        "properties": {},
       },
       "V20CredExRecordCredIssue": {
         "docs": "Serialized credential issue message",
@@ -17876,7 +17994,7 @@ exports[`open api parser aries simple 1`] = `
         "properties": {
           "cred_ex_record": "optional<V20CredExRecordDetailCredExRecord>",
           "indy": "optional<V20CredExRecordIndy>",
-          "ld_proof": "optional<V20CredExRecordLDProof>",
+          "ld_proof": "optional<V20CredExRecordLdProof>",
         },
       },
       "V20CredExRecordDetailCredExRecord": {
@@ -17935,7 +18053,7 @@ exports[`open api parser aries simple 1`] = `
           "external",
         ],
       },
-      "V20CredExRecordLDProof": {
+      "V20CredExRecordLdProof": {
         "docs": undefined,
         "properties": {
           "created_at": {
@@ -18058,12 +18176,6 @@ exports[`open api parser aries simple 1`] = `
             "docs": "Schema version",
             "type": "optional<string>",
           },
-        },
-      },
-      "V20CredFilterLDProof": {
-        "docs": undefined,
-        "properties": {
-          "ld_proof": "V20CredFilterLdProof",
         },
       },
       "V20CredFilterLdProof": {
@@ -18209,7 +18321,7 @@ exports[`open api parser aries simple 1`] = `
       },
       "V20CredRequestFreeFilter": {
         "docs": "Credential specification criteria by format",
-        "type": "V20CredFilterLDProof",
+        "type": "V20CredFilterLdProof",
       },
       "V20DiscoveryExchangeListResult": {
         "docs": undefined,
@@ -18359,9 +18471,17 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {
           "pres": "optional<pres>",
-          "pres_proposal": "optional<pres_proposal>",
-          "pres_request": "optional<pres_request>",
+          "pres_proposal": "optional<V20PresExRecordByFormatPresProposal>",
+          "pres_request": "optional<V20PresExRecordByFormatPresRequest>",
         },
+      },
+      "V20PresExRecordByFormatPresProposal": {
+        "docs": undefined,
+        "properties": {},
+      },
+      "V20PresExRecordByFormatPresRequest": {
+        "docs": undefined,
+        "properties": {},
       },
       "V20PresExRecordInitiator": {
         "docs": "Present-proof exchange initiator: self or external",
@@ -18644,45 +18764,11 @@ exports[`open api parser aries simple 1`] = `
           "ledger_id": "optional<string>",
         },
       },
-      "blinded_ms": {
-        "docs": "Blinded master secret",
-        "properties": {},
-      },
-      "blinded_ms_correctness_proof": {
-        "docs": "Blinded master secret correctness proof",
-        "properties": {},
-      },
-      "cred_issue": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "cred_offer": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "cred_proposal": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "cred_request": {
-        "docs": undefined,
-        "properties": {},
-      },
       "directive": {
         "docs": "Preference",
         "enum": [
           "required",
           "preferred",
-        ],
-      },
-      "feature-type": {
-        "docs": "feature type",
-        "enum": [
-          "protocol",
-          {
-            "name": "GoalCode",
-            "value": "goal-code",
-          },
         ],
       },
       "issuanceType": {
@@ -18696,45 +18782,13 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {},
       },
-      "jwt_vc": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "jwt_vp": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "key_type": {
-        "docs": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
-        "enum": [
-          "ed25519",
-          "bls12381g2",
-        ],
-      },
       "ldp": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "ldp_vc": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "ldp_vp": {
         "docs": undefined,
         "properties": {},
       },
       "metadata": {
         "docs": "Metadata dictionary",
         "properties": {},
-      },
-      "p_type": {
-        "docs": "Predicate type",
-        "enum": [
-          "LT",
-          "LE",
-          "GE",
-          "GT",
-        ],
       },
       "predicate": {
         "docs": "Preference",
@@ -18747,26 +18801,6 @@ exports[`open api parser aries simple 1`] = `
         "docs": undefined,
         "properties": {},
       },
-      "pres_proposal": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "pres_request": {
-        "docs": undefined,
-        "properties": {},
-      },
-      "record_ids": {
-        "docs": "Mapping of input_descriptor id to list of stored W3C credential record_id",
-        "properties": {},
-      },
-      "rev_reg": {
-        "docs": "Revocation registry state",
-        "properties": {},
-      },
-      "reveal_doc": {
-        "docs": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
-        "properties": {},
-      },
       "rule": {
         "docs": "Selection",
         "enum": [
@@ -18774,48 +18808,8 @@ exports[`open api parser aries simple 1`] = `
           "pick",
         ],
       },
-      "self_attested_attrs": {
-        "docs": "Proof requested proof self-attested attributes",
-        "properties": {},
-      },
       "signature": {
         "docs": "Credential signature",
-        "properties": {},
-      },
-      "signature_correctness_proof": {
-        "docs": "Credential signature correctness proof",
-        "properties": {},
-      },
-      "status_active": {
-        "enum": [
-          "required",
-          "allowed",
-          "disallowed",
-        ],
-      },
-      "status_revoked": {
-        "enum": [
-          "required",
-          "allowed",
-          "disallowed",
-        ],
-      },
-      "status_suspended": {
-        "enum": [
-          "required",
-          "allowed",
-          "disallowed",
-        ],
-      },
-      "subject_is_issuer": {
-        "docs": "SubjectIsIssuer",
-        "enum": [
-          "required",
-          "preferred",
-        ],
-      },
-      "unrevealed_attrs": {
-        "docs": "Unrevealed attributes",
         "properties": {},
       },
       "witness": {

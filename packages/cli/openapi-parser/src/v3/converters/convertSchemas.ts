@@ -75,6 +75,20 @@ export function convertReferenceObject(
     }
 }
 
+// Returns a Schema Title if it's suitable as a code generated name
+function getTitleAsName(title: string | undefined): string | undefined {
+    if (title == null) {
+        return undefined;
+    }
+    if (title.includes(" ")) {
+        return undefined;
+    }
+    if (!/^[a-zA-Z]+$/.test(title)) {
+        return undefined;
+    }
+    return title;
+}
+
 export function convertSchemaObject(
     schema: OpenAPIV3.SchemaObject,
     wrapAsNullable: boolean,
@@ -83,7 +97,7 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? schema.title;
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? getTitleAsName(schema.title);
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;

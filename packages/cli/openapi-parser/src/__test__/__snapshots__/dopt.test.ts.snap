@@ -1754,7 +1754,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": undefined,
             "generatedName": "FlowIntentRequestIntent",
             "groupName": undefined,
-            "nameOverride": "Flow_Intent",
+            "nameOverride": undefined,
             "type": "enum",
             "values": [
               {
@@ -2185,7 +2185,7 @@ exports[`open api parser dopt parse open api 1`] = `
             "description": undefined,
             "generatedName": "FlowIntentRequestParamsIntent",
             "groupName": undefined,
-            "nameOverride": "Flow_Intent",
+            "nameOverride": undefined,
             "type": "enum",
             "values": [
               {

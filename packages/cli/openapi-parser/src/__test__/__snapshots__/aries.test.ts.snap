@@ -55938,7 +55938,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "AttachDecoratorData1Jws",
       "groupName": undefined,
-      "nameOverride": "AttachDecoratorData1JWS",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -55963,7 +55963,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "attachDecoratorData1JwsProtected",
             "groupName": undefined,
-            "nameOverride": "AttachDecoratorData1JWS",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "protected JWS header",
@@ -56358,7 +56358,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatJwtVc",
               "groupName": undefined,
-              "nameOverride": "jwt_vc",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -56381,7 +56381,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatJwtVp",
               "groupName": undefined,
-              "nameOverride": "jwt_vp",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -56427,7 +56427,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatLdpVc",
               "groupName": undefined,
-              "nameOverride": "ldp_vc",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -56450,7 +56450,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ClaimFormatLdpVp",
               "groupName": undefined,
-              "nameOverride": "ldp_vp",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -57840,7 +57840,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsIsHolder",
               "groupName": undefined,
-              "nameOverride": "is_holder",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -57868,7 +57868,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "LimitDisclosure",
               "generatedName": "ConstraintsLimitDisclosure",
               "groupName": undefined,
-              "nameOverride": "limit_disclosure",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -57893,7 +57893,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusActive",
               "groupName": undefined,
-              "nameOverride": "status_active",
+              "nameOverride": undefined,
               "type": "enum",
               "values": [
                 {
@@ -57933,7 +57933,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusRevoked",
               "groupName": undefined,
-              "nameOverride": "status_revoked",
+              "nameOverride": undefined,
               "type": "enum",
               "values": [
                 {
@@ -57973,7 +57973,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "ConstraintsStatusSuspended",
               "groupName": undefined,
-              "nameOverride": "status_suspended",
+              "nameOverride": undefined,
               "type": "enum",
               "values": [
                 {
@@ -58013,7 +58013,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "SubjectIsIssuer",
               "generatedName": "ConstraintsSubjectIsIssuer",
               "groupName": undefined,
-              "nameOverride": "subject_is_issuer",
+              "nameOverride": undefined,
               "type": "enum",
               "values": [
                 {
@@ -59058,7 +59058,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredDefValueRevocationGDash",
               "groupName": undefined,
-              "nameOverride": "g_dash",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -59108,7 +59108,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredDefValueRevocationH0",
               "groupName": undefined,
-              "nameOverride": "h0",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -59133,7 +59133,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredDefValueRevocationH1",
               "groupName": undefined,
-              "nameOverride": "h1",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -59158,7 +59158,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredDefValueRevocationH2",
               "groupName": undefined,
-              "nameOverride": "h2",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -59183,7 +59183,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredDefValueRevocationHCap",
               "groupName": undefined,
-              "nameOverride": "h_cap",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -59507,7 +59507,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "The JSON-LD context of the credential",
             "generatedName": "CredentialContext",
             "groupName": undefined,
-            "nameOverride": "@context",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -60130,7 +60130,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "CredentialOfferId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60155,7 +60155,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "CredentialOfferType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60227,7 +60227,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "CredentialOfferOffersAttach",
             "groupName": undefined,
-            "nameOverride": "offers~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -60322,7 +60322,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "CredentialProposalId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60347,7 +60347,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "CredentialProposalType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60404,7 +60404,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalCredDefId",
               "groupName": undefined,
-              "nameOverride": "cred_def_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60450,7 +60450,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalIssuerDid",
               "groupName": undefined,
-              "nameOverride": "issuer_did",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60475,7 +60475,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalSchemaId",
               "groupName": undefined,
-              "nameOverride": "schema_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60500,7 +60500,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalSchemaIssuerDid",
               "groupName": undefined,
-              "nameOverride": "schema_issuer_did",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60525,7 +60525,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalSchemaName",
               "groupName": undefined,
-              "nameOverride": "schema_name",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60550,7 +60550,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "CredentialProposalSchemaVersion",
               "groupName": undefined,
-              "nameOverride": "schema_version",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -60884,7 +60884,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Key type to use for the DID keypair. Validated with the chosen DID method's supported key types.",
             "generatedName": "DidCreateOptionsKeyType",
             "groupName": undefined,
-            "nameOverride": "key_type",
+            "nameOverride": undefined,
             "type": "enum",
             "values": [
               {
@@ -61470,7 +61470,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "DifHolderFieldId",
               "groupName": undefined,
-              "nameOverride": "field_id",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": "FieldID",
@@ -61574,7 +61574,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Issuer identifier to sign the presentation, if different from current public DID",
               "generatedName": "DifPresSpecIssuerId",
               "groupName": undefined,
-              "nameOverride": "issuer_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -61622,7 +61622,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Mapping of input_descriptor id to list of stored W3C credential record_id",
               "generatedName": "DifPresSpecRecordIds",
               "groupName": undefined,
-              "nameOverride": "record_ids",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -61645,7 +61645,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "reveal doc [JSON-LD frame] dict used to derive the credential when selective disclosure is required",
               "generatedName": "DifPresSpecRevealDoc",
               "groupName": undefined,
-              "nameOverride": "reveal_doc",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -61677,7 +61677,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "DifProofProposalInputDescriptors",
               "groupName": undefined,
-              "nameOverride": "input_descriptors",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -61810,7 +61810,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "DiscloseId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -61835,7 +61835,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "DiscloseType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -61892,7 +61892,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "DisclosuresId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -61917,7 +61917,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "DisclosuresType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -62538,7 +62538,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "GeneratedMasterSecret",
               "groupName": undefined,
-              "nameOverride": "master_secret",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -62844,7 +62844,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential definition identifier",
             "generatedName": "IndyCredAbstractCredDefId",
             "groupName": undefined,
-            "nameOverride": "cred_def_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -62894,7 +62894,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Schema identifier",
             "generatedName": "IndyCredAbstractSchemaId",
             "groupName": undefined,
-            "nameOverride": "schema_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -63228,7 +63228,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Blinded master secret",
             "generatedName": "IndyCredRequestBlindedMs",
             "groupName": undefined,
-            "nameOverride": "blinded_ms",
+            "nameOverride": undefined,
             "properties": [],
             "type": "object",
           },
@@ -63244,7 +63244,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Blinded master secret correctness proof",
             "generatedName": "IndyCredRequestBlindedMsCorrectnessProof",
             "groupName": undefined,
-            "nameOverride": "blinded_ms_correctness_proof",
+            "nameOverride": undefined,
             "properties": [],
             "type": "object",
           },
@@ -63258,7 +63258,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential definition identifier",
             "generatedName": "IndyCredRequestCredDefId",
             "groupName": undefined,
-            "nameOverride": "cred_def_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -63294,7 +63294,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Prover DID",
             "generatedName": "IndyCredRequestProverDid",
             "groupName": undefined,
-            "nameOverride": "prover_did",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -63323,7 +63323,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential definition identifier",
             "generatedName": "IndyCredentialCredDefId",
             "groupName": undefined,
-            "nameOverride": "cred_def_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -63347,7 +63347,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Revocation registry state",
               "generatedName": "IndyCredentialRevReg",
               "groupName": undefined,
-              "nameOverride": "rev_reg",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "allOf": [],
@@ -63355,7 +63355,7 @@ exports[`open api parser aries parse open api 1`] = `
                 "description": "Revocation registry state",
                 "generatedName": "IndyCredentialRevReg",
                 "groupName": undefined,
-                "nameOverride": "rev_reg",
+                "nameOverride": undefined,
                 "properties": [],
                 "type": "object",
               },
@@ -63377,13 +63377,13 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Revocation registry identifier",
               "generatedName": "IndyCredentialRevRegId",
               "groupName": undefined,
-              "nameOverride": "rev_reg_id",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Revocation registry identifier",
                 "generatedName": "IndyCredentialRevRegId",
                 "groupName": undefined,
-                "nameOverride": "rev_reg_id",
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -63403,7 +63403,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Schema identifier",
             "generatedName": "IndyCredentialSchemaId",
             "groupName": undefined,
-            "nameOverride": "schema_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -63439,7 +63439,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential signature correctness proof",
             "generatedName": "IndyCredentialSignatureCorrectnessProof",
             "groupName": undefined,
-            "nameOverride": "signature_correctness_proof",
+            "nameOverride": undefined,
             "properties": [],
             "type": "object",
           },
@@ -63541,7 +63541,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "IndyEqProofAPrime",
               "groupName": undefined,
-              "nameOverride": "a_prime",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -63635,7 +63635,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "IndyEqProofM2",
               "groupName": undefined,
-              "nameOverride": "m2",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -63672,7 +63672,7 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "nameOverride": "revealed_attrs",
+              "nameOverride": undefined,
               "type": "map",
               "value": {
                 "description": undefined,
@@ -63954,7 +63954,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Attribute name, indy-canonicalized",
               "generatedName": "IndyGeProofPredAttrName",
               "groupName": undefined,
-              "nameOverride": "attr_name",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -63979,7 +63979,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Predicate type",
               "generatedName": "IndyGeProofPredPType",
               "groupName": undefined,
-              "nameOverride": "p_type",
+              "nameOverride": undefined,
               "type": "enum",
               "values": [
                 {
@@ -64071,7 +64071,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "xr_cap in key correctness proof",
             "generatedName": "IndyKeyCorrectnessProofXrCap",
             "groupName": undefined,
-            "nameOverride": "xr_cap",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": "xr_cap components in key correctness proof",
@@ -64103,7 +64103,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "xz_cap in key correctness proof",
             "generatedName": "IndyKeyCorrectnessProofXzCap",
             "groupName": undefined,
-            "nameOverride": "xz_cap",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -64150,7 +64150,7 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "nameOverride": "c_list",
+              "nameOverride": undefined,
               "type": "map",
               "value": {
                 "description": undefined,
@@ -64194,7 +64194,7 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "nameOverride": "x_list",
+              "nameOverride": undefined,
               "type": "map",
               "value": {
                 "description": undefined,
@@ -64768,13 +64768,13 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Indy GE proofs",
               "generatedName": "IndyPrimaryProofGeProofs",
               "groupName": undefined,
-              "nameOverride": "ge_proofs",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Indy GE proofs",
                 "generatedName": "IndyPrimaryProofGeProofs",
                 "groupName": undefined,
-                "nameOverride": "ge_proofs",
+                "nameOverride": undefined,
                 "type": "array",
                 "value": {
                   "description": undefined,
@@ -64910,7 +64910,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Credential definition identifier",
               "generatedName": "IndyProofIdentifierCredDefId",
               "groupName": undefined,
-              "nameOverride": "cred_def_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -64935,13 +64935,13 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Revocation registry identifier",
               "generatedName": "IndyProofIdentifierRevRegId",
               "groupName": undefined,
-              "nameOverride": "rev_reg_id",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Revocation registry identifier",
                 "generatedName": "IndyProofIdentifierRevRegId",
                 "groupName": undefined,
-                "nameOverride": "rev_reg_id",
+                "nameOverride": undefined,
                 "schema": {
                   "maxLength": undefined,
                   "minLength": undefined,
@@ -64967,7 +64967,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Schema identifier",
               "generatedName": "IndyProofIdentifierSchemaId",
               "groupName": undefined,
-              "nameOverride": "schema_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -65093,7 +65093,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "c_hash value",
               "generatedName": "IndyProofProofAggregatedProofCHash",
               "groupName": undefined,
-              "nameOverride": "c_hash",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -65118,7 +65118,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "c_list value",
               "generatedName": "IndyProofProofAggregatedProofCList",
               "groupName": undefined,
-              "nameOverride": "c_list",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -65975,7 +65975,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Proof requested proof revealed attribute groups",
               "generatedName": "IndyProofRequestedProofRevealedAttrGroups",
               "groupName": undefined,
-              "nameOverride": "revealed_attr_groups",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Proof requested proof revealed attribute groups",
@@ -65993,7 +65993,7 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
-                "nameOverride": "revealed_attr_groups",
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
                   "description": undefined,
@@ -66029,7 +66029,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Proof requested proof revealed attributes",
               "generatedName": "IndyProofRequestedProofRevealedAttrs",
               "groupName": undefined,
-              "nameOverride": "revealed_attrs",
+              "nameOverride": undefined,
               "type": "nullable",
               "value": {
                 "description": "Proof requested proof revealed attributes",
@@ -66047,7 +66047,7 @@ exports[`open api parser aries parse open api 1`] = `
                   },
                   "type": "primitive",
                 },
-                "nameOverride": "revealed_attrs",
+                "nameOverride": undefined,
                 "type": "map",
                 "value": {
                   "description": undefined,
@@ -66085,7 +66085,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Proof requested proof self-attested attributes",
               "generatedName": "IndyProofRequestedProofSelfAttestedAttrs",
               "groupName": undefined,
-              "nameOverride": "self_attested_attrs",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -66108,7 +66108,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Unrevealed attributes",
               "generatedName": "IndyProofRequestedProofUnrevealedAttrs",
               "groupName": undefined,
-              "nameOverride": "unrevealed_attrs",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -66140,7 +66140,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Sub-proof index",
               "generatedName": "IndyProofRequestedProofPredicateSubProofIndex",
               "groupName": undefined,
-              "nameOverride": "sub_proof_index",
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -66224,7 +66224,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Sub-proof index",
               "generatedName": "IndyProofRequestedProofRevealedAttrSubProofIndex",
               "groupName": undefined,
-              "nameOverride": "sub_proof_index",
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -66258,7 +66258,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Sub-proof index",
               "generatedName": "IndyProofRequestedProofRevealedAttrGroupSubProofIndex",
               "groupName": undefined,
-              "nameOverride": "sub_proof_index",
+              "nameOverride": undefined,
               "schema": {
                 "type": "int",
               },
@@ -70432,7 +70432,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "MenuId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -70457,7 +70457,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "MenuType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -70642,7 +70642,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Alternative label for form submit button",
               "generatedName": "MenuFormSubmitLabel",
               "groupName": undefined,
-              "nameOverride": "submit-label",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -71621,7 +71621,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "PresentationDefinitionInputDescriptors",
               "groupName": undefined,
-              "nameOverride": "input_descriptors",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -71699,7 +71699,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "PresentationDefinitionSubmissionRequirements",
               "groupName": undefined,
-              "nameOverride": "submission_requirements",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -71738,7 +71738,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "PresentationProposalId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -71763,7 +71763,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "PresentationProposalType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -71845,7 +71845,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "PresentationRequestId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -71870,7 +71870,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "PresentationRequestType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -71921,7 +71921,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "PresentationRequestRequestPresentationsAttach",
             "groupName": undefined,
-            "nameOverride": "request_presentations~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -72089,7 +72089,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "QueriesId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -72114,7 +72114,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "QueriesType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -72178,7 +72178,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message identifier",
               "generatedName": "QueryId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -72203,7 +72203,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "Message type",
               "generatedName": "QueryType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -72283,7 +72283,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "feature type",
             "generatedName": "QueryItemFeatureType",
             "groupName": undefined,
-            "nameOverride": "feature-type",
+            "nameOverride": undefined,
             "type": "enum",
             "values": [
               {
@@ -73807,7 +73807,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Schema identifier",
             "generatedName": "SchemaSendResultSchemaId",
             "groupName": undefined,
-            "nameOverride": "schema_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -73893,7 +73893,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": "oneOf",
               "generatedName": "SchemasInputDescriptorFilterOneofFilter",
               "groupName": undefined,
-              "nameOverride": "oneof_filter",
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -73916,7 +73916,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "SchemasInputDescriptorFilterUriGroups",
               "groupName": undefined,
-              "nameOverride": "uri_groups",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -74422,7 +74422,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "SubmissionRequirementsFromNested",
               "groupName": undefined,
-              "nameOverride": "from_nested",
+              "nameOverride": undefined,
               "type": "array",
               "value": {
                 "description": undefined,
@@ -75967,7 +75967,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialBoundOfferRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialBoundOfferRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -75978,7 +75978,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialBoundOfferRequestCounterProposal",
             "groupName": undefined,
-            "nameOverride": "V10CredentialBoundOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76007,7 +76007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialConnFreeOfferRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialConnFreeOfferRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -76018,7 +76018,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialConnFreeOfferRequestAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V10CredentialConnFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
@@ -76041,7 +76041,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialConnFreeOfferRequestAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialConnFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -76064,7 +76064,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialConnFreeOfferRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialConnFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -76128,7 +76128,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialConnFreeOfferRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialConnFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -76151,7 +76151,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialCreate",
       "groupName": undefined,
-      "nameOverride": "V10CredentialCreate",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -76162,7 +76162,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -76185,7 +76185,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -76217,7 +76217,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateCredDefId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential definition identifier",
@@ -76256,7 +76256,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential issuer DID",
@@ -76281,7 +76281,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateSchemaId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifier",
@@ -76306,7 +76306,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateSchemaIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema issuer DID",
@@ -76331,7 +76331,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateSchemaName",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema name",
@@ -76356,7 +76356,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateSchemaVersion",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema version",
@@ -76381,7 +76381,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialCreateTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialCreate",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -76404,7 +76404,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialExchange",
       "groupName": undefined,
-      "nameOverride": "V10CredentialExchange",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -76415,7 +76415,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer choice to issue to request in this credential exchange",
@@ -76438,7 +76438,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeAutoOffer",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Holder choice to accept offer in this credential exchange",
@@ -76461,7 +76461,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer choice to remove this credential exchange record when complete",
@@ -76484,7 +76484,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeConnectionId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
@@ -76509,7 +76509,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -76534,7 +76534,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredential",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76555,7 +76555,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialDefinitionId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential definition identifier",
@@ -76580,7 +76580,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialExchangeId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential exchange identifier",
@@ -76605,7 +76605,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential identifier",
@@ -76630,7 +76630,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialOffer",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76651,7 +76651,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialOfferDict",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76672,7 +76672,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialProposalDict",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76693,7 +76693,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialRequest",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76714,7 +76714,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeCredentialRequestMetadata",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -76737,7 +76737,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeErrorMsg",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Error message",
@@ -76762,7 +76762,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeInitiator",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange initiator: self or external",
@@ -76796,7 +76796,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeParentThreadId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Parent thread identifier",
@@ -76821,7 +76821,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeRawCredential",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -76842,7 +76842,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeRevocRegId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Revocation registry identifier",
@@ -76867,7 +76867,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeRevocationId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential identifier within revocation registry",
@@ -76892,7 +76892,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeRole",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange role: holder or issuer",
@@ -76926,7 +76926,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeSchemaId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifier",
@@ -76951,7 +76951,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeState",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange state",
@@ -76976,7 +76976,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeThreadId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
@@ -77001,7 +77001,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -77024,7 +77024,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -77049,7 +77049,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "V10CredentialExchangeListResult",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77060,7 +77060,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialExchangeListResultResults",
             "groupName": undefined,
-            "nameOverride": "V10CredentialExchangeListResult",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Aries#0036 v1.0 credential exchange records",
@@ -77136,7 +77136,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialFreeOfferRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialFreeOfferRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77147,7 +77147,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialFreeOfferRequestAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V10CredentialFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
@@ -77170,7 +77170,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialFreeOfferRequestAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -77193,7 +77193,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialFreeOfferRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -77275,7 +77275,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialFreeOfferRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialFreeOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -77298,7 +77298,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialIssueRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialIssueRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77309,7 +77309,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialIssueRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialIssueRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -77341,7 +77341,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialProblemReportRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77370,7 +77370,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProposalRequestMand",
       "groupName": undefined,
-      "nameOverride": "V10CredentialProposalRequestMand",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77381,7 +77381,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -77404,7 +77404,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -77454,7 +77454,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandCredDefId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential definition identifier",
@@ -77493,7 +77493,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential issuer DID",
@@ -77518,7 +77518,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandSchemaId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifier",
@@ -77543,7 +77543,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandSchemaIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema issuer DID",
@@ -77568,7 +77568,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandSchemaName",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema name",
@@ -77593,7 +77593,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandSchemaVersion",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema version",
@@ -77618,7 +77618,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestMandTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestMand",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -77641,7 +77641,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialProposalRequestOpt",
       "groupName": undefined,
-      "nameOverride": "V10CredentialProposalRequestOpt",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77652,7 +77652,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -77675,7 +77675,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptComment",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -77725,7 +77725,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptCredDefId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential definition identifier",
@@ -77750,7 +77750,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptCredentialProposal",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -77771,7 +77771,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential issuer DID",
@@ -77796,7 +77796,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptSchemaId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifier",
@@ -77821,7 +77821,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptSchemaIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema issuer DID",
@@ -77846,7 +77846,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptSchemaName",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema name",
@@ -77871,7 +77871,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptSchemaVersion",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema version",
@@ -77896,7 +77896,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialProposalRequestOptTrace",
             "groupName": undefined,
-            "nameOverride": "V10CredentialProposalRequestOpt",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -77919,7 +77919,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10CredentialStoreRequest",
       "groupName": undefined,
-      "nameOverride": "V10CredentialStoreRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77930,7 +77930,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10CredentialStoreRequestCredentialId",
             "groupName": undefined,
-            "nameOverride": "V10CredentialStoreRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -77955,7 +77955,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10DiscoveryExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "V10DiscoveryExchangeListResult",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -77966,7 +77966,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryExchangeListResultResults",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryExchangeListResult",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78002,7 +78002,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10DiscoveryRecord",
       "groupName": undefined,
-      "nameOverride": "V10DiscoveryRecord",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78013,7 +78013,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordConnectionId",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
@@ -78038,7 +78038,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -78063,7 +78063,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordDisclose",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78084,7 +78084,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordDiscoveryExchangeId",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential exchange identifier",
@@ -78109,7 +78109,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordQueryMsg",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78130,7 +78130,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordState",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Current record state",
@@ -78155,7 +78155,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordThreadId",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
@@ -78180,7 +78180,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordTrace",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -78203,7 +78203,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10DiscoveryRecordUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V10DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -78268,7 +78268,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationCreateRequestRequest",
       "groupName": undefined,
-      "nameOverride": "V10PresentationCreateRequestRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78279,7 +78279,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationCreateRequestRequestAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V10PresentationCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -78302,7 +78302,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationCreateRequestRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10PresentationCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78348,7 +78348,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationCreateRequestRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V10PresentationCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -78371,7 +78371,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationExchange",
       "groupName": undefined,
-      "nameOverride": "V10PresentationExchange",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78382,7 +78382,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeAutoPresent",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Prover choice to auto-present proof as verifier requests",
@@ -78405,7 +78405,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -78428,7 +78428,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeConnectionId",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
@@ -78453,7 +78453,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -78478,7 +78478,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeErrorMsg",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Error message",
@@ -78503,7 +78503,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeInitiator",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange initiator: self or external",
@@ -78537,7 +78537,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangePresentation",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78558,7 +78558,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangePresentationExchangeId",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Presentation exchange identifier",
@@ -78583,7 +78583,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangePresentationProposalDict",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78604,7 +78604,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangePresentationRequest",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78625,7 +78625,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangePresentationRequestDict",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78646,7 +78646,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeRole",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange role: prover or verifier",
@@ -78680,7 +78680,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeState",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange state",
@@ -78705,7 +78705,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeThreadId",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
@@ -78730,7 +78730,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeTrace",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -78753,7 +78753,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -78778,7 +78778,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeVerified",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether presentation is verified: true or false",
@@ -78812,7 +78812,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeVerifiedMsgs",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchange",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -78844,7 +78844,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationExchangeList",
       "groupName": undefined,
-      "nameOverride": "V10PresentationExchangeList",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78855,7 +78855,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationExchangeListResults",
             "groupName": undefined,
-            "nameOverride": "V10PresentationExchangeList",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Aries RFC 37 v1.0 presentation exchange records",
@@ -78915,7 +78915,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "V10PresentationProblemReportRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78944,7 +78944,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationProposalRequest",
       "groupName": undefined,
-      "nameOverride": "V10PresentationProposalRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -78955,7 +78955,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationProposalRequestAutoPresent",
             "groupName": undefined,
-            "nameOverride": "V10PresentationProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to presentation requests, building and presenting requested proof",
@@ -78978,7 +78978,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationProposalRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10PresentationProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -79042,7 +79042,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationProposalRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V10PresentationProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -79065,7 +79065,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationSendRequestRequest",
       "groupName": undefined,
-      "nameOverride": "V10PresentationSendRequestRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79076,7 +79076,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationSendRequestRequestAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V10PresentationSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -79099,7 +79099,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationSendRequestRequestComment",
             "groupName": undefined,
-            "nameOverride": "V10PresentationSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79163,7 +79163,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationSendRequestRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V10PresentationSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -79186,7 +79186,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V10PresentationSendRequestToProposal",
       "groupName": undefined,
-      "nameOverride": "V10PresentationSendRequestToProposal",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79197,7 +79197,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationSendRequestToProposalAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V10PresentationSendRequestToProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -79220,7 +79220,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v10PresentationSendRequestToProposalTrace",
             "groupName": undefined,
-            "nameOverride": "V10PresentationSendRequestToProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -79243,7 +79243,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredAttrSpec",
       "groupName": undefined,
-      "nameOverride": "V20CredAttrSpec",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79254,7 +79254,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredAttrSpecMimeType",
             "groupName": undefined,
-            "nameOverride": "V20CredAttrSpec",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "MIME type: omit for (null) default",
@@ -79322,7 +79322,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredBoundOfferRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredBoundOfferRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79333,7 +79333,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredBoundOfferRequestCounterPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredBoundOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79354,7 +79354,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredBoundOfferRequestFilter",
             "groupName": undefined,
-            "nameOverride": "V20CredBoundOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79391,7 +79391,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExFree",
       "groupName": undefined,
-      "nameOverride": "V20CredExFree",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79402,7 +79402,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExFreeAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20CredExFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -79425,7 +79425,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExFreeComment",
             "groupName": undefined,
-            "nameOverride": "V20CredExFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -79475,7 +79475,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExFreeCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredExFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79510,7 +79510,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExFreeTrace",
             "groupName": undefined,
-            "nameOverride": "V20CredExFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -79533,7 +79533,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExFreeVerificationMethod",
             "groupName": undefined,
-            "nameOverride": "V20CredExFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "For ld-proofs. Verification method for signing.",
@@ -79565,7 +79565,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecord",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecord",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -79576,7 +79576,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer choice to issue to request in this credential exchange",
@@ -79599,7 +79599,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordAutoOffer",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Holder choice to accept offer in this credential exchange",
@@ -79622,7 +79622,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer choice to remove this credential exchange record when complete",
@@ -79645,7 +79645,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordByFormat",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79666,7 +79666,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordConnectionId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
@@ -79691,7 +79691,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -79716,7 +79716,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredExId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential exchange identifier",
@@ -79741,7 +79741,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredIssue",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79762,7 +79762,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredOffer",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79783,7 +79783,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79804,7 +79804,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredProposal",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79825,7 +79825,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordCredRequest",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -79846,7 +79846,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordErrorMsg",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Error message",
@@ -79871,7 +79871,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordInitiator",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange initiator: self or external",
@@ -79905,7 +79905,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordParentThreadId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Parent thread identifier",
@@ -79930,7 +79930,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordRole",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange role: holder or issuer",
@@ -79964,7 +79964,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordState",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issue-credential exchange state",
@@ -80058,7 +80058,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordThreadId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
@@ -80083,7 +80083,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordTrace",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -80106,7 +80106,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -80131,7 +80131,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordByFormat",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecordByFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80142,7 +80142,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordByFormatCredIssue",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -80150,7 +80150,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredIssue",
               "groupName": undefined,
-              "nameOverride": "cred_issue",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -80165,7 +80165,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordByFormatCredOffer",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -80173,7 +80173,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredOffer",
               "groupName": undefined,
-              "nameOverride": "cred_offer",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -80188,7 +80188,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordByFormatCredProposal",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -80196,7 +80196,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredProposal",
               "groupName": undefined,
-              "nameOverride": "cred_proposal",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -80211,7 +80211,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordByFormatCredRequest",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -80219,7 +80219,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20CredExRecordByFormatCredRequest",
               "groupName": undefined,
-              "nameOverride": "cred_request",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -80234,7 +80234,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordDetail",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecordDetail",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80245,7 +80245,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordDetailCredExRecord",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordDetail",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -80266,7 +80266,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordDetailIndy",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordDetail",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -80287,7 +80287,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordDetailLdProof",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordDetail",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -80316,7 +80316,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordIndy",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecordIndy",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80327,7 +80327,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -80352,7 +80352,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCredExId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Corresponding v2.0 credential exchange record identifier",
@@ -80377,7 +80377,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCredExIndyId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record identifier",
@@ -80402,7 +80402,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCredIdStored",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential identifier stored in wallet",
@@ -80427,7 +80427,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCredRequestMetadata",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -80450,7 +80450,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyCredRevId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential revocation identifier within revocation registry",
@@ -80475,7 +80475,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyRevRegId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Revocation registry identifier",
@@ -80500,7 +80500,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyState",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Current record state",
@@ -80525,7 +80525,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordIndyUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -80550,7 +80550,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordLdProof",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecordLDProof",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80561,7 +80561,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -80586,7 +80586,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofCredExId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Corresponding v2.0 credential exchange record identifier",
@@ -80611,7 +80611,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofCredExLdProofId",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record identifier",
@@ -80636,7 +80636,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofCredIdStored",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential identifier stored in wallet",
@@ -80661,7 +80661,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofState",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Current record state",
@@ -80686,7 +80686,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordLdProofUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordLDProof",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -80711,7 +80711,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredExRecordListResult",
       "groupName": undefined,
-      "nameOverride": "V20CredExRecordListResult",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80722,7 +80722,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredExRecordListResultResults",
             "groupName": undefined,
-            "nameOverride": "V20CredExRecordListResult",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential exchange records and corresponding detail records",
@@ -80798,7 +80798,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilter",
       "groupName": undefined,
-      "nameOverride": "V20CredFilter",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80809,7 +80809,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndy",
             "groupName": undefined,
-            "nameOverride": "V20CredFilter",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -80830,7 +80830,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterLdProof",
             "groupName": undefined,
-            "nameOverride": "V20CredFilter",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -80851,7 +80851,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilterIndy",
       "groupName": undefined,
-      "nameOverride": "V20CredFilterIndy",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -80862,13 +80862,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndyCredDefId",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential definition identifier",
               "generatedName": "V20CredFilterIndyCredDefId",
               "groupName": undefined,
-              "nameOverride": "cred_def_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -80887,13 +80887,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndyIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential issuer DID",
               "generatedName": "V20CredFilterIndyIssuerDid",
               "groupName": undefined,
-              "nameOverride": "issuer_did",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -80912,13 +80912,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndySchemaId",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifier",
               "generatedName": "V20CredFilterIndySchemaId",
               "groupName": undefined,
-              "nameOverride": "schema_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -80937,13 +80937,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndySchemaIssuerDid",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema issuer DID",
               "generatedName": "V20CredFilterIndySchemaIssuerDid",
               "groupName": undefined,
-              "nameOverride": "schema_issuer_did",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -80962,13 +80962,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndySchemaName",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema name",
               "generatedName": "V20CredFilterIndySchemaName",
               "groupName": undefined,
-              "nameOverride": "schema_name",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -80987,13 +80987,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredFilterIndySchemaVersion",
             "groupName": undefined,
-            "nameOverride": "V20CredFilterIndy",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema version",
               "generatedName": "V20CredFilterIndySchemaVersion",
               "groupName": undefined,
-              "nameOverride": "schema_version",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81012,7 +81012,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFilterLdProof",
       "groupName": undefined,
-      "nameOverride": "V20CredFilterLDProof",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81053,7 +81053,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredFormat",
       "groupName": undefined,
-      "nameOverride": "V20CredFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81064,7 +81064,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Attachment identifier",
             "generatedName": "V20CredFormatAttachId",
             "groupName": undefined,
-            "nameOverride": "attach_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -81100,7 +81100,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssue",
       "groupName": undefined,
-      "nameOverride": "V20CredIssue",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81111,13 +81111,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredIssueId",
             "groupName": undefined,
-            "nameOverride": "V20CredIssue",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20CredIssueId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81136,13 +81136,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredIssueType",
             "groupName": undefined,
-            "nameOverride": "V20CredIssue",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20CredIssueType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81161,7 +81161,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredIssueComment",
             "groupName": undefined,
-            "nameOverride": "V20CredIssue",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81193,7 +81193,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential attachments",
             "generatedName": "V20CredIssueCredentialsAttach",
             "groupName": undefined,
-            "nameOverride": "credentials~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -81235,13 +81235,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredIssueReplacementId",
             "groupName": undefined,
-            "nameOverride": "V20CredIssue",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer-unique identifier to coordinate credential replacement",
               "generatedName": "V20CredIssueReplacementId",
               "groupName": undefined,
-              "nameOverride": "replacement_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81260,7 +81260,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssueProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredIssueProblemReportRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81289,7 +81289,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredIssueRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredIssueRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81300,7 +81300,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredIssueRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20CredIssueRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81332,7 +81332,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOffer",
       "groupName": undefined,
-      "nameOverride": "V20CredOffer",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81343,13 +81343,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferId",
             "groupName": undefined,
-            "nameOverride": "V20CredOffer",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20CredOfferId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81368,13 +81368,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferType",
             "groupName": undefined,
-            "nameOverride": "V20CredOffer",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20CredOfferType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81393,7 +81393,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferComment",
             "groupName": undefined,
-            "nameOverride": "V20CredOffer",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81425,7 +81425,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredOffer",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -81467,7 +81467,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Offer attachments",
             "generatedName": "V20CredOfferOffersAttach",
             "groupName": undefined,
-            "nameOverride": "offers~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -81488,13 +81488,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferReplacementId",
             "groupName": undefined,
-            "nameOverride": "V20CredOffer",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Issuer-unique identifier to coordinate credential replacement",
               "generatedName": "V20CredOfferReplacementId",
               "groupName": undefined,
-              "nameOverride": "replacement_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81513,7 +81513,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOfferConnFreeRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredOfferConnFreeRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81524,7 +81524,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferConnFreeRequestAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferConnFreeRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
@@ -81547,7 +81547,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferConnFreeRequestAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferConnFreeRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -81570,7 +81570,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferConnFreeRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferConnFreeRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81602,7 +81602,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferConnFreeRequestCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferConnFreeRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -81637,7 +81637,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferConnFreeRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferConnFreeRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -81660,7 +81660,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredOfferRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredOfferRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81671,7 +81671,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferRequestAutoIssue",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to credential requests, creating and issuing requested credentials",
@@ -81694,7 +81694,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferRequestAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -81717,7 +81717,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81767,7 +81767,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferRequestCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -81802,7 +81802,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredOfferRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20CredOfferRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -81825,7 +81825,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredPreview",
       "groupName": undefined,
-      "nameOverride": "V20CredPreview",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81836,7 +81836,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredPreviewType",
             "groupName": undefined,
-            "nameOverride": "V20CredPreview",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type identifier",
@@ -81882,7 +81882,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredProposal",
       "groupName": undefined,
-      "nameOverride": "V20CredProposal",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -81893,13 +81893,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredProposalId",
             "groupName": undefined,
-            "nameOverride": "V20CredProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20CredProposalId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81918,13 +81918,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredProposalType",
             "groupName": undefined,
-            "nameOverride": "V20CredProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20CredProposalType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -81943,7 +81943,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredProposalComment",
             "groupName": undefined,
-            "nameOverride": "V20CredProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -81975,7 +81975,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredProposalCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20CredProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -81996,7 +81996,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Credential filter per acceptable format on corresponding identifier",
             "generatedName": "V20CredProposalFiltersAttach",
             "groupName": undefined,
-            "nameOverride": "filters~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -82046,7 +82046,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82057,13 +82057,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestId",
             "groupName": undefined,
-            "nameOverride": "V20CredRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20CredRequestId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82082,13 +82082,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestType",
             "groupName": undefined,
-            "nameOverride": "V20CredRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20CredRequestType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82107,7 +82107,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20CredRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -82160,7 +82160,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Request attachments",
             "generatedName": "V20CredRequestRequestsAttach",
             "groupName": undefined,
-            "nameOverride": "requests~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -82181,7 +82181,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequestFree",
       "groupName": undefined,
-      "nameOverride": "V20CredRequestFree",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82192,7 +82192,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestFreeAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20CredRequestFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -82215,7 +82215,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestFreeComment",
             "groupName": undefined,
-            "nameOverride": "V20CredRequestFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -82279,7 +82279,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestFreeHolderDid",
             "groupName": undefined,
-            "nameOverride": "V20CredRequestFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Holder DID to substitute for the credentialSubject.id",
@@ -82311,7 +82311,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestFreeTrace",
             "groupName": undefined,
-            "nameOverride": "V20CredRequestFree",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -82342,7 +82342,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredRequestRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredRequestRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82353,7 +82353,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredRequestRequestHolderDid",
             "groupName": undefined,
-            "nameOverride": "V20CredRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Holder DID to substitute for the credentialSubject.id",
@@ -82385,7 +82385,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20CredStoreRequest",
       "groupName": undefined,
-      "nameOverride": "V20CredStoreRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82396,7 +82396,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20CredStoreRequestCredentialId",
             "groupName": undefined,
-            "nameOverride": "V20CredStoreRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82421,7 +82421,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryExchangeListResult",
       "groupName": undefined,
-      "nameOverride": "V20DiscoveryExchangeListResult",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82432,7 +82432,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryExchangeListResultResults",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryExchangeListResult",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82468,7 +82468,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryExchangeResult",
       "groupName": undefined,
-      "nameOverride": "V20DiscoveryExchangeResult",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82479,7 +82479,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryExchangeResultResults",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryExchangeResult",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82500,7 +82500,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20DiscoveryRecord",
       "groupName": undefined,
-      "nameOverride": "V20DiscoveryRecord",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82511,13 +82511,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordConnectionId",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
               "generatedName": "V20DiscoveryRecordConnectionId",
               "groupName": undefined,
-              "nameOverride": "connection_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82536,13 +82536,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
               "generatedName": "V20DiscoveryRecordCreatedAt",
               "groupName": undefined,
-              "nameOverride": "created_at",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82561,7 +82561,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordDisclosures",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82582,13 +82582,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordDiscoveryExchangeId",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential exchange identifier",
               "generatedName": "V20DiscoveryRecordDiscoveryExchangeId",
               "groupName": undefined,
-              "nameOverride": "discovery_exchange_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82607,7 +82607,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordQueriesMsg",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82628,7 +82628,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordState",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Current record state",
@@ -82653,13 +82653,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordThreadId",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
               "generatedName": "V20DiscoveryRecordThreadId",
               "groupName": undefined,
-              "nameOverride": "thread_id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82678,7 +82678,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordTrace",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -82701,13 +82701,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20DiscoveryRecordUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V20DiscoveryRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
               "generatedName": "V20DiscoveryRecordUpdatedAt",
               "groupName": undefined,
-              "nameOverride": "updated_at",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82742,7 +82742,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20IssueCredSchemaCore",
       "groupName": undefined,
-      "nameOverride": "V20IssueCredSchemaCore",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82753,7 +82753,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20IssueCredSchemaCoreAutoRemove",
             "groupName": undefined,
-            "nameOverride": "V20IssueCredSchemaCore",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to remove the credential exchange record on completion (overrides --preserve-exchange-records configuration setting)",
@@ -82776,7 +82776,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20IssueCredSchemaCoreComment",
             "groupName": undefined,
-            "nameOverride": "V20IssueCredSchemaCore",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -82808,7 +82808,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20IssueCredSchemaCoreCredentialPreview",
             "groupName": undefined,
-            "nameOverride": "V20IssueCredSchemaCore",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -82843,7 +82843,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20IssueCredSchemaCoreTrace",
             "groupName": undefined,
-            "nameOverride": "V20IssueCredSchemaCore",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -82890,7 +82890,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20Pres",
       "groupName": undefined,
-      "nameOverride": "V20Pres",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -82901,13 +82901,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresId",
             "groupName": undefined,
-            "nameOverride": "V20Pres",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20PresId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82926,13 +82926,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresType",
             "groupName": undefined,
-            "nameOverride": "V20Pres",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20PresType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -82951,7 +82951,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresComment",
             "groupName": undefined,
-            "nameOverride": "V20Pres",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -83004,7 +83004,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "V20PresPresentationsAttach",
             "groupName": undefined,
-            "nameOverride": "presentations~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -83025,7 +83025,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresCreateRequestRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresCreateRequestRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83036,7 +83036,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresCreateRequestRequestAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V20PresCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -83059,7 +83059,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresCreateRequestRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20PresCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83105,7 +83105,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresCreateRequestRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresCreateRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -83128,7 +83128,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecord",
       "groupName": undefined,
-      "nameOverride": "V20PresExRecord",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83139,7 +83139,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordAutoPresent",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Prover choice to auto-present proof as verifier requests",
@@ -83162,7 +83162,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -83185,7 +83185,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordByFormat",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83206,7 +83206,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordConnectionId",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Connection identifier",
@@ -83231,7 +83231,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordCreatedAt",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of record creation",
@@ -83256,7 +83256,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordErrorMsg",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Error message",
@@ -83281,7 +83281,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordInitiator",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange initiator: self or external",
@@ -83315,7 +83315,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordPres",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83336,7 +83336,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordPresExId",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Presentation exchange identifier",
@@ -83361,7 +83361,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordPresProposal",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83382,7 +83382,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordPresRequest",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83403,7 +83403,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordRole",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange role: prover or verifier",
@@ -83437,7 +83437,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordState",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Present-proof exchange state",
@@ -83513,7 +83513,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordThreadId",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Thread identifier",
@@ -83538,7 +83538,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -83561,7 +83561,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordUpdatedAt",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Time of last record update",
@@ -83586,7 +83586,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordVerified",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether presentation is verified: 'true' or 'false'",
@@ -83620,7 +83620,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordVerifiedMsgs",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecord",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -83652,7 +83652,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecordByFormat",
       "groupName": undefined,
-      "nameOverride": "V20PresExRecordByFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83663,7 +83663,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordByFormatPres",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -83686,7 +83686,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordByFormatPresProposal",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -83694,7 +83694,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20PresExRecordByFormatPresProposal",
               "groupName": undefined,
-              "nameOverride": "pres_proposal",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -83709,7 +83709,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordByFormatPresRequest",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecordByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "allOf": [],
@@ -83717,7 +83717,7 @@ exports[`open api parser aries parse open api 1`] = `
               "description": undefined,
               "generatedName": "V20PresExRecordByFormatPresRequest",
               "groupName": undefined,
-              "nameOverride": "pres_request",
+              "nameOverride": undefined,
               "properties": [],
               "type": "object",
             },
@@ -83732,7 +83732,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresExRecordList",
       "groupName": undefined,
-      "nameOverride": "V20PresExRecordList",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83743,7 +83743,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresExRecordListResults",
             "groupName": undefined,
-            "nameOverride": "V20PresExRecordList",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Presentation exchange records",
@@ -83803,7 +83803,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresFormat",
       "groupName": undefined,
-      "nameOverride": "V20PresFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83814,7 +83814,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Attachment identifier",
             "generatedName": "V20PresFormatAttachId",
             "groupName": undefined,
-            "nameOverride": "attach_id",
+            "nameOverride": undefined,
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -83850,7 +83850,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProblemReportRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresProblemReportRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83879,7 +83879,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposal",
       "groupName": undefined,
-      "nameOverride": "V20PresProposal",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -83890,13 +83890,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalId",
             "groupName": undefined,
-            "nameOverride": "V20PresProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20PresProposalId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -83915,13 +83915,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalType",
             "groupName": undefined,
-            "nameOverride": "V20PresProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20PresProposalType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -83940,7 +83940,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalComment",
             "groupName": undefined,
-            "nameOverride": "V20PresProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -83986,7 +83986,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Attachment per acceptable format on corresponding identifier",
             "generatedName": "V20PresProposalProposalsAttach",
             "groupName": undefined,
-            "nameOverride": "proposals~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -84007,7 +84007,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposalByFormat",
       "groupName": undefined,
-      "nameOverride": "V20PresProposalByFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84018,7 +84018,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalByFormatDif",
             "groupName": undefined,
-            "nameOverride": "V20PresProposalByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84039,7 +84039,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalByFormatIndy",
             "groupName": undefined,
-            "nameOverride": "V20PresProposalByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84076,7 +84076,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresProposalRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresProposalRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84087,7 +84087,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalRequestAutoPresent",
             "groupName": undefined,
-            "nameOverride": "V20PresProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to respond automatically to presentation requests, building and presenting requested proof",
@@ -84110,7 +84110,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20PresProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -84174,7 +84174,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresProposalRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresProposalRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -84197,7 +84197,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84208,13 +84208,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestId",
             "groupName": undefined,
-            "nameOverride": "V20PresRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message identifier",
               "generatedName": "V20PresRequestId",
               "groupName": undefined,
-              "nameOverride": "@id",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -84233,13 +84233,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestType",
             "groupName": undefined,
-            "nameOverride": "V20PresRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Message type",
               "generatedName": "V20PresRequestType",
               "groupName": undefined,
-              "nameOverride": "@type",
+              "nameOverride": undefined,
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -84258,7 +84258,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20PresRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Human-readable comment",
@@ -84304,7 +84304,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": "Attachment per acceptable format on corresponding identifier",
             "generatedName": "V20PresRequestRequestPresentationsAttach",
             "groupName": undefined,
-            "nameOverride": "request_presentations~attach",
+            "nameOverride": undefined,
             "type": "array",
             "value": {
               "description": undefined,
@@ -84325,13 +84325,13 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestWillConfirm",
             "groupName": undefined,
-            "nameOverride": "V20PresRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether verifier will send confirmation ack",
               "generatedName": "V20PresRequestWillConfirm",
               "groupName": undefined,
-              "nameOverride": "will_confirm",
+              "nameOverride": undefined,
               "schema": {
                 "type": "boolean",
               },
@@ -84348,7 +84348,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresRequestByFormat",
       "groupName": undefined,
-      "nameOverride": "V20PresRequestByFormat",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84359,7 +84359,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestByFormatDif",
             "groupName": undefined,
-            "nameOverride": "V20PresRequestByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84380,7 +84380,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresRequestByFormatIndy",
             "groupName": undefined,
-            "nameOverride": "V20PresRequestByFormat",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84417,7 +84417,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresSendRequestRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresSendRequestRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84428,7 +84428,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSendRequestRequestAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V20PresSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -84451,7 +84451,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSendRequestRequestComment",
             "groupName": undefined,
-            "nameOverride": "V20PresSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84515,7 +84515,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSendRequestRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresSendRequestRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -84538,7 +84538,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresSpecByFormatRequest",
       "groupName": undefined,
-      "nameOverride": "V20PresSpecByFormatRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84549,7 +84549,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSpecByFormatRequestDif",
             "groupName": undefined,
-            "nameOverride": "V20PresSpecByFormatRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84570,7 +84570,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSpecByFormatRequestIndy",
             "groupName": undefined,
-            "nameOverride": "V20PresSpecByFormatRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84591,7 +84591,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresSpecByFormatRequestTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresSpecByFormatRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Record trace information, based on agent configuration",
@@ -84654,7 +84654,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "V20PresentationSendRequestToProposal",
       "groupName": undefined,
-      "nameOverride": "V20PresentationSendRequestToProposal",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -84665,7 +84665,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresentationSendRequestToProposalAutoVerify",
             "groupName": undefined,
-            "nameOverride": "V20PresentationSendRequestToProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Verifier choice to auto-verify proof presentation",
@@ -84688,7 +84688,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "v20PresentationSendRequestToProposalTrace",
             "groupName": undefined,
-            "nameOverride": "V20PresentationSendRequestToProposal",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Whether to trace event (default false)",
@@ -85173,7 +85173,7 @@ exports[`open api parser aries parse open api 1`] = `
       "description": undefined,
       "generatedName": "W3CCredentialsListRequest",
       "groupName": undefined,
-      "nameOverride": "W3CCredentialsListRequest",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -85184,7 +85184,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestContexts",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -85216,7 +85216,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestGivenId",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Given credential id to match",
@@ -85241,7 +85241,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestIssuerId",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Credential issuer identifier to match",
@@ -85266,7 +85266,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestMaxResults",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Maximum number of results to return",
@@ -85289,7 +85289,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestProofTypes",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,
@@ -85321,7 +85321,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestSchemaIds",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Schema identifiers, all of which to match",
@@ -85353,7 +85353,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestSubjectIds",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Subject identifiers, all of which to match",
@@ -85385,7 +85385,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestTagQuery",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "Tag filter",
@@ -85429,7 +85429,7 @@ exports[`open api parser aries parse open api 1`] = `
             "description": undefined,
             "generatedName": "w3CCredentialsListRequestTypes",
             "groupName": undefined,
-            "nameOverride": "W3CCredentialsListRequest",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": undefined,

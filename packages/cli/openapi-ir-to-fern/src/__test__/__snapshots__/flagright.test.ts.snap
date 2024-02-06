@@ -3618,7 +3618,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "response": {
             "docs": "Created",
-            "type": "",
+            "type": "TransactionEventMonitoringResult",
           },
         },
         "post-user-event": {
@@ -4547,16 +4547,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "types": {
-      "": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "eventId": "string",
-          "transaction": "Transaction",
-        },
-      },
       "ACHDetails": {
         "docs": "Model for ACH payment method",
         "properties": {
@@ -5635,7 +5625,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of executed rules",
         "properties": {
           "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<Rule nature type>",
+          "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
@@ -5715,7 +5705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of hit rules",
         "properties": {
           "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<Rule nature type>",
+          "nature": "optional<RuleNature>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
@@ -6034,14 +6024,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "Rule nature type": {
-        "enum": [
-          "AML",
-          "FRAUD",
-          "CTF",
-          "SCREENING",
-        ],
-      },
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "enum": [
@@ -6092,6 +6074,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SANCTIONS",
           "SANCTIONS_PEP",
           "SANCTIONS_PEP_ADVERSE_MEDIA",
+        ],
+      },
+      "RuleNature": {
+        "enum": [
+          "AML",
+          "FRAUD",
+          "CTF",
+          "SCREENING",
         ],
       },
       "RulesResults": {
@@ -6234,6 +6224,16 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<double>",
           "week": "optional<double>",
           "year": "optional<double>",
+        },
+      },
+      "TransactionEventMonitoringResult": {
+        "docs": undefined,
+        "extends": [
+          "RulesResults",
+        ],
+        "properties": {
+          "eventId": "string",
+          "transaction": "Transaction",
         },
       },
       "TransactionLimit": {

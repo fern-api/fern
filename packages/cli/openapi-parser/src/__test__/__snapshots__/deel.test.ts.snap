@@ -16308,7 +16308,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "AlternateEmailItem",
       "groupName": undefined,
-      "nameOverride": "Root Schema",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -16333,7 +16333,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": undefined,
             "generatedName": "AlternateEmailItemIsVerified",
             "groupName": undefined,
-            "nameOverride": "True if email has been verified",
+            "nameOverride": undefined,
             "schema": {
               "type": "boolean",
             },
@@ -37118,7 +37118,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "PaymentWorker",
       "groupName": undefined,
-      "nameOverride": "The worker for the payment",
+      "nameOverride": undefined,
       "properties": [
         {
           "audiences": [],
@@ -37172,7 +37172,7 @@ exports[`open api parser deel parse open api 1`] = `
             "description": undefined,
             "generatedName": "paymentWorkerContractId",
             "groupName": undefined,
-            "nameOverride": "The worker for the payment",
+            "nameOverride": undefined,
             "type": "optional",
             "value": {
               "description": "The worker's Deel contract Id.",
