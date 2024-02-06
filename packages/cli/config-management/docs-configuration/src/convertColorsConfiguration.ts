@@ -142,9 +142,8 @@ function getOppositeLuminance(color: tinycolor.Instance | undefined): tinycolor.
         return undefined;
     }
 
-    const luminance = color.getLuminance();
-    const oppositeLuminance = 1 - luminance;
-    return tinycolor({ h: color.toHsv().h, s: color.toHsv().s, v: oppositeLuminance });
+    const { h, s, v } = color.toHsv();
+    return tinycolor({ h, s, v: 1 - v });
 }
 
 function toRgb(color: tinycolor.Instance): DocsV1Write.RgbColor;
