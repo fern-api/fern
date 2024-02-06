@@ -13,25 +13,29 @@ export function convertColorsConfiguration(
         case "dark":
             return {
                 type: "dark",
-                ...convertColorConfig(rawConfig, context, "dark")
+                ...convertThemedColorConfig(rawConfig, context, "dark")
             };
         case "light":
             return {
                 type: "light",
-                ...convertColorConfig(rawConfig, context, "light")
+                ...convertThemedColorConfig(rawConfig, context, "light")
             };
         case "darkAndLight":
             return {
                 type: "darkAndLight",
-                dark: convertColorConfig(rawConfig, context, "dark"),
-                light: convertColorConfig(rawConfig, context, "light")
+                dark: convertThemedColorConfig(rawConfig, context, "dark"),
+                light: convertThemedColorConfig(rawConfig, context, "light")
             };
         default:
             assertNever(colorType);
     }
 }
 
-function getColorType({ background, accentPrimary }: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
+// exported for testing
+export function getColorType({
+    background,
+    accentPrimary
+}: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
     // if both background and accent colors are provided as strings,
     // we can determine the theme using just the background color
     if (typeof background === "string" && typeof accentPrimary === "string") {
@@ -72,7 +76,7 @@ function getColorType({ background, accentPrimary }: RawDocs.ColorsConfiguration
     return "darkAndLight";
 }
 
-function convertColorConfig(
+export function convertThemedColorConfig(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext,
     theme: "dark" | "light"
@@ -82,15 +86,14 @@ function convertColorConfig(
 
     // the toDark() and toLight() functions are meant to improve color contrast and catch any cases where
     // only one of the dark or light color is provided for either the accentPrimary or background
-    accentPrimaryColor = theme === "dark" ? toLight(accentPrimaryColor) : toDark(accentPrimaryColor);
     backgroundColor = theme === "dark" ? toDark(backgroundColor) : toLight(backgroundColor);
 
-    // TODO: move this warning to fern-check
     if (accentPrimaryColor != null && backgroundColor != null) {
         if (!tinycolor.isReadable(accentPrimaryColor, backgroundColor)) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColor);
+            accentPrimaryColor = tinycolor.mostReadable(backgroundColor, accentPrimaryColor.monochromatic(3));
             context.logger.warn(
-                `The accent color is not readable on the background color in ${theme} mode. The contrast ratio is ${ratio}.`
+                `The accent color is not readable on the background color in ${theme} mode. The contrast ratio is ${ratio}. We've adjusted the accent color to ${accentPrimaryColor.toHexString()} to improve readability.`
             );
         }
     }
@@ -105,14 +108,14 @@ function toLight(color: tinycolor.Instance | undefined): tinycolor.Instance | un
     if (color == null) {
         return undefined;
     }
-    return color.isLight() ? color : color.lighten(20);
+    return color.isLight() ? color : tinycolor.mostReadable("#000", color.monochromatic(3));
 }
 
 function toDark(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
     if (color == null) {
         return undefined;
     }
-    return color.isDark() ? color : color.darken(20);
+    return color.isDark() ? color : tinycolor.mostReadable("#FFF", color.monochromatic(3));
 }
 
 function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined {
