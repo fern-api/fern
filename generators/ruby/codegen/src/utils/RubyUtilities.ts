@@ -62,17 +62,17 @@ export function generateGemConfig(clientName: string, repoUrl?: string): Generat
                 // Input some placeholders for installation to work
                 new Expression({
                     leftSide: "HOMEPAGE",
-                    rightSide: `${repoUrl ?? "https://github.com/REPO/URL"}`,
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "SOURCE_CODE_URI",
-                    rightSide: `${repoUrl ?? "https://github.com/REPO/URL"}`,
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "CHANGELOG_URI",
-                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}/blob/master/CHANGELOG.md"`,
+                    rightSide: `""${repoUrl ?? "https://github.com/REPO/URL"}"/blob/master/CHANGELOG.md"`,
                     isAssignment: true
                 })
             ]

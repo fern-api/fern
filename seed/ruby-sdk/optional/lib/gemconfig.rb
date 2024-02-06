@@ -6,8 +6,8 @@ module SeedObjectsWithImportsClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/optional/fern
-    SOURCE_CODE_URI = https://github.com/optional/fern
-    CHANGELOG_URI = "https://github.com/optional/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/optional/fern"
+    SOURCE_CODE_URI = "https://github.com/optional/fern"
+    CHANGELOG_URI = ""https://github.com/optional/fern"/blob/master/CHANGELOG.md"
   end
 end

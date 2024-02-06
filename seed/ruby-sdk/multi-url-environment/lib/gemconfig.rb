@@ -6,8 +6,8 @@ module SeedMultiUrlEnvironmentClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/multi-url-environment/fern
-    SOURCE_CODE_URI = https://github.com/multi-url-environment/fern
-    CHANGELOG_URI = "https://github.com/multi-url-environment/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/multi-url-environment/fern"
+    SOURCE_CODE_URI = "https://github.com/multi-url-environment/fern"
+    CHANGELOG_URI = ""https://github.com/multi-url-environment/fern"/blob/master/CHANGELOG.md"
   end
 end

@@ -6,8 +6,8 @@ module SeedAliasClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/alias/fern
-    SOURCE_CODE_URI = https://github.com/alias/fern
-    CHANGELOG_URI = "https://github.com/alias/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/alias/fern"
+    SOURCE_CODE_URI = "https://github.com/alias/fern"
+    CHANGELOG_URI = ""https://github.com/alias/fern"/blob/master/CHANGELOG.md"
   end
 end

@@ -6,8 +6,8 @@ module SeedStreamingClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/streaming/fern
-    SOURCE_CODE_URI = https://github.com/streaming/fern
-    CHANGELOG_URI = "https://github.com/streaming/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/streaming/fern"
+    SOURCE_CODE_URI = "https://github.com/streaming/fern"
+    CHANGELOG_URI = ""https://github.com/streaming/fern"/blob/master/CHANGELOG.md"
   end
 end

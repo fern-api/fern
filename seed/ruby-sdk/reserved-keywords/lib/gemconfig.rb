@@ -6,8 +6,8 @@ module SeedNurseryApiClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/reserved-keywords/fern
-    SOURCE_CODE_URI = https://github.com/reserved-keywords/fern
-    CHANGELOG_URI = "https://github.com/reserved-keywords/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/reserved-keywords/fern"
+    SOURCE_CODE_URI = "https://github.com/reserved-keywords/fern"
+    CHANGELOG_URI = ""https://github.com/reserved-keywords/fern"/blob/master/CHANGELOG.md"
   end
 end

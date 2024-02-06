@@ -6,8 +6,8 @@ module SeedUndiscriminatedUnionsClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = https://github.com/undiscriminated-unions/fern
-    SOURCE_CODE_URI = https://github.com/undiscriminated-unions/fern
-    CHANGELOG_URI = "https://github.com/undiscriminated-unions/fern/blob/master/CHANGELOG.md"
+    HOMEPAGE = "https://github.com/undiscriminated-unions/fern"
+    SOURCE_CODE_URI = "https://github.com/undiscriminated-unions/fern"
+    CHANGELOG_URI = ""https://github.com/undiscriminated-unions/fern"/blob/master/CHANGELOG.md"
   end
 end
