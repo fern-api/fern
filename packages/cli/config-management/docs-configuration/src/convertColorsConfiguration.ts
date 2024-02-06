@@ -32,6 +32,12 @@ export function convertColorsConfiguration(
 }
 
 function getColorType({ background, accentPrimary }: RawDocs.ColorsConfiguration): "dark" | "light" | "darkAndLight" {
+    // if both background and accent colors are provided as strings,
+    // we can determine the theme using just the background color
+    if (typeof background === "string" && typeof accentPrimary === "string") {
+        return tinycolor(background).isDark() ? "dark" : "light";
+    }
+
     if (background != null) {
         if (typeof background === "string") {
             return tinycolor(background).isDark() ? "dark" : "light";
