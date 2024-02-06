@@ -36,13 +36,26 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseV2]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          metadata = struct.metadata.to_h.to_json
-          metadata = V2::Problem::TestCaseMetadata.from_json(json_object: metadata)
-          implementation = struct.implementation.to_h.to_json
-          implementation = V2::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
+          parsed_json = JSON.parse(json_object)
+          if parsed_json["metadata"].nil?
+            metadata = nil
+          else
+            metadata = parsed_json["metadata"].to_json
+            metadata = V2::Problem::TestCaseMetadata.from_json(json_object: metadata)
+          end
+          if parsed_json["implementation"].nil?
+            implementation = nil
+          else
+            implementation = parsed_json["implementation"].to_json
+            implementation = V2::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
+          end
           arguments = struct.arguments
-          expects = struct.expects.to_h.to_json
-          expects = V2::Problem::TestCaseExpects.from_json(json_object: expects)
+          if parsed_json["expects"].nil?
+            expects = nil
+          else
+            expects = parsed_json["expects"].to_json
+            expects = V2::Problem::TestCaseExpects.from_json(json_object: expects)
+          end
           new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
               additional_properties: struct)
         end

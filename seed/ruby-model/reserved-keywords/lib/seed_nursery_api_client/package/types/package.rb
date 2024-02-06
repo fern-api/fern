@@ -23,6 +23,7 @@ module SeedNurseryApiClient
       # @return [Package::Package]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         name = struct.name
         new(name: name, additional_properties: struct)
       end

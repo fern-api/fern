@@ -34,10 +34,11 @@ module SeedTraceClient
       # @return [Submission::ExecutionSessionResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         session_id = struct.sessionId
         execution_session_url = struct.executionSessionUrl
-        language = Commons::LANGUAGE.key(struct.language) || struct.language
-        status = Submission::EXECUTION_SESSION_STATUS.key(struct.status) || struct.status
+        language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
+        status = Submission::EXECUTION_SESSION_STATUS.key(parsed_json["status"]) || parsed_json["status"]
         new(session_id: session_id, execution_session_url: execution_session_url, language: language, status: status,
             additional_properties: struct)
       end

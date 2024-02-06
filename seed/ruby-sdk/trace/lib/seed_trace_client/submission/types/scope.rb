@@ -23,6 +23,7 @@ module SeedTraceClient
       # @return [Submission::Scope]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         variables = struct.variables
         new(variables: variables, additional_properties: struct)
       end

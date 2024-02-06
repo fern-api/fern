@@ -30,9 +30,10 @@ module SeedObjectsWithImportsClient
       # @return [File::File]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         name = struct.name
         contents = struct.contents
-        info = File::FILE_INFO.key(struct.info) || struct.info
+        info = File::FILE_INFO.key(parsed_json["info"]) || parsed_json["info"]
         new(name: name, contents: contents, info: info, additional_properties: struct)
       end
 

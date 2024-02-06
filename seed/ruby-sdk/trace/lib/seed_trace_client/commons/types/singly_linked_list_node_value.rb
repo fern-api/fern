@@ -30,6 +30,7 @@ module SeedTraceClient
       # @return [Commons::SinglyLinkedListNodeValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         node_id = struct.nodeId
         val = struct.val
         next_ = struct.next

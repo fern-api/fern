@@ -7,6 +7,7 @@ import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
 import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
+import tinycolor from "tinycolor2";
 import { getAllPages } from "./getAllPages";
 import {
     DocsNavigationConfiguration,
@@ -19,6 +20,7 @@ import {
     UntabbedDocsNavigation,
     VersionInfo
 } from "./ParsedDocsConfiguration";
+
 export async function parseDocsConfiguration({
     rawDocsConfiguration,
     absolutePathToFernFolder,
@@ -41,9 +43,9 @@ export async function parseDocsConfiguration({
         title,
         typography,
         tabs,
-        versions
+        versions,
+        layout
     } = rawDocsConfiguration;
-    const convertedColors = convertColorsConfiguration(colors ?? {}, context);
 
     const convertedNavigation = await getNavigationConfiguration({
         versions,
@@ -92,40 +94,7 @@ export async function parseDocsConfiguration({
                       absoluteFilepathToDocsConfig
                   })
                 : undefined,
-        colors: {
-            accentPrimary:
-                convertedColors.accentPrimary != null
-                    ? convertedColors.accentPrimary.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: convertedColors.accentPrimary.dark,
-                              light: convertedColors.accentPrimary.light
-                          }
-                        : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        convertedColors.accentPrimary.type === "unthemed"
-                        ? {
-                              type: "unthemed",
-                              color: convertedColors.accentPrimary.color
-                          }
-                        : undefined
-                    : undefined,
-            background:
-                convertedColors.background != null
-                    ? convertedColors.background.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: convertedColors.background.dark,
-                              light: convertedColors.background.light
-                          }
-                        : // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-                        convertedColors.background.type === "unthemed"
-                        ? {
-                              type: "unthemed",
-                              color: convertedColors.background.color
-                          }
-                        : undefined
-                    : undefined
-        },
+        colors: convertColorsConfiguration(colors ?? {}, context),
         navbarLinks: navbarLinks != null ? convertNavbarLinks(navbarLinks) : undefined,
         typography:
             typography != null
@@ -133,8 +102,58 @@ export async function parseDocsConfiguration({
                       rawTypography: typography,
                       absoluteFilepathToDocsConfig
                   })
-                : undefined
+                : undefined,
+        layout: convertLayoutConfig(layout)
     };
+}
+
+function convertLayoutConfig(layout: RawDocs.LayoutConfig | undefined): ParsedDocsConfiguration["layout"] {
+    if (layout == null) {
+        return undefined;
+    }
+
+    return {
+        pageWidth:
+            layout.pageWidth?.trim().toLowerCase() === "full" ? { type: "full" } : parseSizeConfig(layout.pageWidth),
+        contentWidth: parseSizeConfig(layout.contentWidth),
+        sidebarWidth: parseSizeConfig(layout.sidebarWidth),
+        headerHeight: parseSizeConfig(layout.headerHeight),
+
+        searchbarPlacement:
+            layout.searchbarPlacement === "header"
+                ? DocsV1Write.SidebarOrHeaderPlacement.Header
+                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar,
+        tabsPlacement:
+            layout.tabsPlacement === "header"
+                ? DocsV1Write.SidebarOrHeaderPlacement.Header
+                : DocsV1Write.SidebarOrHeaderPlacement.Sidebar
+    };
+}
+
+function parseSizeConfig(sizeAsString: string | undefined): DocsV1Write.SizeConfig | undefined {
+    if (sizeAsString == null) {
+        return undefined;
+    }
+
+    const sizeAsStringClean = sizeAsString.trim().toLowerCase();
+
+    const pxMatch = sizeAsStringClean.match(/^(\d+)px$/);
+    if (pxMatch != null && pxMatch[1] != null) {
+        return {
+            type: "px",
+            value: parseFloat(pxMatch[1])
+        };
+    }
+
+    const remMatch = sizeAsStringClean.match(/^(\d+)rem$/);
+    if (remMatch != null && remMatch[1] != null) {
+        return {
+            type: "rem",
+            value: parseFloat(remMatch[1])
+        };
+    }
+
+    return undefined;
 }
 
 async function getNavigationConfiguration({
@@ -225,11 +244,67 @@ async function convertFontConfig({
 }): Promise<FontConfig> {
     return {
         name: rawFontConfig.name,
-        absolutePath: await resolveFilepath({
-            absolutePath: absoluteFilepathToDocsConfig,
-            rawUnresolvedFilepath: rawFontConfig.path
-        })
+        variants: await constructVariants(rawFontConfig, absoluteFilepathToDocsConfig),
+        display: rawFontConfig.display,
+        fallback: rawFontConfig.fallback,
+        fontVariationSettings: rawFontConfig.fontVariationSettings
     };
+}
+
+function constructVariants(
+    rawFontConfig: RawDocs.FontConfig,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<FontConfig["variants"]> {
+    const variants: RawDocs.FontConfigVariant[] = [];
+
+    if (rawFontConfig.path != null) {
+        variants.push({
+            path: rawFontConfig.path,
+            weight: rawFontConfig.weight,
+            style: rawFontConfig.style
+        });
+    }
+
+    rawFontConfig.paths?.forEach((rawVariant) => {
+        if (typeof rawVariant === "string") {
+            variants.push({
+                path: rawVariant,
+                weight: rawFontConfig.weight,
+                style: rawFontConfig.style
+            });
+        } else {
+            variants.push({
+                path: rawVariant.path,
+                weight: rawVariant.weight ?? rawFontConfig.weight,
+                style: rawVariant.style ?? rawFontConfig.style
+            });
+        }
+    });
+
+    return Promise.all(
+        variants.map(async (rawVariant) => ({
+            absolutePath: await resolveFilepath({
+                absolutePath: absoluteFilepathToDocsConfig,
+                rawUnresolvedFilepath: rawVariant.path
+            }),
+            weight: parseWeight(rawVariant.weight),
+            style: rawVariant.style
+        }))
+    );
+}
+
+function parseWeight(weight: string | undefined): string[] | undefined {
+    if (weight == null) {
+        return undefined;
+    }
+
+    const weights = weight
+        .split(/\D+/)
+        .filter(
+            (item) => item !== "" && ["100", "200", "300", "400", "500", "600", "700", "800", "900"].includes(item)
+        );
+
+    return weights;
 }
 
 async function convertNavigationConfiguration({
@@ -371,90 +446,108 @@ async function convertImageReference({
     };
 }
 
+function getColorType(colorConfig: RawDocs.ColorConfig | undefined): "dark" | "light" | "darkAndLight" {
+    if (colorConfig == null) {
+        return "dark";
+    }
+
+    if (typeof colorConfig === "string") {
+        if (tinycolor(colorConfig).isValid()) {
+            return tinycolor(colorConfig).isDark() ? "dark" : "light";
+        } else {
+            return "dark";
+        }
+    }
+
+    if (colorConfig.dark != null && colorConfig.light != null) {
+        return "darkAndLight";
+    }
+
+    if (colorConfig.dark != null) {
+        return "dark";
+    }
+
+    if (colorConfig.light != null) {
+        return "light";
+    }
+
+    return "dark";
+}
+
 function convertColorsConfiguration(
     rawConfig: RawDocs.ColorsConfiguration,
     context: TaskContext
-): DocsV1Write.ColorsConfigV2 {
-    return {
-        accentPrimary:
-            rawConfig.accentPrimary != null
-                ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary")
-                : undefined,
-        background:
-            rawConfig.background != null
-                ? convertColorConfiguration(rawConfig.background, context, "background")
-                : undefined
-    };
+): DocsV1Write.ColorsConfigV3 {
+    const colorType = getColorType(rawConfig.background ?? rawConfig.accentPrimary);
+    switch (colorType) {
+        case "dark":
+            return {
+                type: "dark",
+                accentPrimary:
+                    rawConfig.accentPrimary != null
+                        ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "dark")
+                        : undefined,
+                background:
+                    rawConfig.background != null
+                        ? convertColorConfiguration(rawConfig.background, context, "background", "dark")
+                        : undefined
+            };
+        case "light":
+            return {
+                type: "light",
+                accentPrimary:
+                    rawConfig.accentPrimary != null
+                        ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "light")
+                        : undefined,
+                background:
+                    rawConfig.background != null
+                        ? convertColorConfiguration(rawConfig.background, context, "background", "light")
+                        : undefined
+            };
+        case "darkAndLight":
+            return {
+                type: "darkAndLight",
+                dark: {
+                    accentPrimary:
+                        rawConfig.accentPrimary != null
+                            ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "dark")
+                            : undefined,
+                    background:
+                        rawConfig.background != null
+                            ? convertColorConfiguration(rawConfig.background, context, "background", "dark")
+                            : undefined
+                },
+                light: {
+                    accentPrimary:
+                        rawConfig.accentPrimary != null
+                            ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "light")
+                            : undefined,
+                    background:
+                        rawConfig.background != null
+                            ? convertColorConfiguration(rawConfig.background, context, "background", "light")
+                            : undefined
+                }
+            };
+        default:
+            assertNever(colorType);
+    }
 }
 
 function convertColorConfiguration(
     raw: RawDocs.ColorConfig,
     context: TaskContext,
-    key: string
-): DocsV1Write.ColorConfig {
-    if (typeof raw === "string") {
-        const rgb = hexToRgb(raw);
-        if (rgb == null) {
-            context.failAndThrow(`'${key}' should be a hex color of the format #FFFFFF`);
-        }
-        return {
-            type: "unthemed",
-            color: rgb
-        };
+    key: string,
+    theme: "dark" | "light"
+): DocsV1Write.RgbColor {
+    const rawColor = typeof raw === "string" ? raw : raw[theme] ?? raw.dark ?? raw.light;
+    const color = tinycolor(rawColor);
+    if (!color.isValid()) {
+        context.failAndThrow(
+            `'${typeof raw === "string" ? key : `${key}.${theme}`}' should be a hex color of the format #FFFFFF`
+        );
     }
-
-    let rgbDark = undefined;
-    let rgbLight = undefined;
-
-    if (raw.dark != null) {
-        const rgb = hexToRgb(raw.dark);
-        if (rgb == null) {
-            context.failAndThrow(`'${key}.dark' should be a hex color of the format #FFFFFF`);
-        }
-        rgbDark = rgb;
-    }
-
-    if (raw.light != null) {
-        const rgb = hexToRgb(raw.light);
-        if (rgb == null) {
-            context.failAndThrow(`'${key}.light' should be a hex color of the format #FFFFFF`);
-        }
-        rgbLight = rgb;
-    }
-
-    return {
-        type: "themed",
-        dark: rgbDark,
-        light: rgbLight
-    };
-}
-
-const HEX_COLOR_REGEX = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i;
-
-// https://stackoverflow.com/a/5624139/4238485
-function hexToRgb(hexString: string): DocsV1Write.RgbColor | undefined {
-    const result = HEX_COLOR_REGEX.exec(hexString);
-    if (result != null) {
-        const [_, rAsString, gAsString, bAsString] = result;
-        const r = parseHexColorCode(rAsString);
-        const g = parseHexColorCode(gAsString);
-        const b = parseHexColorCode(bAsString);
-        if (r != null && g != null && b != null) {
-            return { r, g, b };
-        }
-    }
-    return undefined;
-}
-
-function parseHexColorCode(value: string | undefined): number | undefined {
-    if (value == null) {
-        return undefined;
-    }
-    const valueAsNumber = parseInt(value, 16);
-    if (isNaN(valueAsNumber)) {
-        return undefined;
-    }
-    return valueAsNumber;
+    const rgb = color.toRgb();
+    return { r: rgb.r, g: rgb.g, b: rgb.b };
 }
 
 function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.NavbarLink[] {

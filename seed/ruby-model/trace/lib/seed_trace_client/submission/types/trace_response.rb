@@ -44,14 +44,27 @@ module SeedTraceClient
       # @return [Submission::TraceResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         line_number = struct.lineNumber
-        return_value = struct.returnValue.to_h.to_json
-        return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
-        expression_location = struct.expressionLocation.to_h.to_json
-        expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
-        stack = struct.stack.to_h.to_json
-        stack = Submission::StackInformation.from_json(json_object: stack)
+        if parsed_json["returnValue"].nil?
+          return_value = nil
+        else
+          return_value = parsed_json["returnValue"].to_json
+          return_value = Commons::DebugVariableValue.from_json(json_object: return_value)
+        end
+        if parsed_json["expressionLocation"].nil?
+          expression_location = nil
+        else
+          expression_location = parsed_json["expressionLocation"].to_json
+          expression_location = Submission::ExpressionLocation.from_json(json_object: expression_location)
+        end
+        if parsed_json["stack"].nil?
+          stack = nil
+        else
+          stack = parsed_json["stack"].to_json
+          stack = Submission::StackInformation.from_json(json_object: stack)
+        end
         stdout = struct.stdout
         new(submission_id: submission_id, line_number: line_number, return_value: return_value,
             expression_location: expression_location, stack: stack, stdout: stdout, additional_properties: struct)

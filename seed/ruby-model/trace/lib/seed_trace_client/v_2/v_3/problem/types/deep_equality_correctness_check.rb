@@ -26,6 +26,7 @@ module SeedTraceClient
           # @return [V2::V3::Problem::DeepEqualityCorrectnessCheck]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            JSON.parse(json_object)
             expected_value_parameter_id = struct.expectedValueParameterId
             new(expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)
           end

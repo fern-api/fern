@@ -8,13 +8,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -101,13 +100,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -228,13 +226,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -363,13 +360,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -456,13 +452,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -596,13 +591,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1235,13 +1229,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1559,13 +1552,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1851,13 +1843,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2198,13 +2189,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2406,13 +2396,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2499,13 +2488,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2780,13 +2768,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3013,13 +3000,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3110,13 +3096,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3230,13 +3215,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3342,13 +3326,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3450,13 +3433,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3567,13 +3549,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3681,13 +3662,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -3827,13 +3807,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4167,13 +4146,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -4385,13 +4363,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -4647,13 +4624,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -4909,13 +4885,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5010,13 +4985,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5149,13 +5123,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5370,13 +5343,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5463,13 +5435,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5599,13 +5570,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -5692,13 +5662,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -5940,13 +5909,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6509,13 +6477,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -6835,13 +6802,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -7270,13 +7236,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -7527,13 +7492,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -7784,13 +7748,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8000,13 +7963,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8262,13 +8224,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8487,13 +8448,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8777,13 +8737,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -9618,13 +9577,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -10466,13 +10424,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -11831,13 +11788,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -12470,13 +12426,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -12563,13 +12518,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -13226,13 +13180,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -13343,13 +13296,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -14192,13 +14144,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -14738,13 +14689,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -15401,13 +15351,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16256,13 +16205,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -17111,13 +17059,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -17966,13 +17913,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -18705,13 +18651,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -19467,13 +19412,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -20201,13 +20145,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21572,13 +21515,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -22214,13 +22156,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -22307,13 +22248,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -22973,13 +22913,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -23090,13 +23029,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -23872,13 +23810,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -24514,13 +24451,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -25180,13 +25116,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -25949,13 +25884,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -26690,13 +26624,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27459,13 +27392,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27576,13 +27508,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27692,13 +27623,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27828,13 +27758,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27918,13 +27847,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28005,13 +27933,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28144,13 +28071,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28205,13 +28131,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28632,13 +28557,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28696,13 +28620,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28844,13 +28767,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28946,13 +28868,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -29106,13 +29027,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -29266,13 +29186,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -29513,13 +29432,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -29699,13 +29617,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -29887,13 +29804,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -30131,13 +30047,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -30546,13 +30461,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -30735,13 +30649,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -30924,13 +30837,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -31114,13 +31026,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -31237,13 +31148,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -31395,13 +31305,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -31584,13 +31493,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -31764,13 +31672,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -31883,13 +31790,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -32056,13 +31962,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -32173,13 +32078,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -32287,13 +32191,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -32453,13 +32356,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -33175,13 +33077,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -34320,13 +34221,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -34393,13 +34293,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -34992,13 +34891,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -35619,13 +35517,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -35898,13 +35795,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -35991,13 +35887,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -36177,13 +36072,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -36294,13 +36188,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -36741,13 +36634,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -37051,13 +36943,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -37330,13 +37221,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -37895,13 +37785,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -38501,13 +38390,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -39407,13 +39295,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -40794,13 +40681,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -41450,13 +41336,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -41543,13 +41428,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -41729,13 +41613,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -41846,13 +41729,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -42604,13 +42486,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -43291,13 +43172,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -43947,13 +43827,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -44781,13 +44660,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -45694,13 +45572,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -45785,13 +45662,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -46094,13 +45970,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -46225,13 +46100,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -46536,13 +46410,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -46731,13 +46604,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -47049,13 +46921,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -47206,13 +47077,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -47316,13 +47186,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -47625,13 +47494,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -47958,13 +47826,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -48501,13 +48368,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -48857,13 +48723,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -48979,13 +48844,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -49069,13 +48933,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -49293,13 +49156,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -49380,13 +49242,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -49742,7 +49603,6 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -49789,13 +49649,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -49882,13 +49741,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -50023,13 +49881,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -50427,13 +50284,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -50597,13 +50453,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -50739,13 +50594,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -50881,13 +50735,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -50945,13 +50798,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51021,13 +50873,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51079,13 +50930,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51140,13 +50990,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51201,13 +51050,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51265,13 +51113,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -51525,13 +51372,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51948,13 +51794,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -52254,13 +52099,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -52404,13 +52248,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -52543,13 +52386,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -52803,13 +52645,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -53063,13 +52904,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -53348,13 +53188,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -53608,13 +53447,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -53868,13 +53706,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54171,13 +54008,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54306,13 +54142,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54399,13 +54234,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54487,13 +54321,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54674,13 +54507,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -54771,13 +54603,12 @@ exports[`open api parser aries parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],

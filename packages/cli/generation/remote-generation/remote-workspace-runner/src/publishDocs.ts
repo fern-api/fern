@@ -9,13 +9,15 @@ import {
     ParsedDocsConfiguration,
     parseDocsConfiguration,
     TypographyConfig,
-    UnversionedNavigationConfiguration
+    UnversionedNavigationConfiguration,
+    WithoutQuestionMarks
 } from "@fern-api/docs-configuration";
 import { APIV1Write, DocsV1Write, DocsV2Write } from "@fern-api/fdr-sdk";
 import { AbsoluteFilePath, dirname, relative } from "@fern-api/fs-utils";
 import { registerApi } from "@fern-api/register";
 import { TaskContext } from "@fern-api/task-context";
 import { DocsWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
+import { FernDocsConfig } from "@fern-fern/docs-config";
 import { SnippetsConfiguration, TabConfig, VersionAvailability } from "@fern-fern/docs-config/api";
 import axios from "axios";
 import chalk from "chalk";
@@ -32,7 +34,9 @@ export async function publishDocs({
     fernWorkspaces,
     context,
     version,
-    preview
+    preview,
+    editThisPage,
+    isPrivate = false
 }: {
     token: FernToken;
     organization: string;
@@ -43,6 +47,10 @@ export async function publishDocs({
     context: TaskContext;
     version: string | undefined;
     preview: boolean;
+    // TODO: implement audience support in generateIR
+    audiences: FernDocsConfig.AudiencesConfig | undefined;
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
+    isPrivate: boolean | undefined;
 }): Promise<void> {
     const fdr = createFdrService({ token: token.value });
 
@@ -75,6 +83,7 @@ export async function publishDocs({
         startDocsRegisterResponse = await fdr.docs.v2.write.startDocsRegister({
             domain,
             customDomains,
+            authConfig: isPrivate ? { type: "private", authType: "sso" } : { type: "public" },
             apiId: "",
             orgId: organization,
             filepaths: relativeFilepathsToUpload
@@ -121,7 +130,8 @@ export async function publishDocs({
         context,
         token,
         uploadUrls,
-        version
+        version,
+        editThisPage
     });
     context.logger.debug("Calling registerDocs... ", JSON.stringify(registerDocsRequest, undefined, 4));
     const registerDocsResponse = await fdr.docs.v2.write.finishDocsRegister(docsRegistrationId, registerDocsRequest);
@@ -152,7 +162,8 @@ async function constructRegisterDocsRequest({
     context,
     token,
     uploadUrls,
-    version
+    version,
+    editThisPage
 }: {
     parsedDocsConfig: ParsedDocsConfiguration;
     organization: string;
@@ -161,13 +172,17 @@ async function constructRegisterDocsRequest({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined;
 }): Promise<DocsV2Write.RegisterDocsRequest> {
     return {
         docsDefinition: {
             pages: entries(parsedDocsConfig.pages).reduce(
                 (pages, [pageFilepath, pageContents]) => ({
                     ...pages,
-                    [pageFilepath]: { markdown: pageContents }
+                    [pageFilepath]: {
+                        markdown: pageContents,
+                        editThisPageUrl: createEditThisPageUrl(editThisPage, pageFilepath)
+                    }
                 }),
                 {}
             ),
@@ -182,6 +197,19 @@ async function constructRegisterDocsRequest({
             })
         }
     };
+}
+
+function createEditThisPageUrl(
+    editThisPage: FernDocsConfig.EditThisPageConfig | undefined,
+    pageFilepath: string
+): string | undefined {
+    if (editThisPage?.github == null) {
+        return undefined;
+    }
+
+    const { owner, repo, branch = "main", host = "https://github.com" } = editThisPage.github;
+
+    return `${wrapWithHttps(host)}/${owner}/${repo}/blob/${branch}/fern/${pageFilepath}`;
 }
 
 async function convertDocsConfiguration({
@@ -200,7 +228,7 @@ async function convertDocsConfiguration({
     token: FernToken;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     version: string | undefined;
-}): Promise<DocsV1Write.DocsConfig> {
+}): Promise<Omit<WithoutQuestionMarks<DocsV1Write.DocsConfig>, "logo" | "colors" | "typography" | "colorsV2">> {
     return {
         title: parsedDocsConfig.title,
         logoV2: {
@@ -253,45 +281,17 @@ async function convertDocsConfiguration({
             token,
             version
         }),
-        colorsV2: {
-            accentPrimary:
-                parsedDocsConfig.colors?.accentPrimary != null
-                    ? parsedDocsConfig.colors.accentPrimary.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.accentPrimary.dark,
-                              light: parsedDocsConfig.colors.accentPrimary.light
-                          }
-                        : parsedDocsConfig.colors.accentPrimary.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.accentPrimary.color
-                          }
-                        : undefined
-                    : undefined,
-            background:
-                parsedDocsConfig.colors?.background != null
-                    ? parsedDocsConfig.colors.background.type === "themed"
-                        ? {
-                              type: "themed",
-                              dark: parsedDocsConfig.colors.background.dark,
-                              light: parsedDocsConfig.colors.background.light
-                          }
-                        : parsedDocsConfig.colors.background.color != null
-                        ? {
-                              type: "unthemed",
-                              color: parsedDocsConfig.colors.background.color
-                          }
-                        : undefined
-                    : undefined
-        },
+        colorsV3: parsedDocsConfig.colors,
         navbarLinks: parsedDocsConfig.navbarLinks,
-        typography: convertDocsTypographyConfiguration({
+        typographyV2: convertDocsTypographyConfiguration({
             typographyConfiguration: parsedDocsConfig.typography,
             parsedDocsConfig,
             uploadUrls,
             context
-        })
+        }),
+        layout: parsedDocsConfig.layout,
+        css: undefined,
+        js: undefined
     };
 }
 
@@ -484,11 +484,11 @@ function convertDocsTypographyConfiguration({
     parsedDocsConfig: ParsedDocsConfiguration;
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
-}): DocsV1Write.DocsTypographyConfig | undefined {
+}): DocsV1Write.DocsTypographyConfigV2 | undefined {
     if (typographyConfiguration == null) {
         return;
     }
-    const result: DocsV1Write.DocsTypographyConfig = {
+    return {
         headingsFont: convertFont({
             font: typographyConfiguration.headingsFont,
             context,
@@ -511,7 +511,6 @@ function convertDocsTypographyConfiguration({
             uploadUrls
         })
     };
-    return result;
 }
 
 function convertFont({
@@ -526,12 +525,16 @@ function convertFont({
     uploadUrls: Record<DocsV1Write.FilePath, DocsV1Write.FileS3UploadUrl>;
     context: TaskContext;
     label: string;
-}): DocsV1Write.FontConfig | undefined {
+}): DocsV1Write.FontConfigV2 | undefined {
     if (font == null) {
         return;
     }
 
-    const filepath = convertAbsoluteFilepathToFdrFilepath(font.absolutePath, parsedDocsConfig);
+    if (font.variants[0] == null) {
+        return;
+    }
+
+    const filepath = convertAbsoluteFilepathToFdrFilepath(font.variants[0].absolutePath, parsedDocsConfig);
 
     const file = uploadUrls[filepath];
     if (file == null) {
@@ -539,8 +542,23 @@ function convertFont({
     }
 
     return {
+        type: "custom",
         name: font.name ?? `font:${label}:${file.fileId}`,
-        fontFile: file.fileId
+        variants: font.variants.map((variant) => {
+            const filepath = convertAbsoluteFilepathToFdrFilepath(variant.absolutePath, parsedDocsConfig);
+            const file = uploadUrls[filepath];
+            if (file == null) {
+                return context.failAndThrow(`Failed to locate ${label} font file after uploading`);
+            }
+            return {
+                fontFile: file.fileId,
+                weight: variant.weight,
+                style: variant.style != null ? [variant.style] : undefined
+            };
+        }),
+        display: font.display,
+        fallback: font.fallback,
+        fontVariationSettings: font.fontVariationSettings
     };
 }
 
@@ -705,15 +723,17 @@ function getFilepathsToUpload(parsedDocsConfig: ParsedDocsConfiguration): Absolu
 
     const typographyConfiguration = parsedDocsConfig.typography;
 
-    if (typographyConfiguration?.headingsFont != null) {
-        filepaths.push(typographyConfiguration.headingsFont.absolutePath);
-    }
-    if (typographyConfiguration?.bodyFont != null) {
-        filepaths.push(typographyConfiguration.bodyFont.absolutePath);
-    }
-    if (typographyConfiguration?.codeFont != null) {
-        filepaths.push(typographyConfiguration.codeFont.absolutePath);
-    }
+    typographyConfiguration?.headingsFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
+
+    typographyConfiguration?.bodyFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
+
+    typographyConfiguration?.codeFont?.variants.forEach((variant) => {
+        filepaths.push(variant.absolutePath);
+    });
 
     return filepaths;
 }
@@ -723,5 +743,5 @@ function convertAbsoluteFilepathToFdrFilepath(filepath: AbsoluteFilePath, parsed
 }
 
 function wrapWithHttps(url: string): string {
-    return url.startsWith("https://") ? url : `https://${url}`;
+    return url.startsWith("https://") || url.startsWith("http://") ? url : `https://${url}`;
 }

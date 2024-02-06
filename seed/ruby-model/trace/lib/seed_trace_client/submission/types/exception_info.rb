@@ -29,6 +29,7 @@ module SeedTraceClient
       # @return [Submission::ExceptionInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         exception_type = struct.exceptionType
         exception_message = struct.exceptionMessage
         exception_stacktrace = struct.exceptionStacktrace

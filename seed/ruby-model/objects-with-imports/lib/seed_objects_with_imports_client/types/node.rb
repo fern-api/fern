@@ -29,10 +29,15 @@ module SeedObjectsWithImportsClient
     # @return [Node]
     def self.from_json(json_object:)
       struct = JSON.parse(json_object, object_class: OpenStruct)
+      parsed_json = JSON.parse(json_object)
       id = struct.id
       label = struct.label
-      metadata = struct.metadata.to_h.to_json
-      metadata = Commons::Metadata::Metadata.from_json(json_object: metadata)
+      if parsed_json["metadata"].nil?
+        metadata = nil
+      else
+        metadata = parsed_json["metadata"].to_json
+        metadata = Commons::Metadata::Metadata.from_json(json_object: metadata)
+      end
       new(id: id, label: label, metadata: metadata, additional_properties: struct)
     end
 

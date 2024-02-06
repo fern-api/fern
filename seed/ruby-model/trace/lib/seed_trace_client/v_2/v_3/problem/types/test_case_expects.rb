@@ -25,6 +25,7 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseExpects]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            JSON.parse(json_object)
             expected_stdout = struct.expectedStdout
             new(expected_stdout: expected_stdout, additional_properties: struct)
           end

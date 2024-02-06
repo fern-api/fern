@@ -257,7 +257,7 @@ export class ArrayReference extends ClassReference {
                               leftSide: "v",
                               rightSide: new FunctionInvocation({
                                   onObject: "v",
-                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
                               }),
                               isAssignment: true
                           }),
@@ -324,7 +324,7 @@ export class HashReference extends ClassReference {
                               leftSide: "v",
                               rightSide: new FunctionInvocation({
                                   onObject: "v",
-                                  baseFunction: new Function_({ name: "to_h.to_json", functionBody: [] })
+                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
                               }),
                               isAssignment: true
                           }),

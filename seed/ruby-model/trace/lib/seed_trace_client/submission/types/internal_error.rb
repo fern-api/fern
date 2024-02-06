@@ -24,8 +24,13 @@ module SeedTraceClient
       # @return [Submission::InternalError]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        exception_info = struct.exceptionInfo.to_h.to_json
-        exception_info = Submission::ExceptionInfo.from_json(json_object: exception_info)
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["exceptionInfo"].nil?
+          exception_info = nil
+        else
+          exception_info = parsed_json["exceptionInfo"].to_json
+          exception_info = Submission::ExceptionInfo.from_json(json_object: exception_info)
+        end
         new(exception_info: exception_info, additional_properties: struct)
       end
 

@@ -25,8 +25,9 @@ module SeedTraceClient
         # @return [V2::Problem::VoidFunctionSignature]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          parameters = struct.parameters.map do |v|
-            v = v.to_h.to_json
+          parsed_json = JSON.parse(json_object)
+          parameters = parsed_json["parameters"].map do |v|
+            v = v.to_json
             V2::Problem::Parameter.from_json(json_object: v)
           end
           new(parameters: parameters, additional_properties: struct)

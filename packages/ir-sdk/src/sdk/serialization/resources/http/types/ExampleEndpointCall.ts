@@ -34,7 +34,7 @@ export const ExampleEndpointCall: core.serialization.ObjectSchema<
         request: core.serialization.lazy(async () => (await import("../../..")).ExampleRequestBody).optional(),
         response: core.serialization.lazy(async () => (await import("../../..")).ExampleResponse),
         codeSamples: core.serialization
-            .list(core.serialization.lazyObject(async () => (await import("../../..")).ExampleCodeSample))
+            .list(core.serialization.lazy(async () => (await import("../../..")).ExampleCodeSample))
             .optional(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));

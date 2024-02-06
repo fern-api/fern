@@ -28,8 +28,9 @@ module SeedTraceClient
       # @return [Submission::BuildingExecutorResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        status = Submission::EXECUTION_SESSION_STATUS.key(struct.status) || struct.status
+        status = Submission::EXECUTION_SESSION_STATUS.key(parsed_json["status"]) || parsed_json["status"]
         new(submission_id: submission_id, status: status, additional_properties: struct)
       end
 

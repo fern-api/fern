@@ -27,9 +27,14 @@ module SeedTraceClient
       # @return [Submission::StackInformation]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         num_stack_frames = struct.numStackFrames
-        top_stack_frame = struct.topStackFrame.to_h.to_json
-        top_stack_frame = Submission::StackFrame.from_json(json_object: top_stack_frame)
+        if parsed_json["topStackFrame"].nil?
+          top_stack_frame = nil
+        else
+          top_stack_frame = parsed_json["topStackFrame"].to_json
+          top_stack_frame = Submission::StackFrame.from_json(json_object: top_stack_frame)
+        end
         new(num_stack_frames: num_stack_frames, top_stack_frame: top_stack_frame, additional_properties: struct)
       end
 

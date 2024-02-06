@@ -30,10 +30,19 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseImplementation]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            description = struct.description.to_h.to_json
-            description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
-            function = struct.function.to_h.to_json
-            function = V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
+            parsed_json = JSON.parse(json_object)
+            if parsed_json["description"].nil?
+              description = nil
+            else
+              description = parsed_json["description"].to_json
+              description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
+            end
+            if parsed_json["function"].nil?
+              function = nil
+            else
+              function = parsed_json["function"].to_json
+              function = V2::V3::Problem::TestCaseFunction.from_json(json_object: function)
+            end
             new(description: description, function: function, additional_properties: struct)
           end
 
