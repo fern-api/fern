@@ -16,7 +16,7 @@ export interface ExampleEndpointCall extends FernIr.WithDocs {
     request: FernIr.ExampleRequestBody | undefined;
     response: FernIr.ExampleResponse;
     /**
-     * Hand-written code samples for this endpoint.These code samples should match the
+     * Hand-written code samples for this endpoint. These code samples should match the
      * example that it's attached to, so that we can spin up an API Playground with
      * the code sample that's being displayed in the API Reference.
      */
