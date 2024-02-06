@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import {
     FullExample,
@@ -23,8 +23,8 @@ export function buildEndpointExample({
         example.name = endpointExample.name;
     }
 
-    if (endpointExample.docs != null) {
-        example.docs = endpointExample.docs;
+    if (endpointExample.description != null) {
+        example.docs = endpointExample.description;
     }
 
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
@@ -52,13 +52,29 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.codeSamples.length > 0) {
-        example["code-samples"] = endpointExample.codeSamples.map((codeSample) => ({
-            name: codeSample.name ?? undefined,
-            docs: codeSample.docs ?? undefined,
-            language: codeSample.language,
-            code: codeSample.code,
-            install: codeSample.install ?? undefined
-        }));
+        example["code-samples"] = endpointExample.codeSamples
+            .map((codeSample) => {
+                if (codeSample.type === "language") {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        language: codeSample.language,
+                        code: codeSample.code,
+                        install: codeSample.install ?? undefined
+                    };
+                } else if (codeSample.sdk != null) {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        sdk: codeSample.sdk,
+                        code: codeSample.code
+                    };
+                } else {
+                    context.logger.warn("Code sample is missing language or SDK field.");
+                    return undefined;
+                }
+            })
+            .filter(isNonNullish);
     }
 
     return example;

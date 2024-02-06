@@ -57,6 +57,7 @@ export async function getPreviewDocsDefinition({
         apis: await apiCollector.getAPIsForDefinition(),
         config: readDocsConfig,
         files: {},
+        filesV2: {},
         pages: dbDocsDefinition.pages,
         search: {
             type: "legacyMultiAlgoliaIndex",

@@ -139,7 +139,7 @@ export class ExampleEndpointFactory {
 
         return {
             name: exampleName,
-            docs: undefined,
+            description: undefined,
             pathParameters,
             queryParameters,
             headers,

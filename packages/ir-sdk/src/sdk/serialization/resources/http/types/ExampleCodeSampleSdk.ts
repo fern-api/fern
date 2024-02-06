@@ -12,7 +12,7 @@ export const ExampleCodeSampleSdk: core.serialization.ObjectSchema<
 > = core.serialization
     .objectWithoutOptionalProperties({
         name: core.serialization.lazyObject(async () => (await import("../../..")).Name).optional(),
-        sdk: core.serialization.lazy(async () => (await import("../../..")).SupportedSdkLanguage).optional(),
+        sdk: core.serialization.lazy(async () => (await import("../../..")).SupportedSdkLanguage),
         code: core.serialization.string(),
     })
     .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
@@ -20,7 +20,7 @@ export const ExampleCodeSampleSdk: core.serialization.ObjectSchema<
 export declare namespace ExampleCodeSampleSdk {
     interface Raw extends serializers.WithDocs.Raw {
         name?: serializers.Name.Raw | null;
-        sdk?: serializers.SupportedSdkLanguage.Raw | null;
+        sdk: serializers.SupportedSdkLanguage.Raw;
         code: string;
     }
 }

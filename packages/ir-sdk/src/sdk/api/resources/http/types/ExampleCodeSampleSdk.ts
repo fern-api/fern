@@ -10,6 +10,6 @@ import * as FernIr from "../../..";
 export interface ExampleCodeSampleSdk extends FernIr.WithDocs {
     /** Override the example name. */
     name: FernIr.Name | undefined;
-    sdk: FernIr.SupportedSdkLanguage | undefined;
+    sdk: FernIr.SupportedSdkLanguage;
     code: string;
 }

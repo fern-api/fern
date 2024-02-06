@@ -14,7 +14,7 @@ export const SupportedSdkLanguageSchema = z.enum([
     "js", // alias to javascript
     "node", // alias to javascript
     "ts", // alias to typescript
-    "node-ts", // alias to typescript
+    "nodets", // alias to typescript
     "golang", // alias to go
     "c#", // alias to csharp
     "dotnet", // alias to csharp
@@ -23,16 +23,20 @@ export const SupportedSdkLanguageSchema = z.enum([
 
 export type SupportedSdkLanguageSchema = z.infer<typeof SupportedSdkLanguageSchema>;
 
-const ExampleCodeSampleSchemaSdk = WithNameAndDocsSchema.extend({
+export const ExampleCodeSampleSchemaSdk = WithNameAndDocsSchema.extend({
     sdk: SupportedSdkLanguageSchema,
     code: z.string()
 });
 
-const ExampleCodeSampleSchemaLanguage = WithNameAndDocsSchema.extend({
+export type ExampleCodeSampleSchemaSdk = z.infer<typeof ExampleCodeSampleSchemaSdk>;
+
+export const ExampleCodeSampleSchemaLanguage = WithNameAndDocsSchema.extend({
     language: z.string(),
     code: z.string(),
     install: z.optional(z.string())
 });
+
+export type ExampleCodeSampleSchemaLanguage = z.infer<typeof ExampleCodeSampleSchemaLanguage>;
 
 export const ExampleCodeSampleSchema = z.union([ExampleCodeSampleSchemaSdk, ExampleCodeSampleSchemaLanguage]);
 

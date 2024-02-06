@@ -121,7 +121,7 @@ types:
       name:
         type: optional<string>
         docs: Override the example name.
-      sdk: optional<SupportedSdkLanguage>
+      sdk: SupportedSdkLanguage
       code: string
 
   # be sure to keep this in sync with the SupportedSdkLanguage enum
