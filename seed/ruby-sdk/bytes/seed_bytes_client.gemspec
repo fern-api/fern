@@ -4,7 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_bytes_client"
-  spec.version = SeedBytesClient::Gemconfig::VERSION
+  spec.version = "0.0.1"
   spec.authors = SeedBytesClient::Gemconfig::AUTHORS
   spec.email = SeedBytesClient::Gemconfig::EMAIL
   spec.summary = SeedBytesClient::Gemconfig::SUMMARY
@@ -18,4 +18,7 @@ Gem::Specification.new do |spec|
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
+  spec.add_dependency "async-http-faraday", "~> 0.12"
+  spec.add_dependency "faraday", "~> 2.7"
+  spec.add_dependency "faraday-retry", "~> 2.2"
 end

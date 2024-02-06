@@ -1,0 +1,35 @@
+irVersion: v31
+docker: fernapi/fern-java-sdk:latest
+dockerCommand: 
+  - cd generators/java
+  - ./gradlew :sdk:distTar
+  - docker build -f sdk/Dockerfile -t fernapi/fern-java-sdk:latest sdk/
+language: java
+generatorType: SDK
+defaultOutputMode: github
+fixtures:
+  exhaustive:
+    - customConfig: null
+      outputFolder: no-custom-config
+    - customConfig:
+        custom-dependencies:
+          - "implementation jakarta.websocket:jakarta.websocket-api:2.1.0"
+      outputFolder: custom-dependency
+    - customConfig:
+        enable-forward-compatible-enums: true
+      outputFolder: forward-compatible-enums
+    - customConfig:
+        package-prefix: com.fern.sdk
+      outputMode: local_files
+      outputFolder: local-files
+scripts:
+  - docker: fernapi/java-seed
+    commands:
+      - source "$HOME/.sdkman/bin/sdkman-init.sh"
+      - sdk use java 11.0.21-zulu
+      - gradle compileJava
+allowedFailures:
+  - enum
+  - extends
+  - response-property
+  

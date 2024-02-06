@@ -1,8 +1,8 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
-import { FernSeedConfig } from "@fern-fern/seed-config";
 import { findUp } from "find-up";
 import { readdir, readFile } from "fs/promises";
 import yaml from "js-yaml";
+import { FernSeedConfig } from "./config";
 
 export interface SeedWorkspace {
     workspaceName: string;

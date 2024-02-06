@@ -1,0 +1,57 @@
+buildscript {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.palantir.javaformat:gradle-palantir-java-format:2.20.0'
+    }
+}
+
+plugins {
+    id "com.palantir.consistent-versions" version "2.19.0"
+    id "org.inferred.processors" version "3.7.0"
+    id "com.jfrog.artifactory" version "5.1.14"
+    id 'maven-publish'
+    id("com.diffplug.spotless") version "6.25.0"
+}
+
+group 'io.github.fern-api'
+
+apply plugin: 'com.palantir.consistent-versions'
+
+allprojects {
+
+    apply plugin: "org.inferred.processors"
+    apply plugin: "maven-publish"
+    apply plugin: "com.jfrog.artifactory"
+    apply plugin: "java-library"
+    apply plugin: 'com.palantir.java-format'
+
+    version rootProject.version
+    group rootProject.group
+
+    repositories {
+        mavenCentral()
+        maven {
+            url "https://maven.buildwithfern.com"
+        }
+        maven {
+            url "https://maven-dev.buildwithfern.com"
+        }
+    }
+
+    test {
+        useJUnitPlatform()
+        testLogging {
+            events "passed", "skipped", "failed"
+        }
+    }
+
+    sourceCompatibility = 11
+
+    java {
+        palantirJavaFormat {}
+    }
+}

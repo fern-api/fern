@@ -1,5 +1,5 @@
+import { InlinedWebhookPayloadProperty, Webhook, WebhookGroup, WebhookPayload } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { InlinedWebhookPayloadProperty, Webhook, WebhookGroup, WebhookPayload } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../FernFileContext";
 import { parseTypeName } from "../utils/parseTypeName";
 import { convertAvailability } from "./convertDeclaration";

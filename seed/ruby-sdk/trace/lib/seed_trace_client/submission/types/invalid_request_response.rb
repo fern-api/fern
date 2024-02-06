@@ -28,10 +28,19 @@ module SeedTraceClient
       # @return [Submission::InvalidRequestResponse]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
-        request = struct.request.to_h.to_json
-        request = Submission::SubmissionRequest.from_json(json_object: request)
-        cause = struct.cause.to_h.to_json
-        cause = Submission::InvalidRequestCause.from_json(json_object: cause)
+        parsed_json = JSON.parse(json_object)
+        if parsed_json["request"].nil?
+          request = nil
+        else
+          request = parsed_json["request"].to_json
+          request = Submission::SubmissionRequest.from_json(json_object: request)
+        end
+        if parsed_json["cause"].nil?
+          cause = nil
+        else
+          cause = parsed_json["cause"].to_json
+          cause = Submission::InvalidRequestCause.from_json(json_object: cause)
+        end
         new(request: request, cause: cause, additional_properties: struct)
       end
 

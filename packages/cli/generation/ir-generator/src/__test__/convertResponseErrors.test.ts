@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { ResponseErrors } from "@fern-fern/ir-sdk/api";
+import { ResponseErrors } from "@fern-api/ir-sdk";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 import { convertResponseErrors } from "../converters/services/convertResponseErrors";
 import { constructFernFileContext } from "../FernFileContext";

@@ -5,7 +5,7 @@ import { migrateIntermediateRepresentationThroughVersion } from "@fern-api/ir-mi
 import { Project } from "@fern-api/project-loader";
 import { TaskContext } from "@fern-api/task-context";
 import { convertOpenApiWorkspaceToFernWorkspace, FernWorkspace } from "@fern-api/workspace-loader";
-import * as IrSerialization from "@fern-fern/ir-sdk/serialization";
+import { serialization as IrSerialization } from "@fern-api/ir-sdk";
 import { writeFile } from "fs/promises";
 import path from "path";
 import { CliContext } from "../../cli-context/CliContext";

@@ -24,6 +24,7 @@ module SeedAudiencesClient
       # @return [Foo::ImportingType]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         imported = struct.imported
         new(imported: imported, additional_properties: struct)
       end

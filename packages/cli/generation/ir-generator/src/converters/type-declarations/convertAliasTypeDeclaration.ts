@@ -1,4 +1,5 @@
 import { assertNever } from "@fern-api/core-utils";
+import { ResolvedTypeReference, ShapeType, Type } from "@fern-api/ir-sdk";
 import {
     isRawDiscriminatedUnionDefinition,
     isRawEnumDefinition,
@@ -6,7 +7,6 @@ import {
     isRawUndiscriminatedUnionDefinition,
     RawSchemas
 } from "@fern-api/yaml-schema";
-import { ResolvedTypeReference, ShapeType, Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { TypeResolver } from "../../resolvers/TypeResolver";
 

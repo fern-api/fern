@@ -1,6 +1,4 @@
 import { isPlainObject } from "@fern-api/core-utils";
-import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import {
     ExampleEndpointCall,
     ExampleHeader,
@@ -9,7 +7,9 @@ import {
     ExampleRequestBody,
     ExampleResponse,
     Name
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
+import { FernWorkspace } from "@fern-api/workspace-loader";
+import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";

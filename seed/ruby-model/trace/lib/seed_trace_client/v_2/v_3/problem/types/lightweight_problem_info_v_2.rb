@@ -36,11 +36,16 @@ module SeedTraceClient
           # @return [V2::V3::Problem::LightweightProblemInfoV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             problem_id = struct.problemId
             problem_name = struct.problemName
             problem_version = struct.problemVersion
-            variable_types = struct.variableTypes.to_h.to_json
-            variable_types = Set.new(variable_types)
+            if parsed_json["variableTypes"].nil?
+              variable_types = nil
+            else
+              variable_types = parsed_json["variableTypes"].to_json
+              variable_types = Set.new(variable_types)
+            end
             new(problem_id: problem_id, problem_name: problem_name, problem_version: problem_version,
                 variable_types: variable_types, additional_properties: struct)
           end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "submission_id"
+require_relative "../../commons/types/language"
 require_relative "submission_file_info"
 require "json"
 
@@ -10,7 +11,7 @@ module SeedTraceClient
       attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties
 
       # @param submission_id [Submission::SUBMISSION_ID]
-      # @param language [Hash{String => String}]
+      # @param language [LANGUAGE]
       # @param submission_files [Array<Submission::SubmissionFileInfo>]
       # @param user_id [String]
       # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
@@ -18,7 +19,7 @@ module SeedTraceClient
       def initialize(submission_id:, language:, submission_files:, user_id: nil, additional_properties: nil)
         # @type [Submission::SUBMISSION_ID]
         @submission_id = submission_id
-        # @type [Hash{String => String}]
+        # @type [LANGUAGE]
         @language = language
         # @type [Array<Submission::SubmissionFileInfo>]
         @submission_files = submission_files
@@ -34,10 +35,11 @@ module SeedTraceClient
       # @return [Submission::WorkspaceSubmitRequest]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
-        language = LANGUAGE.key(struct.language)
-        submission_files = struct.submissionFiles.map do |v|
-          v = v.to_h.to_json
+        language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
+        submission_files = parsed_json["submissionFiles"].map do |v|
+          v = v.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
         user_id = struct.userId
@@ -51,7 +53,7 @@ module SeedTraceClient
       def to_json(*_args)
         {
           "submissionId": @submission_id,
-          "language": @language,
+          "language": Commons::LANGUAGE[@language] || @language,
           "submissionFiles": @submission_files,
           "userId": @user_id
         }.to_json
@@ -63,7 +65,7 @@ module SeedTraceClient
       # @return [Void]
       def self.validate_raw(obj:)
         obj.submission_id.is_a?(UUID) != false || raise("Passed value for field obj.submission_id is not the expected type, validation failed.")
-        obj.language.is_a?(LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
+        obj.language.is_a?(Commons::LANGUAGE) != false || raise("Passed value for field obj.language is not the expected type, validation failed.")
         obj.submission_files.is_a?(Array) != false || raise("Passed value for field obj.submission_files is not the expected type, validation failed.")
         obj.user_id&.is_a?(String) != false || raise("Passed value for field obj.user_id is not the expected type, validation failed.")
       end

@@ -1,56 +1,56 @@
 # frozen_string_literal: true
-
-require "faraday"
-require_relative "v_2/client"
-require_relative "admin/client"
-require_relative "homepage/client"
-require_relative "migration/client"
-require_relative "playlist/client"
-require_relative "problem/client"
-require_relative "submission/client"
-require_relative "sysprop/client"
-require "async/http/faraday"
+require_relative "environment"
+require_relative "types_export"
+require_relative "requests"
+require_relative "seed_trace_client/v_2/client"
+require_relative "seed_trace_client/admin/client"
+require_relative "seed_trace_client/homepage/client"
+require_relative "seed_trace_client/migration/client"
+require_relative "seed_trace_client/playlist/client"
+require_relative "seed_trace_client/problem/client"
+require_relative "seed_trace_client/submission/client"
+require_relative "seed_trace_client/sysprop/client"
+require_relative "requests"
 
 module SeedTraceClient
   class Client
-    # @param environment [Environment]
+    attr_reader :, :admin, :homepage, :migration, :playlist, :problem, :submission, :sysprop
+    # @param environment [Environment] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param token [String]
-    # @param x_random_header [String]
-    # @return []
-    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil,
-                   x_random_header: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @client = Client.initialize(request_client: request_client)
-      @admin_client = AdminClient.initialize(request_client: request_client)
-      @homepage_client = HomepageClient.initialize(request_client: request_client)
-      @migration_client = MigrationClient.initialize(request_client: request_client)
-      @playlist_client = PlaylistClient.initialize(request_client: request_client)
-      @problem_client = ProblemClient.initialize(request_client: request_client)
-      @submission_client = SubmissionClient.initialize(request_client: request_client)
-      @sysprop_client = SyspropClient.initialize(request_client: request_client)
+    # @param timeout_in_seconds [Long] 
+    # @param token [String] 
+    # @param x_random_header [String] 
+    # @return [Client]
+    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token:, x_random_header: nil)
+      @request_client = RequestClient.new(environment: environment, max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
+      @ = V2::Client.new(request_client: @request_client)
+      @admin = AdminClient.new(request_client: @request_client)
+      @homepage = HomepageClient.new(request_client: @request_client)
+      @migration = MigrationClient.new(request_client: @request_client)
+      @playlist = PlaylistClient.new(request_client: @request_client)
+      @problem = ProblemClient.new(request_client: @request_client)
+      @submission = SubmissionClient.new(request_client: @request_client)
+      @sysprop = SyspropClient.new(request_client: @request_client)
     end
   end
-
   class AsyncClient
-    # @param environment [Environment]
+    attr_reader :, :admin, :homepage, :migration, :playlist, :problem, :submission, :sysprop
+    # @param environment [Environment] 
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
-    # @param timeout_in_seconds [Long]
-    # @param token [String]
-    # @param x_random_header [String]
-    # @return []
-    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token: nil,
-                   x_random_header: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_client = AsyncClient.initialize(request_client: request_client)
-      @async_admin_client = AsyncAdminClient.initialize(request_client: request_client)
-      @async_homepage_client = AsyncHomepageClient.initialize(request_client: request_client)
-      @async_migration_client = AsyncMigrationClient.initialize(request_client: request_client)
-      @async_playlist_client = AsyncPlaylistClient.initialize(request_client: request_client)
-      @async_problem_client = AsyncProblemClient.initialize(request_client: request_client)
-      @async_submission_client = AsyncSubmissionClient.initialize(request_client: request_client)
-      @async_sysprop_client = AsyncSyspropClient.initialize(request_client: request_client)
+    # @param timeout_in_seconds [Long] 
+    # @param token [String] 
+    # @param x_random_header [String] 
+    # @return [AsyncClient]
+    def initialize(environment: Environment::PROD, max_retries: nil, timeout_in_seconds: nil, token:, x_random_header: nil)
+      @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries, timeout_in_seconds: timeout_in_seconds, token: token, x_random_header: x_random_header)
+      @ = V2::AsyncClient.new(request_client: @async_request_client)
+      @admin = AsyncAdminClient.new(request_client: @async_request_client)
+      @homepage = AsyncHomepageClient.new(request_client: @async_request_client)
+      @migration = AsyncMigrationClient.new(request_client: @async_request_client)
+      @playlist = AsyncPlaylistClient.new(request_client: @async_request_client)
+      @problem = AsyncProblemClient.new(request_client: @async_request_client)
+      @submission = AsyncSubmissionClient.new(request_client: @async_request_client)
+      @sysprop = AsyncSyspropClient.new(request_client: @async_request_client)
     end
   end
 end

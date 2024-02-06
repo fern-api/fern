@@ -8,21 +8,21 @@ import { Variable, VariableType } from "./Variable";
 export declare namespace Property {
     export interface Init extends AstNode.Init {
         name: string;
-        type: ClassReference;
+        type: ClassReference | ClassReference[];
         wireValue?: string;
         isOptional?: boolean;
     }
 }
 export class Property extends AstNode {
     public name: string;
-    public type: ClassReference;
+    public type: ClassReference[];
     public wireValue: string | undefined;
     public isOptional: boolean;
 
     constructor({ name, type, wireValue, isOptional = false, ...rest }: Property.Init) {
         super(rest);
         this.name = name;
-        this.type = type;
+        this.type = type instanceof ClassReference ? [type] : type;
         this.wireValue = wireValue;
         this.isOptional = isOptional;
     }
@@ -67,6 +67,8 @@ export class Property extends AstNode {
     }
 
     public getImports(): Set<Import> {
-        return this.type.getImports();
+        let imports = new Set<Import>();
+        this.type.forEach((cr) => (imports = new Set([...imports, ...cr.getImports()])));
+        return imports;
     }
 }

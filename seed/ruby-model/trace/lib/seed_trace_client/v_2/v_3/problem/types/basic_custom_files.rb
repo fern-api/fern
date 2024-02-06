@@ -3,6 +3,7 @@
 require_relative "non_void_function_signature"
 require_relative "basic_test_case_template"
 require "json"
+require_relative "../../../../commons/types/language"
 
 module SeedTraceClient
   module V2
@@ -13,7 +14,7 @@ module SeedTraceClient
 
           # @param method_name [String]
           # @param signature [V2::V3::Problem::NonVoidFunctionSignature]
-          # @param additional_files [Hash{LANGUAGE => LANGUAGE}]
+          # @param additional_files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
           # @param basic_test_case_template [V2::V3::Problem::BasicTestCaseTemplate]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::BasicCustomFiles]
@@ -23,7 +24,7 @@ module SeedTraceClient
             @method_name = method_name
             # @type [V2::V3::Problem::NonVoidFunctionSignature]
             @signature = signature
-            # @type [Hash{LANGUAGE => LANGUAGE}]
+            # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
             @additional_files = additional_files
             # @type [V2::V3::Problem::BasicTestCaseTemplate]
             @basic_test_case_template = basic_test_case_template
@@ -37,15 +38,24 @@ module SeedTraceClient
           # @return [V2::V3::Problem::BasicCustomFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             method_name = struct.methodName
-            signature = struct.signature.to_h.to_json
-            signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
-            additional_files = struct.additionalFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
+            if parsed_json["signature"].nil?
+              signature = nil
+            else
+              signature = parsed_json["signature"].to_json
+              signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
             end
-            basic_test_case_template = struct.basicTestCaseTemplate.to_h.to_json
-            basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
+            additional_files = parsed_json["additionalFiles"].transform_values do |_k, v|
+              v = v.to_json
+              Commons::LANGUAGE.key(v) || v
+            end
+            if parsed_json["basicTestCaseTemplate"].nil?
+              basic_test_case_template = nil
+            else
+              basic_test_case_template = parsed_json["basicTestCaseTemplate"].to_json
+              basic_test_case_template = V2::V3::Problem::BasicTestCaseTemplate.from_json(json_object: basic_test_case_template)
+            end
             new(method_name: method_name, signature: signature, additional_files: additional_files,
                 basic_test_case_template: basic_test_case_template, additional_properties: struct)
           end

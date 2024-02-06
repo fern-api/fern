@@ -1,5 +1,5 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
-import { DeclaredServiceName, DeclaredTypeName, FernFilepath } from "@fern-fern/ir-sdk/api";
+import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
 import { ExternalDependency } from "../ast/ExternalDependency";
@@ -7,50 +7,40 @@ import { Gemspec } from "../ast/gem/Gemspec";
 import { Module_ } from "../ast/Module_";
 import { GeneratedFile } from "./GeneratedFile";
 import { GeneratedRubyFile } from "./GeneratedRubyFile";
-import { TYPES_DIRECTORY } from "./RubyConstants";
+
+export const MINIMUM_RUBY_VERSION = "2.7";
 
 export function getGemName(organization: string, apiName: string, clientClassName?: string, gemName?: string): string {
-    return snakeCase(gemName ?? getClientName(organization, apiName, clientClassName));
+    return gemName ?? snakeCase(getClientName(organization, apiName, clientClassName));
 }
 
 export function getClientName(organization: string, apiName: string, clientClassName?: string): string {
     return clientClassName ?? upperFirst(camelCase(organization)) + upperFirst(camelCase(apiName)) + "Client";
 }
 
-export function getLocationForTypeDeclaration(declaredTypeName: DeclaredTypeName): string {
-    return [
-        ...declaredTypeName.fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName),
-        TYPES_DIRECTORY,
-        declaredTypeName.name.snakeCase.safeName
-    ].join("/");
-}
-
-export function getLocationForServiceDeclaration(declaredServiceName: DeclaredServiceName): string {
-    return [
-        ...declaredServiceName.fernFilepath.packagePath.map((pathPart) => pathPart.snakeCase.safeName),
-        declaredServiceName.fernFilepath.file?.snakeCase.safeName,
-        "client"
-    ]
-        .filter((p) => p !== undefined)
-        .join("/");
-}
-
-// Note: this assumes the file is in a directory of the same name
-export function getLocationFromFernFilepath(fernFilepath: FernFilepath): string {
-    return [...fernFilepath.allParts.map((pathPart) => pathPart.snakeCase.safeName)].join("/");
+export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFullPath?: boolean): string[] {
+    return (includeFullPath === true ? fernFilepath.allParts : fernFilepath.packagePath).map(
+        (pathPart) => pathPart.pascalCase.safeName
+    );
 }
 
 export function generateGemspec(
     clientName: string,
     gemName: string,
     extraDependencies: ExternalDependency[],
-    sdkVersion?: string
+    sdkVersion?: string,
+    hasFileBasedDependencies = false
 ): GeneratedRubyFile {
-    const gemspec = new Gemspec({ clientName, gemName, dependencies: extraDependencies, sdkVersion });
+    const gemspec = new Gemspec({
+        clientName,
+        gemName,
+        dependencies: extraDependencies,
+        sdkVersion,
+        hasFileBasedDependencies
+    });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        directoryPrefix: RelativeFilePath.of("."),
-        name: `${gemName}`,
+        fullPath: `${gemName}`,
         fileExtension: "gemspec",
         isConfigurationFile: true
     });
@@ -64,6 +54,7 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
         child: new Module_({
             name: "Gemconfig",
             child: [
+                new Expression({ leftSide: "VERSION", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "AUTHORS", rightSide: '[""].freeze', isAssignment: true }),
                 new Expression({ leftSide: "EMAIL", rightSide: '""', isAssignment: true }),
                 new Expression({ leftSide: "SUMMARY", rightSide: '""', isAssignment: true }),
@@ -89,8 +80,7 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
     });
     return new GeneratedRubyFile({
         rootNode: gemspec,
-        directoryPrefix: RelativeFilePath.of("."),
-        name: "gemconfig"
+        fullPath: "gemconfig"
     });
 }
 
@@ -111,7 +101,7 @@ export function generateGitignore(): GeneratedFile {
 
 export function generateRubocopConfig(): GeneratedFile {
     const content = `AllCops:
-  TargetRubyVersion: 2.7
+  TargetRubyVersion: ${MINIMUM_RUBY_VERSION}
   
 Style/StringLiterals:
   Enabled: true

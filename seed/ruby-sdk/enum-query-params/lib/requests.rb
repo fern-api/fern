@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-require "faraday"
 require "async/http/faraday"
+require "faraday"
+require "faraday/retry"
 
 module SeedApiClient
   class RequestClient
@@ -52,7 +53,7 @@ module SeedApiClient
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
     # @return [RequestOptions]
-    def initialize(token:, timeout_in_seconds: nil, additional_headers: nil, additional_query_parameters: nil,
+    def initialize(timeout_in_seconds: nil, token: nil, additional_headers: nil, additional_query_parameters: nil,
                    additional_body_parameters: nil)
       # @type [Long]
       @timeout_in_seconds = timeout_in_seconds

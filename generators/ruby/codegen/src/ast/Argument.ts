@@ -6,12 +6,12 @@ import { Variable } from "./Variable";
 export declare namespace Argument {
     export interface Named extends AstNode.Init {
         name: string;
-        type: ClassReference;
+        type: ClassReference | ClassReference[];
         value: FunctionInvocation | Variable | string;
         readonly isNamed: true;
     }
     export interface Unnamed extends AstNode.Init {
-        type: ClassReference;
+        type: ClassReference | ClassReference[];
         value: FunctionInvocation | Variable | string;
         readonly isNamed: false;
     }
@@ -19,25 +19,25 @@ export declare namespace Argument {
 
 export class Argument extends AstNode {
     public name: string | undefined;
-    public type: ClassReference;
+    public type: ClassReference[];
     public value: FunctionInvocation | Variable | string;
 
     constructor({ type, value, ...rest }: Argument.Named | Argument.Unnamed) {
         super(rest);
         this.name = "name" in rest ? rest.name : undefined;
-        this.type = type;
+        this.type = type instanceof ClassReference ? [type] : type;
         this.value = value;
     }
 
     public writeInternal(): void {
         this.addText({ stringContent: this.name, templateString: "%s: " });
         this.addText({
-            stringContent: this.value instanceof AstNode ? this.value.write() : this.value,
+            stringContent: this.value instanceof AstNode ? this.value.write({}) : this.value,
             appendToLastString: true
         });
     }
 
-    public fromJson(): FunctionInvocation | undefined {
+    public fromJson(): AstNode | undefined {
         return;
     }
 }

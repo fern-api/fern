@@ -1,5 +1,5 @@
+import { VariableId } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { VariableId } from "@fern-fern/ir-sdk/api";
 import { constructRootApiFileContext, FernFileContext } from "../FernFileContext";
 
 export interface VariableResolver {

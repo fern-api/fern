@@ -1,11 +1,29 @@
-# Ignore everything recursively
-*
+../packages/ir-sdk/**
+../packages/seed/src/config/**
+../scripts/**
 
-# But not the .ts files
-!*.ts
-
-# Ignore .d.ts files
+**/*.yaml
+**/*.yml
+**/*.mdx
+**/*.md
+**/*.json
+**/*.py
+**/*.rb
+**/*.java
+**/*.js
+**/*.zip
+**/*.cjs
+**/*.mjs
+**/*.snap
+**/*.props
+**/*.lock
+**/*.gradle
+**/*.bat
+**/*.sh
 *.d.ts
 
-# Check subdirectories too
-!*/
+.yarn
+.github
+fern
+
+

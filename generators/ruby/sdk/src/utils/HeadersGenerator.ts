@@ -71,26 +71,26 @@ export class HeadersGenerator {
                     new Parameter({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 basic: (bas: BasicAuthScheme) => [
                     new Parameter({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     }),
                     new Parameter({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Parameter({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: this.isAuthRequired
+                        isOptional: !this.isAuthRequired
                     })
                 ],
                 _other: () => {
@@ -114,14 +114,14 @@ export class HeadersGenerator {
         );
     }
 
-    public getAuthHeadersAsProperties(requireAuthOverride?: boolean): Property[] {
+    public getAuthHeadersAsProperties(isOptionalOverride?: boolean): Property[] {
         return this.auth.schemes.flatMap((scheme) =>
             scheme._visit<Property[]>({
                 bearer: (bas: BearerAuthScheme) => [
                     new Property({
                         name: bas.token.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: requireAuthOverride ?? this.isAuthRequired,
+                        isOptional: isOptionalOverride ?? this.isAuthRequired,
                         wireValue: "Authorization"
                     })
                 ],
@@ -129,19 +129,19 @@ export class HeadersGenerator {
                     new Property({
                         name: bas.username.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: requireAuthOverride ?? this.isAuthRequired
+                        isOptional: isOptionalOverride ?? this.isAuthRequired
                     }),
                     new Property({
                         name: bas.password.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: requireAuthOverride ?? this.isAuthRequired
+                        isOptional: isOptionalOverride ?? this.isAuthRequired
                     })
                 ],
                 header: (has: HeaderAuthScheme) => [
                     new Property({
                         name: has.name.name.snakeCase.safeName,
                         type: StringClassReference,
-                        isOptional: requireAuthOverride ?? this.isAuthRequired,
+                        isOptional: isOptionalOverride ?? this.isAuthRequired,
                         wireValue: has.name.wireValue
                     })
                 ],
@@ -168,7 +168,7 @@ export class HeadersGenerator {
                   })
                 : new Expression({ rightSide: bas.token.snakeCase.safeName, isAssignment: false });
 
-        return ['"Authorization"', `Bearer #{${bearerValue.write()}}`];
+        return ['"Authorization"', `Bearer #{${bearerValue.write({})}}`];
     }
 
     private getBasicAuthorizationHeader(bas: BasicAuthScheme): [string, string] {
@@ -198,34 +198,37 @@ export class HeadersGenerator {
                 new Argument({
                     isNamed: false,
                     type: StringClassReference,
-                    value: `"#{${userName.write()}}:#{${password.write()}}"`
+                    value: `"#{${userName.write({})}}:#{${password.write({})}}"`
                 })
             ]
         });
 
-        return ['"Authorization"', `Basic #{${b64.write()}}`];
+        return ['"Authorization"', `Basic #{${b64.write({})}}`];
     }
 
     // TODO: I don't love how this works, ideally it's a string to expression hash instead, but we don't
     // have string templates in the AST right now which is necessary for header prefixes
     private getCustomAuthorizationHeader(has: HeaderAuthScheme): [string, string] {
-        const jsonValue = new FunctionInvocation({
-            onObject: has.name.name.snakeCase.safeName,
-            baseFunction: new Function_({ name: "to_json", functionBody: [] })
-        });
+        // TODO(P0): fix this, we need to know what actually needs to_json, strings do not
+        // What other objects can go here, what would that look like?
+
+        // const jsonValue = new FunctionInvocation({
+        //     onObject: has.name.name.snakeCase.safeName,
+        //     baseFunction: new Function_({ name: "to_json", functionBody: [] })
+        // });
         const headerValue =
             has.headerEnvVar !== undefined
                 ? new Expression({
-                      leftSide: jsonValue,
+                      leftSide: has.name.name.snakeCase.safeName,
                       rightSide: new EnvironmentVariable({ variableName: has.headerEnvVar }),
                       isAssignment: false,
                       operation: "||"
                   })
-                : new Expression({ rightSide: jsonValue, isAssignment: false });
+                : new Expression({ rightSide: has.name.name.snakeCase.safeName, isAssignment: false });
 
         return [
             `"${has.name.wireValue}"`,
-            `${has.prefix !== undefined ? has.prefix + " " : ""} #{${headerValue.write()}}`
+            `${has.prefix !== undefined ? has.prefix + " " : ""}#{${headerValue.write({})}}`
         ];
     }
 

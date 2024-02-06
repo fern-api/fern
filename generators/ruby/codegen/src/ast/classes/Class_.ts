@@ -58,7 +58,8 @@ export class Class_ extends AstNode {
                         isAssignment: true,
                         yardoc
                     });
-                })
+                }),
+                invocationName: "new"
             });
             functions = [this.initializer, ...functions];
         } else if (initializerOverride !== undefined) {
@@ -70,20 +71,24 @@ export class Class_ extends AstNode {
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
+        this.documentation?.forEach((doc) =>
+            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
+        );
         this.addText({ stringContent: this.classReference.name, templateString: "class %s", startingTabSpaces });
         const classVariableAccessors =
             this.properties.length > 0
-                ? `attr_reader ${this.properties.map((prop) => prop.write()).join(", ")}`
+                ? `attr_reader ${this.properties.map((prop) => prop.write({})).join(", ")}`
                 : undefined;
         this.addText({
             stringContent: classVariableAccessors,
             startingTabSpaces: this.tabSizeSpaces + startingTabSpaces
         });
         this.expressions.map((exp) =>
-            this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+            this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
-        this.functions.map((fun) => this.addText({ stringContent: fun.write(this.tabSizeSpaces + startingTabSpaces) }));
+        this.functions.map((fun) =>
+            this.addText({ stringContent: fun.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
+        );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 
@@ -92,7 +97,6 @@ export class Class_ extends AstNode {
         this.functions.forEach((fun) => (imports = new Set([...imports, ...fun.getImports()])));
         this.properties.forEach((prop) => (imports = new Set([...imports, ...prop.getImports()])));
         this.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
-
         // Do not import self
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
     }

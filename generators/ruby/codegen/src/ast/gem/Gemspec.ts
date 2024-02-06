@@ -1,5 +1,6 @@
 // Note a gemspec for us is just a Ruby class and we configure
 
+import { MINIMUM_RUBY_VERSION } from "../../utils/RubyUtilities";
 import { ClassReference } from "../classes/ClassReference";
 import { Expression } from "../expressions/Expression";
 import { ExternalDependency } from "../ExternalDependency";
@@ -13,11 +14,24 @@ export declare namespace Gemspec {
         gemName: string;
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
+        hasFileBasedDependencies?: boolean;
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ clientName, gemName, dependencies, sdkVersion }: Gemspec.Init) {
-        const globalDependencies: ExternalDependency[] = [];
+    constructor({ clientName, gemName, dependencies, sdkVersion, hasFileBasedDependencies = false }: Gemspec.Init) {
+        const globalDependencies: ExternalDependency[] = [
+            new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
+            new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
+            new ExternalDependency({ packageName: "async-http-faraday", specifier: "~>", version: "0.12" })
+        ];
+        if (hasFileBasedDependencies) {
+            globalDependencies.push(
+                ...[
+                    new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
+                    new ExternalDependency({ packageName: "faraday-multipart", specifier: "~>", version: "1.0" })
+                ]
+            );
+        }
 
         const gemBlock = [
             new Expression({
@@ -35,6 +49,18 @@ export class Gemspec extends FunctionInvocation {
                     leftSide: "spec.version",
                     rightSide: new ClassReference({
                         name: `"${sdkVersion}"`,
+                        import_: new Import({ from: "lib/gemconfig" })
+                    }),
+                    isAssignment: true
+                })
+            );
+        } else {
+            // Allow for people to use the gemconfig if no version is found
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.version",
+                    rightSide: new ClassReference({
+                        name: `${clientName}::Gemconfig::VERSION`,
                         import_: new Import({ from: "lib/gemconfig" })
                     }),
                     isAssignment: true
@@ -91,7 +117,7 @@ export class Gemspec extends FunctionInvocation {
                     }),
                     new Expression({
                         leftSide: "spec.required_ruby_version",
-                        rightSide: '">= 2.7.0"',
+                        rightSide: `">= ${MINIMUM_RUBY_VERSION}.0"`,
                         isAssignment: true
                     }),
                     new Expression({

@@ -1,4 +1,4 @@
-import { Name } from "@fern-fern/ir-sdk/api";
+import { Name } from "@fern-api/ir-sdk";
 import { constructCasingsGenerator } from "../casings/CasingsGenerator";
 
 describe("casingsGenerator", () => {

@@ -1,6 +1,5 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext } from "@fern-api/generator-commons";
-import { ClassReferenceFactory, Class_, GeneratedRubyFile, Module_ } from "@fern-api/ruby-codegen";
+import { ClassReferenceFactory, Class_, GeneratedRubyFile, LocationGenerator, Module_ } from "@fern-api/ruby-codegen";
 import {
     AliasTypeDeclaration,
     DeclaredTypeName,
@@ -22,6 +21,7 @@ import {
     generateUndiscriminatedUnionFromTypeDeclaration,
     generateUnionFromTypeDeclaration
 } from "./AbstractionUtilities";
+import { RootFile } from "./RootFile";
 
 // TODO: This (as an abstract class) will probably be used across CLIs
 export class TypesGenerator {
@@ -32,6 +32,7 @@ export class TypesGenerator {
     private types: Map<TypeId, TypeDeclaration>;
     private gc: GeneratorContext;
     private classReferenceFactory: ClassReferenceFactory;
+    private locationGenerator: LocationGenerator;
     private gemName: string;
     private clientName: string;
 
@@ -60,7 +61,8 @@ export class TypesGenerator {
             this.flattenedProperties.set(typeId, this.getFlattenedProperties(typeId));
         }
 
-        this.classReferenceFactory = new ClassReferenceFactory(this.types);
+        this.locationGenerator = new LocationGenerator(this.gemName);
+        this.classReferenceFactory = new ClassReferenceFactory(this.types, this.locationGenerator);
     }
 
     // We pull all inherited properties onto the object because Ruby
@@ -112,6 +114,14 @@ export class TypesGenerator {
                   });
     }
 
+    // Create a main file for the gem, this just contains imports to all the types
+    private generateRootFile(): GeneratedRubyFile {
+        return new GeneratedRubyFile({
+            rootNode: new RootFile(Array.from(this.classReferenceFactory.generatedReferences.values())),
+            fullPath: this.gemName
+        });
+    }
+
     private generateAliasFile(
         typeId: TypeId,
         aliasTypeDeclaration: AliasTypeDeclaration,
@@ -143,8 +153,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, aliasExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateEnumFile(
@@ -155,8 +164,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, enumExpression, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateObjectFile(
@@ -175,8 +183,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, serializableObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUnionFile(
@@ -195,8 +202,7 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUndiscriminatedUnionFile(
@@ -214,16 +220,15 @@ export class TypesGenerator {
         const rootNode = Module_.wrapInModules(this.clientName, unionObject, typeDeclaration.name.fernFilepath);
         return new GeneratedRubyFile({
             rootNode,
-            directoryPrefix: RelativeFilePath.of(this.gemName),
-            name: typeDeclaration.name
+            fullPath: this.locationGenerator.getLocationForTypeDeclaration(typeDeclaration.name)
         });
     }
     private generateUnkownFile(shape: Type): GeneratedRubyFile | undefined {
         throw new Error("Unknown type declaration shape: " + shape.type);
     }
 
-    public generateFiles(): Map<TypeId, GeneratedRubyFile> {
-        const typeFiles = new Map<TypeId, GeneratedRubyFile>();
+    public generateFiles(includeRootImports = false): GeneratedRubyFile[] {
+        const typeFiles: GeneratedRubyFile[] = [];
         for (const [typeId, typeDeclaration] of this.types.entries()) {
             const generatedFile = typeDeclaration.shape._visit<GeneratedRubyFile | undefined>({
                 alias: (atd: AliasTypeDeclaration) => this.generateAliasFile(typeId, atd, typeDeclaration),
@@ -236,8 +241,12 @@ export class TypesGenerator {
             });
 
             if (generatedFile != null) {
-                typeFiles.set(typeId, generatedFile);
+                typeFiles.push(generatedFile);
             }
+        }
+
+        if (includeRootImports) {
+            typeFiles.push(this.generateRootFile());
         }
 
         return typeFiles;

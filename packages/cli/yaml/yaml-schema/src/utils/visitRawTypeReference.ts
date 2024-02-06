@@ -1,4 +1,4 @@
-import { Literal, PrimitiveType } from "@fern-fern/ir-sdk/api";
+import { Literal, PrimitiveType } from "@fern-api/ir-sdk";
 import { RawPrimitiveType } from "./RawPrimitiveType";
 
 export const FernContainerRegex = {

@@ -2,6 +2,7 @@
 
 module SeedMultiUrlEnvironmentClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

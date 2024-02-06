@@ -1,27 +1,31 @@
 # frozen_string_literal: true
 
-require "faraday"
-require_relative "union/client"
-require "async/http/faraday"
+require_relative "types_export"
+require_relative "requests"
+require_relative "seed_undiscriminated_unions_client/union/client"
 
 module SeedUndiscriminatedUnionsClient
   class Client
+    attr_reader :union
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [Client]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @union_client = UnionClient.initialize(request_client: request_client)
+      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @union = UnionClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
+    attr_reader :union
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
-    # @return []
+    # @return [AsyncClient]
     def initialize(max_retries: nil, timeout_in_seconds: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_union_client = AsyncUnionClient.initialize(request_client: request_client)
+      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds)
+      @union = AsyncUnionClient.new(request_client: @async_request_client)
     end
   end
 end

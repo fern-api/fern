@@ -1,65 +1,70 @@
 # frozen_string_literal: true
 
-require "faraday"
-require_relative "file/notification/service/client"
-require_relative "file/notificationclient"
-require_relative "file/service/client"
-require_relative "fileclient"
-require_relative "health/service/client"
-require_relative "healthclient"
-require_relative "service/client"
-require "async/http/faraday"
+require_relative "environment"
+require_relative "types_export"
+require_relative "requests"
+require_relative "seed_examples_client/file/client"
+require_relative "seed_examples_client/health/client"
+require_relative "seed_examples_client/service/client"
 
 module SeedExamplesClient
   class Client
+    attr_reader :file, :health, :service
+
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return []
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @client = Client.initialize(request_client: request_client)
-      @client = Client.initialize(request_client: request_client)
-      @service_client = ServiceClient.initialize(request_client: request_client)
+    # @return [Client]
+    def initialize(token:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
+      @request_client = RequestClient.new(environment: environment, max_retries: max_retries,
+                                          timeout_in_seconds: timeout_in_seconds, token: token)
+      @file = File::Client.new(request_client: @request_client)
+      @health = Health::Client.new(request_client: @request_client)
+      @service = ServiceClient.new(request_client: @request_client)
     end
 
     # @param request [String]
     # @param request_options [RequestOptions]
     # @return [String]
     def echo(request:, request_options: nil)
-      request_client.conn.post("/") do |req|
-        req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-        req.headers["Authorization"] = request_client.token unless request_client.token.nil?
-        req.headers = { **req.headers, **request_options&.additional_headers }.compact
-        req.body = { **request, **request_options&.additional_body_parameters }.compact
+      response = @request_client.conn.post("/") do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
+      response.body
     end
   end
 
   class AsyncClient
+    attr_reader :file, :health, :service
+
     # @param environment [Environment]
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param token [String]
-    # @return []
-    def initialize(environment: nil, max_retries: nil, timeout_in_seconds: nil, token: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_client = AsyncClient.initialize(client: request_client)
-      @async_client = AsyncClient.initialize(client: request_client)
-      @async_service_client = AsyncServiceClient.initialize(request_client: request_client)
+    # @return [AsyncClient]
+    def initialize(token:, environment: nil, max_retries: nil, timeout_in_seconds: nil)
+      @async_request_client = AsyncRequestClient.new(environment: environment, max_retries: max_retries,
+                                                     timeout_in_seconds: timeout_in_seconds, token: token)
+      @file = File::AsyncClient.new(request_client: @async_request_client)
+      @health = Health::AsyncClient.new(request_client: @async_request_client)
+      @service = AsyncServiceClient.new(request_client: @async_request_client)
     end
 
     # @param request [String]
     # @param request_options [RequestOptions]
     # @return [String]
     def echo(request:, request_options: nil)
-      request_client.conn.post("/") do |req|
-        req.options.timeout = request_options.timeout_in_seconds unless request_options.timeout_in_seconds.nil?
-        req.headers["Authorization"] = request_client.token unless request_client.token.nil?
-        req.headers = { **req.headers, **request_options&.additional_headers }.compact
-        req.body = { **request, **request_options&.additional_body_parameters }.compact
+      response = @async_request_client.conn.post("/") do |req|
+        req.options.timeout = request_options.timeout_in_seconds unless request_options&.timeout_in_seconds.nil?
+        req.headers["Authorization"] = request_options.token unless request_options&.token.nil?
+        req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
+        req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
       end
+      response.body
     end
   end
 end

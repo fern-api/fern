@@ -1,6 +1,7 @@
 import { ObjectProperty, TypeId } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../../utils/RubyConstants";
 import { ClassReference, ClassReferenceFactory } from "../classes/ClassReference";
+import { Class_ } from "../classes/Class_";
 import { AstNode } from "../core/AstNode";
 import { Import } from "../Import";
 import { Parameter } from "../Parameter";
@@ -16,6 +17,7 @@ export declare namespace Function_ {
         returnValue?: ClassReference | ClassReference[];
         flattenedProperties?: Map<TypeId, ObjectProperty[]>;
         crf?: ClassReferenceFactory;
+        invocationName?: string;
     }
 }
 export class Function_ extends AstNode {
@@ -29,6 +31,8 @@ export class Function_ extends AstNode {
     public isStatic: boolean;
     public yardoc: Yardoc;
 
+    public invocationName: string | undefined;
+
     constructor({
         name,
         functionBody,
@@ -38,6 +42,7 @@ export class Function_ extends AstNode {
         isAsync = false,
         isStatic = false,
         returnValue,
+        invocationName,
         ...rest
     }: Function_.Init) {
         super(rest);
@@ -47,6 +52,7 @@ export class Function_ extends AstNode {
         this.functionBody = functionBody;
         this.isAsync = isAsync;
         this.isStatic = isStatic;
+        this.invocationName = invocationName;
 
         this.yardoc = new Yardoc({
             reference: { name: "docString", parameters, returnValue: this.returnValue },
@@ -56,15 +62,17 @@ export class Function_ extends AstNode {
     }
 
     private writeParameters(): string | undefined {
-        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write()).join(", ")})` : undefined;
+        return this.parameters.length > 0 ? `(${this.parameters.map((a) => a.write({})).join(", ")})` : undefined;
     }
 
     public writeInternal(startingTabSpaces: number): void {
-        this.addText({ stringContent: this.documentation, templateString: "# %s", startingTabSpaces });
+        this.documentation?.forEach((doc) =>
+            this.addText({ stringContent: doc, templateString: "# %s", startingTabSpaces })
+        );
         this.addText({
-            stringContent: this.yardoc.write(startingTabSpaces),
-            templateString: this.documentation !== undefined ? "#\n%s" : undefined,
-            startingTabSpaces: this.documentation !== undefined ? startingTabSpaces : 0
+            stringContent: this.yardoc.write({ startingTabSpaces }),
+            templateString: this.documentation !== undefined && this.documentation.length > 0 ? "#\n%s" : undefined,
+            startingTabSpaces: this.documentation !== undefined && this.documentation.length > 0 ? startingTabSpaces : 0
         });
         this.addText({
             stringContent: this.isStatic ? `self.${this.name}` : this.name,
@@ -73,7 +81,7 @@ export class Function_ extends AstNode {
         });
         this.addText({ stringContent: this.writeParameters(), appendToLastString: true, startingTabSpaces });
         this.functionBody.map((exp) =>
-            this.addText({ stringContent: exp.write(this.tabSizeSpaces + startingTabSpaces) })
+            this.addText({ stringContent: exp.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
@@ -82,7 +90,13 @@ export class Function_ extends AstNode {
         let imports = new Set<Import>();
         this.parameters.forEach((param) => (imports = new Set([...imports, ...param.getImports()])));
         this.returnValue.forEach((rv) => (imports = new Set([...imports, ...rv.getImports()])));
-        this.functionBody.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+
+        this.functionBody.forEach((exp) => {
+            if (exp instanceof Class_) {
+                return;
+            }
+            imports = new Set([...imports, ...exp.getImports()]);
+        });
         return imports;
     }
 }

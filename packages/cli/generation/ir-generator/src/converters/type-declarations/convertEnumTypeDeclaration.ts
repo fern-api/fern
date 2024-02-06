@@ -1,5 +1,5 @@
+import { Type } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { convertDeclaration } from "../convertDeclaration";
 

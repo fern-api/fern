@@ -1,6 +1,5 @@
-[Source code](https://github.com/fern-api/fern/tree/main/generators/python)
-
-**Latest version**: `0.7.7`
+[Source code](https://github.com/fern-api/fern/tree/main/generators/python)<br />
+**Latest version**: `0.8.0`
 
 The Python SDK generator outputs a fully functional Python
 SDK. It can publish the SDK to [the Python Package Index at PyPI.org](https://pypi.org) or to a private repository hosted by Fern.
@@ -15,14 +14,14 @@ groups:
   local:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.7.2
+        version: 0.8.0
         output:
           location: local-file-system
-          path: ../../generated/sdk/python
+          path: ../generated/sdk/python
 ```
 </CodeBlock>
 
-## Publish an Internal Package
+## Publish an internal package
 
 Publish the generated SDK to a private PyPI repository hosted by Fern. Available on the Starter plan.
 
@@ -32,14 +31,14 @@ groups:
   internal:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.7.2
+        version: 0.8.0
         output:
           location: pypi.buildwithfern.com
           package-name: imdb # replace with your package name
 ```
 </CodeBlock>
 
-## Publish a Public Package
+## Publish a public package
 
 Publish the generated SDK to PyPI. Available on the Starter plan.
 
@@ -49,7 +48,7 @@ groups:
   public:
     generators:
       - name: fernapi/fern-python-sdk
-        version: 0.7.2
+        version: 0.8.0
         output:
           location: pypi
           package-name: imdb

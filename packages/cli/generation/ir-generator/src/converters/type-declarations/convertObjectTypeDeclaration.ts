@@ -1,5 +1,5 @@
+import { ObjectProperty, Type } from "@fern-api/ir-sdk";
 import { RawSchemas } from "@fern-api/yaml-schema";
-import { ObjectProperty, Type } from "@fern-fern/ir-sdk/api";
 import { FernFileContext } from "../../FernFileContext";
 import { parseTypeName } from "../../utils/parseTypeName";
 import { convertDeclaration } from "../convertDeclaration";

@@ -11,7 +11,7 @@ import {
     TypeDeclaration,
     TypeId,
     WebhookGroupId
-} from "@fern-fern/ir-sdk/api";
+} from "@fern-api/ir-sdk";
 import { mapValues } from "lodash-es";
 import { FilteredIr } from "./filtered-ir/FilteredIr";
 import { IdGenerator } from "./IdGenerator";
@@ -26,14 +26,14 @@ export class PackageTreeGenerator {
         fernFilepath: {
             allParts: [],
             packagePath: [],
-            file: undefined,
+            file: undefined
         },
         service: undefined,
         types: [],
         errors: [],
         subpackages: [],
         webhooks: undefined,
-        navigationConfig: undefined,
+        navigationConfig: undefined
     };
 
     public addPackageRedirection({ from, to }: { from: FernFilepath; to: FernFilepath }): void {
@@ -42,7 +42,7 @@ export class PackageTreeGenerator {
             throw new Error("Found duplicate navigationConfig for package");
         }
         package_.navigationConfig = {
-            pointsTo: IdGenerator.generateSubpackageId(to),
+            pointsTo: IdGenerator.generateSubpackageId(to)
         };
     }
 
@@ -101,7 +101,7 @@ export class PackageTreeGenerator {
                                 : undefined,
                         subpackages: subpackage.subpackages.filter((subpackageId) =>
                             filteredIr.hasSubpackageId(subpackageId)
-                        ),
+                        )
                     };
                 }
             });
@@ -119,19 +119,19 @@ export class PackageTreeGenerator {
                 subpackages: this.rootPackage.subpackages.filter((subpackageId) =>
                     filteredIr.hasSubpackageId(subpackageId)
                 ),
-                webhooks: this.rootPackage.webhooks != null ? this.rootPackage.webhooks : undefined,
+                webhooks: this.rootPackage.webhooks != null ? this.rootPackage.webhooks : undefined
             };
         }
         const allSubpackagesWithEndpoints = new Set(this.getAllChildrenWithEndpoints(this.rootPackage));
         return {
             subpackages: mapValues(this.subpackages, (subpackage, subpackageId) => ({
                 ...subpackage,
-                hasEndpointsInTree: allSubpackagesWithEndpoints.has(subpackageId),
+                hasEndpointsInTree: allSubpackagesWithEndpoints.has(subpackageId)
             })),
             rootPackage: {
                 ...this.rootPackage,
-                hasEndpointsInTree: allSubpackagesWithEndpoints.size > 0 || this.rootPackage.service != null,
-            },
+                hasEndpointsInTree: allSubpackagesWithEndpoints.size > 0 || this.rootPackage.service != null
+            }
         };
     }
 
@@ -194,7 +194,7 @@ export class PackageTreeGenerator {
         const fernFilepathForNextParent: FernFilepath = {
             allParts: fernFilepath.allParts.slice(0, nextIndex),
             packagePath: fernFilepath.packagePath.slice(0, nextIndex),
-            file: nextIndex === fernFilepath.allParts.length ? fernFilepath.file : undefined,
+            file: nextIndex === fernFilepath.allParts.length ? fernFilepath.file : undefined
         };
         let nextParent = subpackagesInParent.find(
             (subpackage) => subpackage.name.originalName === nextPart.originalName
@@ -210,7 +210,7 @@ export class PackageTreeGenerator {
                 errors: [],
                 subpackages: [],
                 navigationConfig: undefined,
-                webhooks: undefined,
+                webhooks: undefined
             };
             this.subpackages[newParentId] = newParent;
             parent.subpackages.push(newParentId);

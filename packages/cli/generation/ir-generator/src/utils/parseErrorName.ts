@@ -1,4 +1,4 @@
-import { DeclaredErrorName } from "@fern-fern/ir-sdk/api";
+import { DeclaredErrorName } from "@fern-api/ir-sdk";
 import { FernFileContext } from "../FernFileContext";
 import { IdGenerator } from "../IdGenerator";
 import { convertToFernFilepath } from "./convertToFernFilepath";

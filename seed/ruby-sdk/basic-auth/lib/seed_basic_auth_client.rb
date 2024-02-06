@@ -1,31 +1,37 @@
 # frozen_string_literal: true
 
-require "faraday"
-require_relative "basic_auth/client"
-require "async/http/faraday"
+require_relative "types_export"
+require_relative "requests"
+require_relative "seed_basic_auth_client/basic_auth/client"
 
 module SeedBasicAuthClient
   class Client
+    attr_reader :basic_auth
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
-    # @return []
-    def initialize(max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
-      request_client = RequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @basic_auth_client = BasicAuthClient.initialize(request_client: request_client)
+    # @return [Client]
+    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
+      @request_client = RequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
+                                          username: username, password: password)
+      @basic_auth = BasicAuthClient.new(request_client: @request_client)
     end
   end
 
   class AsyncClient
+    attr_reader :basic_auth
+
     # @param max_retries [Long] The number of times to retry a failed request, defaults to 2.
     # @param timeout_in_seconds [Long]
     # @param username [String]
     # @param password [String]
-    # @return []
-    def initialize(max_retries: nil, timeout_in_seconds: nil, username: nil, password: nil)
-      AsyncRequestClient.initialize(headers: headers, base_url: base_url, conn: conn)
-      @async_basic_auth_client = AsyncBasicAuthClient.initialize(request_client: request_client)
+    # @return [AsyncClient]
+    def initialize(username:, password:, max_retries: nil, timeout_in_seconds: nil)
+      @async_request_client = AsyncRequestClient.new(max_retries: max_retries, timeout_in_seconds: timeout_in_seconds,
+                                                     username: username, password: password)
+      @basic_auth = AsyncBasicAuthClient.new(request_client: @async_request_client)
     end
   end
 end

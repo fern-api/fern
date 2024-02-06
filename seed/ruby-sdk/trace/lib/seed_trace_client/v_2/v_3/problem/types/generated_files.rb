@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "json"
+require_relative "../../../../commons/types/language"
 
 module SeedTraceClient
   module V2
@@ -9,17 +10,17 @@ module SeedTraceClient
         class GeneratedFiles
           attr_reader :generated_test_case_files, :generated_template_files, :other, :additional_properties
 
-          # @param generated_test_case_files [Hash{LANGUAGE => LANGUAGE}]
-          # @param generated_template_files [Hash{LANGUAGE => LANGUAGE}]
-          # @param other [Hash{LANGUAGE => LANGUAGE}]
+          # @param generated_test_case_files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+          # @param generated_template_files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
+          # @param other [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
           # @param additional_properties [OpenStruct] Additional properties unmapped to the current class definition
           # @return [V2::V3::Problem::GeneratedFiles]
           def initialize(generated_test_case_files:, generated_template_files:, other:, additional_properties: nil)
-            # @type [Hash{LANGUAGE => LANGUAGE}]
+            # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
             @generated_test_case_files = generated_test_case_files
-            # @type [Hash{LANGUAGE => LANGUAGE}]
+            # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
             @generated_template_files = generated_template_files
-            # @type [Hash{LANGUAGE => LANGUAGE}]
+            # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
             @other = other
             # @type [OpenStruct] Additional properties unmapped to the current class definition
             @additional_properties = additional_properties
@@ -31,17 +32,18 @@ module SeedTraceClient
           # @return [V2::V3::Problem::GeneratedFiles]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            generated_test_case_files = struct.generatedTestCaseFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
+            parsed_json = JSON.parse(json_object)
+            generated_test_case_files = parsed_json["generatedTestCaseFiles"].transform_values do |_k, v|
+              v = v.to_json
+              Commons::LANGUAGE.key(v) || v
             end
-            generated_template_files = struct.generatedTemplateFiles.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
+            generated_template_files = parsed_json["generatedTemplateFiles"].transform_values do |_k, v|
+              v = v.to_json
+              Commons::LANGUAGE.key(v) || v
             end
-            other = struct.other.transform_values do |_k, v|
-              v = v.to_h.to_json
-              LANGUAGE.key(v)
+            other = parsed_json["other"].transform_values do |_k, v|
+              v = v.to_json
+              Commons::LANGUAGE.key(v) || v
             end
             new(generated_test_case_files: generated_test_case_files,
                 generated_template_files: generated_template_files, other: other, additional_properties: struct)

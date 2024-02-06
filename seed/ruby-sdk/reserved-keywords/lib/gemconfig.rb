@@ -2,6 +2,7 @@
 
 module SeedNurseryApiClient
   module Gemconfig
+    VERSION = ""
     AUTHORS = [""].freeze
     EMAIL = ""
     SUMMARY = ""

@@ -1,18 +1,19 @@
 import {
     Argument,
     AstNode,
+    B64StringClassReference,
     BlockConfiguration,
     ClassReference,
     ClassReferenceFactory,
     Class_,
     ConditionalStatement,
     Expression,
+    FileClassReference,
     FunctionInvocation,
     Function_,
     GenericClassReference,
     HashInstance,
     JsonClassReference,
-    OpenStructClassReference,
     Parameter,
     Property,
     StringClassReference,
@@ -21,13 +22,18 @@ import {
     VoidClassReference
 } from "@fern-api/ruby-codegen";
 import {
+    BytesRequest,
+    FileProperty,
+    FileUploadRequest,
     HttpEndpoint,
     HttpRequestBodyReference,
     InlinedRequestBody,
+    InlinedRequestBodyProperty,
     JsonResponse,
     JsonResponseBodyWithProperty,
     TypeId
 } from "@fern-fern/ir-sdk/api";
+import { FileUploadUtility } from "./FileUploadUtility";
 import { RequestOptions } from "./RequestOptionsClass";
 import { isTypeOptional } from "./TypeUtilities";
 
@@ -42,13 +48,16 @@ export class EndpointGenerator {
     private queryParametersAsProperties: Property[];
     private headersAsProperties: Property[];
     private bodyAsProperties: Property[];
+    private streamProcessingBlock: Parameter | undefined;
+    private fileUploadUtility: FileUploadUtility;
 
     constructor(
         endpoint: HttpEndpoint,
         requestOptionsVariable: Variable,
         requestOptions: RequestOptions,
         crf: ClassReferenceFactory,
-        generatedClasses: Map<TypeId, Class_>
+        generatedClasses: Map<TypeId, Class_>,
+        fileUploadUtility: FileUploadUtility
     ) {
         this.endpoint = endpoint;
         this.blockArg = "req";
@@ -62,7 +71,8 @@ export class EndpointGenerator {
                 new Property({
                     name: pp.name.snakeCase.safeName,
                     type: crf.fromTypeReference(pp.valueType),
-                    isOptional: isTypeOptional(pp.valueType)
+                    isOptional: isTypeOptional(pp.valueType),
+                    documentation: pp.docs
                 })
         );
         this.queryParametersAsProperties = this.endpoint.queryParameters.map(
@@ -71,7 +81,8 @@ export class EndpointGenerator {
                     name: qp.name.name.snakeCase.safeName,
                     wireValue: qp.name.wireValue,
                     type: crf.fromTypeReference(qp.valueType),
-                    isOptional: isTypeOptional(qp.valueType)
+                    isOptional: isTypeOptional(qp.valueType),
+                    documentation: qp.docs
                 })
         );
         this.headersAsProperties = this.endpoint.headers.map(
@@ -80,7 +91,8 @@ export class EndpointGenerator {
                     name: header.name.name.snakeCase.safeName,
                     wireValue: header.name.wireValue,
                     type: crf.fromTypeReference(header.valueType),
-                    isOptional: isTypeOptional(header.valueType)
+                    isOptional: isTypeOptional(header.valueType),
+                    documentation: header.docs
                 })
         );
 
@@ -99,7 +111,7 @@ export class EndpointGenerator {
                                 wireValue: prop.name.wireValue,
                                 type: crf.fromTypeReference(prop.valueType),
                                 isOptional: isTypeOptional(prop.valueType),
-                                documentation: prop instanceof Property ? prop.documentation : undefined
+                                documentation: prop instanceof Property ? prop.documentation : prop.docs
                             });
                         })
                     ];
@@ -116,25 +128,75 @@ export class EndpointGenerator {
                         })
                     ];
                 },
-                fileUpload: () => {
-                    throw new Error("File upload not yet supported.");
+                fileUpload: (fur: FileUploadRequest) => {
+                    return fur.properties.map((prop) => {
+                        return prop._visit<Property>({
+                            file: (fp: FileProperty) =>
+                                new Property({
+                                    name: fp.key.name.snakeCase.safeName,
+                                    isOptional: fp.isOptional,
+                                    wireValue: fp.key.wireValue,
+                                    type: [StringClassReference, FileClassReference]
+                                }),
+                            bodyProperty: (irbp: InlinedRequestBodyProperty) =>
+                                new Property({
+                                    name: irbp.name.name.snakeCase.safeName,
+                                    isOptional: isTypeOptional(irbp.valueType),
+                                    wireValue: irbp.name.wireValue,
+                                    type: crf.fromTypeReference(irbp.valueType),
+                                    documentation: irbp.docs
+                                }),
+                            _other: () => {
+                                throw new Error("Unknown file upload property type.");
+                            }
+                        });
+                    });
                 },
-                bytes: () => {
-                    throw new Error("Byte-inputs not yet supported.");
+                bytes: (br: BytesRequest) => {
+                    return [
+                        new Property({
+                            name:
+                                this.endpoint.sdkRequest?.requestParameterName.snakeCase.safeName ??
+                                defaultBodyParameterName,
+                            type: B64StringClassReference,
+                            isOptional: br.isOptional,
+                            documentation: "Base64 encoded bytes"
+                        })
+                    ];
                 },
                 _other: () => {
                     throw new Error("Unknown request body type.");
                 }
             }) ?? [];
+
+        this.streamProcessingBlock = this.isStreamingResponse()
+            ? new Parameter({
+                  name: "on_data",
+                  type: GenericClassReference,
+                  isBlock: true,
+                  documentation:
+                      "[chunk, overall_received_bytes, env] Leverage the Faraday on_data callback which will receive tuples of strings, the sum of characters received so far, and the response environment. The latter will allow access to the response status, headers and reason, as well as the request info."
+              })
+            : undefined;
+
+        this.fileUploadUtility = fileUploadUtility;
     }
 
     public getEndpointParameters(): Parameter[] {
-        return [
-            ...this.pathParametersAsProperties.map((pathProp) => pathProp.toParameter({})),
-            ...this.queryParametersAsProperties.map((queryProp) => queryProp.toParameter({})),
-            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({})),
+        const params = [
+            ...this.headersAsProperties.map((headerProp) => headerProp.toParameter({ describeAsHashInYardoc: true })),
+            ...this.pathParametersAsProperties.map((pathProp) =>
+                pathProp.toParameter({ describeAsHashInYardoc: true })
+            ),
+            ...this.queryParametersAsProperties.map((queryProp) =>
+                queryProp.toParameter({ describeAsHashInYardoc: true })
+            ),
             ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true }))
         ];
+        if (this.streamProcessingBlock !== undefined) {
+            params.push(this.streamProcessingBlock);
+        }
+        return params;
     }
 
     public getFaradayHeaders(): Expression {
@@ -151,12 +213,13 @@ export class EndpointGenerator {
                     ])
                 ),
                 // Expand the existing headers hash, then the additionalheaders params
-                additionalHashes: ["req.headers", additionalHeadersProperty],
+                additionalHashes: [{ value: "req.headers" }, { value: additionalHeadersProperty, defaultValue: "{}" }],
                 shouldCompact: true
             }),
             isAssignment: true
         });
     }
+
     public getFaradayParameters(): Expression | undefined {
         const additionalQueryProperty = this.requestOptions.getAdditionalQueryProperties(this.requestOptionsVariable);
         return this.queryParametersAsProperties.length > 0
@@ -169,17 +232,39 @@ export class EndpointGenerator {
                               qp.toVariable(VariableType.LOCAL)
                           ])
                       ),
-                      additionalHashes: [additionalQueryProperty],
+                      additionalHashes: [{ value: additionalQueryProperty, defaultValue: "{}" }],
                       shouldCompact: true
                   }),
                   isAssignment: true
               })
             : undefined;
     }
-    public getFaradayBody(): Expression | undefined {
+
+    private getFaradayBodyForReference(additionalBodyProperty: string): AstNode[] {
+        const prop = this.bodyAsProperties[0];
+        if (prop === undefined) {
+            throw new Error("No body properties found.");
+        }
+
+        const referenceBodyHash = new HashInstance({
+            additionalHashes: [
+                { value: prop.name, defaultValue: "{}" },
+                { value: additionalBodyProperty, defaultValue: "{}" }
+            ],
+            shouldCompact: true
+        });
+        return [
+            new Expression({
+                leftSide: `${this.blockArg}.body`,
+                rightSide: referenceBodyHash,
+                isAssignment: true
+            })
+        ];
+    }
+    public getFaradayBody(): AstNode[] | undefined {
         const additionalBodyProperty = this.requestOptions.getAdditionalBodyProperties(this.requestOptionsVariable);
         if (this.endpoint.requestBody !== undefined) {
-            return this.endpoint.requestBody._visit<Expression>({
+            return this.endpoint.requestBody._visit<AstNode[]>({
                 inlinedRequestBody: () => {
                     const inlineHash = new HashInstance({
                         contents: new Map(
@@ -188,37 +273,83 @@ export class EndpointGenerator {
                                 prop.toVariable(VariableType.LOCAL)
                             ])
                         ),
-                        additionalHashes: [additionalBodyProperty],
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
-                    return new Expression({
-                        leftSide: `${this.blockArg}.body`,
-                        rightSide: inlineHash,
-                        isAssignment: true
-                    });
+                    return [
+                        new Expression({
+                            leftSide: `${this.blockArg}.body`,
+                            rightSide: inlineHash,
+                            isAssignment: true
+                        })
+                    ];
                 },
                 // Our inputs are hashes, so pass that in
-                reference: () => {
-                    const prop = this.bodyAsProperties[0];
-                    if (prop === undefined) {
-                        throw new Error("No body properties found.");
-                    }
-
-                    const referenceBodyHash = new HashInstance({
-                        additionalHashes: [prop.name, additionalBodyProperty],
+                reference: () => this.getFaradayBodyForReference(additionalBodyProperty),
+                fileUpload: () => {
+                    const inlineHash = new HashInstance({
+                        contents: new Map<string, AstNode>(
+                            this.bodyAsProperties.map((prop) => {
+                                const func = new FunctionInvocation({
+                                    onObject: this.fileUploadUtility.classReference,
+                                    baseFunction: this.fileUploadUtility.convertToFaradayMultipart,
+                                    arguments_: [
+                                        new Argument({
+                                            value: prop.toVariable(VariableType.LOCAL),
+                                            type: FileClassReference,
+                                            isNamed: true,
+                                            name: "file_like"
+                                        })
+                                    ]
+                                });
+                                const isFileReference = prop.type.some((cr) => cr === FileClassReference);
+                                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                                if (isFileReference) {
+                                    return [
+                                        prop.wireValue ?? prop.name,
+                                        // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
+                                        prop.isOptional
+                                            ? new ConditionalStatement({
+                                                  if_: {
+                                                      leftSide: new FunctionInvocation({
+                                                          onObject: prop.toVariable(VariableType.LOCAL),
+                                                          baseFunction: new Function_({
+                                                              name: "nil?",
+                                                              functionBody: []
+                                                          }),
+                                                          optionalSafeCall: false
+                                                      }),
+                                                      operation: "!",
+                                                      expressions: [func]
+                                                  }
+                                              })
+                                            : func
+                                    ];
+                                }
+                                return [prop.wireValue ?? prop.name, prop.toVariable(VariableType.LOCAL)];
+                            })
+                        ),
+                        additionalHashes: [{ value: additionalBodyProperty, defaultValue: "{}" }],
                         shouldCompact: true
                     });
-                    return new Expression({
-                        leftSide: `${this.blockArg}.body`,
-                        rightSide: referenceBodyHash,
-                        isAssignment: true
-                    });
+
+                    return [
+                        new Expression({
+                            leftSide: `${this.blockArg}.body`,
+                            rightSide: inlineHash,
+                            isAssignment: true
+                        })
+                    ];
                 },
-                fileUpload: () => {
-                    throw new Error("File upload not yet supported.");
-                },
-                bytes: () => {
-                    throw new Error("Byte-inputs not yet supported.");
+                bytes: (br: BytesRequest) => {
+                    return [
+                        new Expression({
+                            leftSide: `${this.blockArg}.headers['Content-Type']`,
+                            rightSide: `"${br.contentType ?? "application/octet-stream"}"`,
+                            isAssignment: true
+                        }),
+                        ...this.getFaradayBodyForReference(additionalBodyProperty)
+                    ];
                 },
                 _other: () => {
                     throw new Error("Unknown request body type.");
@@ -228,8 +359,12 @@ export class EndpointGenerator {
         return;
     }
 
-    public getFaradayBlock(requestClientVariable: Variable): BlockConfiguration {
-        const expressions = [
+    public getFaradayBlock(
+        requestClientVariable: Variable,
+        path: string,
+        shouldOverwriteUrl: boolean
+    ): BlockConfiguration {
+        const expressions: AstNode[] = [
             ...this.requestOptions.getAdditionalRequestOverrides(this.requestOptionsVariable, this.blockArg),
             ...this.requestOptions.headerProperties.map(
                 (prop) =>
@@ -237,14 +372,14 @@ export class EndpointGenerator {
                         if_: {
                             rightSide: new FunctionInvocation({
                                 // TODO: Do this field access on the client better
-                                onObject: `${requestClientVariable.write()}.${prop.name}`,
+                                onObject: `${this.requestOptionsVariable.write({})}&.${prop.name}`,
                                 baseFunction: new Function_({ name: "nil?", functionBody: [] })
                             }),
                             operation: "!",
                             expressions: [
                                 new Expression({
                                     leftSide: `${this.blockArg}.headers["${prop.wireValue ?? prop.name}"]`,
-                                    rightSide: `${requestClientVariable.write()}.${prop.name}`,
+                                    rightSide: `${this.requestOptionsVariable.write({})}.${prop.name}`,
                                     isAssignment: true
                                 })
                             ]
@@ -254,6 +389,16 @@ export class EndpointGenerator {
             this.getFaradayHeaders()
         ];
 
+        if (this.isStreamingResponse() && this.streamProcessingBlock !== undefined) {
+            expressions.push(
+                new Expression({
+                    leftSide: `${this.blockArg}.options.on_data`,
+                    rightSide: this.streamProcessingBlock.write({}),
+                    isAssignment: true
+                })
+            );
+        }
+
         const parameters = this.getFaradayParameters();
         if (parameters !== undefined) {
             expressions.push(parameters);
@@ -261,16 +406,17 @@ export class EndpointGenerator {
 
         const body = this.getFaradayBody();
         if (body !== undefined) {
-            expressions.push(body);
+            expressions.push(...body);
         }
-        const url =
-            this.endpoint.baseUrl !== undefined
-                ? new Expression({
-                      leftSide: `${this.blockArg}.url`,
-                      rightSide: `${requestClientVariable.write()}.default_environment[${this.endpoint.baseUrl}]`,
-                      isAssignment: true
-                  })
-                : undefined;
+        const url = shouldOverwriteUrl
+            ? new Expression({
+                  leftSide: `${this.blockArg}.url`,
+                  rightSide: `"#{${requestClientVariable.write({})}.default_environment[:${
+                      this.endpoint.baseUrl
+                  }]}/${path}"`,
+                  isAssignment: false
+              })
+            : undefined;
         if (url !== undefined) {
             expressions.push(url);
         }
@@ -280,16 +426,26 @@ export class EndpointGenerator {
         };
     }
 
+    private isStreamingResponse(): boolean {
+        return (
+            this.endpoint.response?._visit<boolean>({
+                json: () => false,
+                fileDownload: () => true,
+                streaming: () => true,
+                text: () => false,
+                _other: () => {
+                    throw new Error("Unknown response type.");
+                }
+            }) ?? false
+        );
+    }
+
     public getResponseType(): ClassReference {
         return (
             this.endpoint.response?._visit<ClassReference>({
                 json: (jr: JsonResponse) => this.crf.fromTypeReference(jr.responseBodyType),
-                fileDownload: () => {
-                    throw new Error("File download not yet supported.");
-                },
-                streaming: () => {
-                    throw new Error("Streaming not yet supported.");
-                },
+                fileDownload: () => VoidClassReference,
+                streaming: () => VoidClassReference,
                 text: () => StringClassReference,
                 _other: () => {
                     throw new Error("Unknown response type.");
@@ -299,14 +455,19 @@ export class EndpointGenerator {
     }
 
     public getResponseExpressions(responseVariable: Variable): AstNode[] | undefined {
+        const responseVariableBody = new Variable({
+            name: `${responseVariable.name}.body`,
+            type: GenericClassReference,
+            variableType: VariableType.LOCAL
+        });
         return this.endpoint.response?._visit<AstNode[]>({
             json: (jr: JsonResponse) => {
                 const responseCr = this.crf.fromTypeReference(jr.responseBodyType);
                 return jr._visit<AstNode[]>({
-                    response: () => [responseCr.fromJson(responseVariable) ?? responseVariable],
+                    response: () => [responseCr.fromJson(responseVariableBody) ?? responseVariableBody],
                     nestedPropertyAsResponse: (jrbwp: JsonResponseBodyWithProperty) => {
                         if (jrbwp.responseProperty !== undefined) {
-                            // Turn to struct, then get the field, then reconvert to JSON (to_h.to_json)
+                            // Turn to struct, then get the field, then reconvert to JSON (to_json)
                             const nestedResponseValueVariable = new Variable({
                                 name: "nested_response_json",
                                 type: GenericClassReference,
@@ -314,35 +475,27 @@ export class EndpointGenerator {
                             });
                             return [
                                 new Expression({
-                                    leftSide: nestedResponseValueVariable,
+                                    leftSide: "parsed_json",
                                     rightSide: new FunctionInvocation({
-                                        onObject: new FunctionInvocation({
-                                            onObject: JsonClassReference,
-                                            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-                                            arguments_: [
-                                                new Argument({
-                                                    value: "json_object",
-                                                    type: GenericClassReference,
-                                                    isNamed: false
-                                                }),
-                                                new Argument({
-                                                    name: "object_class",
-                                                    value: "OpenStruct",
-                                                    type: OpenStructClassReference,
-                                                    isNamed: true
-                                                })
-                                            ]
-                                        }),
-                                        baseFunction: new Function_({
-                                            name: `${jrbwp.responseProperty.name.wireValue}.to_h.to_json`,
-                                            functionBody: []
-                                        })
+                                        onObject: JsonClassReference,
+                                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                                        arguments_: [
+                                            new Argument({
+                                                value: responseVariableBody,
+                                                type: GenericClassReference,
+                                                isNamed: false
+                                            })
+                                        ]
                                     })
+                                }),
+                                new Expression({
+                                    leftSide: nestedResponseValueVariable,
+                                    rightSide: `parsed_json["${jrbwp.responseProperty.name.wireValue}"].to_json`
                                 }),
                                 responseCr.fromJson(nestedResponseValueVariable) ?? nestedResponseValueVariable
                             ];
                         } else {
-                            return [responseCr.fromJson(responseVariable) ?? responseVariable];
+                            return [responseCr.fromJson(responseVariableBody) ?? responseVariableBody];
                         }
                     },
                     _other: () => {
@@ -350,16 +503,27 @@ export class EndpointGenerator {
                     }
                 });
             },
-            fileDownload: () => {
-                throw new Error("File download not yet supported.");
-            },
+            fileDownload: () => [],
             streaming: () => {
                 throw new Error("Streaming not yet supported.");
             },
-            text: () => [responseVariable],
+            text: () => [responseVariableBody],
             _other: () => {
                 throw new Error("Unknown response type.");
             }
         });
+    }
+
+    // TODO: log this skipping
+    public static isStreamingResponse(endpoint: HttpEndpoint): boolean {
+        return (
+            endpoint.response?._visit<boolean>({
+                json: () => false,
+                fileDownload: () => false,
+                streaming: () => true,
+                text: () => false,
+                _other: () => false
+            }) ?? false
+        );
     }
 }

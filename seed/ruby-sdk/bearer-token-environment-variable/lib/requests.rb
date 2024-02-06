@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "faraday"
+require "faraday/retry"
 require "async/http/faraday"
 
 module SeedBearerTokenEnvironmentVariableClient
@@ -11,17 +12,18 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [RequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBearerTokenEnvironmentVariableClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end
@@ -33,37 +35,36 @@ module SeedBearerTokenEnvironmentVariableClient
     # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @return [AsyncRequestClient]
-    def initialize(max_retries: nil, timeout_in_seconds: nil, api_key: nil)
+    def initialize(api_key:, max_retries: nil, timeout_in_seconds: nil)
       @headers = {
         "X-Fern-Language": "Ruby",
         "X-Fern-SDK-Name": "SeedBearerTokenEnvironmentVariableClient",
+        "X-Fern-SDK-Version": "0.0.1",
         "Authorization": %(Bearer #{api_key || ENV["COURIER_API_KEY"]})
       }
       @conn = Faraday.new(headers: @headers) do |faraday|
         faraday.request :json
-        faraday.request :retry, { max: max_retries }
         faraday.response :raise_error, include_request: true
-        faraday.options.timeout = timeout_in_seconds
-        faraday.adapter = :async_http
+        faraday.adapter :async_http
+        faraday.request :retry, { max: max_retries } unless max_retries.nil?
+        faraday.options.timeout = timeout_in_seconds unless timeout_in_seconds.nil?
       end
     end
   end
 
   # Additional options for request-specific configuration when calling APIs via the SDK.
   class RequestOptions
-    attr_reader :timeout_in_seconds, :api_key, :additional_headers, :additional_query_parameters,
-                :additional_body_parameters
+    attr_reader :api_key, :additional_headers, :additional_query_parameters, :additional_body_parameters,
+                :timeout_in_seconds
 
-    # @param timeout_in_seconds [Long]
     # @param api_key [String]
     # @param additional_headers [Hash{String => Object}]
     # @param additional_query_parameters [Hash{String => Object}]
     # @param additional_body_parameters [Hash{String => Object}]
+    # @param timeout_in_seconds [Long]
     # @return [RequestOptions]
-    def initialize(api_key:, timeout_in_seconds: nil, additional_headers: nil, additional_query_parameters: nil,
-                   additional_body_parameters: nil)
-      # @type [Long]
-      @timeout_in_seconds = timeout_in_seconds
+    def initialize(api_key: nil, additional_headers: nil, additional_query_parameters: nil,
+                   additional_body_parameters: nil, timeout_in_seconds: nil)
       # @type [String]
       @api_key = api_key
       # @type [Hash{String => Object}]
@@ -72,6 +73,8 @@ module SeedBearerTokenEnvironmentVariableClient
       @additional_query_parameters = additional_query_parameters
       # @type [Hash{String => Object}]
       @additional_body_parameters = additional_body_parameters
+      # @type [Long]
+      @timeout_in_seconds = timeout_in_seconds
     end
   end
 end

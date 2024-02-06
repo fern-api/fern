@@ -6,6 +6,7 @@ require_relative "variable_type_and_name"
 require_relative "../../commons/types/variable_type"
 require_relative "../../commons/types/test_case_with_expected_result"
 require "json"
+require_relative "../../commons/types/language"
 
 module SeedTraceClient
   module Problem
@@ -17,7 +18,7 @@ module SeedTraceClient
       # @param problem_description [Problem::ProblemDescription]
       # @param problem_name [String]
       # @param problem_version [Integer]
-      # @param files [Hash{LANGUAGE => LANGUAGE}]
+      # @param files [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
       # @param input_params [Array<Problem::VariableTypeAndName>]
       # @param output_type [Commons::VariableType]
       # @param testcases [Array<Commons::TestCaseWithExpectedResult>]
@@ -35,7 +36,7 @@ module SeedTraceClient
         @problem_name = problem_name
         # @type [Integer]
         @problem_version = problem_version
-        # @type [Hash{LANGUAGE => LANGUAGE}]
+        # @type [Hash{Commons::LANGUAGE => Commons::LANGUAGE}]
         @files = files
         # @type [Array<Problem::VariableTypeAndName>]
         @input_params = input_params
@@ -57,23 +58,32 @@ module SeedTraceClient
       # @return [Problem::ProblemInfo]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         problem_id = struct.problemId
-        problem_description = struct.problemDescription.to_h.to_json
-        problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+        if parsed_json["problemDescription"].nil?
+          problem_description = nil
+        else
+          problem_description = parsed_json["problemDescription"].to_json
+          problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
+        end
         problem_name = struct.problemName
         problem_version = struct.problemVersion
-        files = struct.files.transform_values do |_k, v|
-          v = v.to_h.to_json
-          LANGUAGE.key(v)
+        files = parsed_json["files"].transform_values do |_k, v|
+          v = v.to_json
+          Commons::LANGUAGE.key(v) || v
         end
-        input_params = struct.inputParams.map do |v|
-          v = v.to_h.to_json
+        input_params = parsed_json["inputParams"].map do |v|
+          v = v.to_json
           Problem::VariableTypeAndName.from_json(json_object: v)
         end
-        output_type = struct.outputType.to_h.to_json
-        output_type = Commons::VariableType.from_json(json_object: output_type)
-        testcases = struct.testcases.map do |v|
-          v = v.to_h.to_json
+        if parsed_json["outputType"].nil?
+          output_type = nil
+        else
+          output_type = parsed_json["outputType"].to_json
+          output_type = Commons::VariableType.from_json(json_object: output_type)
+        end
+        testcases = parsed_json["testcases"].map do |v|
+          v = v.to_json
           Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end
         method_name = struct.methodName

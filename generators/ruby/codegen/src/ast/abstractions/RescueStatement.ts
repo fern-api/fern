@@ -22,11 +22,11 @@ export class RescueStatement extends AstNode {
     public writeInternal(startingTabSpaces: number): void {
         this.addText({ stringContent: "begin", startingTabSpaces });
         this.begin.forEach((exp) =>
-            this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
         this.addText({ stringContent: "rescue StandardError", startingTabSpaces });
         this.rescue.forEach((exp) =>
-            this.addText({ stringContent: exp.write(), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
+            this.addText({ stringContent: exp.write({}), startingTabSpaces: this.tabSizeSpaces + startingTabSpaces })
         );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }

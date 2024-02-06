@@ -2,7 +2,7 @@
 
 module SeedTraceClient
   module Migration
-    # @type [Hash{String => String}]
-    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.frozen
+    # @type [MIGRATION_STATUS]
+    MIGRATION_STATUS = { running: "RUNNING", failed: "FAILED", finished: "FINISHED" }.freeze
   end
 end
