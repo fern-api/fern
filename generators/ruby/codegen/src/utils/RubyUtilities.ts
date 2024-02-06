@@ -72,7 +72,7 @@ export function generateGemConfig(clientName: string, repoUrl?: string): Generat
                 }),
                 new Expression({
                     leftSide: "CHANGELOG_URI",
-                    rightSide: `""${repoUrl ?? "https://github.com/REPO/URL"}"/blob/master/CHANGELOG.md"`,
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}/blob/master/CHANGELOG.md"`,
                     isAssignment: true
                 })
             ]

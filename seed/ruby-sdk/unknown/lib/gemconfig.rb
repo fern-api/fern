@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SeedUnknownAsAnyClient
   module Gemconfig
     VERSION = ""
@@ -8,6 +9,6 @@ module SeedUnknownAsAnyClient
     DESCRIPTION = ""
     HOMEPAGE = "https://github.com/unknown/fern"
     SOURCE_CODE_URI = "https://github.com/unknown/fern"
-    CHANGELOG_URI = ""https://github.com/unknown/fern"/blob/master/CHANGELOG.md"
+    CHANGELOG_URI = "https://github.com/unknown/fern/blob/master/CHANGELOG.md"
   end
 end

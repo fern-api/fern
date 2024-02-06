@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SeedLiteralHeadersClient
   module Gemconfig
     VERSION = ""
@@ -8,6 +9,6 @@ module SeedLiteralHeadersClient
     DESCRIPTION = ""
     HOMEPAGE = "https://github.com/literal-headers/fern"
     SOURCE_CODE_URI = "https://github.com/literal-headers/fern"
-    CHANGELOG_URI = ""https://github.com/literal-headers/fern"/blob/master/CHANGELOG.md"
+    CHANGELOG_URI = "https://github.com/literal-headers/fern/blob/master/CHANGELOG.md"
   end
 end

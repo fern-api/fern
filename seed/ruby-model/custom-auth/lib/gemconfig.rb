@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module SeedCustomAuthClient
   module Gemconfig
     VERSION = ""
@@ -8,6 +9,6 @@ module SeedCustomAuthClient
     DESCRIPTION = ""
     HOMEPAGE = "https://github.com/REPO/URL"
     SOURCE_CODE_URI = "https://github.com/REPO/URL"
-    CHANGELOG_URI = ""https://github.com/REPO/URL"/blob/master/CHANGELOG.md"
+    CHANGELOG_URI = "https://github.com/REPO/URL/blob/master/CHANGELOG.md"
   end
 end
