@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 module SeedBytesClient
   module Gemconfig
     VERSION = ""
@@ -7,8 +6,8 @@ module SeedBytesClient
     EMAIL = ""
     SUMMARY = ""
     DESCRIPTION = ""
-    HOMEPAGE = "https://github.com/REPO/URL"
-    SOURCE_CODE_URI = "https://github.com/REPO/URL"
-    CHANGELOG_URI = "https://github.com/REPO/URL/blob/master/CHANGELOG.md"
+    HOMEPAGE = https://github.com/bytes/fern
+    SOURCE_CODE_URI = https://github.com/bytes/fern
+    CHANGELOG_URI = "https://github.com/bytes/fern/blob/master/CHANGELOG.md"
   end
 end

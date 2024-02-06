@@ -5,6 +5,7 @@ import {
     generateGemConfig,
     generateGemfile,
     generateGemspec,
+    generateGithubWorkflow,
     generateGitignore,
     generateReadme,
     generateRubocopConfig,
@@ -27,20 +28,39 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     }
 
     // TODO: This (as an abstract function) will probably be used across CLIs
-    private generateRepositoryBoilerPlate(
-        config: FernGeneratorExec.GeneratorConfig,
+    private generateRepositoryBoilerPlate(gemName: string, githubOutputMode: FernGeneratorExec.GithubOutputMode) {
+        this.generatedFiles.push(generateGitignore());
+        this.generatedFiles.push(generateReadme());
+
+        const githubPublishInfo = githubOutputMode.publishInfo;
+        if (githubPublishInfo) {
+            if (githubPublishInfo.type !== "rubygems") {
+                throw new Error(`Attempting to pass in a publish type that is not rubygems: ${githubPublishInfo.type}`);
+            }
+
+            this.generatedFiles.push(
+                generateGithubWorkflow(
+                    gemName,
+                    githubPublishInfo.registryUrl,
+                    githubPublishInfo.apiKeyEnvironmentVariable
+                )
+            );
+        }
+    }
+
+    private generateRubyBoilerPlate(
         gemName: string,
-        clientName: string
+        clientName: string,
+        config: FernGeneratorExec.GeneratorConfig,
+        repoUrl?: string
     ) {
         const sdkVersion = getSdkVersion(config);
 
         const boilerPlateFiles = [];
-        boilerPlateFiles.push(generateGitignore());
         boilerPlateFiles.push(generateRubocopConfig());
         boilerPlateFiles.push(generateGemfile());
-        boilerPlateFiles.push(generateReadme());
         boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion));
-        boilerPlateFiles.push(generateGemConfig(clientName));
+        boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
         // boilerPlateFiles.push(...generateBinDir(gemName));
 
         this.generatedFiles.push(...boilerPlateFiles);
@@ -62,25 +82,15 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
     }
 
     private generateProject(
-        // TODO: leverage config for file gen
+        gemName: string,
+        clientName: string,
         config: FernGeneratorExec.GeneratorConfig,
-        customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: IntermediateRepresentation,
+        repoUrl?: string
     ) {
-        const gemName = getGemName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName,
-            getPackageName(config)
-        );
-        const clientName = getClientName(
-            config.organization,
-            intermediateRepresentation.apiName.pascalCase.safeName,
-            customConfig.clientClassName
-        );
         generatorContext.logger.debug("Generating boilerplate");
-        this.generateRepositoryBoilerPlate(config, gemName, clientName);
+        this.generateRubyBoilerPlate(gemName, clientName, config, repoUrl);
         generatorContext.logger.debug("Generating types");
         this.generateTypes(gemName, clientName, generatorContext, intermediateRepresentation);
     }
@@ -97,9 +107,29 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: RubyModelCustomConfig,
         generatorContext: GeneratorContext,
-        intermediateRepresentation: IntermediateRepresentation
+        intermediateRepresentation: IntermediateRepresentation,
+        githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void> {
-        this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
+        const gemName = getGemName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName,
+            getPackageName(config)
+        );
+        const clientName = getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
+        this.generateRepositoryBoilerPlate(gemName, githubOutputMode);
+        this.generateProject(
+            gemName,
+            clientName,
+            config,
+            generatorContext,
+            intermediateRepresentation,
+            githubOutputMode.repoUrl
+        );
         await Promise.all(
             this.generatedFiles.map(async (f) => {
                 await f.write(AbsoluteFilePath.of(config.output.path));
@@ -118,7 +148,18 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void> {
-        this.generateProject(config, customConfig, generatorContext, intermediateRepresentation);
+        const gemName = getGemName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName,
+            getPackageName(config)
+        );
+        const clientName = getClientName(
+            config.organization,
+            intermediateRepresentation.apiName.pascalCase.safeName,
+            customConfig.clientClassName
+        );
+        this.generateProject(gemName, clientName, config, generatorContext, intermediateRepresentation);
         await Promise.all(
             this.generatedFiles.map(async (f) => {
                 await f.write(AbsoluteFilePath.of(config.output.path));
