@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/user_id"
-
-require_relative "../../commons/types/problem_id"
 require_relative "playlist_id"
+require_relative "../../commons/types/user_id"
+require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient
@@ -36,6 +35,7 @@ module SeedTraceClient
       # @return [Playlist::Playlist]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         playlist_id = struct.playlist_id
         owner_id = struct.owner - id
         name = struct.name

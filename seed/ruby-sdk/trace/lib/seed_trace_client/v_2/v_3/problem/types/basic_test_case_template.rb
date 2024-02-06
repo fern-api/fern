@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "test_case_implementation_description"
-
-require_relative "parameter_id"
 require_relative "test_case_template_id"
+require_relative "test_case_implementation_description"
+require_relative "parameter_id"
 require "json"
 
 module SeedTraceClient
@@ -38,9 +37,15 @@ module SeedTraceClient
           # @return [V2::V3::Problem::BasicTestCaseTemplate]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
+            parsed_json = JSON.parse(json_object)
             template_id = struct.templateId
             name = struct.name
-            description = struct.description
+            if parsed_json["description"].nil?
+              description = nil
+            else
+              description = parsed_json["description"].to_json
+              description = V2::V3::Problem::TestCaseImplementationDescription.from_json(json_object: description)
+            end
             expected_value_parameter_id = struct.expectedValueParameterId
             new(template_id: template_id, name: name, description: description,
                 expected_value_parameter_id: expected_value_parameter_id, additional_properties: struct)

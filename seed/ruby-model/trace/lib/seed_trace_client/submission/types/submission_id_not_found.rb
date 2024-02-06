@@ -24,6 +24,7 @@ module SeedTraceClient
       # @return [Submission::SubmissionIdNotFound]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         missing_submission_id = struct.missingSubmissionId
         new(missing_submission_id: missing_submission_id, additional_properties: struct)
       end

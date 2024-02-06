@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-require_relative "test_case_implementation_reference"
-
-require_relative "test_case_expects"
 require_relative "test_case_metadata"
+require_relative "test_case_implementation_reference"
+require_relative "test_case_expects"
 require "json"
 
 module SeedTraceClient
@@ -38,10 +37,26 @@ module SeedTraceClient
           # @return [V2::V3::Problem::TestCaseV2]
           def self.from_json(json_object:)
             struct = JSON.parse(json_object, object_class: OpenStruct)
-            metadata = struct.metadata
-            implementation = struct.implementation
+            parsed_json = JSON.parse(json_object)
+            if parsed_json["metadata"].nil?
+              metadata = nil
+            else
+              metadata = parsed_json["metadata"].to_json
+              metadata = V2::V3::Problem::TestCaseMetadata.from_json(json_object: metadata)
+            end
+            if parsed_json["implementation"].nil?
+              implementation = nil
+            else
+              implementation = parsed_json["implementation"].to_json
+              implementation = V2::V3::Problem::TestCaseImplementationReference.from_json(json_object: implementation)
+            end
             arguments = struct.arguments
-            expects = struct.expects
+            if parsed_json["expects"].nil?
+              expects = nil
+            else
+              expects = parsed_json["expects"].to_json
+              expects = V2::V3::Problem::TestCaseExpects.from_json(json_object: expects)
+            end
             new(metadata: metadata, implementation: implementation, arguments: arguments, expects: expects,
                 additional_properties: struct)
           end

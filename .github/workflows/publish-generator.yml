@@ -12,6 +12,9 @@ on:
       - "generators/postman/VERSION"
       - "generators/ruby/model/VERSION"
       - "generators/ruby/sdk/VERSION"
+      - "generators/java/sdk/VERSION"
+      - "generators/java/model/VERSION"
+      - "generators/java/spring/VERSION"
   workflow_dispatch:
     inputs:
       generator:
@@ -19,8 +22,16 @@ on:
         required: true
         type: choice
         options:
+          - openapi
+          - python-sdk
+          - fastapi
+          - pydantic
+          - postman
           - ruby-sdk
           - ruby-model
+          - java-sdk
+          - java-model
+          - java-spring
 
 jobs:
   versions-changed:
@@ -33,6 +44,9 @@ jobs:
       postman: ${{ steps.filter.outputs.postman }}
       ruby-model: ${{ steps.filter.outputs.ruby-model }}
       ruby-sdk: ${{ steps.filter.outputs.ruby-sdk }}
+      java-sdk: ${{ steps.filter.outputs.java-sdk }}
+      java-model: ${{ steps.filter.outputs.java-model }}
+      spring: ${{ steps.filter.outputs.spring }}
     steps:
       - uses: actions/checkout@v2
       - uses: dorny/paths-filter@v2
@@ -46,14 +60,19 @@ jobs:
             postman: 'generators/postman/VERSION'
             ruby-model: 'generators/ruby/model/VERSION'
             ruby-sdk: 'generators/ruby/sdk/VERSION'
+            java-sdk: 'generators/java/sdk/VERSION'
+            java-model: 'generators/java/model/VERSION'
+            spring: 'generators/java/spring/VERSION'            
 
   pydantic-model:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.pydantic == 'true'}}
+    if: ${{ needs.versions-changed.outputs.pydantic == 'true' || inputs.generator == 'pydantic' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -69,10 +88,20 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
+        if: ${{ inputs.generator != 'pydantic' }}
         run: |
           projectVersion=$(cat generators/python/pydantic/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'pydantic' }}
+        run: |
+          projectVersion=$(cat generators/python/pydantic/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -89,10 +118,12 @@ jobs:
   fastapi:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.fastapi == 'true'}}
+    if: ${{ needs.versions-changed.outputs.fastapi == 'true' || inputs.generator == 'fastapi' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -108,10 +139,20 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
+        if: ${{ inputs.generator != 'fastapi' }}
         run: |
           projectVersion=$(cat generators/python/fastapi/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'fastapi' }}
+        run: |
+          projectVersion=$(cat generators/python/fastapi/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -128,10 +169,12 @@ jobs:
   python-sdk:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.python-sdk == 'true'}}
+    if: ${{ needs.versions-changed.outputs.python-sdk == 'true' || inputs.generator == 'python-sdk' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install Poetry
         uses: snok/install-poetry@v1
@@ -147,10 +190,20 @@ jobs:
           password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
 
       - name: Print Version
+        if: ${{ inputs.generator != 'python-sdk' }}
         run: |
           projectVersion=$(cat generators/python/sdk/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'python-sdk' }}
+        run: |
+          projectVersion=$(cat generators/python/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -167,10 +220,12 @@ jobs:
   openapi:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.openapi == 'true'}}
+    if: ${{ needs.versions-changed.outputs.openapi == 'true' || inputs.generator == 'openapi' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -191,10 +246,20 @@ jobs:
         run: yarn dist:cli
 
       - name: Print Version
+        if: ${{ inputs.generator != 'openapi' }}
         run: |
           projectVersion=$(cat generators/openapi/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'openapi' }}
+        run: |
+          projectVersion=$(cat generators/openapi/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -211,10 +276,12 @@ jobs:
   postman:
     runs-on: ubuntu-latest
     needs: versions-changed
-    if: ${{ needs.versions-changed.outputs.postman == 'true'}}
+    if: ${{ needs.versions-changed.outputs.postman == 'true' || inputs.generator == 'postman' }}
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -235,10 +302,20 @@ jobs:
         run: yarn dist:cli
 
       - name: Print Version
+        if: ${{ inputs.generator != 'postman' }}
         run: |
           projectVersion=$(cat generators/postman/VERSION)
           echo $projectVersion
           echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'postman' }}
+        run: |
+          projectVersion=$(cat generators/postman/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -259,6 +336,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -288,10 +367,11 @@ jobs:
       - name: Print Version Dev
         if: ${{ inputs.generator == 'ruby-model' }}
         run: |
-          projectVersion=$(cat generators/ruby/sdk/VERSION)
+          projectVersion=$(cat generators/ruby/model/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion
-          echo "VERSION=$projectVersion-$sha_short" >> $GITHUB_ENV
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -312,6 +392,8 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-node@v3
         with:
@@ -342,9 +424,10 @@ jobs:
         if: ${{ inputs.generator == 'ruby-sdk' }}
         run: |
           projectVersion=$(cat generators/ruby/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
           sha_short=$(git rev-parse --short HEAD)
-          echo $projectVersion
-          echo "VERSION=$projectVersion-$sha_short" >> $GITHUB_ENV
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -357,3 +440,147 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: fernapi/fern-ruby-sdk:${{env.VERSION}}
+
+  java-sdk:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-sdk == 'true' || inputs.generator == 'java-sdk' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :sdk:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-sdk' }}
+        run: |
+          projectVersion=$(cat generators/java/sdk/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-sdk' }}
+        run: |
+          projectVersion=$(cat generators/java/sdk/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/sdk
+          file: ./generators/java/sdk/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-java-sdk:${{env.VERSION}}
+
+  java-model:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' || inputs.generator == 'java-model' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :model:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-model' }}
+        run: |
+          projectVersion=$(cat generators/java/model/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-model' }}
+        run: |
+          projectVersion=$(cat generators/java/model/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/model
+          file: ./generators/java/model/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/java-model:${{env.VERSION}}
+
+  java-spring:
+    runs-on: ubuntu-latest
+    needs: versions-changed
+    if: ${{ needs.versions-changed.outputs.java-model == 'true' || inputs.generator == 'java-spring' }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: fernapi
+          password: ${{ secrets.FERN_API_DOCKERHUB_PASSWORD }}
+
+      - name: Build tar
+        working-directory: ./generators/java
+        run: ./gradlew :spring:distTar
+
+      - name: Print Version
+        if: ${{ inputs.generator != 'java-spring' }}
+        run: |
+          projectVersion=$(cat generators/java/spring/VERSION)
+          echo $projectVersion
+          echo "VERSION=$projectVersion" >> $GITHUB_ENV
+
+      - name: Print Version Dev
+        if: ${{ inputs.generator == 'java-spring' }}
+        run: |
+          projectVersion=$(cat generators/java/spring/VERSION)
+          commitNumber=$(git log --oneline | wc -l )
+          sha_short=$(git rev-parse --short HEAD)
+          echo $projectVersion-$commitNumber-$sha_short
+          echo "VERSION=$projectVersion-$commitNumber-$sha_short" >> $GITHUB_ENV
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./generators/java/spring
+          file: ./generators/java/spring/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: fernapi/fern-java-spring:${{env.VERSION}}

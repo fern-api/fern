@@ -1,0 +1,23 @@
+dependencies {
+    api 'com.squareup:javapoet'
+    api 'com.fern.fern:irV31'
+    api 'com.fern.fern:generator-exec-client'
+    api 'com.fasterxml.jackson.core:jackson-annotations'
+    api 'com.fasterxml.jackson.core:jackson-databind'
+    api 'org.apache.commons:commons-lang3'
+    api 'com.palantir.common:streams'
+    api 'org.slf4j:slf4j-api'
+    api 'com.atlassian.commonmark:commonmark'
+
+    compileOnly 'org.immutables:value::annotations'
+    annotationProcessor 'org.immutables:value'
+
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jdk8'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-params'
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core'
+    testImplementation 'org.mockito:mockito-core'
+    testImplementation 'org.mockito:mockito-junit-jupiter'
+}

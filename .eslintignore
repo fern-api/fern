@@ -7,4 +7,4 @@ generated
 bundle.c?js
 .pnp*
 packages/ir-sdk/**
-
+packages/seed/**

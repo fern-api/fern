@@ -2,7 +2,7 @@
 
 module SeedObjectsWithImportsClient
   module File
-    # @type [Hash{String => String}]
-    FILE_INFO = { regular: "REGULAR", directory: "DIRECTORY" }.frozen
+    # @type [FILE_INFO]
+    FILE_INFO = { regular: "REGULAR", directory: "DIRECTORY" }.freeze
   end
 end

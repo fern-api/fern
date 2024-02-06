@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "../../commons/types/types/tag"
-
 require_relative "movie_id"
+require_relative "../../commons/types/types/tag"
 require "json"
 
 module SeedExamplesClient
@@ -47,6 +46,7 @@ module SeedExamplesClient
       # @return [Types::ExtendedMovie]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        JSON.parse(json_object)
         cast = struct.cast
         id = struct.id
         title = struct.title

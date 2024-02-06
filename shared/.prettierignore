@@ -1,4 +1,5 @@
 ../packages/ir-sdk/**
+../packages/seed/src/config/**
 ../scripts/**
 
 **/*.yaml
@@ -14,6 +15,11 @@
 **/*.cjs
 **/*.mjs
 **/*.snap
+**/*.props
+**/*.lock
+**/*.gradle
+**/*.bat
+**/*.sh
 *.d.ts
 
 .yarn

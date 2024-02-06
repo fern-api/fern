@@ -1,6 +1,5 @@
 import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, LogLevel, LOG_LEVELS } from "@fern-api/logger";
-import { loggingExeca } from "@fern-api/logging-execa";
 import path from "path";
 import yargs, { Argv } from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -8,6 +7,7 @@ import { TaskContextFactory } from "./commands/test/TaskContextFactory";
 import { testCustomFixture } from "./commands/test/testCustomFixture";
 import { FIXTURES, testWorkspaceFixtures } from "./commands/test/testWorkspaceFixtures";
 import { loadSeedWorkspaces } from "./loadSeedWorkspaces";
+import { runScript } from "./runScript";
 
 void tryRunCli();
 
@@ -28,7 +28,11 @@ function addTestCommand(cli: Argv) {
         (yargs) =>
             yargs
                 .option("workspace", {
-                    type: "string"
+                    type: "array",
+                    string: true,
+                    default: undefined,
+                    demandOption: true,
+                    description: "The workspace to run tests on"
                 })
                 .option("parallel", {
                     type: "number",
@@ -40,10 +44,17 @@ function addTestCommand(cli: Argv) {
                     description: "Path to the api directory"
                 })
                 .option("fixture", {
-                    type: "string",
+                    type: "array",
+                    string: true,
+                    default: FIXTURES,
                     choices: FIXTURES,
                     demandOption: false,
                     description: "Runs on all fixtures if not provided"
+                })
+                .option("keepDocker", {
+                    type: "boolean",
+                    demandOption: false,
+                    description: "Keeps the docker container after the tests are finished"
                 })
                 .option("update", {
                     type: "boolean",
@@ -58,60 +69,54 @@ function addTestCommand(cli: Argv) {
         async (argv) => {
             const workspaces = await loadSeedWorkspaces();
 
-            const filteredWorkspace = workspaces.filter((workspace) => {
-                return workspace.workspaceName === argv.workspace;
-            });
+            for (const workspace of workspaces) {
+                if (!argv.workspace.includes(workspace.workspaceName)) {
+                    continue;
+                }
 
-            if (filteredWorkspace[0] == null) {
-                throw new Error(`Failed to find workspace ${argv.workspace}`);
-            }
+                const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
 
-            const workspace = filteredWorkspace[0];
-
-            const parsedDockerImage = validateAndParseDockerImage(workspace.workspaceConfig.docker);
-
-            // build docker iamge
-            const taskContextFactory = new TaskContextFactory(argv["log-level"]);
-            const dockerCommand = workspace.workspaceConfig.dockerCommand;
-            if (dockerCommand != null) {
-                const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
-                const spaceDelimitedCommand = dockerCommand.split(" ");
-                await loggingExeca(
-                    workspaceTaskContext.logger,
-                    spaceDelimitedCommand[0] ?? dockerCommand,
-                    spaceDelimitedCommand.slice(1),
-                    {
-                        cwd: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
+                const taskContextFactory = new TaskContextFactory(argv["log-level"]);
+                if (workspace.workspaceConfig.dockerCommand != null) {
+                    const workspaceTaskContext = taskContextFactory.create(workspace.workspaceName);
+                    await runScript({
+                        commands:
+                            typeof workspace.workspaceConfig.dockerCommand === "string"
+                                ? [workspace.workspaceConfig.dockerCommand]
+                                : workspace.workspaceConfig.dockerCommand,
+                        logger: workspaceTaskContext.logger,
+                        workingDir: path.dirname(path.dirname(workspace.absolutePathToWorkspace)),
                         doNotPipeOutput: false
-                    }
-                );
-            }
+                    });
+                }
 
-            if (argv.customFixture != null) {
-                await testCustomFixture({
-                    pathToFixture: argv.customFixture.startsWith("/")
-                        ? AbsoluteFilePath.of(argv.customFixture)
-                        : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
-                    workspace,
-                    irVersion: workspace.workspaceConfig.irVersion,
-                    language: workspace.workspaceConfig.language,
-                    docker: parsedDockerImage,
-                    logLevel: argv["log-level"],
-                    numDockers: argv.parallel
-                });
-            } else {
-                await testWorkspaceFixtures({
-                    workspace,
-                    fixtures: argv.fixture != null ? [argv.fixture] : FIXTURES,
-                    irVersion: workspace.workspaceConfig.irVersion,
-                    language: workspace.workspaceConfig.language,
-                    docker: parsedDockerImage,
-                    dockerCommand: workspace.workspaceConfig.dockerCommand,
-                    scripts: workspace.workspaceConfig.scripts,
-                    logLevel: argv["log-level"],
-                    numDockers: argv.parallel,
-                    taskContextFactory
-                });
+                if (argv.customFixture != null) {
+                    await testCustomFixture({
+                        pathToFixture: argv.customFixture.startsWith("/")
+                            ? AbsoluteFilePath.of(argv.customFixture)
+                            : join(AbsoluteFilePath.of(__dirname), RelativeFilePath.of(argv.customFixture)),
+                        workspace,
+                        irVersion: workspace.workspaceConfig.irVersion,
+                        language: workspace.workspaceConfig.language,
+                        docker: parsedDockerImage,
+                        logLevel: argv["log-level"],
+                        numDockers: argv.parallel,
+                        keepDocker: argv.keepDocker
+                    });
+                } else {
+                    await testWorkspaceFixtures({
+                        workspace,
+                        fixtures: argv.fixture,
+                        irVersion: workspace.workspaceConfig.irVersion,
+                        language: workspace.workspaceConfig.language,
+                        docker: parsedDockerImage,
+                        scripts: workspace.workspaceConfig.scripts,
+                        logLevel: argv["log-level"],
+                        numDockers: argv.parallel,
+                        taskContextFactory,
+                        keepDocker: argv.keepDocker
+                    });
+                }
             }
         }
     );

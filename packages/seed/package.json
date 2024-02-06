@@ -30,7 +30,8 @@
     "depcheck": "depcheck",
     "env:prod": "env-cmd -r .env-cmdrc.cjs -e prod",
     "dist:cli": "yarn compile && node build.cjs && cp -R ../../test-definitions/fern dist",
-    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public"
+    "publish:cli": "yarn dist:cli && cd dist && yarn npm publish --access public",
+    "generate": "fern generate --local"
   },
   "dependencies": {
     "@fern-api/config-management-commons": "workspace:*",
@@ -43,8 +44,7 @@
     "@fern-api/project-configuration": "workspace:*",
     "@fern-api/task-context": "workspace:*",
     "@fern-api/workspace-loader": "workspace:*",
-    "@fern-fern/fiddle-sdk": "^0.0.386",
-    "@fern-fern/seed-config": "0.0.15",
+    "@fern-fern/fiddle-sdk": "^0.0.400",
     "chalk": "^5.0.1",
     "find-up": "^6.3.0",
     "js-yaml": "^4.1.0",

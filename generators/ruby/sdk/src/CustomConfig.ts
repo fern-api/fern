@@ -3,8 +3,7 @@ import { z } from "zod";
 
 export type RubySdkCustomConfig = z.infer<typeof RubySdkCustomConfigSchema>;
 export const RubySdkCustomConfigSchema = BaseGeneratorConfigSchema.extend({
-    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()])),
-    gemName: z.optional(z.string())
+    defaultTimeoutInSeconds: z.optional(z.union([z.literal("infinity"), z.number()]))
 });
 
 // TODO: this will likely be shared between models and SDK
@@ -13,7 +12,6 @@ export function parseCustomConfig(customConfig: unknown): RubySdkCustomConfig {
     return {
         defaultTimeoutInSeconds: parsed?.defaultTimeoutInSeconds ?? parsed?.defaultTimeoutInSeconds,
         extraDependencies: parsed?.extraDependencies ?? {},
-        clientClassName: parsed?.clientClassName,
-        gemName: parsed?.gemName
+        clientClassName: parsed?.clientClassName
     };
 }

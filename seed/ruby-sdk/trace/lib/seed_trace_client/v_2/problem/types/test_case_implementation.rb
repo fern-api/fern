@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
-require_relative "test_case_function"
-
 require_relative "test_case_implementation_description"
+require_relative "test_case_function"
 require "json"
 
 module SeedTraceClient
@@ -30,8 +29,19 @@ module SeedTraceClient
         # @return [V2::Problem::TestCaseImplementation]
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
-          description = struct.description
-          function = struct.function
+          parsed_json = JSON.parse(json_object)
+          if parsed_json["description"].nil?
+            description = nil
+          else
+            description = parsed_json["description"].to_json
+            description = V2::Problem::TestCaseImplementationDescription.from_json(json_object: description)
+          end
+          if parsed_json["function"].nil?
+            function = nil
+          else
+            function = parsed_json["function"].to_json
+            function = V2::Problem::TestCaseFunction.from_json(json_object: function)
+          end
           new(description: description, function: function, additional_properties: struct)
         end
 

@@ -28,8 +28,14 @@ module SeedTraceClient
       # @return [Commons::SinglyLinkedListNodeAndListValue]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         node_id = struct.nodeId
-        full_list = struct.fullList
+        if parsed_json["fullList"].nil?
+          full_list = nil
+        else
+          full_list = parsed_json["fullList"].to_json
+          full_list = Commons::SinglyLinkedListValue.from_json(json_object: full_list)
+        end
         new(node_id: node_id, full_list: full_list, additional_properties: struct)
       end
 

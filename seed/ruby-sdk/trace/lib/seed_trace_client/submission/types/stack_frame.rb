@@ -30,9 +30,13 @@ module SeedTraceClient
       # @return [Submission::StackFrame]
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
+        parsed_json = JSON.parse(json_object)
         method_name = struct.methodName
         line_number = struct.lineNumber
-        scopes = struct.scopes
+        scopes = parsed_json["scopes"].map do |v|
+          v = v.to_json
+          Submission::Scope.from_json(json_object: v)
+        end
         new(method_name: method_name, line_number: line_number, scopes: scopes, additional_properties: struct)
       end
 

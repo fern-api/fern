@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_single_url_environment_default_client"
+  spec.version = SeedSingleUrlEnvironmentDefaultClient::Gemconfig::VERSION
   spec.authors = SeedSingleUrlEnvironmentDefaultClient::Gemconfig::AUTHORS
   spec.email = SeedSingleUrlEnvironmentDefaultClient::Gemconfig::EMAIL
   spec.summary = SeedSingleUrlEnvironmentDefaultClient::Gemconfig::SUMMARY

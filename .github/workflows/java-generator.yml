@@ -1,0 +1,62 @@
+name: java
+
+on:
+  pull_request:
+    paths:
+      - "generators/java/**"
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: "adopt"
+          java-version: "11"
+
+      - name: Build with Gradle
+        working-directory: ./generators/java
+        run: ./gradlew compileJava
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: "adopt"
+          java-version: "11"
+
+      - name: Build with Gradle
+        working-directory: ./generators/java
+        env:
+          TERM: dumb
+        run: ./gradlew test
+
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          distribution: "adopt"
+          java-version: "11"
+
+      - env:
+          TERM: dumb
+        name: Build with Gradle
+        working-directory: ./generators/java
+        run: ./gradlew check -x test

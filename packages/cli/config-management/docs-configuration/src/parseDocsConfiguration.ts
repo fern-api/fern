@@ -20,7 +20,8 @@ import {
     TabbedDocsNavigation,
     TypographyConfig,
     UntabbedDocsNavigation,
-    VersionInfo
+    VersionInfo,
+    WithoutQuestionMarks
 } from "./ParsedDocsConfiguration";
 
 export async function parseDocsConfiguration({
@@ -33,7 +34,7 @@ export async function parseDocsConfiguration({
     absolutePathToFernFolder: AbsoluteFilePath;
     absoluteFilepathToDocsConfig: AbsoluteFilePath;
     context: TaskContext;
-}): Promise<ParsedDocsConfiguration> {
+}): Promise<WithoutQuestionMarks<ParsedDocsConfiguration>> {
     const {
         instances,
         navigation,

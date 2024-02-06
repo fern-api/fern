@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_error_property_client"
+  spec.version = SeedErrorPropertyClient::Gemconfig::VERSION
   spec.authors = SeedErrorPropertyClient::Gemconfig::AUTHORS
   spec.email = SeedErrorPropertyClient::Gemconfig::EMAIL
   spec.summary = SeedErrorPropertyClient::Gemconfig::SUMMARY

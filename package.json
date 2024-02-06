@@ -45,7 +45,8 @@
     "root-package:fix": "yarn root-package:check --fix",
     "demo-setup": "yarn workspace @fern-api/demo-setup dist:cli && node $(yarn workspace @fern-api/demo-setup bin demo-setup)",
     "seed:local": "yarn workspace @fern-api/seed-cli dist:cli && node $(yarn workspace @fern-api/seed-cli bin seed)",
-    "ir:generate": "yarn workspace @fern-api/ir-sdk generate"
+    "ir:generate": "yarn workspace @fern-api/ir-sdk generate",
+    "seed-config:generate": "yarn workspace @fern-api/seed-cli generate"
   },
   "devDependencies": {
     "@babel/core": "^7.23.2",

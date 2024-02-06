@@ -4,6 +4,7 @@ require_relative "lib/gemconfig"
 
 Gem::Specification.new do |spec|
   spec.name = "seed_api_wide_base_path_client"
+  spec.version = SeedApiWideBasePathClient::Gemconfig::VERSION
   spec.authors = SeedApiWideBasePathClient::Gemconfig::AUTHORS
   spec.email = SeedApiWideBasePathClient::Gemconfig::EMAIL
   spec.summary = SeedApiWideBasePathClient::Gemconfig::SUMMARY
