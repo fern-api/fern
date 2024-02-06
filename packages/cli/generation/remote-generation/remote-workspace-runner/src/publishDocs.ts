@@ -25,7 +25,6 @@ import chalk from "chalk";
 import { readFile } from "fs/promises";
 import { imageSize } from "image-size";
 import * as mime from "mime-types";
-import { getPlaiceholder } from "plaiceholder";
 import terminalLink from "terminal-link";
 import { promisify } from "util";
 
@@ -785,7 +784,7 @@ interface AbsoluteImageFilePath {
     filePath: AbsoluteFilePath;
     width: number;
     height: number;
-    blurDataUrl: string;
+    blurDataUrl: string | undefined;
 }
 
 async function getImageFilepathsToUpload(
@@ -811,16 +810,13 @@ async function getImageFilepathsToUpload(
 
     const imageFilepathsAndSizesToUpload = await Promise.all(
         filepaths.map(async (filePath): Promise<ImageFile> => {
-            const [{ base64 }, size] = await Promise.all([
-                readFile(filePath).then((file) => getPlaiceholder(file)),
-                sizeOf(filePath)
-            ]);
+            const size = await sizeOf(filePath);
             if (size == null || size.height == null || size.width == null) {
                 return { type: "filepath", value: filePath };
             }
             return {
                 type: "image",
-                value: { filePath, width: size.width, height: size.height, blurDataUrl: base64 }
+                value: { filePath, width: size.width, height: size.height, blurDataUrl: undefined }
             };
         })
     );
