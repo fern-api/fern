@@ -136,18 +136,17 @@ export class ExampleEndpointFactory {
         if (exampleName == null && requestSchemaIdResponse?.schema != null) {
             exampleName = getNameFromSchemaWithExample(requestSchemaIdResponse.schema);
         }
-        const example = {
+
+        return {
             name: exampleName,
-            docs: undefined,
+            description: undefined,
             pathParameters,
             queryParameters,
             headers,
             request: requestExample,
             response: responseExample,
-            codeSamples: endpoint.customCodeSamples
+            codeSamples: []
         };
-
-        return example;
     }
 
     private isSchemaRequired(schema: SchemaWithExample) {

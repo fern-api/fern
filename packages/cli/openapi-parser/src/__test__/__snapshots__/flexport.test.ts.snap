@@ -13,7 +13,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -21,7 +20,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -1427,7 +1426,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of booking line items linked to submitted bookings",
       "errorStatusCode": [
         400,
@@ -1435,7 +1433,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2079,7 +2077,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Creates and returns a booking line item",
       "errorStatusCode": [
         400,
@@ -2087,7 +2084,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -2418,7 +2415,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of booking line items",
       "errorStatusCode": [
         400,
@@ -2426,7 +2422,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -2737,7 +2733,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of bookings.",
       "errorStatusCode": [
         400,
@@ -2745,7 +2740,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -5564,7 +5559,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -5572,7 +5566,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -8331,7 +8325,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single booking.
 ",
       "errorStatusCode": [
@@ -8340,7 +8333,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -10405,7 +10398,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Rate limited to 2,000 requests per hour",
       "errorStatusCode": [
         400,
@@ -10413,7 +10405,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -10868,13 +10860,12 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of commercial invoices",
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -12065,7 +12056,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "**The Commercial Invoices POST endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "errorStatusCode": [
         400,
@@ -12073,7 +12063,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -13022,7 +13012,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "**The Commercial Invoices PATCH endpoint needs special permission to access. Please contact your Flexport Sales representative if you are interested in using this endpoint.**",
       "errorStatusCode": [
         400,
@@ -13030,7 +13019,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -13957,7 +13946,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single commercial invoice.",
       "errorStatusCode": [
         400,
@@ -13965,7 +13953,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -14865,7 +14853,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of customs entries.",
       "errorStatusCode": [
         400,
@@ -14873,7 +14860,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -15379,7 +15366,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single customs entry.",
       "errorStatusCode": [
         400,
@@ -15387,7 +15373,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -15674,7 +15660,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of all documents associated with shipments.",
       "errorStatusCode": [
         400,
@@ -15682,7 +15667,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16399,7 +16384,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a new document for this client using the request payload",
       "errorStatusCode": [
         400,
@@ -16407,7 +16391,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -16710,7 +16694,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single document.",
       "errorStatusCode": [
         400,
@@ -16718,7 +16701,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -17041,7 +17024,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the contents of a specified file. Returns the file as a stream of bytes.",
       "errorStatusCode": [],
       "examples": [],
@@ -17088,7 +17070,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of all events delivered to any webhook registered by this client",
       "errorStatusCode": [
         400,
@@ -17096,7 +17077,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -17554,7 +17535,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns the webhook event with ID ":id"",
       "errorStatusCode": [
         400,
@@ -17562,7 +17542,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -19014,7 +18994,6 @@ we still recommend setting the Content-Type header to the value \`application/js
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of invoices.",
       "errorStatusCode": [
         400,
@@ -19022,7 +19001,7 @@ we still recommend setting the Content-Type header to the value \`application/js
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -21282,7 +21261,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single invoice",
       "errorStatusCode": [
         400,
@@ -21290,7 +21268,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -22874,7 +22852,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of companies in the network.",
       "errorStatusCode": [
         400,
@@ -22882,7 +22859,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -23649,7 +23626,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -23657,7 +23633,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -24118,13 +24094,12 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single company.",
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -24617,7 +24592,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -24625,7 +24599,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -25115,7 +25089,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of the company entity objects in the network.",
       "errorStatusCode": [
         400,
@@ -25123,7 +25096,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -25797,7 +25770,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -25805,7 +25777,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -26251,7 +26223,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single company entity",
       "errorStatusCode": [
         400,
@@ -26259,7 +26230,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -26635,7 +26606,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -26643,7 +26613,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -27104,7 +27074,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of contacts in the network.",
       "errorStatusCode": [
         400,
@@ -27112,7 +27081,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -27731,7 +27700,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -27739,7 +27707,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -28076,7 +28044,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single contact.",
       "errorStatusCode": [
         400,
@@ -28084,7 +28051,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -28405,7 +28372,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -28413,7 +28379,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -28772,7 +28738,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of location objects in the network.",
       "errorStatusCode": [
         400,
@@ -28780,7 +28745,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -29535,7 +29500,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -29543,7 +29507,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -30015,7 +29979,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single location",
       "errorStatusCode": [
         400,
@@ -30023,7 +29986,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -30432,7 +30395,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -30440,7 +30402,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -30934,7 +30896,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of your own organization.",
       "errorStatusCode": [
         400,
@@ -30942,7 +30903,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -31372,7 +31333,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31380,7 +31340,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -31971,7 +31931,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -31979,7 +31938,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -32305,7 +32264,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of containers. The containers are sorted descending by creation date.",
       "errorStatusCode": [
         400,
@@ -32313,7 +32271,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -33197,7 +33155,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single container.",
       "errorStatusCode": [
         400,
@@ -33205,7 +33162,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -33824,7 +33781,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -33832,7 +33788,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -34821,7 +34777,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of all products belonging to this client",
       "errorStatusCode": [
         400,
@@ -34829,7 +34784,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -35440,7 +35395,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Create a new product for this client using the request payload",
       "errorStatusCode": [
         400,
@@ -35448,7 +35402,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -35889,7 +35843,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns the client's product with this ID",
       "errorStatusCode": [
         400,
@@ -35897,7 +35850,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -36308,7 +36261,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Update this product to represent the request payload",
       "errorStatusCode": [
         400,
@@ -36316,7 +36268,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -36786,7 +36738,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of purchase order line items",
       "errorStatusCode": [
         400,
@@ -36794,7 +36745,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -38236,7 +38187,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns the details of a purchase order line item",
       "errorStatusCode": [
         400,
@@ -38244,7 +38194,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -39352,7 +39302,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of purchase orders",
       "errorStatusCode": [
         400,
@@ -39360,7 +39309,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -41979,7 +41928,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -41987,7 +41935,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -43343,7 +43291,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single purchase order.
 ",
       "errorStatusCode": [
@@ -43352,7 +43299,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -44162,7 +44109,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -44170,7 +44116,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -45169,7 +45115,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of shipment route legs. The legs are sorted descending by creation date.",
       "errorStatusCode": [
         400,
@@ -45177,7 +45122,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -46754,7 +46699,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -46762,7 +46706,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -48098,7 +48042,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of shipments.",
       "errorStatusCode": [
         400,
@@ -48106,7 +48049,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
@@ -51037,7 +50980,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Retrieves the details of a single shipment.
 ",
       "errorStatusCode": [
@@ -51046,7 +50988,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -53028,7 +52970,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         400,
@@ -53036,7 +52977,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -55058,7 +54999,6 @@ Other details about this invoice",
       "audiences": [],
       "authed": false,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Returns a list of shipments status shareable url",
       "errorStatusCode": [
         400,
@@ -55066,7 +55006,7 @@ Other details about this invoice",
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],

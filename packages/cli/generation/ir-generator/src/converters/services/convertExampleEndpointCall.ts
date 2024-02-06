@@ -1,15 +1,17 @@
 import { isPlainObject } from "@fern-api/core-utils";
 import {
+    ExampleCodeSample,
     ExampleEndpointCall,
     ExampleHeader,
     ExampleInlinedRequestBodyProperty,
     ExamplePathParameter,
     ExampleRequestBody,
     ExampleResponse,
-    Name
+    Name,
+    SupportedSdkLanguage
 } from "@fern-api/ir-sdk";
 import { FernWorkspace } from "@fern-api/workspace-loader";
-import { isInlineRequestBody, RawSchemas } from "@fern-api/yaml-schema";
+import { isInlineRequestBody, RawSchemas, visitExampleCodeSampleSchema } from "@fern-api/yaml-schema";
 import { FernFileContext } from "../../FernFileContext";
 import { ErrorResolver } from "../../resolvers/ErrorResolver";
 import { ExampleResolver } from "../../resolvers/ExampleResolver";
@@ -103,14 +105,52 @@ export function convertExampleEndpointCall({
             file,
             workspace
         }),
-        codeSamples: example["code-samples"]?.map((codeSample) => ({
-            code: codeSample.code,
-            language: codeSample.language,
-            docs: codeSample.docs,
-            name: codeSample.name != null ? file.casingsGenerator.generateName(codeSample.name) : undefined,
-            install: codeSample.install
-        }))
+        codeSamples: example["code-samples"]?.map((codeSample) => {
+            return visitExampleCodeSampleSchema<ExampleCodeSample>(codeSample, {
+                language: (languageScheme) =>
+                    ExampleCodeSample.language({
+                        name:
+                            languageScheme.name != null
+                                ? file.casingsGenerator.generateName(languageScheme.name)
+                                : undefined,
+                        docs: languageScheme.docs,
+                        language: languageScheme.language,
+                        code: languageScheme.code,
+                        install: languageScheme.install
+                    }),
+                sdk: (sdkScheme) =>
+                    ExampleCodeSample.sdk({
+                        name: sdkScheme.name != null ? file.casingsGenerator.generateName(sdkScheme.name) : undefined,
+                        docs: sdkScheme.docs,
+                        sdk: removeSdkAlias(sdkScheme.sdk),
+                        code: sdkScheme.code
+                    })
+            });
+        })
     };
+}
+
+function removeSdkAlias(sdk: RawSchemas.SupportedSdkLanguageSchema): SupportedSdkLanguage {
+    switch (sdk) {
+        case "js":
+            return "javascript";
+        case "node":
+            return "javascript";
+        case "ts":
+            return "typescript";
+        case "nodets":
+            return "typescript";
+        case "golang":
+            return "go";
+        case "dotnet":
+            return "csharp";
+        case "c#":
+            return "csharp";
+        case "jvm":
+            return "java";
+        default:
+            return sdk;
+    }
 }
 
 function convertPathParameters({
