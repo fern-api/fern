@@ -37,6 +37,7 @@ import {
     PathParameter,
     SdkConfig,
     SingleBaseUrlEnvironments,
+    Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
@@ -73,7 +74,6 @@ export function generateEndpoints(
             if (EndpointGenerator.isStreamingResponse(endpoint)) {
                 return;
             }
-            // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
             const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
                 .filter((pathPart) => pathPart !== "")
                 .join("/");
@@ -349,8 +349,8 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(requestClientProperty.toVariable(VariableType.LOCAL), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
@@ -393,8 +393,8 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
@@ -405,12 +405,12 @@ export function generateSubpackage(
             returnValue: asyncClassReference
         })
     });
-
     return { subpackageName: subpackageName.pascalCase.safeName, syncClientClass, asyncClientClass };
 }
 
 export function generateService(
     service: HttpService,
+    subpackage: Subpackage,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
@@ -421,7 +421,7 @@ export function generateService(
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator
 ): ClientClassPair {
-    const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
+    const serviceName = subpackage.name.pascalCase.safeName;
     const import_ = new Import({
         from: locationGenerator.getLocationForServiceDeclaration(service.name),
         isExternal: false
