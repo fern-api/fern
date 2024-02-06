@@ -27,8 +27,38 @@ describe("no-complex-query-params", () => {
                 severity: "error"
             },
             {
-                message: "optional<AliasOfAliasOfObject> is not a valid type for a query parameter",
-                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "g"],
+                message: "ObjectWithLiteral is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "l"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "error"
+            },
+            {
+                message: "NestedObjectWithLiteral is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "n"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "error"
+            },
+            {
+                message: "Union is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "o"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "error"
+            },
+            {
+                message: "UndiscriminatedUnion is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "p"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "error"
+            },
+            {
+                message: "ObjectWithUnion is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "q"],
+                relativeFilepath: RelativeFilePath.of("a.yml"),
+                severity: "error"
+            },
+            {
+                message: "NestedObjectWithUnion is not a valid type for a query parameter",
+                nodePath: ["service", "endpoints", "bar", "request", "query-parameters", "r"],
                 relativeFilepath: RelativeFilePath.of("a.yml"),
                 severity: "error"
             }

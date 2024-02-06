@@ -1,0 +1,30 @@
+types:
+  User:
+    properties:
+      name: string
+      tags: list<string>
+
+service:
+  base-path: /user
+  auth: false
+  endpoints:
+    getUsername:
+      path: ""
+      method: GET
+      request:
+        name: GetUsersRequest
+        query-parameters:
+          limit: integer
+          id: uuid
+          date: date
+          deadline: datetime
+          bytes: base64
+          user: User
+          optionalString: optional<string>
+          excludeUser:
+            type: User
+            allow-multiple: true
+          filter:
+            type: string
+            allow-multiple: true
+      response: User
