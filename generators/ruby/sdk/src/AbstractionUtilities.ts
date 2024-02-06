@@ -117,15 +117,7 @@ export function generateEndpoints(
 
             return new Function_({
                 name: endpoint.name.snakeCase.safeName,
-                parameters: [
-                    ...generator.getEndpointParameters(),
-                    // Optional request_options, e.g. the per-request customizer, optional
-                    new Parameter({
-                        name: requestOptionsVariable.name,
-                        type: requestOptionsVariable.type,
-                        isOptional: true
-                    })
-                ],
+                parameters: generator.getEndpointParameters(),
                 functionBody: isAsync
                     ? [
                           new FunctionInvocation({
@@ -337,6 +329,9 @@ export function generateSubpackage(
     const syncClientClass = new Class_({
         classReference: syncClassReference,
         includeInitializer: false,
+        properties: Array.from(subpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
@@ -378,6 +373,9 @@ export function generateSubpackage(
     const asyncClientClass = new Class_({
         classReference: asyncClassReference,
         includeInitializer: false,
+        properties: Array.from(asyncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
