@@ -4,7 +4,7 @@ require_relative "submission_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class StderrResponse
       attr_reader :submission_id, :stderr, :additional_properties
 

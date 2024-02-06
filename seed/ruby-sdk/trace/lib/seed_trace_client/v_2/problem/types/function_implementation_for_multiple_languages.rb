@@ -5,7 +5,7 @@ require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class FunctionImplementationForMultipleLanguages
         attr_reader :code_by_language, :additional_properties
 

@@ -5,7 +5,7 @@ require_relative "running_submission_state"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class RunningResponse
       attr_reader :submission_id, :state, :additional_properties
 

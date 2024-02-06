@@ -15,6 +15,7 @@ export declare namespace Class_ {
         expressions?: Expression[];
         includeInitializer?: boolean;
         initializerOverride?: Function_;
+        children?: AstNode | AstNode[];
     }
 }
 
@@ -31,9 +32,12 @@ export class Class_ extends AstNode {
 
     public initializer?: Function_;
 
+    public children: AstNode[];
+
     constructor({
         classReference,
         initializerOverride,
+        children,
         properties = [],
         functions = [],
         expressions = [],
@@ -68,6 +72,7 @@ export class Class_ extends AstNode {
         }
         this.functions = functions;
         this.expressions = expressions;
+        this.children = children instanceof AstNode ? [children] : children ?? [];
     }
 
     public writeInternal(startingTabSpaces: number): void {
@@ -89,6 +94,9 @@ export class Class_ extends AstNode {
         this.functions.map((fun) =>
             this.addText({ stringContent: fun.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
         );
+        this.children.map((c) =>
+            this.addText({ stringContent: c.write({ startingTabSpaces: this.tabSizeSpaces + startingTabSpaces }) })
+        );
         this.addText({ stringContent: BLOCK_END, startingTabSpaces });
     }
 
@@ -97,6 +105,7 @@ export class Class_ extends AstNode {
         this.functions.forEach((fun) => (imports = new Set([...imports, ...fun.getImports()])));
         this.properties.forEach((prop) => (imports = new Set([...imports, ...prop.getImports()])));
         this.expressions.forEach((exp) => (imports = new Set([...imports, ...exp.getImports()])));
+        this.children.forEach((child) => (imports = new Set([...imports, ...child.getImports()])));
         // Do not import self
         return new Set([...imports].filter((i) => i !== this.classReference.import_));
     }

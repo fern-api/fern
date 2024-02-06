@@ -4,7 +4,7 @@ require_relative "file"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Directory
       attr_reader :name, :files, :directories, :additional_properties
 

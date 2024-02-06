@@ -4,7 +4,7 @@ require "json"
 require_relative "field_value"
 
 module SeedApiClient
-  module Ast
+  class Ast
     class ContainerValue
       attr_reader :member, :discriminant
 

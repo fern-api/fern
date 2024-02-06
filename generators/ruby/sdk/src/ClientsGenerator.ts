@@ -185,6 +185,7 @@ export class ClientsGenerator {
                 clientName,
                 [serviceClasses.syncClientClass, serviceClasses.asyncClientClass],
                 package_.fernFilepath,
+                [],
                 false
             );
             const serviceFile = new GeneratedRubyFile({

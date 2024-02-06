@@ -5,7 +5,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class TestCaseImplementationDescription
         attr_reader :boards, :additional_properties
 

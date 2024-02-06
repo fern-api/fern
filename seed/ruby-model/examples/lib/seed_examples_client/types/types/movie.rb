@@ -5,7 +5,7 @@ require_relative "../../commons/types/types/tag"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Movie
       attr_reader :id, :title, :from, :rating, :type, :tag, :book, :additional_properties
 

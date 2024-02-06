@@ -4,7 +4,7 @@ require "date"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Moment
       attr_reader :id, :date, :datetime, :additional_properties
 

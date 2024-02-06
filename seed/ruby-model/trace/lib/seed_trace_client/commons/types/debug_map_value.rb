@@ -4,7 +4,7 @@ require_relative "debug_key_value_pairs"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DebugMapValue
       attr_reader :key_value_pairs, :additional_properties
 

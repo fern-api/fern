@@ -6,7 +6,7 @@ require_relative "submission_file_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceSubmitRequest
       attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties
 

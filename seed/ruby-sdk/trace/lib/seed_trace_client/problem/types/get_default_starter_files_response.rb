@@ -4,7 +4,7 @@ require "json"
 require_relative "../../commons/types/language"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class GetDefaultStarterFilesResponse
       attr_reader :files, :additional_properties
 

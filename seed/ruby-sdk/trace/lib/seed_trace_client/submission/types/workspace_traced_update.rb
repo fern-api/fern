@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceTracedUpdate
       attr_reader :trace_responses_size, :additional_properties
 

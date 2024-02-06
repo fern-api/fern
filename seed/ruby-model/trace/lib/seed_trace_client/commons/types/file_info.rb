@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class FileInfo
       attr_reader :filename, :contents, :additional_properties
 

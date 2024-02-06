@@ -6,7 +6,7 @@ require_relative "test_submission_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionState
       attr_reader :problem_id, :default_test_cases, :custom_test_cases, :status, :additional_properties
 

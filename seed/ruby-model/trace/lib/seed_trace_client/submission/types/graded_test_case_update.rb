@@ -5,7 +5,7 @@ require_relative "test_case_grade"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GradedTestCaseUpdate
       attr_reader :test_case_id, :grade, :additional_properties
 

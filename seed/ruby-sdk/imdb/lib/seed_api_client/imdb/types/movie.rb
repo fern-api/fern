@@ -4,7 +4,7 @@ require_relative "movie_id"
 require "json"
 
 module SeedApiClient
-  module Imdb
+  class Imdb
     class Movie
       attr_reader :id, :title, :rating, :additional_properties
 

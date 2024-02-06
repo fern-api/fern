@@ -3,7 +3,7 @@
 require "json"
 
 module SeedApiClient
-  module Ast
+  class Ast
     class ObjectValue
       attr_reader :additional_properties
 

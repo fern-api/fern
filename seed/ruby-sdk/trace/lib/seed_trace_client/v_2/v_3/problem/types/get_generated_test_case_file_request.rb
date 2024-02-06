@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class GetGeneratedTestCaseFileRequest
           attr_reader :template, :test_case, :additional_properties
 

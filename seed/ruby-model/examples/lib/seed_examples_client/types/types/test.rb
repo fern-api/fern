@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Test
       attr_reader :member, :discriminant
 

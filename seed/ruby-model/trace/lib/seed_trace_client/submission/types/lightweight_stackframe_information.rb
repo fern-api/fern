@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class LightweightStackframeInformation
       attr_reader :num_stack_frames, :top_stack_frame_method_name, :additional_properties
 

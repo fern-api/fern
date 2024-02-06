@@ -8,7 +8,7 @@ require_relative "doubly_linked_list_node_and_list_value"
 require_relative "generic_value"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DebugVariableValue
       attr_reader :member, :discriminant
 

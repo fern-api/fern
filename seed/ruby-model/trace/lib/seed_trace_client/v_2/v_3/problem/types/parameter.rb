@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class Parameter
           attr_reader :parameter_id, :name, :variable_type, :additional_properties
 

@@ -7,7 +7,7 @@ require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class BasicCustomFiles
         attr_reader :method_name, :signature, :additional_files, :basic_test_case_template, :additional_properties
 

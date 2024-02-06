@@ -4,7 +4,7 @@ require "json"
 require_relative "../../commons/types/language"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceStarterFilesResponseV2
       attr_reader :files_by_language, :additional_properties
 

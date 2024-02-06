@@ -4,7 +4,7 @@ require_relative "problem_description_board"
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class ProblemDescription
       attr_reader :boards, :additional_properties
 

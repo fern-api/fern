@@ -4,7 +4,7 @@ require_relative "workspace_submission_update"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceSubmissionStatusV2
       attr_reader :updates, :additional_properties
 

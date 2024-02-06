@@ -4,7 +4,7 @@ require_relative "../../commons/types/variable_type"
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class VariableTypeAndName
       attr_reader :variable_type, :name, :additional_properties
 

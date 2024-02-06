@@ -4,7 +4,7 @@ require_relative "scope"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class StackFrame
       attr_reader :method_name, :line_number, :scopes, :additional_properties
 

@@ -8,7 +8,7 @@ require_relative "stack_information"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TraceResponseV2
       attr_reader :submission_id, :line_number, :file, :return_value, :expression_location, :stack, :stdout,
                   :additional_properties

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedAudiencesClient
-  module Foo
+  class Foo
     class FilteredType
       attr_reader :public_property, :private_property, :additional_properties
 

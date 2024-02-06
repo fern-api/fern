@@ -4,7 +4,7 @@ require_relative "../../commons/types/file_info"
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class ProblemFiles
       attr_reader :solution_file, :read_only_files, :additional_properties
 

@@ -5,7 +5,7 @@ require_relative "test_submission_update_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionUpdate
       attr_reader :update_time, :update_info, :additional_properties
 

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedResponsePropertyClient
-  module Service
+  class Service
     class Movie
       attr_reader :id, :name, :additional_properties
 

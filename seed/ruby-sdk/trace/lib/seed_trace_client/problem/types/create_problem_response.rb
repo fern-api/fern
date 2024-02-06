@@ -5,7 +5,7 @@ require_relative "create_problem_error"
 require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class CreateProblemResponse
       attr_reader :member, :discriminant
 

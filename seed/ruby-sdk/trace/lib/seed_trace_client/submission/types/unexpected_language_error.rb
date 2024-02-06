@@ -4,7 +4,7 @@ require_relative "../../commons/types/language"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class UnexpectedLanguageError
       attr_reader :expected_language, :actual_language, :additional_properties
 

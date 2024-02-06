@@ -6,7 +6,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class DefaultProvidedFile
         attr_reader :file, :related_types, :additional_properties
 

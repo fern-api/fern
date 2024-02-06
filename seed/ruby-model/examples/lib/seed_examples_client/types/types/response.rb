@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Response
       attr_reader :response, :additional_properties
 

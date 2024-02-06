@@ -5,7 +5,7 @@ require "json"
 
 module SeedAudiencesClient
   module FolderA
-    module Service
+    class Service
       class Response
         attr_reader :foo, :additional_properties
 

@@ -4,7 +4,7 @@ require "json"
 require_relative "exception_info"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExceptionV2
       attr_reader :member, :discriminant
 

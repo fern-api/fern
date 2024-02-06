@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Submission
+  class Submission
     # @type [EXECUTION_SESSION_STATUS]
     EXECUTION_SESSION_STATUS = {
       creating_container: "CREATING_CONTAINER",

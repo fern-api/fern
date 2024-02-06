@@ -6,7 +6,7 @@ require_relative "../../v_2/problem/types/problem_info_v_2"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionStatusV2
       attr_reader :updates, :problem_id, :problem_version, :problem_info, :additional_properties
 

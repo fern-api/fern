@@ -4,7 +4,7 @@ require_relative "node"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Tree
       attr_reader :nodes, :additional_properties
 

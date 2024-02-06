@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Submission
+  class Submission
     # @type [RUNNING_SUBMISSION_STATE]
     RUNNING_SUBMISSION_STATE = {
       queueing_submission: "QUEUEING_SUBMISSION",

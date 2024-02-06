@@ -5,7 +5,7 @@ require "json"
 
 module SeedObjectsWithImportsClient
   module File
-    module Directory
+    class Directory
       class Directory
         attr_reader :name, :files, :directories, :additional_properties
 

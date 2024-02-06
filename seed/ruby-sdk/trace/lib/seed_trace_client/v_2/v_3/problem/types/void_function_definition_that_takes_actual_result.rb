@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         # The generated signature will include an additional param, actualResult
         class VoidFunctionDefinitionThatTakesActualResult
           attr_reader :additional_parameters, :code, :additional_properties

@@ -2,7 +2,7 @@
 require "json"
 
 module SeedNurseryApiClient
-  module Package
+  class Package
     class Record
       attr_reader :foo, :_3_d, :additional_properties
       # @param foo [Hash{String => String}] 

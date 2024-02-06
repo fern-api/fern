@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedExamplesClient
-  module Types
+  class Types
     MOVIE_ID = String
   end
 end

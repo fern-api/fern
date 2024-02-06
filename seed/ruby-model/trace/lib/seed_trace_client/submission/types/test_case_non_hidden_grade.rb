@@ -5,7 +5,7 @@ require_relative "exception_v_2"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseNonHiddenGrade
       attr_reader :passed, :actual_result, :exception, :stdout, :additional_properties
 

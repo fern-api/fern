@@ -5,7 +5,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class GetFunctionSignatureRequest
         attr_reader :function_signature, :additional_properties
 

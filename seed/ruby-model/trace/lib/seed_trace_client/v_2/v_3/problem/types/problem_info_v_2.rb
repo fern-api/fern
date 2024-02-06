@@ -12,7 +12,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class ProblemInfoV2
           attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :supported_languages,
                       :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties

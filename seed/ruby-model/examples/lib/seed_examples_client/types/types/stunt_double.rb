@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class StuntDouble
       attr_reader :name, :actor_or_actress_id, :additional_properties
 

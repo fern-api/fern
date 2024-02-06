@@ -5,7 +5,7 @@ require_relative "test_case_hidden_grade"
 require_relative "test_case_non_hidden_grade"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseGrade
       attr_reader :member, :discriminant
 

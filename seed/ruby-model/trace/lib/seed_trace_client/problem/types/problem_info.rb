@@ -9,7 +9,7 @@ require "json"
 require_relative "../../commons/types/language"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class ProblemInfo
       attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :files, :input_params,
                   :output_type, :testcases, :method_name, :supports_custom_test_cases, :additional_properties

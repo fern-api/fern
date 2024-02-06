@@ -306,8 +306,8 @@ export function generateRootPackage(
         clientName,
         [clientClass, asyncClientClass],
         undefined,
-        true,
-        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
+        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport],
+        true
     );
     return new GeneratedRubyFile({
         rootNode,

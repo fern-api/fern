@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class UpdateProblemResponse
       attr_reader :problem_version, :additional_properties
 

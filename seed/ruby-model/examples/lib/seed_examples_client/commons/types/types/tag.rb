@@ -2,7 +2,7 @@
 
 module SeedExamplesClient
   module Commons
-    module Types
+    class Types
       TAG = String
     end
   end

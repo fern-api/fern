@@ -7,7 +7,7 @@ require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmitRequestV2
       attr_reader :submission_id, :language, :submission_files, :problem_id, :problem_version, :user_id,
                   :additional_properties

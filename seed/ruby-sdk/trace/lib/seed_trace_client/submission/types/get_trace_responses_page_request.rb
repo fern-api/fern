@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GetTraceResponsesPageRequest
       attr_reader :offset, :additional_properties
 

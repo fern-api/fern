@@ -5,7 +5,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class TestCaseExpects
           attr_reader :expected_stdout, :additional_properties
 

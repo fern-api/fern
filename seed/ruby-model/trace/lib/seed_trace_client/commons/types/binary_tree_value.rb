@@ -4,7 +4,7 @@ require_relative "node_id"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class BinaryTreeValue
       attr_reader :root, :nodes, :additional_properties
 

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedFileUploadClient
-  module Service
+  class Service
     class MyObject
       attr_reader :foo, :additional_properties
 

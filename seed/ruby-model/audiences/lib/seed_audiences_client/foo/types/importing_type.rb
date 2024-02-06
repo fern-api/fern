@@ -4,7 +4,7 @@ require_relative "../../commons/types/imported"
 require "json"
 
 module SeedAudiencesClient
-  module Foo
+  class Foo
     class ImportingType
       attr_reader :imported, :additional_properties
 

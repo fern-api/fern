@@ -7,7 +7,7 @@ require_relative "singly_linked_list_value"
 require_relative "doubly_linked_list_value"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class VariableValue
       attr_reader :member, :discriminant
 

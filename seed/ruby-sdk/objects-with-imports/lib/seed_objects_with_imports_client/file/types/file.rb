@@ -4,7 +4,7 @@ require_relative "file_info"
 require "json"
 
 module SeedObjectsWithImportsClient
-  module File
+  class File
     class File
       attr_reader :name, :contents, :info, :additional_properties
 

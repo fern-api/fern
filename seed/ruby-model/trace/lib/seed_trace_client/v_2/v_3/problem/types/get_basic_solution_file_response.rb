@@ -6,7 +6,7 @@ require_relative "../../../../commons/types/language"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class GetBasicSolutionFileResponse
           attr_reader :solution_file_by_language, :additional_properties
 

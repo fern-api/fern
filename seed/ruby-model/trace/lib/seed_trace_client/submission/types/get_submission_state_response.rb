@@ -6,7 +6,7 @@ require_relative "submission_type_state"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GetSubmissionStateResponse
       attr_reader :time_submitted, :submission, :language, :submission_type_state, :additional_properties
 

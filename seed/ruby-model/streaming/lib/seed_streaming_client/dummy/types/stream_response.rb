@@ -3,7 +3,7 @@
 require "json"
 
 module SeedStreamingClient
-  module Dummy
+  class Dummy
     class StreamResponse
       attr_reader :id, :name, :additional_properties
 

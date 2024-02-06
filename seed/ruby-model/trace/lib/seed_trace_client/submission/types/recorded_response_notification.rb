@@ -4,7 +4,7 @@ require_relative "submission_id"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class RecordedResponseNotification
       attr_reader :submission_id, :trace_responses_size, :test_case_id, :additional_properties
 

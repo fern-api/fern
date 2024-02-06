@@ -4,7 +4,7 @@ require_relative "variable_type"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class ListType
       attr_reader :value_type, :is_fixed_length, :additional_properties
 

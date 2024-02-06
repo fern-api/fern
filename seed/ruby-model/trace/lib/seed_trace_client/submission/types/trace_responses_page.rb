@@ -4,7 +4,7 @@ require_relative "trace_response"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TraceResponsesPage
       attr_reader :offset, :trace_responses, :additional_properties
 

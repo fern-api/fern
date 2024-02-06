@@ -4,7 +4,7 @@ require "json"
 require_relative "generic_create_problem_error"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class CreateProblemError
       attr_reader :member, :discriminant
 

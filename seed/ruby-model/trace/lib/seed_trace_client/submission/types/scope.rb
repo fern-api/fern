@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class Scope
       attr_reader :variables, :additional_properties
 

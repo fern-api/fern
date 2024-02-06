@@ -6,7 +6,7 @@ require_relative "traced_file"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class RecordingResponseNotification
       attr_reader :submission_id, :test_case_id, :line_number, :lightweight_stack_info, :traced_file,
                   :additional_properties

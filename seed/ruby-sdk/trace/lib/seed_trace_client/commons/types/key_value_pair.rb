@@ -4,7 +4,7 @@ require_relative "variable_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class KeyValuePair
       attr_reader :key, :value, :additional_properties
 

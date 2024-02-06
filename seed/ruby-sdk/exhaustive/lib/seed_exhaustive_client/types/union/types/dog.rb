@@ -4,7 +4,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Union
+    class Union
       class Dog
         attr_reader :name, :likes_to_woof, :additional_properties
 

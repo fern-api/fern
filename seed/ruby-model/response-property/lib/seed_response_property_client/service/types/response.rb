@@ -4,7 +4,7 @@ require_relative "movie"
 require "json"
 
 module SeedResponsePropertyClient
-  module Service
+  class Service
     class Response
       attr_reader :data, :metadata, :docs, :additional_properties
 

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExpressionLocation
       attr_reader :start, :offset, :additional_properties
 

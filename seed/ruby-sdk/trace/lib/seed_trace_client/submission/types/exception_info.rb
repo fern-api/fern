@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExceptionInfo
       attr_reader :exception_type, :exception_message, :exception_stacktrace, :additional_properties
 

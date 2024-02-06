@@ -5,7 +5,7 @@ require_relative "singly_linked_list_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class SinglyLinkedListNodeAndListValue
       attr_reader :node_id, :full_list, :additional_properties
 

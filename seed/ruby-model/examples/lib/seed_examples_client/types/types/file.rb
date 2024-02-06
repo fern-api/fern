@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class File
       attr_reader :name, :contents, :additional_properties
 

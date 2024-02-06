@@ -4,7 +4,7 @@ require_relative "../../commons/types/file_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceFiles
       attr_reader :main_file, :read_only_files, :additional_properties
 

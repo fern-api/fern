@@ -6,7 +6,7 @@ require_relative "../../../../commons/types/language"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class GeneratedFiles
           attr_reader :generated_test_case_files, :generated_template_files, :other, :additional_properties
 

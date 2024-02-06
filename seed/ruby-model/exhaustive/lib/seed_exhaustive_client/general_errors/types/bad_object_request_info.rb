@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExhaustiveClient
-  module GeneralErrors
+  class GeneralErrors
     class BadObjectRequestInfo
       attr_reader :message, :additional_properties
 

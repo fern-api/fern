@@ -3,7 +3,7 @@
 require "json"
 
 module SeedNurseryApiClient
-  module Package
+  class Package
     class Package
       attr_reader :name, :additional_properties
 

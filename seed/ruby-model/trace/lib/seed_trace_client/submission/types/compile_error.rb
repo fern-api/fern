@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class CompileError
       attr_reader :message, :additional_properties
 

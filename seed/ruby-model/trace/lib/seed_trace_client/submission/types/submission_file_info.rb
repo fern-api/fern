@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionFileInfo
       attr_reader :directory, :filename, :contents, :additional_properties
 

@@ -4,7 +4,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Object
+    class Object
       class ObjectWithMapOfMap
         attr_reader :map, :additional_properties
 

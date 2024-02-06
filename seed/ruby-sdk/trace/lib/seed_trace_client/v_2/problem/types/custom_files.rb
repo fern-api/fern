@@ -6,7 +6,7 @@ require_relative "basic_custom_files"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class CustomFiles
         attr_reader :member, :discriminant
 

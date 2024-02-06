@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module LangServer
+  class LangServer
     class LangServerResponse
       attr_reader :response, :additional_properties
 

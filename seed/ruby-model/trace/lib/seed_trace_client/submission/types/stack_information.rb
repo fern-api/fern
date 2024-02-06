@@ -4,7 +4,7 @@ require_relative "stack_frame"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class StackInformation
       attr_reader :num_stack_frames, :top_stack_frame, :additional_properties
 
