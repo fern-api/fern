@@ -83,7 +83,7 @@ export function convertSchemaObject(
     propertiesToExclude: Set<string> = new Set(),
     referencedAsRequest = false
 ): SchemaWithExample {
-    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME);
+    const nameOverride = getExtension<string>(schema, FernOpenAPIExtension.TYPE_NAME) ?? schema.title;
     const groupName = getExtension<string>(schema, FernOpenAPIExtension.SDK_GROUP_NAME);
     const generatedName = getGeneratedTypeName(breadcrumbs);
     const description = schema.description;
