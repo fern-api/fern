@@ -2838,7 +2838,7 @@ organization.
 ",
         "union": {
           "google_apps": "AuthConnectionOptionsGoogleApps",
-          "none": "Empty",
+          "none": "empty",
           "oidc": "AuthConnectionOptionsOidc",
           "samlp": "AuthConnectionOptionsSaml",
           "waad": "AuthConnectionOptionsAzureAd",
@@ -2904,19 +2904,6 @@ sort order. If not set, then no prior elements exist.
 ",
         "properties": {
           "dev_user": "DevUser",
-        },
-      },
-      "Empty": "map<string, unknown>",
-      "Enhancement": {
-        "docs": undefined,
-        "extends": [
-          "PartBase",
-        ],
-        "properties": {
-          "target_close_date": {
-            "docs": "Timestamp when the enhancement is expected to be closed.",
-            "type": "optional<datetime>",
-          },
         },
       },
       "EnhancementSummary": "PartBaseSummary",
@@ -3043,7 +3030,7 @@ sort order. If not set, then no prior elements exist.
       "EventPartCreated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventPartDeleted": {
@@ -3058,7 +3045,7 @@ sort order. If not set, then no prior elements exist.
       "EventPartUpdated": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "EventRevOrgCreated": {
@@ -3085,7 +3072,7 @@ sort order. If not set, then no prior elements exist.
       "EventTagCreated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTagDeleted": {
@@ -3100,7 +3087,7 @@ sort order. If not set, then no prior elements exist.
       "EventTagUpdated": {
         "docs": undefined,
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "EventTimelineEntryCreated": {
@@ -3127,7 +3114,7 @@ sort order. If not set, then no prior elements exist.
       "EventWebhookCreated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWebhookDeleted": {
@@ -3142,13 +3129,13 @@ sort order. If not set, then no prior elements exist.
       "EventWebhookUpdated": {
         "docs": undefined,
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "EventWorkCreated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "EventWorkDeleted": {
@@ -3163,7 +3150,7 @@ sort order. If not set, then no prior elements exist.
       "EventWorkUpdated": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "ExternalIdentity": {
@@ -3173,15 +3160,6 @@ sort order. If not set, then no prior elements exist.
       "Feature": "PartBase",
       "FeatureSummary": "PartBaseSummary",
       "GroupSummary": "AtomBaseSummary",
-      "Issue": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "priority": "optional<IssuePriority>",
-        },
-      },
       "IssuePriority": {
         "docs": "Priority of the work based upon impact and criticality.",
         "enum": [
@@ -3245,17 +3223,6 @@ always be returned in the specified sort-by order.
         },
       },
       "OrgType": "literal<"rev_org">",
-      "Part": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "capability": "Capability",
-          "enhancement": "Enhancement",
-          "feature": "Feature",
-          "product": "Product",
-        },
-      },
       "PartBase": {
         "docs": undefined,
         "extends": [
@@ -3376,14 +3343,14 @@ always be returned in the specified sort-by order.
       "PartsCreateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "PartsDeleteResponse": "map<string, unknown>",
       "PartsGetResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "PartsListResponse": {
@@ -3397,7 +3364,7 @@ sort order. If not set, then no later elements exist.
           },
           "parts": {
             "docs": "The list of parts.",
-            "type": "list<Part>",
+            "type": "list<part>",
           },
           "prev_cursor": {
             "docs": "The cursor used to iterate preceding results in accordance to the
@@ -3429,7 +3396,7 @@ sort order. If not set, then no prior elements exist.
           "capability": "PartsUpdateRequestCapability",
           "enhancement": "PartsUpdateRequestEnhancement",
           "feature": "PartsUpdateRequestFeature",
-          "none": "Empty",
+          "none": "empty",
           "product": "PartsUpdateRequestProduct",
         },
       },
@@ -3459,7 +3426,7 @@ empty.
       "PartsUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "part": "Part",
+          "part": "part",
         },
       },
       "Product": "PartBase",
@@ -3567,15 +3534,6 @@ the value must be one that's specified in the tag's allowed values.
           },
         },
       },
-      "Stage": {
-        "docs": "Describes the current stage of a work item.",
-        "properties": {
-          "name": {
-            "docs": "Current stage name of the work item.",
-            "type": "string",
-          },
-        },
-      },
       "StageInit": {
         "docs": "Sets an object's initial stage.",
         "properties": {
@@ -3596,34 +3554,6 @@ the value must be one that's specified in the tag's allowed values.
         },
       },
       "SysUserSummary": "UserBaseSummary",
-      "Tag": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "allowed_values": {
-            "docs": "The allowed values for the tag, where a value is provided when a
-tag is associated with an object. If empty, then no value should be
-provided when the association is made.
-",
-            "type": "optional<list<string>>",
-          },
-          "description": {
-            "docs": "An informative description for the tag that should provide context
-on the tag's purpose and usage.
-",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "The name of the tag, which denotes the logical concept by which all
-tagged objects will be associated. The name is guaranteed to be
-unique.
-",
-            "type": "string",
-          },
-        },
-      },
       "TagSummary": {
         "docs": undefined,
         "extends": [
@@ -3652,7 +3582,7 @@ unique.
       "TagsCreateResponse": {
         "docs": "The response to creating a new tag.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "TagsDeleteResponse": {
@@ -3662,7 +3592,7 @@ unique.
       "TagsGetResponse": {
         "docs": "The response to getting a tag's information.",
         "properties": {
-          "tag": "Tag",
+          "tag": "tag",
         },
       },
       "TagsListResponse": {
@@ -3682,7 +3612,7 @@ sort order. If not set, then no prior elements exist.
           },
           "tags": {
             "docs": "The list of tags.",
-            "type": "list<Tag>",
+            "type": "list<tag>",
           },
         },
       },
@@ -3698,18 +3628,7 @@ sort order. If not set, then no prior elements exist.
       "TagsUpdateResponse": {
         "docs": "The response for updating a tag.",
         "properties": {
-          "tag": "Tag",
-        },
-      },
-      "Ticket": {
-        "docs": undefined,
-        "extends": [
-          "WorkBase",
-        ],
-        "properties": {
-          "group": "optional<GroupSummary>",
-          "rev_org": "optional<OrgSummary>",
-          "severity": "optional<TicketSeverity>",
+          "tag": "tag",
         },
       },
       "TicketSeverity": {
@@ -3962,27 +3881,6 @@ not present, then it's ignored. Mututally exclusive with \`set\`.
           "sys_user",
         ],
       },
-      "Webhook": {
-        "docs": undefined,
-        "extends": [
-          "AtomBase",
-        ],
-        "properties": {
-          "event_types": {
-            "docs": "The event types that the webhook will receive.",
-            "type": "optional<list<WebhookEventType>>",
-          },
-          "secret": {
-            "docs": "The secret to use for verifying webhook events.",
-            "type": "string",
-          },
-          "status": "WebhookStatus",
-          "url": {
-            "docs": "The URL of the webhook endpoint.",
-            "type": "string",
-          },
-        },
-      },
       "WebhookEventRequest": {
         "docs": undefined,
         "properties": {
@@ -4079,7 +3977,7 @@ be set for other request types.
       "WebhooksCreateResponse": {
         "docs": "The response to creating a new webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "WebhooksDeleteResponse": {
@@ -4089,7 +3987,7 @@ be set for other request types.
       "WebhooksGetResponse": {
         "docs": "The response to getting the information for the webhook.",
         "properties": {
-          "webhook": "Webhook",
+          "webhook": "webhook",
         },
       },
       "WebhooksListResponse": {
@@ -4097,7 +3995,7 @@ be set for other request types.
         "properties": {
           "webhooks": {
             "docs": "The list of webhooks.",
-            "type": "list<Webhook>",
+            "type": "list<webhook>",
           },
         },
       },
@@ -4137,16 +4035,7 @@ event types. Note this is mutually exclusive with 'add' and
       "WebhooksUpdateResponse": {
         "docs": "The response to updating the webhook.",
         "properties": {
-          "webhook": "Webhook",
-        },
-      },
-      "Work": {
-        "base-properties": {},
-        "discriminant": "type",
-        "docs": undefined,
-        "union": {
-          "issue": "Issue",
-          "ticket": "Ticket",
+          "webhook": "webhook",
         },
       },
       "WorkBase": {
@@ -4172,7 +4061,7 @@ event types. Note this is mutually exclusive with 'add' and
             "docs": "Users that reported the work.",
             "type": "optional<list<UserSummary>>",
           },
-          "stage": "optional<Stage>",
+          "stage": "optional<stage>",
           "tags": {
             "docs": "Tags associated with the object.",
             "type": "optional<list<TagWithValue>>",
@@ -4267,7 +4156,7 @@ issues.
       "WorksCreateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "WorksDeleteResponse": "map<string, unknown>",
@@ -4276,14 +4165,14 @@ issues.
         "properties": {
           "works": {
             "docs": "The resulting collection of work items.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
       "WorksGetResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
         },
       },
       "WorksListResponse": {
@@ -4303,7 +4192,7 @@ sort order. If not set, then no prior elements exist.
           },
           "works": {
             "docs": "The list of works.",
-            "type": "list<Work>",
+            "type": "list<work>",
           },
         },
       },
@@ -4342,7 +4231,7 @@ sort order. If not set, then no prior elements exist.
         "docs": undefined,
         "union": {
           "issue": "WorksUpdateRequestIssue",
-          "none": "Empty",
+          "none": "empty",
           "ticket": "WorksUpdateRequestTicket",
         },
       },
@@ -4413,7 +4302,118 @@ empty.
       "WorksUpdateResponse": {
         "docs": undefined,
         "properties": {
-          "work": "Work",
+          "work": "work",
+        },
+      },
+      "empty": "map<string, unknown>",
+      "enhancement": {
+        "docs": undefined,
+        "extends": [
+          "PartBase",
+        ],
+        "properties": {
+          "target_close_date": {
+            "docs": "Timestamp when the enhancement is expected to be closed.",
+            "type": "optional<datetime>",
+          },
+        },
+      },
+      "issue": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "priority": "optional<IssuePriority>",
+        },
+      },
+      "part": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "capability": "Capability",
+          "enhancement": "enhancement",
+          "feature": "Feature",
+          "product": "Product",
+        },
+      },
+      "stage": {
+        "docs": "Describes the current stage of a work item.",
+        "properties": {
+          "name": {
+            "docs": "Current stage name of the work item.",
+            "type": "string",
+          },
+        },
+      },
+      "tag": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "allowed_values": {
+            "docs": "The allowed values for the tag, where a value is provided when a
+tag is associated with an object. If empty, then no value should be
+provided when the association is made.
+",
+            "type": "optional<list<string>>",
+          },
+          "description": {
+            "docs": "An informative description for the tag that should provide context
+on the tag's purpose and usage.
+",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "The name of the tag, which denotes the logical concept by which all
+tagged objects will be associated. The name is guaranteed to be
+unique.
+",
+            "type": "string",
+          },
+        },
+      },
+      "ticket": {
+        "docs": undefined,
+        "extends": [
+          "WorkBase",
+        ],
+        "properties": {
+          "group": "optional<GroupSummary>",
+          "rev_org": "optional<OrgSummary>",
+          "severity": "optional<TicketSeverity>",
+        },
+      },
+      "webhook": {
+        "docs": undefined,
+        "extends": [
+          "AtomBase",
+        ],
+        "properties": {
+          "event_types": {
+            "docs": "The event types that the webhook will receive.",
+            "type": "optional<list<WebhookEventType>>",
+          },
+          "secret": {
+            "docs": "The secret to use for verifying webhook events.",
+            "type": "string",
+          },
+          "status": "WebhookStatus",
+          "url": {
+            "docs": "The URL of the webhook endpoint.",
+            "type": "string",
+          },
+        },
+      },
+      "work": {
+        "base-properties": {},
+        "discriminant": "type",
+        "docs": undefined,
+        "union": {
+          "issue": "issue",
+          "ticket": "ticket",
         },
       },
     },

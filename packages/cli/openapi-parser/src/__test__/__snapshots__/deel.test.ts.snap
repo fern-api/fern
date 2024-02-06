@@ -33730,7 +33730,7 @@ exports[`open api parser deel parse open api 1`] = `
       "description": undefined,
       "generatedName": "InvoiceContractor",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Contractor",
       "properties": [
         {
           "audiences": [],

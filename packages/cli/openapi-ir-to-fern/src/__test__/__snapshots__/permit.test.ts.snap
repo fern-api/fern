@@ -1636,7 +1636,7 @@ authenticated actor (i.e: human team member or api key).",
             },
             "response": {
               "docs": "Successful Response",
-              "type": "root.OrganizationReadWithApiKey",
+              "type": "root.OrganizationReadWithAPIKey",
             },
           },
           "delete_organization": {
@@ -6753,7 +6753,7 @@ Fields that will be provided will be completely overwritten.",
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "HttpValidationError",
+        "type": "HTTPValidationError",
       },
     },
     "types": {
@@ -7127,7 +7127,7 @@ Fields that will be provided will be completely overwritten.",
             "docs": "Unique id of the organization that the environment belongs to.",
             "type": "string",
           },
-          "pdp_configs": "list<PdpConfigRead>",
+          "pdp_configs": "list<PDPConfigRead>",
           "project_id": {
             "docs": "Unique id of the project that the environment belongs to.",
             "type": "string",
@@ -7143,7 +7143,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "HttpValidationError": {
+      "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",
@@ -7368,7 +7368,7 @@ Fields that will be provided will be completely overwritten.",
           },
         },
       },
-      "OrganizationReadWithApiKey": {
+      "OrganizationReadWithAPIKey": {
         "docs": undefined,
         "properties": {
           "api_key_id": "optional<string>",
@@ -7400,6 +7400,26 @@ Fields that will be provided will be completely overwritten.",
           "updated_at": {
             "docs": "Date and time when the organization was last updated/modified (ISO_8601 format).",
             "type": "datetime",
+          },
+        },
+      },
+      "PDPConfigRead": {
+        "docs": undefined,
+        "properties": {
+          "client_secret": "string",
+          "environment_id": {
+            "docs": "Unique id of the environment that the pdp_config belongs to.",
+            "type": "string",
+          },
+          "id": "string",
+          "name": "optional<string>",
+          "organization_id": {
+            "docs": "Unique id of the organization that the pdp_config belongs to.",
+            "type": "string",
+          },
+          "project_id": {
+            "docs": "Unique id of the project that the pdp_config belongs to.",
+            "type": "string",
           },
         },
       },
@@ -7467,26 +7487,6 @@ Fields that will be provided will be completely overwritten.",
           },
           "page_count": "optional<integer>",
           "total_count": "integer",
-        },
-      },
-      "PdpConfigRead": {
-        "docs": undefined,
-        "properties": {
-          "client_secret": "string",
-          "environment_id": {
-            "docs": "Unique id of the environment that the pdp_config belongs to.",
-            "type": "string",
-          },
-          "id": "string",
-          "name": "optional<string>",
-          "organization_id": {
-            "docs": "Unique id of the organization that the pdp_config belongs to.",
-            "type": "string",
-          },
-          "project_id": {
-            "docs": "Unique id of the project that the pdp_config belongs to.",
-            "type": "string",
-          },
         },
       },
       "Permission": {
@@ -7863,16 +7863,8 @@ The actions represents the ways you can interact with a protected resource.",
       "ResourceRoleList": {
         "docs": undefined,
         "properties": {
-          "roles": "ResourceRoleListRoles",
+          "roles": "Roles",
         },
-      },
-      "ResourceRoleListRoles": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "list<ResourceRoleRead>",
-          "PaginatedResultResourceRoleRead",
-        ],
       },
       "ResourceRoleRead": {
         "docs": undefined,
@@ -8030,16 +8022,8 @@ The actions represents the ways you can interact with a protected resource.",
       "RoleList": {
         "docs": undefined,
         "properties": {
-          "roles": "RoleListRoles",
+          "roles": "Roles",
         },
-      },
-      "RoleListRoles": {
-        "discriminated": false,
-        "docs": undefined,
-        "union": [
-          "list<RoleRead>",
-          "PaginatedResultRoleRead",
-        ],
       },
       "RoleRead": {
         "docs": undefined,
@@ -8093,6 +8077,14 @@ The actions represents the ways you can interact with a protected resource.",
             "type": "datetime",
           },
         },
+      },
+      "Roles": {
+        "discriminated": false,
+        "docs": undefined,
+        "union": [
+          "list<RoleRead>",
+          "PaginatedResultRoleRead",
+        ],
       },
       "RolesBlock": {
         "docs": "Resource roles definition block, defines all the roles on the resource.",

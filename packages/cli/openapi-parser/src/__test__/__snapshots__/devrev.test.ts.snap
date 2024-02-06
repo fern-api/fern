@@ -8436,7 +8436,7 @@ sort order. If not set, then no prior elements exist.
         },
         "type": "primitive",
       },
-      "nameOverride": undefined,
+      "nameOverride": "empty",
       "type": "map",
       "value": {
         "generatedName": "EmptyValue",
@@ -8459,7 +8459,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "Enhancement",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "enhancement",
       "properties": [
         {
           "audiences": [],
@@ -9653,7 +9653,7 @@ sort order. If not set, then no prior elements exist.
       "description": undefined,
       "generatedName": "Issue",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "issue",
       "properties": [
         {
           "audiences": [],
@@ -9896,7 +9896,7 @@ always be returned in the specified sort-by order.
         "discriminantProperty": "type",
         "generatedName": "Part",
         "groupName": undefined,
-        "nameOverride": undefined,
+        "nameOverride": "part",
         "schemas": {
           "capability": {
             "description": undefined,
@@ -11758,7 +11758,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": "Describes the current stage of a work item.",
       "generatedName": "Stage",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "stage",
       "properties": [
         {
           "audiences": [],
@@ -11877,7 +11877,7 @@ the value must be one that's specified in the tag's allowed values.
       "description": undefined,
       "generatedName": "Tag",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "tag",
       "properties": [
         {
           "audiences": [],
@@ -12519,7 +12519,7 @@ tags.
       "description": undefined,
       "generatedName": "Ticket",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ticket",
       "properties": [
         {
           "audiences": [],
@@ -13886,7 +13886,7 @@ default visibility.
       "description": undefined,
       "generatedName": "Webhook",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "webhook",
       "properties": [
         {
           "audiences": [],
@@ -15187,7 +15187,7 @@ event types. Note this is mutually exclusive with 'add' and
         "discriminantProperty": "type",
         "generatedName": "Work",
         "groupName": undefined,
-        "nameOverride": undefined,
+        "nameOverride": "work",
         "schemas": {
           "issue": {
             "description": undefined,

@@ -7757,7 +7757,7 @@ A payment intent captures all payment information (such as the amount to be char
 ⚠️ **Note**: You can only provide up to 50 keys (keys can have up to 50 characters each and each value can be up to 500 characters). We do not support nested objects, only ASCII values.",
                     "type": "optional<map<string, unknown>>",
                   },
-                  "payment_method_details": "root.PaymentIntentsPaymentMethodDetailsPse",
+                  "payment_method_details": "root.PSE",
                   "provider": "root.EnumPaymentLinkProvider",
                 },
               },
@@ -14979,6 +14979,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
+      "BUSINESS": {
+        "docs": "Details about the OFPI payment method.",
+        "properties": {
+          "open_finance": "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi",
+        },
+      },
       "BadRequestErrorBodyItem": {
         "discriminated": false,
         "docs": undefined,
@@ -15077,7 +15083,7 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
             "docs": "For PSE, this field will return an empty object.",
             "type": "map<string, unknown>",
           },
-          "holder": "HolderBusinessResponsePse",
+          "holder": "Business",
           "id": {
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
@@ -15150,19 +15156,12 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
           },
         },
       },
-      "BankAccountHolderRequestOfpi": {
-        "docs": "Details regarding the business bank account holder.",
-        "properties": {
-          "information": "BankAccountHolderRequestOfpiInformation",
-          "type": "EnumBankAccountHolderTypeOfpi",
-        },
-      },
       "BankAccountHolderRequestOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "HolderInformationBusinessOfpi",
-          "HolderInformationIndividualOfpi",
+          "BUSINESS",
+          "INDIVIDUAL",
         ],
       },
       "BankAccountInformationContentPse": {
@@ -15197,7 +15196,7 @@ For \`BUSINESS\` bank accounts, this field is \`null\`.",
             "type": "optional<string>",
           },
           "details": "BankAccountOfpiResponseDetails",
-          "holder": "HolderResponseOfpi",
+          "holder": "OFPI",
           "id": {
             "docs": "Belvo's unique ID for the current bank account.",
             "type": "string",
@@ -15262,7 +15261,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "string",
           },
           "details": "optional<BeneficiaryBankAccountOfpiDetails>",
-          "holder": "HolderResponseOfpi",
+          "holder": "OFPI",
           "id": {
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "string",
@@ -15281,7 +15280,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "BeneficiaryBankAccountPse": {
         "docs": undefined,
         "properties": {
-          "holder": "optional<HolderBusinessResponsePse>",
+          "holder": "optional<Business>",
           "id": {
             "docs": "Belvo's unique ID for the beneficiary bank account.",
             "type": "optional<string>",
@@ -15294,6 +15293,13 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "docs": "The bank account number.",
             "type": "optional<string>",
           },
+        },
+      },
+      "Business": {
+        "docs": "Details regarding the business bank account holder.",
+        "properties": {
+          "Information": "optional<PSE>",
+          "type": "EnumBankAccountHolderTypePse",
         },
       },
       "Categorization": {
@@ -15476,7 +15482,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "payment_method_details": "ChargePaymentMethodDetails",
-          "payment_method_information": "PaymentMethodInformationPse",
+          "payment_method_information": "PSE",
           "payment_method_type": "optional<EnumPaymentLinkAllowedPaymentMethod>",
           "provider": "EnumPaymentLinkProvider",
           "status": {
@@ -15499,15 +15505,9 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "ChargePaymentMethodDetailsPse",
-          "ChargePaymentMethodDetailsOfpi",
+          "PSE",
+          "OFPI",
         ],
-      },
-      "ChargePaymentMethodDetailsOfpi": {
-        "docs": "Details about the payment method.",
-        "properties": {
-          "open_finance": "optional<ChargePaymentMethodDetailsOfpiContent>",
-        },
       },
       "ChargePaymentMethodDetailsOfpiContent": {
         "docs": "Information about the payer of a PSE payment.",
@@ -15520,12 +15520,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "docs": "Unique identifier for the payer’s institution.",
             "type": "optional<string>",
           },
-        },
-      },
-      "ChargePaymentMethodDetailsPse": {
-        "docs": "Details about the payment method.",
-        "properties": {
-          "pse": "optional<ChargePaymentMethodDetailsPseContent>",
         },
       },
       "ChargePaymentMethodDetailsPseContent": {
@@ -15559,7 +15553,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "holder": {
             "docs": "Information regarding the individual bank account holder.",
-            "type": "BankAccountHolderRequestOfpi",
+            "type": "OFPI",
           },
           "institution": {
             "docs": "Belvo's unique ID for the institution that the bank account is created in.",
@@ -15580,7 +15574,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
         "properties": {
           "holder": {
             "docs": "Information regarding the business bank account holder.",
-            "type": "HolderBusinessPse",
+            "type": "PSE",
           },
           "metadata": {
             "docs": "Optional and customizable object where you can provide any additional key-value pairs for your internal purposes. For example, an internal reference number for the payment intent.
@@ -15595,7 +15589,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
           "providers": {
             "docs": "Information about the payment service provider, required in order to establish a connection and process requests. For PSE, the value must be \`payments_way\`.",
-            "type": "ProvidersPse",
+            "type": "PSE",
           },
         },
       },
@@ -15700,7 +15694,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
   ℹ️ The minimum expiration time allowed for a payment link is \`1m\` (1 minute) and the maximum is \`90d\` (90 days).",
             "type": "optional<string>",
           },
-          "payment_method_details": "PaymentMethodDetailsOfpi",
+          "payment_method_details": "OFPI",
           "provider": "EnumPaymentLinkProvider",
         },
       },
@@ -15750,7 +15744,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
   ℹ️ The minimum expiration time allowed for a payment link is \`1m\` (1 minute) and the maximum is \`90d\` (90 days).",
             "type": "optional<string>",
           },
-          "payment_method_details": "PaymentMethodDetailsPse",
+          "payment_method_details": "PSE",
           "provider": "EnumPaymentLinkProvider",
         },
       },
@@ -17362,120 +17356,19 @@ We return one of the following enum values:
           "type": "optional<EnumPaymentIntentHolderTypePse>",
         },
       },
-      "HolderBusinessPse": {
-        "docs": "Details regarding the business bank account holder.",
-        "properties": {
-          "information": "HolderInformationBusinessPse",
-          "type": "EnumBankAccountHolderTypePse",
-        },
-      },
-      "HolderBusinessResponsePse": {
-        "docs": "Details regarding the business bank account holder.",
-        "properties": {
-          "Information": "optional<HolderInformationBusinessPseResponse>",
-          "type": "EnumBankAccountHolderTypePse",
-        },
-      },
-      "HolderInformationBusinessOfpi": {
-        "docs": "Additional information about the bank account holder required in order to create the account for OFPI.",
-        "properties": {
-          "identifier": {
-            "docs": "The document number of the company's ID.",
-            "type": "string",
-          },
-          "identifier_type": "EnumCustomerIdentifierTypeOfpi",
-          "name": {
-            "docs": "The bank account holder's first name.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderInformationBusinessOfpiResponse": {
-        "docs": undefined,
-        "properties": {
-          "identifier": {
-            "docs": "The document number of the company's ID.",
-            "type": "string",
-          },
-          "identifier_type": "EnumCustomerIdentifierTypeOfpi",
-          "name": {
-            "docs": "The bank account holder's first name.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderInformationBusinessPse": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "The business name.
-
-Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderInformationBusinessPseResponse": {
-        "docs": undefined,
-        "properties": {
-          "name": {
-            "docs": "The business name. This value is obfuscated.
-
-Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderInformationIndividualOfpi": {
-        "docs": "Additional information about the bank account holder required in order to create the account for OFPI.",
-        "properties": {
-          "first_name": {
-            "docs": "The bank account holder's first name.",
-            "type": "string",
-          },
-          "identifier": {
-            "docs": "The document number of the customer's ID.",
-            "type": "string",
-          },
-          "identifier_type": "EnumCustomerIdentifierTypeOfpi",
-          "last_name": {
-            "docs": "The bank account holder's last name.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderInformationIndividualOfpiResponse": {
-        "docs": undefined,
-        "properties": {
-          "first_name": {
-            "docs": "The bank account holder's first name.",
-            "type": "string",
-          },
-          "identifier": {
-            "docs": "The document number of the customer's ID.",
-            "type": "string",
-          },
-          "identifier_type": "EnumCustomerIdentifierTypeOfpi",
-          "last_name": {
-            "docs": "The bank account holder's last name.",
-            "type": "string",
-          },
-        },
-      },
-      "HolderResponseOfpi": {
-        "docs": "Details regarding the bank account holder.",
-        "properties": {
-          "information": "HolderResponseOfpiInformation",
-          "type": "EnumBankAccountHolderTypeOfpi",
-        },
-      },
       "HolderResponseOfpiInformation": {
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "HolderInformationBusinessOfpiResponse",
-          "HolderInformationIndividualOfpiResponse",
+          "BUSINESS",
+          "INDIVIDUAL",
         ],
+      },
+      "INDIVIDUAL": {
+        "docs": "Details about the OFPI payment method.",
+        "properties": {
+          "open_finance": "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi",
+        },
       },
       "Income": {
         "docs": "Income insights",
@@ -19657,6 +19550,25 @@ For \`not_found\` errors, the description is:
           },
         },
       },
+      "OFPB": {
+        "docs": "Details about the organization's bank account that will receive the payment.",
+        "properties": {
+          "beneficiary_bank_account": {
+            "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
+            "type": "string",
+          },
+          "callback_url": {
+            "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
+            "type": "optional<string>",
+          },
+        },
+      },
+      "OFPI": {
+        "docs": "Details about the payment method.",
+        "properties": {
+          "open_finance": "optional<ChargePaymentMethodDetailsOfpiContent>",
+        },
+      },
       "Owner": {
         "docs": undefined,
         "properties": {
@@ -19768,6 +19680,12 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "docs": "Array of owner objects.",
             "type": "optional<list<Owner>>",
           },
+        },
+      },
+      "PSE": {
+        "docs": "Object with payment method details to create a payment intent.",
+        "properties": {
+          "pse": "PSE",
         },
       },
       "PaginatedResponseLink": {
@@ -19977,7 +19895,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
           },
           "next_step": "PaymentIntentOfpiNextStep",
           "payment_method_details": "PaymentIntentOfpiPaymentMethodDetails",
-          "payment_method_information": "PaymentMethodInformationOfpi",
+          "payment_method_information": "OFPI",
           "provider": "EnumPaymentLinkProvider",
           "selected_payment_method_type": "EnumPaymentLinkAllowedPaymentMethod",
           "status": "EnumPaymentIntentStatus",
@@ -20005,8 +19923,8 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
         "discriminated": false,
         "docs": undefined,
         "union": [
-          "PaymentIntentPaymentMethodDetailsIndividualOfpi",
-          "PaymentIntentPaymentMethodDetailsBusinessOfpi",
+          "INDIVIDUAL",
+          "BUSINESS",
         ],
       },
       "PaymentIntentPaginatedResponse": {
@@ -20112,24 +20030,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "PaymentIntentPaymentMethodDetailsBusinessOfpi": {
-        "docs": "Details about the OFPI payment method.",
-        "properties": {
-          "open_finance": "PaymentIntentPaymentMethodDetailsBodyBusinessOfpi",
-        },
-      },
-      "PaymentIntentPaymentMethodDetailsIndividualOfpi": {
-        "docs": "Details about the OFPI payment method.",
-        "properties": {
-          "open_finance": "PaymentIntentPaymentMethodDetailsBodyIndividualOfpi",
-        },
-      },
-      "PaymentIntentPaymentMethodDetailsPse": {
-        "docs": "Details about the PSE payment method.",
-        "properties": {
-          "pse": "optional<PaymentIntentPaymentMethodDetailsBodyPse>",
-        },
-      },
       "PaymentIntentPse": {
         "docs": undefined,
         "properties": {
@@ -20188,8 +20088,8 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<map<string, unknown>>",
           },
           "next_step": "PaymentIntentPseNextStep",
-          "payment_method_details": "PaymentIntentPaymentMethodDetailsPse",
-          "payment_method_information": "PaymentMethodInformationPse",
+          "payment_method_details": "PSE",
+          "payment_method_information": "PSE",
           "provider": "EnumPaymentLinkProvider",
           "selected_payment_method_type": "EnumPaymentLinkAllowedPaymentMethod",
           "status": "EnumPaymentIntentStatus",
@@ -20223,29 +20123,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           "pse_display_needs_redirect": "NextStepDisplayNeedsRedirectPse",
           "pse_display_payment_method_information": "NextStepDisplayPaymentMethodInformationPse",
           "pse_display_token_required": "NextStepDisplayTokenRequiredPse",
-        },
-      },
-      "PaymentIntentsPaymentMethodDetailsBodyPse": {
-        "docs": "Details about the organization's bank account that will receive the payment.",
-        "properties": {
-          "belvo_flow": {
-            "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
-            "type": "boolean",
-          },
-          "beneficiary_bank_account": {
-            "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
-            "type": "string",
-          },
-          "callback_url": {
-            "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "PaymentIntentsPaymentMethodDetailsPse": {
-        "docs": "Object with payment method details to create a payment intent.",
-        "properties": {
-          "pse": "PaymentIntentsPaymentMethodDetailsBodyPse",
         },
       },
       "PaymentLinkCallbackUrls": {
@@ -20494,48 +20371,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
           },
         },
       },
-      "PaymentLinksPaymentMethodDetailsBodyOfpi": {
-        "docs": "Details about the organization's bank account that will receive the payment.",
-        "properties": {
-          "beneficiary_bank_account": {
-            "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
-            "type": "string",
-          },
-          "callback_url": {
-            "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "PaymentLinksPaymentMethodDetailsBodyPse": {
-        "docs": "Details about the organization's bank account that will receive the payment.",
-        "properties": {
-          "belvo_flow": {
-            "docs": "This parameter determines the payment flow of the payment intent. By default, this is set to \`true\` and the payment intent created is processed using the Belvo's payment flow and Belvo-integrated institutions. When set to \`false\`, the payment intent process uses institutions not integrated into Belvo's flow.",
-            "type": "boolean",
-          },
-          "beneficiary_bank_account": {
-            "docs": "Belvo's unique ID used to identify the beneficiary's bank account.",
-            "type": "string",
-          },
-          "callback_url": {
-            "docs": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "PaymentMethodDetailsOfpi": {
-        "docs": "Object with information required by Open Finance Payments in Brazil to create a payment intent.",
-        "properties": {
-          "open_finance": "PaymentLinksPaymentMethodDetailsBodyOfpi",
-        },
-      },
-      "PaymentMethodDetailsPse": {
-        "docs": "Object with information required by PSE to create a payment intent.",
-        "properties": {
-          "pse": "PaymentLinksPaymentMethodDetailsBodyPse",
-        },
-      },
       "PaymentMethodInfoCustomerBankAccountsPse": {
         "docs": undefined,
         "properties": {
@@ -20602,20 +20437,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "type": "optional<string>",
           },
           "country": "optional<EnumPaymentsCountry>",
-        },
-      },
-      "PaymentMethodInformationOfpi": {
-        "docs": "Information about the payment method selected.",
-        "properties": {
-          "open_finance": "optional<PaymentMethodInformationBodyOfpi>",
-        },
-      },
-      "PaymentMethodInformationPse": {
-        "docs": "Information about the payment method selected.
-
-**Note**: If no payment method information is associated, we return an empty array.",
-        "properties": {
-          "pse": "optional<PaymentMethodInformationBodyPse>",
         },
       },
       "PaymentTransaction": {
@@ -20802,12 +20623,6 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "docs": "The total taxable pension income of the taxpayer.",
             "type": "double",
           },
-        },
-      },
-      "ProvidersPse": {
-        "docs": undefined,
-        "properties": {
-          "payments_way": "optional<PaymentsWay>",
         },
       },
       "ReceivablesTransaction": {

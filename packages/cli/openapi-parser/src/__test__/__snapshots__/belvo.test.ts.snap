@@ -43045,7 +43045,7 @@ For \`BUSINESS\` bank accounts that Belvo creates for organizations, this field 
       "description": "Details regarding the business bank account holder.",
       "generatedName": "BankAccountHolderRequestOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPI",
       "properties": [
         {
           "audiences": [],
@@ -44949,7 +44949,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the payment method.",
       "generatedName": "ChargePaymentMethodDetailsOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPI",
       "properties": [
         {
           "audiences": [],
@@ -44960,7 +44960,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "chargePaymentMethodDetailsOfpiOpenFinance",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "OFPI",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -45042,7 +45042,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the payment method.",
       "generatedName": "ChargePaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -45053,7 +45053,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "chargePaymentMethodDetailsPsePse",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -45686,7 +45686,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentIntentPseAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "string",
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -45698,7 +45698,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentIntentPseAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "integer",
                   "schema": {
                     "type": "int",
                   },
@@ -45866,7 +45866,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentLinkOfpiAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "string",
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -45878,7 +45878,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentLinkOfpiAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "float",
                   "schema": {
                     "type": "float",
                   },
@@ -46059,7 +46059,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentLinkPseAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "string",
                   "schema": {
                     "maxLength": undefined,
                     "minLength": undefined,
@@ -46071,7 +46071,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
                   "description": undefined,
                   "generatedName": "CreatePaymentLinkPseAmount",
                   "groupName": undefined,
-                  "nameOverride": undefined,
+                  "nameOverride": "integer",
                   "schema": {
                     "type": "int",
                   },
@@ -52227,7 +52227,7 @@ We return one of the following enum values:
       "description": "Details regarding the business bank account holder.",
       "generatedName": "HolderBusinessPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -52266,7 +52266,7 @@ We return one of the following enum values:
       "description": "Details regarding the business bank account holder.",
       "generatedName": "HolderBusinessResponsePse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Business",
       "properties": [
         {
           "audiences": [],
@@ -52291,7 +52291,7 @@ We return one of the following enum values:
             "description": undefined,
             "generatedName": "holderBusinessResponsePseInformation",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Business",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -52312,7 +52312,7 @@ We return one of the following enum values:
       "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
       "generatedName": "HolderInformationBusinessOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BUSINESS",
       "properties": [
         {
           "audiences": [],
@@ -52373,7 +52373,7 @@ We return one of the following enum values:
       "description": undefined,
       "generatedName": "HolderInformationBusinessOfpiResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BUSINESS",
       "properties": [
         {
           "audiences": [],
@@ -52434,7 +52434,7 @@ We return one of the following enum values:
       "description": undefined,
       "generatedName": "HolderInformationBusinessPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -52465,7 +52465,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": undefined,
       "generatedName": "HolderInformationBusinessPseResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -52496,7 +52496,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": "Additional information about the bank account holder required in order to create the account for OFPI.",
       "generatedName": "HolderInformationIndividualOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "INDIVIDUAL",
       "properties": [
         {
           "audiences": [],
@@ -52575,7 +52575,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": undefined,
       "generatedName": "HolderInformationIndividualOfpiResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "INDIVIDUAL",
       "properties": [
         {
           "audiences": [],
@@ -52654,7 +52654,7 @@ Note, this is only applicable if the \`holder.type\` is set to \`BUSINESS\`.",
       "description": "Details regarding the bank account holder.",
       "generatedName": "HolderResponseOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPI",
       "properties": [
         {
           "audiences": [],
@@ -66482,7 +66482,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the OFPI payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsBusinessOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BUSINESS",
       "properties": [
         {
           "audiences": [],
@@ -66507,7 +66507,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the OFPI payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsIndividualOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "INDIVIDUAL",
       "properties": [
         {
           "audiences": [],
@@ -66532,7 +66532,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the PSE payment method.",
       "generatedName": "PaymentIntentPaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -66543,7 +66543,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentIntentPaymentMethodDetailsPsePse",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -67070,7 +67070,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentIntentsPaymentMethodDetailsBodyPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -67099,7 +67099,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentIntentsPaymentMethodDetailsBodyPseCallbackUrl",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
@@ -67140,7 +67140,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with payment method details to create a payment intent.",
       "generatedName": "PaymentIntentsPaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -68349,7 +68349,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentLinksPaymentMethodDetailsBodyOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPB",
       "properties": [
         {
           "audiences": [],
@@ -68378,7 +68378,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentLinksPaymentMethodDetailsBodyOfpiCallbackUrl",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "OFPB",
             "type": "optional",
             "value": {
               "description": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
@@ -68403,7 +68403,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Details about the organization's bank account that will receive the payment.",
       "generatedName": "PaymentLinksPaymentMethodDetailsBodyPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -68432,7 +68432,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentLinksPaymentMethodDetailsBodyPseCallbackUrl",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": "The URL to your application that your customer will be directed to once they confirm the payment in their bank application.",
@@ -68473,7 +68473,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with information required by Open Finance Payments in Brazil to create a payment intent.",
       "generatedName": "PaymentMethodDetailsOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPI",
       "properties": [
         {
           "audiences": [],
@@ -68498,7 +68498,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Object with information required by PSE to create a payment intent.",
       "generatedName": "PaymentMethodDetailsPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -68975,7 +68975,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": "Information about the payment method selected.",
       "generatedName": "PaymentMethodInformationOfpi",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "OFPI",
       "properties": [
         {
           "audiences": [],
@@ -68986,7 +68986,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentMethodInformationOfpiOpenFinance",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "OFPI",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -69009,7 +69009,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
 **Note**: If no payment method information is associated, we return an empty array.",
       "generatedName": "PaymentMethodInformationPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -69020,7 +69020,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "paymentMethodInformationPsePse",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -69628,7 +69628,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
       "description": undefined,
       "generatedName": "ProvidersPse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PSE",
       "properties": [
         {
           "audiences": [],
@@ -69639,7 +69639,7 @@ In our documentation example, we use \`{endpoint}\` as a placeholder value. In p
             "description": undefined,
             "generatedName": "providersPsePaymentsWay",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PSE",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -84222,7 +84222,7 @@ For \`session_expired\` errors, the description can be (among others):
           "key": "name",
           "schema": {
             "generatedName": "PaymentWebhookName",
-            "nameOverride": undefined,
+            "nameOverride": "string",
             "type": "unknown",
           },
         },

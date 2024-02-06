@@ -17550,7 +17550,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for ACH payment method",
       "generatedName": "AchDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ACHDetails",
       "properties": [
         {
           "audiences": [],
@@ -17561,7 +17561,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsRoutingNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": "Routing number of the bank",
@@ -17586,7 +17586,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsAccountNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": "Bank account number of the individual",
@@ -17611,7 +17611,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsBankName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": "Name of the bank",
@@ -17636,7 +17636,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
@@ -17661,7 +17661,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsBankAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -17682,7 +17682,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "achDetailsBeneficiaryName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ACHDetails",
             "type": "optional",
             "value": {
               "description": "Beneficiary name of the account",
@@ -17705,7 +17705,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "ACH" for ACHDetails",
       "generatedName": "AchPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ACHPaymentMethod",
       "type": "literal",
       "value": {
         "string": "ACH",
@@ -17716,7 +17716,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User acquisition channel",
       "generatedName": "AcquisitionChannel",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "AcquisitionChannel",
       "type": "enum",
       "values": [
         {
@@ -17763,7 +17763,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for standardized address",
       "generatedName": "Address",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Address",
       "properties": [
         {
           "audiences": [],
@@ -17828,7 +17828,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "addressState",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Address",
             "type": "optional",
             "value": {
               "description": "State of the user's residence address",
@@ -17871,7 +17871,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "addressTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Address",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -17899,7 +17899,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "AlertClosedDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "AlertClosedDetails",
       "properties": [
         {
           "audiences": [],
@@ -17910,7 +17910,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsAlertId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -17935,7 +17935,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -17960,7 +17960,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsReasons",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -17992,7 +17992,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsReasonDescriptionForOther",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18024,7 +18024,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsComment",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18049,7 +18049,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18074,7 +18074,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsTransactionIds",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18106,7 +18106,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsRuleName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18131,7 +18131,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsRuleDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18156,7 +18156,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsRuleId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18181,7 +18181,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "alertClosedDetailsRuleInstanceId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "AlertClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18206,7 +18206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for amount",
       "generatedName": "Amount",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Amount",
       "properties": [
         {
           "audiences": [],
@@ -18274,7 +18274,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a business user base fields",
       "generatedName": "BusinessBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessBase",
       "properties": [
         {
           "audiences": [],
@@ -18319,7 +18319,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "BusinessEntityLink",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessEntityLink",
       "properties": [
         {
           "audiences": [],
@@ -18330,7 +18330,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessEntityLinkParentUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessEntityLink",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18355,7 +18355,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessEntityLinkChildUserIds",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessEntityLink",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18387,7 +18387,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a business user - optional fields",
       "generatedName": "BusinessOptional",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessOptional",
       "properties": [
         {
           "audiences": [],
@@ -18398,7 +18398,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalUserStateDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18419,7 +18419,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalKycStatusDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18440,7 +18440,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalLegalEntity",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18461,7 +18461,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalShareHolders",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": "Shareholders (beneficiaries) of the company that hold at least 25% ownership. Can be another company or an individual",
@@ -18489,7 +18489,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalDirectors",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": "Director(s) of the company. Must be at least one",
@@ -18517,7 +18517,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalTransactionLimits",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18538,7 +18538,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalRiskLevel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18559,7 +18559,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalAllowedPaymentMethods",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18587,7 +18587,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalLinkedEntities",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18608,7 +18608,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalAcquisitionChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18629,7 +18629,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalSavedPaymentDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18735,7 +18735,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalMccDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18756,7 +18756,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessOptionalTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessOptional",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -18784,7 +18784,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user-related events",
       "generatedName": "BusinessUserEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessUserEvent",
       "properties": [
         {
           "audiences": [],
@@ -18829,7 +18829,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessUserEventEventId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessUserEvent",
             "type": "optional",
             "value": {
               "description": "Unique event ID",
@@ -18854,7 +18854,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessUserEventReason",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessUserEvent",
             "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
@@ -18879,7 +18879,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessUserEventEventDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessUserEvent",
             "type": "optional",
             "value": {
               "description": "Event description",
@@ -18904,7 +18904,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "businessUserEventUpdatedBusinessUserAttributes",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "BusinessUserEvent",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -18925,7 +18925,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user risk score response",
       "generatedName": "BusinessUsersResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessUsersResponse",
       "properties": [
         {
           "audiences": [],
@@ -18963,7 +18963,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business payload with rules result",
       "generatedName": "BusinessWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "BusinessWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -19030,7 +19030,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for credit or debit card details",
       "generatedName": "CardDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CardDetails",
       "properties": [
         {
           "audiences": [],
@@ -19041,7 +19041,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardFingerprint",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Unique card fingerprint that helps identify a specific card without having to use explicit card number. This is likely available at your card payment scheme provider",
@@ -19066,7 +19066,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardIssuedCountry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19087,7 +19087,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsTransactionReferenceField",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Reference for the transaction",
@@ -19112,7 +19112,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetails3DsDone",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Whether 3ds was successfully enforced for the transaction",
@@ -19135,7 +19135,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsNameOnCard",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19156,7 +19156,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardExpiry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19177,7 +19177,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardLast4Digits",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Last 4 digits of Card",
@@ -19202,7 +19202,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardBrand",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Brand of Card",
@@ -19266,7 +19266,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardFunding",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Funding of Card",
@@ -19306,7 +19306,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardAuthenticated",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": "Authentication of Card",
@@ -19329,7 +19329,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsPaymentChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19354,7 +19354,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsCardType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19388,7 +19388,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardDetailsMerchantDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19409,7 +19409,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CardExpiry",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CardExpiry",
       "properties": [
         {
           "audiences": [],
@@ -19420,7 +19420,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardExpiryMonth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardExpiry",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19443,7 +19443,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardExpiryYear",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardExpiry",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19466,7 +19466,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CardMerchantDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CardMerchantDetails",
       "properties": [
         {
           "audiences": [],
@@ -19477,7 +19477,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19502,7 +19502,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsCategory",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19527,7 +19527,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsMcc",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19552,7 +19552,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsCity",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19577,7 +19577,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsCountry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19602,7 +19602,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsState",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19627,7 +19627,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "cardMerchantDetailsPostCode",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CardMerchantDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19651,7 +19651,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 ",
       "generatedName": "CardPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CardPaymentMethod",
       "type": "literal",
       "value": {
         "string": "CARD",
@@ -19664,7 +19664,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CaseClosedDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CaseClosedDetails",
       "properties": [
         {
           "audiences": [],
@@ -19675,7 +19675,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsCaseId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19700,7 +19700,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19725,7 +19725,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsReasons",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19757,7 +19757,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsReasonDescriptionForOther",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19789,7 +19789,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsComment",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19814,7 +19814,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19839,7 +19839,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseClosedDetailsTransactionIds",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseClosedDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -19871,7 +19871,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for case management events",
       "generatedName": "CaseManagementEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CaseManagementEvent",
       "properties": [
         {
           "audiences": [],
@@ -19964,7 +19964,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseManagementEventTransactionId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseManagementEvent",
             "type": "optional",
             "value": {
               "description": "Transaction ID the case pertains to",
@@ -19989,7 +19989,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseManagementEventUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseManagementEvent",
             "type": "optional",
             "value": {
               "description": "User ID the case pertains to",
@@ -20014,7 +20014,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseManagementEventEventId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseManagementEvent",
             "type": "optional",
             "value": {
               "description": "Event ID the case pertains to",
@@ -20039,7 +20039,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "caseManagementEventCaseStatusReasonDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CaseManagementEvent",
             "type": "optional",
             "value": {
               "description": "Case status reason description",
@@ -20064,7 +20064,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CheckDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CheckDetails",
       "properties": [
         {
           "audiences": [],
@@ -20075,7 +20075,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsCheckNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20100,7 +20100,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsCheckIdentifier",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20125,7 +20125,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20150,7 +20150,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsDeliveryStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20208,7 +20208,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsEtaTimestamp",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20231,7 +20231,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "checkDetailsShippingAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CheckDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20250,7 +20250,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "CHECK" for CheckDetails",
       "generatedName": "CheckPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CheckPaymentMethod",
       "type": "literal",
       "value": {
         "string": "CHECK",
@@ -20263,7 +20263,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company financial details",
       "generatedName": "CompanyFinancialDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CompanyFinancialDetails",
       "properties": [
         {
           "audiences": [],
@@ -20274,7 +20274,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyFinancialDetailsExpectedTransactionAmountPerMonth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyFinancialDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20295,7 +20295,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyFinancialDetailsExpectedTurnoverPerMonth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyFinancialDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20316,7 +20316,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyFinancialDetailsTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyFinancialDetails",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -20344,7 +20344,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company general details",
       "generatedName": "CompanyGeneralDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CompanyGeneralDetails",
       "properties": [
         {
           "audiences": [],
@@ -20373,7 +20373,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyGeneralDetailsBusinessIndustry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyGeneralDetails",
             "type": "optional",
             "value": {
               "description": "The industry the business operates in for a business customer",
@@ -20405,7 +20405,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyGeneralDetailsMainProductsServicesSold",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyGeneralDetails",
             "type": "optional",
             "value": {
               "description": "The key products and services provided by the company",
@@ -20437,7 +20437,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyGeneralDetailsUserSegment",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyGeneralDetails",
             "type": "optional",
             "value": {
               "description": "Segmentation of the business user",
@@ -20495,7 +20495,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyGeneralDetailsUserRegistrationStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyGeneralDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20516,7 +20516,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyGeneralDetailsTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyGeneralDetails",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -20544,7 +20544,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user company registration details",
       "generatedName": "CompanyRegistrationDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CompanyRegistrationDetails",
       "properties": [
         {
           "audiences": [],
@@ -20587,7 +20587,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyRegistrationDetailsTaxIdentifier",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyRegistrationDetails",
             "type": "optional",
             "value": {
               "description": "Tax ID number of the registered entity",
@@ -20612,7 +20612,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyRegistrationDetailsLegalEntityType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyRegistrationDetails",
             "type": "optional",
             "value": {
               "description": "Type of legal entity. Ex: Limited Liability",
@@ -20637,7 +20637,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyRegistrationDetailsDateOfRegistration",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyRegistrationDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20662,7 +20662,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "companyRegistrationDetailsTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "CompanyRegistrationDetails",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -20690,7 +20690,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a generic consumer name",
       "generatedName": "ConsumerName",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ConsumerName",
       "properties": [
         {
           "audiences": [],
@@ -20719,7 +20719,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerNameMiddleName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerName",
             "type": "optional",
             "value": {
               "description": "Middle name of the user",
@@ -20744,7 +20744,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerNameLastName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerName",
             "type": "optional",
             "value": {
               "description": "Last name of the user",
@@ -20769,7 +20769,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user-related events",
       "generatedName": "ConsumerUserEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ConsumerUserEvent",
       "properties": [
         {
           "audiences": [],
@@ -20814,7 +20814,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerUserEventEventId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerUserEvent",
             "type": "optional",
             "value": {
               "description": "Unique event ID",
@@ -20839,7 +20839,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerUserEventReason",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerUserEvent",
             "type": "optional",
             "value": {
               "description": "Reason for the event or a state change",
@@ -20864,7 +20864,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerUserEventEventDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerUserEvent",
             "type": "optional",
             "value": {
               "description": "Event description",
@@ -20889,7 +20889,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "consumerUserEventUpdatedConsumerUserAttributes",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ConsumerUserEvent",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -20910,7 +20910,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user risk score response",
       "generatedName": "ConsumerUsersResponse",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ConsumerUsersResponse",
       "properties": [
         {
           "audiences": [],
@@ -20939,7 +20939,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user contact information details",
       "generatedName": "ContactDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ContactDetails",
       "properties": [
         {
           "audiences": [],
@@ -20950,7 +20950,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "contactDetailsEmailIds",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ContactDetails",
             "type": "optional",
             "value": {
               "description": "Email addresses of the contacts for a given business customer",
@@ -20982,7 +20982,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "contactDetailsContactNumbers",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ContactDetails",
             "type": "optional",
             "value": {
               "description": "Phone numbers to contact a given business customer",
@@ -21014,7 +21014,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "contactDetailsFaxNumbers",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ContactDetails",
             "type": "optional",
             "value": {
               "description": "Fax numbers to contact a business customer",
@@ -21046,7 +21046,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "contactDetailsWebsites",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ContactDetails",
             "type": "optional",
             "value": {
               "description": "Website of the company",
@@ -21078,7 +21078,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "contactDetailsAddresses",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ContactDetails",
             "type": "optional",
             "value": {
               "description": "Address(es) of the company",
@@ -21104,7 +21104,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CountryCode",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CountryCode",
       "type": "enum",
       "values": [
         {
@@ -22613,7 +22613,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "CurrencyCode",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "CurrencyCode",
       "type": "enum",
       "values": [
         {
@@ -24244,7 +24244,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for date",
       "generatedName": "Date",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Date",
       "properties": [
         {
           "audiences": [],
@@ -24303,7 +24303,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for device data",
       "generatedName": "DeviceData",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "DeviceData",
       "properties": [
         {
           "audiences": [],
@@ -24314,7 +24314,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataBatteryLevel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Battery level of the device used for a transaction or event at a given timestamp",
@@ -24337,7 +24337,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceLatitude",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Device latitude at a give timestamp for an event or transaction",
@@ -24360,7 +24360,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceLongitude",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Device longitude at a give timestamp for an event or transaction",
@@ -24383,7 +24383,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataIpAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "IP address of the device at a given timestamp for an event or transaction",
@@ -24408,7 +24408,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceIdentifier",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Device identifier number",
@@ -24433,7 +24433,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataVpnUsed",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Whether VPN was used at a given timestamp for an event or transaction",
@@ -24456,7 +24456,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataOperatingSystem",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "Operating system of the device at a given timestamp for an event or transaction",
@@ -24481,7 +24481,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceMaker",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "The maker of the device at a given timestamp for an event or transaction",
@@ -24506,7 +24506,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceModel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "The model of the device at a given timestamp for an event or transaction",
@@ -24531,7 +24531,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataDeviceYear",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "The year the device was manufactured at a given timestamp for an event or transaction",
@@ -24556,7 +24556,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "deviceDataAppVersion",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "DeviceData",
             "type": "optional",
             "value": {
               "description": "The version of the app your user is using on their device at a given timestamp for an event or transaction",
@@ -24581,7 +24581,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of executed rules",
       "generatedName": "ExecutedRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ExecutedRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -24694,7 +24694,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "executedRulesResultRuleHitMeta",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ExecutedRulesResult",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -24715,7 +24715,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "executedRulesResultLabels",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ExecutedRulesResult",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -24743,7 +24743,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "executedRulesResultNature",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ExecutedRulesResult",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -24764,7 +24764,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of rules failed execution. It means rules could not be run",
       "generatedName": "FailedRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "FailedRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -24843,7 +24843,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "FalsePositiveDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "FalsePositiveDetails",
       "properties": [
         {
           "audiences": [],
@@ -24884,7 +24884,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "GENERIC_BANK_ACCOUNT" for GenericBankAccountDetails",
       "generatedName": "GeneralBankAccountPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "GeneralBankAccountPaymentMethod",
       "type": "literal",
       "value": {
         "string": "GENERIC_BANK_ACCOUNT",
@@ -24897,7 +24897,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for any generic bank account",
       "generatedName": "GenericBankAccountDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "GenericBankAccountDetails",
       "properties": [
         {
           "audiences": [],
@@ -24908,7 +24908,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsAccountNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Bank account number",
@@ -24933,7 +24933,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsAccountType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Bank account type. E.g. Checking, Savings etc.",
@@ -24958,7 +24958,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsBankName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Name of the bank",
@@ -24983,7 +24983,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsBankCode",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Unique identifier of the bank. In some countries, this can be the same as the bank's SWIFT code",
@@ -25008,7 +25008,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
@@ -25033,7 +25033,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsBankAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25054,7 +25054,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsSpecialInstructions",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": "Special instructions to be specified if any",
@@ -25079,7 +25079,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "genericBankAccountDetailsPaymentChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "GenericBankAccountDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25104,7 +25104,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for list of hit rules",
       "generatedName": "HitRulesDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "HitRulesDetails",
       "properties": [
         {
           "audiences": [],
@@ -25201,7 +25201,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "hitRulesDetailsRuleHitMeta",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "HitRulesDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25222,7 +25222,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "hitRulesDetailsLabels",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "HitRulesDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25250,7 +25250,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "hitRulesDetailsNature",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "HitRulesDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25271,7 +25271,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Standardized model for Bank Details",
       "generatedName": "IbanDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "IBANDetails",
       "properties": [
         {
           "audiences": [],
@@ -25282,7 +25282,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsBic",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": "Identifier for the bank. Can be routing number, BIK number, SWIFT code, BIC number etc.",
@@ -25307,7 +25307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsBankName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": "Name of the bank",
@@ -25332,7 +25332,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsBankAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25353,7 +25353,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsCountry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25374,7 +25374,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsIban",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": "Account number of the user. Can be account number, IBAN number etc.",
@@ -25399,7 +25399,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": "Name of the bank account holder",
@@ -25424,7 +25424,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25445,7 +25445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsBankBranchCode",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": "Branch code of the bank. In some countries, this can be the same as the bank's SWIFT code",
@@ -25470,7 +25470,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "ibanDetailsPaymentChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "IBANDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25494,7 +25494,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
 ",
       "generatedName": "IbanPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "IBANPaymentMethod",
       "type": "literal",
       "value": {
         "string": "IBAN",
@@ -25505,7 +25505,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "KycStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "KYCStatus",
       "type": "enum",
       "values": [
         {
@@ -25546,7 +25546,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "KycStatusDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "KYCStatusDetails",
       "properties": [
         {
           "audiences": [],
@@ -25557,7 +25557,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "kycStatusDetailsReason",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "KYCStatusDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25582,7 +25582,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "kycStatusDetailsStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "KYCStatusDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25603,7 +25603,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "LegalDocument model generalizes User's identity document type (ex: Passport)",
       "generatedName": "LegalDocument",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "LegalDocument",
       "properties": [
         {
           "audiences": [],
@@ -25650,7 +25650,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalDocumentDocumentIssuedDate",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalDocument",
             "type": "optional",
             "value": {
               "description": "User's identity document issuance date (UNIX timestamp in milliseconds)",
@@ -25673,7 +25673,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalDocumentDocumentExpirationDate",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalDocument",
             "type": "optional",
             "value": {
               "description": "User's identity document expiration date (UNIX timestamp in milliseconds)",
@@ -25710,7 +25710,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalDocumentTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalDocument",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -25738,7 +25738,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalDocumentNameOnDocument",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalDocument",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25759,7 +25759,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for business user legal entity details",
       "generatedName": "LegalEntity",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "LegalEntity",
       "properties": [
         {
           "audiences": [],
@@ -25784,7 +25784,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalEntityCompanyFinancialDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalEntity",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25805,7 +25805,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalEntityCompanyRegistrationDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalEntity",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25826,7 +25826,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalEntityReasonForAccountOpening",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalEntity",
             "type": "optional",
             "value": {
               "description": "Reason for opening the account at financial institution",
@@ -25858,7 +25858,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "legalEntityContactDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "LegalEntity",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25879,7 +25879,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Payload of a list, new or existed",
       "generatedName": "ListData",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ListData",
       "properties": [
         {
           "audiences": [],
@@ -25890,7 +25890,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listDataMetadata",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListData",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -25911,7 +25911,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listDataItems",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListData",
             "type": "optional",
             "value": {
               "description": "List items",
@@ -25939,7 +25939,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "List with ID and header",
       "generatedName": "ListExisted",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ListExisted",
       "properties": [
         {
           "audiences": [],
@@ -26003,7 +26003,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListHeader",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ListHeader",
       "properties": [
         {
           "audiences": [],
@@ -26060,7 +26060,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listHeaderMetadata",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListHeader",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26113,7 +26113,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListItem",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ListItem",
       "properties": [
         {
           "audiences": [],
@@ -26142,7 +26142,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listItemMetadata",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListItem",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26173,7 +26173,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         },
         "type": "primitive",
       },
-      "nameOverride": undefined,
+      "nameOverride": "ListKeyMetadata",
       "type": "map",
       "value": {
         "generatedName": "ListKeyMetadataValue",
@@ -26187,7 +26187,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "ListMetadata",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "ListMetadata",
       "properties": [
         {
           "audiences": [],
@@ -26198,7 +26198,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listMetadataName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListMetadata",
             "type": "optional",
             "value": {
               "description": "List name",
@@ -26223,7 +26223,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listMetadataDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListMetadata",
             "type": "optional",
             "value": {
               "description": "List description",
@@ -26248,7 +26248,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listMetadataStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListMetadata",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26271,7 +26271,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "listMetadataChecksum",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "ListMetadata",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26398,7 +26398,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "MccDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "MCCDetails",
       "properties": [
         {
           "audiences": [],
@@ -26425,7 +26425,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "mccDetailsDescription",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "MCCDetails",
             "type": "optional",
             "value": {
               "description": "Merchant Description",
@@ -26450,7 +26450,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for Mpesa payment method",
       "generatedName": "MpesaDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "MpesaDetails",
       "properties": [
         {
           "audiences": [],
@@ -26540,7 +26540,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "Mpesa" for MpesaDetails",
       "generatedName": "MpesaPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "MpesaPaymentMethod",
       "type": "literal",
       "value": {
         "string": "MPESA",
@@ -26553,7 +26553,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "PepStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PEPStatus",
       "properties": [
         {
           "audiences": [],
@@ -26580,7 +26580,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "pepStatusPepCountry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "PEPStatus",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26603,7 +26603,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "PaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "PaymentMethod",
       "type": "enum",
       "values": [
         {
@@ -26668,7 +26668,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for a generic individual - different from User model by not having userId field",
       "generatedName": "Person",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Person",
       "properties": [
         {
           "audiences": [],
@@ -26693,7 +26693,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "personLegalDocuments",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Person",
             "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
@@ -26721,7 +26721,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "personContactDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Person",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26742,7 +26742,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "personPepStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Person",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -26770,7 +26770,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "personTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Person",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -26796,7 +26796,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RiskLevel",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RiskLevel",
       "type": "enum",
       "values": [
         {
@@ -26837,7 +26837,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for results from Risk Scoring",
       "generatedName": "RiskScoringResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RiskScoringResult",
       "properties": [
         {
           "audiences": [],
@@ -26880,7 +26880,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "riskScoringResultCustomerRiskAssessment",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "RiskScoringResult",
             "type": "optional",
             "value": {
               "description": "Quantified dynamic risk score",
@@ -26901,7 +26901,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
       "generatedName": "RuleAction",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RuleAction",
       "type": "enum",
       "values": [
         {
@@ -26936,7 +26936,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleFailureException",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RuleFailureException",
       "properties": [
         {
           "audiences": [],
@@ -26981,7 +26981,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleHitDirection",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RuleHitDirection",
       "type": "enum",
       "values": [
         {
@@ -27090,7 +27090,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RuleLabels",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RuleLabels",
       "type": "enum",
       "values": [
         {
@@ -27206,7 +27206,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "RulesResults",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "RulesResults",
       "properties": [
         {
           "audiences": [],
@@ -27259,7 +27259,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for SWIFT payment method",
       "generatedName": "SwiftDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "SWIFTDetails",
       "properties": [
         {
           "audiences": [],
@@ -27270,7 +27270,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsSwiftCode",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "SWIFT code of the financial institution",
@@ -27295,7 +27295,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsAccountNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "Account number",
@@ -27320,7 +27320,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsAccountType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "Account type. E.g. Checking, Savings etc.",
@@ -27345,7 +27345,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsBankName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "Name of the bank",
@@ -27370,7 +27370,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
@@ -27395,7 +27395,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsBankAddress",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27416,7 +27416,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "swiftDetailsSpecialInstructions",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SWIFTDetails",
             "type": "optional",
             "value": {
               "description": "Special instructions if any",
@@ -27439,7 +27439,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "SWIFT" for SWIFTDetails",
       "generatedName": "SwiftPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "SWIFTPaymentMethod",
       "type": "literal",
       "value": {
         "string": "SWIFT",
@@ -27452,7 +27452,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "SanctionsDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "SanctionsDetails",
       "properties": [
         {
           "audiences": [],
@@ -27499,7 +27499,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "sanctionsDetailsEntityType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "SanctionsDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27518,7 +27518,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "SanctionsDetailsEntityType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "SanctionsDetailsEntityType",
       "type": "enum",
       "values": [
         {
@@ -27577,7 +27577,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Generic key-value pair model to append a custom variable being sent to Flagright API",
       "generatedName": "Tag",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "Tag",
       "properties": [
         {
           "audiences": [],
@@ -27651,7 +27651,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction amount details",
       "generatedName": "TransactionAmountDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionAmountDetails",
       "properties": [
         {
           "audiences": [],
@@ -27692,7 +27692,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionAmountDetailsCountry",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionAmountDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27713,7 +27713,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionAmountLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionAmountLimit",
       "properties": [
         {
           "audiences": [],
@@ -27724,7 +27724,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionAmountLimitDay",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionAmountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27745,7 +27745,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionAmountLimitWeek",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionAmountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27766,7 +27766,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionAmountLimitMonth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionAmountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27787,7 +27787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionAmountLimitYear",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionAmountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27808,7 +27808,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction base Payload",
       "generatedName": "TransactionBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionBase",
       "properties": [
         {
           "audiences": [],
@@ -27819,7 +27819,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionBaseType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionBase",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27874,7 +27874,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionBaseOriginUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionBase",
             "type": "optional",
             "value": {
               "description": "UserId for where the transaction originates from",
@@ -27899,7 +27899,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionBaseDestinationUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionBase",
             "type": "optional",
             "value": {
               "description": "UserId for transaction's destination. In other words, where the value is being transferred to.",
@@ -27924,7 +27924,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionCountLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionCountLimit",
       "properties": [
         {
           "audiences": [],
@@ -27935,7 +27935,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionCountLimitDay",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionCountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27958,7 +27958,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionCountLimitWeek",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionCountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -27981,7 +27981,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionCountLimitMonth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionCountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28004,7 +28004,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionCountLimitYear",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionCountLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28255,7 +28255,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionLimit",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionLimit",
       "properties": [
         {
           "audiences": [],
@@ -28266,7 +28266,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitTransactionCountLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28287,7 +28287,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitTransactionAmountLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28308,7 +28308,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitAverageTransactionAmountLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimit",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28329,7 +28329,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction limits for a given user",
       "generatedName": "TransactionLimits",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionLimits",
       "properties": [
         {
           "audiences": [],
@@ -28340,7 +28340,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumDailyTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28361,7 +28361,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumWeeklyTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28382,7 +28382,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumMonthlyTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28403,7 +28403,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumQuarterlyTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28424,7 +28424,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28445,7 +28445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsMaximumYearlyTransactionLimit",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28466,7 +28466,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionLimitsPaymentMethodLimits",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionLimits",
             "type": "optional",
             "value": {
               "allOf": [],
@@ -28715,7 +28715,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction states. E.g. Processing, Refunded, Successful etc.",
       "generatedName": "TransactionState",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionState",
       "type": "enum",
       "values": [
         {
@@ -28772,7 +28772,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "TransactionType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionType",
       "type": "enum",
       "values": [
         {
@@ -28819,7 +28819,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction additional payload",
       "generatedName": "TransactionUpdatable",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionUpdatable",
       "properties": [
         {
           "audiences": [],
@@ -28830,7 +28830,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableTransactionState",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28851,7 +28851,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableOriginAmountDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28872,7 +28872,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableDestinationAmountDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -28893,7 +28893,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableOriginPaymentDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "oneOf": {
@@ -28992,7 +28992,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableDestinationPaymentDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "oneOf": {
@@ -29091,7 +29091,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableRelatedTransactionIds",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": "IDs of transactions related to this transaction. Ex: refund, split bills",
@@ -29123,7 +29123,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableProductType",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": "Type of produce being used by the consumer (ex wallets, payments etc)",
@@ -29148,7 +29148,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatablePromotionCodeUsed",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": "Whether a promotion code was used or not the transaction",
@@ -29171,7 +29171,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableReference",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": "Reference field for the transaction indicating the purpose of the transaction etc.",
@@ -29196,7 +29196,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableDeviceData",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29217,7 +29217,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "transactionUpdatableTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "TransactionUpdatable",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -29254,7 +29254,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for transaction payload with rules result",
       "generatedName": "TransactionWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "TransactionWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -29307,7 +29307,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for UPI payment method",
       "generatedName": "UpiDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UPIDetails",
       "properties": [
         {
           "audiences": [],
@@ -29336,7 +29336,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "upiDetailsBankProvider",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UPIDetails",
             "type": "optional",
             "value": {
               "description": "Bank provider name",
@@ -29361,7 +29361,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "upiDetailsInterfaceProvider",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UPIDetails",
             "type": "optional",
             "value": {
               "description": "Interface provider name",
@@ -29386,7 +29386,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "upiDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UPIDetails",
             "type": "optional",
             "value": {
               "description": "Name of the account holder",
@@ -29409,7 +29409,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "UPI" for UPIDetails",
       "generatedName": "UpiPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UPIPaymentMethod",
       "type": "literal",
       "value": {
         "string": "UPI",
@@ -29439,7 +29439,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "User",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "User",
       "properties": [],
       "type": "object",
     },
@@ -29449,7 +29449,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "UserBase",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserBase",
       "properties": [
         {
           "audiences": [],
@@ -29478,7 +29478,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userBaseUserDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserBase",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29515,7 +29515,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user personal details",
       "generatedName": "UserDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserDetails",
       "properties": [
         {
           "audiences": [],
@@ -29540,7 +29540,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userDetailsDateOfBirth",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserDetails",
             "type": "optional",
             "value": {
               "description": "Date of birth of the user (YYYY-MM-DD)",
@@ -29565,7 +29565,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userDetailsCountryOfResidence",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29586,7 +29586,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userDetailsCountryOfNationality",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29607,7 +29607,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userDetailsGender",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserDetails",
             "type": "optional",
             "value": {
               "description": "Gender of the individual - Male, Female or Non-Binary",
@@ -29685,7 +29685,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for User details",
       "generatedName": "UserOptional",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserOptional",
       "properties": [
         {
           "audiences": [],
@@ -29696,7 +29696,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalUserStateDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29717,7 +29717,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalKycStatusDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29738,7 +29738,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalLegalDocuments",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": "User's legal identity documents - See Document Model for details",
@@ -29766,7 +29766,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalContactDetails",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29787,7 +29787,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalTransactionLimits",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29808,7 +29808,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalRiskLevel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29829,7 +29829,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalAcquisitionChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29850,7 +29850,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalReasonForAccountOpening",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29882,7 +29882,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalUserSegment",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29916,7 +29916,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalPepStatus",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -29944,7 +29944,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userOptionalTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserOptional",
             "type": "optional",
             "value": {
               "description": "Additional information that can be added via tags",
@@ -29970,7 +29970,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserRegistrationStatus",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserRegistrationStatus",
       "type": "enum",
       "values": [
         {
@@ -29991,7 +29991,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserState",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserState",
       "type": "enum",
       "values": [
         {
@@ -30062,7 +30062,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "UserStateDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserStateDetails",
       "properties": [
         {
           "audiences": [],
@@ -30073,7 +30073,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userStateDetailsUserId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserStateDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -30098,7 +30098,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "userStateDetailsReason",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "UserStateDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -30146,7 +30146,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Model for consumer user payload with rules result",
       "generatedName": "UserWithRulesResult",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "UserWithRulesResult",
       "properties": [
         {
           "audiences": [],
@@ -30213,7 +30213,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Standardized model for a Generic wallet transaction",
       "generatedName": "WalletDetails",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "WalletDetails",
       "properties": [
         {
           "audiences": [],
@@ -30242,7 +30242,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "walletDetailsWalletId",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "WalletDetails",
             "type": "optional",
             "value": {
               "description": "Unique ID of the wallet",
@@ -30267,7 +30267,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "walletDetailsPaymentChannel",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "WalletDetails",
             "type": "optional",
             "value": {
               "description": "Payment Channel used through wallet",
@@ -30292,7 +30292,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "walletDetailsName",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "WalletDetails",
             "type": "optional",
             "value": {
               "description": "Name of the account holder for a specific wallet",
@@ -30317,7 +30317,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "walletDetailsTags",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "WalletDetails",
             "type": "optional",
             "value": {
               "description": undefined,
@@ -30338,7 +30338,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "description": undefined,
             "generatedName": "walletDetailsWalletPhoneNumber",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "WalletDetails",
             "type": "optional",
             "value": {
               "description": "Phone number associated with the wallet, if any",
@@ -30361,7 +30361,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": "Classify the method of payment as "Wallet" for WalletDetails",
       "generatedName": "WalletPaymentMethod",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "WalletPaymentMethod",
       "type": "literal",
       "value": {
         "string": "WALLET",
@@ -30374,7 +30374,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "WebhookEvent",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "WebhookEvent",
       "properties": [
         {
           "audiences": [],
@@ -30445,7 +30445,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       "description": undefined,
       "generatedName": "WebhookEventType",
       "groupName": undefined,
-      "nameOverride": undefined,
+      "nameOverride": "WebhookEventType",
       "type": "enum",
       "values": [
         {
