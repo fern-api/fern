@@ -289,7 +289,9 @@ async function convertDocsConfiguration({
             uploadUrls,
             context
         }),
-        layout: parsedDocsConfig.layout
+        layout: parsedDocsConfig.layout,
+        css: undefined,
+        js: undefined
     };
 }
 

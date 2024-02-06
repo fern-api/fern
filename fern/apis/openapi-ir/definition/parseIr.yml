@@ -40,10 +40,10 @@ types:
       response: optional<ResponseWithExample>
       errorStatusCode: list<commons.StatusCode>
       server: list<commons.Server>
-      customCodeSamples:
-        type: list<finalIr.CustomCodeSample>
+      examples:
+        type: list<finalIr.EndpointExample>
         docs: |
-          Populated by `x-fern-code-samples` on a path object.
+          Populated by `x-fern-examples` on a path object.
           Also migrated from `x-readme.code-samples` if present.
 
   RequestWithExample:

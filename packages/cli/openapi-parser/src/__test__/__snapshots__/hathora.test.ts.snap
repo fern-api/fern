@@ -8,7 +8,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
@@ -68,7 +67,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         422,
@@ -363,7 +361,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -684,7 +681,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -832,7 +828,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -897,7 +892,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1006,7 +1000,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1160,7 +1153,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -1315,7 +1307,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1402,7 +1393,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1549,7 +1539,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1675,7 +1664,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -1744,7 +1732,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1833,7 +1820,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -1920,7 +1906,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -2099,7 +2084,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -2323,7 +2307,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
@@ -2376,7 +2359,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2543,7 +2525,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2710,7 +2691,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -2878,7 +2858,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3154,7 +3133,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3430,7 +3408,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -3706,7 +3683,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         401,
@@ -4019,7 +3995,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [
@@ -4133,7 +4108,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4295,7 +4269,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -4523,7 +4496,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -4631,7 +4603,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -4732,7 +4703,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [],
       "examples": [],
@@ -4833,7 +4803,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5031,7 +5000,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5147,7 +5115,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5263,7 +5230,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5448,7 +5414,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5570,7 +5535,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5722,7 +5686,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5832,7 +5795,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -5942,7 +5904,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -6030,7 +5991,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,
@@ -6118,7 +6078,6 @@ exports[`open api parser hathora parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": undefined,
       "errorStatusCode": [
         404,

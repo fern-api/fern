@@ -16,6 +16,7 @@ export { EnvironmentSchema } from "./EnvironmentSchema";
 export { ErrorDeclarationSchema } from "./ErrorDeclarationSchema";
 export { ErrorDiscriminationSchema } from "./ErrorDiscriminationSchema";
 export { ErrorReferenceSchema } from "./ErrorReferenceSchema";
+export { ExampleCodeSampleSchema, SupportedSdkLanguageSchema } from "./ExampleCodeSampleSchema";
 export { ExampleEndpointCallSchema } from "./ExampleEndpointCallSchema";
 export { ExampleResponseSchema } from "./ExampleResponseSchema";
 export { ExampleTypeReferenceSchema } from "./ExampleTypeReferenceSchema";
