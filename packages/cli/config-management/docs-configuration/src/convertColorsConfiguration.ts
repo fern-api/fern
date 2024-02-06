@@ -84,9 +84,15 @@ export function convertThemedColorConfig(
     let accentPrimaryColor = getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accentPrimary", theme);
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
-    // the toDark() and toLight() functions are meant to improve color contrast and catch any cases where
-    // only one of the dark or light color is provided for either the accentPrimary or background
-    backgroundColor = theme === "dark" ? toDark(backgroundColor) : toLight(backgroundColor);
+    backgroundColor = enforceTheme(backgroundColor, context, "background", theme);
+
+    // the accent color must always be the opposite of the theme
+    accentPrimaryColor = enforceTheme(
+        accentPrimaryColor,
+        context,
+        "accentPrimary",
+        theme === "dark" ? "light" : "dark"
+    );
 
     if (accentPrimaryColor != null && backgroundColor != null) {
         if (!tinycolor.isReadable(accentPrimaryColor, backgroundColor)) {
@@ -104,20 +110,45 @@ export function convertThemedColorConfig(
     };
 }
 
-function toLight(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
+function enforceTheme(
+    color: tinycolor.Instance | undefined,
+    context: TaskContext,
+    key: string,
+    theme: "dark" | "light"
+): tinycolor.Instance | undefined {
     if (color == null) {
         return undefined;
     }
-    return color.isLight() ? color : tinycolor.mostReadable("#000", color.monochromatic(3));
+
+    if (theme === "dark" && color.isDark()) {
+        return color;
+    } else if (theme === "light" && color.isLight()) {
+        return color;
+    }
+
+    const newColor = getOppositeLuminance(color);
+
+    context.logger.warn(
+        `The ${key} color should be ${theme}. We've adjusted the color to ${newColor.toHexString()} to match the theme by flipping its luminance.`
+    );
+
+    return newColor;
 }
 
-function toDark(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
+function getOppositeLuminance(color: tinycolor.Instance): tinycolor.Instance;
+function getOppositeLuminance(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined;
+function getOppositeLuminance(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
     if (color == null) {
         return undefined;
     }
-    return color.isDark() ? color : tinycolor.mostReadable("#FFF", color.monochromatic(3));
+
+    const luminance = color.getLuminance();
+    const oppositeLuminance = 1 - luminance;
+    return tinycolor({ h: color.toHsv().h, s: color.toHsv().s, v: oppositeLuminance });
 }
 
+function toRgb(color: tinycolor.Instance): DocsV1Write.RgbColor;
+function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined;
 function toRgb(color: tinycolor.Instance | undefined): DocsV1Write.RgbColor | undefined {
     if (color == null) {
         return undefined;
