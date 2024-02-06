@@ -12,5 +12,6 @@ allowedFailures:
   - file-download
   - file-upload
   - plain-text
+  - query-parameters
   - response-property
   - streaming

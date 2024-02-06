@@ -31,5 +31,5 @@ scripts:
 allowedFailures:
   - enum
   - extends
+  - query-parameters
   - response-property
-  

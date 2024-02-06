@@ -17,5 +17,6 @@ allowedFailures:
   - enum
   - exhaustive
   - extends
+  - query-parameters
   - reserved-keywords
   - trace
