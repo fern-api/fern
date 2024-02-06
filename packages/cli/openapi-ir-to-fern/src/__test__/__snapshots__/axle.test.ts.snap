@@ -515,7 +515,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
           "refreshedAt": "string",
           "thirdParties": {
             "docs": "",
-            "type": "list<ThirdParty>",
+            "type": "list<Third Party>",
           },
           "type": "PolicyType",
         },
@@ -538,7 +538,7 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
         "docs": "Indicates whether the operation was performed successfully.",
         "type": "boolean",
       },
-      "ThirdParty": {
+      "Third Party": {
         "docs": undefined,
         "properties": {
           "address": "optional<Address>",

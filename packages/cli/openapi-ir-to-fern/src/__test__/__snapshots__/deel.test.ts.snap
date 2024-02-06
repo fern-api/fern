@@ -5410,16 +5410,9 @@ exports[`open api parser deel simple 1`] = `
           "offset": "optional<AgreementsParamOffset>",
         },
       },
-      "AlternateEmailItem": {
-        "docs": undefined,
-        "properties": {
-          "email": "optional<EmailType>",
-          "isVerified": "boolean",
-        },
-      },
       "AlternateEmailList": {
         "docs": "List of alternate email addresses.",
-        "type": "list<AlternateEmailItem>",
+        "type": "list<Root Schema>",
       },
       "ApiError": {
         "docs": undefined,
@@ -6311,6 +6304,12 @@ exports[`open api parser deel simple 1`] = `
           "client",
           "contractor",
         ],
+      },
+      "Contractor": {
+        "docs": undefined,
+        "properties": {
+          "name": "string",
+        },
       },
       "ContractsSortByEnum": {
         "enum": [
@@ -8165,12 +8164,6 @@ exports[`open api parser deel simple 1`] = `
           "refunded",
         ],
       },
-      "InvoiceContractor": {
-        "docs": undefined,
-        "properties": {
-          "name": "string",
-        },
-      },
       "InvoiceDownloadContainer": {
         "docs": undefined,
         "properties": {
@@ -8795,24 +8788,7 @@ exports[`open api parser deel simple 1`] = `
         ],
       },
       "PaymentStatusEnumList": "list<PaymentStatusEnum>",
-      "PaymentWorker": {
-        "docs": undefined,
-        "properties": {
-          "contract_id": {
-            "docs": "The worker's Deel contract Id.",
-            "type": "optional<string>",
-          },
-          "name": {
-            "docs": "Worker's full name.",
-            "type": "string",
-          },
-          "picUrl": {
-            "docs": "URL to worker's Deel avatar.",
-            "type": "optional<string>",
-          },
-        },
-      },
-      "PaymentWorkerList": "list<PaymentWorker>",
+      "PaymentWorkerList": "list<The worker for the payment>",
       "People": {
         "docs": "People object representing a Deel",
         "properties": {
@@ -9279,6 +9255,13 @@ exports[`open api parser deel simple 1`] = `
           "data": "ResponseEstimateFirstPayment",
         },
       },
+      "Root Schema": {
+        "docs": undefined,
+        "properties": {
+          "email": "optional<EmailType>",
+          "isVerified": "boolean",
+        },
+      },
       "Seniority": {
         "docs": "Seniority describes level of expertise at a job e.g. junior",
         "properties": {
@@ -9416,6 +9399,23 @@ exports[`open api parser deel simple 1`] = `
           "name": {
             "docs": "Name of a team",
             "type": "string",
+          },
+        },
+      },
+      "The worker for the payment": {
+        "docs": undefined,
+        "properties": {
+          "contract_id": {
+            "docs": "The worker's Deel contract Id.",
+            "type": "optional<string>",
+          },
+          "name": {
+            "docs": "Worker's full name.",
+            "type": "string",
+          },
+          "picUrl": {
+            "docs": "URL to worker's Deel avatar.",
+            "type": "optional<string>",
           },
         },
       },

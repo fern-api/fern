@@ -891,11 +891,11 @@ exports[`open api parser superagent simple 1`] = `
     "errors": {
       "UnprocessableEntityError": {
         "status-code": 422,
-        "type": "HttpValidationError",
+        "type": "HTTPValidationError",
       },
     },
     "types": {
-      "HttpValidationError": {
+      "HTTPValidationError": {
         "docs": undefined,
         "properties": {
           "detail": "optional<list<ValidationError>>",

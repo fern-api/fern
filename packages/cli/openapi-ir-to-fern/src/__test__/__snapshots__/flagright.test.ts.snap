@@ -3618,7 +3618,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
           "response": {
             "docs": "Created",
-            "type": "TransactionEventMonitoringResult",
+            "type": "",
           },
         },
         "post-user-event": {
@@ -4547,7 +4547,17 @@ In order to make individual events retrievable, you also need to pass in a uniqu
       },
     },
     "types": {
-      "AchDetails": {
+      "": {
+        "docs": undefined,
+        "extends": [
+          "RulesResults",
+        ],
+        "properties": {
+          "eventId": "string",
+          "transaction": "Transaction",
+        },
+      },
+      "ACHDetails": {
         "docs": "Model for ACH payment method",
         "properties": {
           "accountNumber": {
@@ -4573,7 +4583,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "AchPaymentMethod": "literal<"ACH">",
+      "ACHPaymentMethod": "literal<"ACH">",
       "AcquisitionChannel": {
         "docs": "Model for User acquisition channel",
         "enum": [
@@ -4677,10 +4687,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "Director(s) of the company. Must be at least one",
             "type": "optional<list<Person>>",
           },
-          "kycStatusDetails": "optional<KycStatusDetails>",
+          "kycStatusDetails": "optional<KYCStatusDetails>",
           "legalEntity": "optional<LegalEntity>",
           "linkedEntities": "optional<BusinessEntityLink>",
-          "mccDetails": "optional<MccDetails>",
+          "mccDetails": "optional<MCCDetails>",
           "riskLevel": "optional<RiskLevel>",
           "savedPaymentDetails": "optional<list<BusinessOptionalSavedPaymentDetailsItem>>",
           "shareHolders": {
@@ -4700,14 +4710,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": undefined,
         "union": {
-          "ACH": "AchDetails",
+          "ACH": "ACHDetails",
           "CARD": "CardDetails",
           "CHECK": "CheckDetails",
           "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
+          "IBAN": "IBANDetails",
           "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
+          "SWIFT": "SWIFTDetails",
+          "UPI": "UPIDetails",
           "WALLET": "WalletDetails",
         },
       },
@@ -5625,7 +5635,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of executed rules",
         "properties": {
           "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<RuleNature>",
+          "nature": "optional<Rule nature type>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
@@ -5705,7 +5715,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "docs": "Model for list of hit rules",
         "properties": {
           "labels": "optional<list<RuleLabels>>",
-          "nature": "optional<RuleNature>",
+          "nature": "optional<Rule nature type>",
           "ruleAction": "RuleAction",
           "ruleDescription": {
             "docs": "Description of the rule",
@@ -5723,7 +5733,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "IbanDetails": {
+      "IBANDetails": {
         "docs": "Standardized model for Bank Details",
         "properties": {
           "BIC": {
@@ -5752,8 +5762,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "tags": "optional<Tag>",
         },
       },
-      "IbanPaymentMethod": "literal<"IBAN">",
-      "KycStatus": {
+      "IBANPaymentMethod": "literal<"IBAN">",
+      "KYCStatus": {
         "enum": [
           "SUCCESSFUL",
           "FAILED",
@@ -5762,11 +5772,11 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "MANUAL_REVIEW",
         ],
       },
-      "KycStatusDetails": {
+      "KYCStatusDetails": {
         "docs": undefined,
         "properties": {
           "reason": "optional<string>",
-          "status": "optional<KycStatus>",
+          "status": "optional<KYCStatus>",
         },
       },
       "LegalDocument": {
@@ -5886,7 +5896,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "FLAGRIGHT_LIBRARY",
         ],
       },
-      "MccDetails": {
+      "MCCDetails": {
         "docs": undefined,
         "properties": {
           "code": {
@@ -5927,6 +5937,13 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         ],
       },
       "MpesaPaymentMethod": "literal<"MPESA">",
+      "PEPStatus": {
+        "docs": undefined,
+        "properties": {
+          "isPepHit": "boolean",
+          "pepCountry": "optional<string>",
+        },
+      },
       "PaymentMethod": {
         "enum": [
           "ACH",
@@ -5940,13 +5957,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "CHECK",
         ],
       },
-      "PepStatus": {
-        "docs": undefined,
-        "properties": {
-          "isPepHit": "boolean",
-          "pepCountry": "optional<string>",
-        },
-      },
       "Person": {
         "docs": "Model for a generic individual - different from User model by not having userId field",
         "properties": {
@@ -5956,7 +5966,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             "docs": "User's legal identity documents - See Document Model for details",
             "type": "optional<list<LegalDocument>>",
           },
-          "pepStatus": "optional<list<PepStatus>>",
+          "pepStatus": "optional<list<PEPStatus>>",
           "tags": {
             "docs": "Additional information that can be added via tags",
             "type": "optional<list<Tag>>",
@@ -6024,6 +6034,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
+      "Rule nature type": {
+        "enum": [
+          "AML",
+          "FRAUD",
+          "CTF",
+          "SCREENING",
+        ],
+      },
       "RuleAction": {
         "docs": "Model for rule action if a rule is hit. This is returned in the API response and can be configured on Console by operational accounts like a Compliance Analyst",
         "enum": [
@@ -6076,14 +6094,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "SANCTIONS_PEP_ADVERSE_MEDIA",
         ],
       },
-      "RuleNature": {
-        "enum": [
-          "AML",
-          "FRAUD",
-          "CTF",
-          "SCREENING",
-        ],
-      },
       "RulesResults": {
         "docs": undefined,
         "properties": {
@@ -6097,27 +6107,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SanctionsDetails": {
-        "docs": undefined,
-        "properties": {
-          "entityType": "optional<SanctionsDetailsEntityType>",
-          "name": "string",
-          "searchId": "string",
-        },
-      },
-      "SanctionsDetailsEntityType": {
-        "enum": [
-          "CONSUMER_NAME",
-          "LEGAL_NAME",
-          "SHAREHOLDER",
-          "DIRECTOR",
-          "NAME_ON_CARD",
-          "PAYMENT_NAME",
-          "PAYMENT_BENEFICIARY_NAME",
-          "BANK_NAME",
-        ],
-      },
-      "SwiftDetails": {
+      "SWIFTDetails": {
         "docs": "Model for SWIFT payment method",
         "properties": {
           "accountNumber": {
@@ -6147,7 +6137,27 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "SwiftPaymentMethod": "literal<"SWIFT">",
+      "SWIFTPaymentMethod": "literal<"SWIFT">",
+      "SanctionsDetails": {
+        "docs": undefined,
+        "properties": {
+          "entityType": "optional<SanctionsDetailsEntityType>",
+          "name": "string",
+          "searchId": "string",
+        },
+      },
+      "SanctionsDetailsEntityType": {
+        "enum": [
+          "CONSUMER_NAME",
+          "LEGAL_NAME",
+          "SHAREHOLDER",
+          "DIRECTOR",
+          "NAME_ON_CARD",
+          "PAYMENT_NAME",
+          "PAYMENT_BENEFICIARY_NAME",
+          "BANK_NAME",
+        ],
+      },
       "Tag": {
         "docs": "Generic key-value pair model to append a custom variable being sent to Flagright API",
         "properties": {
@@ -6224,16 +6234,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "month": "optional<double>",
           "week": "optional<double>",
           "year": "optional<double>",
-        },
-      },
-      "TransactionEventMonitoringResult": {
-        "docs": undefined,
-        "extends": [
-          "RulesResults",
-        ],
-        "properties": {
-          "eventId": "string",
-          "transaction": "Transaction",
         },
       },
       "TransactionLimit": {
@@ -6347,14 +6347,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": "Payment details of the destination. It can be a bank account number, wallet ID, card fingerprint etc.",
         "union": {
-          "ACH": "AchDetails",
+          "ACH": "ACHDetails",
           "CARD": "CardDetails",
           "CHECK": "CheckDetails",
           "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
+          "IBAN": "IBANDetails",
           "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
+          "SWIFT": "SWIFTDetails",
+          "UPI": "UPIDetails",
           "WALLET": "WalletDetails",
         },
       },
@@ -6363,14 +6363,14 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "discriminant": "method",
         "docs": "Payment details of the origin. It can be a bank account number, wallet ID, card fingerprint etc.",
         "union": {
-          "ACH": "AchDetails",
+          "ACH": "ACHDetails",
           "CARD": "CardDetails",
           "CHECK": "CheckDetails",
           "GENERIC_BANK_ACCOUNT": "GenericBankAccountDetails",
-          "IBAN": "IbanDetails",
+          "IBAN": "IBANDetails",
           "MPESA": "MpesaDetails",
-          "SWIFT": "SwiftDetails",
-          "UPI": "UpiDetails",
+          "SWIFT": "SWIFTDetails",
+          "UPI": "UPIDetails",
           "WALLET": "WalletDetails",
         },
       },
@@ -6384,7 +6384,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           "hitRules": "list<HitRulesDetails>",
         },
       },
-      "UpiDetails": {
+      "UPIDetails": {
         "docs": "Model for UPI payment method",
         "properties": {
           "bankProvider": {
@@ -6405,7 +6405,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
           },
         },
       },
-      "UpiPaymentMethod": "literal<"UPI">",
+      "UPIPaymentMethod": "literal<"UPI">",
       "User": {
         "docs": "Model for User details",
         "extends": [
@@ -6469,12 +6469,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
         "properties": {
           "acquisitionChannel": "optional<AcquisitionChannel>",
           "contactDetails": "optional<ContactDetails>",
-          "kycStatusDetails": "optional<KycStatusDetails>",
+          "kycStatusDetails": "optional<KYCStatusDetails>",
           "legalDocuments": {
             "docs": "User's legal identity documents - See Document Model for details",
             "type": "optional<list<LegalDocument>>",
           },
-          "pepStatus": "optional<list<PepStatus>>",
+          "pepStatus": "optional<list<PEPStatus>>",
           "reasonForAccountOpening": "optional<list<string>>",
           "riskLevel": "optional<RiskLevel>",
           "tags": {
