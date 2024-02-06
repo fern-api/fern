@@ -5,7 +5,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class DeepEqualityCorrectnessCheck
         attr_reader :expected_value_parameter_id, :additional_properties
 

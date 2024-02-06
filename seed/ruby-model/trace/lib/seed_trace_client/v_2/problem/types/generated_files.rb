@@ -5,7 +5,7 @@ require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class GeneratedFiles
         attr_reader :generated_test_case_files, :generated_template_files, :other, :additional_properties
 
@@ -32,15 +32,15 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          generated_test_case_files = parsed_json["generatedTestCaseFiles"].transform_values do |_k, v|
+          generated_test_case_files = parsed_json["generatedTestCaseFiles"]&.transform_values do |_k, v|
             v = v.to_json
             Commons::LANGUAGE.key(v) || v
           end
-          generated_template_files = parsed_json["generatedTemplateFiles"].transform_values do |_k, v|
+          generated_template_files = parsed_json["generatedTemplateFiles"]&.transform_values do |_k, v|
             v = v.to_json
             Commons::LANGUAGE.key(v) || v
           end
-          other = parsed_json["other"].transform_values do |_k, v|
+          other = parsed_json["other"]&.transform_values do |_k, v|
             v = v.to_json
             Commons::LANGUAGE.key(v) || v
           end

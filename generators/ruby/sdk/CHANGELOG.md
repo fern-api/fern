@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.0.5] - 2024-02-06
+
+- This release contains no changes to the API.
+
+- Bug fixes:
+  - Syntactic error in block parameter usage: we now ensure block parameters are the final parameter for functions
+  - Add properties to subpackages: previously properties on subpackages were not being exposed
+  - Ensure optional properties in from_json are only parsed if present
+
 ## [0.0.4] - 2024-02-05
 
 - This release contains no changes to the API.

@@ -5,6 +5,7 @@ require_relative "c/client"
 module SeedApiClient
   module A
     class Client
+      attr_reader :
       # @param request_client [RequestClient] 
       # @return [A::Client]
       def initialize(request_client:)
@@ -12,6 +13,7 @@ module SeedApiClient
       end
     end
     class AsyncClient
+      attr_reader :
       # @param request_client [RequestClient] 
       # @return [A::AsyncClient]
       def initialize(request_client:)

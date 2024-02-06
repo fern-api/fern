@@ -7,7 +7,7 @@ require_relative "void_function_signature_that_takes_actual_result"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class FunctionSignature
         attr_reader :member, :discriminant
 

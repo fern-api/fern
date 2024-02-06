@@ -4,7 +4,7 @@ require_relative "scope"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class StackFrame
       attr_reader :method_name, :line_number, :scopes, :additional_properties
 
@@ -33,7 +33,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         method_name = struct.methodName
         line_number = struct.lineNumber
-        scopes = parsed_json["scopes"].map do |v|
+        scopes = parsed_json["scopes"]&.map do |v|
           v = v.to_json
           Submission::Scope.from_json(json_object: v)
         end

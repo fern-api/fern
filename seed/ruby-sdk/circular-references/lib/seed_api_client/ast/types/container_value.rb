@@ -4,7 +4,7 @@ require "json"
 require_relative "field_value"
 
 module SeedApiClient
-  module Ast
+  class Ast
     class ContainerValue
       attr_reader :member, :discriminant
 
@@ -28,14 +28,14 @@ module SeedApiClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         member = case struct.type
                  when "list"
-                   json_object.value.map do |v|
+                   json_object.value&.map do |v|
                      v = v.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end
                  when "optional"
                    Ast::FieldValue.from_json(json_object: json_object.value)
                  else
-                   json_object.map do |v|
+                   json_object&.map do |v|
                      v = v.to_json
                      Ast::FieldValue.from_json(json_object: v)
                    end

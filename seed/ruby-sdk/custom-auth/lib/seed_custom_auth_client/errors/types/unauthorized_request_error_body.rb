@@ -3,7 +3,7 @@
 require "json"
 
 module SeedCustomAuthClient
-  module Errors
+  class Errors
     class UnauthorizedRequestErrorBody
       attr_reader :message, :additional_properties
 

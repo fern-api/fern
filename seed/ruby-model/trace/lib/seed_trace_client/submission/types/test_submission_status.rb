@@ -5,7 +5,7 @@ require_relative "running_submission_state"
 require_relative "error_info"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionStatus
       attr_reader :member, :discriminant
 

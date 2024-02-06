@@ -12,6 +12,8 @@ require_relative "union/client"
 module SeedExhaustiveClient
   module Endpoints
     class Client
+      attr_reader :container, :enum, :http_methods, :object, :params, :primitive, :union
+
       # @param request_client [RequestClient]
       # @return [Endpoints::Client]
       def initialize(request_client:)
@@ -26,6 +28,8 @@ module SeedExhaustiveClient
     end
 
     class AsyncClient
+      attr_reader :container, :enum, :http_methods, :object, :params, :primitive, :union
+
       # @param request_client [RequestClient]
       # @return [Endpoints::AsyncClient]
       def initialize(request_client:)

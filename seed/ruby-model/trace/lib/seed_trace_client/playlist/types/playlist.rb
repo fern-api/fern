@@ -6,7 +6,7 @@ require_relative "../../commons/types/problem_id"
 require "json"
 
 module SeedTraceClient
-  module Playlist
+  class Playlist
     class Playlist
       attr_reader :playlist_id, :owner_id, :name, :problems, :additional_properties
 

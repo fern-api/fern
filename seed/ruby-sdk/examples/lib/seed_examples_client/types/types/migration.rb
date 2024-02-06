@@ -4,7 +4,7 @@ require_relative "migration_status"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Migration
       attr_reader :name, :status, :additional_properties
 

@@ -6,7 +6,7 @@ require_relative "test_case_grade"
 require_relative "traced_test_case"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionStatusForTestCase
       attr_reader :member, :discriminant
 

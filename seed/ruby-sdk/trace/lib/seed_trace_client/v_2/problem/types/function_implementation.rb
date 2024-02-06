@@ -4,7 +4,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class FunctionImplementation
         attr_reader :impl, :imports, :additional_properties
 

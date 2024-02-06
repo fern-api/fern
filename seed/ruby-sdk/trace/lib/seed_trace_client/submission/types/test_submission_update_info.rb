@@ -7,7 +7,7 @@ require_relative "graded_test_case_update"
 require_relative "recorded_test_case_update"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionUpdateInfo
       attr_reader :member, :discriminant
 

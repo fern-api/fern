@@ -5,7 +5,7 @@ require_relative "workspace_run_details"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceRanResponse
       attr_reader :submission_id, :run_details, :additional_properties
 

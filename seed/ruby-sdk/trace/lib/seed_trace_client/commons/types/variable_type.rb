@@ -5,7 +5,7 @@ require_relative "list_type"
 require_relative "map_type"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class VariableType
       attr_reader :member, :discriminant
 

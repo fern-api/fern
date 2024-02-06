@@ -5,7 +5,7 @@ require_relative "error_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ErroredResponse
       attr_reader :submission_id, :error_info, :additional_properties
 

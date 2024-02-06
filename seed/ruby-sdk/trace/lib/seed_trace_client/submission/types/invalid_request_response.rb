@@ -5,7 +5,7 @@ require_relative "invalid_request_cause"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class InvalidRequestResponse
       attr_reader :request, :cause, :additional_properties
 

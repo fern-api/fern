@@ -3,7 +3,7 @@
 require "json"
 
 module SeedUnknownAsAnyClient
-  module Unknown
+  class Unknown
     class MyObject
       attr_reader :unknown, :additional_properties
 

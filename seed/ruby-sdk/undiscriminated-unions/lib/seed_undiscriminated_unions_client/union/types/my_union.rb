@@ -3,7 +3,7 @@
 require "json"
 
 module SeedUndiscriminatedUnionsClient
-  module Union
+  class Union
     # Several different types are accepted.
     class MyUnion
       attr_reader :member

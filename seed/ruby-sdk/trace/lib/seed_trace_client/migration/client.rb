@@ -29,6 +29,8 @@ module SeedTraceClient
           "admin-key-header": admin_key_header
         }.compact
       end
+      return if response.body.nil?
+
       response.body.map do |v|
         v = v.to_json
         Migration::Migration.from_json(json_object: v)
@@ -61,7 +63,7 @@ module SeedTraceClient
             "admin-key-header": admin_key_header
           }.compact
         end
-        response.body.map do |v|
+        response.body&.map do |v|
           v = v.to_json
           Migration::Migration.from_json(json_object: v)
         end

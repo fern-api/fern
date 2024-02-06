@@ -5,7 +5,7 @@ require_relative "test_submission_status_v_2"
 require_relative "workspace_submission_status_v_2"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionStatusV2
       attr_reader :member, :discriminant
 

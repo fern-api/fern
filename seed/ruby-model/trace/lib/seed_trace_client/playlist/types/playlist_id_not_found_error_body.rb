@@ -4,7 +4,7 @@ require "json"
 require_relative "playlist_id"
 
 module SeedTraceClient
-  module Playlist
+  class Playlist
     class PlaylistIdNotFoundErrorBody
       attr_reader :member, :discriminant
 

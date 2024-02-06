@@ -12,7 +12,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class ProblemInfoV2
           attr_reader :problem_id, :problem_description, :problem_name, :problem_version, :supported_languages,
                       :custom_files, :generated_files, :custom_test_case_templates, :testcases, :is_public, :additional_properties
@@ -89,11 +89,11 @@ module SeedTraceClient
               generated_files = parsed_json["generatedFiles"].to_json
               generated_files = V2::V3::Problem::GeneratedFiles.from_json(json_object: generated_files)
             end
-            custom_test_case_templates = parsed_json["customTestCaseTemplates"].map do |v|
+            custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
               v = v.to_json
               V2::V3::Problem::TestCaseTemplate.from_json(json_object: v)
             end
-            testcases = parsed_json["testcases"].map do |v|
+            testcases = parsed_json["testcases"]&.map do |v|
               v = v.to_json
               V2::V3::Problem::TestCaseV2.from_json(json_object: v)
             end

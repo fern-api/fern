@@ -4,7 +4,7 @@ require_relative "exception_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class InternalError
       attr_reader :exception_info, :additional_properties
 

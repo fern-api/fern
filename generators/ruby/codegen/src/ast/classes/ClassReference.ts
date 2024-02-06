@@ -14,6 +14,7 @@ import {
 } from "@fern-fern/ir-sdk/api";
 import { format } from "util";
 import { LocationGenerator } from "../../utils/LocationGenerator";
+import { ConditionalStatement } from "../abstractions/ConditionalStatement";
 import { Argument } from "../Argument";
 import { AstNode } from "../core/AstNode";
 import { Expression } from "../expressions/Expression";
@@ -173,7 +174,7 @@ export class SerializableObjectReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new SerializableObjectReference({
             name: declaredTypeName.name.pascalCase.safeName,
             import_: new Import({ from: location }),
@@ -210,7 +211,7 @@ export class AliasReference extends ClassReference {
         locationGenerator: LocationGenerator
     ): ClassReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new AliasReference({
             aliasOf,
             name: declaredTypeName.name.screamingSnakeCase.safeName,
@@ -247,23 +248,36 @@ export class ArrayReference extends ClassReference {
         const valueFromJsonFunction =
             this.innerType instanceof ClassReference ? this.innerType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "map", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "v",
+            ? new ConditionalStatement({
+                  if_: {
+                      rightSide: new FunctionInvocation({
+                          // TODO: Do this field access on the client better
+                          onObject: variable,
+                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                      }),
+                      operation: "!",
                       expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                          new FunctionInvocation({
+                              baseFunction: new Function_({ name: "map", functionBody: [] }),
+                              onObject: variable,
+                              block: {
+                                  arguments: "v",
+                                  expressions: [
+                                      new Expression({
+                                          leftSide: "v",
+                                          rightSide: new FunctionInvocation({
+                                              onObject: "v",
+                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                                          }),
+                                          isAssignment: true
+                                      }),
+                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                                  ]
+                              }
+                          })
                       ]
-                  }
+                  },
+                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
               })
             : undefined;
     }
@@ -314,23 +328,36 @@ export class HashReference extends ClassReference {
         const valueFromJsonFunction =
             this.valueType instanceof ClassReference ? this.valueType.fromJson("v") : undefined;
         return valueFromJsonFunction !== undefined
-            ? new FunctionInvocation({
-                  baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
-                  onObject: variable,
-                  block: {
-                      arguments: "k, v",
+            ? new ConditionalStatement({
+                  if_: {
+                      rightSide: new FunctionInvocation({
+                          // TODO: Do this field access on the client better
+                          onObject: variable,
+                          baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                      }),
+                      operation: "!",
                       expressions: [
-                          new Expression({
-                              leftSide: "v",
-                              rightSide: new FunctionInvocation({
-                                  onObject: "v",
-                                  baseFunction: new Function_({ name: "to_json", functionBody: [] })
-                              }),
-                              isAssignment: true
-                          }),
-                          new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                          new FunctionInvocation({
+                              baseFunction: new Function_({ name: "transform_values", functionBody: [] }),
+                              onObject: variable,
+                              block: {
+                                  arguments: "k, v",
+                                  expressions: [
+                                      new Expression({
+                                          leftSide: "v",
+                                          rightSide: new FunctionInvocation({
+                                              onObject: "v",
+                                              baseFunction: new Function_({ name: "to_json", functionBody: [] })
+                                          }),
+                                          isAssignment: true
+                                      }),
+                                      new Expression({ rightSide: valueFromJsonFunction, isAssignment: false })
+                                  ]
+                              }
+                          })
                       ]
-                  }
+                  },
+                  else_: [new Expression({ rightSide: "nil", isAssignment: false })]
               })
             : undefined;
     }
@@ -450,7 +477,7 @@ export class EnumReference extends HashReference {
         locationGenerator: LocationGenerator
     ): EnumReference {
         const location = locationGenerator.getLocationForTypeDeclaration(declaredTypeName);
-        const moduleBreadcrumbs = Module_.getModulePathFromTypeName(declaredTypeName.fernFilepath, true);
+        const moduleBreadcrumbs = Module_.getModuleBreadcrumbs(declaredTypeName.fernFilepath, true);
         return new EnumReference({
             name: declaredTypeName.name.screamingSnakeCase.safeName,
             import_: new Import({ from: location }),
@@ -520,10 +547,23 @@ export class DateReference extends ClassReference {
     }
 
     public fromJson(variable: Variable | string): AstNode | undefined {
-        return new FunctionInvocation({
-            baseFunction: new Function_({ name: "parse", functionBody: [] }),
-            onObject: this,
-            arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+        return new ConditionalStatement({
+            if_: {
+                rightSide: new FunctionInvocation({
+                    // TODO: Do this field access on the client better
+                    onObject: variable,
+                    baseFunction: new Function_({ name: "nil?", functionBody: [] })
+                }),
+                operation: "!",
+                expressions: [
+                    new FunctionInvocation({
+                        baseFunction: new Function_({ name: "parse", functionBody: [] }),
+                        onObject: this,
+                        arguments_: [new Argument({ value: variable, isNamed: false, type: GenericClassReference })]
+                    })
+                ]
+            },
+            else_: [new Expression({ rightSide: "nil", isAssignment: false })]
         });
     }
 }

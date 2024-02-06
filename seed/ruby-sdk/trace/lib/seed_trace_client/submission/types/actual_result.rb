@@ -6,7 +6,7 @@ require_relative "exception_info"
 require_relative "exception_v_2"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ActualResult
       attr_reader :member, :discriminant
 

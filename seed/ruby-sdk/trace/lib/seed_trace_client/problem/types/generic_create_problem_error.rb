@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class GenericCreateProblemError
       attr_reader :message, :type, :stacktrace, :additional_properties
 

@@ -8,7 +8,7 @@ require_relative "doubly_linked_list_node_and_list_value"
 require_relative "generic_value"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DebugVariableValue
       attr_reader :member, :discriminant
 
@@ -44,7 +44,7 @@ module SeedTraceClient
                  when "mapValue"
                    Commons::DebugMapValue.from_json(json_object: json_object)
                  when "listValue"
-                   json_object.value.map do |v|
+                   json_object.value&.map do |v|
                      v = v.to_json
                      Commons::DebugVariableValue.from_json(json_object: v)
                    end

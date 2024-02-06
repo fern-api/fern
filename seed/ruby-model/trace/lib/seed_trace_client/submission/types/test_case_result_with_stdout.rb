@@ -4,7 +4,7 @@ require_relative "test_case_result"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseResultWithStdout
       attr_reader :result, :stdout, :additional_properties
 

@@ -4,7 +4,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Object
+    class Object
       class ObjectWithRequiredField
         attr_reader :string, :additional_properties
 

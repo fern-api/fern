@@ -2,7 +2,7 @@
 
 module SeedExamplesClient
   module File
-    module Service
+    class Service
       FILENAME = String
     end
   end

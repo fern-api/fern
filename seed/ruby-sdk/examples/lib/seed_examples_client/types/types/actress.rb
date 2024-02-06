@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Actress
       attr_reader :name, :id, :additional_properties
 

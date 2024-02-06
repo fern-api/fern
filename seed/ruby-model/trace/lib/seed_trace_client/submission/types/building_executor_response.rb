@@ -5,7 +5,7 @@ require_relative "execution_session_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class BuildingExecutorResponse
       attr_reader :submission_id, :status, :additional_properties
 

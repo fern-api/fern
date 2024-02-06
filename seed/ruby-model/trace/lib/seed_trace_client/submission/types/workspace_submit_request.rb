@@ -6,7 +6,7 @@ require_relative "submission_file_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceSubmitRequest
       attr_reader :submission_id, :language, :submission_files, :user_id, :additional_properties
 
@@ -38,7 +38,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
-        submission_files = parsed_json["submissionFiles"].map do |v|
+        submission_files = parsed_json["submissionFiles"]&.map do |v|
           v = v.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end

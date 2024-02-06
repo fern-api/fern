@@ -14,7 +14,7 @@ require_relative "invalid_request_response"
 require_relative "finished_response"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class CodeExecutionUpdate
       attr_reader :member, :discriminant
 

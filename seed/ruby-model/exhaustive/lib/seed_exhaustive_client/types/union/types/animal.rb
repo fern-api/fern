@@ -6,7 +6,7 @@ require_relative "cat"
 
 module SeedExhaustiveClient
   module Types
-    module Union
+    class Union
       class Animal
         attr_reader :member, :discriminant
 

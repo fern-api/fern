@@ -3,7 +3,7 @@
 require "json"
 
 module SeedErrorPropertyClient
-  module Errors
+  class Errors
     class PropertyBasedErrorTestBody
       attr_reader :message, :additional_properties
 

@@ -4,7 +4,7 @@ require_relative "file"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Directory
       attr_reader :name, :files, :directories, :additional_properties
 
@@ -32,11 +32,11 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         name = struct.name
-        files = parsed_json["files"].map do |v|
+        files = parsed_json["files"]&.map do |v|
           v = v.to_json
           Types::File.from_json(json_object: v)
         end
-        directories = parsed_json["directories"].map do |v|
+        directories = parsed_json["directories"]&.map do |v|
           v = v.to_json
           Types::Directory.from_json(json_object: v)
         end

@@ -91,6 +91,8 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
+        return if response.body.nil?
+
         DateTime.parse(response.body)
       end
 
@@ -104,6 +106,8 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
+        return if response.body.nil?
+
         Date.parse(response.body)
       end
 
@@ -230,7 +234,7 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
-          DateTime.parse(response.body)
+          DateTime.parse(response.body) unless response.body.nil?
         end
       end
 
@@ -245,7 +249,7 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
-          Date.parse(response.body)
+          Date.parse(response.body) unless response.body.nil?
         end
       end
 

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class GenericValue
       attr_reader :stringified_type, :stringified_value, :additional_properties
 

@@ -8,7 +8,7 @@ require "json"
 require_relative "../../commons/types/language"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class CreateProblemRequest
       attr_reader :problem_name, :problem_description, :files, :input_params, :output_type, :testcases, :method_name,
                   :additional_properties
@@ -56,11 +56,11 @@ module SeedTraceClient
           problem_description = parsed_json["problemDescription"].to_json
           problem_description = Problem::ProblemDescription.from_json(json_object: problem_description)
         end
-        files = parsed_json["files"].transform_values do |_k, v|
+        files = parsed_json["files"]&.transform_values do |_k, v|
           v = v.to_json
           Commons::LANGUAGE.key(v) || v
         end
-        input_params = parsed_json["inputParams"].map do |v|
+        input_params = parsed_json["inputParams"]&.map do |v|
           v = v.to_json
           Problem::VariableTypeAndName.from_json(json_object: v)
         end
@@ -70,7 +70,7 @@ module SeedTraceClient
           output_type = parsed_json["outputType"].to_json
           output_type = Commons::VariableType.from_json(json_object: output_type)
         end
-        testcases = parsed_json["testcases"].map do |v|
+        testcases = parsed_json["testcases"]&.map do |v|
           v = v.to_json
           Commons::TestCaseWithExpectedResult.from_json(json_object: v)
         end

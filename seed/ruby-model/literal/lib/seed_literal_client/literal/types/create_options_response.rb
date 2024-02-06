@@ -4,7 +4,7 @@ require "json"
 require_relative "options"
 
 module SeedLiteralClient
-  module Literal
+  class Literal
     class CreateOptionsResponse
       attr_reader :member, :discriminant
 
