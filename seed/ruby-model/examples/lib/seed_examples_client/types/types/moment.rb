@@ -32,8 +32,8 @@ module SeedExamplesClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         id = struct.id
-        date = Date.parse(parsed_json["date"])
-        datetime = DateTime.parse(parsed_json["datetime"])
+        date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
+        datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
         new(id: id, date: date, datetime: datetime, additional_properties: struct)
       end
 

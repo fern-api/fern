@@ -25,7 +25,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        files_by_language = parsed_json["filesByLanguage"].transform_values do |_k, v|
+        files_by_language = parsed_json["filesByLanguage"]&.transform_values do |_k, v|
           v = v.to_json
           Commons::LANGUAGE.key(v) || v
         end

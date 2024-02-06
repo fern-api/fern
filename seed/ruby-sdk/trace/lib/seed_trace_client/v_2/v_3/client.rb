@@ -7,6 +7,8 @@ module SeedTraceClient
   module V2
     module V3
       class Client
+        attr_reader :problem
+
         # @param request_client [RequestClient]
         # @return [V2::V3::Client]
         def initialize(request_client:)
@@ -15,6 +17,8 @@ module SeedTraceClient
       end
 
       class AsyncClient
+        attr_reader :problem
+
         # @param request_client [RequestClient]
         # @return [V2::V3::AsyncClient]
         def initialize(request_client:)

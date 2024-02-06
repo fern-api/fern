@@ -67,8 +67,8 @@ module SeedExhaustiveClient
           long = struct.long
           double = struct.double
           bool = struct.bool
-          datetime = DateTime.parse(parsed_json["datetime"])
-          date = Date.parse(parsed_json["date"])
+          datetime = (DateTime.parse(parsed_json["datetime"]) unless parsed_json["datetime"].nil?)
+          date = (Date.parse(parsed_json["date"]) unless parsed_json["date"].nil?)
           uuid = struct.uuid
           base_64 = struct.base64
           list = struct.list

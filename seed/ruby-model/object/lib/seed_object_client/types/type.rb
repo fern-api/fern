@@ -88,8 +88,8 @@ module SeedObjectClient
       three = struct.three
       four = struct.four
       five = struct.five
-      six = DateTime.parse(parsed_json["six"])
-      seven = Date.parse(parsed_json["seven"])
+      six = (DateTime.parse(parsed_json["six"]) unless parsed_json["six"].nil?)
+      seven = (Date.parse(parsed_json["seven"]) unless parsed_json["seven"].nil?)
       eight = struct.eight
       nine = struct.nine
       ten = struct.ten

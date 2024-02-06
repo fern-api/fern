@@ -25,7 +25,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        key_value_pairs = parsed_json["keyValuePairs"].map do |v|
+        key_value_pairs = parsed_json["keyValuePairs"]&.map do |v|
           v = v.to_json
           Commons::DebugKeyValuePairs.from_json(json_object: v)
         end

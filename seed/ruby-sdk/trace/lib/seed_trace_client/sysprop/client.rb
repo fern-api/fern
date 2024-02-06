@@ -37,6 +37,8 @@ module SeedTraceClient
         req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
         req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
       end
+      return if response.body.nil?
+
       response.body.transform_values do |_k, v|
         v = v.to_json
         Commons::LANGUAGE.key(v) || v
@@ -79,7 +81,7 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
-        response.body.transform_values do |_k, v|
+        response.body&.transform_values do |_k, v|
           v = v.to_json
           Commons::LANGUAGE.key(v) || v
         end

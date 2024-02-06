@@ -29,6 +29,8 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
+        return if response.body.nil?
+
         response.body.map do |v|
           v = v.to_json
           V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
@@ -46,6 +48,8 @@ module SeedTraceClient
           req.headers["X-Random-Header"] = request_options.x_random_header unless request_options&.x_random_header.nil?
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
         end
+        return if response.body.nil?
+
         response.body.map do |v|
           v = v.to_json
           V2::Problem::ProblemInfoV2.from_json(json_object: v)
@@ -109,7 +113,7 @@ module SeedTraceClient
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           end
-          response.body.map do |v|
+          response.body&.map do |v|
             v = v.to_json
             V2::Problem::LightweightProblemInfoV2.from_json(json_object: v)
           end
@@ -131,7 +135,7 @@ module SeedTraceClient
             end
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           end
-          response.body.map do |v|
+          response.body&.map do |v|
             v = v.to_json
             V2::Problem::ProblemInfoV2.from_json(json_object: v)
           end

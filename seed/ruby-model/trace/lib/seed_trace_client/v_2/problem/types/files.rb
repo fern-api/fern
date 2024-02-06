@@ -26,7 +26,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          files = parsed_json["files"].map do |v|
+          files = parsed_json["files"]&.map do |v|
             v = v.to_json
             V2::Problem::FileInfoV2.from_json(json_object: v)
           end

@@ -88,11 +88,11 @@ module SeedTraceClient
             generated_files = parsed_json["generatedFiles"].to_json
             generated_files = V2::Problem::GeneratedFiles.from_json(json_object: generated_files)
           end
-          custom_test_case_templates = parsed_json["customTestCaseTemplates"].map do |v|
+          custom_test_case_templates = parsed_json["customTestCaseTemplates"]&.map do |v|
             v = v.to_json
             V2::Problem::TestCaseTemplate.from_json(json_object: v)
           end
-          testcases = parsed_json["testcases"].map do |v|
+          testcases = parsed_json["testcases"]&.map do |v|
             v = v.to_json
             V2::Problem::TestCaseV2.from_json(json_object: v)
           end

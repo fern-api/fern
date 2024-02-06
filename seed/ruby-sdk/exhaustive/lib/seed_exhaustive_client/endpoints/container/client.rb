@@ -41,6 +41,8 @@ module SeedExhaustiveClient
           req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
           req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
         end
+        return if response.body.nil?
+
         response.body.map do |v|
           v = v.to_json
           Types::Object::ObjectWithRequiredField.from_json(json_object: v)
@@ -151,7 +153,7 @@ module SeedExhaustiveClient
             req.headers = { **req.headers, **(request_options&.additional_headers || {}) }.compact
             req.body = { **(request || {}), **(request_options&.additional_body_parameters || {}) }.compact
           end
-          response.body.map do |v|
+          response.body&.map do |v|
             v = v.to_json
             Types::Object::ObjectWithRequiredField.from_json(json_object: v)
           end

@@ -47,7 +47,7 @@ module SeedTraceClient
         parsed_json = JSON.parse(json_object)
         submission_id = struct.submissionId
         language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
-        submission_files = parsed_json["submissionFiles"].map do |v|
+        submission_files = parsed_json["submissionFiles"]&.map do |v|
           v = v.to_json
           Submission::SubmissionFileInfo.from_json(json_object: v)
         end
