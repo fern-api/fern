@@ -1,4 +1,6 @@
 import { RelativeFilePath } from "@fern-api/fs-utils";
+import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
+import { BasicLicense, CustomLicense } from "@fern-fern/generator-exec-sdk/api";
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { camelCase, snakeCase, upperFirst } from "lodash-es";
 import { Expression } from "../ast/expressions/Expression";
@@ -55,13 +57,26 @@ export function generateGemspec(
     gemName: string,
     extraDependencies: ExternalDependency[],
     sdkVersion?: string,
+    licenseConfig?: FernGeneratorExec.LicenseConfig,
     hasFileBasedDependencies = false
 ): GeneratedRubyFile {
+    const license = licenseConfig?._visit({
+        basic: (l: BasicLicense) => {
+            return { licenseType: l.id, licenseFilePath: "LICENSE" };
+        },
+        custom: (l: CustomLicense) => {
+            return { licenseFilePath: l.filename };
+        },
+        _other: () => {
+            throw new Error("Unknown license configuration provided.");
+        }
+    });
     const gemspec = new Gemspec({
         clientName,
         gemName,
         dependencies: extraDependencies,
         sdkVersion,
+        license,
         hasFileBasedDependencies
     });
     return new GeneratedRubyFile({
@@ -145,8 +160,9 @@ jobs:
           - name: Build and Push Gem
             env:
               GEM_HOST_API_KEY: \${{ secrets.${apiKeyEnvVar} }}
-            run: >-
+            run: |
               gem build ${gemName}.gemspec
+
               gem push ${gemName}-*.gem --host ${registryUrl}
 `;
     return new GeneratedFile("publish.yml", RelativeFilePath.of(".github/workflows"), content);
