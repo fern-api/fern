@@ -30,8 +30,7 @@ function addTestCommand(cli: Argv) {
                 .option("workspace", {
                     type: "array",
                     string: true,
-                    default: undefined,
-                    demandOption: true,
+                    demandOption: false,
                     description: "The workspace to run tests on"
                 })
                 .option("parallel", {
@@ -70,7 +69,7 @@ function addTestCommand(cli: Argv) {
             const workspaces = await loadSeedWorkspaces();
 
             for (const workspace of workspaces) {
-                if (!argv.workspace.includes(workspace.workspaceName)) {
+                if (argv.workspace != null && !argv.workspace.includes(workspace.workspaceName)) {
                     continue;
                 }
 
