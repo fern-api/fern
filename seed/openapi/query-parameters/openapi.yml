@@ -38,13 +38,6 @@ paths:
           schema:
             type: string
             format: byte
-        - name: keyValue
-          in: query
-          required: true
-          schema:
-            type: object
-            additionalProperties:
-              type: string
         - name: optionalString
           in: query
           required: false
