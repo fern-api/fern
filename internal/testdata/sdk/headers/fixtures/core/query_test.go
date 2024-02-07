@@ -120,15 +120,27 @@ func TestQueryValues(t *testing.T) {
 
 	t.Run("date", func(t *testing.T) {
 		type example struct {
-			DateTime time.Time `json:"dateTime" url:"dateTime" format:"date"`
+			Date time.Time `json:"date" url:"date" format:"date"`
 		}
 
 		values, err := QueryValues(
 			&example{
-				DateTime: time.Date(1994, 3, 16, 12, 34, 56, 0, time.UTC),
+				Date: time.Date(1994, 3, 16, 12, 34, 56, 0, time.UTC),
 			},
 		)
 		require.NoError(t, err)
-		assert.Equal(t, "dateTime=1994-03-16", values.Encode())
+		assert.Equal(t, "date=1994-03-16", values.Encode())
+	})
+
+	t.Run("optional time", func(t *testing.T) {
+		type example struct {
+			Date *time.Time `json:"date,omitempty" url:"date,omitempty" format:"date"`
+		}
+
+		values, err := QueryValues(
+			&example{},
+		)
+		require.NoError(t, err)
+		assert.Empty(t, values.Encode())
 	})
 }

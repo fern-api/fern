@@ -171,8 +171,10 @@ func isEmptyValue(v reflect.Value) bool {
 		IsZero() bool
 	}
 
-	if z, ok := v.Interface().(zeroable); ok {
-		return z.IsZero()
+	if !v.IsNil() {
+		if z, ok := v.Interface().(zeroable); ok {
+			return z.IsZero()
+		}
 	}
 
 	switch v.Kind() {
