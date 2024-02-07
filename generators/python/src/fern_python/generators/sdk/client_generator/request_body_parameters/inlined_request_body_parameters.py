@@ -126,7 +126,7 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                 with writer.indent():
                     if self.is_enum_or_optional_enum(reference=optional_property.value_type):
                         writer.write_line(
-                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value'
+                            f'{InlinedRequestBodyParameters._REQUEST_VARIABLE_NAME}["{optional_property.name.wire_value}"] = {self._get_property_name(optional_property)}.value if {self._get_property_name(optional_property)} is not None else None'
                         )
                     else:
                         writer.write_line(

@@ -30,7 +30,7 @@ class InlinedRequestClient:
         """
         _request: typing.Dict[str, typing.Any] = {}
         if value is not OMIT:
-            _request["value"] = value.value
+            _request["value"] = value.value if value is not None else None
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined-request"),
@@ -64,7 +64,7 @@ class AsyncInlinedRequestClient:
         """
         _request: typing.Dict[str, typing.Any] = {}
         if value is not OMIT:
-            _request["value"] = value.value
+            _request["value"] = value.value if value is not None else None
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "inlined-request"),
