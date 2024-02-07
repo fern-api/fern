@@ -85,7 +85,7 @@ export function convertThemedColorConfig(
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
     if (backgroundColor != null) {
-        const newBackgroundColor = enforceBackgroundTheme(backgroundColor, theme);
+        const newBackgroundColor = enforceBackgroundTheme(tinycolor(backgroundColor.toString()), theme);
         if (newBackgroundColor.toHexString() !== backgroundColor.toHexString()) {
             context.logger.warn(
                 `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
@@ -96,7 +96,10 @@ export function convertThemedColorConfig(
 
     if (accentPrimaryColor != null) {
         const backgroundColorWithFallback = backgroundColor ?? tinycolor(theme === "dark" ? "#000" : "#FFF");
-        const newAccentPrimaryColor = increaseForegroundContrast(accentPrimaryColor, backgroundColorWithFallback);
+        const newAccentPrimaryColor = increaseForegroundContrast(
+            tinycolor(accentPrimaryColor.toString()),
+            backgroundColorWithFallback
+        );
         if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
             context.logger.warn(
