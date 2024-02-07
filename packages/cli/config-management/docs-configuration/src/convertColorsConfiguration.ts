@@ -100,7 +100,7 @@ export function convertThemedColorConfig(
         if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
             context.logger.warn(
-                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}. To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
+                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
             );
             accentPrimaryColor = newAccentPrimaryColor;
         }
@@ -123,7 +123,6 @@ export function increaseForegroundContrast(
             // if the color is already at its maximum or minimum brightness, stop adjusting
             break;
         }
-
         // if the accent color is still not readable, adjust it by 1% until it is
         // if the theme is dark, lighten the color, otherwise darken it
         newForgroundColor = dark ? newForgroundColor.lighten(1) : newForgroundColor.darken(1);
