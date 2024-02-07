@@ -1317,7 +1317,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "ErrorFile",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "File",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2476,7 +2476,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A segment of text (like a word or a sentence).",
             "generatedName": "LanguagePredictionText",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Text",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2535,7 +2535,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "LanguagePredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },
@@ -3100,7 +3100,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "NerPredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },
@@ -3239,7 +3239,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "PredictionFile",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "File",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3682,7 +3682,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "A segment of text (like a word or a sentence).",
               "generatedName": "ProsodyPredictionText",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Text",
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3721,7 +3721,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "ProsodyPredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },

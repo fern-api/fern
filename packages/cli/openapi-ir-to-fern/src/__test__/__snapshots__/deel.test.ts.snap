@@ -6312,6 +6312,12 @@ exports[`open api parser deel simple 1`] = `
           "contractor",
         ],
       },
+      "Contractor": {
+        "docs": undefined,
+        "properties": {
+          "name": "string",
+        },
+      },
       "ContractsSortByEnum": {
         "enum": [
           "contract_title",
@@ -8164,12 +8170,6 @@ exports[`open api parser deel simple 1`] = `
           "failed",
           "refunded",
         ],
-      },
-      "InvoiceContractor": {
-        "docs": undefined,
-        "properties": {
-          "name": "string",
-        },
       },
       "InvoiceDownloadContainer": {
         "docs": undefined,

@@ -7,7 +7,7 @@ import { NavigationConfig, VersionConfig } from "@fern-fern/docs-config/api";
 import { VersionFileConfig as RawVersionFileConfigSerializer } from "@fern-fern/docs-config/serialization";
 import { readFile } from "fs/promises";
 import yaml from "js-yaml";
-import tinycolor from "tinycolor2";
+import { convertColorsConfiguration } from "./convertColorsConfiguration";
 import { getAllPages } from "./getAllPages";
 import {
     DocsNavigationConfiguration,
@@ -444,110 +444,6 @@ async function convertImageReference({
             rawUnresolvedFilepath: rawImageReference
         })
     };
-}
-
-function getColorType(colorConfig: RawDocs.ColorConfig | undefined): "dark" | "light" | "darkAndLight" {
-    if (colorConfig == null) {
-        return "dark";
-    }
-
-    if (typeof colorConfig === "string") {
-        if (tinycolor(colorConfig).isValid()) {
-            return tinycolor(colorConfig).isDark() ? "dark" : "light";
-        } else {
-            return "dark";
-        }
-    }
-
-    if (colorConfig.dark != null && colorConfig.light != null) {
-        return "darkAndLight";
-    }
-
-    if (colorConfig.dark != null) {
-        return "dark";
-    }
-
-    if (colorConfig.light != null) {
-        return "light";
-    }
-
-    return "dark";
-}
-
-function convertColorsConfiguration(
-    rawConfig: RawDocs.ColorsConfiguration,
-    context: TaskContext
-): DocsV1Write.ColorsConfigV3 {
-    const colorType = getColorType(rawConfig.background ?? rawConfig.accentPrimary);
-    switch (colorType) {
-        case "dark":
-            return {
-                type: "dark",
-                accentPrimary:
-                    rawConfig.accentPrimary != null
-                        ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "dark")
-                        : undefined,
-                background:
-                    rawConfig.background != null
-                        ? convertColorConfiguration(rawConfig.background, context, "background", "dark")
-                        : undefined
-            };
-        case "light":
-            return {
-                type: "light",
-                accentPrimary:
-                    rawConfig.accentPrimary != null
-                        ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "light")
-                        : undefined,
-                background:
-                    rawConfig.background != null
-                        ? convertColorConfiguration(rawConfig.background, context, "background", "light")
-                        : undefined
-            };
-        case "darkAndLight":
-            return {
-                type: "darkAndLight",
-                dark: {
-                    accentPrimary:
-                        rawConfig.accentPrimary != null
-                            ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "dark")
-                            : undefined,
-                    background:
-                        rawConfig.background != null
-                            ? convertColorConfiguration(rawConfig.background, context, "background", "dark")
-                            : undefined
-                },
-                light: {
-                    accentPrimary:
-                        rawConfig.accentPrimary != null
-                            ? convertColorConfiguration(rawConfig.accentPrimary, context, "accentPrimary", "light")
-                            : undefined,
-                    background:
-                        rawConfig.background != null
-                            ? convertColorConfiguration(rawConfig.background, context, "background", "light")
-                            : undefined
-                }
-            };
-        default:
-            assertNever(colorType);
-    }
-}
-
-function convertColorConfiguration(
-    raw: RawDocs.ColorConfig,
-    context: TaskContext,
-    key: string,
-    theme: "dark" | "light"
-): DocsV1Write.RgbColor {
-    const rawColor = typeof raw === "string" ? raw : raw[theme] ?? raw.dark ?? raw.light;
-    const color = tinycolor(rawColor);
-    if (!color.isValid()) {
-        context.failAndThrow(
-            `'${typeof raw === "string" ? key : `${key}.${theme}`}' should be a hex color of the format #FFFFFF`
-        );
-    }
-    const rgb = color.toRgb();
-    return { r: rgb.r, g: rgb.g, b: rgb.b };
 }
 
 function convertNavbarLinks(rawConfig: RawDocs.NavbarLink[]): DocsV1Write.NavbarLink[] {
