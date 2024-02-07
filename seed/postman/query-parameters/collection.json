@@ -24,7 +24,7 @@
           "request": {
             "description": null,
             "url": {
-              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&keyValue=&optionalString=&filter=",
+              "raw": "{{baseUrl}}/user?limit=&id=&date=&deadline=&bytes=&optionalString=&filter=",
               "host": [
                 "{{baseUrl}}"
               ],
@@ -54,11 +54,6 @@
                 },
                 {
                   "key": "bytes",
-                  "value": "",
-                  "description": null
-                },
-                {
-                  "key": "keyValue",
                   "value": "",
                   "description": null
                 },

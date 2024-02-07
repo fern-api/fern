@@ -31,7 +31,6 @@ class UserClient:
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
-        key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         filter: typing.Union[str, typing.List[str]],
     ) -> User:
@@ -47,8 +46,6 @@ class UserClient:
 
             - bytes: str.
 
-            - key_value: typing.Dict[str, str].
-
             - optional_string: typing.Optional[str].
 
             - filter: typing.Union[str, typing.List[str]].
@@ -63,7 +60,6 @@ class UserClient:
                     "date": str(date),
                     "deadline": serialize_datetime(deadline),
                     "bytes": jsonable_encoder(bytes),
-                    "keyValue": jsonable_encoder(key_value),
                     "optionalString": optional_string,
                     "filter": filter,
                 }
@@ -92,7 +88,6 @@ class AsyncUserClient:
         date: dt.date,
         deadline: dt.datetime,
         bytes: str,
-        key_value: typing.Dict[str, str],
         optional_string: typing.Optional[str] = None,
         filter: typing.Union[str, typing.List[str]],
     ) -> User:
@@ -108,8 +103,6 @@ class AsyncUserClient:
 
             - bytes: str.
 
-            - key_value: typing.Dict[str, str].
-
             - optional_string: typing.Optional[str].
 
             - filter: typing.Union[str, typing.List[str]].
@@ -124,7 +117,6 @@ class AsyncUserClient:
                     "date": str(date),
                     "deadline": serialize_datetime(deadline),
                     "bytes": jsonable_encoder(bytes),
-                    "keyValue": jsonable_encoder(key_value),
                     "optionalString": optional_string,
                     "filter": filter,
                 }
