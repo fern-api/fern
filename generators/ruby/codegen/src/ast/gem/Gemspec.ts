@@ -15,10 +15,18 @@ export declare namespace Gemspec {
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
         hasFileBasedDependencies?: boolean;
+        license?: { licenseFilePath: string; licenseType?: string };
     }
 }
 export class Gemspec extends FunctionInvocation {
-    constructor({ clientName, gemName, dependencies, sdkVersion, hasFileBasedDependencies = false }: Gemspec.Init) {
+    constructor({
+        clientName,
+        gemName,
+        dependencies,
+        sdkVersion,
+        license,
+        hasFileBasedDependencies = false
+    }: Gemspec.Init) {
         const globalDependencies: ExternalDependency[] = [
             new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
             new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
@@ -63,6 +71,15 @@ export class Gemspec extends FunctionInvocation {
                         name: `${clientName}::Gemconfig::VERSION`,
                         import_: new Import({ from: "lib/gemconfig" })
                     }),
+                    isAssignment: true
+                })
+            );
+        }
+        if (license !== undefined && license.licenseType !== undefined) {
+            gemBlock.push(
+                new Expression({
+                    leftSide: "spec.licenses",
+                    rightSide: `["${license.licenseType}"]`,
                     isAssignment: true
                 })
             );
@@ -141,10 +158,11 @@ export class Gemspec extends FunctionInvocation {
                         }),
                         isAssignment: true
                     }),
-                    // TODO: add  `<< "LICENSE.md"` if a license file is added through config
                     new Expression({
                         leftSide: "spec.files",
-                        rightSide: 'Dir.glob("lib/**/*")',
+                        rightSide: `Dir.glob("lib/**/*")${
+                            license !== undefined ? ' << "' + license.licenseFilePath + '"' : ""
+                        }`,
                         isAssignment: true
                     }),
                     new Expression({ leftSide: "spec.bindir", rightSide: '"exe"', isAssignment: true }),
