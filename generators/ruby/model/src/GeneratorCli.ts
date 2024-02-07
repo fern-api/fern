@@ -1,6 +1,7 @@
 import { AbsoluteFilePath } from "@fern-api/fs-utils";
 import { GeneratorContext, getPackageName, getSdkVersion } from "@fern-api/generator-commons";
 import {
+    generateBasicTests,
     GeneratedFile,
     generateGemConfig,
     generateGemfile,
@@ -62,6 +63,8 @@ export class RubyModelGeneratorCli extends AbstractGeneratorCli<RubyModelCustomC
         boilerPlateFiles.push(generateGemspec(clientName, gemName, [], sdkVersion));
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));
         // boilerPlateFiles.push(...generateBinDir(gemName));
+
+        boilerPlateFiles.push(...generateBasicTests(gemName, clientName));
 
         this.generatedFiles.push(...boilerPlateFiles);
     }
