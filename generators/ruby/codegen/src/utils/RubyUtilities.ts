@@ -24,6 +24,32 @@ export function getBreadcrumbsFromFilepath(fernFilepath: FernFilepath, includeFu
     );
 }
 
+// These tests are so static + basic that I didn't go through the trouble of leveraging the AST
+export function generateBasicTests(gemName: string, clientName: string): GeneratedFile[] {
+    const helperContent = `# frozen_string_literal: true
+
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
+
+require "minitest/autorun"
+require "${gemName}"
+`;
+    const helperFile = new GeneratedFile("test_helper.rb", RelativeFilePath.of("test/"), helperContent);
+
+    const testContent = `# frozen_string_literal: true
+require_relative "test_helper"
+require "${gemName}"
+
+# Basic ${clientName} tests
+class Test${clientName} < Minitest::Test
+  def test_function
+    ${clientName}::Client.new
+  end
+end`;
+    const testFile = new GeneratedFile(`test_${gemName}.rb`, RelativeFilePath.of("test/"), testContent);
+
+    return [helperFile, testFile];
+}
+
 export function generateGemspec(
     clientName: string,
     gemName: string,
@@ -48,7 +74,7 @@ export function generateGemspec(
 
 // To ensure configuration may be managed independently from dependenies, we introduce a new config file that
 // users are encouraged to fernignore and update, while allowing the traditional gemspec to remain generated
-export function generateGemConfig(clientName: string): GeneratedRubyFile {
+export function generateGemConfig(clientName: string, repoUrl?: string): GeneratedRubyFile {
     const gemspec = new Module_({
         name: clientName,
         child: new Module_({
@@ -62,17 +88,17 @@ export function generateGemConfig(clientName: string): GeneratedRubyFile {
                 // Input some placeholders for installation to work
                 new Expression({
                     leftSide: "HOMEPAGE",
-                    rightSide: '"https://github.com/REPO/URL"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "SOURCE_CODE_URI",
-                    rightSide: '"https://github.com/REPO/URL"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}"`,
                     isAssignment: true
                 }),
                 new Expression({
                     leftSide: "CHANGELOG_URI",
-                    rightSide: '"https://github.com/REPO/URL/blob/master/CHANGELOG.md"',
+                    rightSide: `"${repoUrl ?? "https://github.com/REPO/URL"}/blob/master/CHANGELOG.md"`,
                     isAssignment: true
                 })
             ]
@@ -97,6 +123,33 @@ export function generateGitignore(): GeneratedFile {
 .env
 `;
     return new GeneratedFile(".gitignore", RelativeFilePath.of("."), content);
+}
+
+export function generateGithubWorkflow(gemName: string, registryUrl: string, apiKeyEnvVar: string): GeneratedFile {
+    const content = `name: Publish
+
+on: [push]
+jobs:
+    publish:
+        if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout repo
+            uses: actions/checkout@v3
+
+          - uses: ruby/setup-ruby@v1
+            with:
+              ruby-version: 2.7
+              bundler-cache: true
+              
+          - name: Build and Push Gem
+            env:
+              GEM_HOST_API_KEY: \${{ secrets.${apiKeyEnvVar} }}
+            run: >-
+              gem build ${gemName}.gemspec
+              gem push ${gemName}-*.gem --host ${registryUrl}
+`;
+    return new GeneratedFile("publish.yml", RelativeFilePath.of(".github/workflows"), content);
 }
 
 export function generateRubocopConfig(): GeneratedFile {
