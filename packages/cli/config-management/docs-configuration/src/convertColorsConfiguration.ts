@@ -84,23 +84,36 @@ export function convertThemedColorConfig(
     let accentPrimaryColor = getColorInstanceFromRawConfig(rawConfig.accentPrimary, context, "accentPrimary", theme);
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
-    backgroundColor = enforceTheme(backgroundColor, context, "background", theme);
-
-    // the accent color must always be the opposite of the theme
-    accentPrimaryColor = enforceTheme(
-        accentPrimaryColor,
-        context,
-        "accentPrimary",
-        theme === "dark" ? "light" : "dark"
-    );
-
-    if (accentPrimaryColor != null && backgroundColor != null) {
-        if (!tinycolor.isReadable(accentPrimaryColor, backgroundColor)) {
-            const ratio = tinycolor.readability(accentPrimaryColor, backgroundColor);
-            accentPrimaryColor = tinycolor.mostReadable(backgroundColor, accentPrimaryColor.monochromatic(3));
+    if (backgroundColor != null) {
+        const newBackgroundColor = enforceTheme(backgroundColor, theme);
+        if (newBackgroundColor !== backgroundColor) {
             context.logger.warn(
-                `The accent color is not readable on the background color in ${theme} mode. The contrast ratio is ${ratio}. We've adjusted the accent color to ${accentPrimaryColor.toHexString()} to improve readability.`
+                `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
             );
+            backgroundColor = newBackgroundColor;
+        }
+        backgroundColor = newBackgroundColor;
+    }
+
+    if (accentPrimaryColor != null) {
+        const backgroundColorWithFallback = backgroundColor ?? (theme === "dark" ? "#000" : "#FFF");
+        if (!tinycolor.isReadable(accentPrimaryColor, backgroundColorWithFallback)) {
+            // the accent color must always be the opposite of the theme
+            let newAccentPrimaryColor = enforceTheme(accentPrimaryColor, theme === "dark" ? "light" : "dark");
+
+            // if the accent color is still not readable, darken it until it is
+            while (
+                !tinycolor.isReadable(newAccentPrimaryColor, backgroundColorWithFallback) ||
+                newAccentPrimaryColor.getBrightness() === 0
+            ) {
+                newAccentPrimaryColor = newAccentPrimaryColor.darken(1);
+            }
+
+            const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
+            context.logger.warn(
+                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}. To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
+            );
+            accentPrimaryColor = newAccentPrimaryColor;
         }
     }
 
@@ -110,12 +123,9 @@ export function convertThemedColorConfig(
     };
 }
 
-function enforceTheme(
-    color: tinycolor.Instance | undefined,
-    context: TaskContext,
-    key: string,
-    theme: "dark" | "light"
-): tinycolor.Instance | undefined {
+function enforceTheme(color: tinycolor.Instance, theme: "dark" | "light"): tinycolor.Instance;
+function enforceTheme(color: tinycolor.Instance | undefined, theme: "dark" | "light"): tinycolor.Instance | undefined;
+function enforceTheme(color: tinycolor.Instance | undefined, theme: "dark" | "light"): tinycolor.Instance | undefined {
     if (color == null) {
         return undefined;
     }
@@ -126,24 +136,18 @@ function enforceTheme(
         return color;
     }
 
-    const newColor = getOppositeLuminance(color);
-
-    context.logger.warn(
-        `The ${key} color should be ${theme}. We've adjusted the color to ${newColor.toHexString()} to match the theme by flipping its luminance.`
-    );
-
-    return newColor;
+    return getOppositeBrightness(color);
 }
 
-function getOppositeLuminance(color: tinycolor.Instance): tinycolor.Instance;
-function getOppositeLuminance(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined;
-function getOppositeLuminance(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
+function getOppositeBrightness(color: tinycolor.Instance): tinycolor.Instance;
+function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined;
+function getOppositeBrightness(color: tinycolor.Instance | undefined): tinycolor.Instance | undefined {
     if (color == null) {
         return undefined;
     }
 
-    const { h, s, l } = color.toHsl();
-    return tinycolor({ h, s, l: 1 - l });
+    const { h, s, v } = color.toHsv();
+    return tinycolor({ h, s, v: 1 - v });
 }
 
 function toRgb(color: tinycolor.Instance): DocsV1Write.RgbColor;
