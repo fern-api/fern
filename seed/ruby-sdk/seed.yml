@@ -7,5 +7,4 @@ defaultOutputMode: github
 fixtures: []
 scripts: []
 allowedFailures:
-  - query-parameters
   - streaming
