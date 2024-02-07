@@ -3,9 +3,9 @@
 package client
 
 import (
-	core "github.com/enum-query-params/fern/core"
-	option "github.com/enum-query-params/fern/option"
-	svc "github.com/enum-query-params/fern/svc"
+	core "github.com/query-parameters/fern/core"
+	option "github.com/query-parameters/fern/option"
+	user "github.com/query-parameters/fern/user"
 	http "net/http"
 )
 
@@ -14,7 +14,7 @@ type Client struct {
 	caller  *core.Caller
 	header  http.Header
 
-	Svc *svc.Client
+	User *user.Client
 }
 
 func NewClient(opts ...option.RequestOption) *Client {
@@ -28,6 +28,6 @@ func NewClient(opts ...option.RequestOption) *Client {
 			},
 		),
 		header: options.ToHeader(),
-		Svc:    svc.NewClient(opts...),
+		User:   user.NewClient(opts...),
 	}
 }

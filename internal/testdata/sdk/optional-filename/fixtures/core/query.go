@@ -1,16 +1,22 @@
 package core
 
 import (
+	"encoding/base64"
 	"fmt"
 	"net/url"
 	"reflect"
 	"strings"
 	"time"
+
+	"github.com/google/uuid"
 )
 
-var timeType = reflect.TypeOf(time.Time{})
-
-var queryEncoderType = reflect.TypeOf(new(QueryEncoder)).Elem()
+var (
+	bytesType        = reflect.TypeOf([]byte{})
+	queryEncoderType = reflect.TypeOf(new(QueryEncoder)).Elem()
+	timeType         = reflect.TypeOf(time.Time{})
+	uuidType         = reflect.TypeOf(uuid.UUID{})
+)
 
 // QueryEncoder is an interface implemented by any type that wishes to encode
 // itself into URL values in a non-standard way.
@@ -99,6 +105,11 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			sv = sv.Elem()
 		}
 
+		if sv.Type() == uuidType || sv.Type() == bytesType || sv.Type() == timeType {
+			values.Add(name, valueString(sv, opts, sf))
+			continue
+		}
+
 		if sv.Kind() == reflect.Slice || sv.Kind() == reflect.Array {
 			if sv.Len() == 0 {
 				// Skip if slice or array is empty.
@@ -107,11 +118,6 @@ func reflectValue(values url.Values, val reflect.Value, scope string) error {
 			for i := 0; i < sv.Len(); i++ {
 				values.Add(name, valueString(sv.Index(i), opts, sf))
 			}
-			continue
-		}
-
-		if sv.Type() == timeType {
-			values.Add(name, valueString(sv, opts, sf))
 			continue
 		}
 
@@ -143,6 +149,16 @@ func valueString(v reflect.Value, opts tagOptions, sf reflect.StructField) strin
 			return t.Format("2006-01-02")
 		}
 		return t.Format(time.RFC3339)
+	}
+
+	if v.Type() == uuidType {
+		u := v.Interface().(uuid.UUID)
+		return u.String()
+	}
+
+	if v.Type() == bytesType {
+		b := v.Interface().([]byte)
+		return base64.StdEncoding.EncodeToString(b)
 	}
 
 	return fmt.Sprint(v.Interface())

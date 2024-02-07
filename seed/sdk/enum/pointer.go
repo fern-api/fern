@@ -1,4 +1,4 @@
-package api
+package enum
 
 import "time"
 

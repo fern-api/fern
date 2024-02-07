@@ -3,7 +3,7 @@
 package client
 
 import (
-	option "github.com/enum-query-params/fern/option"
+	option "github.com/enum/fern/option"
 	assert "github.com/stretchr/testify/assert"
 	http "net/http"
 	testing "testing"

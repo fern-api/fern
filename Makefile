@@ -16,16 +16,18 @@ install:
 .PHONY: test
 test: install
 	go test ./...
-	npm install -g @fern-api/seed-cli@0.16.25-2-g32eebe2b
-	seed test --workspace sdk --fixture bytes
-	seed test --workspace sdk --fixture enum-query-params
-	seed test --workspace sdk --fixture response-property
-	seed test --workspace sdk --fixture file-upload
-	seed test --workspace sdk --fixture idempotency-headers
-	seed test --workspace sdk --fixture literal
-	seed test --workspace sdk --fixture literal-headers
-	seed test --workspace sdk --fixture plain-text
-	seed test --workspace sdk --fixture streaming
+	npm install -g @fern-api/seed-cli@0.17.0-rc0-2-gde917225c
+	seed test \
+		--fixture bytes \
+		--fixture enum \
+		--fixture file-upload \
+		--fixture idempotency-headers \
+		--fixture literal \
+		--fixture literal-headers \
+		--fixture plain-text \
+		--fixture query-parameters \
+		--fixture response-property \
+		--fixture streaming
 
 .PHONY: fixtures
 fixtures: install
