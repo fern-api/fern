@@ -69,6 +69,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 gemName,
                 [],
                 sdkVersion,
+                // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
                 hasFileUploadEndpoints(intermediateRepresentation) ||
                     intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
             )
@@ -108,6 +109,7 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
             sdkVersion,
             this.generatedClasses,
             this.flattenedProperties,
+            // eslint-disable-next-line @typescript-eslint/strict-boolean-expressions
             hasFileUploadEndpoints(intermediateRepresentation) ||
                 intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
         ).generateFiles();

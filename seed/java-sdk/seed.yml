@@ -32,4 +32,3 @@ allowedFailures:
   - enum
   - extends
   - response-property
-  
