@@ -75,3 +75,6 @@ service:
           p: UndiscriminatedUnion
           q: ObjectWithUnion
           r: NestedObjectWithUnion
+          s: map<string, string>
+          t: map<string, User>
+          u: map<string, ObjectWithLiteral>

@@ -92,6 +92,19 @@ export class ComplexTypeDetector {
         switch (type._type) {
             case "literal":
                 return false;
+            case "map":
+                return (
+                    this.isResolvedReferenceComplex({
+                        type: type.keyType,
+                        file,
+                        visited
+                    }) ||
+                    this.isResolvedReferenceComplex({
+                        type: type.valueType,
+                        file,
+                        visited
+                    })
+                );
             case "optional":
                 return this.isResolvedReferenceComplex({
                     type: type.itemType,
@@ -99,8 +112,8 @@ export class ComplexTypeDetector {
                     visited
                 });
             case "list":
-            case "map":
             case "set":
+                // Users must specify allow-multiple instead.
                 return true;
             default:
                 assertNever(type);

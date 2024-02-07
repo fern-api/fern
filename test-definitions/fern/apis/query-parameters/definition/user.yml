@@ -3,6 +3,10 @@ types:
     properties:
       name: string
       tags: list<string>
+  NestedUser:
+    properties:
+      name: string
+      user: User
 
 service:
   base-path: /user
@@ -20,7 +24,9 @@ service:
           deadline: datetime
           bytes: base64
           user: User
+          keyValue: map<string, string>
           optionalString: optional<string>
+          nestedUser: NestedUser
           excludeUser:
             type: User
             allow-multiple: true
