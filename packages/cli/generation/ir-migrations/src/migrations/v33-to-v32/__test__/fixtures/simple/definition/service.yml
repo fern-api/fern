@@ -19,6 +19,7 @@ service:
           limit: integer
           date: date
           user: User
+          map: map<string, string>
           optionalString: optional<string>
           multipleUser:
             type: User
@@ -26,6 +27,7 @@ service:
           filter:
             type: string
             allow-multiple: true
+          any: optional<unknown>
       examples:
         - path-parameters:
             id: id-2sdx82h
@@ -35,6 +37,9 @@ service:
             date: "1994-01-01"
             user:
               name: username
+            map:
+              key: value
             multipleUser:
               name: multiUsername
             filter: reverse
+
