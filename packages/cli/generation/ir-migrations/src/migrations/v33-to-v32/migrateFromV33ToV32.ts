@@ -85,8 +85,9 @@ class Converter {
             case "named":
                 return this.isNamedTypeObject(typeReference);
             case "primitive":
-            case "unknown":
                 return false;
+            case "unknown":
+                return true;
             default:
                 assertNever(typeReference);
         }
@@ -95,14 +96,9 @@ class Converter {
     private isContainerObject(containerType: IrVersions.V33.ContainerType): boolean {
         switch (containerType.type) {
             case "map":
-                return (
-                    this.isTypeReferenceObject(containerType.keyType) ||
-                    this.isTypeReferenceObject(containerType.valueType)
-                );
             case "list":
-                return this.isTypeReferenceObject(containerType.list);
             case "set":
-                return this.isTypeReferenceObject(containerType.set);
+                return true;
             case "optional":
                 return this.isTypeReferenceObject(containerType.optional);
             case "literal":
@@ -169,8 +165,9 @@ function isExampleTypeReferenceObject(exampleTypeReference: IrVersions.V33.Examp
         case "named":
             return isExampleNamedTypeObject(exampleTypeReference.shape);
         case "primitive":
-        case "unknown":
             return false;
+        case "unknown":
+            return true;
         default:
             assertNever(exampleTypeReference.shape);
     }
@@ -179,13 +176,9 @@ function isExampleTypeReferenceObject(exampleTypeReference: IrVersions.V33.Examp
 function isExampleContainerObject(exampleContainer: IrVersions.V33.ExampleContainer): boolean {
     switch (exampleContainer.type) {
         case "map":
-            return exampleContainer.map.some(
-                (pair) => isExampleTypeReferenceObject(pair.key) || isExampleTypeReferenceObject(pair.value)
-            );
         case "list":
-            return exampleContainer.list.some((elem) => isExampleTypeReferenceObject(elem));
         case "set":
-            return exampleContainer.set.some((elem) => isExampleTypeReferenceObject(elem));
+            return true;
         case "optional":
             return exampleContainer.optional != null && isExampleTypeReferenceObject(exampleContainer.optional);
         default:

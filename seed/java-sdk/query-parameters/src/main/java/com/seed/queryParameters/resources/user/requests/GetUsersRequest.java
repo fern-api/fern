@@ -14,7 +14,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.seed.queryParameters.core.ObjectMappers;
 import java.time.OffsetDateTime;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -33,8 +32,6 @@ public final class GetUsersRequest {
 
     private final byte[] bytes;
 
-    private final Map<String, String> keyValue;
-
     private final Optional<String> optionalString;
 
     private final String filter;
@@ -47,7 +44,6 @@ public final class GetUsersRequest {
             String date,
             OffsetDateTime deadline,
             byte[] bytes,
-            Map<String, String> keyValue,
             Optional<String> optionalString,
             String filter,
             Map<String, Object> additionalProperties) {
@@ -56,7 +52,6 @@ public final class GetUsersRequest {
         this.date = date;
         this.deadline = deadline;
         this.bytes = bytes;
-        this.keyValue = keyValue;
         this.optionalString = optionalString;
         this.filter = filter;
         this.additionalProperties = additionalProperties;
@@ -87,11 +82,6 @@ public final class GetUsersRequest {
         return bytes;
     }
 
-    @JsonProperty("keyValue")
-    public Map<String, String> getKeyValue() {
-        return keyValue;
-    }
-
     @JsonProperty("optionalString")
     public Optional<String> getOptionalString() {
         return optionalString;
@@ -119,7 +109,6 @@ public final class GetUsersRequest {
                 && date.equals(other.date)
                 && deadline.equals(other.deadline)
                 && bytes.equals(other.bytes)
-                && keyValue.equals(other.keyValue)
                 && optionalString.equals(other.optionalString)
                 && filter.equals(other.filter);
     }
@@ -127,14 +116,7 @@ public final class GetUsersRequest {
     @java.lang.Override
     public int hashCode() {
         return Objects.hash(
-                this.limit,
-                this.id,
-                this.date,
-                this.deadline,
-                this.bytes,
-                this.keyValue,
-                this.optionalString,
-                this.filter);
+                this.limit, this.id, this.date, this.deadline, this.bytes, this.optionalString, this.filter);
     }
 
     @java.lang.Override
@@ -175,12 +157,6 @@ public final class GetUsersRequest {
     public interface _FinalStage {
         GetUsersRequest build();
 
-        _FinalStage keyValue(Map<String, String> keyValue);
-
-        _FinalStage putAllKeyValue(Map<String, String> keyValue);
-
-        _FinalStage keyValue(String key, String value);
-
         _FinalStage optionalString(Optional<String> optionalString);
 
         _FinalStage optionalString(String optionalString);
@@ -203,8 +179,6 @@ public final class GetUsersRequest {
 
         private Optional<String> optionalString = Optional.empty();
 
-        private Map<String, String> keyValue = new LinkedHashMap<>();
-
         @JsonAnySetter
         private Map<String, Object> additionalProperties = new HashMap<>();
 
@@ -217,7 +191,6 @@ public final class GetUsersRequest {
             date(other.getDate());
             deadline(other.getDeadline());
             bytes(other.getBytes());
-            keyValue(other.getKeyValue());
             optionalString(other.getOptionalString());
             filter(other.getFilter());
             return this;
@@ -279,29 +252,8 @@ public final class GetUsersRequest {
         }
 
         @java.lang.Override
-        public _FinalStage keyValue(String key, String value) {
-            this.keyValue.put(key, value);
-            return this;
-        }
-
-        @java.lang.Override
-        public _FinalStage putAllKeyValue(Map<String, String> keyValue) {
-            this.keyValue.putAll(keyValue);
-            return this;
-        }
-
-        @java.lang.Override
-        @JsonSetter(value = "keyValue", nulls = Nulls.SKIP)
-        public _FinalStage keyValue(Map<String, String> keyValue) {
-            this.keyValue.clear();
-            this.keyValue.putAll(keyValue);
-            return this;
-        }
-
-        @java.lang.Override
         public GetUsersRequest build() {
-            return new GetUsersRequest(
-                    limit, id, date, deadline, bytes, keyValue, optionalString, filter, additionalProperties);
+            return new GetUsersRequest(limit, id, date, deadline, bytes, optionalString, filter, additionalProperties);
         }
     }
 }
