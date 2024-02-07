@@ -85,33 +85,25 @@ export function convertThemedColorConfig(
     let backgroundColor = getColorInstanceFromRawConfig(rawConfig.background, context, "background", theme);
 
     if (backgroundColor != null) {
-        const newBackgroundColor = enforceTheme(backgroundColor, theme);
-        if (newBackgroundColor !== backgroundColor) {
+        const newBackgroundColor = enforceBackgroundTheme(tinycolor(backgroundColor.toString()), theme);
+        if (newBackgroundColor.toHexString() !== backgroundColor.toHexString()) {
             context.logger.warn(
-                `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
+                `The chosen shade, 'backgroundColor' in ${theme} mode, fails to meet minimum contrast requirements. The brightness is ${backgroundColor.getBrightness()}. To enhance accessibility and ensure content readability, Fern will adjust from ${backgroundColor.toHexString()} to a more contrast-rich ${newBackgroundColor.toHexString()}.`
             );
             backgroundColor = newBackgroundColor;
         }
-        backgroundColor = newBackgroundColor;
     }
 
     if (accentPrimaryColor != null) {
-        const backgroundColorWithFallback = backgroundColor ?? (theme === "dark" ? "#000" : "#FFF");
-        if (!tinycolor.isReadable(accentPrimaryColor, backgroundColorWithFallback)) {
-            // the accent color must always be the opposite of the theme
-            let newAccentPrimaryColor = enforceTheme(accentPrimaryColor, theme === "dark" ? "light" : "dark");
-
-            // if the accent color is still not readable, darken it until it is
-            while (
-                !tinycolor.isReadable(newAccentPrimaryColor, backgroundColorWithFallback) ||
-                newAccentPrimaryColor.getBrightness() === 0
-            ) {
-                newAccentPrimaryColor = newAccentPrimaryColor.darken(1);
-            }
-
+        const backgroundColorWithFallback = backgroundColor ?? tinycolor(theme === "dark" ? "#000" : "#FFF");
+        const newAccentPrimaryColor = increaseForegroundContrast(
+            tinycolor(accentPrimaryColor.toString()),
+            backgroundColorWithFallback
+        );
+        if (newAccentPrimaryColor.toHexString() !== accentPrimaryColor.toHexString()) {
             const ratio = tinycolor.readability(accentPrimaryColor, backgroundColorWithFallback);
             context.logger.warn(
-                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}. To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
+                `The chosen shade, 'accentColor' in ${theme} mode, fails to meet minimum contrast requirements. The contrast ratio is ${ratio}, which is below WCAG AA requirements (4.5:1). To enhance accessibility and ensure content readability, Fern will adjust from ${accentPrimaryColor.toHexString()} to a more contrast-rich ${newAccentPrimaryColor.toHexString()}.`
             );
             accentPrimaryColor = newAccentPrimaryColor;
         }
@@ -123,13 +115,25 @@ export function convertThemedColorConfig(
     };
 }
 
-function enforceTheme(color: tinycolor.Instance, theme: "dark" | "light"): tinycolor.Instance;
-function enforceTheme(color: tinycolor.Instance | undefined, theme: "dark" | "light"): tinycolor.Instance | undefined;
-function enforceTheme(color: tinycolor.Instance | undefined, theme: "dark" | "light"): tinycolor.Instance | undefined {
-    if (color == null) {
-        return undefined;
+export function increaseForegroundContrast(
+    foregroundColor: tinycolor.Instance,
+    backgroundColor: tinycolor.Instance
+): tinycolor.Instance {
+    let newForgroundColor = foregroundColor;
+    const dark = backgroundColor.isDark();
+    while (!tinycolor.isReadable(newForgroundColor, backgroundColor)) {
+        if (dark ? newForgroundColor.getBrightness() === 255 : newForgroundColor.getBrightness() === 0) {
+            // if the color is already at its maximum or minimum brightness, stop adjusting
+            break;
+        }
+        // if the accent color is still not readable, adjust it by 1% until it is
+        // if the theme is dark, lighten the color, otherwise darken it
+        newForgroundColor = dark ? newForgroundColor.lighten(1) : newForgroundColor.darken(1);
     }
+    return newForgroundColor;
+}
 
+export function enforceBackgroundTheme(color: tinycolor.Instance, theme: "dark" | "light"): tinycolor.Instance {
     if (theme === "dark" && color.isDark()) {
         return color;
     } else if (theme === "light" && color.isLight()) {
