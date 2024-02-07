@@ -1,0 +1,72 @@
+types:
+  FeatureImplementation:
+    properties:
+      isImplemented:
+        type: boolean
+        docs: |
+          If the feature is implemented in the generator, this doesn't include partial generation.
+      details:
+        type: optional<string>
+        docs: |
+          Any useful information about the implementation status, if it's begun, if it's behind
+          a feature flag, etc.
+  
+  GeneratorFeatures:
+    docs: |
+      Based on the features outlined within https://www.notion.so/buildwithfern/Generator-Features-2cc7e6c87fc54738843940d35af5c6a4?pvs=4
+    properties:
+      requestOptions:
+        type: FeatureImplementation
+        docs: |
+          Every endpoint should have an optional final parameter where the user can configure request level options.
+          Those should include: authentication, headers, query, and body parameter overrides and inclusions, as well
+          as reties and timeouts.
+      idempotencyHeaders:
+        type: FeatureImplementation
+        docs: |
+          Certain endpoints should have the ability to include an idempotency keys in the headers, to allow for safe retries.
+          In implementation, details can be found in the `idempotencyHeaders` field of the `IntermediateRepresentation`.
+      autoPagination:
+        type: FeatureImplementation
+        docs: SDK clients return an iterator that handles the pagination for the consumer.
+      oauthWrapper:
+        type: FeatureImplementation
+        docs: |
+          The SDK should wrap the OAuth2 flow, and provide a way to automatically retrieve, refresh, and use the token.
+      authEnvVarScanning:
+        type: FeatureImplementation
+        docs: |
+          The SDK should allow for the defaulting of authentication headers from environment variables. Each authentication scheme
+          has a corresponding envvar property within it's Fern definition (`tokenEnvVar` in the BearerAuthScheme definition, for example).
+      asyncApi:
+        type: FeatureImplementation
+        docs: |
+          Currently we parse AsyncAPI specs to allow for configuration of event driven communication (like websockets). SDKs must
+          consume these definitions and support these protocols.
+      streaming:
+        type: FeatureImplementation
+        docs: The SDK should support streaming responses, and provide a way to consume them.
+      fileUploadAndDownload:
+        type: FeatureImplementation
+        docs: |
+          The SDK should support file upload and download. This includes the ability to send files as a path, or as a file-like object.
+      codeSnippets:
+        type: FeatureImplementation
+        docs: |
+          The SDK should provide generated code snippets for each endpoint to their snippets.json file for consumption by docs and the README.
+      errorHandling:
+        type: FeatureImplementation
+        docs: |
+          The SDK should support the creation of custom exceptions and handling them within the SDK. For example, we should be: creating a top level error
+          following the pattern OrganizationError which includes a status code and body, which should be thrown for API errors (e.g. do not throw the generic
+          error from the request client), we should additionally create basic error types out of the box for common issues: JSON parsing and timeout errors.
+      forwardCompatibleEnums:
+        type: FeatureImplementation
+        docs: |
+          The SDK should support forward compatible enums, meaning the SDK should pass through "unknown" enum values as strings. 
+          This means that if the API adds a new enum value, the SDK handles it without need for upgrade.
+      propertyBasedForwardCompatibility:
+        type: FeatureImplementation
+        docs: |
+          The SDK should support forward compatibility for new properties, meaning the SDK should pass through "unknown" properties where possible for the user to access.
+          This means that if the API adds a new property, the SDK handles it without need for upgrade.
