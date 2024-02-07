@@ -135,6 +135,7 @@ export async function testWorkspaceFixtures({
         );
     }
 
+    const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures ?? []);
     if (workspace.workspaceConfig.allowedFailures == null && failedFixtures.length > 0) {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
@@ -142,7 +143,7 @@ export async function testWorkspaceFixtures({
             } test cases failed. The failed fixtures include ${failedFixtures.join(", ")}. None were supposed to fail.`
         );
         process.exit(1);
-    } else if (isEqual(workspace.workspaceConfig.allowedFailures, failedFixtures)) {
+    } else if (isEqual(workspace.workspaceConfig.allowedFailures, failedFixtures) || unexpectedFixtures.length === 0) {
         CONSOLE_LOGGER.info(
             `${failedFixtures.length}/${
                 results.length
@@ -150,7 +151,6 @@ export async function testWorkspaceFixtures({
         );
     } else if (workspace.workspaceConfig.allowedFailures != null) {
         if (failedFixtures.length > 0) {
-            const unexpectedFixtures = difference(failedFixtures, workspace.workspaceConfig.allowedFailures);
             CONSOLE_LOGGER.info(
                 `${failedFixtures.length}/${
                     results.length
