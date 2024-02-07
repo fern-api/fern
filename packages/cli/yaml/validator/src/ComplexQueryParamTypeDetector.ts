@@ -20,7 +20,7 @@ import {
 import { RuleRunnerArgs } from "./Rule";
 import { CASINGS_GENERATOR } from "./utils/casingsGenerator";
 
-export class ComplexTypeDetector {
+export class ComplexQueryParamTypeDetector {
     private typeResolver: TypeResolver;
 
     constructor(private readonly workspace: FernWorkspace) {
