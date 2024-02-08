@@ -20,6 +20,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/csharp/cli"\
       },\
       {\
+        "name": "@fern-api/csharp-codegen",\
+        "reference": "workspace:generators/csharp/codegen"\
+      },\
+      {\
         "name": "@fern-api/fern-csharp-model",\
         "reference": "workspace:generators/csharp/model"\
       },\
@@ -233,6 +237,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
       ["@fern-api/config-management-commons", ["workspace:packages/cli/config-management/commons"]],\
       ["@fern-api/core", ["workspace:packages/core"]],\
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
+      ["@fern-api/csharp-codegen", ["workspace:generators/csharp/codegen"]],\
       ["@fern-api/csharp-generator-cli", ["workspace:generators/csharp/cli"]],\
       ["@fern-api/dependencies-configuration", ["workspace:packages/cli/config-management/dependencies-configuration"]],\
       ["@fern-api/docker-utils", ["workspace:packages/cli/generation/local-generation/docker-utils"]],\
@@ -3996,6 +4001,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["strip-ansi", "npm:7.1.0"],\
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["ua-parser-js", "npm:1.0.37"]\
+          ],\
+          "linkType": "SOFT"\
+        }]\
+      ]],\
+      ["@fern-api/csharp-codegen", [\
+        ["workspace:generators/csharp/codegen", {\
+          "packageLocation": "./generators/csharp/codegen/",\
+          "packageDependencies": [\
+            ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
+            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
+            ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
+            ["@types/jest", "npm:29.0.3"],\
+            ["@types/lodash-es", "npm:4.17.7"],\
+            ["@types/node", "npm:18.7.18"],\
+            ["depcheck", "npm:1.4.6"],\
+            ["eslint", "npm:8.56.0"],\
+            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
+            ["lodash-es", "npm:4.17.21"],\
+            ["organize-imports-cli", "npm:0.10.0"],\
+            ["prettier", "npm:2.7.1"],\
+            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
         }]\
