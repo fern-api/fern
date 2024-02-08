@@ -1,3 +1,4 @@
+import { assertNever } from "@fern-api/core-utils";
 import { AstNode } from "../core/AstNode";
 import { Writer } from "../core/Writer";
 import { ClassReference } from "./ClassReference";
@@ -46,8 +47,41 @@ export class Type extends AstNode {
         super();
     }
 
-    protected write(writer: Writer): void {
-        throw new Error("Method not implemented.");
+    public write(writer: Writer): void {
+        switch (this.internalType.type) {
+            case "integer":
+                writer.write("int");
+                break;
+            case "string":
+                writer.write("string");
+                break;
+            case "boolean":
+                writer.write("bool");
+                break;
+            case "double":
+                writer.write("double");
+                break;
+            case "list":
+                writer.write("List<");
+                this.internalType.value.write(writer);
+                writer.write(">");
+                break;
+            case "set":
+                writer.write("HashSet<");
+                this.internalType.value.write(writer);
+                writer.write(">");
+                break;
+            case "optional":
+                this.internalType.value.write(writer);
+                writer.write("?");
+                break;
+            case "reference":
+                this.addReference(this.internalType.value);
+                writer.write(this.internalType.value.name);
+                break;
+            default:
+                assertNever(this.internalType);
+        }
     }
 
     /* Static factory methods for creating a Type */

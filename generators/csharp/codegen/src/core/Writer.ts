@@ -5,7 +5,7 @@ export class Writer {
     private _buffer = "";
 
     public writeNode(node: AstNode): void {
-        this.write(node.toString());
+        node.write(this);
     }
 
     public writeLine(text: string): void {

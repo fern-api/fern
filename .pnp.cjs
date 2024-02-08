@@ -4010,6 +4010,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./generators/csharp/codegen/",\
           "packageDependencies": [\
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
+            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\

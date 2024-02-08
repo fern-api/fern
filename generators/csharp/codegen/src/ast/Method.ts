@@ -19,11 +19,8 @@ export declare namespace Method {
         /* Docs for the method */
         docs: string | undefined;
     }
-
-
 }
 
-/* A C# class */
 export class Method extends AstNode {
     private parameters: Parameter[] = [];
 
@@ -35,7 +32,7 @@ export class Method extends AstNode {
         this.parameters.push(parameter);
     }
 
-    protected write(writer: Writer): void {
+    public write(writer: Writer): void {
         throw new Error("Method not implemented.");
     }
 }

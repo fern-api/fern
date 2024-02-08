@@ -9,7 +9,7 @@ export abstract class AstNode {
     /**
      * Every AST node knows how to write itself to a string.
      */
-    protected abstract write(writer: Writer): void;
+    public abstract write(writer: Writer): void;
 
     /**
      * Adds a reference to the node.

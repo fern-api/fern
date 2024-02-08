@@ -13,13 +13,12 @@ export declare namespace Parameter {
     }
 }
 
-/* A C# parameter to a method */
 export class Parameter extends AstNode {
     constructor(private readonly args: Parameter.Args) {
         super();
     }
 
-    protected write(writer: Writer): void {
+    public write(writer: Writer): void {
         throw new Error("Method not implemented.");
     }
 }

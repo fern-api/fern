@@ -20,7 +20,8 @@ export class ClassReference extends AstNode {
         this.namespace = namespace;
     }
 
-    protected write(writer: Writer): void {
-        throw new Error("Method not implemented.");
+    public write(writer: Writer): void {
+        this.addReference(this);
+        writer.write(`${this.name}`);
     }
 }
