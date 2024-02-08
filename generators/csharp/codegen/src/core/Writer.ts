@@ -1,7 +1,7 @@
 import { AstNode } from "./AstNode";
 
 export class Writer {
-    private _indentation = 2;
+    private _indentation = 0;
     private _buffer = "";
 
     public writeNode(node: AstNode): void {
@@ -9,15 +9,15 @@ export class Writer {
     }
 
     public writeLine(text: string): void {
-        this._buffer += `${this.getIndentation()}${text}\n`;
+        this._buffer += `${text}\n`;
     }
 
     public write(text: string): void {
-        this._buffer += `${this.getIndentation()}${text}`;
+        this._buffer += `${text}`;
     }
 
     public indent(): void {
-        this._indentation++;
+        this._buffer += `${this.getIndentation()}`;
     }
 
     public dedent(): void {

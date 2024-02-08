@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`class basic 1`] = `
+"
+namespace Fern
+
+public partial class Plant
+{
+    [JsonPropertyJsonProperty("watered")]
+    bool public undefined watered { get; init; } 
+}
+"
+`;

@@ -68,8 +68,7 @@ export class Field extends AstNode {
         if (this.initializer) {
             writer.write(" = ");
             this.initializer.write(writer);
+            writer.writeLine(";");
         }
-
-        writer.writeLine(";");
     }
 }
