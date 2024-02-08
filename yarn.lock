@@ -3117,7 +3117,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
     "@types/node": ^18.7.18
@@ -3140,7 +3140,7 @@ __metadata:
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
-    "@fern-fern/ir-sdk": 0.0.3294
+    "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
