@@ -31,7 +31,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "payment_id": "string",
+                  "payment_id": "payment_id",
                 },
                 "response": {
                   "body": {
@@ -156,7 +156,10 @@ exports[`open api parser deel simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "data": {},
+                    "data": {
+                      "rows": [],
+                      "total": 1.1,
+                    },
                   },
                 },
               },
@@ -207,13 +210,12 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "date_from": "1999-12-31",
-                  "date_to": "1999-12-31",
-                },
                 "response": {
                   "body": {
-                    "data": {},
+                    "data": {
+                      "rows": [],
+                      "total": 1.1,
+                    },
                   },
                 },
               },
@@ -285,8 +287,8 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "key": "string",
-                      "url": "string",
+                      "key": "key",
+                      "url": "url",
                     },
                   },
                 },
@@ -347,9 +349,22 @@ exports[`open api parser deel simple 1`] = `
               {
                 "response": {
                   "body": {
+                    "avatar_url": "avatar_url",
                     "client_country": "US",
                     "contractor_country": "US",
+                    "email": "email",
+                    "first_name": "first_name",
+                    "full_name": "full_name",
+                    "id": 1.1,
+                    "last_name": "last_name",
+                    "middle_name": "middle_name",
+                    "organization_id": 1.1,
+                    "organization_name": "organization_name",
                     "profile_type": "client",
+                    "slack_team_id": "slack_team_id",
+                    "slack_user_id": "slack_user_id",
+                    "user_id": 1.1,
+                    "username": "username",
                   },
                 },
               },
@@ -434,7 +449,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
@@ -447,9 +462,18 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "calculated_premium": 50,
                       "id": "d3f79ad9-b0b5-4e0d-af2e-ad84435c0acb",
-                      "misclassification_guarantee": {},
-                      "penalties": {},
-                      "third_party_liabilities": {},
+                      "misclassification_guarantee": {
+                        "description": "description",
+                        "name": "name",
+                      },
+                      "penalties": {
+                        "description": "description",
+                        "name": "name",
+                      },
+                      "third_party_liabilities": {
+                        "description": "description",
+                        "name": "name",
+                      },
                     },
                   },
                 },
@@ -496,22 +520,10 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
-                  "data": {
-                    "amount": 100,
-                    "currency_code": "USD",
-                    "cycle_end_type": "DAY_OF_WEEK",
-                    "effective_date": "1999-12-31",
-                    "first_payment_date": "1999-12-31",
-                    "frequency": "weekly",
-                    "job_title_id": 123,
-                    "job_title_name": "3D Designer",
-                    "payment_due_type": "REGULAR",
-                    "scale": "hourly",
-                    "seniority_id": 1,
-                  },
+                  "data": {},
                 },
                 "response": {
                   "body": {
@@ -560,129 +572,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "request": {
-                  "data": {
-                    "client": {
-                      "legal_entity": {
-                        "id": 1.1,
-                      },
-                      "team": {
-                        "id": 1.1,
-                      },
-                    },
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                      "scale": "hourly",
-                    },
-                    "country_code": "US",
-                    "job_title": {},
-                    "meta": {
-                      "documents_required": true,
-                    },
-                    "notice_period": 15,
-                    "seniority": {},
-                    "start_date": "1999-12-31",
-                    "termination_date": "1999-12-31",
-                    "title": "string",
-                    "type": "pay_as_you_go_time_based",
-                    "who_reports": "both",
-                    "worker": {
-                      "first_name": "John",
-                      "last_name": "Doe",
-                    },
-                  },
-                },
-                "response": {
-                  "body": {
-                    "data": {
-                      "client": {
-                        "full_name": "string",
-                        "id": 1000000,
-                        "legal_entity": {
-                          "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
-                          "type": "individual",
-                          "vat_number": "string",
-                        },
-                        "team": {
-                          "id": 1.1,
-                          "name": "string",
-                        },
-                      },
-                      "compensation_details": {
-                        "amount": "string",
-                        "currency_code": "USD",
-                        "first_payment": "string",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
-                      },
-                      "created_at": "2022-05-24T09:38:46.235Z",
-                      "employment_details": {
-                        "country": "US",
-                        "days_per_week": 1.1,
-                        "hours_per_day": 1.1,
-                        "paid_vacation_days": 1.1,
-                        "state": "CO",
-                        "type": "string",
-                      },
-                      "id": "string",
-                      "invitations": {},
-                      "is_archived": true,
-                      "job_title": "string",
-                      "notice_period": 15,
-                      "seniority": {
-                        "id": 2,
-                        "level": 2,
-                        "name": "Mid (Individual Contributor Level 2)",
-                      },
-                      "signatures": {
-                        "client_signature": "string",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
-                      },
-                      "special_clause": "string",
-                      "start_date": "2022-05-24T09:38:46.235Z",
-                      "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
-                      "type": "ongoing_time_based",
-                      "who_reports": "both",
-                      "worker": {
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
-                        "first_name": "John",
-                        "last_name": "Doe",
-                        "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
-                          "type": "individual",
-                        },
-                        "nationality": "US",
-                      },
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/rest/v1/contracts",
             "request": {
@@ -711,129 +600,6 @@ exports[`open api parser deel simple 1`] = `
               "root.NotFoundError",
               "root.TooManyRequestsError",
               "root.InternalServerError",
-            ],
-            "examples": [
-              {
-                "request": {
-                  "data": {
-                    "client": {
-                      "legal_entity": {
-                        "id": 1.1,
-                      },
-                      "team": {
-                        "id": 1.1,
-                      },
-                    },
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                      "scale": "hourly",
-                    },
-                    "country_code": "US",
-                    "job_title": {},
-                    "meta": {
-                      "documents_required": true,
-                    },
-                    "notice_period": 15,
-                    "seniority": {},
-                    "start_date": "1999-12-31",
-                    "termination_date": "1999-12-31",
-                    "title": "string",
-                    "type": "ongoing_time_based",
-                    "who_reports": "both",
-                    "worker": {
-                      "first_name": "John",
-                      "last_name": "Doe",
-                    },
-                  },
-                },
-                "response": {
-                  "body": {
-                    "data": {
-                      "client": {
-                        "full_name": "string",
-                        "id": 1000000,
-                        "legal_entity": {
-                          "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
-                          "type": "individual",
-                          "vat_number": "string",
-                        },
-                        "team": {
-                          "id": 1.1,
-                          "name": "string",
-                        },
-                      },
-                      "compensation_details": {
-                        "amount": "string",
-                        "currency_code": "USD",
-                        "first_payment": "string",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
-                      },
-                      "created_at": "2022-05-24T09:38:46.235Z",
-                      "employment_details": {
-                        "country": "US",
-                        "days_per_week": 1.1,
-                        "hours_per_day": 1.1,
-                        "paid_vacation_days": 1.1,
-                        "state": "CO",
-                        "type": "string",
-                      },
-                      "id": "string",
-                      "invitations": {},
-                      "is_archived": true,
-                      "job_title": "string",
-                      "notice_period": 15,
-                      "seniority": {
-                        "id": 2,
-                        "level": 2,
-                        "name": "Mid (Individual Contributor Level 2)",
-                      },
-                      "signatures": {
-                        "client_signature": "string",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
-                      },
-                      "special_clause": "string",
-                      "start_date": "2022-05-24T09:38:46.235Z",
-                      "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
-                      "type": "ongoing_time_based",
-                      "who_reports": "both",
-                      "worker": {
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
-                        "first_name": "John",
-                        "last_name": "Doe",
-                        "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
-                          "type": "individual",
-                        },
-                        "nationality": "US",
-                      },
-                    },
-                  },
-                },
-              },
             ],
             "method": "POST",
             "path": "/rest/v1/contracts/fixed-rate",
@@ -877,106 +643,105 @@ exports[`open api parser deel simple 1`] = `
                       },
                     },
                     "compensation_details": {
-                      "amount": 100,
                       "currency_code": "USD",
                       "cycle_end": 25,
                       "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
                       "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
                       "payment_due_days": 5,
                       "payment_due_type": "REGULAR",
                     },
-                    "country_code": "US",
                     "job_title": {},
                     "meta": {
                       "documents_required": true,
                     },
-                    "notice_period": 15,
-                    "seniority": {},
-                    "start_date": "1999-12-31",
-                    "termination_date": "1999-12-31",
-                    "title": "string",
+                    "title": "title",
                     "type": "payg_milestones",
-                    "who_reports": "both",
-                    "worker": {
-                      "first_name": "John",
-                      "last_name": "Doe",
-                    },
                   },
                 },
                 "response": {
                   "body": {
                     "data": {
                       "client": {
-                        "full_name": "string",
+                        "email": "email",
+                        "full_name": "full_name",
                         "id": 1000000,
                         "legal_entity": {
                           "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
+                          "name": "name",
+                          "registration_number": "registration_number",
+                          "subtype": "subtype",
                           "type": "individual",
-                          "vat_number": "string",
+                          "vat_number": "vat_number",
                         },
                         "team": {
                           "id": 1.1,
-                          "name": "string",
+                          "name": "name",
                         },
                       },
                       "compensation_details": {
-                        "amount": "string",
+                        "amount": "amount",
                         "currency_code": "USD",
-                        "first_payment": "string",
+                        "first_payment": "first_payment",
                         "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
+                        "frequency": "frequency",
+                        "gross_annual_salary": "gross_annual_salary",
+                        "gross_signing_bonus": "gross_signing_bonus",
+                        "gross_variable_bonus": "gross_variable_bonus",
+                        "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
                         "hours_per_day": 1.1,
                         "paid_vacation_days": 1.1,
+                        "probation_period": 1.1,
                         "state": "CO",
-                        "type": "string",
+                        "type": "type",
                       },
-                      "id": "string",
-                      "invitations": {},
+                      "external_id": "external_id",
+                      "id": "id",
+                      "invitations": {
+                        "client_email": "client_email",
+                        "worker_email": "worker_email",
+                      },
                       "is_archived": true,
-                      "job_title": "string",
+                      "job_title": "job_title",
                       "notice_period": 15,
+                      "scope_of_work": "scope_of_work",
                       "seniority": {
                         "id": 2,
                         "level": 2,
                         "name": "Mid (Individual Contributor Level 2)",
                       },
                       "signatures": {
-                        "client_signature": "string",
+                        "client_signature": "client_signature",
                         "client_signed_at": "2022-05-24T09:38:46.235Z",
                         "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
+                        "worker_signature": "worker_signature",
                         "worker_signed_at": "2022-05-24T09:38:46.235Z",
                       },
-                      "special_clause": "string",
+                      "special_clause": "special_clause",
                       "start_date": "2022-05-24T09:38:46.235Z",
                       "status": "new",
                       "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
+                      "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
+                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "email": "email",
+                        "expected_email": "expected_email",
                         "first_name": "John",
+                        "full_name": "full_name",
+                        "id": 1000000,
+                        "image": "image",
                         "last_name": "Doe",
                         "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
+                          "personal_name": "personal_name",
+                          "registration_number": "registration_number",
                           "type": "individual",
                         },
                         "nationality": "US",
@@ -1028,106 +793,105 @@ exports[`open api parser deel simple 1`] = `
                       },
                     },
                     "compensation_details": {
-                      "amount": 100,
                       "currency_code": "USD",
                       "cycle_end": 25,
                       "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
                       "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
                       "payment_due_days": 5,
                       "payment_due_type": "REGULAR",
                     },
-                    "country_code": "US",
                     "job_title": {},
                     "meta": {
                       "documents_required": true,
                     },
-                    "notice_period": 15,
-                    "seniority": {},
-                    "start_date": "1999-12-31",
-                    "termination_date": "1999-12-31",
-                    "title": "string",
+                    "title": "title",
                     "type": "payg_tasks",
-                    "who_reports": "both",
-                    "worker": {
-                      "first_name": "John",
-                      "last_name": "Doe",
-                    },
                   },
                 },
                 "response": {
                   "body": {
                     "data": {
                       "client": {
-                        "full_name": "string",
+                        "email": "email",
+                        "full_name": "full_name",
                         "id": 1000000,
                         "legal_entity": {
                           "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
+                          "name": "name",
+                          "registration_number": "registration_number",
+                          "subtype": "subtype",
                           "type": "individual",
-                          "vat_number": "string",
+                          "vat_number": "vat_number",
                         },
                         "team": {
                           "id": 1.1,
-                          "name": "string",
+                          "name": "name",
                         },
                       },
                       "compensation_details": {
-                        "amount": "string",
+                        "amount": "amount",
                         "currency_code": "USD",
-                        "first_payment": "string",
+                        "first_payment": "first_payment",
                         "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
+                        "frequency": "frequency",
+                        "gross_annual_salary": "gross_annual_salary",
+                        "gross_signing_bonus": "gross_signing_bonus",
+                        "gross_variable_bonus": "gross_variable_bonus",
+                        "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
                         "hours_per_day": 1.1,
                         "paid_vacation_days": 1.1,
+                        "probation_period": 1.1,
                         "state": "CO",
-                        "type": "string",
+                        "type": "type",
                       },
-                      "id": "string",
-                      "invitations": {},
+                      "external_id": "external_id",
+                      "id": "id",
+                      "invitations": {
+                        "client_email": "client_email",
+                        "worker_email": "worker_email",
+                      },
                       "is_archived": true,
-                      "job_title": "string",
+                      "job_title": "job_title",
                       "notice_period": 15,
+                      "scope_of_work": "scope_of_work",
                       "seniority": {
                         "id": 2,
                         "level": 2,
                         "name": "Mid (Individual Contributor Level 2)",
                       },
                       "signatures": {
-                        "client_signature": "string",
+                        "client_signature": "client_signature",
                         "client_signed_at": "2022-05-24T09:38:46.235Z",
                         "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
+                        "worker_signature": "worker_signature",
                         "worker_signed_at": "2022-05-24T09:38:46.235Z",
                       },
-                      "special_clause": "string",
+                      "special_clause": "special_clause",
                       "start_date": "2022-05-24T09:38:46.235Z",
                       "status": "new",
                       "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
+                      "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
+                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "email": "email",
+                        "expected_email": "expected_email",
                         "first_name": "John",
+                        "full_name": "full_name",
+                        "id": 1000000,
+                        "image": "image",
                         "last_name": "Doe",
                         "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
+                          "personal_name": "personal_name",
+                          "registration_number": "registration_number",
                           "type": "individual",
                         },
                         "nationality": "US",
@@ -1166,129 +930,6 @@ exports[`open api parser deel simple 1`] = `
               "root.TooManyRequestsError",
               "root.InternalServerError",
             ],
-            "examples": [
-              {
-                "request": {
-                  "data": {
-                    "client": {
-                      "legal_entity": {
-                        "id": 1.1,
-                      },
-                      "team": {
-                        "id": 1.1,
-                      },
-                    },
-                    "compensation_details": {
-                      "amount": 100,
-                      "currency_code": "USD",
-                      "cycle_end": 25,
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "first_payment": 500,
-                      "first_payment_date": "1999-12-31",
-                      "frequency": "weekly",
-                      "notice_period": 15,
-                      "pay_before_weekends": true,
-                      "payment_due_days": 5,
-                      "payment_due_type": "REGULAR",
-                      "scale": "hourly",
-                    },
-                    "country_code": "US",
-                    "job_title": {},
-                    "meta": {
-                      "documents_required": true,
-                    },
-                    "notice_period": 15,
-                    "seniority": {},
-                    "start_date": "1999-12-31",
-                    "termination_date": "1999-12-31",
-                    "title": "string",
-                    "type": "pay_as_you_go_time_based",
-                    "who_reports": "both",
-                    "worker": {
-                      "first_name": "John",
-                      "last_name": "Doe",
-                    },
-                  },
-                },
-                "response": {
-                  "body": {
-                    "data": {
-                      "client": {
-                        "full_name": "string",
-                        "id": 1000000,
-                        "legal_entity": {
-                          "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
-                          "type": "individual",
-                          "vat_number": "string",
-                        },
-                        "team": {
-                          "id": 1.1,
-                          "name": "string",
-                        },
-                      },
-                      "compensation_details": {
-                        "amount": "string",
-                        "currency_code": "USD",
-                        "first_payment": "string",
-                        "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
-                      },
-                      "created_at": "2022-05-24T09:38:46.235Z",
-                      "employment_details": {
-                        "country": "US",
-                        "days_per_week": 1.1,
-                        "hours_per_day": 1.1,
-                        "paid_vacation_days": 1.1,
-                        "state": "CO",
-                        "type": "string",
-                      },
-                      "id": "string",
-                      "invitations": {},
-                      "is_archived": true,
-                      "job_title": "string",
-                      "notice_period": 15,
-                      "seniority": {
-                        "id": 2,
-                        "level": 2,
-                        "name": "Mid (Individual Contributor Level 2)",
-                      },
-                      "signatures": {
-                        "client_signature": "string",
-                        "client_signed_at": "2022-05-24T09:38:46.235Z",
-                        "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
-                        "worker_signed_at": "2022-05-24T09:38:46.235Z",
-                      },
-                      "special_clause": "string",
-                      "start_date": "2022-05-24T09:38:46.235Z",
-                      "status": "new",
-                      "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
-                      "type": "ongoing_time_based",
-                      "who_reports": "both",
-                      "worker": {
-                        "date_of_birth": "2022-05-24T09:38:46.235Z",
-                        "first_name": "John",
-                        "last_name": "Doe",
-                        "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
-                          "type": "individual",
-                        },
-                        "nationality": "US",
-                      },
-                    },
-                  },
-                },
-              },
-            ],
             "method": "POST",
             "path": "/rest/v1/contracts/time-based",
             "request": {
@@ -1324,7 +965,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
               },
             ],
@@ -1364,7 +1005,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -1415,17 +1056,16 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
-                  "data": {
-                    "completion_date": "1999-12-31",
-                  },
+                  "data": {},
                 },
                 "response": {
                   "body": {
                     "data": {
                       "completion_date": "1999-12-31",
+                      "id": "id",
                     },
                   },
                 },
@@ -1522,7 +1162,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -1564,11 +1204,11 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
-                    "external_id": "string",
+                    "external_id": "external_id",
                   },
                 },
                 "response": {
@@ -1616,11 +1256,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                },
-                "query-parameters": {
-                  "calculation_type": "CUSTOM_AMOUNT",
-                  "end_date": "1999-12-31",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -1730,7 +1366,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": [],
@@ -1768,78 +1404,92 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
                     "data": {
                       "client": {
-                        "full_name": "string",
+                        "email": "email",
+                        "full_name": "full_name",
                         "id": 1000000,
                         "legal_entity": {
                           "id": 1000000,
-                          "name": "string",
-                          "registration_number": "string",
-                          "subtype": "string",
+                          "name": "name",
+                          "registration_number": "registration_number",
+                          "subtype": "subtype",
                           "type": "individual",
-                          "vat_number": "string",
+                          "vat_number": "vat_number",
                         },
                         "team": {
                           "id": 1.1,
-                          "name": "string",
+                          "name": "name",
                         },
                       },
                       "compensation_details": {
-                        "amount": "string",
+                        "amount": "amount",
                         "currency_code": "USD",
-                        "first_payment": "string",
+                        "first_payment": "first_payment",
                         "first_payment_date": "2022-05-24T09:38:46.235Z",
-                        "frequency": "string",
-                        "gross_annual_salary": "string",
-                        "gross_signing_bonus": "string",
-                        "gross_variable_bonus": "string",
-                        "scale": "string",
+                        "frequency": "frequency",
+                        "gross_annual_salary": "gross_annual_salary",
+                        "gross_signing_bonus": "gross_signing_bonus",
+                        "gross_variable_bonus": "gross_variable_bonus",
+                        "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
                         "hours_per_day": 1.1,
                         "paid_vacation_days": 1.1,
+                        "probation_period": 1.1,
                         "state": "CO",
-                        "type": "string",
+                        "type": "type",
                       },
-                      "id": "string",
-                      "invitations": {},
+                      "external_id": "external_id",
+                      "id": "id",
+                      "invitations": {
+                        "client_email": "client_email",
+                        "worker_email": "worker_email",
+                      },
                       "is_archived": true,
-                      "job_title": "string",
+                      "job_title": "job_title",
                       "notice_period": 15,
+                      "scope_of_work": "scope_of_work",
                       "seniority": {
                         "id": 2,
                         "level": 2,
                         "name": "Mid (Individual Contributor Level 2)",
                       },
                       "signatures": {
-                        "client_signature": "string",
+                        "client_signature": "client_signature",
                         "client_signed_at": "2022-05-24T09:38:46.235Z",
                         "signed_at": "2022-05-24T09:38:46.235Z",
-                        "worker_signature": "string",
+                        "worker_signature": "worker_signature",
                         "worker_signed_at": "2022-05-24T09:38:46.235Z",
                       },
-                      "special_clause": "string",
+                      "special_clause": "special_clause",
                       "start_date": "2022-05-24T09:38:46.235Z",
                       "status": "new",
                       "termination_date": "2022-05-24T09:38:46.235Z",
-                      "title": "string",
+                      "title": "title",
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
+                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
+                        "email": "email",
+                        "expected_email": "expected_email",
                         "first_name": "John",
+                        "full_name": "full_name",
+                        "id": 1000000,
+                        "image": "image",
                         "last_name": "Doe",
                         "legal_entity": {
-                          "personal_name": "string",
-                          "registration_number": "string",
+                          "personal_name": "personal_name",
+                          "registration_number": "registration_number",
                           "type": "individual",
                         },
                         "nationality": "US",
@@ -1879,15 +1529,11 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "order_direction": "asc",
-                  "sort_by": "contract_title",
-                },
                 "response": {
                   "body": {
                     "data": [],
                     "page": {
-                      "cursor": "string",
+                      "cursor": "cursor",
                       "total_rows": 1.1,
                     },
                   },
@@ -1968,7 +1614,9 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [],
+                  },
                 },
               },
             ],
@@ -1997,12 +1645,12 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
-                    "email": "string",
-                    "message": "string",
+                    "email": "email",
+                    "message": "message",
                   },
                 },
                 "response": {
@@ -2054,16 +1702,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "request": {
                   "data": {
-                    "compensation_details": {
-                      "amount": 2500,
-                      "calculation_type": "CUSTOM_AMOUNT",
-                      "currency_code": "USD",
-                      "cycle_end_type": "DAY_OF_WEEK",
-                      "payment_due_type": "REGULAR",
-                      "scale": "weekly",
-                      "work_week_end": "Sunday",
-                      "work_week_start": "Sunday",
-                    },
+                    "compensation_details": {},
                     "country_code": "US",
                     "start_date": "1999-12-31",
                     "type": "ongoing_time_based",
@@ -2072,6 +1711,7 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
+                      "first_payment_dates": [],
                       "pro_rata": {
                         "calculation_type": "CUSTOM_AMOUNT",
                         "cycle_end": "1999-12-31",
@@ -2123,11 +1763,11 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
-                    "client_signature": "string",
+                    "client_signature": "client_signature",
                   },
                 },
                 "response": {
@@ -2180,7 +1820,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -2244,34 +1884,9 @@ exports[`open api parser deel simple 1`] = `
               {
                 "request": {
                   "data": {
-                    "client": {
-                      "legal_entity": {},
-                      "team": {},
-                    },
+                    "client": {},
                     "compensation_details": {},
-                    "employee": {
-                      "address": {
-                        "city": "Denver",
-                        "country": "US",
-                        "state": "CO",
-                        "street": "Deel Street 500",
-                        "zip": "44000",
-                      },
-                      "email": "employee@email.com",
-                      "first_name": "Jane",
-                      "last_name": "Doe",
-                      "nationality": "US",
-                    },
-                    "employment": {
-                      "country": "US",
-                      "end_date": "1999-12-31",
-                      "start_date": "1999-12-31",
-                      "time_off_type": "STANDARD",
-                      "type": "Full-time",
-                    },
-                    "quote_additional_fields": {
-                      "worker_type": "Skilled",
-                    },
+                    "employment": {},
                     "seniority": {},
                   },
                 },
@@ -2281,15 +1896,35 @@ exports[`open api parser deel simple 1`] = `
                       "client": {
                         "legal_entity": {},
                       },
-                      "compensation_details": {},
+                      "compensation_details": {
+                        "currency": "currency",
+                        "salary": 1.1,
+                        "variable_compensation": "variable_compensation",
+                        "variable_compensation_type": "variable_compensation_type",
+                      },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "employee": {},
+                      "employee": {
+                        "email": "email",
+                        "first_name": "first_name",
+                        "last_name": "last_name",
+                        "legal_name": "legal_name",
+                      },
                       "employment": {
+                        "calculated_holidays": "calculated_holidays",
+                        "country": "country",
                         "end_date": "1999-12-31",
+                        "probation_period": 1.1,
                         "scope_of_work": "A designer works on the entire process of defining requirements, visualizing and creating graphics including illustrations or logos. Also, the designer works on shaping the visual aspects of websites, product packaging, and more.",
                         "start_date": "1999-12-31",
+                        "state": "state",
+                        "time_off_type": "time_off_type",
+                        "work_visa_required": true,
                       },
-                      "health_plan": {},
+                      "health_plan": {
+                        "id": "id",
+                        "name": "name",
+                      },
+                      "id": "id",
                       "job_title": "Designer",
                       "seniority": {
                         "id": 2,
@@ -2348,6 +1983,7 @@ exports[`open api parser deel simple 1`] = `
                         "type": "ALLOWED_WITHOUT_LIMITATION",
                       },
                       "health_insurance": {
+                        "providers": [],
                         "status": "REQUIRED",
                       },
                       "hiring_guide_country_name": "brazil",
@@ -2365,22 +2001,20 @@ exports[`open api parser deel simple 1`] = `
                       },
                       "probation": {
                         "max": 90,
+                        "min": "min",
                       },
                       "salary": {
                         "max": "2649300.00",
                         "min": "14544.00",
                       },
                       "sick_days": {
+                        "max": "max",
                         "min": "0",
                       },
                       "start_date_buffer": 5,
                       "work_schedule": {
-                        "days": {
-                          "max": "6",
-                        },
-                        "hours": {
-                          "max": "10",
-                        },
+                        "days": {},
+                        "hours": {},
                       },
                     },
                   },
@@ -2471,9 +2105,8 @@ exports[`open api parser deel simple 1`] = `
                 "request": {
                   "data": {
                     "amount": 2500,
-                    "contract_id": "string",
+                    "contract_id": "contract_id",
                     "date_submitted": "1999-12-31",
-                    "description": "Bonus for being awesome.",
                     "type": "bonus",
                   },
                 },
@@ -2482,7 +2115,9 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "created": true,
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
+                      "status": "status",
                     },
                   },
                 },
@@ -2679,10 +2314,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "date_from": "1999-12-31",
-                  "date_to": "1999-12-31",
-                },
                 "response": {
                   "body": {
                     "data": [],
@@ -2768,11 +2399,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                },
-                "query-parameters": {
-                  "date_from": "1999-12-31",
-                  "date_to": "1999-12-31",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -2865,7 +2492,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "request": {
                   "data": {
-                    "description": "string",
+                    "description": "description",
                   },
                 },
                 "response": {
@@ -3124,7 +2751,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
@@ -3183,8 +2810,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "milestone_id": "string",
+                  "contract_id": "contract_id",
+                  "milestone_id": "milestone_id",
                 },
                 "request": {
                   "data": {
@@ -3245,7 +2872,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
@@ -3303,8 +2930,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "milestone_id": "string",
+                  "contract_id": "contract_id",
+                  "milestone_id": "milestone_id",
                 },
                 "response": {
                   "body": {
@@ -3350,7 +2977,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -3390,8 +3017,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "milestone_id": "string",
+                  "contract_id": "contract_id",
+                  "milestone_id": "milestone_id",
                 },
                 "response": {
                   "body": {
@@ -3464,7 +3091,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
@@ -3522,8 +3149,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "offcycle_payment_id": "string",
+                  "contract_id": "contract_id",
+                  "offcycle_payment_id": "offcycle_payment_id",
                 },
                 "response": {
                   "body": {
@@ -3533,7 +3160,7 @@ exports[`open api parser deel simple 1`] = `
                       "currency_code": "USD",
                       "date_submitted": "2022-05-24T09:38:46.235Z",
                       "description": "Yearly bonus.",
-                      "id": "string",
+                      "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
                       "reported_by": {
                         "full_name": "John Smith",
@@ -3545,6 +3172,7 @@ exports[`open api parser deel simple 1`] = `
                         "remarks": "SAP Reference id: 123",
                         "reviewed_at": "2022-05-04T03:45:27.899Z",
                       },
+                      "status": "status",
                     },
                   },
                 },
@@ -3585,7 +3213,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -3685,7 +3313,9 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [],
+                  },
                 },
               },
             ],
@@ -3789,17 +3419,12 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
                     "amount": "123.45",
-                    "attachment": {
-                      "filename": "string",
-                      "key": "string",
-                    },
                     "date_submitted": "1999-12-31",
-                    "description": "Make the button pop.",
                   },
                 },
                 "response": {
@@ -3852,12 +3477,11 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
                     "ids": [],
-                    "reason": "Great work.",
                     "status": "approved",
                   },
                 },
@@ -3909,12 +3533,11 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "task_id": "string",
+                  "contract_id": "contract_id",
+                  "task_id": "task_id",
                 },
                 "request": {
                   "data": {
-                    "reason": "Excited!",
                     "status": "approved",
                   },
                 },
@@ -3970,8 +3593,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "task_id": "string",
+                  "contract_id": "contract_id",
+                  "task_id": "task_id",
                 },
                 "response": {
                   "body": {
@@ -4026,7 +3649,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -4077,16 +3700,10 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "request": {
                   "data": {
-                    "end_date": "2022-09-05",
-                    "is_end_date_half_day": false,
-                    "is_start_date_half_day": false,
-                    "other_timeoff_name": "Birthday",
-                    "reason": "Holiday",
-                    "start_date": "2022-09-03",
                     "type": "VACATION",
                     "with_multiple_dates": true,
                   },
@@ -4094,10 +3711,17 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
+                      "applied_changes": [],
+                      "attachments": [],
+                      "can_request_changes": true,
                       "change_request": {
+                        "attachments": [],
+                        "date_is_half_day": true,
                         "days_used_end_year": "2.00",
                         "days_used_start_year": "2.00",
                         "denial_reason": "No time off available",
+                        "end_date_is_half_day": true,
+                        "has_multiple_dates": true,
                         "other_timeoff_name": "This is time off for a doctor's appointment",
                         "reason": "I have a doctors appointment",
                         "requested_at": "2022-05-24T09:38:46.235Z",
@@ -4113,33 +3737,43 @@ exports[`open api parser deel simple 1`] = `
                           "profile_type": "client",
                         },
                         "single_date": "2022-05-24T09:38:46.235Z",
+                        "start_date_is_half_day": true,
                         "status": "REQUESTED",
                         "total_days_used": "4.00",
                         "type": "VACATION",
                       },
                       "contract_id": "abc123",
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "date_is_half_day": true,
                       "days_used_end_year": "2.00",
                       "days_used_start_year": "2.00",
                       "denial_reason": "No time off available",
                       "end_date": "2022-05-24T09:38:46.235Z",
+                      "end_date_is_half_day": true,
+                      "has_multiple_dates": true,
                       "id": 6938,
+                      "is_updated": true,
                       "other_timeoff_name": "This is time off for a doctor's appointment",
                       "reason": "I have a doctors appointment",
                       "requested_at": "2022-05-24T09:38:46.235Z",
                       "requester": {
                         "id": 409222,
+                        "is_employee": true,
                         "name": "Mr. Rogers",
+                        "pic_url": "pic_url",
                         "profile_type": "client",
                       },
                       "reviewed_at": "2022-05-24T09:38:46.235Z",
                       "reviewer": {
                         "id": 409222,
+                        "is_employee": true,
                         "name": "Mr. Rogers",
+                        "pic_url": "pic_url",
                         "profile_type": "client",
                       },
                       "single_date": "2022-05-24T09:38:46.235Z",
                       "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date_is_half_day": true,
                       "status": "REQUESTED",
                       "total_days_used": "4.00",
                       "type": "VACATION",
@@ -4181,8 +3815,8 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "timeoff_id": "string",
+                  "contract_id": "contract_id",
+                  "timeoff_id": "timeoff_id",
                 },
                 "response": {
                   "body": {
@@ -4226,17 +3860,11 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                  "timeoff_id": "string",
+                  "contract_id": "contract_id",
+                  "timeoff_id": "timeoff_id",
                 },
                 "request": {
                   "data": {
-                    "end_date": "2022-09-05",
-                    "is_end_date_half_day": false,
-                    "is_start_date_half_day": false,
-                    "other_timeoff_name": "Birthday",
-                    "reason": "Holiday",
-                    "start_date": "2022-09-03",
                     "type": "VACATION",
                     "with_multiple_dates": true,
                   },
@@ -4244,10 +3872,17 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
+                      "applied_changes": [],
+                      "attachments": [],
+                      "can_request_changes": true,
                       "change_request": {
+                        "attachments": [],
+                        "date_is_half_day": true,
                         "days_used_end_year": "2.00",
                         "days_used_start_year": "2.00",
                         "denial_reason": "No time off available",
+                        "end_date_is_half_day": true,
+                        "has_multiple_dates": true,
                         "other_timeoff_name": "This is time off for a doctor's appointment",
                         "reason": "I have a doctors appointment",
                         "requested_at": "2022-05-24T09:38:46.235Z",
@@ -4263,33 +3898,43 @@ exports[`open api parser deel simple 1`] = `
                           "profile_type": "client",
                         },
                         "single_date": "2022-05-24T09:38:46.235Z",
+                        "start_date_is_half_day": true,
                         "status": "REQUESTED",
                         "total_days_used": "4.00",
                         "type": "VACATION",
                       },
                       "contract_id": "abc123",
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "date_is_half_day": true,
                       "days_used_end_year": "2.00",
                       "days_used_start_year": "2.00",
                       "denial_reason": "No time off available",
                       "end_date": "2022-05-24T09:38:46.235Z",
+                      "end_date_is_half_day": true,
+                      "has_multiple_dates": true,
                       "id": 6938,
+                      "is_updated": true,
                       "other_timeoff_name": "This is time off for a doctor's appointment",
                       "reason": "I have a doctors appointment",
                       "requested_at": "2022-05-24T09:38:46.235Z",
                       "requester": {
                         "id": 409222,
+                        "is_employee": true,
                         "name": "Mr. Rogers",
+                        "pic_url": "pic_url",
                         "profile_type": "client",
                       },
                       "reviewed_at": "2022-05-24T09:38:46.235Z",
                       "reviewer": {
                         "id": 409222,
+                        "is_employee": true,
                         "name": "Mr. Rogers",
+                        "pic_url": "pic_url",
                         "profile_type": "client",
                       },
                       "single_date": "2022-05-24T09:38:46.235Z",
                       "start_date": "2022-05-24T09:38:46.235Z",
+                      "start_date_is_half_day": true,
                       "status": "REQUESTED",
                       "total_days_used": "4.00",
                       "type": "VACATION",
@@ -4367,7 +4012,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -4407,7 +4052,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -4447,11 +4092,10 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "timeoff_id": "string",
+                  "timeoff_id": "timeoff_id",
                 },
                 "request": {
                   "data": {
-                    "denial_reason": "Not allowed for this day.",
                     "is_approved": true,
                   },
                 },
@@ -4519,9 +4163,9 @@ exports[`open api parser deel simple 1`] = `
               {
                 "request": {
                   "data": {
-                    "contract_id": "string",
+                    "contract_id": "contract_id",
                     "date_submitted": "1999-12-31",
-                    "description": "string",
+                    "description": "description",
                     "quantity": 1.1,
                   },
                 },
@@ -4530,7 +4174,9 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "created": true,
                       "created_at": "2022-05-24T09:38:46.235Z",
+                      "id": "id",
                       "public_id": "00000000-0000-0000-0000-000000000000",
+                      "status": "status",
                     },
                   },
                 },
@@ -4735,19 +4381,20 @@ exports[`open api parser deel simple 1`] = `
                     "data": {
                       "approvers": [],
                       "attachment": {
-                        "filename": "string",
-                        "key": "string",
+                        "filename": "filename",
+                        "key": "key",
                       },
                       "contract": {
-                        "id": "string",
-                        "title": "string",
+                        "id": "id",
+                        "title": "title",
                         "type": "ongoing_time_based",
                       },
                       "created_at": "2022-05-04T03:45:27.108Z",
                       "currency_code": "USD",
+                      "custom_scale": "custom_scale",
                       "date_submitted": "2022-05-24T09:38:46.235Z",
-                      "description": "string",
-                      "id": "string",
+                      "description": "description",
+                      "id": "id",
                       "payment_cycle": {
                         "end_date": "2022-05-24T09:38:46.235Z",
                         "start_date": "2022-05-24T09:38:46.235Z",
@@ -4761,13 +4408,13 @@ exports[`open api parser deel simple 1`] = `
                       "reviewed_by": {
                         "full_name": "Jane Smith",
                         "id": 123456,
-                        "remarks": "string",
+                        "remarks": "remarks",
                         "reviewed_at": "2022-05-04T03:45:27.899Z",
                       },
                       "scale": "custom",
                       "status": "approved",
                       "total_amount": "200.0000",
-                      "type": "string",
+                      "type": "type",
                       "worksheet": {
                         "days": 0,
                         "hours": 1,
@@ -4809,10 +4456,6 @@ exports[`open api parser deel simple 1`] = `
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "date_from": "1999-12-31",
-                  "date_to": "1999-12-31",
-                },
                 "response": {
                   "body": {
                     "data": [],
@@ -4887,11 +4530,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "contract_id": "string",
-                },
-                "query-parameters": {
-                  "date_from": "1999-12-31",
-                  "date_to": "1999-12-31",
+                  "contract_id": "contract_id",
                 },
                 "response": {
                   "body": {
@@ -4973,7 +4612,7 @@ exports[`open api parser deel simple 1`] = `
                 },
                 "request": {
                   "data": {
-                    "description": "string",
+                    "description": "description",
                     "quantity": 1.1,
                   },
                 },
@@ -5038,7 +4677,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -5066,12 +4705,10 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "request": {
-                  "description": "My first webhook",
                   "events": [],
-                  "name": "Demo webhook",
                   "status": "enabled",
                   "url": "https://mywebhook.com/listening",
                 },
@@ -5079,14 +4716,15 @@ exports[`open api parser deel simple 1`] = `
                   "body": {
                     "data": {
                       "api_version": "v1",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [],
                       "hidden": false,
                       "id": 1.1,
                       "name": "My webhooks",
+                      "signing_key": "signing_key",
                       "status": "enabled",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                       "url": "https://mywebhook.com/listening",
                     },
                   },
@@ -5154,20 +4792,21 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "data": {
                       "api_version": "v1",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [],
                       "hidden": false,
                       "id": 1.1,
                       "name": "My webhooks",
+                      "signing_key": "signing_key",
                       "status": "enabled",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                       "url": "https://mywebhook.com/listening",
                     },
                   },
@@ -5203,9 +4842,7 @@ exports[`open api parser deel simple 1`] = `
               {
                 "request": {
                   "api_version": "v1",
-                  "description": "I like it very much.",
                   "events": [],
-                  "name": "My first webhook.",
                   "status": "enabled",
                   "url": "https://mywebhook.com",
                 },
@@ -5213,14 +4850,15 @@ exports[`open api parser deel simple 1`] = `
                   "body": {
                     "data": {
                       "api_version": "v1",
-                      "created_at": "string",
+                      "created_at": "created_at",
                       "description": "My first webhook",
                       "events": [],
                       "hidden": false,
                       "id": 1.1,
                       "name": "My webhooks",
+                      "signing_key": "signing_key",
                       "status": "enabled",
-                      "updated_at": "string",
+                      "updated_at": "updated_at",
                       "url": "https://mywebhook.com/listening",
                     },
                   },

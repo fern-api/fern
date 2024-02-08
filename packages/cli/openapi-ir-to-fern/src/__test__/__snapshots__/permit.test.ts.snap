@@ -23,8 +23,8 @@ exports[`open api parser permit simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "operations": [],
@@ -71,8 +71,8 @@ exports[`open api parser permit simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "operations": [],
@@ -119,8 +119,8 @@ exports[`open api parser permit simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "idents": [],
@@ -167,8 +167,8 @@ exports[`open api parser permit simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "idents": [],
@@ -215,8 +215,8 @@ exports[`open api parser permit simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "operations": [],
@@ -289,8 +289,8 @@ If the permission is already granted, it is skipped.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "permission": "repository:clone",
@@ -361,8 +361,8 @@ If the permission is already granted, it is skipped.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -423,8 +423,8 @@ If the permission is not granted, it is skipped.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "permission": "repository:clone",
@@ -516,8 +516,8 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "conditions": {
@@ -568,8 +568,12 @@ If we check the checkbox where \`us_based_employees\` and \`private_repos->clone
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -674,9 +678,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "examples": [
               {
                 "path-parameters": {
-                  "condition_set_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
               },
             ],
@@ -707,9 +711,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "examples": [
               {
                 "path-parameters": {
-                  "condition_set_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
@@ -738,8 +742,12 @@ This includes any permissions granted to said condition set (i.e: any matching c
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -812,9 +820,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "examples": [
               {
                 "path-parameters": {
-                  "condition_set_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -865,9 +873,9 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "examples": [
               {
                 "path-parameters": {
-                  "condition_set_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -918,15 +926,13 @@ This includes any permissions granted to said condition set (i.e: any matching c
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                },
-                "query-parameters": {
-                  "type": "userset",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -985,9 +991,9 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "condition_set_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "condition_set_id": "condition_set_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "conditions": {
@@ -1035,8 +1041,12 @@ Fields that will be provided will be completely overwritten.",
                     "key": "na_based_employees",
                     "name": "US or Canada based employees",
                     "organization_id": "7c60d51f-b44e-4682-87d6-449835ea4de6",
+                    "parent_id": "parent_id",
                     "project_id": "405d8375-3514-403b-8c43-83ae74cfe0e9",
                     "resource": {
+                      "action_groups": {
+                        "action_groups": [],
+                      },
                       "actions": {
                         "clone": {
                           "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
@@ -1178,38 +1188,30 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
-                  "conflict_strategy": "fail",
-                  "scope": {
-                    "resource_sets": {},
-                    "resources": {},
-                    "roles": {},
-                    "user_sets": {},
-                  },
-                  "target_env": {
-                    "new": {
-                      "jwks": {
-                        "keys": [],
-                      },
-                      "key": "string",
-                      "name": "string",
-                    },
-                  },
+                  "target_env": {},
                 },
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
+                    "id": "id",
                     "jwks": {
                       "keys": [],
                     },
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1263,26 +1265,30 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "proj_id": "string",
+                  "proj_id": "proj_id",
                 },
                 "request": {
-                  "jwks": {
-                    "keys": [],
-                  },
-                  "key": "string",
-                  "name": "string",
+                  "key": "key",
+                  "name": "name",
                 },
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
+                    "id": "id",
                     "jwks": {
                       "keys": [],
                     },
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1314,8 +1320,8 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
               },
             ],
@@ -1342,20 +1348,27 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
+                    "id": "id",
                     "jwks": {
                       "keys": [],
                     },
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1388,7 +1401,7 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "proj_id": "string",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -1431,21 +1444,28 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
+                    "id": "id",
                     "jwks": {
                       "keys": [],
                     },
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
                     "pdp_configs": [],
-                    "project_id": "string",
+                    "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "stats": {
                       "has_decision_logs": true,
                       "members": [],
@@ -1487,25 +1507,28 @@ allowed.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
-                "request": {
-                  "jwks": {
-                    "keys": [],
-                  },
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "custom_branch_name": "custom_branch_name",
+                    "description": "description",
+                    "id": "id",
                     "jwks": {
                       "keys": [],
                     },
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
-                    "project_id": "string",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "project_id": "project_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1596,16 +1619,23 @@ authenticated actor (i.e: human team member or api key).",
             "examples": [
               {
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "key": "key",
+                  "name": "name",
                 },
                 "response": {
                   "body": {
+                    "api_key_id": "api_key_id",
+                    "api_key_secret": "api_key_secret",
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "id": "id",
                     "is_enterprise": true,
-                    "key": "string",
-                    "name": "string",
+                    "key": "key",
+                    "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1649,7 +1679,7 @@ authenticated actor (i.e: human team member or api key).",
             "examples": [
               {
                 "path-parameters": {
-                  "org_id": "string",
+                  "org_id": "org_id",
                 },
               },
             ],
@@ -1675,10 +1705,15 @@ if such org exists and can be accessed by the authenticated actor.",
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "id": "id",
                     "is_enterprise": true,
-                    "key": "string",
-                    "name": "string",
+                    "key": "key",
+                    "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1702,15 +1737,20 @@ if such org exists and can be accessed by the authenticated actor.",
             "examples": [
               {
                 "path-parameters": {
-                  "org_id": "string",
+                  "org_id": "org_id",
                 },
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "id": "id",
                     "is_enterprise": true,
-                    "key": "string",
-                    "name": "string",
+                    "key": "key",
+                    "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1774,16 +1814,21 @@ authenticated actor (i.e: human team member or api key).",
             "examples": [
               {
                 "path-parameters": {
-                  "org_id": "string",
+                  "org_id": "org_id",
                 },
                 "request": {},
                 "response": {
                   "body": {
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
+                    "id": "id",
                     "is_enterprise": true,
-                    "key": "string",
-                    "name": "string",
+                    "key": "key",
+                    "name": "name",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
@@ -1847,17 +1892,25 @@ Every project is a separate silo, and has its own unique set of environments and
             "examples": [
               {
                 "request": {
-                  "key": "string",
-                  "name": "string",
+                  "key": "key",
+                  "name": "name",
                 },
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
+                    "description": "description",
+                    "id": "id",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -1912,7 +1965,7 @@ Every project is a separate silo, and has its own unique set of environments and
             "examples": [
               {
                 "path-parameters": {
-                  "proj_id": "string",
+                  "proj_id": "proj_id",
                 },
               },
             ],
@@ -1935,16 +1988,24 @@ Every project is a separate silo, and has its own unique set of environments and
             "examples": [
               {
                 "path-parameters": {
-                  "proj_id": "string",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
+                    "description": "description",
+                    "id": "id",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -2006,17 +2067,25 @@ Every project is a separate silo, and has its own unique set of environments and
             "examples": [
               {
                 "path-parameters": {
-                  "proj_id": "string",
+                  "proj_id": "proj_id",
                 },
                 "request": {},
                 "response": {
                   "body": {
+                    "active_policy_repo_id": "active_policy_repo_id",
                     "created_at": "2024-01-15T09:30:00Z",
-                    "id": "string",
-                    "key": "string",
-                    "name": "string",
-                    "organization_id": "string",
+                    "description": "description",
+                    "id": "id",
+                    "key": "key",
+                    "name": "name",
+                    "organization_id": "organization_id",
+                    "settings": {
+                      "settings": {
+                        "key": "value",
+                      },
+                    },
                     "updated_at": "2024-01-15T09:30:00Z",
+                    "urn_namespace": "urn_namespace",
                   },
                 },
               },
@@ -2085,9 +2154,9 @@ to a role as one action.
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "actions": [
@@ -2104,6 +2173,11 @@ to a role as one action.
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2176,10 +2250,10 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_group_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_group_id": "action_group_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
               },
             ],
@@ -2214,10 +2288,10 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_group_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_group_id": "action_group_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": {
@@ -2225,6 +2299,11 @@ This includes any permissions granted to perform the action.",
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2274,9 +2353,9 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": [],
@@ -2328,10 +2407,10 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_group_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_group_id": "action_group_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {},
                 "response": {
@@ -2340,6 +2419,11 @@ Fields that will be provided will be completely overwritten.",
                       "read",
                       "update",
                     ],
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "Writer Action Group",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2427,9 +2511,9 @@ Each (resource, action) pair defines a unique permission level.
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "description": "read a document",
@@ -2438,6 +2522,11 @@ Each (resource, action) pair defines a unique permission level.
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2510,10 +2599,10 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_id": "action_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
               },
             ],
@@ -2548,13 +2637,18 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_id": "action_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2605,9 +2699,9 @@ This includes any permissions granted to perform the action.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": [],
@@ -2659,16 +2753,21 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "action_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "action_id": "action_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "description": "read a document",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "read a document",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -2762,9 +2861,9 @@ define a boolean \`private\` attributes that we can now use in our policies.
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "description": "whether or not the github repository is private",
@@ -2826,10 +2925,10 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
               },
             ],
@@ -2877,10 +2976,10 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": {
@@ -2935,9 +3034,9 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": [],
@@ -2989,14 +3088,13 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "description": "whether or not the github repository is private",
-                  "type": "bool",
                 },
                 "response": {
                   "body": {
@@ -3075,8 +3173,8 @@ and will return the existing instance object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "attributes": {
@@ -3160,9 +3258,9 @@ and will return the existing instance object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "instance_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "instance_id": "instance_id",
+                  "proj_id": "proj_id",
                 },
               },
             ],
@@ -3193,9 +3291,9 @@ and will return the existing instance object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "instance_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "instance_id": "instance_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
@@ -3249,8 +3347,8 @@ and will return the existing instance object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -3298,9 +3396,9 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "instance_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "instance_id": "instance_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "attributes": {
@@ -3397,10 +3495,10 @@ If some of the permissions specified are already assigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "permissions": [
@@ -3409,6 +3507,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3467,9 +3570,9 @@ If some of the permissions specified are already assigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "description": "the maintainer role can read from the repo and push changes",
@@ -3484,6 +3587,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3569,10 +3677,10 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
               },
             ],
@@ -3607,13 +3715,18 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3669,10 +3782,10 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
@@ -3716,10 +3829,10 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
@@ -3763,9 +3876,9 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": [],
@@ -3818,10 +3931,10 @@ If some of the permissions specified are already unassigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "permissions": [
@@ -3830,6 +3943,11 @@ If some of the permissions specified are already unassigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -3889,10 +4007,10 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "description": "the maintainer role can read from the repo and push changes",
@@ -3902,6 +4020,11 @@ Fields that will be provided will be completely overwritten.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the maintainer role can read from the repo and push changes",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4011,8 +4134,8 @@ A resource may also contain:
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "actions": {
@@ -4035,26 +4158,43 @@ A resource may also contain:
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [],
+                    },
                     "actions": {
                       "clone": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4135,9 +4275,9 @@ A resource may also contain:
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
               },
             ],
@@ -4168,32 +4308,49 @@ A resource may also contain:
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [],
+                    },
                     "actions": {
                       "clone": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4242,12 +4399,13 @@ A resource may also contain:
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -4311,38 +4469,55 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {
                   "actions": {
-                    "string": {},
+                    "actions": {},
                   },
-                  "name": "string",
+                  "name": "name",
                 },
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [],
+                    },
                     "actions": {
                       "clone": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4424,33 +4599,50 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "resource_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "resource_id": "resource_id",
                 },
                 "request": {},
                 "response": {
                   "body": {
+                    "action_groups": {
+                      "action_groups": [],
+                    },
                     "actions": {
                       "clone": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
+                        "key": "key",
+                        "name": "name",
                       },
                       "push": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
+                        "key": "key",
+                        "name": "name",
                       },
                       "read": {
+                        "attributes": {},
+                        "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
+                        "key": "key",
+                        "name": "name",
                       },
                     },
                     "attributes": {
                       "created": {
                         "description": "the time (timestamp) the repository was created",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f11",
+                        "key": "key",
                         "type": "time",
                       },
                       "private": {
                         "description": "whether the repo is private (if false, the repo is public)",
                         "id": "497f6eca-6276-4993-bfeb-53cbbbba6f22",
+                        "key": "key",
                         "type": "bool",
                       },
                     },
@@ -4561,8 +4753,8 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "role": "admin",
@@ -4616,12 +4808,14 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": [],
                 "response": {
-                  "body": {},
+                  "body": {
+                    "assignments_created": 1,
+                  },
                 },
               },
             ],
@@ -4655,12 +4849,14 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": [],
                 "response": {
-                  "body": {},
+                  "body": {
+                    "assignments_removed": 1,
+                  },
                 },
               },
             ],
@@ -4698,8 +4894,8 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -4762,8 +4958,8 @@ If the role is not actually assigned, will return 404.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "role": "editor",
@@ -4821,9 +5017,9 @@ If some of the permissions specified are already assigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "permissions": [
@@ -4832,6 +5028,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4885,8 +5086,8 @@ If some of the permissions specified are already assigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "description": "the editor role can read and write to documents",
@@ -4901,6 +5102,11 @@ If some of the permissions specified are already assigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -4981,9 +5187,9 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
               },
             ],
@@ -5014,12 +5220,17 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5070,9 +5281,9 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
@@ -5112,9 +5323,9 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "response": {
                   "body": {
@@ -5154,12 +5365,13 @@ This includes any permissions granted to said role.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -5215,9 +5427,9 @@ If some of the permissions specified are already unassigned, will skip them.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "permissions": [
@@ -5226,6 +5438,11 @@ If some of the permissions specified are already unassigned, will skip them.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5280,9 +5497,9 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "role_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "role_id": "role_id",
                 },
                 "request": {
                   "description": "the editor role can read and write to documents",
@@ -5292,6 +5509,11 @@ Fields that will be provided will be completely overwritten.",
                 },
                 "response": {
                   "body": {
+                    "attributes": {
+                      "attributes": {
+                        "key": "value",
+                      },
+                    },
                     "created_at": "2019-08-24T14:15:22Z",
                     "description": "the editor role can read and write to documents",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
@@ -5407,8 +5629,8 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "attributes": {
@@ -5429,6 +5651,7 @@ and will return the existing tenant object in the response body.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -5471,9 +5694,9 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "tenant_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
                 },
               },
             ],
@@ -5504,10 +5727,10 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "tenant_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
+                  "user_id": "user_id",
                 },
               },
             ],
@@ -5542,9 +5765,9 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "tenant_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
                 },
                 "response": {
                   "body": {
@@ -5555,6 +5778,7 @@ and will return the existing tenant object in the response body.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -5598,13 +5822,14 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "tenant_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -5662,12 +5887,13 @@ and will return the existing tenant object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -5722,9 +5948,9 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "tenant_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "tenant_id": "tenant_id",
                 },
                 "request": {},
                 "response": {
@@ -5736,6 +5962,7 @@ Fields that will be provided will be completely overwritten.",
                       },
                     },
                     "created_at": "2019-08-24T14:15:22Z",
+                    "description": "description",
                     "environment_id": "40ef0e48-a11f-4963-a229-e396c9f7e7c4",
                     "id": "497f6eca-6276-4993-bfeb-53cbbbba6f08",
                     "key": "stripeinc",
@@ -5834,8 +6061,8 @@ define a string \`owner\` attribute that we can now use in our policies.
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "description": "whether or not the github repository is private",
@@ -5897,9 +6124,9 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
               },
             ],
@@ -5944,9 +6171,9 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
@@ -6003,8 +6230,8 @@ attribute to evaluate as \`undefined\`.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": [],
@@ -6053,13 +6280,12 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "attribute_id": "string",
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "attribute_id": "attribute_id",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "description": "whether or not the github repository is private",
-                  "type": "bool",
                 },
                 "response": {
                   "body": {
@@ -6140,9 +6366,9 @@ The tenant defines the scope of the assignment. In other words, the role is effe
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
                 "request": {
                   "role": "admin",
@@ -6217,8 +6443,8 @@ and will return the existing user object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "request": {
                   "attributes": {
@@ -6312,9 +6538,9 @@ and will return the existing user object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
               },
             ],
@@ -6345,9 +6571,9 @@ and will return the existing user object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
                 "response": {
                   "body": {
@@ -6428,12 +6654,13 @@ and will return the existing user object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
                 },
                 "response": {
                   "body": {
                     "data": [],
+                    "page_count": 1,
                     "total_count": 1,
                   },
                 },
@@ -6487,9 +6714,9 @@ and will return the existing user object in the response body.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
                 "request": {
                   "attributes": {
@@ -6591,9 +6818,9 @@ If the role is not actually assigned, will return 404.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
                 "request": {
                   "role": "editor",
@@ -6646,9 +6873,9 @@ Fields that will be provided will be completely overwritten.",
             "examples": [
               {
                 "path-parameters": {
-                  "env_id": "string",
-                  "proj_id": "string",
-                  "user_id": "string",
+                  "env_id": "env_id",
+                  "proj_id": "proj_id",
+                  "user_id": "user_id",
                 },
                 "request": {},
                 "response": {

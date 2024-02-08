@@ -21,11 +21,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "name": "string",
-                  "type": "string",
+                  "name": "name",
+                  "type": "type",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -62,10 +64,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "agentId": "string",
+                  "agentId": "agentId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -89,10 +93,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "agentId": "string",
+                  "agentId": "agentId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -113,7 +119,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -134,13 +142,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "agentId": "string",
+                  "agentId": "agentId",
                 },
-                "request": {
-                  "string": {},
-                },
+                "request": {},
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -167,15 +175,15 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "agentId": "string",
+                  "agentId": "agentId",
                 },
                 "request": {
-                  "input": {
-                    "string": {},
-                  },
+                  "input": {},
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -221,10 +229,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "description": "string",
+                  "description": "description",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -255,10 +265,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "tokenId": "string",
+                  "tokenId": "tokenId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -282,10 +294,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "tokenId": "string",
+                  "tokenId": "tokenId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -306,7 +320,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -338,11 +354,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "email": "string",
-                  "password": "string",
+                  "email": "email",
+                  "password": "password",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -374,11 +392,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "email": "string",
-                  "password": "string",
+                  "email": "email",
+                  "password": "password",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -423,12 +443,14 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "name": "string",
-                  "type": "string",
-                  "url": "string",
+                  "name": "name",
+                  "type": "type",
+                  "url": "url",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -465,10 +487,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "documentId": "string",
+                  "documentId": "documentId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -492,10 +516,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "documentId": "string",
+                  "documentId": "documentId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -516,7 +542,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -549,11 +577,13 @@ exports[`open api parser superagent simple 1`] = `
               {
                 "request": {
                   "input_variables": [],
-                  "name": "string",
-                  "template": "string",
+                  "name": "name",
+                  "template": "template",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -586,10 +616,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "promptId": "string",
+                  "promptId": "promptId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -613,10 +645,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "promptId": "string",
+                  "promptId": "promptId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -637,7 +671,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -658,13 +694,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "promptId": "string",
+                  "promptId": "promptId",
                 },
-                "request": {
-                  "string": {},
-                },
+                "request": {},
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -702,11 +738,13 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "name": "string",
-                  "type": "string",
+                  "name": "name",
+                  "type": "type",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -739,10 +777,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "toolId": "string",
+                  "toolId": "toolId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -766,10 +806,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "toolId": "string",
+                  "toolId": "toolId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -790,7 +832,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -816,7 +860,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -848,10 +894,12 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "userId": "string",
+                  "userId": "userId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],
@@ -872,7 +920,9 @@ exports[`open api parser superagent simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {},
+                  "body": {
+                    "key": "value",
+                  },
                 },
               },
             ],

@@ -60,13 +60,12 @@ exports[`open api parser assembly simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "final_model": "default",
                   "transcript_ids": [],
                 },
                 "response": {
                   "body": {
-                    "request_id": "string",
-                    "response": "string",
+                    "request_id": "request_id",
+                    "response": "response",
                   },
                 },
               },
@@ -98,13 +97,13 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "request_id": "string",
+                  "request_id": "request_id",
                 },
                 "response": {
                   "body": {
                     "deleted": true,
-                    "request_id": "string",
-                    "request_id_to_purge": "string",
+                    "request_id": "request_id",
+                    "request_id_to_purge": "request_id_to_purge",
                   },
                 },
               },
@@ -137,13 +136,12 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "final_model": "default",
                   "questions": [],
                   "transcript_ids": [],
                 },
                 "response": {
                   "body": {
-                    "request_id": "string",
+                    "request_id": "request_id",
                     "response": [],
                   },
                 },
@@ -187,13 +185,12 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "final_model": "default",
                   "transcript_ids": [],
                 },
                 "response": {
                   "body": {
-                    "request_id": "string",
-                    "response": "string",
+                    "request_id": "request_id",
+                    "response": "response",
                   },
                 },
               },
@@ -237,14 +234,13 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "final_model": "default",
-                  "prompt": "string",
+                  "prompt": "prompt",
                   "transcript_ids": [],
                 },
                 "response": {
                   "body": {
-                    "request_id": "string",
-                    "response": "string",
+                    "request_id": "request_id",
+                    "response": "response",
                   },
                 },
               },
@@ -302,7 +298,7 @@ The LLM response data, as well as any context provided in the original request w
                 },
                 "response": {
                   "body": {
-                    "token": "string",
+                    "token": "token",
                   },
                 },
               },
@@ -353,40 +349,76 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "audio_url": "string",
-                  "boost_param": "low",
-                  "language_code": "en",
-                  "redact_pii_sub": "entity_type",
-                  "summary_model": "informative",
-                  "summary_type": "bullets",
+                  "audio_url": "audio_url",
                 },
                 "response": {
                   "body": {
-                    "acoustic_model": "string",
-                    "audio_url": "string",
+                    "acoustic_model": "acoustic_model",
+                    "audio_duration": 1.1,
+                    "audio_end_at": 1,
+                    "audio_start_from": 1,
+                    "audio_url": "audio_url",
+                    "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
                       "results": [],
                     },
+                    "boost_param": "boost_param",
+                    "chapters": [],
+                    "confidence": 1.1,
+                    "content_safety": true,
                     "content_safety_labels": {
                       "results": [],
                       "status": "success",
                     },
+                    "custom_spelling": [],
+                    "custom_topics": true,
+                    "disfluencies": true,
+                    "dual_channel": true,
+                    "entities": [],
+                    "entity_detection": true,
+                    "error": "error",
+                    "filter_profanity": true,
+                    "format_text": true,
+                    "iab_categories": true,
                     "iab_categories_result": {
                       "results": [],
                       "status": "success",
                       "summary": {
-                        "string": 1.1,
+                        "summary": 1.1,
                       },
                     },
-                    "id": "string",
+                    "id": "id",
                     "language_code": "en",
-                    "language_model": "string",
+                    "language_detection": true,
+                    "language_model": "language_model",
+                    "punctuate": true,
                     "redact_pii": true,
+                    "redact_pii_audio": true,
+                    "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [],
                     "redact_pii_sub": "entity_type",
+                    "sentiment_analysis": true,
+                    "sentiment_analysis_results": [],
+                    "speaker_labels": true,
+                    "speakers_expected": 1,
+                    "speech_threshold": 1.1,
+                    "speed_boost": true,
                     "status": "queued",
                     "summarization": true,
+                    "summary": "summary",
+                    "summary_model": "summary_model",
+                    "summary_type": "summary_type",
+                    "text": "text",
+                    "throttled": true,
+                    "topics": [],
+                    "utterances": [],
                     "webhook_auth": true,
+                    "webhook_auth_header_name": "webhook_auth_header_name",
+                    "webhook_status_code": 1,
+                    "webhook_url": "webhook_url",
+                    "word_boost": [],
+                    "words": [],
                   },
                 },
               },
@@ -429,35 +461,76 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "transcript_id": "string",
+                  "transcript_id": "transcript_id",
                 },
                 "response": {
                   "body": {
-                    "acoustic_model": "string",
-                    "audio_url": "string",
+                    "acoustic_model": "acoustic_model",
+                    "audio_duration": 1.1,
+                    "audio_end_at": 1,
+                    "audio_start_from": 1,
+                    "audio_url": "audio_url",
+                    "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
                       "results": [],
                     },
+                    "boost_param": "boost_param",
+                    "chapters": [],
+                    "confidence": 1.1,
+                    "content_safety": true,
                     "content_safety_labels": {
                       "results": [],
                       "status": "success",
                     },
+                    "custom_spelling": [],
+                    "custom_topics": true,
+                    "disfluencies": true,
+                    "dual_channel": true,
+                    "entities": [],
+                    "entity_detection": true,
+                    "error": "error",
+                    "filter_profanity": true,
+                    "format_text": true,
+                    "iab_categories": true,
                     "iab_categories_result": {
                       "results": [],
                       "status": "success",
                       "summary": {
-                        "string": 1.1,
+                        "summary": 1.1,
                       },
                     },
-                    "id": "string",
+                    "id": "id",
                     "language_code": "en",
-                    "language_model": "string",
+                    "language_detection": true,
+                    "language_model": "language_model",
+                    "punctuate": true,
                     "redact_pii": true,
+                    "redact_pii_audio": true,
+                    "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [],
                     "redact_pii_sub": "entity_type",
+                    "sentiment_analysis": true,
+                    "sentiment_analysis_results": [],
+                    "speaker_labels": true,
+                    "speakers_expected": 1,
+                    "speech_threshold": 1.1,
+                    "speed_boost": true,
                     "status": "queued",
                     "summarization": true,
+                    "summary": "summary",
+                    "summary_model": "summary_model",
+                    "summary_type": "summary_type",
+                    "text": "text",
+                    "throttled": true,
+                    "topics": [],
+                    "utterances": [],
                     "webhook_auth": true,
+                    "webhook_auth_header_name": "webhook_auth_header_name",
+                    "webhook_status_code": 1,
+                    "webhook_url": "webhook_url",
+                    "word_boost": [],
+                    "words": [],
                   },
                 },
               },
@@ -490,35 +563,76 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "transcript_id": "string",
+                  "transcript_id": "transcript_id",
                 },
                 "response": {
                   "body": {
-                    "acoustic_model": "string",
-                    "audio_url": "string",
+                    "acoustic_model": "acoustic_model",
+                    "audio_duration": 1.1,
+                    "audio_end_at": 1,
+                    "audio_start_from": 1,
+                    "audio_url": "audio_url",
+                    "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
                       "results": [],
                     },
+                    "boost_param": "boost_param",
+                    "chapters": [],
+                    "confidence": 1.1,
+                    "content_safety": true,
                     "content_safety_labels": {
                       "results": [],
                       "status": "success",
                     },
+                    "custom_spelling": [],
+                    "custom_topics": true,
+                    "disfluencies": true,
+                    "dual_channel": true,
+                    "entities": [],
+                    "entity_detection": true,
+                    "error": "error",
+                    "filter_profanity": true,
+                    "format_text": true,
+                    "iab_categories": true,
                     "iab_categories_result": {
                       "results": [],
                       "status": "success",
                       "summary": {
-                        "string": 1.1,
+                        "summary": 1.1,
                       },
                     },
-                    "id": "string",
+                    "id": "id",
                     "language_code": "en",
-                    "language_model": "string",
+                    "language_detection": true,
+                    "language_model": "language_model",
+                    "punctuate": true,
                     "redact_pii": true,
+                    "redact_pii_audio": true,
+                    "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [],
                     "redact_pii_sub": "entity_type",
+                    "sentiment_analysis": true,
+                    "sentiment_analysis_results": [],
+                    "speaker_labels": true,
+                    "speakers_expected": 1,
+                    "speech_threshold": 1.1,
+                    "speed_boost": true,
                     "status": "queued",
                     "summarization": true,
+                    "summary": "summary",
+                    "summary_model": "summary_model",
+                    "summary_type": "summary_type",
+                    "text": "text",
+                    "throttled": true,
+                    "topics": [],
+                    "utterances": [],
                     "webhook_auth": true,
+                    "webhook_auth_header_name": "webhook_auth_header_name",
+                    "webhook_status_code": 1,
+                    "webhook_url": "webhook_url",
+                    "word_boost": [],
+                    "words": [],
                   },
                 },
               },
@@ -551,13 +665,13 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "transcript_id": "string",
+                  "transcript_id": "transcript_id",
                 },
                 "response": {
                   "body": {
                     "audio_duration": 1.1,
                     "confidence": 1.1,
-                    "id": "string",
+                    "id": "id",
                     "paragraphs": [],
                   },
                 },
@@ -591,11 +705,11 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "transcript_id": "string",
+                  "transcript_id": "transcript_id",
                 },
                 "response": {
                   "body": {
-                    "redacted_audio_url": "string",
+                    "redacted_audio_url": "redacted_audio_url",
                     "status": "redacted_audio_ready",
                   },
                 },
@@ -629,13 +743,13 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "path-parameters": {
-                  "transcript_id": "string",
+                  "transcript_id": "transcript_id",
                 },
                 "response": {
                   "body": {
                     "audio_duration": 1.1,
                     "confidence": 1.1,
-                    "id": "string",
+                    "id": "id",
                     "sentences": [],
                   },
                 },
@@ -698,15 +812,13 @@ The LLM response data, as well as any context provided in the original request w
             ],
             "examples": [
               {
-                "query-parameters": {
-                  "status": "queued",
-                },
                 "response": {
                   "body": {
                     "page_details": {
-                      "current_url": "string",
+                      "current_url": "current_url",
                       "limit": 1,
-                      "prev_url": "string",
+                      "next_url": "next_url",
+                      "prev_url": "prev_url",
                       "result_count": 1,
                     },
                     "transcripts": [],

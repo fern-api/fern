@@ -19,20 +19,23 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "data": {
-                      "carrier": "string",
-                      "createdAt": "string",
-                      "firstName": "string",
-                      "id": "string",
-                      "lastName": "string",
-                      "modifiedAt": "string",
+                      "carrier": "carrier",
+                      "createdAt": "createdAt",
+                      "email": "email",
+                      "firstName": "firstName",
+                      "id": "id",
+                      "lastName": "lastName",
+                      "modifiedAt": "modifiedAt",
+                      "phone": "phone",
                       "policies": [],
-                      "refreshedAt": "string",
+                      "refreshedAt": "refreshedAt",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -87,18 +90,27 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "data": {
-                      "address": {},
-                      "domain": "string",
-                      "id": "string",
-                      "modifiedAt": "string",
-                      "name": "string",
-                      "phone": "string",
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
+                      "domain": "domain",
+                      "id": "id",
+                      "logoUrl": "logoUrl",
+                      "modifiedAt": "modifiedAt",
+                      "name": "name",
+                      "phone": "phone",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -124,7 +136,10 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "response": {
-                  "body": {},
+                  "body": {
+                    "data": [],
+                    "success": true,
+                  },
                 },
               },
             ],
@@ -171,9 +186,6 @@ exports[`open api parser axle simple 1`] = `
                 "headers": {},
                 "request": {
                   "redirectUri": "https://example.com/redirect",
-                  "user": {
-                    "id": "string",
-                  },
                   "webhookUri": "https://example.com/webhook",
                 },
                 "response": {
@@ -257,28 +269,36 @@ exports[`open api parser axle simple 1`] = `
               {
                 "headers": {},
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "data": {
-                      "account": "string",
-                      "address": {},
-                      "carrier": "string",
+                      "account": "account",
+                      "address": {
+                        "addressLine1": "addressLine1",
+                        "addressLine2": "addressLine2",
+                        "city": "city",
+                        "country": "country",
+                        "postalCode": "postalCode",
+                        "state": "state",
+                      },
+                      "carrier": "carrier",
                       "coverages": [],
-                      "createdAt": "string",
-                      "effectiveDate": "string",
-                      "expirationDate": "string",
-                      "id": "string",
+                      "createdAt": "createdAt",
+                      "effectiveDate": "effectiveDate",
+                      "expirationDate": "expirationDate",
+                      "id": "id",
                       "insureds": [],
                       "isActive": true,
-                      "modifiedAt": "string",
-                      "policyNumber": "string",
+                      "modifiedAt": "modifiedAt",
+                      "policyNumber": "policyNumber",
                       "properties": [],
-                      "refreshedAt": "string",
+                      "refreshedAt": "refreshedAt",
                       "thirdParties": [],
                       "type": "auto",
                     },
+                    "success": true,
                   },
                 },
               },
@@ -336,13 +356,13 @@ Auth codes are ephemeral and expire after 10 minutes, while accessTokens do not 
                 "headers": {},
                 "name": "example-1",
                 "request": {
-                  "authCode": "string",
+                  "authCode": "authCode",
                 },
                 "response": {
                   "body": {
                     "data": {
-                      "accessToken": "string",
-                      "account": "string",
+                      "accessToken": "accessToken",
+                      "account": "account",
                       "policies": [],
                     },
                     "success": true,

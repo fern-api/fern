@@ -53,7 +53,7 @@ Used to retrieve a deployment given its ID or name.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -81,14 +81,14 @@ Used to retrieve a deployment given its ID or name.
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -106,7 +106,7 @@ Used to retrieve a deployment given its ID or name.
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -187,10 +187,6 @@ Creates a new document index.",
           "queryParameters": [],
           "request": {
             "properties": {
-              "environment": {
-                "enum": "DEVELOPMENT",
-                "type": "enum",
-              },
               "indexing_config": {
                 "map": [
                   {
@@ -351,10 +347,6 @@ Creates a new document index.",
                 },
                 "type": "primitive",
               },
-              "status": {
-                "enum": "ACTIVE",
-                "type": "enum",
-              },
             },
             "type": "object",
           },
@@ -373,7 +365,7 @@ Creates a new document index.",
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -382,11 +374,25 @@ Creates a new document index.",
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "indexing_config",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
                       "type": "map",
                     },
                   },
@@ -395,14 +401,14 @@ Creates a new document index.",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -571,6 +577,10 @@ Used to list documents. Optionally filter on supported fields.
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "results": {
+                "array": [],
+                "type": "array",
               },
             },
             "type": "object",
@@ -784,15 +794,6 @@ Generate a completion using a previously defined deployment.
           "queryParameters": [],
           "request": {
             "properties": {
-              "options": {
-                "properties": {
-                  "logprobs": {
-                    "enum": "ALL",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
               "requests": {
                 "array": [],
                 "type": "array",
@@ -947,7 +948,7 @@ Used to retrieve a model version given its ID.
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -962,7 +963,7 @@ Used to retrieve a model version given its ID.
                 "properties": {
                   "base_model": {
                     "primitive": {
-                      "string": "string",
+                      "string": "base_model",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -971,7 +972,28 @@ Used to retrieve a model version given its ID.
                     "properties": {
                       "id": {
                         "primitive": {
-                          "string": "string",
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "prompt_id": {
+                        "primitive": {
+                          "string": "prompt_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "prompt_index": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "sandbox_id": {
+                        "primitive": {
+                          "string": "sandbox_id",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1004,6 +1026,10 @@ Used to retrieve a model version given its ID.
                         },
                         "type": "primitive",
                       },
+                      "logit_bias": {
+                        "map": [],
+                        "type": "map",
+                      },
                       "max_tokens": {
                         "primitive": {
                           "int": 1,
@@ -1018,7 +1044,18 @@ Used to retrieve a model version given its ID.
                         },
                         "type": "primitive",
                       },
+                      "stop": {
+                        "array": [],
+                        "type": "array",
+                      },
                       "temperature": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "top_k": {
                         "primitive": {
                           "double": 1.1,
                           "type": "double",
@@ -1051,26 +1088,40 @@ Used to retrieve a model version given its ID.
                     },
                     "type": "object",
                   },
+                  "prompt_syntax_version": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "prompt_template": {
+                    "primitive": {
+                      "string": "prompt_template",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                 },
                 "type": "object",
               },
               "external_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "external_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1160,7 +1211,7 @@ Compiles the prompt backing the model version using the provided input values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1171,18 +1222,7 @@ Compiles the prompt backing the model version using the provided input values.",
           "request": {
             "properties": {
               "input_values": {
-                "map": [
-                  {
-                    "key": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "value": {
-                      "map": [],
-                      "type": "map",
-                    },
-                  },
-                ],
+                "map": [],
                 "type": "map",
               },
             },
@@ -1201,7 +1241,7 @@ Compiles the prompt backing the model version using the provided input values.",
                   },
                   "text": {
                     "primitive": {
-                      "string": "string",
+                      "string": "text",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1301,21 +1341,21 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "properties": {
               "label": {
                 "primitive": {
-                  "string": "string",
+                  "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "model",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1398,21 +1438,21 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1424,14 +1464,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1443,14 +1483,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1462,14 +1502,14 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
                   },
                   "label": {
                     "primitive": {
-                      "string": "string",
+                      "string": "label",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1481,7 +1521,7 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "properties": {
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -1563,7 +1603,7 @@ or overwritten with default values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1647,7 +1687,7 @@ or overwritten with default values.",
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1656,10 +1696,25 @@ or overwritten with default values.",
                 "array": [],
                 "type": "array",
               },
+              "label": {
+                "primitive": {
+                  "string": "label",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "metric_input_params": {
                 "properties": {
                   "params": {
-                    "properties": {},
+                    "properties": {
+                      "target": {
+                        "primitive": {
+                          "string": "target",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
                     "type": "object",
                   },
                 },
@@ -1800,7 +1855,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1810,7 +1865,7 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
               "name": "scenario_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "scenario_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1899,49 +1954,9 @@ Perform a search against a document index.
           "queryParameters": [],
           "request": {
             "properties": {
-              "options": {
-                "properties": {
-                  "filters": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "result_merging": {
-                    "properties": {
-                      "enabled": {
-                        "primitive": {
-                          "boolean": true,
-                          "type": "boolean",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "weights": {
-                    "properties": {
-                      "keywords": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                      "semantic_similarity": {
-                        "primitive": {
-                          "double": 1.1,
-                          "type": "double",
-                        },
-                        "type": "primitive",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "query": {
                 "primitive": {
-                  "string": "string",
+                  "string": "query",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2106,7 +2121,7 @@ or overwritten with default values.",
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2121,18 +2136,7 @@ or overwritten with default values.",
                 "type": "object",
               },
               "input_values": {
-                "map": [
-                  {
-                    "key": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "value": {
-                      "map": [],
-                      "type": "map",
-                    },
-                  },
-                ],
+                "map": [],
                 "type": "map",
               },
             },
@@ -2141,23 +2145,59 @@ or overwritten with default values.",
           "response": {
             "properties": {
               "evaluation_params": {
-                "properties": {},
+                "properties": {
+                  "target": {
+                    "primitive": {
+                      "string": "target",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
                 "type": "object",
               },
               "input_values": {
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "input_values",
                       "type": "string",
                     },
                     "value": {
-                      "map": [],
+                      "map": [
+                        {
+                          "key": {
+                            "string": "key",
+                            "type": "string",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "value",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                      ],
                       "type": "map",
                     },
                   },
                 ],
                 "type": "map",
+              },
+              "label": {
+                "primitive": {
+                  "string": "label",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "test_case_id": {
+                "primitive": {
+                  "string": "test_case_id",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -2245,7 +2285,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2255,7 +2295,7 @@ Deletes an existing test case for a test suite, keying off of the test case id."
               "name": "test_case_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "test_case_id",
                   "type": "string",
                 },
                 "type": "primitive",

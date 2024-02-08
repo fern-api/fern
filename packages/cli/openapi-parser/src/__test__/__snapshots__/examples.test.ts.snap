@@ -77,6 +77,13 @@ exports[`examples examples parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "score": {
+                    "primitive": {
+                      "double": 1.1,
+                      "type": "double",
+                    },
+                    "type": "primitive",
+                  },
                   "state": {
                     "primitive": {
                       "string": "CA",

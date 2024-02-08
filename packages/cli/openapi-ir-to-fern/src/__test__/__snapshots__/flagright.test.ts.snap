@@ -37,11 +37,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
           "examples": [
             {
               "path-parameters": {
-                "userId": "string",
+                "userId": "userId",
               },
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [],
                   "createdTimestamp": 1641654664000,
                   "directors": [
                     {
@@ -77,7 +78,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
-                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -91,11 +91,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "documentIssuedDate": 1639939034000,
                           "documentNumber": "Z9431P",
                           "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
                           "tags": [
                             {
                               "key": "customerType",
@@ -104,6 +99,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "pepStatus": [],
                       "tags": [
                         {
                           "key": "customKey",
@@ -113,6 +109,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     },
                   ],
                   "kycStatusDetails": {
+                    "reason": "reason",
                     "status": "SUCCESSFUL",
                   },
                   "legalEntity": {
@@ -125,6 +122,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "amountCurrency": "USD",
                         "amountValue": 8000,
                       },
+                      "tags": [],
                     },
                     "companyGeneralDetails": {
                       "businessIndustry": [
@@ -134,12 +132,17 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "mainProductsServicesSold": [
                         "Hazelnut",
                       ],
+                      "tags": [],
                       "userRegistrationStatus": "REGISTERED",
                       "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
+                      "tags": [],
+                      "taxIdentifier": "taxIdentifier",
                     },
                     "contactDetails": {
                       "addresses": [
@@ -159,16 +162,25 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "contactNumbers": [],
+                      "emailIds": [],
+                      "faxNumbers": [],
+                      "websites": [],
                     },
                     "reasonForAccountOpening": [
                       "string",
                     ],
                   },
-                  "linkedEntities": {},
+                  "linkedEntities": {
+                    "childUserIds": [],
+                    "parentUserId": "parentUserId",
+                  },
                   "mccDetails": {
                     "code": 1.1,
+                    "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -203,7 +215,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "countryOfNationality": "DE",
                         "countryOfResidence": "US",
                         "dateOfBirth": "1991-01-01",
-                        "gender": "M",
                         "name": {
                           "firstName": "Baran",
                           "lastName": "Ozkan",
@@ -217,11 +228,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           "documentIssuedDate": 1639939034000,
                           "documentNumber": "Z9431P",
                           "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
                           "tags": [
                             {
                               "key": "customerType",
@@ -230,6 +236,7 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
+                      "pepStatus": [],
                       "tags": [
                         {
                           "key": "customKey",
@@ -270,362 +277,22 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "amountValue": 800,
                     },
                     "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
+                      "ACH": {},
+                      "CARD": {},
+                      "CHECK": {},
+                      "GENERIC_BANK_ACCOUNT": {},
+                      "IBAN": {},
+                      "MPESA": {},
+                      "SWIFT": {},
+                      "UPI": {},
+                      "WALLET": {},
                     },
                   },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userStateDetails": {
+                    "reason": "reason",
                     "state": "UNACCEPTABLE",
+                    "userId": "userId",
                   },
                 },
               },
@@ -659,7 +326,7 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
           "examples": [
             {
               "path-parameters": {
-                "transactionId": "string",
+                "transactionId": "transactionId",
               },
               "response": {
                 "body": {
@@ -684,34 +351,26 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   },
                   "executedRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
@@ -721,8 +380,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                     "transactionCurrency": "EUR",
                   },
                   "originUserId": "8650a2611d0771cba03310f74bf6",
+                  "productType": "productType",
                   "promotionCodeUsed": true,
                   "reference": "loan repayment",
+                  "relatedTransactionIds": [],
                   "tags": [
                     {
                       "key": "customKey",
@@ -765,7 +426,7 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
           "examples": [
             {
               "path-parameters": {
-                "userId": "string",
+                "userId": "userId",
               },
               "response": {
                 "body": {
@@ -794,12 +455,14 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "emailIds": [
                       "baran@flagright.com",
                     ],
+                    "faxNumbers": [],
                     "websites": [
                       "flagright.com",
                     ],
                   },
                   "createdTimestamp": 1641654664000,
                   "kycStatusDetails": {
+                    "reason": "reason",
                     "status": "SUCCESSFUL",
                   },
                   "legalDocuments": [
@@ -822,6 +485,8 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       ],
                     },
                   ],
+                  "pepStatus": [],
+                  "reasonForAccountOpening": [],
                   "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
@@ -855,357 +520,15 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       "amountValue": 800,
                     },
                     "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
+                      "ACH": {},
+                      "CARD": {},
+                      "CHECK": {},
+                      "GENERIC_BANK_ACCOUNT": {},
+                      "IBAN": {},
+                      "MPESA": {},
+                      "SWIFT": {},
+                      "UPI": {},
+                      "WALLET": {},
                     },
                   },
                   "userDetails": {
@@ -1222,7 +545,9 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                   "userSegment": "RETAIL",
                   "userStateDetails": {
+                    "reason": "reason",
                     "state": "UNACCEPTABLE",
+                    "userId": "userId",
                   },
                 },
               },
@@ -1266,432 +591,14 @@ Each consumer Business entity needs three mandatory fields:
           "examples": [
             {
               "request": {
-                "acquisitionChannel": "ORGANIC",
                 "createdTimestamp": 1.1,
-                "kycStatusDetails": {
-                  "status": "SUCCESSFUL",
-                },
-                "legalEntity": {
-                  "companyFinancialDetails": {
-                    "expectedTransactionAmountPerMonth": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "expectedTurnoverPerMonth": {
-                      "amountCurrency": "USD",
-                      "amountValue": 8000,
-                    },
-                  },
-                  "companyGeneralDetails": {
-                    "businessIndustry": [
-                      "Farming",
-                    ],
-                    "legalName": "Ozkan Hazelnut Export JSC",
-                    "mainProductsServicesSold": [
-                      "Hazelnut",
-                    ],
-                    "userRegistrationStatus": "REGISTERED",
-                    "userSegment": "SOLE_PROPRIETORSHIP",
-                  },
-                  "companyRegistrationDetails": {
-                    "registrationCountry": "DE",
-                    "registrationIdentifier": "PSJ554342",
-                  },
-                  "contactDetails": {},
-                },
-                "linkedEntities": {},
-                "mccDetails": {
-                  "code": 1.1,
-                },
-                "riskLevel": "VERY_HIGH",
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "paymentMethodLimits": {
-                    "ACH": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "CARD": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "CHECK": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "GENERIC_BANK_ACCOUNT": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "IBAN": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "MPESA": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "SWIFT": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "UPI": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "WALLET": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                  },
-                },
-                "userId": "string",
-                "userStateDetails": {
-                  "state": "UNACCEPTABLE",
-                },
+                "userId": "userId",
               },
               "response": {
                 "body": {
                   "executedRules": [],
                   "hitRules": [],
+                  "message": "message",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
@@ -1739,599 +646,18 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
-                "updatedBusinessUserAttributes": {
-                  "acquisitionChannel": "ORGANIC",
-                  "directors": [
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "gender": "M",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "kycStatusDetails": {
-                    "status": "SUCCESSFUL",
-                  },
-                  "legalEntity": {
-                    "companyFinancialDetails": {
-                      "expectedTransactionAmountPerMonth": {
-                        "amountCurrency": "GBP",
-                        "amountValue": 800,
-                      },
-                      "expectedTurnoverPerMonth": {
-                        "amountCurrency": "USD",
-                        "amountValue": 8000,
-                      },
-                    },
-                    "companyGeneralDetails": {
-                      "businessIndustry": [
-                        "Farming",
-                      ],
-                      "legalName": "Ozkan Hazelnut Export JSC",
-                      "mainProductsServicesSold": [
-                        "Hazelnut",
-                      ],
-                      "userRegistrationStatus": "REGISTERED",
-                      "userSegment": "SOLE_PROPRIETORSHIP",
-                    },
-                    "companyRegistrationDetails": {
-                      "registrationCountry": "DE",
-                      "registrationIdentifier": "PSJ554342",
-                    },
-                    "contactDetails": {
-                      "addresses": [
-                        {
-                          "addressLines": [
-                            "Klara-Franke Str 20",
-                          ],
-                          "city": "Berlin",
-                          "country": "Germany",
-                          "postcode": "10557",
-                          "state": "Berlin",
-                          "tags": [
-                            {
-                              "key": "customKey",
-                              "value": "customValue",
-                            },
-                          ],
-                        },
-                      ],
-                    },
-                    "reasonForAccountOpening": [
-                      "string",
-                    ],
-                  },
-                  "linkedEntities": {},
-                  "mccDetails": {
-                    "code": 1.1,
-                  },
-                  "riskLevel": "VERY_HIGH",
-                  "shareHolders": [
-                    {
-                      "contactDetails": {
-                        "addresses": [
-                          {
-                            "addressLines": [
-                              "Klara-Franke Str 20",
-                            ],
-                            "city": "Berlin",
-                            "country": "Germany",
-                            "postcode": "10557",
-                            "state": "Berlin",
-                            "tags": [
-                              {
-                                "key": "customKey",
-                                "value": "customValue",
-                              },
-                            ],
-                          },
-                        ],
-                        "contactNumbers": [
-                          "+371 123132",
-                        ],
-                        "emailIds": [
-                          "baran@flagright.com",
-                        ],
-                        "websites": [
-                          "flagright.com",
-                        ],
-                      },
-                      "generalDetails": {
-                        "countryOfNationality": "DE",
-                        "countryOfResidence": "US",
-                        "dateOfBirth": "1991-01-01",
-                        "gender": "M",
-                        "name": {
-                          "firstName": "Baran",
-                          "lastName": "Ozkan",
-                          "middleName": "Realblood",
-                        },
-                      },
-                      "legalDocuments": [
-                        {
-                          "documentExpirationDate": 1839939034000,
-                          "documentIssuedCountry": "DE",
-                          "documentIssuedDate": 1639939034000,
-                          "documentNumber": "Z9431P",
-                          "documentType": "passport",
-                          "nameOnDocument": {
-                            "firstName": "Baran",
-                            "lastName": "Ozkan",
-                            "middleName": "Realblood",
-                          },
-                          "tags": [
-                            {
-                              "key": "customerType",
-                              "value": "wallet",
-                            },
-                          ],
-                        },
-                      ],
-                      "tags": [
-                        {
-                          "key": "customKey",
-                          "value": "customValue",
-                        },
-                      ],
-                    },
-                  ],
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "transactionLimits": {
-                    "maximumDailyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumMonthlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumQuarterlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumWeeklyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumYearlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                    },
-                  },
-                  "userStateDetails": {
-                    "state": "UNACCEPTABLE",
-                  },
-                },
-                "userId": "string",
+                "userId": "userId",
               },
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
+                  "allowedPaymentMethods": [],
                   "createdTimestamp": 1.1,
+                  "directors": [],
+                  "executedRules": [],
+                  "hitRules": [],
                   "kycStatusDetails": {
+                    "reason": "reason",
                     "status": "SUCCESSFUL",
                   },
                   "legalEntity": {
@@ -2344,6 +670,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "amountCurrency": "USD",
                         "amountValue": 8000,
                       },
+                      "tags": [],
                     },
                     "companyGeneralDetails": {
                       "businessIndustry": [
@@ -2353,20 +680,39 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "mainProductsServicesSold": [
                         "Hazelnut",
                       ],
+                      "tags": [],
                       "userRegistrationStatus": "REGISTERED",
                       "userSegment": "SOLE_PROPRIETORSHIP",
                     },
                     "companyRegistrationDetails": {
+                      "dateOfRegistration": "dateOfRegistration",
+                      "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
+                      "tags": [],
+                      "taxIdentifier": "taxIdentifier",
                     },
-                    "contactDetails": {},
+                    "contactDetails": {
+                      "addresses": [],
+                      "contactNumbers": [],
+                      "emailIds": [],
+                      "faxNumbers": [],
+                      "websites": [],
+                    },
+                    "reasonForAccountOpening": [],
                   },
-                  "linkedEntities": {},
+                  "linkedEntities": {
+                    "childUserIds": [],
+                    "parentUserId": "parentUserId",
+                  },
                   "mccDetails": {
                     "code": 1.1,
+                    "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
+                  "savedPaymentDetails": [],
+                  "shareHolders": [],
+                  "tags": [],
                   "transactionLimits": {
                     "maximumDailyTransactionLimit": {
                       "amountCurrency": "GBP",
@@ -2393,362 +739,22 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "amountValue": 800,
                     },
                     "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
+                      "ACH": {},
+                      "CARD": {},
+                      "CHECK": {},
+                      "GENERIC_BANK_ACCOUNT": {},
+                      "IBAN": {},
+                      "MPESA": {},
+                      "SWIFT": {},
+                      "UPI": {},
+                      "WALLET": {},
                     },
                   },
-                  "userId": "string",
+                  "userId": "userId",
                   "userStateDetails": {
+                    "reason": "reason",
                     "state": "UNACCEPTABLE",
+                    "userId": "userId",
                   },
                 },
               },
@@ -2859,44 +865,35 @@ Here are some of the most used payload fields explained (you can find the full p
                 ],
                 "timestamp": 1641654664000,
                 "transactionId": "7b80a539eea6e78acbd6d458e5971482",
-                "transactionState": "CREATED",
-                "type": "DEPOSIT",
               },
               "response": {
                 "body": {
                   "executedRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
+                  "message": "message",
                   "transactionId": "7b80a539eea6e78acbd6d458e5971482",
                 },
               },
@@ -2948,7 +945,6 @@ Each consumer User entity needs three mandatory fields:
             {
               "name": "example-1",
               "request": {
-                "acquisitionChannel": "ORGANIC",
                 "contactDetails": {
                   "addresses": [
                     {
@@ -2978,9 +974,6 @@ Each consumer User entity needs three mandatory fields:
                   ],
                 },
                 "createdTimestamp": 1641654664000,
-                "kycStatusDetails": {
-                  "status": "SUCCESSFUL",
-                },
                 "legalDocuments": [
                   {
                     "documentExpirationDate": 1839939034000,
@@ -2988,11 +981,6 @@ Each consumer User entity needs three mandatory fields:
                     "documentIssuedDate": 1639939034000,
                     "documentNumber": "Z9431P",
                     "documentType": "passport",
-                    "nameOnDocument": {
-                      "firstName": "Baran",
-                      "lastName": "Ozkan",
-                      "middleName": "Realblood",
-                    },
                     "tags": [
                       {
                         "key": "customerType",
@@ -3001,397 +989,16 @@ Each consumer User entity needs three mandatory fields:
                     ],
                   },
                 ],
-                "riskLevel": "VERY_HIGH",
                 "tags": [
                   {
                     "key": "customKey",
                     "value": "customValue",
                   },
                 ],
-                "transactionLimits": {
-                  "maximumDailyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumMonthlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumQuarterlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumWeeklyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "maximumYearlyTransactionLimit": {
-                    "amountCurrency": "GBP",
-                    "amountValue": 800,
-                  },
-                  "paymentMethodLimits": {
-                    "ACH": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "CARD": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "CHECK": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "GENERIC_BANK_ACCOUNT": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "IBAN": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "MPESA": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "SWIFT": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "UPI": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                    "WALLET": {
-                      "averageTransactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionAmountLimit": {
-                        "day": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "month": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "week": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                        "year": {
-                          "amountCurrency": "GBP",
-                          "amountValue": 800,
-                        },
-                      },
-                      "transactionCountLimit": {},
-                    },
-                  },
-                },
                 "userDetails": {
                   "countryOfNationality": "DE",
                   "countryOfResidence": "US",
                   "dateOfBirth": "1991-01-01",
-                  "gender": "M",
                   "name": {
                     "firstName": "Baran",
                     "lastName": "Ozkan",
@@ -3399,15 +1006,12 @@ Each consumer User entity needs three mandatory fields:
                   },
                 },
                 "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
-                "userSegment": "RETAIL",
-                "userStateDetails": {
-                  "state": "UNACCEPTABLE",
-                },
               },
               "response": {
                 "body": {
                   "executedRules": [],
                   "hitRules": [],
+                  "message": "message",
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
                 },
               },
@@ -3468,74 +1072,32 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "timestamp": 1431231244001,
                 "transactionId": "443dea26147a406b957d9ee3a1247b11",
                 "transactionState": "SUCCESSFUL",
-                "updatedTransactionAttributes": {
-                  "destinationAmountDetails": {
-                    "country": "IN",
-                    "transactionAmount": 68351.34,
-                    "transactionCurrency": "INR",
-                  },
-                  "deviceData": {
-                    "appVersion": "1.1.0",
-                    "batteryLevel": 95,
-                    "deviceIdentifier": "3c49f915d04485e34caba",
-                    "deviceLatitude": 13.0033,
-                    "deviceLongitude": 76.1004,
-                    "deviceMaker": "ASUS",
-                    "deviceModel": "Zenphone M2 Pro Max",
-                    "deviceYear": "2018",
-                    "ipAddress": "10.23.191.2",
-                    "operatingSystem": "Android 11.2",
-                    "vpnUsed": false,
-                  },
-                  "originAmountDetails": {
-                    "country": "DE",
-                    "transactionAmount": 800,
-                    "transactionCurrency": "EUR",
-                  },
-                  "promotionCodeUsed": true,
-                  "reference": "loan repayment",
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "transactionState": "CREATED",
-                },
               },
               "response": {
                 "body": {
                   "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
                   "hitRules": [
                     {
+                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {
-                        "falsePositiveDetails": {
-                          "confidenceScore": 1.1,
-                          "isFalsePositive": true,
-                        },
-                      },
+                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
-                      "ruleInstanceId": "string",
+                      "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
                     },
                   ],
@@ -3565,8 +1127,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "transactionCurrency": "EUR",
                     },
                     "originUserId": "8650a2611d0771cba03310f74bf6",
+                    "productType": "productType",
                     "promotionCodeUsed": true,
                     "reference": "loan repayment",
+                    "relatedTransactionIds": [],
                     "tags": [
                       {
                         "key": "customKey",
@@ -3653,461 +1217,30 @@ In order to make individual events retrievable, you also need to pass in a uniqu
             {
               "request": {
                 "timestamp": 1.1,
-                "updatedConsumerUserAttributes": {
-                  "acquisitionChannel": "ORGANIC",
-                  "contactDetails": {
-                    "addresses": [
-                      {
-                        "addressLines": [
-                          "Klara-Franke Str 20",
-                        ],
-                        "city": "Berlin",
-                        "country": "Germany",
-                        "postcode": "10557",
-                        "state": "Berlin",
-                        "tags": [
-                          {
-                            "key": "customKey",
-                            "value": "customValue",
-                          },
-                        ],
-                      },
-                    ],
-                    "contactNumbers": [
-                      "+37112345432",
-                    ],
-                    "emailIds": [
-                      "baran@flagright.com",
-                    ],
-                    "websites": [
-                      "flagright.com",
-                    ],
-                  },
-                  "kycStatusDetails": {
-                    "status": "SUCCESSFUL",
-                  },
-                  "legalDocuments": [
-                    {
-                      "documentExpirationDate": 1839939034000,
-                      "documentIssuedCountry": "DE",
-                      "documentIssuedDate": 1639939034000,
-                      "documentNumber": "Z9431P",
-                      "documentType": "passport",
-                      "nameOnDocument": {
-                        "firstName": "Baran",
-                        "lastName": "Ozkan",
-                        "middleName": "Realblood",
-                      },
-                      "tags": [
-                        {
-                          "key": "customerType",
-                          "value": "wallet",
-                        },
-                      ],
-                    },
-                  ],
-                  "riskLevel": "VERY_HIGH",
-                  "tags": [
-                    {
-                      "key": "customKey",
-                      "value": "customValue",
-                    },
-                  ],
-                  "transactionLimits": {
-                    "maximumDailyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumMonthlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumQuarterlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumWeeklyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "maximumYearlyTransactionLimit": {
-                      "amountCurrency": "GBP",
-                      "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                    },
-                  },
-                  "userSegment": "RETAIL",
-                  "userStateDetails": {
-                    "state": "UNACCEPTABLE",
-                  },
-                },
-                "userId": "string",
+                "userId": "userId",
               },
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
-                  "contactDetails": {},
+                  "contactDetails": {
+                    "addresses": [],
+                    "contactNumbers": [],
+                    "emailIds": [],
+                    "faxNumbers": [],
+                    "websites": [],
+                  },
                   "createdTimestamp": 1.1,
+                  "executedRules": [],
+                  "hitRules": [],
                   "kycStatusDetails": {
+                    "reason": "reason",
                     "status": "SUCCESSFUL",
                   },
+                  "legalDocuments": [],
+                  "pepStatus": [],
+                  "reasonForAccountOpening": [],
                   "riskLevel": "VERY_HIGH",
+                  "tags": [],
                   "transactionLimits": {
                     "maximumDailyTransactionLimit": {
                       "amountCurrency": "GBP",
@@ -4134,357 +1267,15 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "amountValue": 800,
                     },
                     "paymentMethodLimits": {
-                      "ACH": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CARD": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "CHECK": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "GENERIC_BANK_ACCOUNT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "IBAN": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "MPESA": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "SWIFT": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "UPI": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
-                      "WALLET": {
-                        "averageTransactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionAmountLimit": {
-                          "day": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "month": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "week": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                          "year": {
-                            "amountCurrency": "GBP",
-                            "amountValue": 800,
-                          },
-                        },
-                        "transactionCountLimit": {},
-                      },
+                      "ACH": {},
+                      "CARD": {},
+                      "CHECK": {},
+                      "GENERIC_BANK_ACCOUNT": {},
+                      "IBAN": {},
+                      "MPESA": {},
+                      "SWIFT": {},
+                      "UPI": {},
+                      "WALLET": {},
                     },
                   },
                   "userDetails": {
@@ -4498,10 +1289,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "middleName": "Realblood",
                     },
                   },
-                  "userId": "string",
+                  "userId": "userId",
                   "userSegment": "RETAIL",
                   "userStateDetails": {
+                    "reason": "reason",
                     "state": "UNACCEPTABLE",
+                    "userId": "userId",
                   },
                 },
               },

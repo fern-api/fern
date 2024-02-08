@@ -21,18 +21,18 @@ Used to retrieve a deployment given its ID or name.
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "active_model_version_ids": [],
                     "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
-                    "id": "string",
-                    "label": "string",
+                    "id": "id",
+                    "label": "label",
                     "last_deployed_on": "2024-01-15T09:30:00Z",
                     "model_type": "GENERATE",
-                    "name": "string",
+                    "name": "name",
                     "status": "ACTIVE",
                   },
                 },
@@ -72,7 +72,6 @@ Creates a new document index.",
               {
                 "name": "Index Using Instructor Model",
                 "request": {
-                  "environment": "DEVELOPMENT",
                   "indexing_config": {
                     "chunking": {
                       "chunker_config": {
@@ -92,18 +91,19 @@ Creates a new document index.",
                   },
                   "label": "My Document Index",
                   "name": "my-document-index",
-                  "status": "ACTIVE",
                 },
                 "response": {
                   "body": {
                     "created": "2024-01-15T09:30:00Z",
                     "environment": "DEVELOPMENT",
-                    "id": "string",
+                    "id": "id",
                     "indexing_config": {
-                      "string": {},
+                      "indexing_config": {
+                        "key": "value",
+                      },
                     },
-                    "label": "string",
-                    "name": "string",
+                    "label": "label",
+                    "name": "name",
                     "status": "ACTIVE",
                   },
                 },
@@ -182,6 +182,7 @@ Used to list documents. Optionally filter on supported fields.
                     "count": 1,
                     "next": "http://api.example.org/accounts/?offset=400&limit=100",
                     "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+                    "results": [],
                   },
                 },
               },
@@ -280,18 +281,16 @@ Compiles the prompt backing the model version using the provided input values.",
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "request": {
-                  "input_values": {
-                    "string": {},
-                  },
+                  "input_values": {},
                 },
                 "response": {
                   "body": {
                     "prompt": {
                       "num_tokens": 1,
-                      "text": "string",
+                      "text": "text",
                     },
                   },
                 },
@@ -334,14 +333,17 @@ Used to retrieve a model version given its ID.
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
                     "build_config": {
-                      "base_model": "string",
+                      "base_model": "base_model",
                       "sandbox_snapshot": {
-                        "id": "string",
+                        "id": "id",
+                        "prompt_id": "prompt_id",
+                        "prompt_index": 1,
+                        "sandbox_id": "sandbox_id",
                       },
                     },
                     "created": "2024-01-15T09:30:00Z",
@@ -349,19 +351,24 @@ Used to retrieve a model version given its ID.
                       "input_variables": [],
                       "parameters": {
                         "frequency_penalty": 1.1,
+                        "logit_bias": {},
                         "max_tokens": 1,
                         "presence_penalty": 1.1,
+                        "stop": [],
                         "temperature": 1.1,
+                        "top_k": 1.1,
                         "top_p": 1.1,
                       },
                       "prompt_block_data": {
                         "blocks": [],
                         "version": 1,
                       },
+                      "prompt_syntax_version": 1,
+                      "prompt_template": "prompt_template",
                     },
-                    "external_id": "string",
-                    "id": "string",
-                    "label": "string",
+                    "external_id": "external_id",
+                    "id": "id",
+                    "label": "label",
                     "model_type": "GENERATE",
                     "provider": "ANTHROPIC",
                     "status": "CREATING",
@@ -408,9 +415,9 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
             "examples": [
               {
                 "request": {
-                  "label": "string",
-                  "model": "string",
-                  "name": "string",
+                  "label": "label",
+                  "model": "model",
+                  "name": "name",
                   "parameters": {
                     "frequency_penalty": 1.1,
                     "max_tokens": 1,
@@ -430,24 +437,24 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
                 "response": {
                   "body": {
                     "deployment": {
-                      "id": "string",
-                      "label": "string",
-                      "name": "string",
+                      "id": "id",
+                      "label": "label",
+                      "name": "name",
                     },
                     "model_version": {
-                      "id": "string",
-                      "label": "string",
+                      "id": "id",
+                      "label": "label",
                     },
                     "prompt": {
-                      "id": "string",
-                      "label": "string",
+                      "id": "id",
+                      "label": "label",
                     },
                     "sandbox": {
-                      "id": "string",
-                      "label": "string",
+                      "id": "id",
+                      "label": "label",
                     },
                     "sandbox_snapshot": {
-                      "id": "string",
+                      "id": "id",
                     },
                   },
                 },
@@ -526,8 +533,8 @@ Deletes an existing scenario from a sandbox, keying off of the provided scenario
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
-                  "scenario_id": "string",
+                  "id": "id",
+                  "scenario_id": "scenario_id",
                 },
               },
             ],
@@ -560,7 +567,7 @@ or overwritten with default values.",
               {
                 "name": "Basic Example",
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "request": {
                   "inputs": [
@@ -582,10 +589,13 @@ or overwritten with default values.",
                 },
                 "response": {
                   "body": {
-                    "id": "string",
+                    "id": "id",
                     "inputs": [],
+                    "label": "label",
                     "metric_input_params": {
-                      "params": {},
+                      "params": {
+                        "target": "target",
+                      },
                     },
                   },
                 },
@@ -643,8 +653,8 @@ Deletes an existing test case for a test suite, keying off of the test case id."
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
-                  "test_case_id": "string",
+                  "id": "id",
+                  "test_case_id": "test_case_id",
                 },
               },
             ],
@@ -676,20 +686,24 @@ or overwritten with default values.",
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "request": {
                   "evaluation_params": {},
-                  "input_values": {
-                    "string": {},
-                  },
+                  "input_values": {},
                 },
                 "response": {
                   "body": {
-                    "evaluation_params": {},
-                    "input_values": {
-                      "string": {},
+                    "evaluation_params": {
+                      "target": "target",
                     },
+                    "input_values": {
+                      "input_values": {
+                        "key": "value",
+                      },
+                    },
+                    "label": "label",
+                    "test_case_id": "test_case_id",
                   },
                 },
               },
@@ -819,9 +833,6 @@ Generate a completion using a previously defined deployment.
           "examples": [
             {
               "request": {
-                "options": {
-                  "logprobs": "ALL",
-                },
                 "requests": [],
               },
               "response": {
@@ -925,17 +936,7 @@ Perform a search against a document index.
           "examples": [
             {
               "request": {
-                "options": {
-                  "filters": {},
-                  "result_merging": {
-                    "enabled": true,
-                  },
-                  "weights": {
-                    "keywords": 1.1,
-                    "semantic_similarity": 1.1,
-                  },
-                },
-                "query": "string",
+                "query": "query",
               },
               "response": {
                 "body": {

@@ -21,12 +21,16 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "id": "string",
-                  "organizationID": "string",
-                  "secret": "string",
+                  "id": "id",
+                  "organizationID": "organizationID",
+                  "secret": "secret",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "access_token": "access_token",
+                    "expires_in": 1,
+                    "token_type": "token_type",
+                  },
                 },
               },
             ],
@@ -76,24 +80,48 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "buyerId": "string",
-                  "orgId": "string",
+                  "buyerId": "buyerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": {
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "description": "description",
+                    "externalID": "externalID",
+                    "id": "id",
                     "info": {
                       "awsBuyer": {
+                        "awsAccountID": "awsAccountID",
+                        "awsCustomerID": "awsCustomerID",
                         "companyInfo": {},
+                        "dataFeedAccountID": "dataFeedAccountID",
                       },
                       "azureBuyer": {
                         "buyerInfo": {},
                         "companyInfo": {},
+                        "emailId": "emailId",
+                        "objectId": "objectId",
+                        "puid": "puid",
+                        "tenantId": "tenantId",
                       },
+                      "collectableAmount": 1.1,
+                      "disbursedAmount": 1.1,
                       "gcpBuyer": {
+                        "approvals": [],
+                        "createTime": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "inputProperties": [],
+                        "name": "name",
+                        "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "updateTime": "2024-01-15T09:30:00Z",
                         "userInfo": {},
                       },
+                      "invoicedAmount": 1.1,
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                   },
                 },
@@ -126,7 +154,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -156,25 +184,49 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "buyerId": "string",
-                  "orgId": "string",
+                  "buyerId": "buyerId",
+                  "orgId": "orgId",
                 },
                 "request": {},
                 "response": {
                   "body": {
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "description": "description",
+                    "externalID": "externalID",
+                    "id": "id",
                     "info": {
                       "awsBuyer": {
+                        "awsAccountID": "awsAccountID",
+                        "awsCustomerID": "awsCustomerID",
                         "companyInfo": {},
+                        "dataFeedAccountID": "dataFeedAccountID",
                       },
                       "azureBuyer": {
                         "buyerInfo": {},
                         "companyInfo": {},
+                        "emailId": "emailId",
+                        "objectId": "objectId",
+                        "puid": "puid",
+                        "tenantId": "tenantId",
                       },
+                      "collectableAmount": 1.1,
+                      "disbursedAmount": 1.1,
                       "gcpBuyer": {
+                        "approvals": [],
+                        "createTime": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "inputProperties": [],
+                        "name": "name",
+                        "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
+                        "updateTime": "2024-01-15T09:30:00Z",
                         "userInfo": {},
                       },
+                      "invoicedAmount": 1.1,
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                   },
                 },
@@ -232,16 +284,22 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "request": {
                   "creditAmountIncrement": 1.1,
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": "entitlementID",
+                  "organizationID": "organizationID",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "creditAmountIncrement": 1.1,
+                    "entitlementID": "entitlementID",
+                    "entitlementTermID": "entitlementTermID",
+                    "newCreditAmount": 1.1,
+                    "organizationID": "organizationID",
+                  },
                 },
               },
             ],
@@ -287,17 +345,49 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": {
+                    "buyerID": "buyerID",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "entitlementTermID": "entitlementTermID",
+                    "externalBuyerID": "externalBuyerID",
+                    "externalID": "externalID",
+                    "externalProductID": "externalProductID",
+                    "id": "id",
                     "info": {
+                      "autoRenew": true,
+                      "awsEntitlements": [],
+                      "azureSubscriptions": [],
+                      "collectableAmount": 1.1,
+                      "commitAmount": 1.1,
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "disbursedAmount": 1.1,
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [],
+                      "gcpPlans": [],
+                      "invoicedAmount": 1.1,
+                      "paymentInstallments": [],
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "offerID": "offerID",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
+                    "startTime": "2024-01-15T09:30:00Z",
                     "status": "ACTIVE",
+                    "type": "type",
                   },
                 },
               },
@@ -329,7 +419,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -359,8 +449,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "buyerId": "string",
-                  "orgId": "string",
+                  "buyerId": "buyerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -394,8 +484,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "offerId": "string",
-                  "orgId": "string",
+                  "offerId": "offerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -429,7 +519,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                 },
                 "response": {
@@ -464,8 +554,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
                   "body": [],
@@ -499,18 +589,50 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "request": {},
                 "response": {
                   "body": {
+                    "buyerID": "buyerID",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "entitlementTermID": "entitlementTermID",
+                    "externalBuyerID": "externalBuyerID",
+                    "externalID": "externalID",
+                    "externalProductID": "externalProductID",
+                    "id": "id",
                     "info": {
+                      "autoRenew": true,
+                      "awsEntitlements": [],
+                      "azureSubscriptions": [],
+                      "collectableAmount": 1.1,
+                      "commitAmount": 1.1,
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "disbursedAmount": 1.1,
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [],
+                      "gcpPlans": [],
+                      "invoicedAmount": 1.1,
+                      "paymentInstallments": [],
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "name": "name",
+                    "offerID": "offerID",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
+                    "startTime": "2024-01-15T09:30:00Z",
                     "status": "ACTIVE",
+                    "type": "type",
                   },
                 },
               },
@@ -574,20 +696,50 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "entitlementTermId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "entitlementTermId": "entitlementTermId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": {
+                    "buyerID": "buyerID",
+                    "commitAmount": 1.1,
+                    "creditAmount": 1.1,
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "entitlementID": "entitlementID",
                     "entitlementInfo": {
+                      "autoRenew": true,
+                      "awsEntitlements": [],
+                      "azureSubscriptions": [],
+                      "collectableAmount": 1.1,
+                      "commitAmount": 1.1,
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "disbursedAmount": 1.1,
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [],
+                      "gcpPlans": [],
+                      "invoicedAmount": 1.1,
+                      "paymentInstallments": [],
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                     },
+                    "externalEntitlementID": "externalEntitlementID",
+                    "id": "id",
                     "info": {
                       "type": "",
                     },
+                    "offerID": "offerID",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
+                    "startTime": "2024-01-15T09:30:00Z",
+                    "usedCommitAmount": 1.1,
+                    "usedCreditAmount": 1.1,
                   },
                 },
               },
@@ -623,8 +775,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -670,59 +822,89 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "request": {
-                  "info": {
-                    "awsAceIntegration": {
-                      "credential": {},
-                    },
-                    "awsIntegration": {},
-                    "azureIntegration": {
-                      "credential": {},
-                    },
-                    "gcpIntegration": {},
-                    "hubspotCrmIntegration": {
-                      "credential": {},
-                    },
-                    "salesforceCrmIntegration": {
-                      "credential": {},
-                    },
-                    "slackIntegration": {
-                      "authedUser": {},
-                      "enterprise": {},
-                      "incomingWebhook": {},
-                      "team": {},
-                    },
-                  },
-                  "organizationID": "string",
+                  "info": {},
+                  "organizationID": "organizationID",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
                     "info": {
                       "awsAceIntegration": {
                         "credential": {},
+                        "partnerId": "partnerId",
+                        "s3BucketName": "s3BucketName",
+                        "s3BucketRegion": "s3BucketRegion",
+                        "secretKey": "secretKey",
                       },
-                      "awsIntegration": {},
+                      "awsIntegration": {
+                        "externalID": "externalID",
+                        "iamRoleArn": "iamRoleArn",
+                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "mcasFullSyncDone": true,
+                        "mcasIamRoleArn": "mcasIamRoleArn",
+                        "mcasS3Bucket": "mcasS3Bucket",
+                        "mcasSnsTopic": "mcasSnsTopic",
+                        "mdfsFullSyncDone": true,
+                        "mdfsKmsKeyArn": "mdfsKmsKeyArn",
+                        "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [],
+                        "revenueRecordFullSyncDone": true,
+                      },
                       "azureIntegration": {
+                        "cmaFullSyncDone": true,
                         "credential": {},
+                        "secretKey": "secretKey",
                       },
-                      "gcpIntegration": {},
+                      "gcpIntegration": {
+                        "gcpProjectId": "gcpProjectId",
+                        "gcpProjectNumber": "gcpProjectNumber",
+                        "identityProviderId": "identityProviderId",
+                        "partnerId": "partnerId",
+                        "pubsubTopic": "pubsubTopic",
+                        "reportBucket": "reportBucket",
+                        "reportFullSyncDone": true,
+                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [],
+                        "workloadIdentityPoolId": "workloadIdentityPoolId",
+                      },
                       "hubspotCrmIntegration": {
                         "credential": {},
+                        "portalId": 1,
+                        "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
                         "credential": {},
+                        "filters": [],
+                        "instanceUrl": "instanceUrl",
+                        "isSandbox": true,
+                        "secretKey": "secretKey",
+                        "subdomain": "subdomain",
                       },
                       "slackIntegration": {
+                        "accessToken": "accessToken",
+                        "appId": "appId",
                         "authedUser": {},
+                        "botUserId": "botUserId",
                         "enterprise": {},
+                        "expiresIn": 1,
                         "incomingWebhook": {},
+                        "redirectUrl": "redirectUrl",
+                        "refreshToken": "refreshToken",
+                        "scope": "scope",
                         "team": {},
+                        "tokenType": "tokenType",
                       },
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                     "service": "MARKETPLACE",
                     "status": "CREATED",
@@ -767,7 +949,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
@@ -808,34 +990,85 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
                     "info": {
                       "awsAceIntegration": {
                         "credential": {},
+                        "partnerId": "partnerId",
+                        "s3BucketName": "s3BucketName",
+                        "s3BucketRegion": "s3BucketRegion",
+                        "secretKey": "secretKey",
                       },
-                      "awsIntegration": {},
+                      "awsIntegration": {
+                        "externalID": "externalID",
+                        "iamRoleArn": "iamRoleArn",
+                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "mcasFullSyncDone": true,
+                        "mcasIamRoleArn": "mcasIamRoleArn",
+                        "mcasS3Bucket": "mcasS3Bucket",
+                        "mcasSnsTopic": "mcasSnsTopic",
+                        "mdfsFullSyncDone": true,
+                        "mdfsKmsKeyArn": "mdfsKmsKeyArn",
+                        "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [],
+                        "revenueRecordFullSyncDone": true,
+                      },
                       "azureIntegration": {
+                        "cmaFullSyncDone": true,
                         "credential": {},
+                        "secretKey": "secretKey",
                       },
-                      "gcpIntegration": {},
+                      "gcpIntegration": {
+                        "gcpProjectId": "gcpProjectId",
+                        "gcpProjectNumber": "gcpProjectNumber",
+                        "identityProviderId": "identityProviderId",
+                        "partnerId": "partnerId",
+                        "pubsubTopic": "pubsubTopic",
+                        "reportBucket": "reportBucket",
+                        "reportFullSyncDone": true,
+                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [],
+                        "workloadIdentityPoolId": "workloadIdentityPoolId",
+                      },
                       "hubspotCrmIntegration": {
                         "credential": {},
+                        "portalId": 1,
+                        "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
                         "credential": {},
+                        "filters": [],
+                        "instanceUrl": "instanceUrl",
+                        "isSandbox": true,
+                        "secretKey": "secretKey",
+                        "subdomain": "subdomain",
                       },
                       "slackIntegration": {
+                        "accessToken": "accessToken",
+                        "appId": "appId",
                         "authedUser": {},
+                        "botUserId": "botUserId",
                         "enterprise": {},
+                        "expiresIn": 1,
                         "incomingWebhook": {},
+                        "redirectUrl": "redirectUrl",
+                        "refreshToken": "refreshToken",
+                        "scope": "scope",
                         "team": {},
+                        "tokenType": "tokenType",
                       },
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                     "service": "MARKETPLACE",
                     "status": "CREATED",
@@ -874,7 +1107,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -905,61 +1138,91 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
                 "request": {
-                  "info": {
-                    "awsAceIntegration": {
-                      "credential": {},
-                    },
-                    "awsIntegration": {},
-                    "azureIntegration": {
-                      "credential": {},
-                    },
-                    "gcpIntegration": {},
-                    "hubspotCrmIntegration": {
-                      "credential": {},
-                    },
-                    "salesforceCrmIntegration": {
-                      "credential": {},
-                    },
-                    "slackIntegration": {
-                      "authedUser": {},
-                      "enterprise": {},
-                      "incomingWebhook": {},
-                      "team": {},
-                    },
-                  },
-                  "organizationID": "string",
+                  "info": {},
+                  "organizationID": "organizationID",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
                     "info": {
                       "awsAceIntegration": {
                         "credential": {},
+                        "partnerId": "partnerId",
+                        "s3BucketName": "s3BucketName",
+                        "s3BucketRegion": "s3BucketRegion",
+                        "secretKey": "secretKey",
                       },
-                      "awsIntegration": {},
+                      "awsIntegration": {
+                        "externalID": "externalID",
+                        "iamRoleArn": "iamRoleArn",
+                        "marketplaceStartDate": "2024-01-15T09:30:00Z",
+                        "mcasFullSyncDone": true,
+                        "mcasIamRoleArn": "mcasIamRoleArn",
+                        "mcasS3Bucket": "mcasS3Bucket",
+                        "mcasSnsTopic": "mcasSnsTopic",
+                        "mdfsFullSyncDone": true,
+                        "mdfsKmsKeyArn": "mdfsKmsKeyArn",
+                        "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [],
+                        "revenueRecordFullSyncDone": true,
+                      },
                       "azureIntegration": {
+                        "cmaFullSyncDone": true,
                         "credential": {},
+                        "secretKey": "secretKey",
                       },
-                      "gcpIntegration": {},
+                      "gcpIntegration": {
+                        "gcpProjectId": "gcpProjectId",
+                        "gcpProjectNumber": "gcpProjectNumber",
+                        "identityProviderId": "identityProviderId",
+                        "partnerId": "partnerId",
+                        "pubsubTopic": "pubsubTopic",
+                        "reportBucket": "reportBucket",
+                        "reportFullSyncDone": true,
+                        "reportStartDate": "2024-01-15T09:30:00Z",
+                        "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [],
+                        "workloadIdentityPoolId": "workloadIdentityPoolId",
+                      },
                       "hubspotCrmIntegration": {
                         "credential": {},
+                        "portalId": 1,
+                        "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
                         "credential": {},
+                        "filters": [],
+                        "instanceUrl": "instanceUrl",
+                        "isSandbox": true,
+                        "secretKey": "secretKey",
+                        "subdomain": "subdomain",
                       },
                       "slackIntegration": {
+                        "accessToken": "accessToken",
+                        "appId": "appId",
                         "authedUser": {},
+                        "botUserId": "botUserId",
                         "enterprise": {},
+                        "expiresIn": 1,
                         "incomingWebhook": {},
+                        "redirectUrl": "redirectUrl",
+                        "refreshToken": "refreshToken",
+                        "scope": "scope",
                         "team": {},
+                        "tokenType": "tokenType",
                       },
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                     "service": "MARKETPLACE",
                     "status": "CREATED",
@@ -1019,7 +1282,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                   "service": "MARKETPLACE",
                 },
@@ -1138,12 +1401,27 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "usageRecordGroupId": "string",
+                  "orgId": "orgId",
+                  "usageRecordGroupId": "usageRecordGroupId",
                 },
                 "response": {
                   "body": {
-                    "metaInfo": {},
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "entitlementID": "entitlementID",
+                    "id": "id",
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "metaInfo": {
+                      "originRecords": {
+                        "originRecords": 1.1,
+                      },
+                    },
+                    "organizationID": "organizationID",
+                    "records": {
+                      "records": 1.1,
+                    },
+                    "serialID": 1,
+                    "status": "status",
+                    "usageRecordReportID": "usageRecordReportID",
                   },
                 },
               },
@@ -1175,16 +1453,54 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "usageRecordReportId": "string",
+                  "orgId": "orgId",
+                  "usageRecordReportId": "usageRecordReportId",
                 },
                 "response": {
                   "body": {
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "entitlementID": "entitlementID",
+                    "entitlementTermID": "entitlementTermID",
+                    "id": "id",
                     "info": {
-                      "awsMeteringResponse": {},
-                      "azureMeteringResponse": {},
-                      "gcpMeteringResponse": {},
+                      "awsMeteringResponse": {
+                        "resultMetadata": {},
+                        "results": [],
+                        "unprocessedRecords": [],
+                      },
+                      "azureMeteringResponse": {
+                        "count": 1,
+                        "result": [],
+                      },
+                      "commitAmount": 1.1,
+                      "creditAmount": 1.1,
+                      "creditRecords": {
+                        "creditRecords": 1.1,
+                      },
+                      "dimensionUnitPrice": {
+                        "dimensionUnitPrice": 1.1,
+                      },
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "gcpMeteringResponse": {
+                        "reportErrors": [],
+                        "serviceConfigId": "serviceConfigId",
+                        "serviceRolloutId": "serviceRolloutId",
+                      },
+                      "includedRecords": {
+                        "includedRecords": 1.1,
+                      },
+                      "reportedRecords": {
+                        "reportedRecords": 1.1,
+                      },
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "usageRecordGroupIds": [],
+                      "usedCommitAmount": 1.1,
+                      "usedCommitAmountIncrement": 1.1,
+                      "usedCreditAmount": 1.1,
+                      "usedCreditAmountIncrement": 1.1,
                     },
+                    "organizationID": "organizationID",
+                    "productID": "productID",
                   },
                 },
               },
@@ -1217,11 +1533,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordGroups": [],
+                  },
                 },
               },
             ],
@@ -1274,10 +1593,13 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordGroups": [],
+                  },
                 },
               },
             ],
@@ -1326,11 +1648,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordGroups": [],
+                  },
                 },
               },
             ],
@@ -1383,11 +1708,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordReports": [],
+                  },
                 },
               },
             ],
@@ -1444,10 +1772,13 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordReports": [],
+                  },
                 },
               },
             ],
@@ -1496,11 +1827,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "usageRecordReports": [],
+                  },
                 },
               },
             ],
@@ -1554,20 +1888,34 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "entitlementId": "string",
-                  "orgId": "string",
+                  "entitlementId": "entitlementId",
+                  "orgId": "orgId",
                 },
                 "request": {
-                  "entitlementID": "string",
-                  "metaInfo": {},
-                  "organizationID": "string",
+                  "entitlementID": "entitlementID",
+                  "organizationID": "organizationID",
                   "records": {
-                    "string": 1.1,
+                    "records": 1.1,
                   },
                 },
                 "response": {
                   "body": {
-                    "metaInfo": {},
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "entitlementID": "entitlementID",
+                    "id": "id",
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "metaInfo": {
+                      "originRecords": {
+                        "originRecords": 1.1,
+                      },
+                    },
+                    "organizationID": "organizationID",
+                    "records": {
+                      "records": 1.1,
+                    },
+                    "serialID": 1,
+                    "status": "status",
+                    "usageRecordReportID": "usageRecordReportID",
                   },
                 },
               },
@@ -1631,8 +1979,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "offerId": "string",
-                  "orgId": "string",
+                  "offerId": "offerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": "string",
@@ -1667,68 +2015,94 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
-                "request": {
-                  "info": {
-                    "azureOriginalPlan": {
-                      "pricing": {
-                        "customMeters": {
-                          "priceInputOption": "perMarket",
-                        },
-                        "recurrentPrice": {
-                          "priceInputOption": "perMarket",
-                        },
-                      },
-                    },
-                    "azurePrivateOffer": {
-                      "privateOfferType": "customerPromotion",
-                      "state": "draft",
-                      "subState": "pendingAcceptance",
-                      "upgradedFrom": {},
-                    },
-                    "azureProductVariant": {
-                      "resourceType": "AzureSkuVariant",
-                      "state": "InActive",
-                    },
-                    "eulaType": "",
-                    "visibility": "PRIVATE",
-                  },
-                  "metaInfo": {},
-                  "offerType": "DEFAULT",
-                  "partner": "AWS",
-                  "service": "MARKETPLACE",
-                  "status": "ACCEPTED",
-                },
+                "request": {},
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "expireTime": "2024-01-15T09:30:00Z",
+                    "externalID": "externalID",
+                    "id": "id",
                     "info": {
                       "azureOriginalPlan": {
-                        "pricing": {
-                          "customMeters": {
-                            "priceInputOption": "perMarket",
-                          },
-                          "recurrentPrice": {
-                            "priceInputOption": "perMarket",
-                          },
-                        },
+                        "$schema": "schema",
+                        "id": "id",
+                        "plan": "plan",
+                        "pricing": {},
+                        "product": "product",
+                        "resourceName": "resourceName",
+                        "validations": [],
                       },
                       "azurePrivateOffer": {
+                        "$schema": "schema",
+                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [],
+                        "beneficiaries": [],
+                        "eTag": "eTag",
+                        "end": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "notificationContacts": [],
+                        "preparedBy": "preparedBy",
+                        "pricing": [],
                         "privateOfferType": "customerPromotion",
+                        "resourceName": "resourceName",
+                        "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
                         "upgradedFrom": {},
+                        "validations": [],
+                        "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [],
+                        "cloudAvailabilities": [],
+                        "conversionPaths": "conversionPaths",
+                        "extendedProperties": [],
+                        "externalID": "externalID",
+                        "featureAvailabilities": [],
+                        "friendlyName": "friendlyName",
+                        "id": "id",
+                        "leadGenID": "leadGenID",
+                        "referenceVariantID": "referenceVariantID",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [],
+                      "buyerAzureTenants": [],
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [],
+                      "gcpPlans": [],
+                      "paymentInstallments": [],
+                      "privateOfferUrl": "privateOfferUrl",
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "metaInfo": {},
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "metaInfo": {
+                      "baseAgreementId": "baseAgreementId",
+                      "contacts": [],
+                      "isAgreementBasedOffer": true,
+                      "isRenewalOffer": true,
+                      "notifications": [],
+                    },
+                    "name": "name",
                     "offerType": "DEFAULT",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
@@ -1762,68 +2136,94 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
-                "request": {
-                  "info": {
-                    "azureOriginalPlan": {
-                      "pricing": {
-                        "customMeters": {
-                          "priceInputOption": "perMarket",
-                        },
-                        "recurrentPrice": {
-                          "priceInputOption": "perMarket",
-                        },
-                      },
-                    },
-                    "azurePrivateOffer": {
-                      "privateOfferType": "customerPromotion",
-                      "state": "draft",
-                      "subState": "pendingAcceptance",
-                      "upgradedFrom": {},
-                    },
-                    "azureProductVariant": {
-                      "resourceType": "AzureSkuVariant",
-                      "state": "InActive",
-                    },
-                    "eulaType": "",
-                    "visibility": "PRIVATE",
-                  },
-                  "metaInfo": {},
-                  "offerType": "DEFAULT",
-                  "partner": "AWS",
-                  "service": "MARKETPLACE",
-                  "status": "ACCEPTED",
-                },
+                "request": {},
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "expireTime": "2024-01-15T09:30:00Z",
+                    "externalID": "externalID",
+                    "id": "id",
                     "info": {
                       "azureOriginalPlan": {
-                        "pricing": {
-                          "customMeters": {
-                            "priceInputOption": "perMarket",
-                          },
-                          "recurrentPrice": {
-                            "priceInputOption": "perMarket",
-                          },
-                        },
+                        "$schema": "schema",
+                        "id": "id",
+                        "plan": "plan",
+                        "pricing": {},
+                        "product": "product",
+                        "resourceName": "resourceName",
+                        "validations": [],
                       },
                       "azurePrivateOffer": {
+                        "$schema": "schema",
+                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [],
+                        "beneficiaries": [],
+                        "eTag": "eTag",
+                        "end": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "notificationContacts": [],
+                        "preparedBy": "preparedBy",
+                        "pricing": [],
                         "privateOfferType": "customerPromotion",
+                        "resourceName": "resourceName",
+                        "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
                         "upgradedFrom": {},
+                        "validations": [],
+                        "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [],
+                        "cloudAvailabilities": [],
+                        "conversionPaths": "conversionPaths",
+                        "extendedProperties": [],
+                        "externalID": "externalID",
+                        "featureAvailabilities": [],
+                        "friendlyName": "friendlyName",
+                        "id": "id",
+                        "leadGenID": "leadGenID",
+                        "referenceVariantID": "referenceVariantID",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [],
+                      "buyerAzureTenants": [],
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [],
+                      "gcpPlans": [],
+                      "paymentInstallments": [],
+                      "privateOfferUrl": "privateOfferUrl",
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "metaInfo": {},
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "metaInfo": {
+                      "baseAgreementId": "baseAgreementId",
+                      "contacts": [],
+                      "isAgreementBasedOffer": true,
+                      "isRenewalOffer": true,
+                      "notifications": [],
+                    },
+                    "name": "name",
                     "offerType": "DEFAULT",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
@@ -1856,8 +2256,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "offerId": "string",
-                  "orgId": "string",
+                  "offerId": "offerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": "string",
@@ -1891,38 +2291,94 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "offerId": "string",
-                  "orgId": "string",
+                  "offerId": "offerId",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "endTime": "2024-01-15T09:30:00Z",
+                    "expireTime": "2024-01-15T09:30:00Z",
+                    "externalID": "externalID",
+                    "id": "id",
                     "info": {
                       "azureOriginalPlan": {
-                        "pricing": {
-                          "customMeters": {
-                            "priceInputOption": "perMarket",
-                          },
-                          "recurrentPrice": {
-                            "priceInputOption": "perMarket",
-                          },
-                        },
+                        "$schema": "schema",
+                        "id": "id",
+                        "plan": "plan",
+                        "pricing": {},
+                        "product": "product",
+                        "resourceName": "resourceName",
+                        "validations": [],
                       },
                       "azurePrivateOffer": {
+                        "$schema": "schema",
+                        "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [],
+                        "beneficiaries": [],
+                        "eTag": "eTag",
+                        "end": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "name": "name",
+                        "notificationContacts": [],
+                        "preparedBy": "preparedBy",
+                        "pricing": [],
                         "privateOfferType": "customerPromotion",
+                        "resourceName": "resourceName",
+                        "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
+                        "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
                         "upgradedFrom": {},
+                        "validations": [],
+                        "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [],
+                        "cloudAvailabilities": [],
+                        "conversionPaths": "conversionPaths",
+                        "extendedProperties": [],
+                        "externalID": "externalID",
+                        "featureAvailabilities": [],
+                        "friendlyName": "friendlyName",
+                        "id": "id",
+                        "leadGenID": "leadGenID",
+                        "referenceVariantID": "referenceVariantID",
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [],
+                      "buyerAzureTenants": [],
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "discount": 1.1,
                       "eulaType": "",
+                      "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [],
+                      "gcpPlans": [],
+                      "paymentInstallments": [],
+                      "privateOfferUrl": "privateOfferUrl",
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                       "visibility": "PRIVATE",
                     },
-                    "metaInfo": {},
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "metaInfo": {
+                      "baseAgreementId": "baseAgreementId",
+                      "contacts": [],
+                      "isAgreementBasedOffer": true,
+                      "isRenewalOffer": true,
+                      "notifications": [],
+                    },
+                    "name": "name",
                     "offerType": "DEFAULT",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
+                    "productID": "productID",
                     "service": "MARKETPLACE",
                     "status": "ACCEPTED",
                   },
@@ -1956,7 +2412,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -1986,10 +2442,10 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "headers": {
-                  "Authorization": "string",
+                  "Authorization": "Authorization",
                 },
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                 },
                 "response": {
@@ -2034,8 +2490,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
                   "body": [],
@@ -2089,7 +2545,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -2151,8 +2607,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
                   "body": "string",
@@ -2186,42 +2642,69 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "externalID": "externalID",
+                    "fulfillmentUrl": "fulfillmentUrl",
+                    "id": "id",
                     "info": {
+                      "attributes": {
+                        "attributes": "attributes",
+                      },
                       "awsSaasProduct": {
                         "Description": {},
+                        "Dimensions": [],
                         "PromotionalResources": {},
                         "SupportInformation": {},
+                        "Versions": [],
+                        "dataFeedProductId": "dataFeedProductId",
+                        "productId": "productId",
                       },
+                      "awsSnsSubscriptions": [],
                       "azureProduct": {
-                        "setup": {
-                          "callToAction": "free",
-                          "resourceType": "AzureProductSetup",
-                          "sellingOption": "ListingOnly",
-                        },
+                        "availabilities": [],
+                        "branches": [],
+                        "externalIDs": [],
+                        "id": "id",
+                        "isModularPublishing": true,
+                        "listings": [],
+                        "name": "name",
+                        "packageConfigurations": [],
+                        "properties": [],
+                        "resourceType": "resourceType",
+                        "setup": {},
+                        "submissions": [],
+                        "variants": [],
                       },
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "eulaUrl": "eulaUrl",
                       "gcpProduct": {
-                        "listingSpec": {
-                          "externalAccountSpec": {},
-                          "listingType": "BillingIntegratedManagedService",
-                          "marketingSpec": {
-                            "supportSpec": {},
-                          },
-                          "purchaseSpec": {},
-                        },
+                        "createTime": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "listingSpec": {},
                         "marketplace": "marketplaces/google-cloud",
-                        "serviceConfig": {
-                          "billing": {},
-                        },
+                        "name": "name",
+                        "service": "service",
+                        "serviceConfig": {},
                       },
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "name": "name",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                     "productType": "UNKNOWN",
                     "service": "MARKETPLACE",
+                    "status": "status",
                   },
                 },
               },
@@ -2253,8 +2736,8 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "response": {
                   "body": [],
@@ -2288,7 +2771,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "response": {
                   "body": [],
@@ -2318,7 +2801,7 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                 },
                 "response": {
@@ -2353,47 +2836,74 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
-                  "productId": "string",
+                  "orgId": "orgId",
+                  "productId": "productId",
                 },
                 "request": {
-                  "fulfillmentUrl": "string",
-                  "id": "string",
-                  "organizationID": "string",
+                  "fulfillmentUrl": "fulfillmentUrl",
+                  "id": "id",
+                  "organizationID": "organizationID",
                 },
                 "response": {
                   "body": {
+                    "createdBy": "createdBy",
+                    "creationTime": "2024-01-15T09:30:00Z",
+                    "externalID": "externalID",
+                    "fulfillmentUrl": "fulfillmentUrl",
+                    "id": "id",
                     "info": {
+                      "attributes": {
+                        "attributes": "attributes",
+                      },
                       "awsSaasProduct": {
                         "Description": {},
+                        "Dimensions": [],
                         "PromotionalResources": {},
                         "SupportInformation": {},
+                        "Versions": [],
+                        "dataFeedProductId": "dataFeedProductId",
+                        "productId": "productId",
                       },
+                      "awsSnsSubscriptions": [],
                       "azureProduct": {
-                        "setup": {
-                          "callToAction": "free",
-                          "resourceType": "AzureProductSetup",
-                          "sellingOption": "ListingOnly",
-                        },
+                        "availabilities": [],
+                        "branches": [],
+                        "externalIDs": [],
+                        "id": "id",
+                        "isModularPublishing": true,
+                        "listings": [],
+                        "name": "name",
+                        "packageConfigurations": [],
+                        "properties": [],
+                        "resourceType": "resourceType",
+                        "setup": {},
+                        "submissions": [],
+                        "variants": [],
                       },
+                      "commits": [],
+                      "currency": "currency",
+                      "dimensions": [],
+                      "eulaUrl": "eulaUrl",
                       "gcpProduct": {
-                        "listingSpec": {
-                          "externalAccountSpec": {},
-                          "listingType": "BillingIntegratedManagedService",
-                          "marketingSpec": {
-                            "supportSpec": {},
-                          },
-                          "purchaseSpec": {},
-                        },
+                        "createTime": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "listingSpec": {},
                         "marketplace": "marketplaces/google-cloud",
-                        "serviceConfig": {
-                          "billing": {},
-                        },
+                        "name": "name",
+                        "service": "service",
+                        "serviceConfig": {},
                       },
+                      "refundCancelationPolicy": "refundCancelationPolicy",
+                      "sellerNotes": "sellerNotes",
                     },
+                    "lastUpdateTime": "2024-01-15T09:30:00Z",
+                    "lastUpdatedBy": "lastUpdatedBy",
+                    "name": "name",
+                    "organizationID": "organizationID",
                     "partner": "AWS",
                     "productType": "UNKNOWN",
                     "service": "MARKETPLACE",
+                    "status": "status",
                   },
                 },
               },
@@ -2458,17 +2968,25 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "request": {
-                  "organizationID": "string",
+                  "organizationID": "organizationID",
                   "partner": "AWS",
                   "reportType": "InvoicedAmount",
                   "service": "MARKETPLACE",
                 },
                 "response": {
                   "body": {
+                    "buyerID": "buyerID",
+                    "entitlementID": "entitlementID",
+                    "organizationID": "organizationID",
+                    "partner": "partner",
+                    "productID": "productID",
+                    "reportDate": "2024-01-15T09:30:00Z",
                     "reportType": "InvoicedAmount",
+                    "revenueRecords": [],
+                    "service": "service",
                   },
                 },
               },
@@ -2528,14 +3046,19 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                 },
                 "request": {
-                  "entitlementID": "string",
-                  "organizationID": "string",
+                  "entitlementID": "entitlementID",
+                  "organizationID": "organizationID",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "entitlementID": "entitlementID",
+                    "organizationID": "organizationID",
+                    "reportDate": "2024-01-15T09:30:00Z",
+                    "usageRecords": [],
+                  },
                 },
               },
             ],
@@ -2574,11 +3097,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "revenueRecordDetails": [],
+                  },
                 },
               },
             ],
@@ -2643,11 +3169,14 @@ exports[`open api parser suger simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "orgId": "string",
+                  "orgId": "orgId",
                   "partner": "AWS",
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "nextOffset": 1,
+                    "revenueRecords": [],
+                  },
                 },
               },
             ],

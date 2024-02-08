@@ -79,15 +79,7 @@ exports[`open api parser assembly parse open api 1`] = `
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "status",
-              "value": {
-                "enum": "queued",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
@@ -95,7 +87,7 @@ exports[`open api parser assembly parse open api 1`] = `
                 "properties": {
                   "current_url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "current_url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -107,9 +99,16 @@ exports[`open api parser assembly parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
+                  "next_url": {
+                    "primitive": {
+                      "string": "next_url",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "prev_url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "prev_url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -399,30 +398,10 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "audio_url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "audio_url",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "boost_param": {
-                "enum": "low",
-                "type": "enum",
-              },
-              "language_code": {
-                "enum": "en",
-                "type": "enum",
-              },
-              "redact_pii_sub": {
-                "enum": "entity_type",
-                "type": "enum",
-              },
-              "summary_model": {
-                "enum": "informative",
-                "type": "enum",
-              },
-              "summary_type": {
-                "enum": "bullets",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -431,15 +410,43 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "acoustic_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "acoustic_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_duration": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "audio_end_at": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "audio_start_from": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
                 },
                 "type": "primitive",
               },
               "audio_url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "audio_url",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_chapters": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -459,6 +466,31 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "boost_param": {
+                "primitive": {
+                  "string": "boost_param",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "chapters": {
+                "array": [],
+                "type": "array",
+              },
+              "confidence": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "content_safety": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "content_safety_labels": {
                 "properties": {
                   "results": {
@@ -471,6 +503,70 @@ exports[`open api parser assembly parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "custom_spelling": {
+                "array": [],
+                "type": "array",
+              },
+              "custom_topics": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "disfluencies": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "dual_channel": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "entities": {
+                "array": [],
+                "type": "array",
+              },
+              "entity_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "error": {
+                "primitive": {
+                  "string": "error",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "filter_profanity": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "format_text": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "iab_categories": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "iab_categories_result": {
                 "properties": {
@@ -486,7 +582,7 @@ exports[`open api parser assembly parse open api 1`] = `
                     "map": [
                       {
                         "key": {
-                          "string": "string",
+                          "string": "summary",
                           "type": "string",
                         },
                         "value": {
@@ -505,7 +601,7 @@ exports[`open api parser assembly parse open api 1`] = `
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -514,10 +610,24 @@ exports[`open api parser assembly parse open api 1`] = `
                 "enum": "en",
                 "type": "enum",
               },
+              "language_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "language_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "language_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "punctuate": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -528,9 +638,66 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "redact_pii_audio": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_audio_quality": {
+                "primitive": {
+                  "string": "redact_pii_audio_quality",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [],
+                "type": "array",
+              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
+              },
+              "sentiment_analysis": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "sentiment_analysis_results": {
+                "array": [],
+                "type": "array",
+              },
+              "speaker_labels": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "speakers_expected": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "speech_threshold": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "speed_boost": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "status": {
                 "enum": "queued",
@@ -543,12 +710,84 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "summary": {
+                "primitive": {
+                  "string": "summary",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_model": {
+                "primitive": {
+                  "string": "summary_model",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_type": {
+                "primitive": {
+                  "string": "summary_type",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text": {
+                "primitive": {
+                  "string": "text",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "throttled": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "topics": {
+                "array": [],
+                "type": "array",
+              },
+              "utterances": {
+                "array": [],
+                "type": "array",
+              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "webhook_auth_header_name": {
+                "primitive": {
+                  "string": "webhook_auth_header_name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "webhook_status_code": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "webhook_url": {
+                "primitive": {
+                  "string": "webhook_url",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "word_boost": {
+                "array": [],
+                "type": "array",
+              },
+              "words": {
+                "array": [],
+                "type": "array",
               },
             },
             "type": "object",
@@ -629,7 +868,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "name": "transcript_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transcript_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -642,15 +881,43 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "acoustic_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "acoustic_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_duration": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "audio_end_at": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "audio_start_from": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
                 },
                 "type": "primitive",
               },
               "audio_url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "audio_url",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_chapters": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -670,6 +937,31 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "boost_param": {
+                "primitive": {
+                  "string": "boost_param",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "chapters": {
+                "array": [],
+                "type": "array",
+              },
+              "confidence": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "content_safety": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "content_safety_labels": {
                 "properties": {
                   "results": {
@@ -682,6 +974,70 @@ exports[`open api parser assembly parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "custom_spelling": {
+                "array": [],
+                "type": "array",
+              },
+              "custom_topics": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "disfluencies": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "dual_channel": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "entities": {
+                "array": [],
+                "type": "array",
+              },
+              "entity_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "error": {
+                "primitive": {
+                  "string": "error",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "filter_profanity": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "format_text": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "iab_categories": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "iab_categories_result": {
                 "properties": {
@@ -697,7 +1053,7 @@ exports[`open api parser assembly parse open api 1`] = `
                     "map": [
                       {
                         "key": {
-                          "string": "string",
+                          "string": "summary",
                           "type": "string",
                         },
                         "value": {
@@ -716,7 +1072,7 @@ exports[`open api parser assembly parse open api 1`] = `
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -725,10 +1081,24 @@ exports[`open api parser assembly parse open api 1`] = `
                 "enum": "en",
                 "type": "enum",
               },
+              "language_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "language_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "language_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "punctuate": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -739,9 +1109,66 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "redact_pii_audio": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_audio_quality": {
+                "primitive": {
+                  "string": "redact_pii_audio_quality",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [],
+                "type": "array",
+              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
+              },
+              "sentiment_analysis": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "sentiment_analysis_results": {
+                "array": [],
+                "type": "array",
+              },
+              "speaker_labels": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "speakers_expected": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "speech_threshold": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "speed_boost": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "status": {
                 "enum": "queued",
@@ -754,12 +1181,84 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "summary": {
+                "primitive": {
+                  "string": "summary",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_model": {
+                "primitive": {
+                  "string": "summary_model",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_type": {
+                "primitive": {
+                  "string": "summary_type",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text": {
+                "primitive": {
+                  "string": "text",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "throttled": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "topics": {
+                "array": [],
+                "type": "array",
+              },
+              "utterances": {
+                "array": [],
+                "type": "array",
+              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "webhook_auth_header_name": {
+                "primitive": {
+                  "string": "webhook_auth_header_name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "webhook_status_code": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "webhook_url": {
+                "primitive": {
+                  "string": "webhook_url",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "word_boost": {
+                "array": [],
+                "type": "array",
+              },
+              "words": {
+                "array": [],
+                "type": "array",
               },
             },
             "type": "object",
@@ -845,7 +1344,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "name": "transcript_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transcript_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -858,15 +1357,43 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "acoustic_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "acoustic_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "audio_duration": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "audio_end_at": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "audio_start_from": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
                 },
                 "type": "primitive",
               },
               "audio_url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "audio_url",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auto_chapters": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -886,6 +1413,31 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
+              "boost_param": {
+                "primitive": {
+                  "string": "boost_param",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "chapters": {
+                "array": [],
+                "type": "array",
+              },
+              "confidence": {
+                "primitive": {
+                  "double": 1.1,
+                  "type": "double",
+                },
+                "type": "primitive",
+              },
+              "content_safety": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "content_safety_labels": {
                 "properties": {
                   "results": {
@@ -898,6 +1450,70 @@ exports[`open api parser assembly parse open api 1`] = `
                   },
                 },
                 "type": "object",
+              },
+              "custom_spelling": {
+                "array": [],
+                "type": "array",
+              },
+              "custom_topics": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "disfluencies": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "dual_channel": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "entities": {
+                "array": [],
+                "type": "array",
+              },
+              "entity_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "error": {
+                "primitive": {
+                  "string": "error",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "filter_profanity": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "format_text": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "iab_categories": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "iab_categories_result": {
                 "properties": {
@@ -913,7 +1529,7 @@ exports[`open api parser assembly parse open api 1`] = `
                     "map": [
                       {
                         "key": {
-                          "string": "string",
+                          "string": "summary",
                           "type": "string",
                         },
                         "value": {
@@ -932,7 +1548,7 @@ exports[`open api parser assembly parse open api 1`] = `
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -941,10 +1557,24 @@ exports[`open api parser assembly parse open api 1`] = `
                 "enum": "en",
                 "type": "enum",
               },
+              "language_detection": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "language_model": {
                 "primitive": {
-                  "string": "string",
+                  "string": "language_model",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "punctuate": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -955,9 +1585,66 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "redact_pii_audio": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_audio_quality": {
+                "primitive": {
+                  "string": "redact_pii_audio_quality",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "redact_pii_policies": {
+                "array": [],
+                "type": "array",
+              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
+              },
+              "sentiment_analysis": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "sentiment_analysis_results": {
+                "array": [],
+                "type": "array",
+              },
+              "speaker_labels": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "speakers_expected": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "speech_threshold": {
+                "primitive": {
+                  "float": 1.1,
+                  "type": "float",
+                },
+                "type": "primitive",
+              },
+              "speed_boost": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
               },
               "status": {
                 "enum": "queued",
@@ -970,12 +1657,84 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "summary": {
+                "primitive": {
+                  "string": "summary",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_model": {
+                "primitive": {
+                  "string": "summary_model",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "summary_type": {
+                "primitive": {
+                  "string": "summary_type",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "text": {
+                "primitive": {
+                  "string": "text",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "throttled": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "topics": {
+                "array": [],
+                "type": "array",
+              },
+              "utterances": {
+                "array": [],
+                "type": "array",
+              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
                   "type": "boolean",
                 },
                 "type": "primitive",
+              },
+              "webhook_auth_header_name": {
+                "primitive": {
+                  "string": "webhook_auth_header_name",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "webhook_status_code": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+              "webhook_url": {
+                "primitive": {
+                  "string": "webhook_url",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "word_boost": {
+                "array": [],
+                "type": "array",
+              },
+              "words": {
+                "array": [],
+                "type": "array",
               },
             },
             "type": "object",
@@ -1148,7 +1907,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "name": "transcript_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transcript_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1175,7 +1934,7 @@ exports[`open api parser assembly parse open api 1`] = `
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1268,7 +2027,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "name": "transcript_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transcript_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1295,7 +2054,7 @@ exports[`open api parser assembly parse open api 1`] = `
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1482,7 +2241,7 @@ exports[`open api parser assembly parse open api 1`] = `
               "name": "transcript_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transcript_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1495,7 +2254,7 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "redacted_audio_url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "redacted_audio_url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1604,7 +2363,7 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "token": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1687,10 +2446,6 @@ exports[`open api parser assembly parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "final_model": {
-                "enum": "default",
-                "type": "enum",
-              },
               "transcript_ids": {
                 "array": [],
                 "type": "array",
@@ -1702,14 +2457,14 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "request_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "response": {
                 "primitive": {
-                  "string": "string",
+                  "string": "response",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1792,10 +2547,6 @@ exports[`open api parser assembly parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "final_model": {
-                "enum": "default",
-                "type": "enum",
-              },
               "questions": {
                 "array": [],
                 "type": "array",
@@ -1811,7 +2562,7 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "request_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1898,10 +2649,6 @@ exports[`open api parser assembly parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "final_model": {
-                "enum": "default",
-                "type": "enum",
-              },
               "transcript_ids": {
                 "array": [],
                 "type": "array",
@@ -1913,14 +2660,14 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "request_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "response": {
                 "primitive": {
-                  "string": "string",
+                  "string": "response",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2003,13 +2750,9 @@ exports[`open api parser assembly parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
-              "final_model": {
-                "enum": "default",
-                "type": "enum",
-              },
               "prompt": {
                 "primitive": {
-                  "string": "string",
+                  "string": "prompt",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2025,14 +2768,14 @@ exports[`open api parser assembly parse open api 1`] = `
             "properties": {
               "request_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "response": {
                 "primitive": {
-                  "string": "string",
+                  "string": "response",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2118,7 +2861,7 @@ The LLM response data, as well as any context provided in the original request w
               "name": "request_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2138,14 +2881,14 @@ The LLM response data, as well as any context provided in the original request w
               },
               "request_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "request_id_to_purge": {
                 "primitive": {
-                  "string": "string",
+                  "string": "request_id_to_purge",
                   "type": "string",
                 },
                 "type": "primitive",

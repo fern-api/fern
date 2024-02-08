@@ -17,29 +17,7 @@ exports[`open api parser hume parse open api 1`] = `
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "when",
-              "value": {
-                "enum": "created_before",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "sort_by",
-              "value": {
-                "enum": "created",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "direction",
-              "value": {
-                "enum": "asc",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "array": [],
@@ -232,59 +210,14 @@ exports[`open api parser hume parse open api 1`] = `
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "models": {
-                "properties": {
-                  "face": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "language": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "ner": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "prosody": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                      "window": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "transcription": {
-                "properties": {
-                  "language": {
-                    "enum": "zh",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "job_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "job_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -355,7 +288,7 @@ exports[`open api parser hume parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",

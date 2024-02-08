@@ -21,6 +21,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -51,6 +52,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -97,6 +99,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -135,6 +138,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -165,6 +169,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -195,6 +200,7 @@ exports[`open api parser buzzshot simple 1`] = `
                     "count": 1,
                     "next": "http://api.example.org/accounts/?page=4",
                     "previous": "http://api.example.org/accounts/?page=2",
+                    "results": [],
                   },
                 },
               },
@@ -221,11 +227,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
-                    "name": "string",
+                    "hidden": true,
+                    "id": 1,
+                    "name": "name",
                   },
                 },
               },
@@ -249,16 +257,28 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
+                    "added_at": "2024-01-15T09:30:00Z",
                     "complete": {
                       "completed_at": "2024-01-15T09:30:00Z",
+                      "completion_time": 1,
+                      "did_win": true,
+                      "hints": 1,
+                      "score": 1,
                     },
-                    "date": "string",
+                    "date": "date",
                     "extra_fields": [],
-                    "time": "string",
+                    "group": "group",
+                    "id": 1,
+                    "name": "name",
+                    "photos": [],
+                    "room": "room",
+                    "start_at": "2024-01-15T09:30:00Z",
+                    "time": "time",
+                    "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
               },
@@ -303,13 +323,21 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
-                    "date": "string",
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "date": "date",
+                    "games": [],
+                    "id": 1,
+                    "is_event": true,
+                    "name": "name",
+                    "photos": [],
                     "players": [],
-                    "time": "string",
+                    "start_at": "2024-01-15T09:30:00Z",
+                    "time": "time",
+                    "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
               },
@@ -346,11 +374,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
-                    "name": "string",
+                    "hidden": true,
+                    "id": 1,
+                    "name": "name",
                   },
                 },
               },
@@ -374,11 +404,13 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "photo_id": "string",
+                  "photo_id": "photo_id",
                 },
                 "response": {
                   "body": {
-                    "original_image": "string",
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "id": "id",
+                    "original_image": "original_image",
                     "processed": [],
                   },
                 },
@@ -403,13 +435,19 @@ exports[`open api parser buzzshot simple 1`] = `
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "response": {
                   "body": {
-                    "email": "string",
+                    "added_at": "2024-01-15T09:30:00Z",
+                    "email": "email",
                     "extra_fields": [],
-                    "phone": "string",
+                    "first_name": "first_name",
+                    "id": 1,
+                    "last_name": "last_name",
+                    "marketing_email_allowed": true,
+                    "phone": "phone",
+                    "updated_at": "2024-01-15T09:30:00Z",
                   },
                 },
               },
