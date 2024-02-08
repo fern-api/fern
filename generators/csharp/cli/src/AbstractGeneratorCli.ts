@@ -72,7 +72,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
 
             const generatorContext = new GeneratorContextImpl(logger);
             if (!generatorContext.didSucceed()) {
-                throw new Error("Failed to generate TypeScript project.");
+                throw new Error("Failed to generate csharp project.");
             }
 
             await config.output.mode._visit<void | Promise<void>>({
@@ -121,19 +121,15 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         }
     }
 
-    // 0. Parse any custom config and forward to generator
     protected abstract parseCustomConfig(customConfig: unknown): CustomConfig;
-    // 1. Generate the project
-    // 2. Add additional files (tests, GitHub files (workflow files, .gitignore, etc.))
-    // 3. Set up package and publishing
-    // Write necessary files for publishing and return any necessary package information
-    // + actually publish the specified package
+
     protected abstract publishPackage(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
         generatorContext: GeneratorContext,
         intermediateRepresentation: IntermediateRepresentation
     ): Promise<void>;
+
     protected abstract writeForGithub(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
@@ -141,6 +137,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
         intermediateRepresentation: IntermediateRepresentation,
         githubOutputMode: FernGeneratorExec.GithubOutputMode
     ): Promise<void>;
+
     protected abstract writeForDownload(
         config: FernGeneratorExec.GeneratorConfig,
         customConfig: CustomConfig,
