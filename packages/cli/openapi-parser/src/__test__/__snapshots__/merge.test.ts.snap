@@ -219,10 +219,6 @@ exports[`open api parser merge parse open api 1`] = `
                     ],
                     "type": "map",
                   },
-                  "categories": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "color": {
                     "primitive": {
                       "string": "color",
@@ -350,10 +346,6 @@ exports[`open api parser merge parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
-              "available_model_operations": {
-                "array": [],
-                "type": "array",
-              },
               "integration": {
                 "properties": {
                   "api_endpoints_to_documentation_urls": {
@@ -384,10 +376,6 @@ exports[`open api parser merge parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "categories": {
-                    "array": [],
-                    "type": "array",
                   },
                   "color": {
                     "primitive": {
@@ -536,10 +524,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -1098,10 +1082,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "123234",
@@ -1328,10 +1308,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -1761,10 +1737,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -1945,10 +1917,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -2253,10 +2221,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "eins": {
-                "array": [],
-                "type": "array",
-              },
               "field_mappings": {
                 "map": [
                   {
@@ -2306,10 +2270,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -2526,10 +2486,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -3009,14 +2965,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "deductions": {
-                "array": [],
-                "type": "array",
-              },
-              "earnings": {
-                "array": [],
-                "type": "array",
-              },
               "employee": {
                 "primitive": {
                   "string": "d2f972d0-2526-434b-9409-4c3b468e08f0",
@@ -3095,10 +3043,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -3119,10 +3063,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "taxes": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -3299,10 +3239,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -5791,10 +5727,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "array": [],
                 "type": "array",
               },
-              "logs": {
-                "array": [],
-                "type": "array",
-              },
               "model": {
                 "properties": {
                   "avatar": {
@@ -5865,10 +5797,6 @@ exports[`open api parser merge parse open api 1`] = `
                     "enum": "ACTIVE",
                     "type": "enum",
                   },
-                  "employments": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "ethnicity": {
                     "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
                     "type": "enum",
@@ -5912,10 +5840,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "gender": {
                     "enum": "MALE",
                     "type": "enum",
-                  },
-                  "groups": {
-                    "array": [],
-                    "type": "array",
                   },
                   "hire_date": {
                     "primitive": {
@@ -5990,10 +5914,6 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "datetime",
                     },
                     "type": "primitive",
-                  },
-                  "remote_data": {
-                    "array": [],
-                    "type": "array",
                   },
                   "remote_id": {
                     "primitive": {
@@ -6284,10 +6204,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "enum": "ACTIVE",
                 "type": "enum",
               },
-              "employments": {
-                "array": [],
-                "type": "array",
-              },
               "ethnicity": {
                 "enum": "AMERICAN_INDIAN_OR_ALASKA_NATIVE",
                 "type": "enum",
@@ -6331,10 +6247,6 @@ exports[`open api parser merge parse open api 1`] = `
               "gender": {
                 "enum": "MALE",
                 "type": "enum",
-              },
-              "groups": {
-                "array": [],
-                "type": "array",
               },
               "hire_date": {
                 "primitive": {
@@ -6409,10 +6321,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -8704,10 +8612,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -9420,10 +9324,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -9927,10 +9827,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -10354,10 +10250,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "800293",
@@ -10547,10 +10439,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -10967,10 +10855,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "error_details": {
-                "array": [],
-                "type": "array",
-              },
               "first_incident_time": {
                 "primitive": {
                   "datetime": "2022-12-05T16:19:15.161Z",
@@ -11203,10 +11087,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -11642,10 +11522,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -12059,10 +11935,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -12500,10 +12372,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -12850,10 +12718,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "800293",
@@ -13004,10 +12868,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -13584,10 +13444,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {
@@ -14579,10 +14435,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -14813,10 +14665,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -15218,10 +15066,6 @@ exports[`open api parser merge parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -15395,10 +15239,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -16031,10 +15871,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "array": [],
                 "type": "array",
               },
-              "logs": {
-                "array": [],
-                "type": "array",
-              },
               "model": {
                 "properties": {
                   "amount": {
@@ -16114,10 +15950,6 @@ exports[`open api parser merge parse open api 1`] = `
                       "type": "datetime",
                     },
                     "type": "primitive",
-                  },
-                  "remote_data": {
-                    "array": [],
-                    "type": "array",
                   },
                   "remote_id": {
                     "primitive": {
@@ -16312,10 +16144,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -16831,10 +16659,6 @@ exports[`open api parser merge parse open api 1`] = `
                 "enum": "VACATION",
                 "type": "enum",
               },
-              "remote_data": {
-                "array": [],
-                "type": "array",
-              },
               "remote_id": {
                 "primitive": {
                   "string": "19202938",
@@ -17136,10 +16960,6 @@ exports[`open api parser merge parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "remote_data": {
-                "array": [],
-                "type": "array",
               },
               "remote_id": {
                 "primitive": {

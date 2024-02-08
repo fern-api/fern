@@ -18,7 +18,6 @@ exports[`x-fern-sdk-group-name x-fern-sdk-group-name simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "associatedPersons": [],
                     "id": "id",
                   },
                 },

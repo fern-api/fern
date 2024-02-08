@@ -4698,10 +4698,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -5079,10 +5075,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -5471,10 +5463,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -5980,10 +5968,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -6502,10 +6486,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -6903,10 +6883,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -7298,10 +7274,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -7700,10 +7672,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -8095,10 +8063,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -8497,10 +8461,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -8892,10 +8852,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -9294,10 +9250,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -9689,10 +9641,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -10091,10 +10039,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -10486,10 +10430,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -11028,10 +10968,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -11383,10 +11319,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -11755,10 +11687,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -12256,10 +12184,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -12632,10 +12556,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -13024,10 +12944,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -13400,10 +13316,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -13778,10 +13690,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -14152,10 +14060,6 @@ You will be assigned as owner of the new team automatically.",
                     },
                     "type": "primitive",
                   },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "validateOnPublish": {
                     "primitive": {
                       "boolean": true,
@@ -14512,10 +14416,6 @@ You will be assigned as owner of the new team automatically.",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "tags": {
-                    "array": [],
-                    "type": "array",
                   },
                   "validateOnPublish": {
                     "primitive": {
@@ -19369,10 +19269,6 @@ You will be assigned as owner of the new team automatically.",
                 ],
                 "type": "map",
               },
-              "referenceFields": {
-                "array": [],
-                "type": "array",
-              },
               "scheduleJob": {
                 "properties": {
                   "color": {
@@ -22422,18 +22318,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
-              "createdComments": {
-                "array": [],
-                "type": "array",
-              },
-              "deletedComments": {
-                "array": [],
-                "type": "array",
-              },
-              "updatedComments": {
-                "array": [],
-                "type": "array",
-              },
               "version": {
                 "primitive": {
                   "int": 1,
@@ -23027,18 +22911,6 @@ You will be assigned as owner of the new team automatically.",
           "request": undefined,
           "response": {
             "properties": {
-              "createdComments": {
-                "array": [],
-                "type": "array",
-              },
-              "deletedComments": {
-                "array": [],
-                "type": "array",
-              },
-              "updatedComments": {
-                "array": [],
-                "type": "array",
-              },
               "version": {
                 "primitive": {
                   "int": 1,
@@ -26651,10 +26523,6 @@ You will be assigned as owner of the new team automatically.",
                 },
                 "type": "primitive",
               },
-              "tags": {
-                "array": [],
-                "type": "array",
-              },
               "type": {
                 "enum": "Unknown",
                 "type": "enum",
@@ -27140,10 +27008,6 @@ You will be assigned as owner of the new team automatically.",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "tags": {
-                "array": [],
-                "type": "array",
               },
               "type": {
                 "enum": "Unknown",
@@ -27855,10 +27719,6 @@ You will be assigned as owner of the new team automatically.",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "tags": {
-                "array": [],
-                "type": "array",
               },
               "type": {
                 "enum": "Unknown",

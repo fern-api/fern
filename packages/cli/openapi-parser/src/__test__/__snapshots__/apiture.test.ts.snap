@@ -1814,10 +1814,6 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                 },
                 "type": "object",
               },
-              "intermediaryInstitutions": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -3292,10 +3288,6 @@ The default response lists only recent transactions. Normally, this is transacti
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "merchant": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "occurredOn": {
                         "primitive": {

@@ -180,10 +180,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "companyInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "dataFeedAccountID": {
                         "primitive": {
                           "string": "dataFeedAccountID",
@@ -196,14 +192,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "azureBuyer": {
                     "properties": {
-                      "buyerInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "companyInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "emailId": {
                         "primitive": {
                           "string": "emailId",
@@ -251,10 +239,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "gcpBuyer": {
                     "properties": {
-                      "approvals": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "createTime": {
                         "primitive": {
                           "datetime": "2024-01-15T09:30:00Z",
@@ -268,10 +252,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "inputProperties": {
-                        "array": [],
-                        "type": "array",
                       },
                       "name": {
                         "primitive": {
@@ -297,10 +277,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
-                      },
-                      "userInfo": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -500,10 +476,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "companyInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "dataFeedAccountID": {
                         "primitive": {
                           "string": "dataFeedAccountID",
@@ -516,14 +488,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "azureBuyer": {
                     "properties": {
-                      "buyerInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "companyInfo": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "emailId": {
                         "primitive": {
                           "string": "emailId",
@@ -571,10 +535,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "gcpBuyer": {
                     "properties": {
-                      "approvals": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "createTime": {
                         "primitive": {
                           "datetime": "2024-01-15T09:30:00Z",
@@ -588,10 +548,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "inputProperties": {
-                        "array": [],
-                        "type": "array",
                       },
                       "name": {
                         "primitive": {
@@ -617,10 +573,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
-                      },
-                      "userInfo": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -962,10 +914,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "pricing": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "product": {
                         "primitive": {
                           "string": "product",
@@ -979,10 +927,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
                       },
                     },
                     "type": "object",
@@ -1002,14 +946,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
-                      },
-                      "acceptanceLinks": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "beneficiaries": {
-                        "array": [],
-                        "type": "array",
                       },
                       "eTag": {
                         "primitive": {
@@ -1046,20 +982,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "notificationContacts": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "preparedBy": {
                         "primitive": {
                           "string": "preparedBy",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "pricing": {
-                        "array": [],
-                        "type": "array",
                       },
                       "privateOfferType": {
                         "enum": "customerPromotion",
@@ -1094,14 +1022,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "upgradedFrom": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "variableStartDate": {
                         "primitive": {
                           "boolean": true,
@@ -1114,14 +1034,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "azureProductVariant": {
                     "properties": {
-                      "azureGovernmentCertifications": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "cloudAvailabilities": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "conversionPaths": {
                         "primitive": {
                           "string": "conversionPaths",
@@ -1129,20 +1041,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "extendedProperties": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "externalID": {
                         "primitive": {
                           "string": "externalID",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "featureAvailabilities": {
-                        "array": [],
-                        "type": "array",
                       },
                       "friendlyName": {
                         "primitive": {
@@ -1183,28 +1087,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "buyerAwsAccountIds": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "buyerAzureTenants": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "discount": {
                     "primitive": {
@@ -1223,18 +1111,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "gcpMetrics": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "privateOfferUrl": {
                     "primitive": {
@@ -1287,10 +1163,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "contacts": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "isAgreementBasedOffer": {
                     "primitive": {
                       "boolean": true,
@@ -1304,10 +1176,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
-                  },
-                  "notifications": {
-                    "array": [],
-                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -1614,14 +1482,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "awsEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "azureSubscriptions": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "collectableAmount": {
                     "primitive": {
                       "double": 1.1,
@@ -1636,20 +1496,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "disbursedAmount": {
                     "primitive": {
@@ -1676,24 +1528,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "gcpEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "invoicedAmount": {
                     "primitive": {
                       "double": 1.1,
                       "type": "double",
                     },
                     "type": "primitive",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "refundCancelationPolicy": {
                     "primitive": {
@@ -2140,14 +1980,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "awsEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "azureSubscriptions": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "collectableAmount": {
                     "primitive": {
                       "double": 1.1,
@@ -2162,20 +1994,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "disbursedAmount": {
                     "primitive": {
@@ -2202,24 +2026,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "gcpEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "invoicedAmount": {
                     "primitive": {
                       "double": 1.1,
                       "type": "double",
                     },
                     "type": "primitive",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "refundCancelationPolicy": {
                     "primitive": {
@@ -2597,14 +2409,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "awsEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "azureSubscriptions": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "collectableAmount": {
                     "primitive": {
                       "double": 1.1,
@@ -2619,20 +2423,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "disbursedAmount": {
                     "primitive": {
@@ -2659,24 +2455,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "gcpEntitlements": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "invoicedAmount": {
                     "primitive": {
                       "double": 1.1,
                       "type": "double",
                     },
                     "type": "primitive",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "refundCancelationPolicy": {
                     "primitive": {
@@ -2906,10 +2690,6 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "usageRecordGroups": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -3382,10 +3162,6 @@ exports[`open api parser suger parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "usageRecordReports": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -3739,10 +3515,6 @@ exports[`open api parser suger parse open api 1`] = `
                 "properties": {
                   "awsAceIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "partnerId": {
                         "primitive": {
                           "string": "partnerId",
@@ -3846,10 +3618,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "policyArns": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "revenueRecordFullSyncDone": {
                         "primitive": {
                           "boolean": true,
@@ -3868,10 +3636,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "boolean",
                         },
                         "type": "primitive",
-                      },
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "secretKey": {
                         "primitive": {
@@ -3948,10 +3712,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "serviceNames": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "workloadIdentityPoolId": {
                         "primitive": {
                           "string": "workloadIdentityPoolId",
@@ -3964,10 +3724,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "hubspotCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "portalId": {
                         "primitive": {
                           "int": 1,
@@ -3987,14 +3743,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "salesforceCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "filters": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "instanceUrl": {
                         "primitive": {
                           "string": "instanceUrl",
@@ -4042,10 +3790,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "authedUser": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "botUserId": {
                         "primitive": {
                           "string": "botUserId",
@@ -4053,20 +3797,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "enterprise": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "expiresIn": {
                         "primitive": {
                           "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
-                      },
-                      "incomingWebhook": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "redirectUrl": {
                         "primitive": {
@@ -4088,10 +3824,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "team": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "tokenType": {
                         "primitive": {
@@ -4272,10 +4004,6 @@ exports[`open api parser suger parse open api 1`] = `
                 "properties": {
                   "awsAceIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "partnerId": {
                         "primitive": {
                           "string": "partnerId",
@@ -4379,10 +4107,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "policyArns": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "revenueRecordFullSyncDone": {
                         "primitive": {
                           "boolean": true,
@@ -4401,10 +4125,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "boolean",
                         },
                         "type": "primitive",
-                      },
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "secretKey": {
                         "primitive": {
@@ -4481,10 +4201,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "serviceNames": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "workloadIdentityPoolId": {
                         "primitive": {
                           "string": "workloadIdentityPoolId",
@@ -4497,10 +4213,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "hubspotCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "portalId": {
                         "primitive": {
                           "int": 1,
@@ -4520,14 +4232,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "salesforceCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "filters": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "instanceUrl": {
                         "primitive": {
                           "string": "instanceUrl",
@@ -4575,10 +4279,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "authedUser": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "botUserId": {
                         "primitive": {
                           "string": "botUserId",
@@ -4586,20 +4286,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "enterprise": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "expiresIn": {
                         "primitive": {
                           "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
-                      },
-                      "incomingWebhook": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "redirectUrl": {
                         "primitive": {
@@ -4621,10 +4313,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "team": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "tokenType": {
                         "primitive": {
@@ -5038,10 +4726,6 @@ exports[`open api parser suger parse open api 1`] = `
                 "properties": {
                   "awsAceIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "partnerId": {
                         "primitive": {
                           "string": "partnerId",
@@ -5145,10 +4829,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "policyArns": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "revenueRecordFullSyncDone": {
                         "primitive": {
                           "boolean": true,
@@ -5167,10 +4847,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "boolean",
                         },
                         "type": "primitive",
-                      },
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "secretKey": {
                         "primitive": {
@@ -5247,10 +4923,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "serviceNames": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "workloadIdentityPoolId": {
                         "primitive": {
                           "string": "workloadIdentityPoolId",
@@ -5263,10 +4935,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "hubspotCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "portalId": {
                         "primitive": {
                           "int": 1,
@@ -5286,14 +4954,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "salesforceCrmIntegration": {
                     "properties": {
-                      "credential": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "filters": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "instanceUrl": {
                         "primitive": {
                           "string": "instanceUrl",
@@ -5341,10 +5001,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "authedUser": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "botUserId": {
                         "primitive": {
                           "string": "botUserId",
@@ -5352,20 +5008,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "enterprise": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "expiresIn": {
                         "primitive": {
                           "int": 1,
                           "type": "int",
                         },
                         "type": "primitive",
-                      },
-                      "incomingWebhook": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "redirectUrl": {
                         "primitive": {
@@ -5387,10 +5035,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "team": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "tokenType": {
                         "primitive": {
@@ -5917,10 +5561,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "pricing": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "product": {
                         "primitive": {
                           "string": "product",
@@ -5934,10 +5574,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
                       },
                     },
                     "type": "object",
@@ -5957,14 +5593,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
-                      },
-                      "acceptanceLinks": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "beneficiaries": {
-                        "array": [],
-                        "type": "array",
                       },
                       "eTag": {
                         "primitive": {
@@ -6001,20 +5629,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "notificationContacts": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "preparedBy": {
                         "primitive": {
                           "string": "preparedBy",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "pricing": {
-                        "array": [],
-                        "type": "array",
                       },
                       "privateOfferType": {
                         "enum": "customerPromotion",
@@ -6049,14 +5669,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "upgradedFrom": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "variableStartDate": {
                         "primitive": {
                           "boolean": true,
@@ -6069,14 +5681,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "azureProductVariant": {
                     "properties": {
-                      "azureGovernmentCertifications": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "cloudAvailabilities": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "conversionPaths": {
                         "primitive": {
                           "string": "conversionPaths",
@@ -6084,20 +5688,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "extendedProperties": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "externalID": {
                         "primitive": {
                           "string": "externalID",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "featureAvailabilities": {
-                        "array": [],
-                        "type": "array",
                       },
                       "friendlyName": {
                         "primitive": {
@@ -6138,28 +5734,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "buyerAwsAccountIds": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "buyerAzureTenants": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "discount": {
                     "primitive": {
@@ -6178,18 +5758,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "gcpMetrics": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "privateOfferUrl": {
                     "primitive": {
@@ -6242,10 +5810,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "contacts": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "isAgreementBasedOffer": {
                     "primitive": {
                       "boolean": true,
@@ -6259,10 +5823,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
-                  },
-                  "notifications": {
-                    "array": [],
-                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -6481,10 +6041,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "pricing": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "product": {
                         "primitive": {
                           "string": "product",
@@ -6498,10 +6054,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
                       },
                     },
                     "type": "object",
@@ -6521,14 +6073,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "datetime",
                         },
                         "type": "primitive",
-                      },
-                      "acceptanceLinks": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "beneficiaries": {
-                        "array": [],
-                        "type": "array",
                       },
                       "eTag": {
                         "primitive": {
@@ -6565,20 +6109,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "notificationContacts": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "preparedBy": {
                         "primitive": {
                           "string": "preparedBy",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "pricing": {
-                        "array": [],
-                        "type": "array",
                       },
                       "privateOfferType": {
                         "enum": "customerPromotion",
@@ -6613,14 +6149,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "upgradedFrom": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "validations": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "variableStartDate": {
                         "primitive": {
                           "boolean": true,
@@ -6633,14 +6161,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "azureProductVariant": {
                     "properties": {
-                      "azureGovernmentCertifications": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "cloudAvailabilities": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "conversionPaths": {
                         "primitive": {
                           "string": "conversionPaths",
@@ -6648,20 +6168,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "extendedProperties": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "externalID": {
                         "primitive": {
                           "string": "externalID",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "featureAvailabilities": {
-                        "array": [],
-                        "type": "array",
                       },
                       "friendlyName": {
                         "primitive": {
@@ -6702,28 +6214,12 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "buyerAwsAccountIds": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "buyerAzureTenants": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "currency": {
                     "primitive": {
                       "string": "currency",
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "discount": {
                     "primitive": {
@@ -6742,18 +6238,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "gcpMetrics": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "gcpPlans": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "paymentInstallments": {
-                    "array": [],
-                    "type": "array",
                   },
                   "privateOfferUrl": {
                     "primitive": {
@@ -6806,10 +6290,6 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "contacts": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "isAgreementBasedOffer": {
                     "primitive": {
                       "boolean": true,
@@ -6823,10 +6303,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "boolean",
                     },
                     "type": "primitive",
-                  },
-                  "notifications": {
-                    "array": [],
-                    "type": "array",
                   },
                 },
                 "type": "object",
@@ -7942,10 +7418,6 @@ exports[`open api parser suger parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "revenueRecords": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -8241,10 +7713,6 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "revenueRecordDetails": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -8684,26 +8152,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "awsSaasProduct": {
                     "properties": {
-                      "Description": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "Dimensions": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "PromotionalResources": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "SupportInformation": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "Versions": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "dataFeedProductId": {
                         "primitive": {
                           "string": "dataFeedProductId",
@@ -8721,24 +8169,8 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "awsSnsSubscriptions": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "azureProduct": {
                     "properties": {
-                      "availabilities": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "branches": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "externalIDs": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "id": {
                         "primitive": {
                           "string": "id",
@@ -8753,24 +8185,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "listings": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "name": {
                         "primitive": {
                           "string": "name",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "packageConfigurations": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "properties": {
-                        "array": [],
-                        "type": "array",
                       },
                       "resourceType": {
                         "primitive": {
@@ -8779,24 +8199,8 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "setup": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "submissions": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "variants": {
-                        "array": [],
-                        "type": "array",
-                      },
                     },
                     "type": "object",
-                  },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
                   },
                   "currency": {
                     "primitive": {
@@ -8804,10 +8208,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "eulaUrl": {
                     "primitive": {
@@ -8832,10 +8232,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "listingSpec": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "marketplace": {
                         "literal": {
                           "string": "marketplaces/google-cloud",
@@ -8856,10 +8252,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "serviceConfig": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -9241,26 +8633,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "awsSaasProduct": {
                     "properties": {
-                      "Description": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "Dimensions": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "PromotionalResources": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "SupportInformation": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "Versions": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "dataFeedProductId": {
                         "primitive": {
                           "string": "dataFeedProductId",
@@ -9278,24 +8650,8 @@ exports[`open api parser suger parse open api 1`] = `
                     },
                     "type": "object",
                   },
-                  "awsSnsSubscriptions": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "azureProduct": {
                     "properties": {
-                      "availabilities": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "branches": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "externalIDs": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "id": {
                         "primitive": {
                           "string": "id",
@@ -9310,24 +8666,12 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "listings": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "name": {
                         "primitive": {
                           "string": "name",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "packageConfigurations": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "properties": {
-                        "array": [],
-                        "type": "array",
                       },
                       "resourceType": {
                         "primitive": {
@@ -9336,24 +8680,8 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "setup": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "submissions": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "variants": {
-                        "array": [],
-                        "type": "array",
-                      },
                     },
                     "type": "object",
-                  },
-                  "commits": {
-                    "array": [],
-                    "type": "array",
                   },
                   "currency": {
                     "primitive": {
@@ -9361,10 +8689,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "dimensions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "eulaUrl": {
                     "primitive": {
@@ -9389,10 +8713,6 @@ exports[`open api parser suger parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "listingSpec": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "marketplace": {
                         "literal": {
                           "string": "marketplaces/google-cloud",
@@ -9413,10 +8733,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "serviceConfig": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -9971,10 +9287,6 @@ exports[`open api parser suger parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "usageRecordGroups": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -10186,10 +9498,6 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "usageRecordReports": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -10458,10 +9766,6 @@ exports[`open api parser suger parse open api 1`] = `
                 "enum": "InvoicedAmount",
                 "type": "enum",
               },
-              "revenueRecords": {
-                "array": [],
-                "type": "array",
-              },
               "service": {
                 "primitive": {
                   "string": "service",
@@ -10573,10 +9877,6 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "usageRecordGroups": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -10971,10 +10271,6 @@ exports[`open api parser suger parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "usageRecordReports": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -11192,23 +10488,6 @@ exports[`open api parser suger parse open api 1`] = `
               },
               "info": {
                 "properties": {
-                  "awsMeteringResponse": {
-                    "properties": {
-                      "resultMetadata": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "results": {
-                        "array": [],
-                        "type": "array",
-                      },
-                      "unprocessedRecords": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "azureMeteringResponse": {
                     "properties": {
                       "count": {
@@ -11217,10 +10496,6 @@ exports[`open api parser suger parse open api 1`] = `
                           "type": "int",
                         },
                         "type": "primitive",
-                      },
-                      "result": {
-                        "array": [],
-                        "type": "array",
                       },
                     },
                     "type": "object",
@@ -11284,10 +10559,6 @@ exports[`open api parser suger parse open api 1`] = `
                   },
                   "gcpMeteringResponse": {
                     "properties": {
-                      "reportErrors": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "serviceConfigId": {
                         "primitive": {
                           "string": "serviceConfigId",
@@ -11347,10 +10618,6 @@ exports[`open api parser suger parse open api 1`] = `
                       "type": "datetime",
                     },
                     "type": "primitive",
-                  },
-                  "usageRecordGroupIds": {
-                    "array": [],
-                    "type": "array",
                   },
                   "usedCommitAmount": {
                     "primitive": {
@@ -11537,10 +10804,6 @@ exports[`open api parser suger parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "usageRecords": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",

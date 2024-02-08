@@ -308,10 +308,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "primitive",
               },
-              "new_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "new_name": {
                 "primitive": {
                   "string": "Valentine's Day - 2020",
@@ -339,10 +335,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "new_product_descriptions": {
-                "array": [],
-                "type": "array",
               },
               "new_wants_bco": {
                 "primitive": {
@@ -1041,10 +1033,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       },
                     },
                     "type": "object",
-                  },
-                  "new_product_descriptions": {
-                    "array": [],
-                    "type": "array",
                   },
                   "new_wants_bco": {
                     "primitive": {
@@ -5300,10 +5288,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "primitive",
               },
-              "metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "name": {
                 "primitive": {
                   "string": "PO 123",
@@ -5583,10 +5567,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                         },
                         "type": "object",
-                      },
-                      "product_descriptions": {
-                        "array": [],
-                        "type": "array",
                       },
                       "wants_delivery_service": {
                         "primitive": {
@@ -7637,10 +7617,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                         },
                         "type": "object",
                       },
-                      "product_descriptions": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "wants_delivery_service": {
                         "primitive": {
                           "boolean": false,
@@ -8671,10 +8647,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                           },
                         },
                         "type": "object",
-                      },
-                      "product_descriptions": {
-                        "array": [],
-                        "type": "array",
                       },
                       "wants_delivery_service": {
                         "primitive": {
@@ -10798,10 +10770,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 "array": [],
                 "type": "array",
               },
-              "metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "proration_amount": {
                 "properties": {
                   "amount": {
@@ -10887,10 +10855,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "involved_parties": {
-                    "array": [],
-                    "type": "array",
                   },
                   "is_related_parties": {
                     "primitive": {
@@ -11631,10 +11595,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                 },
                 "type": "primitive",
               },
-              "line_items": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -11687,10 +11647,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "involved_parties": {
-                    "array": [],
-                    "type": "array",
                   },
                   "is_related_parties": {
                     "primitive": {
@@ -12469,10 +12425,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "involved_parties": {
-                    "array": [],
-                    "type": "array",
                   },
                   "is_related_parties": {
                     "primitive": {
@@ -15453,10 +15405,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                     },
                     "type": "primitive",
                   },
-                  "data": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "next": {
                     "primitive": {
                       "string": "next",
@@ -15955,10 +15903,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                         },
                         "type": "primitive",
                       },
-                      "containers": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "exception": {
                         "properties": {
                           "message": {
@@ -15986,10 +15930,6 @@ we still recommend setting the Content-Type header to the value \`application/js
                               "type": "string",
                             },
                             "type": "primitive",
-                          },
-                          "tags": {
-                            "array": [],
-                            "type": "array",
                           },
                         },
                         "type": "object",
@@ -20501,10 +20441,6 @@ Other details about this invoice",
                             },
                             "type": "object",
                           },
-                          "metadata": {
-                            "map": [],
-                            "type": "map",
-                          },
                           "name": {
                             "primitive": {
                               "string": "CompanyFoo",
@@ -21194,10 +21130,6 @@ Other details about this invoice",
                               "type": "string",
                             },
                             "type": "primitive",
-                          },
-                          "vat_numbers": {
-                            "array": [],
-                            "type": "array",
                           },
                         },
                         "type": "object",
@@ -22229,10 +22161,6 @@ Other details about this invoice",
                               "type": "string",
                             },
                             "type": "primitive",
-                          },
-                          "vat_numbers": {
-                            "array": [],
-                            "type": "array",
                           },
                         },
                         "type": "object",
@@ -23326,10 +23254,6 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "vat_numbers": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -24108,10 +24032,6 @@ Other details about this invoice",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "vat_numbers": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -26370,10 +26290,6 @@ Other details about this invoice",
                             },
                             "type": "primitive",
                           },
-                          "metadata": {
-                            "map": [],
-                            "type": "map",
-                          },
                           "name": {
                             "primitive": {
                               "string": "Wayne Enterprises",
@@ -28567,10 +28483,6 @@ Other details about this invoice",
                             },
                             "type": "primitive",
                           },
-                          "vat_numbers": {
-                            "array": [],
-                            "type": "array",
-                          },
                         },
                         "type": "object",
                       },
@@ -30139,10 +30051,6 @@ Other details about this invoice",
                               "type": "datetime",
                             },
                             "type": "primitive",
-                          },
-                          "metadata": {
-                            "map": [],
-                            "type": "map",
                           },
                           "seal_number": {
                             "primitive": {
@@ -32922,10 +32830,6 @@ Other details about this invoice",
           "queryParameters": [],
           "request": {
             "properties": {
-              "classifications": {
-                "array": [],
-                "type": "array",
-              },
               "client_verified": {
                 "primitive": {
                   "boolean": true,
@@ -32961,20 +32865,12 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "product_properties": {
-                "array": [],
-                "type": "array",
-              },
               "sku": {
                 "primitive": {
                   "string": "WDVCDFD-RM00472",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "suppliers": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -33797,10 +33693,6 @@ Other details about this invoice",
           "queryParameters": [],
           "request": {
             "properties": {
-              "classifications": {
-                "array": [],
-                "type": "array",
-              },
               "client_verified": {
                 "primitive": {
                   "boolean": true,
@@ -33836,20 +33728,12 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "product_properties": {
-                "array": [],
-                "type": "array",
-              },
               "sku": {
                 "primitive": {
                   "string": "WDVCDFD-RM00472",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "suppliers": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -35767,10 +35651,6 @@ Other details about this invoice",
                         },
                         "type": "object",
                       },
-                      "details": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "name": {
                         "primitive": {
                           "string": "ORD - Chicago - IL",
@@ -36052,10 +35932,6 @@ Other details about this invoice",
                           },
                         },
                         "type": "object",
-                      },
-                      "details": {
-                        "array": [],
-                        "type": "array",
                       },
                       "name": {
                         "primitive": {
@@ -37447,16 +37323,8 @@ Other details about this invoice",
                                         },
                                         "type": "primitive",
                                       },
-                                      "vat_numbers": {
-                                        "array": [],
-                                        "type": "array",
-                                      },
                                     },
                                     "type": "object",
-                                  },
-                                  "contacts": {
-                                    "array": [],
-                                    "type": "array",
                                   },
                                   "role": {
                                     "enum": "buyer",
@@ -37496,10 +37364,6 @@ Other details about this invoice",
                                           "type": "string",
                                         },
                                         "type": "primitive",
-                                      },
-                                      "vat_numbers": {
-                                        "array": [],
-                                        "type": "array",
                                       },
                                     },
                                     "type": "object",
@@ -37648,10 +37512,6 @@ Other details about this invoice",
                                           "type": "string",
                                         },
                                         "type": "primitive",
-                                      },
-                                      "vat_numbers": {
-                                        "array": [],
-                                        "type": "array",
                                       },
                                     },
                                     "type": "object",
@@ -38900,10 +38760,6 @@ Other details about this invoice",
                         ],
                         "type": "array",
                       },
-                      "metadata": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "must_arrive_date": {
                         "primitive": {
                           "string": "2019-07-31",
@@ -39065,10 +38921,6 @@ Other details about this invoice",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "metadata": {
-                "properties": {},
-                "type": "object",
               },
               "must_arrive_date": {
                 "primitive": {
@@ -39304,10 +39156,6 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "destination_addresses": {
-                "array": [],
-                "type": "array",
-              },
               "destination_port": {
                 "properties": {
                   "_object": {
@@ -39398,10 +39246,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "details": {
-                    "array": [],
-                    "type": "array",
                   },
                   "name": {
                     "primitive": {
@@ -39695,10 +39539,6 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
-                  "details": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "name": {
                     "primitive": {
                       "string": "ORD - Chicago - IL",
@@ -39708,10 +39548,6 @@ Other details about this invoice",
                   },
                 },
                 "type": "object",
-              },
-              "parties": {
-                "array": [],
-                "type": "array",
               },
               "priority": {
                 "enum": "standard",
@@ -40200,10 +40036,6 @@ Other details about this invoice",
                     },
                     "type": "primitive",
                   },
-                  "destination_addresses": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "destination_port": {
                     "properties": {
                       "_object": {
@@ -40266,10 +40098,6 @@ Other details about this invoice",
                           },
                         },
                         "type": "object",
-                      },
-                      "details": {
-                        "array": [],
-                        "type": "array",
                       },
                       "name": {
                         "primitive": {
@@ -40535,10 +40363,6 @@ Other details about this invoice",
                         },
                         "type": "object",
                       },
-                      "details": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "name": {
                         "primitive": {
                           "string": "ORD - Chicago - IL",
@@ -40548,10 +40372,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "parties": {
-                    "array": [],
-                    "type": "array",
                   },
                   "priority": {
                     "enum": "standard",
@@ -41085,10 +40905,6 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "must_arrive_date": {
                 "primitive": {
                   "string": "2019-07-31",
@@ -41233,10 +41049,6 @@ Other details about this invoice",
                 },
                 "type": "primitive",
               },
-              "destination_addresses": {
-                "array": [],
-                "type": "array",
-              },
               "destination_port": {
                 "properties": {
                   "_object": {
@@ -41327,10 +41139,6 @@ Other details about this invoice",
                       },
                     },
                     "type": "object",
-                  },
-                  "details": {
-                    "array": [],
-                    "type": "array",
                   },
                   "name": {
                     "primitive": {
@@ -41624,10 +41432,6 @@ Other details about this invoice",
                     },
                     "type": "object",
                   },
-                  "details": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "name": {
                     "primitive": {
                       "string": "ORD - Chicago - IL",
@@ -41637,10 +41441,6 @@ Other details about this invoice",
                   },
                 },
                 "type": "object",
-              },
-              "parties": {
-                "array": [],
-                "type": "array",
               },
               "priority": {
                 "enum": "standard",
@@ -45272,10 +45072,6 @@ Other details about this invoice",
                                 },
                                 "type": "primitive",
                               },
-                              "classifications": {
-                                "array": [],
-                                "type": "array",
-                              },
                               "review_status": {
                                 "enum": "complete",
                                 "type": "enum",
@@ -45694,10 +45490,6 @@ Other details about this invoice",
                               },
                             },
                             "type": "object",
-                          },
-                          "metadata": {
-                            "map": [],
-                            "type": "map",
                           },
                           "name": {
                             "primitive": {
@@ -47883,10 +47675,6 @@ Other details about this invoice",
                     },
                     "type": "primitive",
                   },
-                  "child_shipments": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "commercial_invoices": {
                     "properties": {
                       "_object": {
@@ -48105,10 +47893,6 @@ Other details about this invoice",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "classifications": {
-                        "array": [],
-                        "type": "array",
                       },
                       "review_status": {
                         "enum": "complete",
@@ -49907,10 +49691,6 @@ Other details about this invoice",
                     },
                     "type": "primitive",
                   },
-                  "child_shipments": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "commercial_invoices": {
                     "properties": {
                       "_object": {
@@ -50129,10 +49909,6 @@ Other details about this invoice",
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "classifications": {
-                        "array": [],
-                        "type": "array",
                       },
                       "review_status": {
                         "enum": "complete",

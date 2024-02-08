@@ -486,10 +486,6 @@ given Dev organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
-                  "scopes": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
@@ -870,10 +866,6 @@ organization.
                   "requested_token_type": {
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
-                  },
-                  "scopes": {
-                    "array": [],
-                    "type": "array",
                   },
                   "status": {
                     "enum": "active",
@@ -1663,10 +1655,6 @@ used.
                     },
                     "type": "primitive",
                   },
-                  "external_identities": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "full_name": {
                     "primitive": {
                       "string": "full_name",
@@ -1687,10 +1675,6 @@ used.
                       "type": "datetime",
                     },
                     "type": "primitive",
-                  },
-                  "phone_numbers": {
-                    "array": [],
-                    "type": "array",
                   },
                   "state": {
                     "enum": "active",
@@ -3233,10 +3217,6 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
-                  "allowed_values": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -3478,10 +3458,6 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
-                  "allowed_values": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -3768,10 +3744,6 @@ used.
             "properties": {
               "tag": {
                 "properties": {
-                  "allowed_values": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -4277,10 +4249,6 @@ used.
                     },
                     "type": "primitive",
                   },
-                  "event_types": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4526,10 +4494,6 @@ used.
                     },
                     "type": "primitive",
                   },
-                  "event_types": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4734,10 +4698,6 @@ used.
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "event_types": {
-                    "array": [],
-                    "type": "array",
                   },
                   "id": {
                     "primitive": {

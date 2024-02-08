@@ -417,7 +417,6 @@ exports[`open api parser aries simple 1`] = `
               {
                 "request": {
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "metadata": {},
                   "my_label": "Bob",
                   "recipient_keys": [
                     "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
@@ -678,9 +677,7 @@ exports[`open api parser aries simple 1`] = `
                   "conn_id": "conn_id",
                 },
                 "response": {
-                  "body": {
-                    "results": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -982,9 +979,7 @@ exports[`open api parser aries simple 1`] = `
                   "metadata": {},
                 },
                 "response": {
-                  "body": {
-                    "results": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -1254,7 +1249,6 @@ exports[`open api parser aries simple 1`] = `
                         {},
                         {},
                       ],
-                      "meta_data": {},
                       "signature_request": [
                         {},
                         {},
@@ -1265,7 +1259,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00",
@@ -1635,7 +1628,6 @@ exports[`open api parser aries simple 1`] = `
                     "cred_tags": {
                       "key": "cred_tags",
                     },
-                    "cred_value": {},
                     "expanded_types": [
                       "https://w3id.org/citizenship#PermanentResidentCard",
                       "https://w3id.org/citizenship#PermanentResidentCard",
@@ -1717,7 +1709,6 @@ exports[`open api parser aries simple 1`] = `
                         "cred_tags": {
                           "key": "cred_tags",
                         },
-                        "cred_value": {},
                         "expanded_types": [
                           "https://w3id.org/citizenship#PermanentResidentCard",
                           "https://w3id.org/citizenship#PermanentResidentCard",
@@ -1746,7 +1737,6 @@ exports[`open api parser aries simple 1`] = `
                         "cred_tags": {
                           "key": "cred_tags",
                         },
-                        "cred_value": {},
                         "expanded_types": [
                           "https://w3id.org/citizenship#PermanentResidentCard",
                           "https://w3id.org/citizenship#PermanentResidentCard",
@@ -2049,7 +2039,6 @@ exports[`open api parser aries simple 1`] = `
                     "byte_count": 1234,
                     "data": {
                       "base64": "ey4uLn0=",
-                      "json": {},
                       "links": [
                         "https://link.to/data",
                         "https://link.to/data",
@@ -2373,7 +2362,6 @@ exports[`open api parser aries simple 1`] = `
                       "queries_msg": {
                         "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                        "queries": [],
                       },
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -2450,7 +2438,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2461,7 +2448,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2514,7 +2500,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2525,7 +2510,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2590,7 +2574,6 @@ exports[`open api parser aries simple 1`] = `
                           {},
                           {},
                         ],
-                        "meta_data": {},
                         "signature_request": [
                           {},
                           {},
@@ -2601,7 +2584,6 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "timing": {},
                         "trace": true,
                         "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2625,7 +2607,6 @@ exports[`open api parser aries simple 1`] = `
                           {},
                           {},
                         ],
-                        "meta_data": {},
                         "signature_request": [
                           {},
                           {},
@@ -2636,7 +2617,6 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "timing": {},
                         "trace": true,
                         "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2682,7 +2662,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2693,7 +2672,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2743,7 +2721,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2754,7 +2731,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2804,7 +2780,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2815,7 +2790,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -2865,7 +2839,6 @@ exports[`open api parser aries simple 1`] = `
                       {},
                       {},
                     ],
-                    "meta_data": {},
                     "signature_request": [
                       {},
                       {},
@@ -2876,7 +2849,6 @@ exports[`open api parser aries simple 1`] = `
                     ],
                     "state": "active",
                     "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    "timing": {},
                     "trace": true,
                     "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -3180,13 +3152,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -3197,7 +3167,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -3376,13 +3345,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -3393,7 +3360,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -3568,13 +3534,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -3585,7 +3549,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -3701,7 +3664,6 @@ exports[`open api parser aries simple 1`] = `
                           "nonce": "0",
                           "prover_did": "WgWxqztrNooG92RXvxSTWv",
                         },
-                        "credential_request_metadata": {},
                         "error_msg": "Credential definition identifier is not set in proposal",
                         "initiator": "self",
                         "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -3806,7 +3768,6 @@ exports[`open api parser aries simple 1`] = `
                           "nonce": "0",
                           "prover_did": "WgWxqztrNooG92RXvxSTWv",
                         },
-                        "credential_request_metadata": {},
                         "error_msg": "Credential definition identifier is not set in proposal",
                         "initiator": "self",
                         "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -3960,13 +3921,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -3977,7 +3936,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -4155,13 +4113,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -4172,7 +4128,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -4302,13 +4257,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -4319,7 +4272,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -4463,13 +4415,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -4480,7 +4430,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -4664,13 +4613,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -4681,7 +4628,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -4853,13 +4799,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -4870,7 +4814,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -5037,13 +4980,11 @@ exports[`open api parser aries simple 1`] = `
                       "nonce": "0",
                       "prover_did": "WgWxqztrNooG92RXvxSTWv",
                     },
-                    "credential_request_metadata": {},
                     "error_msg": "Credential definition identifier is not set in proposal",
                     "initiator": "self",
                     "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "raw_credential": {
                       "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
-                      "rev_reg": {},
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                       "signature": {},
@@ -5054,7 +4995,6 @@ exports[`open api parser aries simple 1`] = `
                           "raw": "raw",
                         },
                       },
-                      "witness": {},
                     },
                     "revoc_reg_id": "revoc_reg_id",
                     "revocation_id": "revocation_id",
@@ -5192,12 +5132,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5384,12 +5318,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5560,12 +5488,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "created_at": "2021-12-31 23:59:59+00:00",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5658,7 +5580,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -5791,7 +5712,6 @@ exports[`open api parser aries simple 1`] = `
                           "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_request_metadata": {},
                           "cred_rev_id": "12345",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "state": "active",
@@ -5899,7 +5819,6 @@ exports[`open api parser aries simple 1`] = `
                           "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                          "cred_request_metadata": {},
                           "cred_rev_id": "12345",
                           "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                           "state": "active",
@@ -5965,12 +5884,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "created_at": "2021-12-31 23:59:59+00:00",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6063,7 +5976,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -6182,12 +6094,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6319,12 +6225,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6508,12 +6408,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6681,12 +6575,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -6882,12 +6770,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7040,12 +6922,6 @@ exports[`open api parser aries simple 1`] = `
                     "auto_issue": false,
                     "auto_offer": false,
                     "auto_remove": false,
-                    "by_format": {
-                      "cred_issue": {},
-                      "cred_offer": {},
-                      "cred_proposal": {},
-                      "cred_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7191,12 +7067,6 @@ exports[`open api parser aries simple 1`] = `
                       "auto_issue": false,
                       "auto_offer": false,
                       "auto_remove": false,
-                      "by_format": {
-                        "cred_issue": {},
-                        "cred_offer": {},
-                        "cred_proposal": {},
-                        "cred_request": {},
-                      },
                       "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "created_at": "2021-12-31 23:59:59+00:00",
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -7289,7 +7159,6 @@ exports[`open api parser aries simple 1`] = `
                       "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_ex_indy_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "cred_id_stored": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "cred_request_metadata": {},
                       "cred_rev_id": "12345",
                       "rev_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                       "state": "active",
@@ -7412,7 +7281,6 @@ exports[`open api parser aries simple 1`] = `
                 "response": {
                   "body": {
                     "error": "error",
-                    "signed_doc": {},
                   },
                 },
               },
@@ -7759,7 +7627,6 @@ exports[`open api parser aries simple 1`] = `
                         {},
                         {},
                       ],
-                      "meta_data": {},
                       "signature_request": [
                         {},
                         {},
@@ -7770,7 +7637,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00",
@@ -8361,14 +8227,11 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "mediation_id": "mediation_id",
                 },
-                "request": {
-                  "filter": {},
-                },
+                "request": {},
                 "response": {
                   "body": {
                     "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "@type": "https://didcomm.org/my-family/1.0/my-message-type",
-                    "filter": {},
                     "paginate": {
                       "limit": 1,
                       "offset": 1,
@@ -8633,7 +8496,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "token": "eyJhbGciOiJFZERTQSJ9.eyJhIjogIjAifQ.dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk",
                     "updated_at": "2021-12-31 23:59:59+00:00",
@@ -8792,7 +8654,6 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "key_management_mode": "managed",
-                        "settings": {},
                         "state": "active",
                         "updated_at": "2021-12-31 23:59:59+00:00",
                         "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8800,7 +8661,6 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "key_management_mode": "managed",
-                        "settings": {},
                         "state": "active",
                         "updated_at": "2021-12-31 23:59:59+00:00",
                         "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8839,7 +8699,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "updated_at": "2021-12-31 23:59:59+00:00",
                     "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -8882,7 +8741,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "key_management_mode": "managed",
-                    "settings": {},
                     "state": "active",
                     "updated_at": "2021-12-31 23:59:59+00:00",
                     "wallet_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9002,7 +8860,6 @@ exports[`open api parser aries simple 1`] = `
                     "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/didexchange/1.0",
                   ],
                   "mediation_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "metadata": {},
                   "my_label": "Invitation to Barry",
                   "protocol_version": "1.1",
                   "use_public_did": false,
@@ -9030,7 +8887,6 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
-                            "json": {},
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -9047,7 +8903,6 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
-                            "json": {},
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -9169,7 +9024,6 @@ exports[`open api parser aries simple 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
-                        "json": {},
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -9186,7 +9040,6 @@ exports[`open api parser aries simple 1`] = `
                       "byte_count": 1234,
                       "data": {
                         "base64": "ey4uLn0=",
-                        "json": {},
                         "links": [
                           "https://link.to/data",
                           "https://link.to/data",
@@ -9240,7 +9093,6 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
-                            "json": {},
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -9257,7 +9109,6 @@ exports[`open api parser aries simple 1`] = `
                           "byte_count": 1234,
                           "data": {
                             "base64": "ey4uLn0=",
-                            "json": {},
                             "links": [
                               "https://link.to/data",
                               "https://link.to/data",
@@ -9412,19 +9263,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9600,7 +9442,6 @@ exports[`open api parser aries simple 1`] = `
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "error_msg": "Invalid structure",
                         "initiator": "self",
-                        "presentation": {},
                         "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "presentation_proposal_dict": {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9699,7 +9540,6 @@ exports[`open api parser aries simple 1`] = `
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "error_msg": "Invalid structure",
                         "initiator": "self",
-                        "presentation": {},
                         "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "presentation_proposal_dict": {
                           "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9890,19 +9730,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10120,19 +9951,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10319,19 +10141,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10503,19 +10316,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10656,19 +10460,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -10819,19 +10614,10 @@ exports[`open api parser aries simple 1`] = `
                     "error_msg": "Invalid structure",
                     "initiator": "self",
                     "presentation": {
-                      "identifiers": [],
-                      "proof": {
-                        "aggregated_proof": {},
-                        "proofs": [],
-                      },
                       "requested_proof": {
                         "predicates": {
                           "predicates": {},
                         },
-                        "revealed_attr_groups": {},
-                        "revealed_attrs": {},
-                        "self_attested_attrs": {},
-                        "unrevealed_attrs": {},
                       },
                     },
                     "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -11035,11 +10821,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11150,7 +10931,6 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "auto_present": false,
                         "auto_verify": true,
-                        "by_format": {},
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "error_msg": "Invalid structure",
@@ -11188,7 +10968,6 @@ exports[`open api parser aries simple 1`] = `
                       {
                         "auto_present": false,
                         "auto_verify": true,
-                        "by_format": {},
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "error_msg": "Invalid structure",
@@ -11317,11 +11096,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11475,11 +11249,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11606,11 +11375,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11719,11 +11483,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11810,11 +11569,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -11899,11 +11653,6 @@ exports[`open api parser aries simple 1`] = `
                   "body": {
                     "auto_present": false,
                     "auto_verify": true,
-                    "by_format": {
-                      "pres": {},
-                      "pres_proposal": {},
-                      "pres_request": {},
-                    },
                     "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                     "created_at": "2021-12-31 23:59:59+00:00",
                     "error_msg": "Invalid structure",
@@ -12466,9 +12215,7 @@ exports[`open api parser aries simple 1`] = `
                   "rev_reg_id": "rev_reg_id",
                 },
                 "response": {
-                  "body": {
-                    "rev_reg_delta": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -12611,7 +12358,6 @@ exports[`open api parser aries simple 1`] = `
                         {},
                         {},
                       ],
-                      "meta_data": {},
                       "signature_request": [
                         {},
                         {},
@@ -12622,7 +12368,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00",
@@ -12779,7 +12524,6 @@ exports[`open api parser aries simple 1`] = `
                         {},
                         {},
                       ],
-                      "meta_data": {},
                       "signature_request": [
                         {},
                         {},
@@ -12790,7 +12534,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00",
@@ -12978,11 +12721,7 @@ exports[`open api parser aries simple 1`] = `
                   "apply_ledger_update": true,
                 },
                 "response": {
-                  "body": {
-                    "accum_calculated": {},
-                    "accum_fixed": {},
-                    "rev_reg_delta": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -13293,7 +13032,6 @@ exports[`open api parser aries simple 1`] = `
                         {},
                         {},
                       ],
-                      "meta_data": {},
                       "signature_request": [
                         {},
                         {},
@@ -13304,7 +13042,6 @@ exports[`open api parser aries simple 1`] = `
                       ],
                       "state": "active",
                       "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                      "timing": {},
                       "trace": true,
                       "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                       "updated_at": "2021-12-31 23:59:59+00:00",
@@ -13407,9 +13144,7 @@ exports[`open api parser aries simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "config": {},
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -13491,9 +13226,7 @@ exports[`open api parser aries simple 1`] = `
               {
                 "response": {
                   "body": {
-                    "conductor": {},
                     "label": "label",
-                    "timing": {},
                     "version": "version",
                   },
                 },
@@ -13996,7 +13729,6 @@ exports[`open api parser aries simple 1`] = `
                     {},
                     {},
                   ],
-                  "meta_data": {},
                   "signature_request": [
                     {},
                     {},
@@ -14007,7 +13739,6 @@ exports[`open api parser aries simple 1`] = `
                   ],
                   "state": "active",
                   "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "timing": {},
                   "trace": true,
                   "transaction_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "updated_at": "2021-12-31 23:59:59+00:00",

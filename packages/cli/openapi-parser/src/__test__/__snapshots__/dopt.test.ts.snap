@@ -848,10 +848,6 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
-              "blocks": {
-                "array": [],
-                "type": "array",
-              },
               "kind": {
                 "literal": {
                   "string": "flow",

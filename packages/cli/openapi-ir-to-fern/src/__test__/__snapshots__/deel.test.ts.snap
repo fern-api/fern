@@ -157,7 +157,6 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "rows": [],
                       "total": 1.1,
                     },
                   },
@@ -213,7 +212,6 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "rows": [],
                       "total": 1.1,
                     },
                   },
@@ -647,7 +645,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -687,7 +684,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -805,7 +801,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -845,7 +840,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -962,7 +956,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -1002,7 +995,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -1119,7 +1111,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -1159,7 +1150,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -1277,7 +1267,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -1317,7 +1306,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -1846,7 +1834,6 @@ exports[`open api parser deel simple 1`] = `
                         "scale": "scale",
                       },
                       "created_at": "2022-05-24T09:38:46.235Z",
-                      "custom_fields": [],
                       "employment_details": {
                         "country": "US",
                         "days_per_week": 1.1,
@@ -1886,7 +1873,6 @@ exports[`open api parser deel simple 1`] = `
                       "type": "ongoing_time_based",
                       "who_reports": "both",
                       "worker": {
-                        "alternate_email": [],
                         "date_of_birth": "2022-05-24T09:38:46.235Z",
                         "email": "email",
                         "expected_email": "expected_email",
@@ -2022,9 +2008,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "data": [],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -2122,7 +2106,6 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "first_payment_dates": [],
                       "pro_rata": {
                         "calculation_type": "CUSTOM_AMOUNT",
                         "cycle_end": "1999-12-31",
@@ -2312,9 +2295,6 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "client": {
-                        "legal_entity": {},
-                      },
                       "compensation_details": {
                         "currency": "currency",
                         "salary": 1.1,
@@ -2402,7 +2382,6 @@ exports[`open api parser deel simple 1`] = `
                         "type": "ALLOWED_WITHOUT_LIMITATION",
                       },
                       "health_insurance": {
-                        "providers": [],
                         "status": "REQUIRED",
                       },
                       "hiring_guide_country_name": "brazil",
@@ -3737,9 +3716,7 @@ exports[`open api parser deel simple 1`] = `
             "examples": [
               {
                 "response": {
-                  "body": {
-                    "data": [],
-                  },
+                  "body": {},
                 },
               },
             ],
@@ -4142,11 +4119,8 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "applied_changes": [],
-                      "attachments": [],
                       "can_request_changes": true,
                       "change_request": {
-                        "attachments": [],
                         "date_is_half_day": true,
                         "days_used_end_year": "2.00",
                         "days_used_start_year": "2.00",
@@ -4309,11 +4283,8 @@ exports[`open api parser deel simple 1`] = `
                 "response": {
                   "body": {
                     "data": {
-                      "applied_changes": [],
-                      "attachments": [],
                       "can_request_changes": true,
                       "change_request": {
-                        "attachments": [],
                         "date_is_half_day": true,
                         "days_used_end_year": "2.00",
                         "days_used_start_year": "2.00",

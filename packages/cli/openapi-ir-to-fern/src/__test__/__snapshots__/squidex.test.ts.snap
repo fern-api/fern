@@ -1994,7 +1994,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
-                    "tags": [],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -2598,7 +2597,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
-                    "tags": [],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -2868,7 +2866,6 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
-                    "tags": [],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -3241,9 +3238,6 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "response": {
                   "body": {
-                    "createdComments": [],
-                    "deletedComments": [],
-                    "updatedComments": [],
                     "version": 1,
                   },
                 },
@@ -3738,7 +3732,6 @@ The client secret is auto generated on the server and returned. The client does 
                         },
                       },
                     },
-                    "referenceFields": [],
                     "scheduleJob": {
                       "color": "color",
                       "dueTime": "2024-01-15T09:30:00Z",
@@ -4927,9 +4920,6 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "response": {
                   "body": {
-                    "createdComments": [],
-                    "deletedComments": [],
-                    "updatedComments": [],
                     "version": 1,
                   },
                 },
@@ -5889,7 +5879,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -5975,7 +5964,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6094,7 +6082,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6180,7 +6167,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6269,7 +6255,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6355,7 +6340,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6442,7 +6426,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6563,7 +6546,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6649,7 +6631,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6738,7 +6719,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6824,7 +6804,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6981,7 +6960,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7081,7 +7059,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7162,7 +7139,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7329,7 +7305,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7419,7 +7394,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7503,7 +7477,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7599,7 +7572,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7719,7 +7691,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7807,7 +7778,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7908,7 +7878,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8006,7 +7975,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8090,7 +8058,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8176,7 +8143,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8264,7 +8230,6 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
-                      "tags": [],
                       "validateOnPublish": true,
                     },
                     "scripts": {

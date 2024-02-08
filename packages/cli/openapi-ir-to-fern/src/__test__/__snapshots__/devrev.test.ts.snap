@@ -463,7 +463,6 @@ given Dev organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -606,7 +605,6 @@ organization.
                       "issued_at": "2024-01-15T09:30:00Z",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "requested_token_type": "urn:devrev:params:oauth:token-type:aat",
-                      "scopes": [],
                       "status": "active",
                       "subject": "subject",
                       "token_hint": "token_hint",
@@ -744,11 +742,9 @@ used.
                         "id": "id",
                       },
                       "email": "email",
-                      "external_identities": [],
                       "full_name": "full_name",
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
-                      "phone_numbers": [],
                       "state": "active",
                     },
                   },
@@ -1353,7 +1349,6 @@ and a logical concept denoted by the tag's name.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1462,7 +1457,6 @@ permitted.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1560,7 +1554,6 @@ used.
                 "response": {
                   "body": {
                     "tag": {
-                      "allowed_values": [],
                       "created_date": "2024-01-15T09:30:00Z",
                       "description": "description",
                       "display_id": "display_id",
@@ -1780,7 +1773,6 @@ used.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -1891,7 +1883,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",
@@ -1967,7 +1958,6 @@ response.
                     "webhook": {
                       "created_date": "2024-01-15T09:30:00Z",
                       "display_id": "display_id",
-                      "event_types": [],
                       "id": "id",
                       "modified_date": "2024-01-15T09:30:00Z",
                       "secret": "secret",

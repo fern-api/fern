@@ -121,10 +121,6 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "authConfiguration": {
                 "properties": {
-                  "anonymous": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "google": {
                     "properties": {
                       "clientId": {
@@ -135,10 +131,6 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                       },
                     },
-                    "type": "object",
-                  },
-                  "nickname": {
-                    "properties": {},
                     "type": "object",
                   },
                 },
@@ -420,10 +412,6 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "authConfiguration": {
                 "properties": {
-                  "anonymous": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "google": {
                     "properties": {
                       "clientId": {
@@ -434,10 +422,6 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                       },
                     },
-                    "type": "object",
-                  },
-                  "nickname": {
-                    "properties": {},
                     "type": "object",
                   },
                 },
@@ -716,10 +700,6 @@ exports[`open api parser hathora parse open api 1`] = `
               },
               "authConfiguration": {
                 "properties": {
-                  "anonymous": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "google": {
                     "properties": {
                       "clientId": {
@@ -730,10 +710,6 @@ exports[`open api parser hathora parse open api 1`] = `
                         "type": "primitive",
                       },
                     },
-                    "type": "object",
-                  },
-                  "nickname": {
-                    "properties": {},
                     "type": "object",
                   },
                 },
@@ -5052,24 +5028,7 @@ exports[`open api parser hathora parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "cpu": {
-                "array": [],
-                "type": "array",
-              },
-              "memory": {
-                "array": [],
-                "type": "array",
-              },
-              "rate_egress": {
-                "array": [],
-                "type": "array",
-              },
-              "total_egress": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },

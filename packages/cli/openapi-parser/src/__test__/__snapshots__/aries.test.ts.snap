@@ -1282,10 +1282,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "my_label": {
                 "primitive": {
                   "string": "Bob",
@@ -3300,12 +3296,7 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "results": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -3419,12 +3410,7 @@ exports[`open api parser aries parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "properties": {
-              "results": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -4064,10 +4050,6 @@ exports[`open api parser aries parse open api 1`] = `
                     ],
                     "type": "array",
                   },
-                  "meta_data": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "signature_request": {
                     "array": [
                       {
@@ -4107,10 +4089,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "timing": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "trace": {
                     "primitive": {
@@ -5280,10 +5258,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "map",
               },
-              "cred_value": {
-                "properties": {},
-                "type": "object",
-              },
               "expanded_types": {
                 "array": [
                   {
@@ -6225,10 +6199,6 @@ exports[`open api parser aries parse open api 1`] = `
                         ],
                         "type": "map",
                       },
-                      "cred_value": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "expanded_types": {
                         "array": [
                           {
@@ -6367,10 +6337,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "cred_value": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "expanded_types": {
                         "array": [
@@ -6983,10 +6949,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "json": {
-                        "map": [],
-                        "type": "map",
                       },
                       "links": {
                         "array": [
@@ -7919,10 +7881,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "queries": {
-                        "array": [],
-                        "type": "array",
                       },
                     },
                     "type": "object",
@@ -9166,27 +9124,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -9971,27 +9908,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -10941,10 +10857,6 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
-                          "cred_request_metadata": {
-                            "properties": {},
-                            "type": "object",
-                          },
                           "cred_rev_id": {
                             "primitive": {
                               "string": "12345",
@@ -11481,10 +11393,6 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
-                          "cred_request_metadata": {
-                            "properties": {},
-                            "type": "object",
-                          },
                           "cred_rev_id": {
                             "primitive": {
                               "string": "12345",
@@ -11825,27 +11733,6 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "by_format": {
-                    "properties": {
-                      "cred_issue": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_offer": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_proposal": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_request": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "connection_id": {
                     "primitive": {
                       "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -12303,10 +12190,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "cred_request_metadata": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "cred_rev_id": {
                     "primitive": {
@@ -12608,27 +12491,6 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "by_format": {
-                    "properties": {
-                      "cred_issue": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_offer": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_proposal": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_request": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "connection_id": {
                     "primitive": {
                       "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -13086,10 +12948,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "cred_request_metadata": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "cred_rev_id": {
                     "primitive": {
@@ -13487,27 +13345,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -14060,27 +13897,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -14636,27 +14452,6 @@ exports[`open api parser aries parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "by_format": {
-                    "properties": {
-                      "cred_issue": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_offer": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_proposal": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "cred_request": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "connection_id": {
                     "primitive": {
                       "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -15114,10 +14909,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "cred_request_metadata": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "cred_rev_id": {
                     "primitive": {
@@ -15581,27 +15372,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -16395,27 +16165,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17208,27 +16957,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -17951,27 +17679,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "cred_issue": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_offer": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "cred_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -19033,10 +18740,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -19063,10 +18766,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -19119,10 +18818,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -19787,10 +19482,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -19817,10 +19508,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -19873,10 +19560,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -20414,10 +20097,6 @@ exports[`open api parser aries parse open api 1`] = `
                             "type": "primitive",
                           },
                         },
-                        "type": "object",
-                      },
-                      "credential_request_metadata": {
-                        "properties": {},
                         "type": "object",
                       },
                       "error_msg": {
@@ -20963,10 +20642,6 @@ exports[`open api parser aries parse open api 1`] = `
                             "type": "primitive",
                           },
                         },
-                        "type": "object",
-                      },
-                      "credential_request_metadata": {
-                        "properties": {},
                         "type": "object",
                       },
                       "error_msg": {
@@ -21769,10 +21444,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -21799,10 +21470,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -21855,10 +21522,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -22548,10 +22211,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -22578,10 +22237,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -22634,10 +22289,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -23356,10 +23007,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -23386,10 +23033,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -23442,10 +23085,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -24031,10 +23670,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -24061,10 +23696,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -24117,10 +23748,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -24704,10 +24331,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -24734,10 +24357,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -24790,10 +24409,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -25511,10 +25126,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -25541,10 +25152,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -25597,10 +25204,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -26272,10 +25875,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -26302,10 +25901,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -26358,10 +25953,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -27061,10 +26652,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "credential_request_metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "error_msg": {
                 "primitive": {
                   "string": "Credential definition identifier is not set in proposal",
@@ -27091,10 +26678,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "rev_reg": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "rev_reg_id": {
                     "primitive": {
@@ -27147,10 +26730,6 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                     ],
                     "type": "map",
-                  },
-                  "witness": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -27319,10 +26898,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "signed_doc": {
-                "properties": {},
-                "type": "object",
               },
             },
             "type": "object",
@@ -28144,10 +27719,6 @@ exports[`open api parser aries parse open api 1`] = `
                     ],
                     "type": "array",
                   },
-                  "meta_data": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "signature_request": {
                     "array": [
                       {
@@ -28187,10 +27758,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "timing": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "trace": {
                     "primitive": {
@@ -29329,12 +28896,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "filter": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
@@ -29352,10 +28914,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "filter": {
-                "properties": {},
-                "type": "object",
               },
               "paginate": {
                 "properties": {
@@ -31454,10 +31012,6 @@ exports[`open api parser aries parse open api 1`] = `
                 "enum": "managed",
                 "type": "enum",
               },
-              "settings": {
-                "properties": {},
-                "type": "object",
-              },
               "state": {
                 "primitive": {
                   "string": "active",
@@ -31573,10 +31127,6 @@ exports[`open api parser aries parse open api 1`] = `
               "key_management_mode": {
                 "enum": "managed",
                 "type": "enum",
-              },
-              "settings": {
-                "properties": {},
-                "type": "object",
               },
               "state": {
                 "primitive": {
@@ -31732,10 +31282,6 @@ exports[`open api parser aries parse open api 1`] = `
               "key_management_mode": {
                 "enum": "managed",
                 "type": "enum",
-              },
-              "settings": {
-                "properties": {},
-                "type": "object",
               },
               "state": {
                 "primitive": {
@@ -32100,10 +31646,6 @@ exports[`open api parser aries parse open api 1`] = `
                         "enum": "managed",
                         "type": "enum",
                       },
-                      "settings": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "state": {
                         "primitive": {
                           "string": "active",
@@ -32140,10 +31682,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "key_management_mode": {
                         "enum": "managed",
                         "type": "enum",
-                      },
-                      "settings": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "state": {
                         "primitive": {
@@ -32338,10 +31876,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "metadata": {
-                "properties": {},
-                "type": "object",
-              },
               "my_label": {
                 "primitive": {
                   "string": "Invitation to Barry",
@@ -32477,10 +32011,6 @@ exports[`open api parser aries parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
-                              "json": {
-                                "map": [],
-                                "type": "map",
-                              },
                               "links": {
                                 "array": [
                                   {
@@ -32565,10 +32095,6 @@ exports[`open api parser aries parse open api 1`] = `
                                   "type": "string",
                                 },
                                 "type": "primitive",
-                              },
-                              "json": {
-                                "map": [],
-                                "type": "map",
                               },
                               "links": {
                                 "array": [
@@ -33013,10 +32539,6 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
-                          "json": {
-                            "map": [],
-                            "type": "map",
-                          },
                           "links": {
                             "array": [
                               {
@@ -33101,10 +32623,6 @@ exports[`open api parser aries parse open api 1`] = `
                               "type": "string",
                             },
                             "type": "primitive",
-                          },
-                          "json": {
-                            "map": [],
-                            "type": "map",
                           },
                           "links": {
                             "array": [
@@ -33429,10 +32947,6 @@ exports[`open api parser aries parse open api 1`] = `
                                 },
                                 "type": "primitive",
                               },
-                              "json": {
-                                "map": [],
-                                "type": "map",
-                              },
                               "links": {
                                 "array": [
                                   {
@@ -33517,10 +33031,6 @@ exports[`open api parser aries parse open api 1`] = `
                                   "type": "string",
                                 },
                                 "type": "primitive",
-                              },
-                              "json": {
-                                "map": [],
-                                "type": "map",
                               },
                               "links": {
                                 "array": [
@@ -34265,23 +33775,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -34559,10 +34052,6 @@ exports[`open api parser aries parse open api 1`] = `
                         },
                         "type": "primitive",
                       },
-                      "by_format": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "connection_id": {
                         "primitive": {
                           "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -34746,10 +34235,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "boolean",
                         },
                         "type": "primitive",
-                      },
-                      "by_format": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "connection_id": {
                         "primitive": {
@@ -35150,23 +34635,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -35979,23 +35447,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -36316,23 +35767,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -36634,23 +36068,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -37151,23 +36568,6 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
               "connection_id": {
                 "primitive": {
                   "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -37661,23 +37061,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "by_format": {
-                "properties": {
-                  "pres": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_proposal": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "pres_request": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
               },
               "connection_id": {
                 "primitive": {
@@ -38188,23 +37571,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -38221,22 +37587,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -38836,10 +38186,6 @@ exports[`open api parser aries parse open api 1`] = `
                         "enum": "self",
                         "type": "enum",
                       },
-                      "presentation": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "presentation_exchange_id": {
                         "primitive": {
                           "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -39333,10 +38679,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "initiator": {
                         "enum": "self",
                         "type": "enum",
-                      },
-                      "presentation": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "presentation_exchange_id": {
                         "primitive": {
@@ -40056,23 +39398,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -40089,22 +39414,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -41228,23 +40537,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -41261,22 +40553,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -41921,23 +41197,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -41954,22 +41213,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -42596,23 +41839,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -42629,22 +41855,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -43441,23 +42651,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -43474,22 +42667,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -44303,23 +43480,6 @@ exports[`open api parser aries parse open api 1`] = `
               },
               "presentation": {
                 "properties": {
-                  "identifiers": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "proof": {
-                    "properties": {
-                      "aggregated_proof": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "proofs": {
-                        "array": [],
-                        "type": "array",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "requested_proof": {
                     "properties": {
                       "predicates": {
@@ -44336,22 +43496,6 @@ exports[`open api parser aries parse open api 1`] = `
                           },
                         ],
                         "type": "map",
-                      },
-                      "revealed_attr_groups": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "revealed_attrs": {
-                        "map": [],
-                        "type": "map",
-                      },
-                      "self_attested_attrs": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                      "unrevealed_attrs": {
-                        "properties": {},
-                        "type": "object",
                       },
                     },
                     "type": "object",
@@ -46091,10 +45235,6 @@ exports[`open api parser aries parse open api 1`] = `
                     ],
                     "type": "array",
                   },
-                  "meta_data": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "signature_request": {
                     "array": [
                       {
@@ -46134,10 +45274,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "timing": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "trace": {
                     "primitive": {
@@ -47384,10 +46520,6 @@ exports[`open api parser aries parse open api 1`] = `
                     ],
                     "type": "array",
                   },
-                  "meta_data": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "signature_request": {
                     "array": [
                       {
@@ -47427,10 +46559,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "timing": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "trace": {
                     "primitive": {
@@ -47936,20 +47064,7 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "request": undefined,
           "response": {
-            "properties": {
-              "accum_calculated": {
-                "properties": {},
-                "type": "object",
-              },
-              "accum_fixed": {
-                "properties": {},
-                "type": "object",
-              },
-              "rev_reg_delta": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -48358,12 +47473,7 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "rev_reg_delta": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -49305,10 +48415,6 @@ exports[`open api parser aries parse open api 1`] = `
                     ],
                     "type": "array",
                   },
-                  "meta_data": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "signature_request": {
                     "array": [
                       {
@@ -49348,10 +48454,6 @@ exports[`open api parser aries parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "timing": {
-                    "properties": {},
-                    "type": "object",
                   },
                   "trace": {
                     "primitive": {
@@ -50018,20 +49120,12 @@ exports[`open api parser aries parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
-              "conductor": {
-                "properties": {},
-                "type": "object",
-              },
               "label": {
                 "primitive": {
                   "string": "label",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "version": {
                 "primitive": {
@@ -50092,12 +49186,7 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "config": {
-                "properties": {},
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -50466,10 +49555,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -50509,10 +49594,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -50718,10 +49799,6 @@ exports[`open api parser aries parse open api 1`] = `
                         ],
                         "type": "array",
                       },
-                      "meta_data": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "signature_request": {
                         "array": [
                           {
@@ -50761,10 +49838,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "timing": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "trace": {
                         "primitive": {
@@ -50900,10 +49973,6 @@ exports[`open api parser aries parse open api 1`] = `
                         ],
                         "type": "array",
                       },
-                      "meta_data": {
-                        "properties": {},
-                        "type": "object",
-                      },
                       "signature_request": {
                         "array": [
                           {
@@ -50943,10 +50012,6 @@ exports[`open api parser aries parse open api 1`] = `
                           "type": "string",
                         },
                         "type": "primitive",
-                      },
-                      "timing": {
-                        "properties": {},
-                        "type": "object",
                       },
                       "trace": {
                         "primitive": {
@@ -51158,10 +50223,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -51201,10 +50262,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -51731,10 +50788,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -51774,10 +50827,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -51990,10 +51039,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -52033,10 +51078,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -52249,10 +51290,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -52292,10 +51329,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -52533,10 +51566,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -52576,10 +51605,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {
@@ -52792,10 +51817,6 @@ exports[`open api parser aries parse open api 1`] = `
                 ],
                 "type": "array",
               },
-              "meta_data": {
-                "properties": {},
-                "type": "object",
-              },
               "signature_request": {
                 "array": [
                   {
@@ -52835,10 +51856,6 @@ exports[`open api parser aries parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "timing": {
-                "properties": {},
-                "type": "object",
               },
               "trace": {
                 "primitive": {

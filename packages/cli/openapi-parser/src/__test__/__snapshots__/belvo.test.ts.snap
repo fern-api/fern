@@ -420,10 +420,6 @@ in the DevPortal.
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -3364,10 +3360,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -5223,10 +5215,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "funds_data": {
-                "array": [],
-                "type": "array",
-              },
               "id": {
                 "primitive": {
                   "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -5329,20 +5317,12 @@ client.connect()
                     },
                     "type": "primitive",
                   },
-                  "fees": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "interest_rate": {
                     "primitive": {
                       "double": 1.1,
                       "type": "double",
                     },
                     "type": "primitive",
-                  },
-                  "interest_rates": {
-                    "array": [],
-                    "type": "array",
                   },
                   "last_payment_date": {
                     "primitive": {
@@ -6485,10 +6465,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -9140,10 +9116,6 @@ client.connect()
                     },
                     "type": "primitive",
                   },
-                  "funds_data": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -9246,20 +9218,12 @@ client.connect()
                         },
                         "type": "primitive",
                       },
-                      "fees": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "interest_rate": {
                         "primitive": {
                           "double": 1.1,
                           "type": "double",
                         },
                         "type": "primitive",
-                      },
-                      "interest_rates": {
-                        "array": [],
-                        "type": "array",
                       },
                       "last_payment_date": {
                         "primitive": {
@@ -10275,10 +10239,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -11861,10 +11821,6 @@ client.connect()
                     },
                     "type": "primitive",
                   },
-                  "funds_data": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "id": {
                     "primitive": {
                       "string": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
@@ -11967,20 +11923,12 @@ client.connect()
                         },
                         "type": "primitive",
                       },
-                      "fees": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "interest_rate": {
                         "primitive": {
                           "double": 1.1,
                           "type": "double",
                         },
                         "type": "primitive",
-                      },
-                      "interest_rates": {
-                        "array": [],
-                        "type": "array",
                       },
                       "last_payment_date": {
                         "primitive": {
@@ -12713,10 +12661,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -13253,24 +13197,12 @@ client.connect()
           "request": undefined,
           "response": {
             "properties": {
-              "country_codes": {
-                "array": [],
-                "type": "array",
-              },
               "display_name": {
                 "primitive": {
                   "string": "Erebor Mexico",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "features": {
-                "array": [],
-                "type": "array",
-              },
-              "form_fields": {
-                "array": [],
-                "type": "array",
               },
               "icon_logo": {
                 "primitive": {
@@ -13310,10 +13242,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "resources": {
-                "array": [],
-                "type": "array",
               },
               "status": {
                 "enum": "healthy",
@@ -13717,10 +13645,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -15620,10 +15544,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -18180,10 +18100,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -20193,10 +20109,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -20706,10 +20618,6 @@ client.connect()
             "properties": {
               "address": {
                 "properties": {
-                  "between_street": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "exterior_number": {
                     "primitive": {
                       "string": "432",
@@ -20804,10 +20712,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "economic_activity": {
-                "array": [],
-                "type": "array",
-              },
               "id": {
                 "primitive": {
                   "string": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
@@ -20829,10 +20733,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "obligations": {
-                "array": [],
-                "type": "array",
-              },
               "official_name": {
                 "primitive": {
                   "string": "John Doe",
@@ -20853,10 +20753,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "regimes": {
-                "array": [],
-                "type": "array",
               },
               "tax_payer_information": {
                 "properties": {
@@ -21224,10 +21120,6 @@ client.connect()
             "properties": {
               "address": {
                 "properties": {
-                  "between_street": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "exterior_number": {
                     "primitive": {
                       "string": "432",
@@ -21322,10 +21214,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "economic_activity": {
-                "array": [],
-                "type": "array",
-              },
               "id": {
                 "primitive": {
                   "string": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
@@ -21347,10 +21235,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "obligations": {
-                "array": [],
-                "type": "array",
-              },
               "official_name": {
                 "primitive": {
                   "string": "John Doe",
@@ -21371,10 +21255,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "regimes": {
-                "array": [],
-                "type": "array",
               },
               "tax_payer_information": {
                 "properties": {
@@ -22009,10 +21889,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -23315,10 +23191,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -24875,10 +24747,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -26242,10 +26110,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -26724,10 +26588,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "instruments": {
-                "array": [],
-                "type": "array",
-              },
               "name": {
                 "primitive": {
                   "string": "Investimento",
@@ -27020,10 +26880,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "instruments": {
-                "array": [],
-                "type": "array",
-              },
               "name": {
                 "primitive": {
                   "string": "Investimento",
@@ -27305,10 +27161,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "instruments": {
-                "array": [],
-                "type": "array",
               },
               "name": {
                 "primitive": {
@@ -27878,10 +27730,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -29148,10 +28996,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -30111,10 +29955,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -30727,10 +30567,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
                 "enum": "NATIONAL",
                 "type": "enum",
               },
-              "retention_breakdown": {
-                "array": [],
-                "type": "array",
-              },
               "sender_id": {
                 "primitive": {
                   "string": "JKUF980404P0",
@@ -31188,10 +31024,6 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -33008,10 +32840,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -33370,14 +33198,6 @@ client.connect()
                 },
                 "type": "primitive",
               },
-              "employment_records": {
-                "array": [],
-                "type": "array",
-              },
-              "files": {
-                "array": [],
-                "type": "array",
-              },
               "id": {
                 "primitive": {
                   "string": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
@@ -33407,10 +33227,6 @@ client.connect()
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "document_ids": {
-                    "array": [],
-                    "type": "array",
                   },
                   "email": {
                     "primitive": {
@@ -33832,12 +33648,7 @@ client.connect()
             "type": "object",
           },
           "response": {
-            "properties": {
-              "transactions": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -33933,10 +33744,6 @@ client.connect()
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -34085,10 +33892,6 @@ For example:
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -34580,10 +34383,6 @@ For example:
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -34884,10 +34683,6 @@ For example:
                 },
                 "type": "primitive",
               },
-              "form_fields": {
-                "array": [],
-                "type": "array",
-              },
               "icon_logo": {
                 "primitive": {
                   "string": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
@@ -35138,10 +34933,6 @@ For example:
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -36054,10 +35845,6 @@ For example:
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -37111,10 +36898,6 @@ For example:
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -38112,10 +37895,6 @@ For example:
                 },
                 "type": "primitive",
               },
-              "results": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -39066,10 +38845,6 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "results": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",

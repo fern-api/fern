@@ -137,7 +137,6 @@ exports[`open api parser axle simple 1`] = `
                 "headers": {},
                 "response": {
                   "body": {
-                    "data": [],
                     "success": true,
                   },
                 },

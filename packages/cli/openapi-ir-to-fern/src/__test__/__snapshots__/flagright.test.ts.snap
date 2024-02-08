@@ -42,7 +42,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
-                  "allowedPaymentMethods": [],
                   "createdTimestamp": 1641654664000,
                   "directors": [
                     {
@@ -104,7 +103,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
-                      "pepStatus": [],
                       "tags": [
                         {
                           "key": "customKey",
@@ -127,7 +125,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                         "amountCurrency": "USD",
                         "amountValue": 8000,
                       },
-                      "tags": [],
                     },
                     "companyGeneralDetails": {
                       "businessIndustry": [
@@ -137,7 +134,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "mainProductsServicesSold": [
                         "Hazelnut",
                       ],
-                      "tags": [],
                       "userRegistrationStatus": "REGISTERED",
                       "userSegment": "SOLE_PROPRIETORSHIP",
                     },
@@ -146,7 +142,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                       "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
-                      "tags": [],
                       "taxIdentifier": "taxIdentifier",
                     },
                     "contactDetails": {
@@ -167,17 +162,12 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
-                      "contactNumbers": [],
-                      "emailIds": [],
-                      "faxNumbers": [],
-                      "websites": [],
                     },
                     "reasonForAccountOpening": [
                       "string",
                     ],
                   },
                   "linkedEntities": {
-                    "childUserIds": [],
                     "parentUserId": "parentUserId",
                   },
                   "mccDetails": {
@@ -185,7 +175,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
-                  "savedPaymentDetails": [],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -246,7 +235,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                           ],
                         },
                       ],
-                      "pepStatus": [],
                       "tags": [
                         {
                           "key": "customKey",
@@ -285,17 +273,6 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {},
-                      "CARD": {},
-                      "CHECK": {},
-                      "GENERIC_BANK_ACCOUNT": {},
-                      "IBAN": {},
-                      "MPESA": {},
-                      "SWIFT": {},
-                      "UPI": {},
-                      "WALLET": {},
                     },
                   },
                   "userId": "96647cfd9e8fe66ee0f3362e011e34e8",
@@ -361,12 +338,10 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   },
                   "executedRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -374,11 +349,9 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   ],
                   "hitRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -393,7 +366,6 @@ Calling \`GET /transactions/{transactionId}\` will return the entire transaction
                   "productType": "productType",
                   "promotionCodeUsed": true,
                   "reference": "loan repayment",
-                  "relatedTransactionIds": [],
                   "tags": [
                     {
                       "key": "customKey",
@@ -465,7 +437,6 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "emailIds": [
                       "baran@flagright.com",
                     ],
-                    "faxNumbers": [],
                     "websites": [
                       "flagright.com",
                     ],
@@ -495,8 +466,6 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                       ],
                     },
                   ],
-                  "pepStatus": [],
-                  "reasonForAccountOpening": [],
                   "riskLevel": "VERY_HIGH",
                   "tags": [
                     {
@@ -528,17 +497,6 @@ Calling \`GET /consumer/user/{userId}\` will return the entire user payload and 
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {},
-                      "CARD": {},
-                      "CHECK": {},
-                      "GENERIC_BANK_ACCOUNT": {},
-                      "IBAN": {},
-                      "MPESA": {},
-                      "SWIFT": {},
-                      "UPI": {},
-                      "WALLET": {},
                     },
                   },
                   "userDetails": {
@@ -602,7 +560,6 @@ Each consumer Business entity needs three mandatory fields:
             {
               "request": {
                 "createdTimestamp": 1.1,
-                "directors": [],
                 "legalEntity": {
                   "companyFinancialDetails": {
                     "expectedTransactionAmountPerMonth": {
@@ -613,7 +570,6 @@ Each consumer Business entity needs three mandatory fields:
                       "amountCurrency": "USD",
                       "amountValue": 8000,
                     },
-                    "tags": [],
                   },
                   "companyGeneralDetails": {
                     "businessIndustry": [
@@ -623,17 +579,12 @@ Each consumer Business entity needs three mandatory fields:
                     "mainProductsServicesSold": [
                       "Hazelnut",
                     ],
-                    "tags": [],
                   },
                   "companyRegistrationDetails": {
                     "registrationCountry": "DE",
                     "registrationIdentifier": "PSJ554342",
-                    "tags": [],
                   },
                 },
-                "savedPaymentDetails": [],
-                "shareHolders": [],
-                "tags": [],
                 "transactionLimits": {
                   "maximumDailyTransactionLimit": {
                     "amountCurrency": "GBP",
@@ -793,7 +744,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "amountCurrency": "USD",
                         "amountValue": 8000,
                       },
-                      "tags": [],
                     },
                     "companyGeneralDetails": {
                       "businessIndustry": [
@@ -803,12 +753,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "mainProductsServicesSold": [
                         "Hazelnut",
                       ],
-                      "tags": [],
                     },
                     "companyRegistrationDetails": {
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
-                      "tags": [],
                     },
                     "contactDetails": {
                       "addresses": [
@@ -833,7 +781,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "string",
                     ],
                   },
-                  "savedPaymentDetails": [],
                   "shareHolders": [
                     {
                       "contactDetails": {
@@ -940,11 +887,7 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
-                  "allowedPaymentMethods": [],
                   "createdTimestamp": 1.1,
-                  "directors": [],
-                  "executedRules": [],
-                  "hitRules": [],
                   "kycStatusDetails": {
                     "reason": "reason",
                     "status": "SUCCESSFUL",
@@ -959,7 +902,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                         "amountCurrency": "USD",
                         "amountValue": 8000,
                       },
-                      "tags": [],
                     },
                     "companyGeneralDetails": {
                       "businessIndustry": [
@@ -969,7 +911,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "mainProductsServicesSold": [
                         "Hazelnut",
                       ],
-                      "tags": [],
                       "userRegistrationStatus": "REGISTERED",
                       "userSegment": "SOLE_PROPRIETORSHIP",
                     },
@@ -978,20 +919,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                       "legalEntityType": "legalEntityType",
                       "registrationCountry": "DE",
                       "registrationIdentifier": "PSJ554342",
-                      "tags": [],
                       "taxIdentifier": "taxIdentifier",
                     },
-                    "contactDetails": {
-                      "addresses": [],
-                      "contactNumbers": [],
-                      "emailIds": [],
-                      "faxNumbers": [],
-                      "websites": [],
-                    },
-                    "reasonForAccountOpening": [],
                   },
                   "linkedEntities": {
-                    "childUserIds": [],
                     "parentUserId": "parentUserId",
                   },
                   "mccDetails": {
@@ -999,9 +930,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "description": "description",
                   },
                   "riskLevel": "VERY_HIGH",
-                  "savedPaymentDetails": [],
-                  "shareHolders": [],
-                  "tags": [],
                   "transactionLimits": {
                     "maximumDailyTransactionLimit": {
                       "amountCurrency": "GBP",
@@ -1026,17 +954,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {},
-                      "CARD": {},
-                      "CHECK": {},
-                      "GENERIC_BANK_ACCOUNT": {},
-                      "IBAN": {},
-                      "MPESA": {},
-                      "SWIFT": {},
-                      "UPI": {},
-                      "WALLET": {},
                     },
                   },
                   "userId": "userId",
@@ -1159,12 +1076,10 @@ Here are some of the most used payload fields explained (you can find the full p
                 "body": {
                   "executedRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1172,11 +1087,9 @@ Here are some of the most used payload fields explained (you can find the full p
                   ],
                   "hitRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1431,12 +1344,10 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "eventId": "7b80a539eea6e78acbd6d458e5971482",
                   "executedRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
                       "ruleHit": true,
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1444,11 +1355,9 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   ],
                   "hitRules": [
                     {
-                      "labels": [],
                       "nature": "AML",
                       "ruleAction": "BLOCK",
                       "ruleDescription": "If a user makes a remittance transaction >= 1800 in EUR - ask for proof of funds",
-                      "ruleHitMeta": {},
                       "ruleId": "R-1a",
                       "ruleInstanceId": "ruleInstanceId",
                       "ruleName": "Proof of funds for high value transactions",
@@ -1483,7 +1392,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "productType": "productType",
                     "promotionCodeUsed": true,
                     "reference": "loan repayment",
-                    "relatedTransactionIds": [],
                     "tags": [
                       {
                         "key": "customKey",
@@ -1657,25 +1565,12 @@ In order to make individual events retrievable, you also need to pass in a uniqu
               "response": {
                 "body": {
                   "acquisitionChannel": "ORGANIC",
-                  "contactDetails": {
-                    "addresses": [],
-                    "contactNumbers": [],
-                    "emailIds": [],
-                    "faxNumbers": [],
-                    "websites": [],
-                  },
                   "createdTimestamp": 1.1,
-                  "executedRules": [],
-                  "hitRules": [],
                   "kycStatusDetails": {
                     "reason": "reason",
                     "status": "SUCCESSFUL",
                   },
-                  "legalDocuments": [],
-                  "pepStatus": [],
-                  "reasonForAccountOpening": [],
                   "riskLevel": "VERY_HIGH",
-                  "tags": [],
                   "transactionLimits": {
                     "maximumDailyTransactionLimit": {
                       "amountCurrency": "GBP",
@@ -1700,17 +1595,6 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                     "maximumYearlyTransactionLimit": {
                       "amountCurrency": "GBP",
                       "amountValue": 800,
-                    },
-                    "paymentMethodLimits": {
-                      "ACH": {},
-                      "CARD": {},
-                      "CHECK": {},
-                      "GENERIC_BANK_ACCOUNT": {},
-                      "IBAN": {},
-                      "MPESA": {},
-                      "SWIFT": {},
-                      "UPI": {},
-                      "WALLET": {},
                     },
                   },
                   "userDetails": {

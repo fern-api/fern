@@ -631,10 +631,6 @@ exports[`open api parser supertokens parse open api 1`] = `
           "response": {
             "oneOf": {
               "discriminated": {
-                "devices": {
-                  "array": [],
-                  "type": "array",
-                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -4425,10 +4421,6 @@ Passing the optional deviceId signifies a resend code flow.
           "request": undefined,
           "response": {
             "properties": {
-              "devices": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -7248,10 +7240,6 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 "type": "literal",
               },
-              "users": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -9130,10 +9118,6 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 "type": "literal",
               },
-              "users": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -9350,10 +9334,6 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                 },
                 "type": "literal",
-              },
-              "user": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -12286,10 +12266,6 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
-              "roles": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -12518,10 +12494,6 @@ e.g.:
                   },
                   "type": "primitive",
                 },
-                "users": {
-                  "array": [],
-                  "type": "array",
-                },
               },
               "type": "discriminated",
             },
@@ -12726,10 +12698,6 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
-              "permissions": {
-                "array": [],
-                "type": "array",
-              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -13009,10 +12977,6 @@ e.g.:
           "response": {
             "oneOf": {
               "discriminated": {
-                "permissions": {
-                  "array": [],
-                  "type": "array",
-                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -13228,10 +13192,6 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
-              "permissions": {
-                "array": [],
-                "type": "array",
-              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -13483,10 +13443,6 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
-              "roles": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -13934,10 +13890,6 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
-              "roles": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -15044,20 +14996,11 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "sessionHandles": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
-              "sessionHandlesRevoked": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -16338,10 +16281,6 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
-              "sessionHandles": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -17695,12 +17634,7 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "keys": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -19491,10 +19425,6 @@ e.g.:
                 },
                 "type": "literal",
               },
-              "users": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -20567,12 +20497,7 @@ e.g.:
           ],
           "request": undefined,
           "response": {
-            "properties": {
-              "sessions": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -20854,12 +20779,7 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "versions": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -22155,10 +22075,6 @@ e.g.:
                 },
                 "type": "literal",
               },
-              "users": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -22809,10 +22725,6 @@ e.g.:
                 },
                 "type": "literal",
               },
-              "tags": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -22977,10 +22889,6 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
-              "features": {
-                "array": [],
-                "type": "array",
-              },
               "status": {
                 "literal": {
                   "string": "OK",

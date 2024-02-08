@@ -129,10 +129,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "health_insurance": {
                     "properties": {
-                      "providers": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "status": {
                         "enum": "REQUIRED",
                         "type": "enum",
@@ -437,15 +433,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "client": {
-                    "properties": {
-                      "legal_entity": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
                   "compensation_details": {
                     "properties": {
                       "currency": {
@@ -1056,10 +1043,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -1283,10 +1266,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -1774,10 +1753,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -2001,10 +1976,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -2492,10 +2463,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -2719,10 +2686,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -3214,10 +3177,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -3441,10 +3400,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -4257,10 +4212,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -4484,10 +4435,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -4831,10 +4778,6 @@ exports[`open api parser deel parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "custom_fields": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "employment_details": {
                     "properties": {
                       "country": {
@@ -5058,10 +5001,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "worker": {
                     "properties": {
-                      "alternate_email": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_of_birth": {
                         "primitive": {
                           "datetime": "2022-05-24T09:38:46.235Z",
@@ -9355,10 +9294,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "first_payment_dates": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "pro_rata": {
                     "properties": {
                       "calculation_type": {
@@ -9658,14 +9593,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "applied_changes": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "attachments": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "can_request_changes": {
                     "primitive": {
                       "boolean": true,
@@ -9675,10 +9602,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "change_request": {
                     "properties": {
-                      "attachments": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_is_half_day": {
                         "primitive": {
                           "boolean": true,
@@ -10226,14 +10149,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "applied_changes": {
-                    "array": [],
-                    "type": "array",
-                  },
-                  "attachments": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "can_request_changes": {
                     "primitive": {
                       "boolean": true,
@@ -10243,10 +10158,6 @@ exports[`open api parser deel parse open api 1`] = `
                   },
                   "change_request": {
                     "properties": {
-                      "attachments": {
-                        "array": [],
-                        "type": "array",
-                      },
                       "date_is_half_day": {
                         "primitive": {
                           "boolean": true,
@@ -13321,12 +13232,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -14169,12 +14075,7 @@ exports[`open api parser deel parse open api 1`] = `
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {
-              "data": {
-                "array": [],
-                "type": "array",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
         },
@@ -14543,10 +14444,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "rows": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "total": {
                     "primitive": {
                       "double": 1.1,
@@ -14935,10 +14832,6 @@ exports[`open api parser deel parse open api 1`] = `
             "properties": {
               "data": {
                 "properties": {
-                  "rows": {
-                    "array": [],
-                    "type": "array",
-                  },
                   "total": {
                     "primitive": {
                       "double": 1.1,

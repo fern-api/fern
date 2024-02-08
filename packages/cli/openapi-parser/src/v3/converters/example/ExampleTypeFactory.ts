@@ -65,7 +65,7 @@ export class ExampleTypeFactory {
                 return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
-            case "nullable":
+            case "nullable": {
                 if (
                     example == null &&
                     !this.hasExample(schema.value) &&
@@ -73,14 +73,25 @@ export class ExampleTypeFactory {
                 ) {
                     return undefined;
                 }
-                return this.buildExampleHelper({
+                const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
                     example,
                     depth,
                     options
                 });
-            case "optional":
+                if (result != null && result.type === "array" && result.array.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "map" && result.map.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
+                    return undefined;
+                }
+                return result;
+            }
+            case "optional": {
                 if (
                     example == null &&
                     !this.hasExample(schema.value) &&
@@ -88,13 +99,24 @@ export class ExampleTypeFactory {
                 ) {
                     return undefined;
                 }
-                return this.buildExampleHelper({
+                const result = this.buildExampleHelper({
                     schema: schema.value,
                     visitedSchemaIds,
                     example,
                     depth,
                     options
                 });
+                if (result != null && result.type === "array" && result.array.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "map" && result.map.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
+                    return undefined;
+                }
+                return result;
+            }
             case "primitive": {
                 const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, options });
                 return FullExample.primitive(primitiveExample);

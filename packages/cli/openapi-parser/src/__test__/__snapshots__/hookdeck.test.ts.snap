@@ -31,10 +31,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -596,14 +592,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -879,14 +867,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -1150,14 +1130,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -1332,14 +1304,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -1742,14 +1706,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -1920,14 +1876,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "properties": {
               "channels": {
                 "properties": {
-                  "email": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "opsgenie": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "slack": {
                     "properties": {
                       "channel_name": {
@@ -2092,10 +2040,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -2467,10 +2411,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "body": {
-                "properties": {},
-                "type": "object",
-              },
               "bulk_retry_id": {
                 "primitive": {
                   "string": "bulk_retry_id",
@@ -2665,10 +2605,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -4461,10 +4397,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -6905,10 +6837,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -9288,10 +9216,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     },
                     "type": "primitive",
                   },
-                  "body": {
-                    "properties": {},
-                    "type": "object",
-                  },
                   "bulk_retry_id": {
                     "primitive": {
                       "string": "bulk_retry_id",
@@ -9918,10 +9842,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -17074,10 +16994,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -19243,10 +19159,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -20522,10 +20434,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -24136,10 +24044,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -26111,10 +26015,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           },
           "response": {
             "properties": {
-              "events": {
-                "array": [],
-                "type": "array",
-              },
               "request": {
                 "properties": {
                   "cli_events_count": {
@@ -26406,10 +26306,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -28456,10 +28352,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -28830,10 +28722,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -34763,10 +34651,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -36887,10 +36771,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "models": {
-                "array": [],
-                "type": "array",
-              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -38852,10 +38732,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "topics": {
-                "array": [],
-                "type": "array",
-              },
             },
             "type": "object",
           },
@@ -39010,10 +38886,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -40418,10 +40290,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
           },
           "response": {
             "properties": {
-              "console": {
-                "array": [],
-                "type": "array",
-              },
               "execution_id": {
                 "primitive": {
                   "string": "execution_id",
@@ -40462,10 +40330,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                       "type": "string",
                     },
                     "type": "primitive",
-                  },
-                  "query": {
-                    "properties": {},
-                    "type": "object",
                   },
                 },
                 "type": "object",
@@ -40891,10 +40755,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -41889,10 +41749,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
-              },
-              "models": {
-                "array": [],
-                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -43106,14 +42962,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -43947,14 +43795,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -44787,14 +44627,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -45157,14 +44989,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
               },
               "ruleset": {
                 "properties": {
@@ -45718,14 +45542,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -46083,14 +45899,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
               },
               "ruleset": {
                 "properties": {
@@ -46450,14 +46258,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
-              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -46815,14 +46615,6 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "datetime",
                 },
                 "type": "primitive",
-              },
-              "resolved_rules": {
-                "array": [],
-                "type": "array",
-              },
-              "rules": {
-                "array": [],
-                "type": "array",
               },
               "ruleset": {
                 "properties": {

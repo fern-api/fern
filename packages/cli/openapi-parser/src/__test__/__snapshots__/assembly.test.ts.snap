@@ -473,10 +473,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "chapters": {
-                "array": [],
-                "type": "array",
-              },
               "confidence": {
                 "primitive": {
                   "double": 1.1,
@@ -504,10 +500,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "custom_spelling": {
-                "array": [],
-                "type": "array",
-              },
               "custom_topics": {
                 "primitive": {
                   "boolean": true,
@@ -528,10 +520,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "entities": {
-                "array": [],
-                "type": "array",
               },
               "entity_detection": {
                 "primitive": {
@@ -652,10 +640,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "redact_pii_policies": {
-                "array": [],
-                "type": "array",
-              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
@@ -666,10 +650,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "sentiment_analysis_results": {
-                "array": [],
-                "type": "array",
               },
               "speaker_labels": {
                 "primitive": {
@@ -745,14 +725,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "topics": {
-                "array": [],
-                "type": "array",
-              },
-              "utterances": {
-                "array": [],
-                "type": "array",
-              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
@@ -780,14 +752,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "word_boost": {
-                "array": [],
-                "type": "array",
-              },
-              "words": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -944,10 +908,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "chapters": {
-                "array": [],
-                "type": "array",
-              },
               "confidence": {
                 "primitive": {
                   "double": 1.1,
@@ -975,10 +935,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "custom_spelling": {
-                "array": [],
-                "type": "array",
-              },
               "custom_topics": {
                 "primitive": {
                   "boolean": true,
@@ -999,10 +955,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "entities": {
-                "array": [],
-                "type": "array",
               },
               "entity_detection": {
                 "primitive": {
@@ -1123,10 +1075,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "redact_pii_policies": {
-                "array": [],
-                "type": "array",
-              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
@@ -1137,10 +1085,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "sentiment_analysis_results": {
-                "array": [],
-                "type": "array",
               },
               "speaker_labels": {
                 "primitive": {
@@ -1216,14 +1160,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "topics": {
-                "array": [],
-                "type": "array",
-              },
-              "utterances": {
-                "array": [],
-                "type": "array",
-              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
@@ -1251,14 +1187,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "word_boost": {
-                "array": [],
-                "type": "array",
-              },
-              "words": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",
@@ -1420,10 +1348,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "chapters": {
-                "array": [],
-                "type": "array",
-              },
               "confidence": {
                 "primitive": {
                   "double": 1.1,
@@ -1451,10 +1375,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "object",
               },
-              "custom_spelling": {
-                "array": [],
-                "type": "array",
-              },
               "custom_topics": {
                 "primitive": {
                   "boolean": true,
@@ -1475,10 +1395,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "entities": {
-                "array": [],
-                "type": "array",
               },
               "entity_detection": {
                 "primitive": {
@@ -1599,10 +1515,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "redact_pii_policies": {
-                "array": [],
-                "type": "array",
-              },
               "redact_pii_sub": {
                 "enum": "entity_type",
                 "type": "enum",
@@ -1613,10 +1525,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "boolean",
                 },
                 "type": "primitive",
-              },
-              "sentiment_analysis_results": {
-                "array": [],
-                "type": "array",
               },
               "speaker_labels": {
                 "primitive": {
@@ -1692,14 +1600,6 @@ exports[`open api parser assembly parse open api 1`] = `
                 },
                 "type": "primitive",
               },
-              "topics": {
-                "array": [],
-                "type": "array",
-              },
-              "utterances": {
-                "array": [],
-                "type": "array",
-              },
               "webhook_auth": {
                 "primitive": {
                   "boolean": true,
@@ -1727,14 +1627,6 @@ exports[`open api parser assembly parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "word_boost": {
-                "array": [],
-                "type": "array",
-              },
-              "words": {
-                "array": [],
-                "type": "array",
               },
             },
             "type": "object",

@@ -4163,21 +4163,18 @@ A resource may also contain:
                     },
                     "actions": {
                       "clone": {
-                        "attributes": {},
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
-                        "attributes": {},
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
-                        "attributes": {},
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -4319,21 +4316,18 @@ A resource may also contain:
                     },
                     "actions": {
                       "clone": {
-                        "attributes": {},
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
-                        "attributes": {},
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
-                        "attributes": {},
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -4486,21 +4480,18 @@ TODO: we need to decide if we are auto-revoking, or if we are rejecting the PUT 
                     },
                     "actions": {
                       "clone": {
-                        "attributes": {},
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
-                        "attributes": {},
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
-                        "attributes": {},
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",
@@ -4611,21 +4602,18 @@ Fields that will be provided will be completely overwritten.",
                     },
                     "actions": {
                       "clone": {
-                        "attributes": {},
                         "description": "description",
                         "id": "90e21d70-2b1b-42f0-b492-8fd69c1d79d1",
                         "key": "key",
                         "name": "name",
                       },
                       "push": {
-                        "attributes": {},
                         "description": "description",
                         "id": "e06da336-6e03-41d6-a495-40b0d7537b2a",
                         "key": "key",
                         "name": "name",
                       },
                       "read": {
-                        "attributes": {},
                         "description": "description",
                         "id": "2bc27751-6115-43c0-b68c-928cb46e34bc",
                         "key": "key",

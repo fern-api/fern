@@ -30,11 +30,9 @@ exports[`open api parser hathora simple 1`] = `
                     "appName": "appName",
                     "appSecret": "appSecret",
                     "authConfiguration": {
-                      "anonymous": {},
                       "google": {
                         "clientId": "clientId",
                       },
-                      "nickname": {},
                     },
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
@@ -92,11 +90,9 @@ exports[`open api parser hathora simple 1`] = `
                     "appName": "appName",
                     "appSecret": "appSecret",
                     "authConfiguration": {
-                      "anonymous": {},
                       "google": {
                         "clientId": "clientId",
                       },
-                      "nickname": {},
                     },
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
@@ -156,11 +152,9 @@ exports[`open api parser hathora simple 1`] = `
                     "appName": "appName",
                     "appSecret": "appSecret",
                     "authConfiguration": {
-                      "anonymous": {},
                       "google": {
                         "clientId": "clientId",
                       },
-                      "nickname": {},
                     },
                     "createdAt": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
@@ -1341,12 +1335,7 @@ exports[`open api parser hathora simple 1`] = `
                   "processId": "processId",
                 },
                 "response": {
-                  "body": {
-                    "cpu": [],
-                    "memory": [],
-                    "rate_egress": [],
-                    "total_egress": [],
-                  },
+                  "body": {},
                 },
               },
             ],
