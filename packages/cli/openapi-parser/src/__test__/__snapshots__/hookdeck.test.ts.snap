@@ -20481,7 +20481,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "iss_YXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "issue_trigger_id",
+              "value": {
+                "primitive": {
+                  "string": "it_BXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "merged_with",
+              "value": {
+                "primitive": {
+                  "string": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -22177,7 +22208,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "iss_YXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "issue_trigger_id",
+              "value": {
+                "primitive": {
+                  "string": "it_BXKv5OdJXCiVwkPhGy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "merged_with",
+              "value": {
+                "primitive": {
+                  "string": "iss_AXKv3OdJXCiKlkPhDz",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {

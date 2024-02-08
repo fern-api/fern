@@ -1971,6 +1971,16 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               },
             },
             {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
               "name": "direction",
               "value": {
                 "enum": "debit",
@@ -2498,7 +2508,28 @@ This information provides hints to clients, allowing bank customers to select tr
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "startsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "endsOn",
+              "value": {
+                "primitive": {
+                  "string": "2022-07-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -3964,6 +3995,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                       },
                       "schedule": {
                         "properties": {
+                          "amountLimit": {
+                            "primitive": {
+                              "string": "3456.78",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "creditsOn": {
                             "primitive": {
                               "string": "2026-06-26",
@@ -4106,6 +4144,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                       },
                       "schedule": {
                         "properties": {
+                          "amountLimit": {
+                            "primitive": {
+                              "string": "3456.78",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "count": {
                             "primitive": {
                               "int": 9,
@@ -4449,6 +4494,13 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
@@ -4472,6 +4524,13 @@ Note: This operation requires an identity challenge if the financial institution
                     },
                     "type": "primitive",
                   },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "location": {
                     "enum": "internal",
                     "type": "enum",
@@ -4484,6 +4543,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "id": {
                     "primitive": {
                       "string": "88b1ca3e-d0f3",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -5101,6 +5167,13 @@ Note: This operation requires an identity challenge if the financial institution
               },
               "schedule": {
                 "properties": {
+                  "amountLimit": {
+                    "primitive": {
+                      "string": "3456.78",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "frequency": {
                     "enum": "once",
                     "type": "enum",
@@ -5115,11 +5188,45 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "object",
               },
+              "sourceAccount": {
+                "properties": {
+                  "id": {
+                    "primitive": {
+                      "string": "e821ce54-c715",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Premiere Checking *6789",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "location": {
+                    "enum": "internal",
+                    "type": "enum",
+                  },
+                  "type": {
+                    "enum": "checking",
+                    "type": "enum",
+                  },
+                },
+                "type": "object",
+              },
               "targetAccount": {
                 "properties": {
                   "id": {
                     "primitive": {
                       "string": "88b1ca3e-d0f3",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "label": {
+                    "primitive": {
+                      "string": "Checking *1008",
                       "type": "string",
                     },
                     "type": "primitive",

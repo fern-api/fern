@@ -164,7 +164,238 @@ in the DevPortal.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "access_mode",
+              "value": {
+                "primitive": {
+                  "string": "single",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_by__not_in",
+              "value": {
+                "primitive": {
+                  "string": "578947e2-3c9a-4401-bbad-59b2f2d2b91b,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "external_id",
+              "value": {
+                "primitive": {
+                  "string": "InternalUser4000",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "external_id__in",
+              "value": {
+                "primitive": {
+                  "string": "InternalUser4000,InternalUser4001",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution__in",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail,gringotts_co_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution_user_id",
+              "value": {
+                "primitive": {
+                  "string": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution_user_id__in",
+              "value": {
+                "primitive": {
+                  "string": "ezFoxjPDr7YnASnOaft5F3zt7D0kurgDNlLtZFjxUo0=,YwuTM0uEEh1BbVgDZBcNpa_-Tm3l2q8ZkZNrlhp-pNA=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "refresh_rate",
+              "value": {
+                "primitive": {
+                  "string": "24h",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "invalid",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "invalid,unconfirmed",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -892,9 +1123,58 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "credentials_storage": {
+                "primitive": {
+                  "string": "store",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "external_id": {
+                "primitive": {
+                  "string": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "fetch_historical": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "institution": {
                 "primitive": {
                   "string": "erebor_mx_retail",
@@ -902,9 +1182,58 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "password": {
+                "primitive": {
+                  "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "username": {
                 "primitive": {
                   "string": "username",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username2": {
+                "primitive": {
+                  "string": "secondusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username3": {
+                "primitive": {
+                  "string": "thirdusername",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1200,7 +1529,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -1213,6 +1563,13 @@ client.connect()
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1517,7 +1874,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -1809,12 +2187,68 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "certificate": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "password": {
                 "primitive": {
                   "string": "password",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "password2": {
+                "primitive": {
+                  "string": "pin",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "private_key": {
+                "primitive": {
+                  "string": "1234567890abcd=",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "username_type": {
+                "primitive": {
+                  "string": "001",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2293,7 +2727,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "access_mode": {
@@ -2503,7 +2958,388 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available",
+              "value": {
+                "primitive": {
+                  "string": "4000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available__lt",
+              "value": {
+                "primitive": {
+                  "string": "6000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available__lte",
+              "value": {
+                "primitive": {
+                  "string": "5999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available__gt",
+              "value": {
+                "primitive": {
+                  "string": "2000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available__gte",
+              "value": {
+                "primitive": {
+                  "string": "1999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__available__range",
+              "value": {
+                "primitive": {
+                  "string": "3000.00,4350.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current",
+              "value": {
+                "primitive": {
+                  "string": "4000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current__lt",
+              "value": {
+                "primitive": {
+                  "string": "6000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current__lte",
+              "value": {
+                "primitive": {
+                  "string": "5999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current__gt",
+              "value": {
+                "primitive": {
+                  "string": "2000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current__gte",
+              "value": {
+                "primitive": {
+                  "string": "1999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__current__range",
+              "value": {
+                "primitive": {
+                  "string": "3000.00,4350.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "category",
+              "value": {
+                "primitive": {
+                  "string": "CREDIT_ACCOUNT",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "category__in",
+              "value": {
+                "primitive": {
+                  "string": "CHECKING_ACCOUNT,SAVINGS_ACCOUNT",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency",
+              "value": {
+                "primitive": {
+                  "string": "COP",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency__in",
+              "value": {
+                "primitive": {
+                  "string": "COP,MXN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution__in",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail,gringotts_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "name",
+              "value": {
+                "primitive": {
+                  "string": "Cuenta Perfiles- M.N. - MXN-666",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "name__icontains",
+              "value": {
+                "primitive": {
+                  "string": "Perfiles",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "number",
+              "value": {
+                "primitive": {
+                  "string": "4057068115181",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "number__in",
+              "value": {
+                "primitive": {
+                  "string": "4057068115181,7809346821648",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "public_identification_name",
+              "value": {
+                "primitive": {
+                  "string": "CLABE",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "public_identification_value",
+              "value": {
+                "primitive": {
+                  "string": "150194683119900273",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "Cuentas de efectivo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -3604,12 +4440,40 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3872,7 +4736,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -3882,9 +4767,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4163,7 +5062,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -4962,10 +5882,580 @@ client.connect()
           "pathParameters": [],
           "queryParameters": [
             {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
               "name": "link",
               "value": {
                 "primitive": {
                   "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account",
+              "value": {
+                "primitive": {
+                  "string": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__available",
+              "value": {
+                "primitive": {
+                  "string": "4000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__available__lt",
+              "value": {
+                "primitive": {
+                  "string": "6000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__available__lte",
+              "value": {
+                "primitive": {
+                  "string": "5999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__available__range",
+              "value": {
+                "primitive": {
+                  "string": "3000.00,4350.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current",
+              "value": {
+                "primitive": {
+                  "string": "4000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current__gt",
+              "value": {
+                "primitive": {
+                  "string": "4020.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current__gte",
+              "value": {
+                "primitive": {
+                  "string": "4019.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current__lt",
+              "value": {
+                "primitive": {
+                  "string": "3000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current__lte",
+              "value": {
+                "primitive": {
+                  "string": "2999.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__balance__current__range",
+              "value": {
+                "primitive": {
+                  "string": "2999.00,4000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__in",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account_type",
+              "value": {
+                "primitive": {
+                  "string": "Cuentas de efectivo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account_type__in",
+              "value": {
+                "primitive": {
+                  "string": "Cuentas de efectivo,Depositos Ahorro",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-02",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "accounting_date__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01,2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gt",
+              "value": {
+                "primitive": {
+                  "string": "520.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gte",
+              "value": {
+                "primitive": {
+                  "string": "519.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lt",
+              "value": {
+                "primitive": {
+                  "string": "540.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lte",
+              "value": {
+                "primitive": {
+                  "string": "541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__range",
+              "value": {
+                "primitive": {
+                  "string": "519.00,541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "collected_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "credit_card_data__bill_name__in",
+              "value": {
+                "primitive": {
+                  "string": "maio-2022,feb-2022",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency",
+              "value": {
+                "primitive": {
+                  "string": "COP",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency__in",
+              "value": {
+                "primitive": {
+                  "string": "COP,MXN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "reference",
+              "value": {
+                "primitive": {
+                  "string": "085904452810319225",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "reference__in",
+              "value": {
+                "primitive": {
+                  "string": "085904452810319225,8703",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "PENDING",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "PENDING,PROCESSED",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "OUTFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type__in",
+              "value": {
+                "primitive": {
+                  "string": "INFLOW,OUTFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-02",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01,2022-05-06",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6550,9 +8040,37 @@ If you try to access older information than what we can access, we will return a
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "date_from": {
                 "primitive": {
                   "string": "2020-08-05",
@@ -6570,6 +8088,13 @@ If you try to access older information than what we can access, we will return a
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -6836,9 +8361,37 @@ If you try to access older information than what we can access, we will return a
           ],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "date_from": {
                 "primitive": {
                   "string": "2020-08-05",
@@ -6856,6 +8409,13 @@ If you try to access older information than what we can access, we will return a
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7113,7 +8673,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -7123,9 +8704,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -7382,7 +8977,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -8354,7 +9970,288 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__in",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__type",
+              "value": {
+                "primitive": {
+                  "string": "Cuentas de efectivo",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__type__in",
+              "value": {
+                "primitive": {
+                  "string": "Cuentas de efectivo,Credito",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance",
+              "value": {
+                "primitive": {
+                  "string": "530.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__lt",
+              "value": {
+                "primitive": {
+                  "string": "540.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__lte",
+              "value": {
+                "primitive": {
+                  "string": "541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__gt",
+              "value": {
+                "primitive": {
+                  "string": "520.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__gte",
+              "value": {
+                "primitive": {
+                  "string": "519.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "balance__range",
+              "value": {
+                "primitive": {
+                  "string": "519.00,541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency",
+              "value": {
+                "primitive": {
+                  "string": "COP",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency__in",
+              "value": {
+                "primitive": {
+                  "string": "COP,MXN",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution__in",
+              "value": {
+                "primitive": {
+                  "string": "erebor_mx_retail,gringotts_mx_retail",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-02",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01,2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -9209,9 +11106,37 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "account": {
+                "primitive": {
+                  "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "date_from": {
                 "primitive": {
                   "string": "2021-01-18",
@@ -9229,6 +11154,13 @@ client.connect()
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9470,7 +11402,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -9480,9 +11433,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -9731,7 +11698,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -10559,7 +12547,148 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country_code",
+              "value": {
+                "primitive": {
+                  "string": "MX",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country_code__in",
+              "value": {
+                "primitive": {
+                  "string": "CO,BR",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "display_name",
+              "value": {
+                "primitive": {
+                  "string": "Erebor Bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "name__in",
+              "value": {
+                "primitive": {
+                  "string": "erebor_br_retail,gotham_co_business",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "resources__allin",
+              "value": {
+                "primitive": {
+                  "string": "ACCOUNTS,OWNERS,TRANSACTIONS",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "healthy",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "healthy,down",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "fiscal",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type__in",
+              "value": {
+                "primitive": {
+                  "string": "fiscal,bank",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "website",
+              "value": {
+                "primitive": {
+                  "string": "https://www.erebor.mx",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -11099,7 +13228,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -11392,7 +13542,158 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "display_name__icontains",
+              "value": {
+                "primitive": {
+                  "string": "Daniela",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "email",
+              "value": {
+                "primitive": {
+                  "string": "lopes.d@gmail.com",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -11929,12 +14230,40 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12167,7 +14496,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -12177,9 +14527,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -12428,7 +14792,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -12900,7 +15285,318 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-02",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_date__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01,2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_identification",
+              "value": {
+                "primitive": {
+                  "string": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "invoice_identification__in",
+              "value": {
+                "primitive": {
+                  "string": "862B9918-3K6H-4E0B-NAI9-2BE2D833B840,992B9918-3G6H-4E0B-DAI9-2BE2D833B833",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "Vigente",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "Vigente,Cancelado",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount__lt",
+              "value": {
+                "primitive": {
+                  "string": "540.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount__lte",
+              "value": {
+                "primitive": {
+                  "string": "541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount__gt",
+              "value": {
+                "primitive": {
+                  "string": "520.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount__gte",
+              "value": {
+                "primitive": {
+                  "string": "519.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "total_amount__range",
+              "value": {
+                "primitive": {
+                  "string": "519.00,541.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type",
+              "value": {
+                "primitive": {
+                  "string": "OUTFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "type__in",
+              "value": {
+                "primitive": {
+                  "string": "OUTFLOW,INFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -13841,7 +16537,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "date_from": {
@@ -13861,6 +16578,20 @@ client.connect()
               "link": {
                 "primitive": {
                   "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
+              "type": {
+                "primitive": {
+                  "string": "INFLOW",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14137,7 +16868,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -14147,9 +16899,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -14413,7 +17179,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -15157,7 +17944,218 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio",
+              "value": {
+                "primitive": {
+                  "string": "2018",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio__lt",
+              "value": {
+                "primitive": {
+                  "string": "2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio__lte",
+              "value": {
+                "primitive": {
+                  "string": "2021",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio__gt",
+              "value": {
+                "primitive": {
+                  "string": "2019",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio__gte",
+              "value": {
+                "primitive": {
+                  "string": "2017",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "ejercicio__range",
+              "value": {
+                "primitive": {
+                  "string": "2015,2021",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "tipo_declaracion",
+              "value": {
+                "primitive": {
+                  "string": "Normal",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "tipo_declaracion__in",
+              "value": {
+                "primitive": {
+                  "string": "Normal,Commercial",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -15892,9 +18890,37 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "attach_pdf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "date_from": {
                 "primitive": {
                   "string": "2018-01-01",
@@ -15913,6 +18939,13 @@ client.connect()
                 "primitive": {
                   "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -16288,7 +19321,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -16983,7 +20037,138 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -17476,13 +20661,41 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -17984,7 +21197,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -18620,7 +21854,138 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -19104,13 +22469,41 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -19386,7 +22779,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -19796,7 +23210,88 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__in",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "73694155-b871-41ec-94e3-37d17ff62b5d,40968d42-7d89-49e3-9931-78baa8e0544e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -20166,12 +23661,54 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2020-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2020-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -20530,7 +24067,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -20540,9 +24098,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -20786,7 +24358,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "array": [],
@@ -21156,7 +24749,108 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account_in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,d3d941ab-4ca5-43c1-8b23-db329ee4cb7e",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -21565,12 +25259,54 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -21783,7 +25519,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -21793,9 +25550,23 @@ client.connect()
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -22022,7 +25793,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "array": [],
@@ -22374,7 +26166,58 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -22803,12 +26646,40 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -23064,7 +26935,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -23077,6 +26969,13 @@ client.connect()
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -23347,7 +27246,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -23743,7 +27663,198 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account",
+              "value": {
+                "primitive": {
+                  "string": "d979df3a-5d0f-4cc9-9bd4-b75c28b45963",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "account__in",
+              "value": {
+                "primitive": {
+                  "string": "24ccab1d-3a86-4136-a6eb-e04bf52b356f,beb2b197-3cf7-428d-bef3-f415c0d57509",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-02",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "value_date__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-01,2022-05-06",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -24288,7 +28399,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "date_from": {
@@ -24308,6 +28440,13 @@ client.connect()
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -24567,7 +28706,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -24882,7 +29042,88 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -25163,12 +29404,40 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
                 "primitive": {
                   "string": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -25301,7 +29570,28 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -25311,9 +29601,23 @@ If you need to know the currency of the account, just do a GET Details to the ac
                 },
                 "type": "primitive",
               },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "session": {
                 "primitive": {
                   "string": "6e7b283c6efa449c9c028a16b5c249fa",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "token": {
+                "primitive": {
+                  "string": "1234ab",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -25454,7 +29758,28 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "array": [],
@@ -25650,7 +29975,118 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -26000,7 +30436,28 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "date_from": {
@@ -26164,7 +30621,28 @@ If you need to know the currency of the account, just do a GET Details to the ac
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -26495,7 +30973,198 @@ If you need to know the currency of the account, just do a GET Details to the ac
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "link__in",
+              "value": {
+                "primitive": {
+                  "string": "8848bd0c-9c7e-4f53-a732-ec896b11d4c4,cc2b13cf-336e-497c-9fad-e074b580df65",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-05",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-04-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-03-03,2022-05-04",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "eb42c21c-2d9e-4dc1-89b8-9401d4beca73,82b3f18c-055b-4f82-9fae-d2201815ab0c",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year",
+              "value": {
+                "primitive": {
+                  "string": "2021",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year__gt",
+              "value": {
+                "primitive": {
+                  "string": "2020",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year__gte",
+              "value": {
+                "primitive": {
+                  "string": "2019",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year__lt",
+              "value": {
+                "primitive": {
+                  "string": "2018",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year__lte",
+              "value": {
+                "primitive": {
+                  "string": "2017",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "year__range",
+              "value": {
+                "primitive": {
+                  "string": "2017,2021",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -27145,13 +31814,48 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
+              "attach_pdf": {
+                "primitive": {
+                  "boolean": false,
+                  "type": "boolean",
+                },
+                "type": "primitive",
+              },
               "link": {
                 "primitive": {
                   "string": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "type": "string",
+                },
+                "type": "primitive",
+              },
+              "save_data": {
+                "primitive": {
+                  "boolean": true,
+                  "type": "boolean",
                 },
                 "type": "primitive",
               },
@@ -27430,7 +32134,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -28217,7 +32942,48 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -28398,7 +33164,28 @@ client.connect()
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": {
             "properties": {
               "link": {
@@ -28544,7 +33331,28 @@ client.connect()
               },
             },
           ],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "omit",
+              "value": {
+                "primitive": {
+                  "string": "link,balance",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "fields",
+              "value": {
+                "primitive": {
+                  "string": "link,balance,account",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -28894,6 +33702,20 @@ client.connect()
           "queryParameters": [],
           "request": {
             "properties": {
+              "date_from": {
+                "primitive": {
+                  "string": "2022-08-01",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "date_to": {
+                "primitive": {
+                  "string": "2022-12-30",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "language": {
                 "primitive": {
                   "string": "pt",
@@ -29326,6 +34148,20 @@ For example:
           "queryParameters": [],
           "request": {
             "properties": {
+              "auth_header": {
+                "primitive": {
+                  "string": "Authorization",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "auth_token": {
+                "primitive": {
+                  "string": "Bearer hv7alD71j0dzXf09iKfg7u",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "name": {
                 "primitive": {
                   "string": "Your webhook name",
@@ -29628,7 +34464,98 @@ For example:
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country",
+              "value": {
+                "primitive": {
+                  "string": "COL",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "country__in",
+              "value": {
+                "primitive": {
+                  "string": "COL,BRA",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -30086,7 +35013,108 @@ For example:
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "customer__type",
+              "value": {
+                "primitive": {
+                  "string": "INDIVIDUAL",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "search",
+              "value": {
+                "primitive": {
+                  "string": "car",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -30851,7 +35879,158 @@ For example:
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "number",
+              "value": {
+                "primitive": {
+                  "string": "1231564526",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "number__in",
+              "value": {
+                "primitive": {
+                  "string": "1231564526,15648325",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "customer",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "institution",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "holder__type",
+              "value": {
+                "primitive": {
+                  "string": "INDIVIDUAL",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "holder__type__in",
+              "value": {
+                "primitive": {
+                  "string": "INDIVIDUAL,BUSINESS",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "providers",
+              "value": {
+                "primitive": {
+                  "string": "payments_way",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -31816,7 +36995,98 @@ For example:
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "page_size",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "search",
+              "value": {
+                "primitive": {
+                  "string": "trai",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -32217,6 +37487,13 @@ For example:
                 },
                 "type": "primitive",
               },
+              "expires_in": {
+                "primitive": {
+                  "string": "7d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "payment_method_details": {
                 "properties": {
                   "open_finance": {
@@ -32224,6 +37501,13 @@ For example:
                       "beneficiary_bank_account": {
                         "primitive": {
                           "string": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "callback_url": {
+                        "primitive": {
+                          "string": "https://www.acmecorp.com/checkout/3487321",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -32612,7 +37896,198 @@ For example:
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "provider",
+              "value": {
+                "primitive": {
+                  "string": "payments_way",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "payment_method_type",
+              "value": {
+                "primitive": {
+                  "string": "pse",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "customer",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "customer__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gt",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gte",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lt",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lte",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status",
+              "value": {
+                "primitive": {
+                  "string": "SUCCEEDED",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "status__in",
+              "value": {
+                "primitive": {
+                  "string": "PROCESSING,SUCCEEDED",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {
@@ -33336,7 +38811,238 @@ During the payment intent flow, you need to fill in the payment intent with requ
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [],
+          "queryParameters": [
+            {
+              "name": "page",
+              "value": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "id__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__gte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lt",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__lte",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "created_at__range",
+              "value": {
+                "primitive": {
+                  "string": "2022-09-15,2022-09-20",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "charge",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "charge__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "beneficiary",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "beneficiary__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "payer",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "payer__in",
+              "value": {
+                "primitive": {
+                  "string": "24e5b3a5-19aa-40fe-91e5-4db7f22ecc2d,bfe57b64-f033-4a00-97f8-83ec88440264",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "transaction__type",
+              "value": {
+                "primitive": {
+                  "string": "INFLOW",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "currency",
+              "value": {
+                "primitive": {
+                  "string": "COP",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "description",
+              "value": {
+                "primitive": {
+                  "string": "Training shoes",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gt",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__gte",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lt",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__lte",
+              "value": {
+                "primitive": {
+                  "string": "1000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+            {
+              "name": "amount__range",
+              "value": {
+                "primitive": {
+                  "string": "1001.00,2000.00",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+            },
+          ],
           "request": undefined,
           "response": {
             "properties": {

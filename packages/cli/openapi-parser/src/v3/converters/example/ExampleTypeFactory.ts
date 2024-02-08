@@ -66,7 +66,11 @@ export class ExampleTypeFactory {
             case "literal":
                 return FullExample.literal(schema.value);
             case "nullable":
-                if (example == null && (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))) {
+                if (
+                    example == null &&
+                    !this.hasExample(schema.value) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                ) {
                     return undefined;
                 }
                 return this.buildExampleHelper({
@@ -77,7 +81,11 @@ export class ExampleTypeFactory {
                     options
                 });
             case "optional":
-                if (example == null && (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))) {
+                if (
+                    example == null &&
+                    !this.hasExample(schema.value) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                ) {
                     return undefined;
                 }
                 return this.buildExampleHelper({
@@ -327,6 +335,46 @@ export class ExampleTypeFactory {
             }
             default:
                 assertNever(schema);
+        }
+    }
+
+    private hasExample(schema: SchemaWithExample): boolean {
+        switch (schema.type) {
+            case "array":
+                return this.hasExample(schema.value);
+            case "enum":
+                return schema.example != null;
+            case "literal":
+                return false;
+            case "map":
+                return schema.key.schema.example != null && this.hasExample(schema.value);
+            case "object": {
+                const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0;
+                if (objectExample) {
+                    return true;
+                }
+                for (const property of schema.properties) {
+                    if (this.hasExample(property.schema)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            case "primitive":
+                return schema.schema.example != null;
+            case "reference": {
+                const resolvedSchema = this.schemas[schema.schema];
+                if (resolvedSchema != null) {
+                    return this.hasExample(resolvedSchema);
+                }
+                return false;
+            }
+            case "unknown":
+                return schema.example != null;
+            case "oneOf":
+                return Object.values(schema.oneOf.schemas).some((schema) => this.hasExample(schema));
+            default:
+                return false;
         }
     }
 

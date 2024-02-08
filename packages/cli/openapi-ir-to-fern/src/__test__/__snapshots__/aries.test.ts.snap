@@ -176,7 +176,10 @@ exports[`open api parser aries simple 1`] = `
                 },
                 "request": {
                   "menu": {
+                    "description": "User preferences for window settings",
+                    "errormsg": "Error: item not present",
                     "options": [],
+                    "title": "My Menu",
                   },
                 },
                 "response": {
@@ -1176,8 +1179,25 @@ exports[`open api parser aries simple 1`] = `
                         },
                       },
                       "value": {
-                        "primary": {},
-                        "revocation": {},
+                        "primary": {
+                          "n": "0",
+                          "rctxt": "0",
+                          "s": "0",
+                          "z": "0",
+                        },
+                        "revocation": {
+                          "g": "1 1F14F&ECB578F 2 095E45DDF417D",
+                          "g_dash": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
+                          "h": "1 16675DAE54BFAE8 2 095E45DD417D",
+                          "h0": "1 21E5EF9476EAF18 2 095E45DDF417D",
+                          "h1": "1 236D1D99236090 2 095E45DDF417D",
+                          "h2": "1 1C3AE8D1F1E277 2 095E45DDF417D",
+                          "h_cap": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
+                          "htilde": "1 1D8549E8C0F8 2 095E45DDF417D",
+                          "pk": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
+                          "u": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
+                          "y": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
+                        },
                       },
                       "ver": "1.0",
                     },
@@ -1316,8 +1336,25 @@ exports[`open api parser aries simple 1`] = `
                         },
                       },
                       "value": {
-                        "primary": {},
-                        "revocation": {},
+                        "primary": {
+                          "n": "0",
+                          "rctxt": "0",
+                          "s": "0",
+                          "z": "0",
+                        },
+                        "revocation": {
+                          "g": "1 1F14F&ECB578F 2 095E45DDF417D",
+                          "g_dash": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
+                          "h": "1 16675DAE54BFAE8 2 095E45DD417D",
+                          "h0": "1 21E5EF9476EAF18 2 095E45DDF417D",
+                          "h1": "1 236D1D99236090 2 095E45DDF417D",
+                          "h2": "1 1C3AE8D1F1E277 2 095E45DDF417D",
+                          "h_cap": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
+                          "htilde": "1 1D8549E8C0F8 2 095E45DDF417D",
+                          "pk": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
+                          "u": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
+                          "y": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
+                        },
                       },
                       "ver": "1.0",
                     },
@@ -2007,6 +2044,23 @@ exports[`open api parser aries simple 1`] = `
                   "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                   "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                   "did": "WgWxqztrNooG92RXvxSTWv",
+                  "did_doc~attach": {
+                    "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    "byte_count": 1234,
+                    "data": {
+                      "base64": "ey4uLn0=",
+                      "json": {},
+                      "links": [
+                        "https://link.to/data",
+                        "https://link.to/data",
+                      ],
+                      "sha256": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                    },
+                    "description": "view from doorway, facing east, with lights off",
+                    "filename": "IMG1092348.png",
+                    "lastmod_time": "2021-12-31 23:59:59+00:00",
+                    "mime-type": "image/png",
+                  },
                   "label": "Request to connect with Bob",
                 },
                 "response": {
@@ -2111,10 +2165,14 @@ exports[`open api parser aries simple 1`] = `
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "disclose": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "protocols": [],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "query_msg": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "query": "query",
                         },
                         "state": "active",
@@ -2126,10 +2184,14 @@ exports[`open api parser aries simple 1`] = `
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "disclose": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "protocols": [],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "query_msg": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "query": "query",
                         },
                         "state": "active",
@@ -2238,10 +2300,15 @@ exports[`open api parser aries simple 1`] = `
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "disclosures": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "queries_msg": {},
+                        "queries_msg": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "trace": true,
@@ -2251,10 +2318,15 @@ exports[`open api parser aries simple 1`] = `
                         "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "created_at": "2021-12-31 23:59:59+00:00",
                         "disclosures": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "disclosures": [],
                         },
                         "discovery_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                        "queries_msg": {},
+                        "queries_msg": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                        },
                         "state": "active",
                         "thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "trace": true,
@@ -3579,9 +3651,49 @@ exports[`open api parser aries simple 1`] = `
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                         },
                         "credential_offer_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "credential_preview": {
+                            "@type": "issue-credential/1.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
                           "offers~attach": [],
                         },
-                        "credential_proposal_dict": {},
+                        "credential_proposal_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                          "credential_proposal": {
+                            "@type": "issue-credential/1.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
+                          "issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                          "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                          "schema_version": "1.0",
+                        },
                         "credential_request": {
                           "blinded_ms": {},
                           "blinded_ms_correctness_proof": {},
@@ -3644,9 +3756,49 @@ exports[`open api parser aries simple 1`] = `
                           "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
                         },
                         "credential_offer_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "credential_preview": {
+                            "@type": "issue-credential/1.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
                           "offers~attach": [],
                         },
-                        "credential_proposal_dict": {},
+                        "credential_proposal_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                          "cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                          "credential_proposal": {
+                            "@type": "issue-credential/1.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
+                          "issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                          "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                          "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv",
+                          "schema_version": "1.0",
+                        },
                         "credential_request": {
                           "blinded_ms": {},
                           "blinded_ms_correctness_proof": {},
@@ -4999,7 +5151,40 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [],
+                        "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
+                        "type": [],
+                      },
+                      "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
+                        "proofType": "Ed25519Signature2018",
+                      },
+                    },
+                  },
                   "trace": true,
                 },
                 "response": {
@@ -5158,7 +5343,40 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [],
+                        "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
+                        "type": [],
+                      },
+                      "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
+                        "proofType": "Ed25519Signature2018",
+                      },
+                    },
+                  },
                   "trace": true,
                 },
                 "response": {
@@ -5488,6 +5706,77 @@ exports[`open api parser aries simple 1`] = `
                           "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created_at": "2021-12-31 23:59:59+00:00",
                           "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "cred_issue": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credentials~attach": [],
+                            "formats": [],
+                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          },
+                          "cred_offer": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credential_preview": {
+                              "@type": "issue-credential/2.0/credential-preview",
+                              "attributes": [
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                              ],
+                            },
+                            "formats": [],
+                            "offers~attach": [],
+                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          },
+                          "cred_preview": {
+                            "@type": "issue-credential/2.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
+                          "cred_proposal": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credential_preview": {
+                              "@type": "issue-credential/2.0/credential-preview",
+                              "attributes": [
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                              ],
+                            },
+                            "filters~attach": [],
+                            "formats": [],
+                          },
+                          "cred_request": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "formats": [],
+                            "requests~attach": [],
+                          },
                           "error_msg": "The front fell off",
                           "initiator": "self",
                           "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5525,6 +5814,77 @@ exports[`open api parser aries simple 1`] = `
                           "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                           "created_at": "2021-12-31 23:59:59+00:00",
                           "cred_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "cred_issue": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credentials~attach": [],
+                            "formats": [],
+                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          },
+                          "cred_offer": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credential_preview": {
+                              "@type": "issue-credential/2.0/credential-preview",
+                              "attributes": [
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                              ],
+                            },
+                            "formats": [],
+                            "offers~attach": [],
+                            "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          },
+                          "cred_preview": {
+                            "@type": "issue-credential/2.0/credential-preview",
+                            "attributes": [
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                              {
+                                "mime-type": "image/jpeg",
+                                "name": "favourite_drink",
+                                "value": "martini",
+                              },
+                            ],
+                          },
+                          "cred_proposal": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "credential_preview": {
+                              "@type": "issue-credential/2.0/credential-preview",
+                              "attributes": [
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                                {
+                                  "mime-type": "image/jpeg",
+                                  "name": "favourite_drink",
+                                  "value": "martini",
+                                },
+                              ],
+                            },
+                            "filters~attach": [],
+                            "formats": [],
+                          },
+                          "cred_request": {
+                            "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "@type": "https://didcomm.org/my-family/1.0/my-message-type",
+                            "formats": [],
+                            "requests~attach": [],
+                          },
                           "error_msg": "The front fell off",
                           "initiator": "self",
                           "parent_thread_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
@@ -5800,7 +6160,23 @@ exports[`open api parser aries simple 1`] = `
                 "path-parameters": {
                   "cred_ex_id": "cred_ex_id",
                 },
-                "request": {},
+                "request": {
+                  "counter_preview": {
+                    "@type": "issue-credential/2.0/credential-preview",
+                    "attributes": [
+                      {
+                        "mime-type": "image/jpeg",
+                        "name": "favourite_drink",
+                        "value": "martini",
+                      },
+                      {
+                        "mime-type": "image/jpeg",
+                        "name": "favourite_drink",
+                        "value": "martini",
+                      },
+                    ],
+                  },
+                },
                 "response": {
                   "body": {
                     "auto_issue": false,
@@ -6090,7 +6466,40 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [],
+                        "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
+                        "type": [],
+                      },
+                      "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
+                        "proofType": "Ed25519Signature2018",
+                      },
+                    },
+                  },
                   "trace": true,
                   "verification_method": "verification_method",
                 },
@@ -6231,7 +6640,40 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [],
+                        "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
+                        "type": [],
+                      },
+                      "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
+                        "proofType": "Ed25519Signature2018",
+                      },
+                    },
+                  },
                   "trace": true,
                 },
                 "response": {
@@ -6398,7 +6840,40 @@ exports[`open api parser aries simple 1`] = `
                       },
                     ],
                   },
-                  "filter": {},
+                  "filter": {
+                    "ld_proof": {
+                      "credential": {
+                        "@context": [],
+                        "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
+                        "issuanceDate": "2010-01-01 19:23:24+00:00",
+                        "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
+                        "type": [],
+                      },
+                      "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
+                        "proofType": "Ed25519Signature2018",
+                      },
+                    },
+                  },
                   "trace": true,
                   "verification_method": "verification_method",
                 },
@@ -6528,11 +7003,31 @@ exports[`open api parser aries simple 1`] = `
                       "credential": {
                         "@context": [],
                         "credentialSubject": {},
+                        "expirationDate": "2010-01-01 19:23:24+00:00",
+                        "id": "http://example.edu/credentials/1872",
                         "issuanceDate": "2010-01-01 19:23:24+00:00",
                         "issuer": {},
+                        "proof": {
+                          "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "created": "2021-12-31 23:59:59+00:00",
+                          "domain": "example.com",
+                          "jws": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                          "nonce": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                          "proofPurpose": "assertionMethod",
+                          "proofValue": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                          "type": "Ed25519Signature2018",
+                          "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                        },
                         "type": [],
                       },
                       "options": {
+                        "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "created": "2021-12-31 23:59:59+00:00",
+                        "credentialStatus": {
+                          "type": "CredentialStatusList2017",
+                        },
+                        "domain": "example.com",
+                        "proofPurpose": "assertionMethod",
                         "proofType": "Ed25519Signature2018",
                       },
                     },
@@ -9108,6 +9603,8 @@ exports[`open api parser aries simple 1`] = `
                         "presentation": {},
                         "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "presentation_proposal_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "presentation_proposal": {
                             "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                             "attributes": [
@@ -9180,6 +9677,8 @@ exports[`open api parser aries simple 1`] = `
                           "version": "1.0",
                         },
                         "presentation_request_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "request_presentations~attach": [],
                         },
                         "role": "prover",
@@ -9203,6 +9702,8 @@ exports[`open api parser aries simple 1`] = `
                         "presentation": {},
                         "presentation_exchange_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "presentation_proposal_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "presentation_proposal": {
                             "@type": "did:sov:BzCbsNYhMrjHiqZDTUASHg;spec/present-proof/1.0/presentation-preview",
                             "attributes": [
@@ -9275,6 +9776,8 @@ exports[`open api parser aries simple 1`] = `
                           "version": "1.0",
                         },
                         "presentation_request_dict": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "request_presentations~attach": [],
                         },
                         "role": "prover",
@@ -10487,7 +10990,45 @@ exports[`open api parser aries simple 1`] = `
                 "request": {
                   "auto_verify": false,
                   "comment": "comment",
-                  "presentation_request": {},
+                  "presentation_request": {
+                    "indy": {
+                      "name": "Proof request",
+                      "nonce": "1",
+                      "requested_attributes": {
+                        "key": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                            "age",
+                          ],
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "requested_predicates": {
+                        "key": {
+                          "name": "index",
+                          "p_type": ">=",
+                          "p_value": 0,
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "version": "1.0",
+                    },
+                  },
                   "trace": false,
                 },
                 "response": {
@@ -10615,15 +11156,21 @@ exports[`open api parser aries simple 1`] = `
                         "error_msg": "Invalid structure",
                         "initiator": "self",
                         "pres": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "presentations~attach": [],
                         },
                         "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "pres_proposal": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "proposals~attach": [],
                         },
                         "pres_request": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "request_presentations~attach": [],
                         },
@@ -10647,15 +11194,21 @@ exports[`open api parser aries simple 1`] = `
                         "error_msg": "Invalid structure",
                         "initiator": "self",
                         "pres": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "presentations~attach": [],
                         },
                         "pres_ex_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "pres_proposal": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "proposals~attach": [],
                         },
                         "pres_request": {
+                          "@id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                          "@type": "https://didcomm.org/my-family/1.0/my-message-type",
                           "formats": [],
                           "request_presentations~attach": [],
                         },
@@ -10877,7 +11430,45 @@ exports[`open api parser aries simple 1`] = `
                   "auto_verify": false,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_request": {},
+                  "presentation_request": {
+                    "indy": {
+                      "name": "Proof request",
+                      "nonce": "1",
+                      "requested_attributes": {
+                        "key": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                            "age",
+                          ],
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "requested_predicates": {
+                        "key": {
+                          "name": "index",
+                          "p_type": ">=",
+                          "p_value": 0,
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "version": "1.0",
+                    },
+                  },
                   "trace": false,
                 },
                 "response": {
@@ -10970,7 +11561,45 @@ exports[`open api parser aries simple 1`] = `
                   "auto_present": true,
                   "comment": "comment",
                   "connection_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                  "presentation_proposal": {},
+                  "presentation_proposal": {
+                    "indy": {
+                      "name": "Proof request",
+                      "nonce": "1",
+                      "requested_attributes": {
+                        "key": {
+                          "name": "favouriteDrink",
+                          "names": [
+                            "age",
+                            "age",
+                          ],
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "requested_predicates": {
+                        "key": {
+                          "name": "index",
+                          "p_type": ">=",
+                          "p_value": 0,
+                          "restrictions": [
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                            {
+                              "key": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                            },
+                          ],
+                        },
+                      },
+                      "version": "1.0",
+                    },
+                  },
                   "trace": false,
                 },
                 "response": {
@@ -11066,6 +11695,24 @@ exports[`open api parser aries simple 1`] = `
                   "pres_ex_id": "pres_ex_id",
                 },
                 "request": {
+                  "indy": {
+                    "requested_attributes": {
+                      "key": {
+                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "revealed": true,
+                      },
+                    },
+                    "requested_predicates": {
+                      "key": {
+                        "cred_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                        "timestamp": 1640995199,
+                      },
+                    },
+                    "self_attested_attributes": {
+                      "key": "self_attested_value",
+                    },
+                    "trace": false,
+                  },
                   "trace": true,
                 },
                 "response": {
@@ -11480,11 +12127,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -11601,11 +12254,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -11854,11 +12513,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -11910,8 +12575,14 @@ exports[`open api parser aries simple 1`] = `
                         ],
                         "record_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
                         "revoc_def_type": "CL_ACCUM",
-                        "revoc_reg_def": {},
-                        "revoc_reg_entry": {},
+                        "revoc_reg_def": {
+                          "credDefId": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                          "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                          "ver": "1.0",
+                        },
+                        "revoc_reg_entry": {
+                          "ver": "1.0",
+                        },
                         "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "state": "active",
                         "tag": "tag",
@@ -12014,11 +12685,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -12241,11 +12918,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
@@ -12356,11 +13039,17 @@ exports[`open api parser aries simple 1`] = `
                         "id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
                         "revocDefType": "CL_ACCUM",
                         "tag": "tag",
-                        "value": {},
+                        "value": {
+                          "maxCredNum": 1,
+                          "tailsHash": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_entry": {
-                        "value": {},
+                        "value": {
+                          "accum": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                          "prevAccum": "21 137AC810975E4 6 76F0384B6F23",
+                        },
                         "ver": "1.0",
                       },
                       "revoc_reg_id": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",

@@ -385,6 +385,10 @@ This information provides hints to clients, allowing bank customers to select tr
                 "path-parameters": {
                   "institutionId": "TIBURON",
                 },
+                "query-parameters": {
+                  "endsOn": "2022-07-04",
+                  "startsOn": "2022-07-04",
+                },
                 "response": {
                   "body": {
                     "accuracyEndsOn": "2026-12-31T00:00:00.000Z",
@@ -542,6 +546,7 @@ This information provides hints to clients, allowing bank customers to select tr
                 },
                 "query-parameters": {
                   "direction": "debit",
+                  "endsOn": "2022-07-04",
                   "frequency": "once",
                   "startsOn": "2022-07-04",
                 },
@@ -1165,15 +1170,18 @@ Note: This operation requires an identity challenge if the financial institution
                   "amount": "275.00",
                   "memo": "Cover check for car repair",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
                   },
                   "sourceAccount": {
                     "id": "bd9b7af2-6f9b",
+                    "label": "Checking *1008",
                     "location": "internal",
                   },
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
+                    "label": "Checking *1008",
                     "location": "internal",
                   },
                 },
@@ -1355,6 +1363,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "memo": "Cover check for car repair",
                         "processedAt": "2022-06-28T021:00:00.000Z",
                         "schedule": {
+                          "amountLimit": "3456.78",
                           "creditsOn": "2026-06-26",
                           "debitsOn": "2026-06-24",
                           "frequency": "once",
@@ -1383,6 +1392,7 @@ Note: This operation requires an identity challenge if the financial institution
                         "memo": "school expenses",
                         "processedAt": "2024-01-15T09:30:00Z",
                         "schedule": {
+                          "amountLimit": "3456.78",
                           "count": 9,
                           "creditsOn": "2023-08-01",
                           "debitsOn": "2026-08-01",
@@ -1470,11 +1480,19 @@ Note: This operation requires an identity challenge if the financial institution
                 "request": {
                   "amount": "275.00",
                   "schedule": {
+                    "amountLimit": "3456.78",
                     "frequency": "once",
                     "scheduledOn": "2022-06-28",
                   },
+                  "sourceAccount": {
+                    "id": "e821ce54-c715",
+                    "label": "Premiere Checking *6789",
+                    "location": "internal",
+                    "type": "checking",
+                  },
                   "targetAccount": {
                     "id": "88b1ca3e-d0f3",
+                    "label": "Checking *1008",
                   },
                 },
                 "response": {

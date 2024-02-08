@@ -519,9 +519,30 @@ exports[`open api parser aries parse open api 1`] = `
             "properties": {
               "menu": {
                 "properties": {
+                  "description": {
+                    "primitive": {
+                      "string": "User preferences for window settings",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "errormsg": {
+                    "primitive": {
+                      "string": "Error: item not present",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "options": {
                     "array": [],
                     "type": "array",
+                  },
+                  "title": {
+                    "primitive": {
+                      "string": "My Menu",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                 },
                 "type": "object",
@@ -4511,11 +4532,118 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": {
                     "properties": {
                       "primary": {
-                        "properties": {},
+                        "properties": {
+                          "n": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "rctxt": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "s": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "z": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "revocation": {
-                        "properties": {},
+                        "properties": {
+                          "g": {
+                            "primitive": {
+                              "string": "1 1F14F&ECB578F 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "g_dash": {
+                            "primitive": {
+                              "string": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h": {
+                            "primitive": {
+                              "string": "1 16675DAE54BFAE8 2 095E45DD417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h0": {
+                            "primitive": {
+                              "string": "1 21E5EF9476EAF18 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h1": {
+                            "primitive": {
+                              "string": "1 236D1D99236090 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h2": {
+                            "primitive": {
+                              "string": "1 1C3AE8D1F1E277 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h_cap": {
+                            "primitive": {
+                              "string": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "htilde": {
+                            "primitive": {
+                              "string": "1 1D8549E8C0F8 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "pk": {
+                            "primitive": {
+                              "string": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "u": {
+                            "primitive": {
+                              "string": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "y": {
+                            "primitive": {
+                              "string": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                     },
@@ -4668,11 +4796,118 @@ exports[`open api parser aries parse open api 1`] = `
                   "value": {
                     "properties": {
                       "primary": {
-                        "properties": {},
+                        "properties": {
+                          "n": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "rctxt": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "s": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "z": {
+                            "primitive": {
+                              "string": "0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "revocation": {
-                        "properties": {},
+                        "properties": {
+                          "g": {
+                            "primitive": {
+                              "string": "1 1F14F&ECB578F 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "g_dash": {
+                            "primitive": {
+                              "string": "1 1D64716fCDC00C 1 0C781960FA66E3D3 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h": {
+                            "primitive": {
+                              "string": "1 16675DAE54BFAE8 2 095E45DD417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h0": {
+                            "primitive": {
+                              "string": "1 21E5EF9476EAF18 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h1": {
+                            "primitive": {
+                              "string": "1 236D1D99236090 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h2": {
+                            "primitive": {
+                              "string": "1 1C3AE8D1F1E277 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "h_cap": {
+                            "primitive": {
+                              "string": "1 1B2A32CF3167 1 2490FEBF6EE55 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "htilde": {
+                            "primitive": {
+                              "string": "1 1D8549E8C0F8 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "pk": {
+                            "primitive": {
+                              "string": "1 142CD5E5A7DC 1 153885BD903312 2 095E45DDF417D",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "u": {
+                            "primitive": {
+                              "string": "1 0C430AAB2B4710 1 1CB3A0932EE7E 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "y": {
+                            "primitive": {
+                              "string": "1 153558BD903312 2 095E45DDF417D 1 0000000000000000",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                     },
@@ -6724,6 +6959,95 @@ exports[`open api parser aries parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "did_doc~attach": {
+                "properties": {
+                  "@id": {
+                    "primitive": {
+                      "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "byte_count": {
+                    "primitive": {
+                      "int": 1234,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "data": {
+                    "properties": {
+                      "base64": {
+                        "primitive": {
+                          "string": "ey4uLn0=",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "json": {
+                        "map": [],
+                        "type": "map",
+                      },
+                      "links": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "https://link.to/data",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          {
+                            "primitive": {
+                              "string": "https://link.to/data",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "sha256": {
+                        "primitive": {
+                          "string": "617a48c7c8afe0521efdc03e5bb0ad9e655893e6b4b51f0e794d70fba132aacb",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "view from doorway, facing east, with lights off",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "filename": {
+                    "primitive": {
+                      "string": "IMG1092348.png",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "lastmod_time": {
+                    "primitive": {
+                      "string": "2021-12-31 23:59:59+00:00",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "mime-type": {
+                    "primitive": {
+                      "string": "image/png",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "label": {
                 "primitive": {
                   "string": "Request to connect with Bob",
@@ -7780,6 +8104,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "disclosures": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "disclosures": {
                             "array": [],
                             "type": "array",
@@ -7795,7 +8133,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "queries_msg": {
-                        "properties": {},
+                        "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "state": {
@@ -7847,6 +8200,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "disclosures": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "disclosures": {
                             "array": [],
                             "type": "array",
@@ -7862,7 +8229,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "queries_msg": {
-                        "properties": {},
+                        "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "state": {
@@ -8228,6 +8610,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "disclose": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "protocols": {
                             "array": [],
                             "type": "array",
@@ -8244,6 +8640,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "query_msg": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "query": {
                             "primitive": {
                               "string": "query",
@@ -8303,6 +8713,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "disclose": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "protocols": {
                             "array": [],
                             "type": "array",
@@ -8319,6 +8743,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "query_msg": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "query": {
                             "primitive": {
                               "string": "query",
@@ -8524,7 +8962,175 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {},
+                "properties": {
+                  "ld_proof": {
+                    "properties": {
+                      "credential": {
+                        "properties": {
+                          "@context": {
+                            "array": [],
+                            "type": "array",
+                          },
+                          "credentialSubject": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuanceDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuer": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "type": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "options": {
+                        "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofType": {
+                            "primitive": {
+                              "string": "Ed25519Signature2018",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -9162,7 +9768,175 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {},
+                "properties": {
+                  "ld_proof": {
+                    "properties": {
+                      "credential": {
+                        "properties": {
+                          "@context": {
+                            "array": [],
+                            "type": "array",
+                          },
+                          "credentialSubject": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuanceDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuer": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "type": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "options": {
+                        "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofType": {
+                            "primitive": {
+                              "string": "Ed25519Signature2018",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -9758,6 +10532,335 @@ exports[`open api parser aries parse open api 1`] = `
                             },
                             "type": "primitive",
                           },
+                          "cred_issue": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credentials~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "replacement_id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_offer": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credential_preview": {
+                                "properties": {
+                                  "@type": {
+                                    "primitive": {
+                                      "string": "issue-credential/2.0/credential-preview",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "attributes": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "offers~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "replacement_id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_preview": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/2.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_proposal": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credential_preview": {
+                                "properties": {
+                                  "@type": {
+                                    "primitive": {
+                                      "string": "issue-credential/2.0/credential-preview",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "attributes": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "filters~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_request": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "requests~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "error_msg": {
                             "primitive": {
                               "string": "The front fell off",
@@ -9968,6 +11071,335 @@ exports[`open api parser aries parse open api 1`] = `
                               "type": "string",
                             },
                             "type": "primitive",
+                          },
+                          "cred_issue": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credentials~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "replacement_id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_offer": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credential_preview": {
+                                "properties": {
+                                  "@type": {
+                                    "primitive": {
+                                      "string": "issue-credential/2.0/credential-preview",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "attributes": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "offers~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "replacement_id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_preview": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/2.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_proposal": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "credential_preview": {
+                                "properties": {
+                                  "@type": {
+                                    "primitive": {
+                                      "string": "issue-credential/2.0/credential-preview",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "attributes": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                      {
+                                        "properties": {
+                                          "mime-type": {
+                                            "primitive": {
+                                              "string": "image/jpeg",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "name": {
+                                            "primitive": {
+                                              "string": "favourite_drink",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "martini",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                              "filters~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "cred_request": {
+                            "properties": {
+                              "@id": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "@type": {
+                                "primitive": {
+                                  "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "formats": {
+                                "array": [],
+                                "type": "array",
+                              },
+                              "requests~attach": {
+                                "array": [],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
                           },
                           "error_msg": {
                             "primitive": {
@@ -11960,7 +13392,77 @@ exports[`open api parser aries parse open api 1`] = `
           ],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "counter_preview": {
+                "properties": {
+                  "@type": {
+                    "primitive": {
+                      "string": "issue-credential/2.0/credential-preview",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "attributes": {
+                    "array": [
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "primitive": {
+                              "string": "image/jpeg",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "favourite_drink",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "martini",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      {
+                        "properties": {
+                          "mime-type": {
+                            "primitive": {
+                              "string": "image/jpeg",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "favourite_drink",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "martini",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
+            },
             "type": "object",
           },
           "response": {
@@ -13869,7 +15371,175 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {},
+                "properties": {
+                  "ld_proof": {
+                    "properties": {
+                      "credential": {
+                        "properties": {
+                          "@context": {
+                            "array": [],
+                            "type": "array",
+                          },
+                          "credentialSubject": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuanceDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuer": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "type": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "options": {
+                        "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofType": {
+                            "primitive": {
+                              "string": "Ed25519Signature2018",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -14521,7 +16191,175 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {},
+                "properties": {
+                  "ld_proof": {
+                    "properties": {
+                      "credential": {
+                        "properties": {
+                          "@context": {
+                            "array": [],
+                            "type": "array",
+                          },
+                          "credentialSubject": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuanceDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuer": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "type": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "options": {
+                        "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofType": {
+                            "primitive": {
+                              "string": "Ed25519Signature2018",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -15159,7 +16997,175 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "object",
               },
               "filter": {
-                "properties": {},
+                "properties": {
+                  "ld_proof": {
+                    "properties": {
+                      "credential": {
+                        "properties": {
+                          "@context": {
+                            "array": [],
+                            "type": "array",
+                          },
+                          "credentialSubject": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuanceDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "issuer": {
+                            "map": [],
+                            "type": "map",
+                          },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "type": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "options": {
+                        "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofType": {
+                            "primitive": {
+                              "string": "Ed25519Signature2018",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -15748,6 +17754,20 @@ exports[`open api parser aries parse open api 1`] = `
                             "map": [],
                             "type": "map",
                           },
+                          "expirationDate": {
+                            "primitive": {
+                              "string": "2010-01-01 19:23:24+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "http://example.edu/credentials/1872",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "issuanceDate": {
                             "primitive": {
                               "string": "2010-01-01 19:23:24+00:00",
@@ -15759,6 +17779,74 @@ exports[`open api parser aries parse open api 1`] = `
                             "map": [],
                             "type": "map",
                           },
+                          "proof": {
+                            "properties": {
+                              "challenge": {
+                                "primitive": {
+                                  "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "created": {
+                                "primitive": {
+                                  "string": "2021-12-31 23:59:59+00:00",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "domain": {
+                                "primitive": {
+                                  "string": "example.com",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "jws": {
+                                "primitive": {
+                                  "string": "eyJhbGciOiAiRWREUc2UsICJjcml0IjogWyJiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQ1Ch6YBKY7UBAjg6iBX5qBQ",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "nonce": {
+                                "primitive": {
+                                  "string": "CF69iO3nfvqRsRBNElE8b4wO39SyJHPM7Gg1nExltW5vSfQA1lvDCR/zXX1To0/4NLo==",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofPurpose": {
+                                "primitive": {
+                                  "string": "assertionMethod",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "proofValue": {
+                                "primitive": {
+                                  "string": "sy1AahqbzJQ63n9RtekmwzqZeVj494VppdAVJBnMYrTwft6cLJJGeTSSxCCJ6HKnRtwE7jjDh6sB2z2AAiZY9BBnCD8wUVgwqH3qchGRCuC2RugA4eQ9fUrR4Yuycac3caiaaay",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "primitive": {
+                                  "string": "Ed25519Signature2018",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "verificationMethod": {
+                                "primitive": {
+                                  "string": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "type": {
                             "array": [],
                             "type": "array",
@@ -15768,6 +17856,46 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "options": {
                         "properties": {
+                          "challenge": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "created": {
+                            "primitive": {
+                              "string": "2021-12-31 23:59:59+00:00",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credentialStatus": {
+                            "properties": {
+                              "type": {
+                                "primitive": {
+                                  "string": "CredentialStatusList2017",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "domain": {
+                            "primitive": {
+                              "string": "example.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "proofPurpose": {
+                            "primitive": {
+                              "string": "assertionMethod",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "proofType": {
                             "primitive": {
                               "string": "Ed25519Signature2018",
@@ -18041,6 +20169,89 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "credential_offer_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credential_preview": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/1.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "offers~attach": {
                             "array": [],
                             "type": "array",
@@ -18049,7 +20260,126 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "object",
                       },
                       "credential_proposal_dict": {
-                        "properties": {},
+                        "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "cred_def_id": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credential_proposal": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/1.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "issuer_did": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_id": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_issuer_did": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_version": {
+                            "primitive": {
+                              "string": "1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "credential_request": {
@@ -18388,6 +20718,89 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "credential_offer_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credential_preview": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/1.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
                           "offers~attach": {
                             "array": [],
                             "type": "array",
@@ -18396,7 +20809,126 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "object",
                       },
                       "credential_proposal_dict": {
-                        "properties": {},
+                        "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "cred_def_id": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "credential_proposal": {
+                            "properties": {
+                              "@type": {
+                                "primitive": {
+                                  "string": "issue-credential/1.0/credential-preview",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "attributes": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  {
+                                    "properties": {
+                                      "mime-type": {
+                                        "primitive": {
+                                          "string": "image/jpeg",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "name": {
+                                        "primitive": {
+                                          "string": "favourite_drink",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "martini",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "issuer_did": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_id": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_issuer_did": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "schema_version": {
+                            "primitive": {
+                              "string": "1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "credential_request": {
@@ -31519,7 +34051,192 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "primitive",
               },
               "presentation_request": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "primitive": {
+                          "string": "Proof request",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nonce": {
+                        "primitive": {
+                          "string": "1",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_attributes": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "favouriteDrink",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "names": {
+                                  "array": [
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "requested_predicates": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "index",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "p_type": {
+                                  "enum": ">=",
+                                  "type": "enum",
+                                },
+                                "p_value": {
+                                  "primitive": {
+                                    "int": 0,
+                                    "type": "int",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "version": {
+                        "primitive": {
+                          "string": "1.0",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -31873,6 +34590,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -31893,6 +34624,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres_proposal": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -31906,6 +34651,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres_request": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -32019,6 +34778,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -32039,6 +34812,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres_proposal": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -32052,6 +34839,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "pres_request": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "formats": {
                             "array": [],
                             "type": "array",
@@ -33062,6 +35863,96 @@ exports[`open api parser aries parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "indy": {
+                "properties": {
+                  "requested_attributes": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "value": {
+                          "properties": {
+                            "cred_id": {
+                              "primitive": {
+                                "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                            "revealed": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                  "requested_predicates": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "value": {
+                          "properties": {
+                            "cred_id": {
+                              "primitive": {
+                                "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                "type": "string",
+                              },
+                              "type": "primitive",
+                            },
+                            "timestamp": {
+                              "primitive": {
+                                "int": 1640995199,
+                                "type": "int",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                          "type": "object",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                  "self_attested_attributes": {
+                    "map": [
+                      {
+                        "key": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "value": {
+                          "primitive": {
+                            "string": "self_attested_value",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                    ],
+                    "type": "map",
+                  },
+                  "trace": {
+                    "primitive": {
+                      "boolean": false,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
               "trace": {
                 "primitive": {
                   "boolean": true,
@@ -34046,7 +36937,192 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "primitive",
               },
               "presentation_proposal": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "primitive": {
+                          "string": "Proof request",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nonce": {
+                        "primitive": {
+                          "string": "1",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_attributes": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "favouriteDrink",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "names": {
+                                  "array": [
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "requested_predicates": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "index",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "p_type": {
+                                  "enum": ">=",
+                                  "type": "enum",
+                                },
+                                "p_value": {
+                                  "primitive": {
+                                    "int": 0,
+                                    "type": "int",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "version": {
+                        "primitive": {
+                          "string": "1.0",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -34372,7 +37448,192 @@ exports[`open api parser aries parse open api 1`] = `
                 "type": "primitive",
               },
               "presentation_request": {
-                "properties": {},
+                "properties": {
+                  "indy": {
+                    "properties": {
+                      "name": {
+                        "primitive": {
+                          "string": "Proof request",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nonce": {
+                        "primitive": {
+                          "string": "1",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_attributes": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "favouriteDrink",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "names": {
+                                  "array": [
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                    {
+                                      "primitive": {
+                                        "string": "age",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "requested_predicates": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "value": {
+                              "properties": {
+                                "name": {
+                                  "primitive": {
+                                    "string": "index",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "p_type": {
+                                  "enum": ">=",
+                                  "type": "enum",
+                                },
+                                "p_value": {
+                                  "primitive": {
+                                    "int": 0,
+                                    "type": "int",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "restrictions": {
+                                  "array": [
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                    {
+                                      "map": [
+                                        {
+                                          "key": {
+                                            "string": "key",
+                                            "type": "string",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                      ],
+                                      "type": "map",
+                                    },
+                                  ],
+                                  "type": "array",
+                                },
+                              },
+                              "type": "object",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "version": {
+                        "primitive": {
+                          "string": "1.0",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
                 "type": "object",
               },
               "trace": {
@@ -35588,6 +38849,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_proposal_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "presentation_proposal": {
                             "properties": {
                               "@type": {
@@ -35939,6 +39214,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_request_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "request_presentations~attach": {
                             "array": [],
                             "type": "array",
@@ -36058,6 +39347,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_proposal_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "presentation_proposal": {
                             "properties": {
                               "@type": {
@@ -36409,6 +39712,20 @@ exports[`open api parser aries parse open api 1`] = `
                       },
                       "presentation_request_dict": {
                         "properties": {
+                          "@id": {
+                            "primitive": {
+                              "string": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "@type": {
+                            "primitive": {
+                              "string": "https://didcomm.org/my-family/1.0/my-message-type",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
                           "request_presentations~attach": {
                             "array": [],
                             "type": "array",
@@ -41793,7 +45110,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -41809,7 +45141,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -42194,7 +45541,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -42210,7 +45572,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -43221,7 +46598,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -43237,7 +46629,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -43496,7 +46903,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -43512,7 +46934,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -43745,11 +47182,41 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "literal",
                       },
                       "revoc_reg_def": {
-                        "properties": {},
+                        "properties": {
+                          "credDefId": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "WgWxqztrNooG92RXvxSTWv:4:WgWxqztrNooG92RXvxSTWv:3:CL:20:tag:CL_ACCUM:0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "ver": {
+                            "primitive": {
+                              "string": "1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "revoc_reg_entry": {
-                        "properties": {},
+                        "properties": {
+                          "ver": {
+                            "primitive": {
+                              "string": "1.0",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "revoc_reg_id": {
@@ -44219,7 +47686,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -44235,7 +47717,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -45057,7 +48554,22 @@ exports[`open api parser aries parse open api 1`] = `
                         "type": "primitive",
                       },
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "maxCredNum": {
+                            "primitive": {
+                              "int": 1,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                          "tailsHash": {
+                            "primitive": {
+                              "string": "H3C2AVvLMv6gmMNam3uVAjZpfkcJCwDwnZn6z3wXmqPV",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {
@@ -45073,7 +48585,22 @@ exports[`open api parser aries parse open api 1`] = `
                   "revoc_reg_entry": {
                     "properties": {
                       "value": {
-                        "properties": {},
+                        "properties": {
+                          "accum": {
+                            "primitive": {
+                              "string": "21 11792B036AED0AAA12A4 4 298B2571FFC63A737",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "prevAccum": {
+                            "primitive": {
+                              "string": "21 137AC810975E4 6 76F0384B6F23",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
                         "type": "object",
                       },
                       "ver": {

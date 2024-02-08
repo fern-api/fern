@@ -1171,6 +1171,171 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 "enum": "SUCCESSFUL",
                 "type": "enum",
               },
+              "updatedTransactionAttributes": {
+                "properties": {
+                  "destinationAmountDetails": {
+                    "properties": {
+                      "country": {
+                        "enum": "IN",
+                        "type": "enum",
+                      },
+                      "transactionAmount": {
+                        "primitive": {
+                          "double": 68351.34,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "transactionCurrency": {
+                        "enum": "INR",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "deviceData": {
+                    "properties": {
+                      "appVersion": {
+                        "primitive": {
+                          "string": "1.1.0",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "batteryLevel": {
+                        "primitive": {
+                          "double": 95,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceIdentifier": {
+                        "primitive": {
+                          "string": "3c49f915d04485e34caba",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceLatitude": {
+                        "primitive": {
+                          "double": 13.0033,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceLongitude": {
+                        "primitive": {
+                          "double": 76.1004,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceMaker": {
+                        "primitive": {
+                          "string": "ASUS",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceModel": {
+                        "primitive": {
+                          "string": "Zenphone M2 Pro Max",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "deviceYear": {
+                        "primitive": {
+                          "string": "2018",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "ipAddress": {
+                        "primitive": {
+                          "string": "10.23.191.2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "operatingSystem": {
+                        "primitive": {
+                          "string": "Android 11.2",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "vpnUsed": {
+                        "primitive": {
+                          "boolean": false,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "originAmountDetails": {
+                    "properties": {
+                      "country": {
+                        "enum": "DE",
+                        "type": "enum",
+                      },
+                      "transactionAmount": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "transactionCurrency": {
+                        "enum": "EUR",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "promotionCodeUsed": {
+                    "primitive": {
+                      "boolean": true,
+                      "type": "boolean",
+                    },
+                    "type": "primitive",
+                  },
+                  "reference": {
+                    "primitive": {
+                      "string": "loan repayment",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "tags": {
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "customKey",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "customValue",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                },
+                "type": "object",
+              },
             },
             "type": "object",
           },
@@ -1843,6 +2008,32 @@ Each consumer User entity needs three mandatory fields:
                         },
                         "type": "primitive",
                       },
+                      "nameOnDocument": {
+                        "properties": {
+                          "firstName": {
+                            "primitive": {
+                              "string": "Baran",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "lastName": {
+                            "primitive": {
+                              "string": "Ozkan",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "middleName": {
+                            "primitive": {
+                              "string": "Realblood",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
                       "tags": {
                         "array": [
                           {
@@ -1896,6 +2087,107 @@ Each consumer User entity needs three mandatory fields:
                   },
                 ],
                 "type": "array",
+              },
+              "transactionLimits": {
+                "properties": {
+                  "maximumDailyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumMonthlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumQuarterlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumWeeklyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumYearlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "userDetails": {
                 "properties": {
@@ -2849,6 +3141,229 @@ Each consumer Business entity needs three mandatory fields:
                 },
                 "type": "primitive",
               },
+              "directors": {
+                "array": [],
+                "type": "array",
+              },
+              "legalEntity": {
+                "properties": {
+                  "companyFinancialDetails": {
+                    "properties": {
+                      "expectedTransactionAmountPerMonth": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "expectedTurnoverPerMonth": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "USD",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 8000,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "tags": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "companyGeneralDetails": {
+                    "properties": {
+                      "businessIndustry": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "Farming",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "legalName": {
+                        "primitive": {
+                          "string": "Ozkan Hazelnut Export JSC",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "mainProductsServicesSold": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "Hazelnut",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "tags": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "companyRegistrationDetails": {
+                    "properties": {
+                      "registrationCountry": {
+                        "enum": "DE",
+                        "type": "enum",
+                      },
+                      "registrationIdentifier": {
+                        "primitive": {
+                          "string": "PSJ554342",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "tags": {
+                        "array": [],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
+              "savedPaymentDetails": {
+                "array": [],
+                "type": "array",
+              },
+              "shareHolders": {
+                "array": [],
+                "type": "array",
+              },
+              "tags": {
+                "array": [],
+                "type": "array",
+              },
+              "transactionLimits": {
+                "properties": {
+                  "maximumDailyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumMonthlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumQuarterlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumWeeklyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "maximumYearlyTransactionLimit": {
+                    "properties": {
+                      "amountCurrency": {
+                        "enum": "GBP",
+                        "type": "enum",
+                      },
+                      "amountValue": {
+                        "primitive": {
+                          "double": 800,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
               "userId": {
                 "primitive": {
                   "string": "userId",
@@ -3244,6 +3759,32 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                   "type": "string",
                                 },
                                 "type": "primitive",
+                              },
+                              "nameOnDocument": {
+                                "properties": {
+                                  "firstName": {
+                                    "primitive": {
+                                      "string": "Baran",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "lastName": {
+                                    "primitive": {
+                                      "string": "Ozkan",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "middleName": {
+                                    "primitive": {
+                                      "string": "Realblood",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
                               },
                               "tags": {
                                 "array": [
@@ -3817,6 +4358,32 @@ Calling \`GET /business/user/{userId}\` will return the entire User payload and 
                                 },
                                 "type": "primitive",
                               },
+                              "nameOnDocument": {
+                                "properties": {
+                                  "firstName": {
+                                    "primitive": {
+                                      "string": "Baran",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "lastName": {
+                                    "primitive": {
+                                      "string": "Ozkan",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "middleName": {
+                                    "primitive": {
+                                      "string": "Realblood",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
                               "tags": {
                                 "array": [
                                   {
@@ -4362,6 +4929,346 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                 },
                 "type": "primitive",
               },
+              "updatedConsumerUserAttributes": {
+                "properties": {
+                  "contactDetails": {
+                    "properties": {
+                      "addresses": {
+                        "array": [
+                          {
+                            "properties": {
+                              "addressLines": {
+                                "array": [
+                                  {
+                                    "type": "unknown",
+                                    "unknown": {
+                                      "primitive": {
+                                        "string": "Klara-Franke Str 20",
+                                        "type": "string",
+                                      },
+                                      "type": "primitive",
+                                    },
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "city": {
+                                "primitive": {
+                                  "string": "Berlin",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "country": {
+                                "primitive": {
+                                  "string": "Germany",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "postcode": {
+                                "primitive": {
+                                  "string": "10557",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "state": {
+                                "primitive": {
+                                  "string": "Berlin",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "tags": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "key": {
+                                        "primitive": {
+                                          "string": "customKey",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "value": {
+                                        "primitive": {
+                                          "string": "customValue",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "contactNumbers": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "+37112345432",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "emailIds": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "baran@flagright.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "websites": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "flagright.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "legalDocuments": {
+                    "array": [
+                      {
+                        "properties": {
+                          "documentExpirationDate": {
+                            "primitive": {
+                              "double": 1839939034000,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "documentIssuedCountry": {
+                            "enum": "DE",
+                            "type": "enum",
+                          },
+                          "documentIssuedDate": {
+                            "primitive": {
+                              "double": 1639939034000,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                          "documentNumber": {
+                            "primitive": {
+                              "string": "Z9431P",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "documentType": {
+                            "primitive": {
+                              "string": "passport",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "nameOnDocument": {
+                            "properties": {
+                              "firstName": {
+                                "primitive": {
+                                  "string": "Baran",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "lastName": {
+                                "primitive": {
+                                  "string": "Ozkan",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "middleName": {
+                                "primitive": {
+                                  "string": "Realblood",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "tags": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "primitive": {
+                                      "string": "customerType",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "wallet",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "tags": {
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "customKey",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "customValue",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "transactionLimits": {
+                    "properties": {
+                      "maximumDailyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumMonthlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumQuarterlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumWeeklyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumYearlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
+              },
               "userId": {
                 "primitive": {
                   "string": "userId",
@@ -4772,6 +5679,920 @@ In order to make individual events retrievable, you also need to pass in a uniqu
                   "type": "double",
                 },
                 "type": "primitive",
+              },
+              "updatedBusinessUserAttributes": {
+                "properties": {
+                  "directors": {
+                    "array": [
+                      {
+                        "properties": {
+                          "contactDetails": {
+                            "properties": {
+                              "addresses": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "addressLines": {
+                                        "array": [
+                                          {
+                                            "type": "unknown",
+                                            "unknown": {
+                                              "primitive": {
+                                                "string": "Klara-Franke Str 20",
+                                                "type": "string",
+                                              },
+                                              "type": "primitive",
+                                            },
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "city": {
+                                        "primitive": {
+                                          "string": "Berlin",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "country": {
+                                        "primitive": {
+                                          "string": "Germany",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "postcode": {
+                                        "primitive": {
+                                          "string": "10557",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "state": {
+                                        "primitive": {
+                                          "string": "Berlin",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "tags": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "key": {
+                                                "primitive": {
+                                                  "string": "customKey",
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                              "value": {
+                                                "primitive": {
+                                                  "string": "customValue",
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "contactNumbers": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "+371 123132",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "emailIds": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "baran@flagright.com",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "websites": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "flagright.com",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "generalDetails": {
+                            "properties": {
+                              "countryOfNationality": {
+                                "enum": "DE",
+                                "type": "enum",
+                              },
+                              "countryOfResidence": {
+                                "enum": "US",
+                                "type": "enum",
+                              },
+                              "dateOfBirth": {
+                                "primitive": {
+                                  "string": "1991-01-01",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "properties": {
+                                  "firstName": {
+                                    "primitive": {
+                                      "string": "Baran",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "lastName": {
+                                    "primitive": {
+                                      "string": "Ozkan",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "middleName": {
+                                    "primitive": {
+                                      "string": "Realblood",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "legalDocuments": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "documentExpirationDate": {
+                                    "primitive": {
+                                      "double": 1839939034000,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentIssuedCountry": {
+                                    "enum": "DE",
+                                    "type": "enum",
+                                  },
+                                  "documentIssuedDate": {
+                                    "primitive": {
+                                      "double": 1639939034000,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentNumber": {
+                                    "primitive": {
+                                      "string": "Z9431P",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentType": {
+                                    "primitive": {
+                                      "string": "passport",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "nameOnDocument": {
+                                    "properties": {
+                                      "firstName": {
+                                        "primitive": {
+                                          "string": "Baran",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "lastName": {
+                                        "primitive": {
+                                          "string": "Ozkan",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "middleName": {
+                                        "primitive": {
+                                          "string": "Realblood",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  "tags": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "key": {
+                                            "primitive": {
+                                              "string": "customerType",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "wallet",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "tags": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "primitive": {
+                                      "string": "customKey",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "customValue",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "legalEntity": {
+                    "properties": {
+                      "companyFinancialDetails": {
+                        "properties": {
+                          "expectedTransactionAmountPerMonth": {
+                            "properties": {
+                              "amountCurrency": {
+                                "enum": "GBP",
+                                "type": "enum",
+                              },
+                              "amountValue": {
+                                "primitive": {
+                                  "double": 800,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "expectedTurnoverPerMonth": {
+                            "properties": {
+                              "amountCurrency": {
+                                "enum": "USD",
+                                "type": "enum",
+                              },
+                              "amountValue": {
+                                "primitive": {
+                                  "double": 8000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "tags": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "companyGeneralDetails": {
+                        "properties": {
+                          "businessIndustry": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "Farming",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "legalName": {
+                            "primitive": {
+                              "string": "Ozkan Hazelnut Export JSC",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "mainProductsServicesSold": {
+                            "array": [
+                              {
+                                "primitive": {
+                                  "string": "Hazelnut",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "tags": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "companyRegistrationDetails": {
+                        "properties": {
+                          "registrationCountry": {
+                            "enum": "DE",
+                            "type": "enum",
+                          },
+                          "registrationIdentifier": {
+                            "primitive": {
+                              "string": "PSJ554342",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "tags": {
+                            "array": [],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "contactDetails": {
+                        "properties": {
+                          "addresses": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "addressLines": {
+                                    "array": [
+                                      {
+                                        "type": "unknown",
+                                        "unknown": {
+                                          "primitive": {
+                                            "string": "Klara-Franke Str 20",
+                                            "type": "string",
+                                          },
+                                          "type": "primitive",
+                                        },
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                  "city": {
+                                    "primitive": {
+                                      "string": "Berlin",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "country": {
+                                    "primitive": {
+                                      "string": "Germany",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "postcode": {
+                                    "primitive": {
+                                      "string": "10557",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "state": {
+                                    "primitive": {
+                                      "string": "Berlin",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "tags": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "key": {
+                                            "primitive": {
+                                              "string": "customKey",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "customValue",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "reasonForAccountOpening": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "string",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "savedPaymentDetails": {
+                    "array": [],
+                    "type": "array",
+                  },
+                  "shareHolders": {
+                    "array": [
+                      {
+                        "properties": {
+                          "contactDetails": {
+                            "properties": {
+                              "addresses": {
+                                "array": [
+                                  {
+                                    "properties": {
+                                      "addressLines": {
+                                        "array": [
+                                          {
+                                            "type": "unknown",
+                                            "unknown": {
+                                              "primitive": {
+                                                "string": "Klara-Franke Str 20",
+                                                "type": "string",
+                                              },
+                                              "type": "primitive",
+                                            },
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                      "city": {
+                                        "primitive": {
+                                          "string": "Berlin",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "country": {
+                                        "primitive": {
+                                          "string": "Germany",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "postcode": {
+                                        "primitive": {
+                                          "string": "10557",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "state": {
+                                        "primitive": {
+                                          "string": "Berlin",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "tags": {
+                                        "array": [
+                                          {
+                                            "properties": {
+                                              "key": {
+                                                "primitive": {
+                                                  "string": "customKey",
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                              "value": {
+                                                "primitive": {
+                                                  "string": "customValue",
+                                                  "type": "string",
+                                                },
+                                                "type": "primitive",
+                                              },
+                                            },
+                                            "type": "object",
+                                          },
+                                        ],
+                                        "type": "array",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "contactNumbers": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "+371 123132",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "emailIds": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "baran@flagright.com",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                              "websites": {
+                                "array": [
+                                  {
+                                    "primitive": {
+                                      "string": "flagright.com",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                ],
+                                "type": "array",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "generalDetails": {
+                            "properties": {
+                              "countryOfNationality": {
+                                "enum": "DE",
+                                "type": "enum",
+                              },
+                              "countryOfResidence": {
+                                "enum": "US",
+                                "type": "enum",
+                              },
+                              "dateOfBirth": {
+                                "primitive": {
+                                  "string": "1991-01-01",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "name": {
+                                "properties": {
+                                  "firstName": {
+                                    "primitive": {
+                                      "string": "Baran",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "lastName": {
+                                    "primitive": {
+                                      "string": "Ozkan",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "middleName": {
+                                    "primitive": {
+                                      "string": "Realblood",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                          "legalDocuments": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "documentExpirationDate": {
+                                    "primitive": {
+                                      "double": 1839939034000,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentIssuedCountry": {
+                                    "enum": "DE",
+                                    "type": "enum",
+                                  },
+                                  "documentIssuedDate": {
+                                    "primitive": {
+                                      "double": 1639939034000,
+                                      "type": "double",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentNumber": {
+                                    "primitive": {
+                                      "string": "Z9431P",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "documentType": {
+                                    "primitive": {
+                                      "string": "passport",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "nameOnDocument": {
+                                    "properties": {
+                                      "firstName": {
+                                        "primitive": {
+                                          "string": "Baran",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "lastName": {
+                                        "primitive": {
+                                          "string": "Ozkan",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                      "middleName": {
+                                        "primitive": {
+                                          "string": "Realblood",
+                                          "type": "string",
+                                        },
+                                        "type": "primitive",
+                                      },
+                                    },
+                                    "type": "object",
+                                  },
+                                  "tags": {
+                                    "array": [
+                                      {
+                                        "properties": {
+                                          "key": {
+                                            "primitive": {
+                                              "string": "customerType",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                          "value": {
+                                            "primitive": {
+                                              "string": "wallet",
+                                              "type": "string",
+                                            },
+                                            "type": "primitive",
+                                          },
+                                        },
+                                        "type": "object",
+                                      },
+                                    ],
+                                    "type": "array",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "tags": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "key": {
+                                    "primitive": {
+                                      "string": "customKey",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "value": {
+                                    "primitive": {
+                                      "string": "customValue",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "tags": {
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "customKey",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "value": {
+                            "primitive": {
+                              "string": "customValue",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "transactionLimits": {
+                    "properties": {
+                      "maximumDailyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumMonthlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumQuarterlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumWeeklyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "maximumYearlyTransactionLimit": {
+                        "properties": {
+                          "amountCurrency": {
+                            "enum": "GBP",
+                            "type": "enum",
+                          },
+                          "amountValue": {
+                            "primitive": {
+                              "double": 800,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                },
+                "type": "object",
               },
               "userId": {
                 "primitive": {

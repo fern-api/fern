@@ -8405,6 +8405,13 @@ exports[`open api parser merge parse open api 1`] = `
           "queryParameters": [],
           "request": {
             "properties": {
+              "message": {
+                "primitive": {
+                  "string": "deletion request by user id 51903790-7dfe-4053-8d63-5a10cc4ffd39",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "reason": {
                 "enum": "GENERAL_CUSTOMER_REQUEST",
                 "type": "enum",

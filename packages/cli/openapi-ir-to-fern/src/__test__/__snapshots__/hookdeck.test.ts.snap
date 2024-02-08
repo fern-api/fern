@@ -4282,6 +4282,11 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "id": "iss_YXKv5OdJXCiVwkPhGy",
+                  "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                  "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                },
                 "response": {
                   "body": {
                     "count": 1,
@@ -4325,6 +4330,11 @@ exports[`open api parser hookdeck simple 1`] = `
             ],
             "examples": [
               {
+                "query-parameters": {
+                  "id": "iss_YXKv5OdJXCiVwkPhGy",
+                  "issue_trigger_id": "it_BXKv5OdJXCiVwkPhGy",
+                  "merged_with": "iss_AXKv3OdJXCiKlkPhDz",
+                },
                 "response": {
                   "body": {
                     "count": 1,
