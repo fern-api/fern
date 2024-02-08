@@ -122,5 +122,15 @@ export const GENERATOR_INVOCATIONS: Record<GeneratorName, Omit<GeneratorInvocati
         config: {
             format: "yaml"
         }
+    },
+    [GeneratorName.CSHARP_MODEL]: {
+        version: "0.0.0"
+    },
+    [GeneratorName.CSHARP_SDK]: {
+        version: "0.0.1",
+        output: {
+            location: "local-file-system",
+            path: "../sdks/csharp"
+        }
     }
 };
