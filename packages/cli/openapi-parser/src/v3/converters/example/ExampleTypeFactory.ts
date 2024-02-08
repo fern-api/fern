@@ -10,6 +10,21 @@ import {
 import { convertToFullExample } from "./convertToFullExample";
 import { getFullExampleAsArray, getFullExampleAsObject } from "./getFullExample";
 
+export declare namespace ExampleTypeFactory {
+    interface Options {
+        /* Name of the field the example is being generated for */
+        name?: string;
+        /*
+         * Max number of levels to generate optional properties for.
+         * Becomes 0 if ignoreOptionals is true.
+         */
+        maxDepth?: number;
+        ignoreOptionals: boolean;
+        /* True if example is for query or path parameter */
+        isParameter: boolean;
+    }
+}
+
 export class ExampleTypeFactory {
     private schemas: Record<SchemaId, SchemaWithExample>;
 
@@ -20,30 +35,27 @@ export class ExampleTypeFactory {
     public buildExample({
         schema,
         example,
-        isOptional = false,
-        /* If true, then we know that we are building an example for a query param, path param, or header */
-        parameter = false
+        options
     }: {
         schema: SchemaWithExample;
         example: unknown | undefined;
-        isOptional: boolean;
-        parameter: boolean;
+        options: ExampleTypeFactory.Options;
     }): FullExample | undefined {
-        return this.buildExampleHelper({ schema, isOptional, visitedSchemaIds: new Set(), example, parameter });
+        return this.buildExampleHelper({ schema, visitedSchemaIds: new Set(), example, options, depth: 0 });
     }
 
     private buildExampleHelper({
         example,
         schema,
-        isOptional,
+        depth,
         visitedSchemaIds,
-        parameter = false
+        options
     }: {
         example: unknown | undefined;
         schema: SchemaWithExample;
-        isOptional: boolean;
+        depth: number;
         visitedSchemaIds: Set<SchemaId>;
-        parameter: boolean;
+        options: ExampleTypeFactory.Options;
     }): FullExample | undefined {
         switch (schema.type) {
             case "enum":
@@ -53,25 +65,61 @@ export class ExampleTypeFactory {
                 return schema.values[0] != null ? FullExample.enum(schema.values[0]?.value) : undefined;
             case "literal":
                 return FullExample.literal(schema.value);
-            case "nullable":
-                return this.buildExampleHelper({
+            case "nullable": {
+                if (
+                    example == null &&
+                    !this.hasExample(schema.value) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                ) {
+                    return undefined;
+                }
+                const result = this.buildExampleHelper({
                     schema: schema.value,
-                    isOptional: true,
                     visitedSchemaIds,
                     example,
-                    parameter
+                    depth,
+                    options
                 });
-            case "optional":
-                return this.buildExampleHelper({
+                if (result != null && result.type === "array" && result.array.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "map" && result.map.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
+                    return undefined;
+                }
+                return result;
+            }
+            case "optional": {
+                if (
+                    example == null &&
+                    !this.hasExample(schema.value) &&
+                    (options.ignoreOptionals || this.exceedsMaxDepth(depth, options))
+                ) {
+                    return undefined;
+                }
+                const result = this.buildExampleHelper({
                     schema: schema.value,
-                    isOptional: true,
                     visitedSchemaIds,
                     example,
-                    parameter
+                    depth,
+                    options
                 });
+                if (result != null && result.type === "array" && result.array.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "map" && result.map.length === 0) {
+                    return undefined;
+                }
+                if (result != null && result.type === "object" && Object.keys(result.properties).length === 0) {
+                    return undefined;
+                }
+                return result;
+            }
             case "primitive": {
-                const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, isOptional });
-                return primitiveExample != null ? FullExample.primitive(primitiveExample) : undefined;
+                const primitiveExample = this.buildExampleFromPrimitive({ schema: schema.schema, example, options });
+                return FullExample.primitive(primitiveExample);
             }
             case "reference": {
                 const referencedSchemaWithExample = this.schemas[schema.schema];
@@ -80,9 +128,9 @@ export class ExampleTypeFactory {
                     const referencedExample = this.buildExampleHelper({
                         example,
                         schema: referencedSchemaWithExample,
-                        isOptional,
                         visitedSchemaIds,
-                        parameter
+                        depth,
+                        options
                     });
                     visitedSchemaIds.delete(schema.schema);
                     return referencedExample;
@@ -136,9 +184,9 @@ export class ExampleTypeFactory {
                                 const propertyExample = this.buildExampleHelper({
                                     schema,
                                     example: fullExample[property],
-                                    isOptional: !required,
                                     visitedSchemaIds,
-                                    parameter
+                                    depth: depth + 1,
+                                    options
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -149,9 +197,9 @@ export class ExampleTypeFactory {
                                 const propertyExample = this.buildExampleHelper({
                                     schema,
                                     example: fullExample?.[property],
-                                    isOptional: !required,
                                     visitedSchemaIds,
-                                    parameter
+                                    depth: depth + 1,
+                                    options
                                 });
                                 if (propertyExample != null) {
                                     result[property] = propertyExample;
@@ -171,9 +219,9 @@ export class ExampleTypeFactory {
                             return this.buildExampleHelper({
                                 example,
                                 schema: schema.oneOf.schemas[0],
-                                isOptional,
                                 visitedSchemaIds,
-                                parameter
+                                depth,
+                                options
                             });
                         }
                         break;
@@ -187,29 +235,44 @@ export class ExampleTypeFactory {
                         return FullExample.unknown(fullExample);
                     }
                 }
-                if (isOptional) {
+                if (options.ignoreOptionals || this.exceedsMaxDepth(depth, options)) {
                     return undefined;
-                } else if (parameter) {
-                    return FullExample.primitive(PrimitiveExample.string("string"));
                 }
-                return FullExample.map([]);
+                if (options.isParameter) {
+                    return FullExample.primitive(PrimitiveExample.string(options.name ?? "string"));
+                }
+                return FullExample.map([
+                    {
+                        key: PrimitiveExample.string("key"),
+                        value: FullExample.primitive(PrimitiveExample.string("value"))
+                    }
+                ]);
             case "array": {
                 const fullExample = getFullExampleAsArray(example);
-                if (isOptional && fullExample == null) {
-                    return undefined;
-                }
                 const itemExamples = [];
-                for (const item of fullExample ?? []) {
-                    const itemExample = this.buildExampleHelper({
-                        example: item,
-                        schema: schema.value,
-                        isOptional: true,
-                        visitedSchemaIds,
-                        parameter
-                    });
-                    if (itemExample != null) {
-                        itemExamples.push(itemExample);
+                if (fullExample != null && fullExample.length > 0) {
+                    for (const item of fullExample) {
+                        const itemExample = this.buildExampleHelper({
+                            example: item,
+                            schema: schema.value,
+                            depth: depth + 1,
+                            visitedSchemaIds,
+                            options
+                        });
+                        if (itemExample != null) {
+                            itemExamples.push(itemExample);
+                        }
                     }
+                }
+                const itemExample = this.buildExampleHelper({
+                    example: undefined,
+                    schema: schema.value,
+                    depth: depth + 1,
+                    visitedSchemaIds,
+                    options
+                });
+                if (itemExample != null) {
+                    itemExamples.push(itemExample);
                 }
                 return FullExample.array(itemExamples);
             }
@@ -221,16 +284,16 @@ export class ExampleTypeFactory {
                         const keyExample = this.buildExampleFromPrimitive({
                             schema: schema.key.schema,
                             example: key,
-                            isOptional
+                            options
                         });
                         const valueExample = this.buildExampleHelper({
                             example: value,
                             schema: schema.value,
-                            isOptional,
                             visitedSchemaIds,
-                            parameter
+                            depth: depth + 1,
+                            options
                         });
-                        if (keyExample != null && valueExample != null) {
+                        if (valueExample != null) {
                             kvs.push({
                                 key: keyExample,
                                 value: valueExample
@@ -242,16 +305,16 @@ export class ExampleTypeFactory {
                 const keyExample = this.buildExampleFromPrimitive({
                     schema: schema.key.schema,
                     example: undefined,
-                    isOptional
+                    options
                 });
                 const valueExample = this.buildExampleHelper({
                     example: undefined,
                     schema: schema.value,
-                    isOptional,
                     visitedSchemaIds,
-                    parameter
+                    depth: depth + 1,
+                    options
                 });
-                if (keyExample != null && valueExample != null) {
+                if (valueExample != null) {
                     return FullExample.map([
                         {
                             key: keyExample,
@@ -259,7 +322,7 @@ export class ExampleTypeFactory {
                         }
                     ]);
                 }
-                return isOptional ? undefined : FullExample.map([]);
+                return FullExample.map([]);
             }
             case "object": {
                 const result: Record<string, FullExample> = {};
@@ -274,24 +337,83 @@ export class ExampleTypeFactory {
                     const propertyExample = this.buildExampleHelper({
                         schema,
                         example: fullExample[property],
-                        isOptional: !required,
                         visitedSchemaIds,
-                        parameter
+                        depth: depth + 1,
+                        options: {
+                            ...options,
+                            name: property
+                        }
                     });
                     if (propertyExample != null) {
                         result[property] = propertyExample;
                     } else if (required) {
-                        return undefined;
+                        const generatedExample = this.buildExampleHelper({
+                            schema,
+                            example: fullExample[property],
+                            visitedSchemaIds,
+                            depth: depth + 1,
+                            options: {
+                                ...options,
+                                name: property
+                            }
+                        });
+                        if (generatedExample == null) {
+                            return undefined;
+                        }
+                        result[property] = generatedExample;
                     }
                 }
-                const a = FullExample.object({
+                return FullExample.object({
                     properties: result
                 });
-                return a;
             }
             default:
                 assertNever(schema);
         }
+    }
+
+    private hasExample(schema: SchemaWithExample): boolean {
+        switch (schema.type) {
+            case "array":
+                return this.hasExample(schema.value);
+            case "enum":
+                return schema.example != null;
+            case "literal":
+                return false;
+            case "map":
+                return schema.key.schema.example != null && this.hasExample(schema.value);
+            case "object": {
+                const objectExample = schema.fullExamples != null && schema.fullExamples.length > 0;
+                if (objectExample) {
+                    return true;
+                }
+                for (const property of schema.properties) {
+                    if (this.hasExample(property.schema)) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            case "primitive":
+                return schema.schema.example != null;
+            case "reference": {
+                const resolvedSchema = this.schemas[schema.schema];
+                if (resolvedSchema != null) {
+                    return this.hasExample(resolvedSchema);
+                }
+                return false;
+            }
+            case "unknown":
+                return schema.example != null;
+            case "oneOf":
+                return Object.values(schema.oneOf.schemas).some((schema) => this.hasExample(schema));
+            default:
+                return false;
+        }
+    }
+
+    private exceedsMaxDepth(depth: number, options: ExampleTypeFactory.Options): boolean {
+        return depth > (options.maxDepth ?? 0);
     }
 
     private getAllProperties(object: ObjectSchemaWithExample): Record<string, SchemaWithExample> {
@@ -353,96 +475,87 @@ export class ExampleTypeFactory {
     }
 
     private buildExampleFromPrimitive({
-        isOptional,
         example,
-        schema
+        schema,
+        options
     }: {
-        isOptional: boolean;
         example: unknown | undefined;
         schema: PrimitiveSchemaValueWithExample;
-    }): PrimitiveExample | undefined {
+        options: ExampleTypeFactory.Options;
+    }): PrimitiveExample {
         switch (schema.type) {
             case "string":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.string(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.string(schema.example);
-                } else if (!isOptional) {
-                    return PrimitiveExample.string("string");
+                } else {
+                    return PrimitiveExample.string(options.name ?? "string");
                 }
-                return undefined;
             case "base64":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.base64(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.base64(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.base64("SGVsbG8gd29ybGQh");
                 }
-                return undefined;
             case "boolean":
                 if (example != null && typeof example === "boolean") {
                     return PrimitiveExample.boolean(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.boolean(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.boolean(true);
                 }
-                return undefined;
             case "date":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.date(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.date(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.date("2023-01-15");
                 }
-                return undefined;
             case "datetime":
                 if (example != null && typeof example === "string") {
                     return PrimitiveExample.datetime(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.datetime(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.datetime("2024-01-15T09:30:00Z");
                 }
-                return undefined;
             case "double":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.double(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.double(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.double(1.1);
                 }
-                return undefined;
             case "float":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.float(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.float(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.float(1.1);
                 }
-                return undefined;
             case "int":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.int(1);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.int(1);
                 }
-                return undefined;
             case "int64":
                 if (example != null && typeof example === "number") {
                     return PrimitiveExample.int64(example);
                 } else if (schema.example != null) {
                     return PrimitiveExample.int64(schema.example);
-                } else if (!isOptional) {
+                } else {
                     return PrimitiveExample.int64(1000000);
                 }
-                return undefined;
             default:
                 assertNever(schema);
         }

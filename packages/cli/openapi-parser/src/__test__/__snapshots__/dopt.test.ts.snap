@@ -26,7 +26,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "uid",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "uid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -48,7 +48,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "userIdentifier",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -58,8 +58,45 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
+              "containerUid": {
+                "primitive": {
+                  "string": "containerUid",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "fields": {
-                "array": [],
+                "array": [
+                  {
+                    "oneOf": {
+                      "discriminated": {
+                        "sid": {
+                          "primitive": {
+                            "string": "fields",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                        "type": {
+                          "primitive": {
+                            "string": "string",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                        "value": {
+                          "primitive": {
+                            "string": "fields",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                      "type": "discriminated",
+                    },
+                    "type": "oneOf",
+                  },
+                ],
                 "type": "array",
               },
               "kind": {
@@ -71,7 +108,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
               "sid": {
                 "primitive": {
-                  "string": "string",
+                  "string": "sid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -106,7 +143,7 @@ exports[`open api parser dopt parse open api 1`] = `
                 "map": [
                   {
                     "key": {
-                      "string": "string",
+                      "string": "transitioned",
                       "type": "string",
                     },
                     "value": {
@@ -126,7 +163,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
               "uid": {
                 "primitive": {
-                  "string": "string",
+                  "string": "uid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -809,7 +846,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "sid",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "sid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -828,20 +865,10 @@ exports[`open api parser dopt parse open api 1`] = `
               },
             },
             {
-              "name": "include",
-              "value": {
-                "literal": {
-                  "string": "block",
-                  "type": "string",
-                },
-                "type": "literal",
-              },
-            },
-            {
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "userIdentifier",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -851,6 +878,126 @@ exports[`open api parser dopt parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
+              "blocks": {
+                "array": [
+                  {
+                    "properties": {
+                      "containerUid": {
+                        "primitive": {
+                          "string": "containerUid",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "fields": {
+                        "array": [
+                          {
+                            "oneOf": {
+                              "discriminated": {
+                                "sid": {
+                                  "primitive": {
+                                    "string": "fields",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                                "type": {
+                                  "primitive": {
+                                    "string": "string",
+                                    "type": "string",
+                                  },
+                                  "type": "primitive",
+                                },
+                              },
+                              "type": "discriminated",
+                            },
+                            "type": "oneOf",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "kind": {
+                        "literal": {
+                          "string": "block",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "sid": {
+                        "primitive": {
+                          "string": "sid",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "state": {
+                        "properties": {
+                          "active": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "entered": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "exited": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transitioned": {
+                        "map": [
+                          {
+                            "key": {
+                              "string": "transitioned",
+                              "type": "string",
+                            },
+                            "value": {
+                              "primitive": {
+                                "boolean": true,
+                                "type": "boolean",
+                              },
+                              "type": "primitive",
+                            },
+                          },
+                        ],
+                        "type": "map",
+                      },
+                      "type": {
+                        "enum": "custom",
+                        "type": "enum",
+                      },
+                      "uid": {
+                        "primitive": {
+                          "string": "uid",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "version": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "kind": {
                 "literal": {
                   "string": "flow",
@@ -860,7 +1007,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
               "sid": {
                 "primitive": {
-                  "string": "string",
+                  "string": "sid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -900,7 +1047,7 @@ exports[`open api parser dopt parse open api 1`] = `
               },
               "uid": {
                 "primitive": {
-                  "string": "string",
+                  "string": "uid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1683,7 +1830,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "uid",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "uid",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1712,7 +1859,7 @@ exports[`open api parser dopt parse open api 1`] = `
               "name": "userIdentifier",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "userIdentifier",
                   "type": "string",
                 },
                 "type": "primitive",

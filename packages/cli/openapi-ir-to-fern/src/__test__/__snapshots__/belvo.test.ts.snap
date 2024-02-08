@@ -100,7 +100,7 @@ client.accounts.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -215,7 +215,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -228,6 +228,7 @@ client.connect()
                       "current": 5874.13,
                     },
                     "balance_type": "ASSET",
+                    "bank_product_id": "bank_product_id",
                     "category": "CHECKING_ACCOUNT",
                     "collected_at": "2019-09-27T13:01:41.941Z",
                     "created_at": "2022-02-09T08:45:50.406032Z",
@@ -235,17 +236,36 @@ client.connect()
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "credit_limit": 192000,
                       "cutting_date": "2019-12-11",
+                      "end_date": "end_date",
                       "interest_rate": 4,
+                      "last_payment_date": "last_payment_date",
                       "minimum_payment": 2400.3,
+                      "monthly_payment": 1.1,
                       "next_payment_date": "2019-12-13",
                       "no_interest_payment": 2690.83,
                     },
                     "currency": "MXN",
+                    "funds_data": [
+                      {
+                        "balance": 88427.94,
+                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        "name": "FIX X",
+                        "percentage": 100,
+                        "public_identifications": [
+                          {
+                            "name": "CNPJ",
+                            "value": "05.954.445/0221-68",
+                          },
+                        ],
+                        "type": "CNPJ",
+                      },
+                    ],
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                     "institution": {
                       "name": "erebor_mx_retail",
                       "type": "bank",
                     },
+                    "internal_identification": "internal_identification",
                     "last_accessed_at": "2021-03-09T10:28:40.000Z",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "loan_data": {
@@ -254,8 +274,28 @@ client.connect()
                       "contract_end_date": "2027-10-01",
                       "contract_number": "890ASLDJF87SD00",
                       "contract_start_date": "2020-03-01",
+                      "credit_limit": 1.1,
+                      "cutting_date": "cutting_date",
+                      "cutting_day": "cutting_day",
+                      "fees": [
+                        {
+                          "type": "OPERATION_FEE",
+                          "value": 5.6,
+                        },
+                      ],
+                      "interest_rate": 1.1,
+                      "interest_rates": [
+                        {
+                          "name": "jurosEfetivo",
+                          "value": 7.85,
+                        },
+                      ],
+                      "last_payment_date": "last_payment_date",
+                      "last_period_balance": 1.1,
+                      "limit_day": "limit_day",
                       "loan_type": "Consignado",
                       "monthly_payment": 1000,
+                      "no_interest_payment": 1.1,
                       "number_of_installments_outstanding": 1,
                       "number_of_installments_total": 1,
                       "outstanding_balance": 182000,
@@ -432,6 +472,59 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                    ],
                   },
                 },
               },
@@ -721,7 +814,91 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "balance": {
+                        "available": 5621.12,
+                        "current": 5874.13,
+                      },
+                      "balance_type": "ASSET",
+                      "bank_product_id": "bank_product_id",
+                      "category": "CHECKING_ACCOUNT",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_data": {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "credit_limit": 192000,
+                        "cutting_date": "2019-12-11",
+                        "end_date": "end_date",
+                        "interest_rate": 4,
+                        "last_payment_date": "last_payment_date",
+                        "minimum_payment": 2400.3,
+                        "monthly_payment": 1.1,
+                        "next_payment_date": "2019-12-13",
+                        "no_interest_payment": 2690.83,
+                      },
+                      "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        },
+                      ],
+                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "institution": {
+                        "name": "erebor_mx_retail",
+                        "type": "bank",
+                      },
+                      "internal_identification": "internal_identification",
+                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loan_data": {
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "contract_amount": 202000,
+                        "contract_end_date": "2027-10-01",
+                        "contract_number": "890ASLDJF87SD00",
+                        "contract_start_date": "2020-03-01",
+                        "credit_limit": 1.1,
+                        "cutting_date": "cutting_date",
+                        "cutting_day": "cutting_day",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 5.6,
+                          },
+                        ],
+                        "interest_rate": 1.1,
+                        "interest_rates": [
+                          {
+                            "name": "jurosEfetivo",
+                            "value": 7.85,
+                          },
+                        ],
+                        "last_payment_date": "last_payment_date",
+                        "last_period_balance": 1.1,
+                        "limit_day": "limit_day",
+                        "loan_type": "Consignado",
+                        "monthly_payment": 1000,
+                        "no_interest_payment": 1.1,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
+                        "outstanding_balance": 182000,
+                        "outstanding_principal": 142023,
+                        "payment_day": "27",
+                        "principal": 192000,
+                      },
+                      "name": "Cuenta Perfiles- M.N. - MXN-666",
+                      "number": "4057068115181",
+                      "public_identification_name": "CLABE",
+                      "public_identification_value": "150194683119900273",
+                      "receivables_data": {
+                        "anticipated": 1393.46,
+                        "available": 800.37,
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "current": 2193.83,
+                      },
+                      "type": "Cuentas de efectivo",
+                    },
+                  ],
                 },
               },
               {
@@ -874,7 +1051,91 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "balance": {
+                        "available": 5621.12,
+                        "current": 5874.13,
+                      },
+                      "balance_type": "ASSET",
+                      "bank_product_id": "bank_product_id",
+                      "category": "CHECKING_ACCOUNT",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_data": {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "credit_limit": 192000,
+                        "cutting_date": "2019-12-11",
+                        "end_date": "end_date",
+                        "interest_rate": 4,
+                        "last_payment_date": "last_payment_date",
+                        "minimum_payment": 2400.3,
+                        "monthly_payment": 1.1,
+                        "next_payment_date": "2019-12-13",
+                        "no_interest_payment": 2690.83,
+                      },
+                      "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        },
+                      ],
+                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "institution": {
+                        "name": "erebor_mx_retail",
+                        "type": "bank",
+                      },
+                      "internal_identification": "internal_identification",
+                      "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loan_data": {
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "contract_amount": 202000,
+                        "contract_end_date": "2027-10-01",
+                        "contract_number": "890ASLDJF87SD00",
+                        "contract_start_date": "2020-03-01",
+                        "credit_limit": 1.1,
+                        "cutting_date": "cutting_date",
+                        "cutting_day": "cutting_day",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 5.6,
+                          },
+                        ],
+                        "interest_rate": 1.1,
+                        "interest_rates": [
+                          {
+                            "name": "jurosEfetivo",
+                            "value": 7.85,
+                          },
+                        ],
+                        "last_payment_date": "last_payment_date",
+                        "last_period_balance": 1.1,
+                        "limit_day": "limit_day",
+                        "loan_type": "Consignado",
+                        "monthly_payment": 1000,
+                        "no_interest_payment": 1.1,
+                        "number_of_installments_outstanding": 1,
+                        "number_of_installments_total": 1,
+                        "outstanding_balance": 182000,
+                        "outstanding_principal": 142023,
+                        "payment_day": "27",
+                        "principal": 192000,
+                      },
+                      "name": "Cuenta Perfiles- M.N. - MXN-666",
+                      "number": "4057068115181",
+                      "public_identification_name": "CLABE",
+                      "public_identification_value": "150194683119900273",
+                      "receivables_data": {
+                        "anticipated": 1393.46,
+                        "available": 800.37,
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "current": 2193.83,
+                      },
+                      "type": "Cuentas de efectivo",
+                    },
+                  ],
                 },
               },
               {
@@ -1086,7 +1347,7 @@ client.balances.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -1187,7 +1448,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -1201,6 +1462,7 @@ client.connect()
                         "current": 5874.13,
                       },
                       "balance_type": "ASSET",
+                      "bank_product_id": "bank_product_id",
                       "category": "CHECKING_ACCOUNT",
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "created_at": "2022-02-09T08:45:50.406032Z",
@@ -1208,17 +1470,26 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
+                        "end_date": "end_date",
                         "interest_rate": 4,
+                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
+                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        },
+                      ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                       "institution": {
                         "name": "erebor_mx_retail",
                         "type": "bank",
                       },
+                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2021-03-09T10:28:40.000Z",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "loan_data": {
@@ -1227,8 +1498,28 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
+                        "credit_limit": 1.1,
+                        "cutting_date": "cutting_date",
+                        "cutting_day": "cutting_day",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 5.6,
+                          },
+                        ],
+                        "interest_rate": 1.1,
+                        "interest_rates": [
+                          {
+                            "name": "jurosEfetivo",
+                            "value": 7.85,
+                          },
+                        ],
+                        "last_payment_date": "last_payment_date",
+                        "last_period_balance": 1.1,
+                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
+                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 1,
                         "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
@@ -1249,7 +1540,10 @@ client.connect()
                       "type": "Cuentas de efectivo",
                     },
                     "balance": 50000,
+                    "collected_at": "2024-01-15T09:30:00Z",
+                    "current_balance": 1.1,
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                    "statement": "statement",
                     "value_date": "2019-10-23",
                   },
                 },
@@ -1399,6 +1693,41 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "account": {
+                          "balance": {
+                            "current": 5874.13,
+                          },
+                          "balance_type": "ASSET",
+                          "category": "CHECKING_ACCOUNT",
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "created_at": "2022-02-09T08:45:50.406032Z",
+                          "currency": "MXN",
+                          "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "loan_data": {
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_end_date": "2027-10-01",
+                            "monthly_payment": 1000,
+                            "outstanding_balance": 182000,
+                            "principal": 192000,
+                          },
+                          "name": "Cuenta Perfiles- M.N. - MXN-666",
+                          "number": "4057068115181",
+                          "public_identification_name": "CLABE",
+                          "public_identification_value": "150194683119900273",
+                          "type": "Cuentas de efectivo",
+                        },
+                        "balance": 50000,
+                        "collected_at": "2024-01-15T09:30:00Z",
+                        "current_balance": 1.1,
+                        "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                        "statement": "statement",
+                        "value_date": "2019-10-23",
+                      },
+                    ],
                   },
                 },
               },
@@ -1637,7 +1966,66 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "balance": 50000,
+                      "collected_at": "2024-01-15T09:30:00Z",
+                      "current_balance": 1.1,
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "statement": "statement",
+                      "value_date": "2019-10-23",
+                    },
+                  ],
                 },
               },
               {
@@ -1779,7 +2167,66 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "balance": 50000,
+                      "collected_at": "2024-01-15T09:30:00Z",
+                      "current_balance": 1.1,
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "statement": "statement",
+                      "value_date": "2019-10-23",
+                    },
+                  ],
                 },
               },
               {
@@ -1980,6 +2427,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "body": {
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                    "customer": "customer",
                     "details": {
                       "account_type": "CHECKINGS",
                       "agency": "0444",
@@ -1995,6 +2443,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                       "type": "INDIVIDUAL",
                     },
                     "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                    "institution": "institution",
                   },
                 },
               },
@@ -2026,6 +2475,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "body": {
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                    "customer": "customer",
                     "details": {
                       "account_type": "CHECKINGS",
                       "agency": "0444",
@@ -2041,6 +2491,7 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                       "type": "INDIVIDUAL",
                     },
                     "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                    "institution": "institution",
                   },
                 },
               },
@@ -2088,6 +2539,30 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                        "customer": "customer",
+                        "details": {
+                          "account_type": "CHECKINGS",
+                          "agency": "0444",
+                          "country": "BRA",
+                          "number": "45722-0",
+                        },
+                        "holder": {
+                          "information": {
+                            "identifier": "231.002.999-00",
+                            "identifier_type": "CPF",
+                            "name": "Caetano Veloso Entertainment Universe",
+                          },
+                          "type": "INDIVIDUAL",
+                        },
+                        "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "institution": "institution",
+                      },
+                    ],
                   },
                 },
               },
@@ -2223,10 +2698,46 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
               {
                 "request": {
                   "language": "pt",
-                  "transactions": [],
+                  "transactions": [
+                    {
+                      "account_category": "CHECKING_ACCOUNT",
+                      "account_holder_id": "7890098789087",
+                      "account_holder_type": "INDIVIDUAL",
+                      "account_id": "BBVACA-89077589",
+                      "amount": 650.89,
+                      "currency": "BRL",
+                      "description": "APPL3STORE",
+                      "institution": "BBVA",
+                      "transaction_id": "3CWE4927CF15355",
+                      "type": "INFLOW",
+                      "value_date": "2022-11-18",
+                    },
+                  ],
                 },
                 "response": {
-                  "body": {},
+                  "body": {
+                    "transactions": [
+                      {
+                        "account_category": "CHECKING_ACCOUNT",
+                        "account_holder_id": "7890098789087",
+                        "account_holder_type": "INDIVIDUAL",
+                        "account_id": "BBVACA-89077589",
+                        "amount": 650.89,
+                        "category": "Income & Payments",
+                        "currency": "BRL",
+                        "description": "APPL3STORE",
+                        "institution": "BBVA",
+                        "mcc": 1,
+                        "merchant": {
+                          "merchant_name": "Apple, Inc",
+                        },
+                        "subcategory": "Freelance",
+                        "transaction_id": "3CWE4927CF15355",
+                        "type": "INFLOW",
+                        "value_date": "2022-11-18",
+                      },
+                    ],
+                  },
                 },
               },
             ],
@@ -2282,14 +2793,12 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
             "examples": [
               {
                 "request": {
-                  "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
                   "country": "BRA",
                   "customer_type": "INDIVIDUAL",
                   "email": "caetano.veloso@musicabrazil.br",
                   "identifier": "1018760936",
                   "identifier_type": "CPF",
                   "name": "Caetano Veloso",
-                  "phone": "231.002.999-00",
                 },
                 "response": {
                   "body": {
@@ -2386,6 +2895,22 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "address": "Rua de Caetano Veloso 432, 70200 Brasilia",
+                        "country": "BRA",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "customer_type": "INDIVIDUAL",
+                        "email": "caetano.veloso@musicabrazil.br",
+                        "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "identifier": "00.000.000/0001-91",
+                        "identifier_type": "CPF",
+                        "name": "Caetano Veloso",
+                        "phone": "3210-9876",
+                      },
+                    ],
                   },
                 },
               },
@@ -2511,7 +3036,7 @@ At the moment, the employment records resource is available for:
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -2535,7 +3060,7 @@ At the moment, the employment records resource is available for:
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -2545,16 +3070,46 @@ At the moment, the employment records resource is available for:
                   "body": {
                     "collected_at": "2020-04-23T21:32:55.336854+00:00",
                     "created_at": "2020-04-23T21:32:55.336854+00:00",
+                    "employment_records": [
+                      {
+                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        "currency": "MXN",
+                        "employer": "Batman Enterprises CDMX",
+                        "employer_id": "780-BAT-88769-CDMX",
+                        "employment_status_updates": [
+                          {
+                            "base_salary": 1033.09,
+                            "update_date": "2021-09-01",
+                          },
+                        ],
+                        "end_date": "2019-12-31",
+                        "monthly_salary": 1.1,
+                        "most_recent_base_salary": 762.54,
+                        "start_date": "2019-10-10",
+                        "state": "DISTRITO FEDERAL",
+                        "weeks_employed": 1,
+                      },
+                    ],
+                    "files": [
+                      {
+                        "type": "ReporteSemanasCotizadas_190123",
+                        "value": "=PDF_BINARY=",
+                      },
+                    ],
                     "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
                     "internal_identification": "BLPM951331IONVGR54",
                     "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
                     "personal_data": {
                       "birth_date": "2022-02-09",
+                      "document_ids": [
+                        {},
+                      ],
                       "email": "bruce.banner@avengers.com",
                       "entitlements": {
                         "entitled_to_company_benefits": true,
                         "entitled_to_health_insurance": true,
                         "status": "EMPLOYED",
+                        "valid_until": "valid_until",
                       },
                       "first_name": "Bruce",
                       "last_name": "Banner del Torro",
@@ -2615,6 +3170,36 @@ At the moment, the employment records resource is available for:
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        "created_at": "2020-04-23T21:32:55.336854+00:00",
+                        "employment_records": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                            "currency": "MXN",
+                            "employer": "Batman Enterprises CDMX",
+                            "employer_id": "780-BAT-88769-CDMX",
+                            "end_date": "2019-12-31",
+                            "most_recent_base_salary": 762.54,
+                            "start_date": "2019-10-10",
+                            "state": "DISTRITO FEDERAL",
+                            "weeks_employed": 1,
+                          },
+                        ],
+                        "files": [
+                          {
+                            "type": "ReporteSemanasCotizadas_190123",
+                            "value": "=PDF_BINARY=",
+                          },
+                        ],
+                        "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
+                        "internal_identification": "BLPM951331IONVGR54",
+                        "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                        "report_date": "2023-01-19",
+                      },
+                    ],
                   },
                 },
               },
@@ -2672,7 +3257,54 @@ At the moment, the employment records resource is available for:
                   "link": "d686c617-6d9e-4bc6-9801-5ac276ccb6a2",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                      "created_at": "2020-04-23T21:32:55.336854+00:00",
+                      "employment_records": [
+                        {
+                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          "currency": "MXN",
+                          "employer": "Batman Enterprises CDMX",
+                          "employer_id": "780-BAT-88769-CDMX",
+                          "end_date": "2019-12-31",
+                          "most_recent_base_salary": 762.54,
+                          "start_date": "2019-10-10",
+                          "state": "DISTRITO FEDERAL",
+                          "weeks_employed": 1,
+                        },
+                      ],
+                      "files": [
+                        {
+                          "type": "ReporteSemanasCotizadas_190123",
+                          "value": "=PDF_BINARY=",
+                        },
+                      ],
+                      "id": "fef05fc8-7357-4a4a-9d29-55038ea31a04",
+                      "internal_identification": "BLPM951331IONVGR54",
+                      "link": "27c1d5cf-e8fb-433a-a2f7-d246de199c01",
+                      "personal_data": {
+                        "birth_date": "2022-02-09",
+                        "document_ids": [
+                          {},
+                        ],
+                        "email": "bruce.banner@avengers.com",
+                        "entitlements": {
+                          "entitled_to_company_benefits": true,
+                          "entitled_to_health_insurance": true,
+                        },
+                        "first_name": "Bruce",
+                        "last_name": "Banner del Torro",
+                        "official_name": "Bruce Banner del Torro",
+                      },
+                      "report_date": "2023-01-19",
+                      "social_security_summary": {
+                        "weeks_contributed": 1,
+                        "weeks_redeemed": 1,
+                        "weeks_reinstated": 1,
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -2751,11 +3383,46 @@ When set to \`false\`, the data won't be persisted and we return a 200 OK respon
                   "date_from": "2022-08-01",
                   "date_to": "2022-12-30",
                   "language": "pt",
-                  "minimum_confidence_level": "HIGH",
-                  "transactions": [],
+                  "transactions": [
+                    {
+                      "account_category": "CHECKING_ACCOUNT",
+                      "account_holder_id": "a61bc801-9fa5-457b-88ad-850c96eaca30",
+                      "account_holder_type": "INDIVIDUAL",
+                      "account_id": "EBACA-89077589",
+                      "amount": 650.89,
+                      "currency": "BRL",
+                      "description": "SALÁRIO MENSAL",
+                      "institution": "Erebor Retail Brasil",
+                      "transaction_id": "3CWE4927CF15355",
+                      "value_date": "2022-11-18",
+                    },
+                  ],
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "first_transaction_date": "2022-06-09",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "income_source_type": "BANK",
+                      "income_streams": [],
+                      "last_transaction_date": "2023-02-09",
+                      "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
+                      "monthly_average": 1705.46,
+                      "monthly_average_high_confidence": 0,
+                      "monthly_average_irregular": 1308.18,
+                      "monthly_average_low_confidence": 1308.18,
+                      "monthly_average_medium_confidence": 2500,
+                      "monthly_average_regular": 2500,
+                      "number_of_income_streams": 1,
+                      "total_high_confidence": 0,
+                      "total_income_amount": 12616.37,
+                      "total_irregular_income_amount": 2616.37,
+                      "total_low_confidence": 2616.37,
+                      "total_medium_confidence": 10000,
+                      "total_regular_income_amount": 10000,
+                    },
+                  ],
                 },
               },
             ],
@@ -2883,7 +3550,7 @@ client.incomes.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -2984,14 +3651,37 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "first_transaction_date": "2022-06-09",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "income_source_type": "BANK",
+                      "income_streams": [],
+                      "last_transaction_date": "2023-02-09",
+                      "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
+                      "monthly_average": 1705.46,
+                      "monthly_average_high_confidence": 0,
+                      "monthly_average_irregular": 1308.18,
+                      "monthly_average_low_confidence": 1308.18,
+                      "monthly_average_medium_confidence": 2500,
+                      "monthly_average_regular": 2500,
+                      "number_of_income_streams": 1,
+                      "total_high_confidence": 0,
+                      "total_income_amount": 12616.37,
+                      "total_irregular_income_amount": 2616.37,
+                      "total_low_confidence": 2616.37,
+                      "total_medium_confidence": 10000,
+                      "total_regular_income_amount": 10000,
+                    },
+                  ],
                 },
               },
               {
@@ -3119,6 +3809,31 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "first_transaction_date": "2022-06-09",
+                        "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                        "income_source_type": "BANK",
+                        "income_streams": [],
+                        "last_transaction_date": "2023-02-09",
+                        "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
+                        "monthly_average": 1705.46,
+                        "monthly_average_high_confidence": 0,
+                        "monthly_average_irregular": 1308.18,
+                        "monthly_average_low_confidence": 1308.18,
+                        "monthly_average_medium_confidence": 2500,
+                        "monthly_average_regular": 2500,
+                        "number_of_income_streams": 1,
+                        "total_high_confidence": 0,
+                        "total_income_amount": 12616.37,
+                        "total_irregular_income_amount": 2616.37,
+                        "total_low_confidence": 2616.37,
+                        "total_medium_confidence": 10000,
+                        "total_regular_income_amount": 10000,
+                      },
+                    ],
                   },
                 },
               },
@@ -3277,7 +3992,30 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "first_transaction_date": "2022-06-09",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "income_source_type": "BANK",
+                      "income_streams": [],
+                      "last_transaction_date": "2023-02-09",
+                      "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
+                      "monthly_average": 1705.46,
+                      "monthly_average_high_confidence": 0,
+                      "monthly_average_irregular": 1308.18,
+                      "monthly_average_low_confidence": 1308.18,
+                      "monthly_average_medium_confidence": 2500,
+                      "monthly_average_regular": 2500,
+                      "number_of_income_streams": 1,
+                      "total_high_confidence": 0,
+                      "total_income_amount": 12616.37,
+                      "total_irregular_income_amount": 2616.37,
+                      "total_low_confidence": 2616.37,
+                      "total_medium_confidence": 10000,
+                      "total_regular_income_amount": 10000,
+                    },
+                  ],
                 },
               },
               {
@@ -3415,7 +4153,6 @@ client.connect()
                   "date_from": "2020-08-01",
                   "date_to": "2020-12-30",
                   "link": "2ccd5e15-194a-4a19-a45a-e7223c7e6717",
-                  "minimum_confidence_level": "HIGH",
                   "token": "1234ab",
                 },
                 "response": {
@@ -3424,7 +4161,29 @@ client.connect()
                     "first_transaction_date": "2022-06-09",
                     "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
                     "income_source_type": "BANK",
-                    "income_streams": [],
+                    "income_streams": [
+                      {
+                        "account_id": "EBACA-89077589",
+                        "average_income_amount": 2500,
+                        "confidence": "HIGH",
+                        "currency": "BRL",
+                        "frequency": "MONTHLY",
+                        "full_periods": 1,
+                        "income_type": "SALARY",
+                        "last_income_amount": 2500,
+                        "last_income_date": "2022-02-09",
+                        "last_income_description": {
+                          "key": "value",
+                        },
+                        "lookback_periods": 1,
+                        "monthly_average": 2500,
+                        "number_of_incomes": 1,
+                        "periods_with_income": 1,
+                        "regularity": 0.75,
+                        "stability": 1,
+                        "trend": 0,
+                      },
+                    ],
                     "last_transaction_date": "2023-02-09",
                     "link": "f4621548-2f9e-440e-9ebd-ae8decac8c02",
                     "monthly_average": 1705.46,
@@ -3615,7 +4374,7 @@ You can see a complete list of institutions by either consulting our [Institutio
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -3623,13 +4382,44 @@ You can see a complete list of institutions by either consulting our [Institutio
                 },
                 "response": {
                   "body": {
+                    "country_codes": [
+                      "MX",
+                    ],
                     "display_name": "Erebor Mexico",
+                    "features": [
+                      {
+                        "description": "The institution may require a token during link creation or login",
+                        "name": "token_required",
+                      },
+                    ],
+                    "form_fields": [
+                      {
+                        "label": "Client number",
+                        "name": "username",
+                        "placeholder": "ABC333333A33",
+                        "type": "text",
+                        "validation": "^.{1,}$",
+                        "validation_message": "Invalid client number",
+                        "values": [
+                          {
+                            "code": "001",
+                            "label": "Cédula de Ciudadanía",
+                            "placeholder": "DEF4444908M22",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid document number",
+                          },
+                        ],
+                      },
+                    ],
                     "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
                     "id": 1,
                     "integration_type": "credentials",
                     "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
                     "name": "erebor_mx_retail",
                     "primary_color": "#056dae",
+                    "resources": [
+                      "ACCOUNTS",
+                    ],
                     "status": "healthy",
                     "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
                     "type": "bank",
@@ -3769,6 +4559,44 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "country_codes": [
+                          "MX",
+                        ],
+                        "display_name": "Erebor Mexico",
+                        "features": [
+                          {
+                            "description": "The institution may require a token during link creation or login",
+                            "name": "token_required",
+                          },
+                        ],
+                        "form_fields": [
+                          {
+                            "label": "Client number",
+                            "name": "username",
+                            "placeholder": "ABC333333A33",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                          },
+                        ],
+                        "icon_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                        "id": 1,
+                        "integration_type": "credentials",
+                        "logo": "https://belvo-api-media.s3.amazonaws.com/logos/erebor_logo.png",
+                        "name": "erebor_mx_retail",
+                        "primary_color": "#056dae",
+                        "resources": [
+                          "ACCOUNTS",
+                        ],
+                        "status": "healthy",
+                        "text_logo": "https://statics.belvo.io/widget/images/institutions/erebor.svg",
+                        "type": "bank",
+                        "website": "https://www.erebor.com/",
+                      },
+                    ],
                   },
                 },
               },
@@ -3991,7 +4819,7 @@ client. investments_portfolio.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -4083,7 +4911,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -4096,6 +4924,47 @@ client.connect()
                     "balance_type": "ASSET",
                     "currency": "BRL",
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "instruments": [
+                      {
+                        "average_acquisition_price": 10.01,
+                        "balance_gross": 100.09,
+                        "balance_net": 99.09,
+                        "currency": "USD",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 123.09,
+                          },
+                        ],
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "interest_rates": [
+                          {
+                            "index": "CDI",
+                            "type": "yearly",
+                            "value": 11.31,
+                          },
+                        ],
+                        "name": "CBD DIGITAL ESPECIAL",
+                        "open_date": "2021-08-10",
+                        "price": 10.41,
+                        "profit": 3.08,
+                        "public_id": [
+                          {
+                            "type": "isin",
+                            "value": "435-3354.3333",
+                          },
+                        ],
+                        "quantity": 27.46,
+                        "redemption_conditions": [
+                          {
+                            "type": "due_date",
+                            "value": "12-02-2023",
+                          },
+                        ],
+                        "subtype": "CBD",
+                        "type": "BOND",
+                      },
+                    ],
                     "name": "Investimento",
                     "type": "FIXED_INCOME",
                   },
@@ -4216,6 +5085,40 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "balance_gross": 76000,
+                        "balance_net": 77370.69,
+                        "balance_type": "ASSET",
+                        "currency": "BRL",
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "instruments": [
+                          {
+                            "average_acquisition_price": 10.01,
+                            "balance_gross": 100.09,
+                            "balance_net": 99.09,
+                            "currency": "USD",
+                            "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                            "name": "CBD DIGITAL ESPECIAL",
+                            "open_date": "2021-08-10",
+                            "price": 10.41,
+                            "profit": 3.08,
+                            "public_id": [
+                              {
+                                "type": "isin",
+                                "value": "435-3354.3333",
+                              },
+                            ],
+                            "quantity": 27.46,
+                            "subtype": "CBD",
+                            "type": "BOND",
+                          },
+                        ],
+                        "name": "Investimento",
+                        "type": "FIXED_INCOME",
+                      },
+                    ],
                   },
                 },
               },
@@ -4361,6 +5264,47 @@ client.connect()
                     "balance_type": "ASSET",
                     "currency": "BRL",
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "instruments": [
+                      {
+                        "average_acquisition_price": 10.01,
+                        "balance_gross": 100.09,
+                        "balance_net": 99.09,
+                        "currency": "USD",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 123.09,
+                          },
+                        ],
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "interest_rates": [
+                          {
+                            "index": "CDI",
+                            "type": "yearly",
+                            "value": 11.31,
+                          },
+                        ],
+                        "name": "CBD DIGITAL ESPECIAL",
+                        "open_date": "2021-08-10",
+                        "price": 10.41,
+                        "profit": 3.08,
+                        "public_id": [
+                          {
+                            "type": "isin",
+                            "value": "435-3354.3333",
+                          },
+                        ],
+                        "quantity": 27.46,
+                        "redemption_conditions": [
+                          {
+                            "type": "due_date",
+                            "value": "12-02-2023",
+                          },
+                        ],
+                        "subtype": "CBD",
+                        "type": "BOND",
+                      },
+                    ],
                     "name": "Investimento",
                     "type": "FIXED_INCOME",
                   },
@@ -4491,6 +5435,47 @@ client.connect()
                     "balance_type": "ASSET",
                     "currency": "BRL",
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                    "instruments": [
+                      {
+                        "average_acquisition_price": 10.01,
+                        "balance_gross": 100.09,
+                        "balance_net": 99.09,
+                        "currency": "USD",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 123.09,
+                          },
+                        ],
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "interest_rates": [
+                          {
+                            "index": "CDI",
+                            "type": "yearly",
+                            "value": 11.31,
+                          },
+                        ],
+                        "name": "CBD DIGITAL ESPECIAL",
+                        "open_date": "2021-08-10",
+                        "price": 10.41,
+                        "profit": 3.08,
+                        "public_id": [
+                          {
+                            "type": "isin",
+                            "value": "435-3354.3333",
+                          },
+                        ],
+                        "quantity": 27.46,
+                        "redemption_conditions": [
+                          {
+                            "type": "due_date",
+                            "value": "12-02-2023",
+                          },
+                        ],
+                        "subtype": "CBD",
+                        "type": "BOND",
+                      },
+                    ],
                     "name": "Investimento",
                     "type": "FIXED_INCOME",
                   },
@@ -4678,7 +5663,7 @@ client.invoices.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -4780,7 +5765,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -4788,6 +5773,7 @@ client.connect()
                 },
                 "response": {
                   "body": {
+                    "cancelation_status": "cancelation_status",
                     "cancelation_update_date": "2019-12-02",
                     "certification_authority": "CCC333333CC33",
                     "certification_date": "2019-12-01",
@@ -4799,27 +5785,78 @@ client.connect()
                     "folio": "26",
                     "id": "c749315b-eec2-435d-a458-06912878564f",
                     "invoice_date": "2019-12-01",
-                    "invoice_details": [],
+                    "invoice_details": [
+                      {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "description": "December 2019 accounting fees",
+                        "pre_tax_amount": 400,
+                        "product_identification": "84101600",
+                        "quantity": 1,
+                        "retained_taxes": [
+                          {
+                            "retained_tax_amount": 209.79,
+                            "tax": "ISR",
+                            "tax_percentage": 10,
+                          },
+                        ],
+                        "tax_amount": 64,
+                        "tax_percentage": 16,
+                        "tax_type": "tax_type",
+                        "total_amount": 464,
+                        "unit_amount": 200,
+                        "unit_code": "E48",
+                        "unit_description": "Unidad de servicio",
+                      },
+                    ],
                     "invoice_identification": "A1A1A1A1-2B2B-3C33-D44D-555555E55EE",
                     "invoice_type": "Egreso",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "payment_method": "PUE",
+                    "payment_method_description": "payment_method_description",
                     "payment_type": "99",
-                    "payments": [],
+                    "payment_type_description": "payment_type_description",
+                    "payments": [
+                      {
+                        "amount": 8000.5,
+                        "beneficiary_account_number": "12343453245633",
+                        "beneficiary_rfc": "BNM840515VB1",
+                        "currency": "BRL",
+                        "date": "2020-03-17T12:00:00.000Z",
+                        "exchange_rate": "3.75",
+                        "operation_number": "831840",
+                        "payer_account_number": "13343663245699",
+                        "payer_bank_name": "CITI BANAMEX",
+                        "payer_rfc": "BKJM840515VB1",
+                        "payment_type": "03",
+                        "related_documents": [
+                          {
+                            "amount_paid": 8000,
+                            "currency": "MXN",
+                            "invoice_identification": "7EE015F3-6311-11EA-B02A-00155D014007",
+                            "outstanding_balance": 10877.84,
+                            "partiality_number": 1,
+                            "payment_method": "PPD",
+                            "previous_balance": 18877.84,
+                          },
+                        ],
+                      },
+                    ],
                     "payroll": {
                       "amount": 20400.1,
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "date_from": "2018-07-01",
                       "date_to": "2018-07-31",
                       "days": 1,
-                      "payment_date": "string",
+                      "payment_date": "payment_date",
                       "type": "O",
                       "version": "1.2",
                     },
                     "place_of_issue": "01165",
+                    "receiver_blacklist_status": "receiver_blacklist_status",
                     "receiver_id": "BBB222222BB22",
                     "receiver_name": "BELVO CORP",
                     "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                    "sender_blacklist_status": "sender_blacklist_status",
                     "sender_id": "AAA111111AA11",
                     "sender_name": "ACME CORP",
                     "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
@@ -4834,6 +5871,7 @@ client.connect()
                       "code": "sat_xml_limit_reached",
                       "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.",
                     },
+                    "xml": "xml",
                   },
                 },
               },
@@ -4986,6 +6024,99 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "cancelation_status": "cancelation_status",
+                        "cancelation_update_date": "2019-12-02",
+                        "certification_authority": "CCC333333CC33",
+                        "certification_date": "2019-12-01",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "currency": "MXN",
+                        "discount_amount": 10,
+                        "exchange_rate": 0.052,
+                        "folio": "26",
+                        "id": "c749315b-eec2-435d-a458-06912878564f",
+                        "invoice_date": "2019-12-01",
+                        "invoice_details": [
+                          {
+                            "description": "December 2019 accounting fees",
+                            "pre_tax_amount": 400,
+                            "product_identification": "84101600",
+                            "quantity": 1,
+                            "tax_amount": 64,
+                            "tax_percentage": 16,
+                            "total_amount": 464,
+                            "unit_amount": 200,
+                            "unit_code": "E48",
+                            "unit_description": "Unidad de servicio",
+                          },
+                        ],
+                        "invoice_identification": "A1A1A1A1-2B2B-3C33-D44D-555555E55EE",
+                        "invoice_type": "Egreso",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "payment_method": "PUE",
+                        "payment_method_description": "payment_method_description",
+                        "payment_type": "99",
+                        "payment_type_description": "payment_type_description",
+                        "payments": [
+                          {
+                            "amount": 8000.5,
+                            "beneficiary_account_number": "12343453245633",
+                            "currency": "BRL",
+                            "date": "2020-03-17T12:00:00.000Z",
+                            "exchange_rate": "3.75",
+                            "operation_number": "831840",
+                            "payer_account_number": "13343663245699",
+                            "payer_bank_name": "CITI BANAMEX",
+                            "payer_rfc": "BKJM840515VB1",
+                            "payment_type": "03",
+                            "related_documents": [
+                              {
+                                "amount_paid": 8000,
+                                "currency": "MXN",
+                                "invoice_identification": "7EE015F3-6311-11EA-B02A-00155D014007",
+                                "outstanding_balance": 10877.84,
+                                "partiality_number": 1,
+                                "payment_method": "PPD",
+                                "previous_balance": 18877.84,
+                              },
+                            ],
+                          },
+                        ],
+                        "payroll": {
+                          "amount": 20400.1,
+                          "date_from": "2018-07-01",
+                          "date_to": "2018-07-31",
+                          "days": 1,
+                          "payment_date": "payment_date",
+                          "type": "O",
+                          "version": "1.2",
+                        },
+                        "place_of_issue": "01165",
+                        "receiver_blacklist_status": "receiver_blacklist_status",
+                        "receiver_id": "BBB222222BB22",
+                        "receiver_name": "BELVO CORP",
+                        "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                        "sender_blacklist_status": "sender_blacklist_status",
+                        "sender_id": "AAA111111AA11",
+                        "sender_name": "ACME CORP",
+                        "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                        "status": "Vigente",
+                        "subtotal_amount": 400,
+                        "tax_amount": 64,
+                        "total_amount": 454,
+                        "type": "INFLOW",
+                        "usage": "P01",
+                        "version": "3.3",
+                        "warnings": {
+                          "code": "sat_xml_limit_reached",
+                          "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.",
+                        },
+                        "xml": "xml",
+                      },
+                    ],
                   },
                 },
               },
@@ -5233,7 +6364,99 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "cancelation_status": "cancelation_status",
+                      "cancelation_update_date": "2019-12-02",
+                      "certification_authority": "CCC333333CC33",
+                      "certification_date": "2019-12-01",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "currency": "MXN",
+                      "discount_amount": 10,
+                      "exchange_rate": 0.052,
+                      "folio": "26",
+                      "id": "c749315b-eec2-435d-a458-06912878564f",
+                      "invoice_date": "2019-12-01",
+                      "invoice_details": [
+                        {
+                          "description": "December 2019 accounting fees",
+                          "pre_tax_amount": 400,
+                          "product_identification": "84101600",
+                          "quantity": 1,
+                          "tax_amount": 64,
+                          "tax_percentage": 16,
+                          "total_amount": 464,
+                          "unit_amount": 200,
+                          "unit_code": "E48",
+                          "unit_description": "Unidad de servicio",
+                        },
+                      ],
+                      "invoice_identification": "A1A1A1A1-2B2B-3C33-D44D-555555E55EE",
+                      "invoice_type": "Egreso",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "payment_method": "PUE",
+                      "payment_method_description": "payment_method_description",
+                      "payment_type": "99",
+                      "payment_type_description": "payment_type_description",
+                      "payments": [
+                        {
+                          "amount": 8000.5,
+                          "beneficiary_account_number": "12343453245633",
+                          "currency": "BRL",
+                          "date": "2020-03-17T12:00:00.000Z",
+                          "exchange_rate": "3.75",
+                          "operation_number": "831840",
+                          "payer_account_number": "13343663245699",
+                          "payer_bank_name": "CITI BANAMEX",
+                          "payer_rfc": "BKJM840515VB1",
+                          "payment_type": "03",
+                          "related_documents": [
+                            {
+                              "amount_paid": 8000,
+                              "currency": "MXN",
+                              "invoice_identification": "7EE015F3-6311-11EA-B02A-00155D014007",
+                              "outstanding_balance": 10877.84,
+                              "partiality_number": 1,
+                              "payment_method": "PPD",
+                              "previous_balance": 18877.84,
+                            },
+                          ],
+                        },
+                      ],
+                      "payroll": {
+                        "amount": 20400.1,
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "date_from": "2018-07-01",
+                        "date_to": "2018-07-31",
+                        "days": 1,
+                        "payment_date": "payment_date",
+                        "type": "O",
+                        "version": "1.2",
+                      },
+                      "place_of_issue": "01165",
+                      "receiver_blacklist_status": "receiver_blacklist_status",
+                      "receiver_id": "BBB222222BB22",
+                      "receiver_name": "BELVO CORP",
+                      "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                      "sender_blacklist_status": "sender_blacklist_status",
+                      "sender_id": "AAA111111AA11",
+                      "sender_name": "ACME CORP",
+                      "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                      "status": "Vigente",
+                      "subtotal_amount": 400,
+                      "tax_amount": 64,
+                      "total_amount": 454,
+                      "type": "INFLOW",
+                      "usage": "P01",
+                      "version": "3.3",
+                      "warnings": {
+                        "code": "sat_xml_limit_reached",
+                        "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.",
+                      },
+                      "xml": "xml",
+                    },
+                  ],
                 },
               },
               {
@@ -5376,7 +6599,99 @@ client.connect()
                   "type": "INFLOW",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "cancelation_status": "cancelation_status",
+                      "cancelation_update_date": "2019-12-02",
+                      "certification_authority": "CCC333333CC33",
+                      "certification_date": "2019-12-01",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "currency": "MXN",
+                      "discount_amount": 10,
+                      "exchange_rate": 0.052,
+                      "folio": "26",
+                      "id": "c749315b-eec2-435d-a458-06912878564f",
+                      "invoice_date": "2019-12-01",
+                      "invoice_details": [
+                        {
+                          "description": "December 2019 accounting fees",
+                          "pre_tax_amount": 400,
+                          "product_identification": "84101600",
+                          "quantity": 1,
+                          "tax_amount": 64,
+                          "tax_percentage": 16,
+                          "total_amount": 464,
+                          "unit_amount": 200,
+                          "unit_code": "E48",
+                          "unit_description": "Unidad de servicio",
+                        },
+                      ],
+                      "invoice_identification": "A1A1A1A1-2B2B-3C33-D44D-555555E55EE",
+                      "invoice_type": "Egreso",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "payment_method": "PUE",
+                      "payment_method_description": "payment_method_description",
+                      "payment_type": "99",
+                      "payment_type_description": "payment_type_description",
+                      "payments": [
+                        {
+                          "amount": 8000.5,
+                          "beneficiary_account_number": "12343453245633",
+                          "currency": "BRL",
+                          "date": "2020-03-17T12:00:00.000Z",
+                          "exchange_rate": "3.75",
+                          "operation_number": "831840",
+                          "payer_account_number": "13343663245699",
+                          "payer_bank_name": "CITI BANAMEX",
+                          "payer_rfc": "BKJM840515VB1",
+                          "payment_type": "03",
+                          "related_documents": [
+                            {
+                              "amount_paid": 8000,
+                              "currency": "MXN",
+                              "invoice_identification": "7EE015F3-6311-11EA-B02A-00155D014007",
+                              "outstanding_balance": 10877.84,
+                              "partiality_number": 1,
+                              "payment_method": "PPD",
+                              "previous_balance": 18877.84,
+                            },
+                          ],
+                        },
+                      ],
+                      "payroll": {
+                        "amount": 20400.1,
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "date_from": "2018-07-01",
+                        "date_to": "2018-07-31",
+                        "days": 1,
+                        "payment_date": "payment_date",
+                        "type": "O",
+                        "version": "1.2",
+                      },
+                      "place_of_issue": "01165",
+                      "receiver_blacklist_status": "receiver_blacklist_status",
+                      "receiver_id": "BBB222222BB22",
+                      "receiver_name": "BELVO CORP",
+                      "receiver_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                      "sender_blacklist_status": "sender_blacklist_status",
+                      "sender_id": "AAA111111AA11",
+                      "sender_name": "ACME CORP",
+                      "sender_tax_fraud_status": "NO_TAX_FRAUD_STATUS",
+                      "status": "Vigente",
+                      "subtotal_amount": 400,
+                      "tax_amount": 64,
+                      "total_amount": 454,
+                      "type": "INFLOW",
+                      "usage": "P01",
+                      "version": "3.3",
+                      "warnings": {
+                        "code": "sat_xml_limit_reached",
+                        "message": "The daily limit for XML downloads set by SAT was reached so this invoice might be missing data. Please check https://tinyurl.com/yydzhy5d for more information on this error.",
+                      },
+                      "xml": "xml",
+                    },
+                  ],
                 },
               },
               {
@@ -5685,7 +7000,7 @@ To delete links in bulk, we recommend looping through the list of links you want
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -5785,7 +7100,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -5946,6 +7261,21 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "access_mode": "recurrent",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "bcef7f35-67f2-4b19-b009-cb38795faf09",
+                        "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "institution": "erebor_mx_retail",
+                        "institution_user_id": "sooE7XJWEKypZJR603ecaWYk-8Ap0oD8Nr1pBQ4eG9c=",
+                        "last_accessed_at": "2019-09-27T13:02:03.584Z",
+                        "refresh_rate": "7d",
+                        "status": "valid",
+                      },
+                    ],
                   },
                 },
               },
@@ -6306,7 +7636,6 @@ client.connect()
                   "omit": "link,balance",
                 },
                 "request": {
-                  "access_mode": "single",
                   "certificate": "1234567890abcd=",
                   "credentials_storage": "store",
                   "external_id": "56ab5706-6e00-48a4-91c9-ca55968678d9",
@@ -6594,7 +7923,7 @@ For a list of standards codes, see the table below.
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -6880,7 +8209,7 @@ client.owners.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -6981,7 +8310,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -6998,10 +8327,13 @@ client.connect()
                       "document_type": "CPF",
                     },
                     "email": "johndoe@belvo.com",
+                    "first_name": "first_name",
                     "id": "c749315b-eec2-435d-a458-06912878564f",
                     "internal_identification": "7e5838e4",
+                    "last_name": "last_name",
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "phone_number": "+52-XXX-XXX-XXXX",
+                    "second_last_name": "second_last_name",
                   },
                 },
               },
@@ -7137,6 +8469,27 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "display_name": "John Doe",
+                        "document_id": {
+                          "document_number": "235578435-S",
+                          "document_type": "CPF",
+                        },
+                        "email": "johndoe@belvo.com",
+                        "first_name": "first_name",
+                        "id": "c749315b-eec2-435d-a458-06912878564f",
+                        "internal_identification": "7e5838e4",
+                        "last_name": "last_name",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "phone_number": "+52-XXX-XXX-XXXX",
+                        "second_last_name": "second_last_name",
+                      },
+                    ],
                   },
                 },
               },
@@ -7317,7 +8670,26 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "display_name": "John Doe",
+                      "document_id": {
+                        "document_number": "235578435-S",
+                        "document_type": "CPF",
+                      },
+                      "email": "johndoe@belvo.com",
+                      "first_name": "first_name",
+                      "id": "c749315b-eec2-435d-a458-06912878564f",
+                      "internal_identification": "7e5838e4",
+                      "last_name": "last_name",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "phone_number": "+52-XXX-XXX-XXXX",
+                      "second_last_name": "second_last_name",
+                    },
+                  ],
                 },
               },
               {
@@ -7456,7 +8828,26 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "address": "Carrer de la Llacuna, 162, 08018 Barcelona",
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "display_name": "John Doe",
+                      "document_id": {
+                        "document_number": "235578435-S",
+                        "document_type": "CPF",
+                      },
+                      "email": "johndoe@belvo.com",
+                      "first_name": "first_name",
+                      "id": "c749315b-eec2-435d-a458-06912878564f",
+                      "internal_identification": "7e5838e4",
+                      "last_name": "last_name",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "phone_number": "+52-XXX-XXX-XXXX",
+                      "second_last_name": "second_last_name",
+                    },
+                  ],
                 },
               },
               {
@@ -7597,6 +8988,27 @@ client.connect()
                     "active": true,
                     "country": "BRA",
                     "display_name": "Wakanda National Bank",
+                    "form_fields": [
+                      {
+                        "label": "Document",
+                        "length": 1,
+                        "name": "username",
+                        "optional": false,
+                        "placeholder": "Username",
+                        "type": "text",
+                        "validation": "^.{1,}$",
+                        "validation_message": "Invalid client number",
+                        "values": [
+                          {
+                            "code": "001",
+                            "label": "Cédula de Ciudadanía",
+                            "placeholder": "DEF4444908M22",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid document number",
+                          },
+                        ],
+                      },
+                    ],
                     "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
                     "id": "bbaceead-7b96-46d8-9354-38dec9707004",
                     "legal_entity_name": "Wakanda Bank, National Association",
@@ -7646,6 +9058,34 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "active": true,
+                        "country": "BRA",
+                        "display_name": "Wakanda National Bank",
+                        "form_fields": [
+                          {
+                            "label": "Document",
+                            "length": 1,
+                            "name": "username",
+                            "optional": false,
+                            "placeholder": "Username",
+                            "type": "text",
+                            "validation": "^.{1,}$",
+                            "validation_message": "Invalid client number",
+                          },
+                        ],
+                        "icon_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_icon_logo.png",
+                        "id": "bbaceead-7b96-46d8-9354-38dec9707004",
+                        "legal_entity_name": "Wakanda Bank, National Association",
+                        "logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_logo.png",
+                        "name": "wakanda_national",
+                        "primary_color": "#fdbc24",
+                        "text_logo": "https://belvo-api-media.s3.amazonaws.com/logos/wakandanational_text_logo.png",
+                        "website": "https://www.wakandanational.com",
+                      },
+                    ],
                   },
                 },
               },
@@ -7825,6 +9265,7 @@ A payment intent captures all payment information (such as the amount to be char
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
                   },
                 },
               },
@@ -7996,12 +9437,10 @@ During the payment intent flow, you need to fill in the payment intent with requ
             "examples": [
               {
                 "request": {
-                  "allowed_payment_method_types": [],
+                  "allowed_payment_method_types": [
+                    "open_finance",
+                  ],
                   "amount": "1234.12",
-                  "callback_urls": {
-                    "cancel": "https://www.acmecorp.com/checkout/3487548/cancel",
-                    "success": "https://www.acmecorp.com/checkout/3487548/success",
-                  },
                   "customer": "06dc2f14-1217-4480-9b36-550a944a39d1",
                   "description": "Shoe payment",
                   "expires_in": "7d",
@@ -8105,16 +9544,33 @@ During the payment intent flow, you need to fill in the payment intent with requ
                   "created_at__lt": "2022-09-15",
                   "created_at__lte": "2022-09-15",
                   "created_at__range": "2022-09-15,2022-09-20",
-                  "ordering": "created_at",
                   "page": 1,
                   "page_size": 1,
                   "search": "trai",
-                  "status": "ACTIVE",
                 },
                 "response": {
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "access_token": "YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU",
+                        "callback_urls": {
+                          "cancel": "https://www.acmecorp.com/checkout/3487548/cancel",
+                          "success": "https://www.acmecorp.com/checkout/3487548/success",
+                        },
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "62053a72-e2d5-4c95-a578-6b16616900ac",
+                        "expires_at": "2023-02-09T08:45:50.406032Z",
+                        "expires_in": "7d",
+                        "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "payment_intent": "b7dd85b1-671e-45c7-aba6-b4b37a8fc0c2",
+                        "payment_url": "https://pay.belvo.io/YggaKvPbM5aJhksu1BEwDI5FKTcUc5wZqNB-wH7MFGU",
+                        "status": "ACTIVE",
+                        "updated_at": "2022-02-09T08:45:50.406032Z",
+                      },
+                    ],
                   },
                 },
               },
@@ -8270,7 +9726,9 @@ You can use the Payment Transactions resource in order to get useful information
                     "description": "Training shoes",
                     "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
                     "payer": {
-                      "string": {},
+                      "payer": {
+                        "key": "value",
+                      },
                     },
                     "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
                     "transaction_type": "INFLOW",
@@ -8329,6 +9787,22 @@ You can use the Payment Transactions resource in order to get useful information
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "amount": "1020.00",
+                        "beneficiary": "a80d5a9d-20ae-479a-8dd7-ff3443bcbbfc",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "currency": "BRL",
+                        "customer": "9eebd63b-3339-44a9-8a5a-72bb6cb2f310",
+                        "description": "Training shoes",
+                        "id": "fd0f3303-cafb-47ea-9753-21155cb144ab",
+                        "payer": {},
+                        "payment_intent": "004a28bb-fac2-4172-884b-5b6ea15314ad",
+                        "transaction_type": "INFLOW",
+                      },
+                    ],
                   },
                 },
               },
@@ -8463,7 +9937,7 @@ You can use the Payment Transactions resource in order to get useful information
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -8496,7 +9970,9 @@ You can use the Payment Transactions resource in order to get useful information
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
                     "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
-                    "name": {},
+                    "name": {
+                      "key": "value",
+                    },
                     "url": "https://mycompany.com/security/webhook",
                   },
                 },
@@ -8528,6 +10004,20 @@ You can use the Payment Transactions resource in order to get useful information
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "auth_header": "Authorization",
+                        "auth_token": "*******",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                        "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                        "name": {
+                          "key": "value",
+                        },
+                        "url": "https://mycompany.com/security/webhook",
+                      },
+                    ],
                   },
                 },
               },
@@ -8559,7 +10049,19 @@ You can use the Payment Transactions resource in order to get useful information
                   "url": "https://mycompany.com/security/webhook",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "auth_header": "Authorization",
+                      "auth_token": "*******",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "created_by": "38322582-7c76-4775-abe8-0fb2bdeb8204",
+                      "id": "32ab6809-6253-4fb0-be0f-94cce6ebb692",
+                      "name": {
+                        "key": "value",
+                      },
+                      "url": "https://mycompany.com/security/webhook",
+                    },
+                  ],
                 },
               },
             ],
@@ -8628,7 +10130,7 @@ You can use the Payment Transactions resource in order to get useful information
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -8652,7 +10154,7 @@ You can use the Payment Transactions resource in order to get useful information
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -8670,7 +10172,12 @@ You can use the Payment Transactions resource in order to get useful information
                     "collected_at": "2020-04-23T21:32:55.336854+00:00",
                     "created_at": "2020-04-23T21:30:20.336854+00:00",
                     "currency": "BRL",
-                    "fees": [],
+                    "fees": [
+                      {
+                        "type": "TRANSACTION_FEE",
+                        "value": 2.21,
+                      },
+                    ],
                     "gross_amount": 106.7,
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "institution_transaction_id": "134532345",
@@ -8747,6 +10254,37 @@ You can use the Payment Transactions resource in order to get useful information
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "account": {
+                          "id": "a7a3104c-5a3c-4536-81e1-14523097f645",
+                          "institution": {
+                            "name": "erebor_mx_retail",
+                          },
+                        },
+                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        "created_at": "2020-04-23T21:30:20.336854+00:00",
+                        "currency": "BRL",
+                        "fees": [
+                          {
+                            "value": 2.21,
+                          },
+                        ],
+                        "gross_amount": 106.7,
+                        "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "institution_transaction_id": "134532345",
+                        "net_amount": 104.58,
+                        "number_of_installments": {
+                          "paid": 1,
+                          "total": 1,
+                        },
+                        "status": "APPROVED",
+                        "type": "MASTERCARD_CREDIT",
+                        "value_date": "2022-01-16",
+                        "value_hour": "19:47",
+                      },
+                    ],
                   },
                 },
               },
@@ -8882,7 +10420,12 @@ You can use the Payment Transactions resource in order to get useful information
                     "collected_at": "2020-04-23T21:32:55.336854+00:00",
                     "created_at": "2020-04-23T21:30:20.336854+00:00",
                     "currency": "BRL",
-                    "fees": [],
+                    "fees": [
+                      {
+                        "type": "TRANSACTION_FEE",
+                        "value": 2.21,
+                      },
+                    ],
                     "gross_amount": 106.7,
                     "id": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "institution_transaction_id": "134532345",
@@ -9013,7 +10556,7 @@ client. recurring_expenses.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -9105,14 +10648,82 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "average_transaction_amount": 32.9,
+                      "category": "Bills & Utilities",
+                      "days_since_last_transaction": 1,
+                      "frequency": "MONTHLY",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "median_transaction_amount": 32.9,
+                      "name": "Netflix",
+                      "payment_type": "SUBSCRIPTION",
+                      "transactions": [
+                        {
+                          "amount": 2145.45,
+                          "description": "Netflix.com/march",
+                          "value_date": "2019-10-23",
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
               {
@@ -9235,6 +10846,50 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "account": {
+                          "balance": {
+                            "current": 5874.13,
+                          },
+                          "balance_type": "ASSET",
+                          "category": "CHECKING_ACCOUNT",
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "created_at": "2022-02-09T08:45:50.406032Z",
+                          "currency": "MXN",
+                          "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "loan_data": {
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_end_date": "2027-10-01",
+                            "monthly_payment": 1000,
+                            "outstanding_balance": 182000,
+                            "principal": 192000,
+                          },
+                          "name": "Cuenta Perfiles- M.N. - MXN-666",
+                          "number": "4057068115181",
+                          "public_identification_name": "CLABE",
+                          "public_identification_value": "150194683119900273",
+                          "type": "Cuentas de efectivo",
+                        },
+                        "average_transaction_amount": 32.9,
+                        "category": "Bills & Utilities",
+                        "days_since_last_transaction": 1,
+                        "frequency": "MONTHLY",
+                        "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                        "median_transaction_amount": 32.9,
+                        "name": "Netflix",
+                        "payment_type": "SUBSCRIPTION",
+                        "transactions": [
+                          {
+                            "amount": 2145.45,
+                            "description": "Netflix.com/march",
+                            "value_date": "2019-10-23",
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -9393,7 +11048,75 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "average_transaction_amount": 32.9,
+                      "category": "Bills & Utilities",
+                      "days_since_last_transaction": 1,
+                      "frequency": "MONTHLY",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "median_transaction_amount": 32.9,
+                      "name": "Netflix",
+                      "payment_type": "SUBSCRIPTION",
+                      "transactions": [
+                        {
+                          "amount": 2145.45,
+                          "description": "Netflix.com/march",
+                          "value_date": "2019-10-23",
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
               {
@@ -9518,7 +11241,75 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "average_transaction_amount": 32.9,
+                      "category": "Bills & Utilities",
+                      "days_since_last_transaction": 1,
+                      "frequency": "MONTHLY",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "median_transaction_amount": 32.9,
+                      "name": "Netflix",
+                      "payment_type": "SUBSCRIPTION",
+                      "transactions": [
+                        {
+                          "amount": 2145.45,
+                          "description": "Netflix.com/march",
+                          "value_date": "2019-10-23",
+                        },
+                      ],
+                    },
+                  ],
                 },
               },
               {
@@ -9709,7 +11500,7 @@ client. risk_insights.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -9733,14 +11524,90 @@ client. risk_insights.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
                   "omit": "link,balance",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "accounts": [
+                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      ],
+                      "balances_metrics": {
+                        "balance_threshold_x": 267,
+                        "closing_balance": 24.19,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
+                        "max_balance_1m": 3062.11,
+                        "max_balance_1w": 3062.11,
+                        "max_balance_3m": 3062.11,
+                        "min_balance_1m": 0.51,
+                        "min_balance_1w": 0.51,
+                        "min_balance_3m": 0.51,
+                      },
+                      "cashflow_metrics": {
+                        "positive_to_negative_ratio_1m": 0.98,
+                        "positive_to_negative_ratio_1w": 0.98,
+                        "positive_to_negative_ratio_3m": 0.98,
+                        "sum_negative_1m": 10237.03,
+                        "sum_negative_1w": 10237.03,
+                        "sum_negative_3m": 10237.03,
+                        "sum_positive_1m": 10022.01,
+                        "sum_positive_1w": 10022.01,
+                        "sum_positive_3m": 10022.01,
+                      },
+                      "created_at": "2022-02-01T20:25:47.307911Z",
+                      "credit_cards_metrics": {
+                        "num_accounts": 1,
+                        "sum_credit_limit": 600.5,
+                        "sum_credit_used": 200.5,
+                      },
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loans_metrics": {
+                        "num_accounts": 1,
+                        "sum_loans_monthly_payment": 400,
+                        "sum_loans_outstanding_principal": 2000,
+                        "sum_loans_principal": 5000,
+                      },
+                      "transactions_metrics": {
+                        "max_incoming_amount_1m": 3030,
+                        "max_incoming_amount_1w": 3030,
+                        "max_incoming_amount_3m": 3030,
+                        "max_outgoing_amount_1m": 3027.44,
+                        "max_outgoing_amount_1w": 3027.44,
+                        "max_outgoing_amount_3m": 3027.44,
+                        "mean_incoming_amount_1m": 3030,
+                        "mean_incoming_amount_1w": 3030,
+                        "mean_incoming_amount_3m": 3030,
+                        "mean_outgoing_amount_1m": 3027.44,
+                        "mean_outgoing_amount_1w": 3027.44,
+                        "mean_outgoing_amount_3m": 3027.44,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
+                        "sum_incoming_amount_1m": 10022.01,
+                        "sum_incoming_amount_1w": 10022.01,
+                        "sum_incoming_amount_3m": 10022.01,
+                        "sum_outgoing_amount_1m": 10237.03,
+                        "sum_outgoing_amount_1w": 10237.03,
+                        "sum_outgoing_amount_3m": 10237.03,
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -9793,6 +11660,84 @@ client. risk_insights.list(params: {
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "accounts": [
+                          "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        ],
+                        "balances_metrics": {
+                          "balance_threshold_x": 267,
+                          "closing_balance": 24.19,
+                          "days_balance_below_0_1m": 1,
+                          "days_balance_below_0_1w": 1,
+                          "days_balance_below_0_3m": 1,
+                          "days_balance_below_x_1m": 1,
+                          "days_balance_below_x_1w": 1,
+                          "days_balance_below_x_3m": 1,
+                          "max_balance_1m": 3062.11,
+                          "max_balance_1w": 3062.11,
+                          "max_balance_3m": 3062.11,
+                          "min_balance_1m": 0.51,
+                          "min_balance_1w": 0.51,
+                          "min_balance_3m": 0.51,
+                        },
+                        "cashflow_metrics": {
+                          "positive_to_negative_ratio_1m": 0.98,
+                          "positive_to_negative_ratio_1w": 0.98,
+                          "positive_to_negative_ratio_3m": 0.98,
+                          "sum_negative_1m": 10237.03,
+                          "sum_negative_1w": 10237.03,
+                          "sum_negative_3m": 10237.03,
+                          "sum_positive_1m": 10022.01,
+                          "sum_positive_1w": 10022.01,
+                          "sum_positive_3m": 10022.01,
+                        },
+                        "created_at": "2022-02-01T20:25:47.307911Z",
+                        "credit_cards_metrics": {
+                          "num_accounts": 1,
+                          "sum_credit_limit": 600.5,
+                          "sum_credit_used": 200.5,
+                        },
+                        "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loans_metrics": {
+                          "num_accounts": 1,
+                          "sum_loans_monthly_payment": 400,
+                          "sum_loans_outstanding_principal": 2000,
+                          "sum_loans_principal": 5000,
+                        },
+                        "transactions_metrics": {
+                          "max_incoming_amount_1m": 3030,
+                          "max_incoming_amount_1w": 3030,
+                          "max_incoming_amount_3m": 3030,
+                          "max_outgoing_amount_1m": 3027.44,
+                          "max_outgoing_amount_1w": 3027.44,
+                          "max_outgoing_amount_3m": 3027.44,
+                          "mean_incoming_amount_1m": 3030,
+                          "mean_incoming_amount_1w": 3030,
+                          "mean_incoming_amount_3m": 3030,
+                          "mean_outgoing_amount_1m": 3027.44,
+                          "mean_outgoing_amount_1w": 3027.44,
+                          "mean_outgoing_amount_3m": 3027.44,
+                          "num_incoming_transactions_1m": 1,
+                          "num_incoming_transactions_1w": 1,
+                          "num_incoming_transactions_3m": 1,
+                          "num_outgoing_transactions_1m": 1,
+                          "num_outgoing_transactions_1w": 1,
+                          "num_outgoing_transactions_3m": 1,
+                          "num_transactions_1m": 1,
+                          "num_transactions_1w": 1,
+                          "num_transactions_3m": 1,
+                          "sum_incoming_amount_1m": 10022.01,
+                          "sum_incoming_amount_1w": 10022.01,
+                          "sum_incoming_amount_3m": 10022.01,
+                          "sum_outgoing_amount_1m": 10237.03,
+                          "sum_outgoing_amount_1w": 10237.03,
+                          "sum_outgoing_amount_3m": 10237.03,
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -9871,7 +11816,83 @@ client. risk_insights.list(params: {
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "accounts": [
+                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      ],
+                      "balances_metrics": {
+                        "balance_threshold_x": 267,
+                        "closing_balance": 24.19,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
+                        "max_balance_1m": 3062.11,
+                        "max_balance_1w": 3062.11,
+                        "max_balance_3m": 3062.11,
+                        "min_balance_1m": 0.51,
+                        "min_balance_1w": 0.51,
+                        "min_balance_3m": 0.51,
+                      },
+                      "cashflow_metrics": {
+                        "positive_to_negative_ratio_1m": 0.98,
+                        "positive_to_negative_ratio_1w": 0.98,
+                        "positive_to_negative_ratio_3m": 0.98,
+                        "sum_negative_1m": 10237.03,
+                        "sum_negative_1w": 10237.03,
+                        "sum_negative_3m": 10237.03,
+                        "sum_positive_1m": 10022.01,
+                        "sum_positive_1w": 10022.01,
+                        "sum_positive_3m": 10022.01,
+                      },
+                      "created_at": "2022-02-01T20:25:47.307911Z",
+                      "credit_cards_metrics": {
+                        "num_accounts": 1,
+                        "sum_credit_limit": 600.5,
+                        "sum_credit_used": 200.5,
+                      },
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loans_metrics": {
+                        "num_accounts": 1,
+                        "sum_loans_monthly_payment": 400,
+                        "sum_loans_outstanding_principal": 2000,
+                        "sum_loans_principal": 5000,
+                      },
+                      "transactions_metrics": {
+                        "max_incoming_amount_1m": 3030,
+                        "max_incoming_amount_1w": 3030,
+                        "max_incoming_amount_3m": 3030,
+                        "max_outgoing_amount_1m": 3027.44,
+                        "max_outgoing_amount_1w": 3027.44,
+                        "max_outgoing_amount_3m": 3027.44,
+                        "mean_incoming_amount_1m": 3030,
+                        "mean_incoming_amount_1w": 3030,
+                        "mean_incoming_amount_3m": 3030,
+                        "mean_outgoing_amount_1m": 3027.44,
+                        "mean_outgoing_amount_1w": 3027.44,
+                        "mean_outgoing_amount_3m": 3027.44,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
+                        "sum_incoming_amount_1m": 10022.01,
+                        "sum_incoming_amount_1w": 10022.01,
+                        "sum_incoming_amount_3m": 10022.01,
+                        "sum_outgoing_amount_1m": 10237.03,
+                        "sum_outgoing_amount_1w": 10237.03,
+                        "sum_outgoing_amount_3m": 10237.03,
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -9920,7 +11941,83 @@ If you need to know the currency of the account, just do a GET Details to the ac
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "accounts": [
+                        "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      ],
+                      "balances_metrics": {
+                        "balance_threshold_x": 267,
+                        "closing_balance": 24.19,
+                        "days_balance_below_0_1m": 1,
+                        "days_balance_below_0_1w": 1,
+                        "days_balance_below_0_3m": 1,
+                        "days_balance_below_x_1m": 1,
+                        "days_balance_below_x_1w": 1,
+                        "days_balance_below_x_3m": 1,
+                        "max_balance_1m": 3062.11,
+                        "max_balance_1w": 3062.11,
+                        "max_balance_3m": 3062.11,
+                        "min_balance_1m": 0.51,
+                        "min_balance_1w": 0.51,
+                        "min_balance_3m": 0.51,
+                      },
+                      "cashflow_metrics": {
+                        "positive_to_negative_ratio_1m": 0.98,
+                        "positive_to_negative_ratio_1w": 0.98,
+                        "positive_to_negative_ratio_3m": 0.98,
+                        "sum_negative_1m": 10237.03,
+                        "sum_negative_1w": 10237.03,
+                        "sum_negative_3m": 10237.03,
+                        "sum_positive_1m": 10022.01,
+                        "sum_positive_1w": 10022.01,
+                        "sum_positive_3m": 10022.01,
+                      },
+                      "created_at": "2022-02-01T20:25:47.307911Z",
+                      "credit_cards_metrics": {
+                        "num_accounts": 1,
+                        "sum_credit_limit": 600.5,
+                        "sum_credit_used": 200.5,
+                      },
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "loans_metrics": {
+                        "num_accounts": 1,
+                        "sum_loans_monthly_payment": 400,
+                        "sum_loans_outstanding_principal": 2000,
+                        "sum_loans_principal": 5000,
+                      },
+                      "transactions_metrics": {
+                        "max_incoming_amount_1m": 3030,
+                        "max_incoming_amount_1w": 3030,
+                        "max_incoming_amount_3m": 3030,
+                        "max_outgoing_amount_1m": 3027.44,
+                        "max_outgoing_amount_1w": 3027.44,
+                        "max_outgoing_amount_3m": 3027.44,
+                        "mean_incoming_amount_1m": 3030,
+                        "mean_incoming_amount_1w": 3030,
+                        "mean_incoming_amount_3m": 3030,
+                        "mean_outgoing_amount_1m": 3027.44,
+                        "mean_outgoing_amount_1w": 3027.44,
+                        "mean_outgoing_amount_3m": 3027.44,
+                        "num_incoming_transactions_1m": 1,
+                        "num_incoming_transactions_1w": 1,
+                        "num_incoming_transactions_3m": 1,
+                        "num_outgoing_transactions_1m": 1,
+                        "num_outgoing_transactions_1w": 1,
+                        "num_outgoing_transactions_3m": 1,
+                        "num_transactions_1m": 1,
+                        "num_transactions_1w": 1,
+                        "num_transactions_3m": 1,
+                        "sum_incoming_amount_1m": 10022.01,
+                        "sum_incoming_amount_1w": 10022.01,
+                        "sum_incoming_amount_3m": 10022.01,
+                        "sum_outgoing_amount_1m": 10237.03,
+                        "sum_outgoing_amount_1w": 10237.03,
+                        "sum_outgoing_amount_3m": 10237.03,
+                      },
+                    },
+                  ],
                 },
               },
             ],
@@ -10005,7 +12102,14 @@ For example:
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "id": "fc6694b5-ced2-47db-8d14-f15c9e942f31",
+                      "last_used": "2022-02-09T08:45:50.406032Z",
+                      "password": "******",
+                    },
+                  ],
                 },
               },
             ],
@@ -10032,6 +12136,15 @@ For example:
                   "body": {
                     "count": 1,
                     "next": "https://api.belvo.com/payments/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "id": "fc6694b5-ced2-47db-8d14-f15c9e942f31",
+                        "last_used": "2022-02-09T08:45:50.406032Z",
+                        "password": "******",
+                      },
+                    ],
                   },
                 },
               },
@@ -10120,7 +12233,7 @@ client.tax_compliance_status.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -10221,7 +12334,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -10369,6 +12482,18 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "id": "91106968-1abd-4d64-85c1-4e73d96fb997",
+                        "internal_identification": "20NE1234567",
+                        "outcome": "POSITIVE",
+                        "pdf": "=PDF-STRING=",
+                        "rfc": "KDFC211118IS0",
+                      },
+                    ],
                   },
                 },
               },
@@ -10702,7 +12827,7 @@ At the moment, the Tax Declaration resource is available for:
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -10803,7 +12928,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -11023,6 +13148,84 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "annual_income_statement": {
+                          "annual_totals": {
+                            "total_applicable_deductions": 0,
+                            "total_exempt_income": 115004000,
+                            "total_exemptions_and_deductions": 0,
+                            "total_ordinary_net_income": 0,
+                          },
+                          "gross_income": {
+                            "capital_income": 0,
+                            "earned_income": 115004000,
+                            "fee_based_income": 0,
+                            "non_labor_income": 0,
+                          },
+                          "net_income": {
+                            "capital_income": 0,
+                            "earned_income": 115004000,
+                            "fee_based_income": 0,
+                            "non_labor_income": 0,
+                          },
+                          "non_taxable_income": {
+                            "capital_income": 0,
+                            "earned_income": 115004000,
+                            "fee_based_income": 0,
+                            "non_labor_income": 0,
+                          },
+                        },
+                        "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        "created_at": "2020-04-23T21:30:20.336854+00:00",
+                        "date_issued": "2022-09-02",
+                        "document_information": {
+                          "form_number": "2117680087604",
+                          "name": "Declaracion de Renta y Complementario o de Ingresos y Patrimonio para Personas Juridicas y Asimiladas y Personas Naturales y Asimiladas no Residentes y Sucesiones Iliquidas de Causantes no Residentes",
+                          "type": "110",
+                          "year": 1,
+                        },
+                        "equity_statement": {
+                          "total_debts": 77626000,
+                          "total_gross_equity": 4648000,
+                          "total_net_equity": 0,
+                        },
+                        "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                        "link": "8a95ca1a-1a7a-4ce0-8599-f8ff1dc792ac",
+                        "pdf": "==BINARY-STRING==",
+                        "pension_income_statement": {
+                          "net_pension_income": 0,
+                          "net_taxable_pension_income": 0,
+                        },
+                        "tax_assessment": {
+                          "balance_payable": 0,
+                          "balance_refundable": 84000,
+                          "fortuitous_profit_tax": 0,
+                          "net_income_tax": 9144000,
+                          "previous_year_balance": 1514000,
+                          "total_payment": 0,
+                          "total_tax_due": 9144000,
+                          "total_tax_on_taxable_net_income": 9144000,
+                          "total_withheld_tax": 7714000,
+                        },
+                        "tax_payer_information": {
+                          "document_id": {
+                            "document_number": "7113223466",
+                            "document_type": "NIT",
+                          },
+                          "first_last_name": "Restrepo",
+                          "first_name": "Carlos",
+                          "main_economic_activity": "0010",
+                          "other_names": "Alberto",
+                          "reporting_id": {
+                            "reporting_type": "sectional_address_code",
+                            "reporting_value": "32",
+                          },
+                          "second_last_name": "Vives",
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -11222,7 +13425,74 @@ client.connect()
                   "year_to": "2019",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "annual_costs_and_deductions_statement": {
+                        "administration_expenses": 3266000,
+                        "costs": 1881843000,
+                        "distribution_and_sales_expenses": 0,
+                        "financial_expenses": 0,
+                        "total_costs_and_deductible_expenses": 191449000,
+                      },
+                      "annual_income_statement": {
+                        "dividends": 0,
+                        "gross_income_from_ordinary_activities": 210043000,
+                        "other_income": 0,
+                        "returns_rebates_and_discounts_on_sales": 0,
+                        "total_gross_income": 210043000,
+                        "total_net_income": 210043000,
+                      },
+                      "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                      "created_at": "2020-04-23T21:30:20.336854+00:00",
+                      "date_issued": "2022-09-02",
+                      "document_information": {
+                        "form_number": "2117680087604",
+                        "name": "Declaracion de Renta y Complementario o de Ingresos y Patrimonio para Personas Juridicas y Asimiladas y Personas Naturales y Asimiladas no Residentes y Sucesiones Iliquidas de Causantes no Residentes",
+                        "type": "110",
+                        "year": 1,
+                      },
+                      "equity_statement": {
+                        "accounts_documents_and_finance_leases_receivable": 0,
+                        "cash_and_cash_equivalents": 4648000,
+                        "debts": 207030000,
+                        "inventory": 0,
+                        "investments_and_derivative_financial_instruments": 77626000,
+                        "property_plant_and_equipment_investment_properties": 0,
+                        "total_gross_equity": 220860000,
+                        "total_net_equity": 13830000,
+                      },
+                      "id": "1c83ead8-6665-429c-a17a-ddc76cb3a95e",
+                      "link": "8a95ca1a-1a7a-4ce0-8599-f8ff1dc792ac",
+                      "pdf": "==BINARY-STRING==",
+                      "tax_assessment": {
+                        "fortuitous_profit_tax": 0,
+                        "net_income_tax": 5764000,
+                        "net_income_taxable": 18594000,
+                        "total_balance_in_favor": 1889000,
+                        "total_balance_payable": 0,
+                        "total_payment": 0,
+                        "total_tax_due": 5764000,
+                        "total_tax_on_taxable_net_income": 5764000,
+                        "total_withholdings_for_the_taxable_year_to_be_declared": 7361000,
+                      },
+                      "tax_payer_information": {
+                        "company_name": "Trusty Spanners",
+                        "document_id": {
+                          "document_number": "8312224477",
+                          "document_type": "NIT",
+                        },
+                        "first_last_name": "Restrepo",
+                        "first_name": "Carlos",
+                        "main_economic_activity": "0032",
+                        "other_names": "Alberto",
+                        "reporting_id": {
+                          "reporting_type": "sectional_address_code",
+                          "reporting_value": "32",
+                        },
+                        "second_last_name": "Vives",
+                      },
+                    },
+                  ],
                 },
               },
               {
@@ -11478,7 +13748,7 @@ client.tax_retentions.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
             ],
@@ -11502,7 +13772,7 @@ client.tax_retentions.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -11510,6 +13780,7 @@ client.tax_retentions.list(params: {
                 },
                 "response": {
                   "body": {
+                    "cancelled_at": "2024-01-15T09:30:00Z",
                     "certified_at": "2019-01-03T21:10:41.000Z",
                     "code": 1,
                     "collected_at": "2022-02-09T08:45:50.406032Z",
@@ -11521,6 +13792,14 @@ client.tax_retentions.list(params: {
                     "receiver_id": "GYGK3207809L1",
                     "receiver_name": "ACME LTD",
                     "receiver_nationality": "NATIONAL",
+                    "retention_breakdown": [
+                      {
+                        "base_amount": 0.03,
+                        "payment_status": "PAID",
+                        "retained_amount": 0,
+                        "tax_type": "01",
+                      },
+                    ],
                     "sender_id": "JKUF980404P0",
                     "sender_name": "Roberto Nunez Batman",
                     "total_exempt_amount": 1000.8,
@@ -11585,6 +13864,38 @@ client.tax_retentions.list(params: {
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "cancelled_at": "2024-01-15T09:30:00Z",
+                        "certified_at": "2019-01-03T21:10:41.000Z",
+                        "code": 1,
+                        "collected_at": "2022-02-09T08:45:50.406032Z",
+                        "created_at": "2022-02-09T08:46:20.406032Z",
+                        "id": "c749315b-eec2-435d-a458-06912878564f",
+                        "invoice_identification": "def404af-5eef-4112-aa99-d1ec8493b89a",
+                        "issued_at": "2019-01-03T21:10:40.000Z",
+                        "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
+                        "receiver_id": "GYGK3207809L1",
+                        "receiver_name": "ACME LTD",
+                        "receiver_nationality": "NATIONAL",
+                        "retention_breakdown": [
+                          {
+                            "base_amount": 0.03,
+                            "retained_amount": 0,
+                            "tax_type": "01",
+                          },
+                        ],
+                        "sender_id": "JKUF980404P0",
+                        "sender_name": "Roberto Nunez Batman",
+                        "total_exempt_amount": 1000.8,
+                        "total_invoice_amount": 53249.8,
+                        "total_retained_amount": 1550.7,
+                        "total_taxable_amount": 43249,
+                        "version": "1.0",
+                        "xml": "=XML-STRING=",
+                      },
+                    ],
                   },
                 },
               },
@@ -11674,7 +13985,37 @@ client.tax_retentions.list(params: {
                   "type": "OUTFLOW",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "cancelled_at": "2024-01-15T09:30:00Z",
+                      "certified_at": "2019-01-03T21:10:41.000Z",
+                      "code": 1,
+                      "collected_at": "2022-02-09T08:45:50.406032Z",
+                      "created_at": "2022-02-09T08:46:20.406032Z",
+                      "id": "c749315b-eec2-435d-a458-06912878564f",
+                      "invoice_identification": "def404af-5eef-4112-aa99-d1ec8493b89a",
+                      "issued_at": "2019-01-03T21:10:40.000Z",
+                      "link": "19697249-01b8-443e-a451-76bfc5fbeebf",
+                      "receiver_id": "GYGK3207809L1",
+                      "receiver_name": "ACME LTD",
+                      "receiver_nationality": "NATIONAL",
+                      "retention_breakdown": [
+                        {
+                          "base_amount": 0.03,
+                          "retained_amount": 0,
+                          "tax_type": "01",
+                        },
+                      ],
+                      "sender_id": "JKUF980404P0",
+                      "sender_name": "Roberto Nunez Batman",
+                      "total_exempt_amount": 1000.8,
+                      "total_invoice_amount": 53249.8,
+                      "total_retained_amount": 1550.7,
+                      "total_taxable_amount": 43249,
+                      "version": "1.0",
+                      "xml": "=XML-STRING=",
+                    },
+                  ],
                 },
               },
             ],
@@ -11813,7 +14154,7 @@ client.tax_returns.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -11914,7 +14255,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -11924,10 +14265,50 @@ client.connect()
                   "body": {
                     "collected_at": "2019-09-27T13:01:41.941Z",
                     "created_at": "2022-02-09T08:45:50.406032Z",
+                    "datos_informativos": {
+                      "datos_informativos": {
+                        "key": "value",
+                      },
+                    },
+                    "deducciones_personales": {
+                      "deducciones_personales": {
+                        "key": "value",
+                      },
+                    },
+                    "determinacion_impuesto": {
+                      "determinacion_impuesto": {
+                        "key": "value",
+                      },
+                    },
+                    "dividendos": {
+                      "dividendos": {
+                        "key": "value",
+                      },
+                    },
                     "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                    "informacion_general": {
+                      "informacion_general": {
+                        "key": "value",
+                      },
+                    },
                     "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                     "pdf": "=PDF-STRING=",
                     "receipt_pdf": "=PDF-STRING=",
+                    "retenciones": {
+                      "retenciones": {
+                        "key": "value",
+                      },
+                    },
+                    "servicios_profesionales": {
+                      "servicios_profesionales": {
+                        "key": "value",
+                      },
+                    },
+                    "sueldos_salarios": {
+                      "sueldos_salarios": {
+                        "key": "value",
+                      },
+                    },
                   },
                 },
               },
@@ -12069,6 +14450,17 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "pdf": "=PDF-STRING=",
+                        "receipt_pdf": "=PDF-STRING=",
+                      },
+                    ],
                   },
                 },
               },
@@ -12274,10 +14666,59 @@ client.connect()
                   "date_to": "2019-01-01",
                   "link": "d4617561-1c01-4b2f-83b6-a594f7b3bc57",
                   "save_data": true,
-                  "type": "string",
+                  "type": "type",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "collected_at": "2019-09-27T13:01:41.941Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "datos_informativos": {
+                        "datos_informativos": {
+                          "key": "value",
+                        },
+                      },
+                      "deducciones_personales": {
+                        "deducciones_personales": {
+                          "key": "value",
+                        },
+                      },
+                      "determinacion_impuesto": {
+                        "determinacion_impuesto": {
+                          "key": "value",
+                        },
+                      },
+                      "dividendos": {
+                        "dividendos": {
+                          "key": "value",
+                        },
+                      },
+                      "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                      "informacion_general": {
+                        "informacion_general": {
+                          "key": "value",
+                        },
+                      },
+                      "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                      "pdf": "=PDF-STRING=",
+                      "receipt_pdf": "=PDF-STRING=",
+                      "retenciones": {
+                        "retenciones": {
+                          "key": "value",
+                        },
+                      },
+                      "servicios_profesionales": {
+                        "servicios_profesionales": {
+                          "key": "value",
+                        },
+                      },
+                      "sueldos_salarios": {
+                        "sueldos_salarios": {
+                          "key": "value",
+                        },
+                      },
+                    },
+                  ],
                 },
               },
               {
@@ -12546,7 +14987,7 @@ client.tax_status.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -12647,7 +15088,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -12656,6 +15097,9 @@ client.connect()
                 "response": {
                   "body": {
                     "address": {
+                      "between_street": [
+                        {},
+                      ],
                       "exterior_number": "432",
                       "interior_number": "PLANTA BAJA",
                       "locality": "none",
@@ -12670,21 +15114,49 @@ client.connect()
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
                     "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
+                    "economic_activity": [
+                      {
+                        "economic_activity": "Asalariado",
+                        "end_date": "end_date",
+                        "initial_date": "2020-12-06",
+                        "order": "2",
+                        "percentage": "1",
+                      },
+                    ],
                     "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
                     "id_cif": "12345678901",
                     "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
+                    "obligations": [
+                      {
+                        "end_date": "end_date",
+                        "expiration": "Conjuntamente con la declaración anual del ejercicio.",
+                        "initial_date": "2020-12-06",
+                        "obligation": "Declaración informativa de IVA con la anual de ISR",
+                      },
+                    ],
                     "official_name": "John Doe",
                     "pdf": "=PDF-STRING=",
                     "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
+                    "regimes": [
+                      {
+                        "end_date": "end_date",
+                        "initial_date": "2020-12-06",
+                        "regimen": "Régimen de Ingresos por Dividendos (socios y accionistas)",
+                      },
+                    ],
                     "tax_payer_information": {
                       "commercial_name": "Jar Jar Transport",
+                      "curp": "curp",
                       "email": "john_doe@gmail.com",
                       "first_last_name": "DOE",
+                      "last_status_change_date": "last_status_change_date",
                       "name": "JOHN",
                       "phone": "1234567890",
                       "rfc": "BEMP12345G58",
                       "second_last_name": "SCHMOE",
                       "social_name": "John Doe SA DE CV",
+                      "start_operations_date": "start_operations_date",
+                      "status_padron": "status_padron",
                     },
                   },
                 },
@@ -12819,6 +15291,39 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "address": {
+                          "postal_code": "21255",
+                        },
+                        "collected_at": "2020-04-23T21:32:55.336Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
+                        "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
+                        "economic_activity": [
+                          {},
+                        ],
+                        "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
+                        "id_cif": "12345678901",
+                        "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
+                        "obligations": [
+                          {},
+                        ],
+                        "official_name": "John Doe",
+                        "pdf": "=PDF-STRING=",
+                        "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
+                        "regimes": [
+                          {
+                            "initial_date": "2020-12-06",
+                            "regimen": "Régimen de Ingresos por Dividendos (socios y accionistas)",
+                          },
+                        ],
+                        "tax_payer_information": {
+                          "rfc": "BEMP12345G58",
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -12991,6 +15496,9 @@ client.connect()
                 "response": {
                   "body": {
                     "address": {
+                      "between_street": [
+                        {},
+                      ],
                       "exterior_number": "432",
                       "interior_number": "PLANTA BAJA",
                       "locality": "none",
@@ -13005,21 +15513,49 @@ client.connect()
                     "created_at": "2022-02-09T08:45:50.406032Z",
                     "digital_stamp": "||2020/04/26|GHTF980303F7|CONSTANCIA DE SITUACIÓN FISCAL|2044441088666600000034||",
                     "digital_stamp_chain": "EtenSA9t1adG7bn+Jj23kj43JK+XbMPxdOppwabhXD+pXseSqYowWWDna0mpUk3264lkj2345j23faNZB852dCDt9KAjow=",
+                    "economic_activity": [
+                      {
+                        "economic_activity": "Asalariado",
+                        "end_date": "end_date",
+                        "initial_date": "2020-12-06",
+                        "order": "2",
+                        "percentage": "1",
+                      },
+                    ],
                     "id": "21e9e25b-10a8-48a5-9e6a-4072b364b53f",
                     "id_cif": "12345678901",
                     "link": "c2280c05-cbeb-4a29-ae53-8f837a77995b",
+                    "obligations": [
+                      {
+                        "end_date": "end_date",
+                        "expiration": "Conjuntamente con la declaración anual del ejercicio.",
+                        "initial_date": "2020-12-06",
+                        "obligation": "Declaración informativa de IVA con la anual de ISR",
+                      },
+                    ],
                     "official_name": "John Doe",
                     "pdf": "=PDF-STRING=",
                     "place_and_date_of_issuance": "TLALPAN , CIUDAD DE MEXICO A 19 DE MARZO DE 2020",
+                    "regimes": [
+                      {
+                        "end_date": "end_date",
+                        "initial_date": "2020-12-06",
+                        "regimen": "Régimen de Ingresos por Dividendos (socios y accionistas)",
+                      },
+                    ],
                     "tax_payer_information": {
                       "commercial_name": "Jar Jar Transport",
+                      "curp": "curp",
                       "email": "john_doe@gmail.com",
                       "first_last_name": "DOE",
+                      "last_status_change_date": "last_status_change_date",
                       "name": "JOHN",
                       "phone": "1234567890",
                       "rfc": "BEMP12345G58",
                       "second_last_name": "SCHMOE",
                       "social_name": "John Doe SA DE CV",
+                      "start_operations_date": "start_operations_date",
+                      "status_padron": "status_padron",
                     },
                   },
                 },
@@ -13260,7 +15796,7 @@ client.transactions.list(params: {
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
               },
               {
@@ -13361,7 +15897,7 @@ client.connect()
             "examples": [
               {
                 "path-parameters": {
-                  "id": "string",
+                  "id": "id",
                 },
                 "query-parameters": {
                   "fields": "link,balance,account",
@@ -13375,6 +15911,7 @@ client.connect()
                         "current": 5874.13,
                       },
                       "balance_type": "ASSET",
+                      "bank_product_id": "bank_product_id",
                       "category": "CHECKING_ACCOUNT",
                       "collected_at": "2019-09-27T13:01:41.941Z",
                       "created_at": "2022-02-09T08:45:50.406032Z",
@@ -13382,17 +15919,26 @@ client.connect()
                         "collected_at": "2019-09-27T13:01:41.941Z",
                         "credit_limit": 192000,
                         "cutting_date": "2019-12-11",
+                        "end_date": "end_date",
                         "interest_rate": 4,
+                        "last_payment_date": "last_payment_date",
                         "minimum_payment": 2400.3,
+                        "monthly_payment": 1.1,
                         "next_payment_date": "2019-12-13",
                         "no_interest_payment": 2690.83,
                       },
                       "currency": "MXN",
+                      "funds_data": [
+                        {
+                          "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                        },
+                      ],
                       "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
                       "institution": {
                         "name": "erebor_mx_retail",
                         "type": "bank",
                       },
+                      "internal_identification": "internal_identification",
                       "last_accessed_at": "2021-03-09T10:28:40.000Z",
                       "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
                       "loan_data": {
@@ -13401,8 +15947,28 @@ client.connect()
                         "contract_end_date": "2027-10-01",
                         "contract_number": "890ASLDJF87SD00",
                         "contract_start_date": "2020-03-01",
+                        "credit_limit": 1.1,
+                        "cutting_date": "cutting_date",
+                        "cutting_day": "cutting_day",
+                        "fees": [
+                          {
+                            "type": "OPERATION_FEE",
+                            "value": 5.6,
+                          },
+                        ],
+                        "interest_rate": 1.1,
+                        "interest_rates": [
+                          {
+                            "name": "jurosEfetivo",
+                            "value": 7.85,
+                          },
+                        ],
+                        "last_payment_date": "last_payment_date",
+                        "last_period_balance": 1.1,
+                        "limit_day": "limit_day",
                         "loan_type": "Consignado",
                         "monthly_payment": 1000,
+                        "no_interest_payment": 1.1,
                         "number_of_installments_outstanding": 1,
                         "number_of_installments_total": 1,
                         "outstanding_balance": 182000,
@@ -13628,6 +16194,54 @@ client.connect()
                   "body": {
                     "count": 1,
                     "next": "https://sandbox.belvo.com/api/{endpoint}/?page=2",
+                    "previous": "previous",
+                    "results": [
+                      {
+                        "account": {
+                          "balance": {
+                            "current": 5874.13,
+                          },
+                          "balance_type": "ASSET",
+                          "category": "CHECKING_ACCOUNT",
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "created_at": "2022-02-09T08:45:50.406032Z",
+                          "currency": "MXN",
+                          "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                          "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                          "loan_data": {
+                            "collected_at": "2022-02-09T08:45:50.406032Z",
+                            "contract_end_date": "2027-10-01",
+                            "monthly_payment": 1000,
+                            "outstanding_balance": 182000,
+                            "principal": 192000,
+                          },
+                          "name": "Cuenta Perfiles- M.N. - MXN-666",
+                          "number": "4057068115181",
+                          "public_identification_name": "CLABE",
+                          "public_identification_value": "150194683119900273",
+                          "type": "Cuentas de efectivo",
+                        },
+                        "accounting_date": "2019-10-23T13:01:41.941Z",
+                        "amount": 2145.45,
+                        "balance": 16907.96,
+                        "category": "Income & Payments",
+                        "collected_at": "2019-11-28T10:27:44.813Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "currency": "BRL",
+                        "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
+                        "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                        "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
+                        "merchant": {
+                          "merchant_name": "Merchants R Us Global",
+                        },
+                        "observations": "OPTIONAL OBSERVATIONS",
+                        "reference": "8703",
+                        "status": "PROCESSED",
+                        "subcategory": "Freelance",
+                        "type": "INFLOW",
+                        "value_date": "2019-10-23",
+                      },
+                    ],
                   },
                 },
               },
@@ -13986,7 +16600,88 @@ client.connect()
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "accounting_date": "2019-10-23T13:01:41.941Z",
+                      "amount": 2145.45,
+                      "balance": 16907.96,
+                      "category": "Income & Payments",
+                      "collected_at": "2019-11-28T10:27:44.813Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_card_data": {
+                        "bill_amount": 300,
+                        "bill_name": "apr-2020",
+                        "bill_status": "PAID",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "previous_bill_total": "9614.30",
+                      },
+                      "currency": "BRL",
+                      "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
+                      "merchant": {
+                        "logo": "https://logo.clearbit.com/asesor-contable.es",
+                        "merchant_name": "Merchants R Us Global",
+                        "website": "https://merchants-r-us.com",
+                      },
+                      "observations": "OPTIONAL OBSERVATIONS",
+                      "reference": "8703",
+                      "status": "PROCESSED",
+                      "subcategory": "Freelance",
+                      "type": "INFLOW",
+                      "value_date": "2019-10-23",
+                    },
+                  ],
                 },
               },
               {
@@ -14131,7 +16826,88 @@ If you try to access older information than what we can access, we will return a
                   "token": "1234ab",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "account": {
+                        "balance": {
+                          "current": 5874.13,
+                        },
+                        "balance_type": "ASSET",
+                        "bank_product_id": "bank_product_id",
+                        "category": "CHECKING_ACCOUNT",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "created_at": "2022-02-09T08:45:50.406032Z",
+                        "credit_data": {
+                          "collected_at": "2019-09-27T13:01:41.941Z",
+                          "credit_limit": 192000,
+                          "cutting_date": "2019-12-11",
+                          "interest_rate": 4,
+                          "minimum_payment": 2400.3,
+                          "next_payment_date": "2019-12-13",
+                          "no_interest_payment": 2690.83,
+                        },
+                        "currency": "MXN",
+                        "funds_data": [
+                          {
+                            "collected_at": "2020-04-23T21:32:55.336854+00:00",
+                          },
+                        ],
+                        "id": "0d3ffb69-f83b-456e-ad8e-208d0998d71d",
+                        "institution": {
+                          "name": "erebor_mx_retail",
+                        },
+                        "internal_identification": "internal_identification",
+                        "last_accessed_at": "2021-03-09T10:28:40.000Z",
+                        "link": "30cb4806-6e00-48a4-91c9-ca55968576c8",
+                        "loan_data": {
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "contract_end_date": "2027-10-01",
+                          "monthly_payment": 1000,
+                          "outstanding_balance": 182000,
+                          "principal": 192000,
+                        },
+                        "name": "Cuenta Perfiles- M.N. - MXN-666",
+                        "number": "4057068115181",
+                        "public_identification_name": "CLABE",
+                        "public_identification_value": "150194683119900273",
+                        "receivables_data": {
+                          "anticipated": 1393.46,
+                          "available": 800.37,
+                          "collected_at": "2022-02-09T08:45:50.406032Z",
+                          "current": 2193.83,
+                        },
+                        "type": "Cuentas de efectivo",
+                      },
+                      "accounting_date": "2019-10-23T13:01:41.941Z",
+                      "amount": 2145.45,
+                      "balance": 16907.96,
+                      "category": "Income & Payments",
+                      "collected_at": "2019-11-28T10:27:44.813Z",
+                      "created_at": "2022-02-09T08:45:50.406032Z",
+                      "credit_card_data": {
+                        "bill_amount": 300,
+                        "bill_name": "apr-2020",
+                        "bill_status": "PAID",
+                        "collected_at": "2019-09-27T13:01:41.941Z",
+                        "previous_bill_total": "9614.30",
+                      },
+                      "currency": "BRL",
+                      "description": "SEVEN BUDDHAS RFC:XXXXXXXXXX",
+                      "id": "076c66e5-90f5-4e01-99c7-50e32f65ae42",
+                      "internal_identification": "TXpRMU9UQTROMWhZV2xSU1FUazJSMDl",
+                      "merchant": {
+                        "logo": "https://logo.clearbit.com/asesor-contable.es",
+                        "merchant_name": "Merchants R Us Global",
+                        "website": "https://merchants-r-us.com",
+                      },
+                      "observations": "OPTIONAL OBSERVATIONS",
+                      "reference": "8703",
+                      "status": "PROCESSED",
+                      "subcategory": "Freelance",
+                      "type": "INFLOW",
+                      "value_date": "2019-10-23",
+                    },
+                  ],
                 },
               },
               {

@@ -20,7 +20,10 @@ service:
         type: root.Pets
       examples:
         - response:
-            body: []
+            body:
+              - id: 1
+                name: name
+                tag: tag
     createPets:
       path: /v1/pets
       method: POST
@@ -42,8 +45,9 @@ service:
         type: root.Pet
       examples:
         - path-parameters:
-            petId: string
+            petId: petId
           response:
             body:
               id: 1
-              name: string
+              name: name
+              tag: tag

@@ -17,13 +17,14 @@ exports[`x-fern-sdk-group-name-with-streaming x-fern-sdk-group-name-with-streami
             "examples": [
               {
                 "path-parameters": {
-                  "userId": "string",
+                  "userId": "userId",
                 },
                 "request": {
                   "stream": false,
                 },
                 "response": {
                   "body": {
+                    "id": "id",
                     "streamed": false,
                   },
                 },
