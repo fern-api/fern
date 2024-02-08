@@ -44,8 +44,10 @@ export class ExampleEndpointFactory {
             requestExample = this.exampleTypeFactory.buildExample({
                 schema: requestSchemaIdResponse.schema,
                 example: requestSchemaIdResponse.example?.value,
-                isOptional: !required,
-                parameter: false
+                options: {
+                    isParameter: false,
+                    ignoreOptionals: true
+                }
             });
             if (required && requestExample == null) {
                 return undefined;
@@ -58,8 +60,11 @@ export class ExampleEndpointFactory {
             responseExample = this.exampleTypeFactory.buildExample({
                 schema: responseSchemaIdResponse.schema,
                 example: responseSchemaIdResponse.example?.value,
-                isOptional: !required,
-                parameter: false
+                options: {
+                    isParameter: false,
+                    ignoreOptionals: false,
+                    maxDepth: 3
+                }
             });
             if (required && responseExample == null) {
                 return undefined;
@@ -71,9 +76,12 @@ export class ExampleEndpointFactory {
             const required = this.isSchemaRequired(pathParameter.schema);
             let example = this.exampleTypeFactory.buildExample({
                 schema: pathParameter.schema,
-                isOptional: !required,
                 example: undefined,
-                parameter: true
+                options: {
+                    name: pathParameter.name,
+                    isParameter: true,
+                    ignoreOptionals: true
+                }
             });
             if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;
@@ -93,9 +101,12 @@ export class ExampleEndpointFactory {
             const required = this.isSchemaRequired(queryParameter.schema);
             let example = this.exampleTypeFactory.buildExample({
                 schema: queryParameter.schema,
-                isOptional: !required,
                 example: undefined,
-                parameter: true
+                options: {
+                    name: queryParameter.name,
+                    isParameter: true,
+                    ignoreOptionals: true
+                }
             });
             if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;
@@ -115,9 +126,12 @@ export class ExampleEndpointFactory {
             const required = this.isSchemaRequired(header.schema);
             let example = this.exampleTypeFactory.buildExample({
                 schema: header.schema,
-                isOptional: !required,
                 example: undefined,
-                parameter: true
+                options: {
+                    name: header.name,
+                    isParameter: true,
+                    ignoreOptionals: true
+                }
             });
             if (example != null && !isExamplePrimitive(example)) {
                 example = undefined;

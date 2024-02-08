@@ -40,9 +40,16 @@ exports[`open api parser devrev parse open api 1`] = `
           "request": undefined,
           "response": {
             "properties": {
+              "expires_at": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -127,7 +134,7 @@ exports[`open api parser devrev parse open api 1`] = `
             "properties": {
               "file_name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "file_name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -138,7 +145,27 @@ exports[`open api parser devrev parse open api 1`] = `
           "response": {
             "properties": {
               "form_data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -150,7 +177,7 @@ exports[`open api parser devrev parse open api 1`] = `
               },
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -228,47 +255,21 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "grant_type": {
-                "enum": "urn:devrev:params:oauth:grant-type:token-issue",
-                "type": "enum",
-              },
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-              "rev_info": {
-                "properties": {
-                  "org_traits": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "user_ref": {
-                    "primitive": {
-                      "string": "string",
-                      "type": "string",
-                    },
-                    "type": "primitive",
-                  },
-                  "user_traits": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "subject_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:jwt:auth0",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "access_token": {
                 "primitive": {
-                  "string": "string",
+                  "string": "access_token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "client_id": {
+                "primitive": {
+                  "string": "client_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -277,6 +278,20 @@ authenticated user.
                 "primitive": {
                   "int": 1,
                   "type": "int",
+                },
+                "type": "primitive",
+              },
+              "refresh_token": {
+                "primitive": {
+                  "string": "refresh_token",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "scope": {
+                "primitive": {
+                  "string": "scope",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -426,7 +441,7 @@ given Dev organization.
               "name": "token_id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -438,10 +453,52 @@ given Dev organization.
             "properties": {
               "token": {
                 "properties": {
+                  "client_id": {
+                    "primitive": {
+                      "string": "client_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "issued_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -449,9 +506,35 @@ given Dev organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
+                  },
+                  "subject": {
+                    "primitive": {
+                      "string": "subject",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "token_hint": {
+                    "primitive": {
+                      "string": "token_hint",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                 },
                 "type": "object",
@@ -534,20 +617,101 @@ token type issued for a given subject.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "requested_token_type",
-              "value": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
               "tokens": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "client_id": {
+                        "primitive": {
+                          "string": "client_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "expires_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "issued_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "scopes": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "scopes",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "subject": {
+                        "primitive": {
+                          "string": "subject",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "token_hint": {
+                        "primitive": {
+                          "string": "token_hint",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -687,12 +851,7 @@ authenticated user.
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "requested_token_type": {
-                "enum": "urn:devrev:params:oauth:token-type:aat",
-                "type": "enum",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": undefined,
@@ -757,14 +916,14 @@ organization.
             "properties": {
               "token_hint": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_hint",
                   "type": "string",
                 },
                 "type": "primitive",
               },
               "token_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "token_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -776,10 +935,52 @@ organization.
             "properties": {
               "token": {
                 "properties": {
+                  "client_id": {
+                    "primitive": {
+                      "string": "client_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "expires_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "issued_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -787,9 +988,35 @@ organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
+                  },
+                  "subject": {
+                    "primitive": {
+                      "string": "subject",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "token_hint": {
+                    "primitive": {
+                      "string": "token_hint",
+                      "type": "string",
+                    },
+                    "type": "primitive",
                   },
                 },
                 "type": "object",
@@ -937,7 +1164,7 @@ connections can not be deleted using this method.
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1145,14 +1372,10 @@ disabled.
             "properties": {
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "toggle": {
-                "enum": "disable",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -1272,21 +1495,119 @@ disabled.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
               "dev_users": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_picture": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "email": {
+                        "primitive": {
+                          "string": "email",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_identities": {
+                        "array": [
+                          {
+                            "map": [],
+                            "type": "map",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "full_name": {
+                        "primitive": {
+                          "string": "full_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone_numbers": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "phone_numbers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
+              },
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -1512,11 +1833,39 @@ used.
             "properties": {
               "dev_user": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "display_picture": {
                     "properties": {
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
-                          "string": "string",
+                          "string": "id",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -1524,12 +1873,54 @@ used.
                     },
                     "type": "object",
                   },
-                  "id": {
+                  "email": {
                     "primitive": {
-                      "string": "string",
+                      "string": "email",
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "external_identities": {
+                    "array": [
+                      {
+                        "map": [],
+                        "type": "map",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "full_name": {
+                    "primitive": {
+                      "string": "full_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "phone_numbers": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "phone_numbers",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "state": {
                     "enum": "active",
@@ -1674,7 +2065,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -1813,21 +2218,27 @@ used.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "parts": {
                 "array": [],
                 "type": "array",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
               },
             },
             "type": "object",
@@ -2144,14 +2555,10 @@ organization.
             "properties": {
               "display_name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "display_name",
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-              "environment": {
-                "enum": "production",
-                "type": "enum",
               },
             },
             "type": "object",
@@ -2160,10 +2567,59 @@ organization.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2261,7 +2717,21 @@ organization.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -2352,10 +2822,59 @@ organization.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2440,20 +2959,88 @@ to access.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "rev_orgs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "domain": {
+                        "primitive": {
+                          "string": "domain",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_ref": {
+                        "primitive": {
+                          "string": "external_ref",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2777,10 +3364,6 @@ them.
           "queryParameters": [],
           "request": {
             "properties": {
-              "environment": {
-                "enum": "production",
-                "type": "enum",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:identity:devo/<dev-org-id>:revo/<rev-org-id>",
@@ -2795,10 +3378,59 @@ them.
             "properties": {
               "rev_org": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_name": {
+                    "primitive": {
+                      "string": "display_name",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "domain": {
+                    "primitive": {
+                      "string": "domain",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "external_ref": {
+                    "primitive": {
+                      "string": "external_ref",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
@@ -2881,7 +3513,7 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "name": {
                 "primitive": {
-                  "string": "string",
+                  "string": "name",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -2893,16 +3525,56 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3001,7 +3673,21 @@ and a logical concept denoted by the tag's name.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -3092,16 +3778,56 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3183,20 +3909,86 @@ and a logical concept denoted by the tag's name.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "tags": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "allowed_values": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "allowed_values",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3330,10 +4122,6 @@ used.
           "queryParameters": [],
           "request": {
             "properties": {
-              "allowed_values": {
-                "properties": {},
-                "type": "object",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:core:devo/<dev-org-id>:tag/<tag-id>",
@@ -3348,16 +4136,56 @@ used.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "description": {
+                    "primitive": {
+                      "string": "description",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "name": {
                     "primitive": {
-                      "string": "string",
+                      "string": "name",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3568,17 +4396,24 @@ used.
                 "type": "primitive",
               },
             },
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
           ],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "timeline_entries": {
                 "array": [],
                 "type": "array",
@@ -3792,7 +4627,7 @@ used.
             "properties": {
               "url": {
                 "primitive": {
-                  "string": "string",
+                  "string": "url",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3804,16 +4639,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3824,7 +4689,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -3923,7 +4788,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -4014,16 +4893,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4034,7 +4943,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4121,7 +5030,68 @@ used.
           "response": {
             "properties": {
               "webhooks": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_types": {
+                        "array": [
+                          {
+                            "enum": "part_created",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "secret": {
+                        "primitive": {
+                          "string": "secret",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -4184,14 +5154,6 @@ used.
           "queryParameters": [],
           "request": {
             "properties": {
-              "action": {
-                "enum": "activate",
-                "type": "enum",
-              },
-              "event_types": {
-                "properties": {},
-                "type": "object",
-              },
               "id": {
                 "primitive": {
                   "string": "don:<partition>:integration:devo/<dev-org-id>:webhook/<webhook-id>",
@@ -4206,16 +5168,46 @@ used.
             "properties": {
               "webhook": {
                 "properties": {
+                  "created_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "display_id": {
+                    "primitive": {
+                      "string": "display_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
-                      "string": "string",
+                      "string": "id",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "modified_date": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
                     },
                     "type": "primitive",
                   },
                   "secret": {
                     "primitive": {
-                      "string": "string",
+                      "string": "secret",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4226,7 +5218,7 @@ used.
                   },
                   "url": {
                     "primitive": {
-                      "string": "string",
+                      "string": "url",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4385,7 +5377,21 @@ used.
                   "type": "string",
                 },
                 "value": {
-                  "map": [],
+                  "map": [
+                    {
+                      "key": {
+                        "string": "key",
+                        "type": "string",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                  ],
                   "type": "map",
                 },
               },
@@ -4881,18 +5887,24 @@ organizations.
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "mode",
-              "value": {
-                "enum": "after",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "next_cursor": {
+                "primitive": {
+                  "string": "next_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "prev_cursor": {
+                "primitive": {
+                  "string": "prev_cursor",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
               "works": {
                 "array": [],
                 "type": "array",

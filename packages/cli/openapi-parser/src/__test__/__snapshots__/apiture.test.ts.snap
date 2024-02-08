@@ -76,20 +76,141 @@ Transfers support recurring schedules, such as repeating every week or every mon
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "location",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "properties": {
+              "count": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "allows": {
+                        "properties": {
+                          "billPay": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "manageCards": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "mobileCheckDeposit": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "transferFrom": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "transferTo": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "view": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "viewCards": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Checking *1008",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "location": {
+                        "enum": "internal",
+                        "type": "enum",
+                      },
+                      "maskedNumber": {
+                        "primitive": {
+                          "string": "maskedNumber",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "nickname": {
+                        "primitive": {
+                          "string": "Payroll Checking",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "product": {
+                        "properties": {
+                          "code": {
+                            "primitive": {
+                              "string": "180D_CDA",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "description": {
+                            "primitive": {
+                              "string": "Certificate of Deposit with a 180 day term",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "180 Day CD",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "cd",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "limit": {
@@ -102,6 +223,20 @@ Transfers support recurring schedules, such as repeating every week or every mon
               "nextPage_url": {
                 "primitive": {
                   "string": "https://production.api.apiture.com/banking/accounts/bf23bc970b78d27691e8",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "primaryAccountId": {
+                "primitive": {
+                  "string": "primaryAccountId",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "start": {
+                "primitive": {
+                  "string": "start",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -302,7 +437,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -390,7 +525,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -408,7 +543,7 @@ Transfers support recurring schedules, such as repeating every week or every mon
               },
               "maskedNumber": {
                 "primitive": {
-                  "string": "string",
+                  "string": "maskedNumber",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -626,6 +761,53 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "available": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "current": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "currentWithPending": {
+                        "primitive": {
+                          "string": "3456.78",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "incomplete": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2021-10-30T19:06:04.250Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -735,7 +917,7 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -747,7 +929,27 @@ The response may be incomplete. Given a \`Retry-After\` response header, the cli
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "0399abed-fd3d",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "Max Pike",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -982,7 +1184,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1122,6 +1324,13 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
                 },
                 "type": "primitive",
               },
+              "start": {
+                "primitive": {
+                  "string": "start",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
             },
             "type": "object",
           },
@@ -1245,7 +1454,7 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1256,6 +1465,24 @@ To obtain available balances for these accounts, use [\`listAccountBalances\`](#
           "request": undefined,
           "response": {
             "properties": {
+              "accounts": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "key",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "string": "value",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "maximumOverdraftAccounts": {
                 "primitive": {
                   "int": 1,
@@ -1343,7 +1570,7 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1357,6 +1584,24 @@ The user must have the \`allows.manageOverdraftAccounts\` permission on the acco
           },
           "response": {
             "properties": {
+              "accounts": {
+                "map": [
+                  {
+                    "key": {
+                      "string": "key",
+                      "type": "string",
+                    },
+                    "value": {
+                      "primitive": {
+                        "string": "value",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  },
+                ],
+                "type": "map",
+              },
               "maximumOverdraftAccounts": {
                 "primitive": {
                   "int": 1,
@@ -1457,7 +1702,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1545,6 +1790,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "sharedSecret": {
                 "primitive": {
                   "string": "obsolete obese octopus",
+                  "type": "string",
+                },
+                "type": "primitive",
+              },
+              "taxId": {
+                "primitive": {
+                  "string": "taxId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1640,7 +1892,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "locator",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "locator",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1657,7 +1909,7 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
               "name": "countryCode",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "countryCode",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -1720,6 +1972,13 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                         },
                         "type": "primitive",
                       },
+                      "regionName": {
+                        "primitive": {
+                          "string": "regionName",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                     "type": "object",
                   },
@@ -1743,6 +2002,81 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                   },
                 },
                 "type": "object",
+              },
+              "intermediaryInstitutions": {
+                "array": [
+                  {
+                    "properties": {
+                      "address": {
+                        "properties": {
+                          "address1": {
+                            "primitive": {
+                              "string": "239 West Princess Ave.",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "address2": {
+                            "primitive": {
+                              "string": "Building 14, Suite 1500",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "countryCode": {
+                            "primitive": {
+                              "string": "US",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "locality": {
+                            "primitive": {
+                              "string": "Andalasia",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "postalCode": {
+                            "primitive": {
+                              "string": "28407",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "regionCode": {
+                            "primitive": {
+                              "string": "NC",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "locator": {
+                        "primitive": {
+                          "string": "503000196",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "locatorType": {
+                        "enum": "abaRoutingNumber",
+                        "type": "enum",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "First Bank of Andalasia",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -2040,6 +2374,25 @@ The authenticated user must have the \`account.allows.manageJointOwners\` permis
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "effectiveOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "scheduledOn": {
+                        "primitive": {
+                          "string": "2022-07-04",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -2291,6 +2644,22 @@ Cutoff times are very slowly changing data. This is a _conditional operation_ wh
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "time": {
+                        "primitive": {
+                          "string": "16:45",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "ach",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -2453,20 +2822,6 @@ This information provides hints to clients, allowing bank customers to select tr
                   "type": "string",
                 },
                 "type": "primitive",
-              },
-            },
-            {
-              "name": "type",
-              "value": {
-                "enum": "internal",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "risk",
-              "value": {
-                "enum": "early",
-                "type": "enum",
               },
             },
           ],
@@ -2962,6 +3317,36 @@ This information provides hints to clients, allowing bank customers to select tr
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "creditOn": {
+                        "primitive": {
+                          "string": "2022-07-05",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "debitOn": {
+                        "primitive": {
+                          "string": "2022-10-07",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "occursOn": {
+                        "primitive": {
+                          "string": "2022-10-10",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "reason": {
+                        "enum": "holiday",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -3138,7 +3523,7 @@ The default response lists only recent transactions. Normally, this is transacti
               "name": "accountId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "accountId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -3178,14 +3563,14 @@ The default response lists only recent transactions. Normally, this is transacti
                         "properties": {
                           "id": {
                             "primitive": {
-                              "string": "string",
+                              "string": "id",
                               "type": "string",
                             },
                             "type": "primitive",
                           },
                           "label": {
                             "primitive": {
-                              "string": "string",
+                              "string": "label",
                               "type": "string",
                             },
                             "type": "primitive",
@@ -3212,6 +3597,13 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
                           "string": "d62c0701-0d74",
@@ -3219,9 +3611,12 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
-                      "merchant": {
-                        "properties": {},
-                        "type": "object",
+                      "memo": {
+                        "primitive": {
+                          "string": "memo",
+                          "type": "string",
+                        },
+                        "type": "primitive",
                       },
                       "occurredOn": {
                         "primitive": {
@@ -3323,6 +3718,13 @@ The default response lists only recent transactions. Normally, this is transacti
                         },
                         "type": "primitive",
                       },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                       "id": {
                         "primitive": {
                           "string": "88f5bf17-ecc4",
@@ -3366,6 +3768,153 @@ The default response lists only recent transactions. Normally, this is transacti
                       "occurredOn": {
                         "primitive": {
                           "string": "2023-06-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "posted": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "postedOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "subtype": {
+                        "enum": "check",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "enum": "debit",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "1276.21",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "balance": {
+                        "primitive": {
+                          "string": "8509.38",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "category": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "127",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Utilities",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "check": {
+                        "properties": {
+                          "imageBack_url": {
+                            "primitive": {
+                              "string": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/back/content",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "imageFront_url": {
+                            "primitive": {
+                              "string": "/accounts/1d16e438-18e0/transactions/88f5bf17-ecc4/images/front/content",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "number": {
+                            "primitive": {
+                              "int": 8412,
+                              "type": "int",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "createdOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "88f5bf17-ecc4",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "memo": {
+                        "primitive": {
+                          "string": "Paid electric bill",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "merchant": {
+                        "properties": {
+                          "logo_url": {
+                            "primitive": {
+                              "string": "https://BillTedsExcellentElectricCompany.example.com/img/logos/medium.png",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "B&T's Excellent Electric Co.",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "website_url": {
+                            "primitive": {
+                              "string": "https://BillTedsExcellentElectricCompany.example.com/",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "occurredOn": {
+                        "primitive": {
+                          "string": "2023-05-18",
                           "type": "string",
                         },
                         "type": "primitive",
@@ -3775,7 +4324,31 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "response": {
             "properties": {
               "items": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "id": {
+                        "primitive": {
+                          "string": "0399abed-fd3d",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "Dining",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "debit",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3866,6 +4439,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
           "request": undefined,
           "response": {
             "properties": {
+              "count": {
+                "primitive": {
+                  "int": 1,
+                  "type": "int",
+                },
+                "type": "primitive",
+              },
               "items": {
                 "array": [
                   {
@@ -3930,10 +4510,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           },
                           "frequency": {
                             "enum": "once",
-                            "type": "enum",
-                          },
-                          "recurrenceType": {
-                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4011,6 +4587,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         },
                         "type": "primitive",
                       },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "updatedBy",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
                     },
                     "type": "object",
                   },
@@ -4041,6 +4624,13 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "primitive": {
                           "string": "school expenses",
                           "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "processedAt": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
                         },
                         "type": "primitive",
                       },
@@ -4076,10 +4666,6 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                           },
                           "frequency": {
                             "enum": "monthly",
-                            "type": "enum",
-                          },
-                          "recurrenceType": {
-                            "enum": "fixed",
                             "type": "enum",
                           },
                           "scheduledOn": {
@@ -4154,6 +4740,150 @@ This is a _conditional operation_ when the \`If-None-Match\` header is used. If 
                         "primitive": {
                           "datetime": "2022-04-18T07:21:35.375Z",
                           "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "updatedBy",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  {
+                    "properties": {
+                      "amount": {
+                        "primitive": {
+                          "string": "275.00",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "createdAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "memo": {
+                        "primitive": {
+                          "string": "memo",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "processedAt": {
+                        "primitive": {
+                          "datetime": "2026-06-26T021:00:00.000Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "schedule": {
+                        "properties": {
+                          "amountLimit": {
+                            "primitive": {
+                              "string": "3456.78",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "creditsOn": {
+                            "primitive": {
+                              "string": "2026-06-26",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "debitsOn": {
+                            "primitive": {
+                              "string": "2026-06-24",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "frequency": {
+                            "enum": "once",
+                            "type": "enum",
+                          },
+                          "scheduledOn": {
+                            "primitive": {
+                              "string": "2026-06-28",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "sourceAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "bd9b7af2-6f9b",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Checking *1008",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "state": {
+                        "enum": "unscheduled",
+                        "type": "enum",
+                      },
+                      "targetAccount": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "88b1ca3e-d0f3",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "Personal Savings *4567",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "type": {
+                            "enum": "savings",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "updatedAt": {
+                        "primitive": {
+                          "datetime": "2022-04-18T07:21:35.375Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "updatedBy": {
+                        "primitive": {
+                          "string": "James Bond",
+                          "type": "string",
                         },
                         "type": "primitive",
                       },
@@ -4404,10 +5134,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "enum": "once",
                     "type": "enum",
                   },
-                  "recurrenceType": {
-                    "enum": "fixed",
-                    "type": "enum",
-                  },
                   "scheduledOn": {
                     "primitive": {
                       "string": "2022-06-28",
@@ -4438,10 +5164,6 @@ Note: This operation requires an identity challenge if the financial institution
                     "enum": "internal",
                     "type": "enum",
                   },
-                  "type": {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
                 },
                 "type": "object",
               },
@@ -4463,10 +5185,6 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "location": {
                     "enum": "internal",
-                    "type": "enum",
-                  },
-                  "type": {
-                    "enum": "savings",
                     "type": "enum",
                   },
                 },
@@ -4505,12 +5223,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -4524,6 +5256,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4608,6 +5347,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -4707,7 +5453,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -4746,12 +5492,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -4765,6 +5525,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -4849,6 +5616,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
@@ -4929,7 +5703,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5003,7 +5777,7 @@ Note: This operation requires an identity challenge if the financial institution
               "name": "transferId",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "transferId",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -5031,10 +5805,6 @@ Note: This operation requires an identity challenge if the financial institution
                   },
                   "frequency": {
                     "enum": "once",
-                    "type": "enum",
-                  },
-                  "recurrenceType": {
-                    "enum": "fixed",
                     "type": "enum",
                   },
                   "scheduledOn": {
@@ -5090,14 +5860,6 @@ Note: This operation requires an identity challenge if the financial institution
                     },
                     "type": "primitive",
                   },
-                  "location": {
-                    "enum": "internal",
-                    "type": "enum",
-                  },
-                  "type": {
-                    "enum": "savings",
-                    "type": "enum",
-                  },
                 },
                 "type": "object",
               },
@@ -5134,12 +5896,26 @@ Note: This operation requires an identity challenge if the financial institution
                 },
                 "type": "primitive",
               },
+              "processedAt": {
+                "primitive": {
+                  "datetime": "2024-01-15T09:30:00Z",
+                  "type": "datetime",
+                },
+                "type": "primitive",
+              },
               "schedule": {
                 "properties": {
                   "amountLimit": {
                     "primitive": {
                       "string": "3456.78",
                       "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "count": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
                     },
                     "type": "primitive",
                   },
@@ -5153,6 +5929,13 @@ Note: This operation requires an identity challenge if the financial institution
                   "debitsOn": {
                     "primitive": {
                       "string": "2026-06-24",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "endsOn": {
+                    "primitive": {
+                      "string": "endsOn",
                       "type": "string",
                     },
                     "type": "primitive",
@@ -5237,6 +6020,13 @@ Note: This operation requires an identity challenge if the financial institution
                 "primitive": {
                   "datetime": "2022-04-18T07:21:35.375Z",
                   "type": "datetime",
+                },
+                "type": "primitive",
+              },
+              "updatedBy": {
+                "primitive": {
+                  "string": "updatedBy",
+                  "type": "string",
                 },
                 "type": "primitive",
               },
