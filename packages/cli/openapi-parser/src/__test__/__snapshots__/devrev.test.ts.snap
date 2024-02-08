@@ -145,7 +145,27 @@ exports[`open api parser devrev parse open api 1`] = `
           "response": {
             "properties": {
               "form_data": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -486,6 +506,18 @@ given Dev organization.
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
                   },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "status": {
                     "enum": "active",
                     "type": "enum",
@@ -590,7 +622,96 @@ token type issued for a given subject.
           "response": {
             "properties": {
               "tokens": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "client_id": {
+                        "primitive": {
+                          "string": "client_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "expires_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "issued_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_token_type": {
+                        "enum": "urn:devrev:params:oauth:token-type:aat",
+                        "type": "enum",
+                      },
+                      "scopes": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "scopes",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "subject": {
+                        "primitive": {
+                          "string": "subject",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "token_hint": {
+                        "primitive": {
+                          "string": "token_hint",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -866,6 +987,18 @@ organization.
                   "requested_token_type": {
                     "enum": "urn:devrev:params:oauth:token-type:aat",
                     "type": "enum",
+                  },
+                  "scopes": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "scopes",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "status": {
                     "enum": "active",
@@ -1367,7 +1500,99 @@ disabled.
           "response": {
             "properties": {
               "dev_users": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_picture": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "email": {
+                        "primitive": {
+                          "string": "email",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_identities": {
+                        "array": [
+                          {
+                            "map": [],
+                            "type": "map",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "full_name": {
+                        "primitive": {
+                          "string": "full_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "phone_numbers": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "phone_numbers",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "state": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "next_cursor": {
@@ -1655,6 +1880,15 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "external_identities": {
+                    "array": [
+                      {
+                        "map": [],
+                        "type": "map",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "full_name": {
                     "primitive": {
                       "string": "full_name",
@@ -1675,6 +1909,18 @@ used.
                       "type": "datetime",
                     },
                     "type": "primitive",
+                  },
+                  "phone_numbers": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "phone_numbers",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "state": {
                     "enum": "active",
@@ -2732,7 +2978,69 @@ to access.
                 "type": "primitive",
               },
               "rev_orgs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_name": {
+                        "primitive": {
+                          "string": "display_name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "domain": {
+                        "primitive": {
+                          "string": "domain",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "external_ref": {
+                        "primitive": {
+                          "string": "external_ref",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3217,6 +3525,18 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -3458,6 +3778,18 @@ and a logical concept denoted by the tag's name.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -3596,7 +3928,67 @@ and a logical concept denoted by the tag's name.
                 "type": "primitive",
               },
               "tags": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "allowed_values": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "allowed_values",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "description": {
+                        "primitive": {
+                          "string": "description",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -3744,6 +4136,18 @@ used.
             "properties": {
               "tag": {
                 "properties": {
+                  "allowed_values": {
+                    "array": [
+                      {
+                        "primitive": {
+                          "string": "allowed_values",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "created_date": {
                     "primitive": {
                       "datetime": "2024-01-15T09:30:00Z",
@@ -4249,6 +4653,15 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4494,6 +4907,15 @@ used.
                     },
                     "type": "primitive",
                   },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
+                  },
                   "id": {
                     "primitive": {
                       "string": "id",
@@ -4608,7 +5030,68 @@ used.
           "response": {
             "properties": {
               "webhooks": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "created_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "display_id": {
+                        "primitive": {
+                          "string": "display_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_types": {
+                        "array": [
+                          {
+                            "enum": "part_created",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "modified_date": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "secret": {
+                        "primitive": {
+                          "string": "secret",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "active",
+                        "type": "enum",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -4698,6 +5181,15 @@ used.
                       "type": "string",
                     },
                     "type": "primitive",
+                  },
+                  "event_types": {
+                    "array": [
+                      {
+                        "enum": "part_created",
+                        "type": "enum",
+                      },
+                    ],
+                    "type": "array",
                   },
                   "id": {
                     "primitive": {

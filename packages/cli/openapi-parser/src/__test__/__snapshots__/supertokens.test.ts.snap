@@ -631,6 +631,44 @@ exports[`open api parser supertokens parse open api 1`] = `
           "response": {
             "oneOf": {
               "discriminated": {
+                "devices": {
+                  "array": [
+                    {
+                      "properties": {
+                        "name": {
+                          "primitive": {
+                            "string": "name",
+                            "type": "string",
+                          },
+                          "type": "primitive",
+                        },
+                        "period": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                        "skew": {
+                          "primitive": {
+                            "double": 1.1,
+                            "type": "double",
+                          },
+                          "type": "primitive",
+                        },
+                        "verified": {
+                          "primitive": {
+                            "boolean": true,
+                            "type": "boolean",
+                          },
+                          "type": "primitive",
+                        },
+                      },
+                      "type": "object",
+                    },
+                  ],
+                  "type": "array",
+                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -4421,6 +4459,75 @@ Passing the optional deviceId signifies a resend code flow.
           "request": undefined,
           "response": {
             "properties": {
+              "devices": {
+                "array": [
+                  {
+                    "properties": {
+                      "codes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "codeId": {
+                                "primitive": {
+                                  "string": "QZ0Mx9zG9cfqNXmPI0I/67r9bpKghUBDQZeMMbayi+I=",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "codeLifetime": {
+                                "primitive": {
+                                  "double": 900000,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                              "timeCreated": {
+                                "primitive": {
+                                  "double": 1637262633029,
+                                  "type": "double",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "failedCodeInputAttemptCount": {
+                        "primitive": {
+                          "double": 2,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "phoneNumber": {
+                        "primitive": {
+                          "string": "+14155552671",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "preAuthSessionId": {
+                        "primitive": {
+                          "string": "kFmkPQEAJtACiT2w/K8fndEuNm+XozJXSZSlWEr+iGs=",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -7240,6 +7347,37 @@ If the email or phoneNumber is set to null the previous value will be deleted. I
                 },
                 "type": "literal",
               },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -9118,6 +9256,49 @@ Note that there is an invisible character at the end of the path, this was to av
                 },
                 "type": "literal",
               },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "thirdParty": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "google",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -9334,6 +9515,49 @@ Note that there is an invisible character at the end of the path, this was to av
                   "type": "string",
                 },
                 "type": "literal",
+              },
+              "user": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "johndoe@gmail.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "thirdParty": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "google",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "timeJoined": {
+                        "primitive": {
+                          "double": 1623918032231,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -12266,6 +12490,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -12494,6 +12730,18 @@ e.g.:
                   },
                   "type": "primitive",
                 },
+                "users": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
+                },
               },
               "type": "discriminated",
             },
@@ -12698,6 +12946,18 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -12977,6 +13237,18 @@ e.g.:
           "response": {
             "oneOf": {
               "discriminated": {
+                "permissions": {
+                  "array": [
+                    {
+                      "primitive": {
+                        "string": "permission",
+                        "type": "string",
+                      },
+                      "type": "primitive",
+                    },
+                  ],
+                  "type": "array",
+                },
                 "status": {
                   "primitive": {
                     "string": "OK",
@@ -13192,6 +13464,18 @@ e.g.:
           "queryParameters": [],
           "request": {
             "properties": {
+              "permissions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "permission",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "role": {
                 "primitive": {
                   "string": "admin",
@@ -13443,6 +13727,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -13890,6 +14186,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "roles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "admin",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -14996,11 +15304,36 @@ e.g.:
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {},
+            "properties": {
+              "sessionHandles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
           "response": {
             "properties": {
+              "sessionHandlesRevoked": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -16281,6 +16614,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "sessionHandles": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "68en6gd6-865b-4af6-ba00-96e5c153257d",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",
@@ -17634,7 +17979,58 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "keys": {
+                "array": [
+                  {
+                    "properties": {
+                      "alg": {
+                        "literal": {
+                          "string": "RS256",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "kid": {
+                        "primitive": {
+                          "string": "kid",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "kty": {
+                        "primitive": {
+                          "string": "RSA",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "use": {
+                        "primitive": {
+                          "string": "sig",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "x5c": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "x5c",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -19425,6 +19821,44 @@ e.g.:
                 },
                 "type": "literal",
               },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "email": {
+                        "primitive": {
+                          "string": "test@example.com",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "isSuspended": {
+                        "primitive": {
+                          "boolean": false,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeCreated": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "uf2323-f223r233-f23-f23-f2f32",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -20497,7 +20931,46 @@ e.g.:
           ],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "sessions": {
+                "array": [
+                  {
+                    "properties": {
+                      "expiry": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "sessionId": {
+                        "primitive": {
+                          "string": "fni29f-f23f23-f2fq32qt-h35evf",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "timeCreated": {
+                        "primitive": {
+                          "double": 16382348324,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "userId": {
+                        "primitive": {
+                          "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -20779,7 +21252,20 @@ e.g.:
           "queryParameters": [],
           "request": undefined,
           "response": {
-            "properties": {},
+            "properties": {
+              "versions": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "versions",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
+            },
             "type": "object",
           },
         },
@@ -22075,6 +22561,46 @@ e.g.:
                 },
                 "type": "literal",
               },
+              "users": {
+                "array": [
+                  {
+                    "properties": {
+                      "recipeId": {
+                        "enum": "emailpassword",
+                        "type": "enum",
+                      },
+                      "user": {
+                        "properties": {
+                          "email": {
+                            "primitive": {
+                              "string": "johndoe@gmail.com",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "fa7a0841-b533-4478-95533-0fde890c3483",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "timeJoined": {
+                            "primitive": {
+                              "double": 1623918032231,
+                              "type": "double",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -22725,6 +23251,18 @@ e.g.:
                 },
                 "type": "literal",
               },
+              "tags": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "tags",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -22889,6 +23427,18 @@ e.g.:
           "request": undefined,
           "response": {
             "properties": {
+              "features": {
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "features",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
+                "type": "array",
+              },
               "status": {
                 "literal": {
                   "string": "OK",

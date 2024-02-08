@@ -60,7 +60,23 @@ exports[`open api parser squidex simple 1`] = `
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "allowAnonymous": true,
+                        "apiCallsLimit": 1,
+                        "apiTrafficLimit": 1,
+                        "id": "id",
+                        "name": "name",
+                        "role": "role",
+                        "secret": "secret",
+                      },
+                    ],
                   },
                 },
               },
@@ -109,7 +125,20 @@ exports[`open api parser squidex simple 1`] = `
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -163,7 +192,9 @@ exports[`open api parser squidex simple 1`] = `
                     "label": "label",
                     "lastModified": "2024-01-15T09:30:00Z",
                     "name": "name",
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                     "roleName": "roleName",
                     "roleProperties": {
                       "roleProperties": {
@@ -213,7 +244,23 @@ exports[`open api parser squidex simple 1`] = `
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "englishName": "englishName",
+                        "fallback": [
+                          "fallback",
+                        ],
+                        "isMaster": true,
+                        "isOptional": true,
+                        "iso2Code": "iso2Code",
+                      },
+                    ],
                   },
                 },
               },
@@ -261,7 +308,20 @@ exports[`open api parser squidex simple 1`] = `
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -304,7 +364,24 @@ exports[`open api parser squidex simple 1`] = `
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "isDefaultRole": true,
+                        "name": "name",
+                        "numClients": 1,
+                        "numContributors": 1,
+                        "permissions": [
+                          "permissions",
+                        ],
+                        "properties": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -350,8 +427,28 @@ exports[`open api parser squidex simple 1`] = `
                         "method": "method",
                       },
                     },
-                    "errors": [],
-                    "items": [],
+                    "errors": [
+                      "errors",
+                    ],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "id": "id",
+                        "initial": "initial",
+                        "name": "name",
+                        "schemaIds": [
+                          "schemaIds",
+                        ],
+                        "steps": {
+                          "steps": {},
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -403,7 +500,9 @@ exports[`open api parser squidex simple 1`] = `
                     "label": "label",
                     "lastModified": "2024-01-15T09:30:00Z",
                     "name": "name",
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                     "roleName": "roleName",
                     "roleProperties": {
                       "roleProperties": {
@@ -440,7 +539,35 @@ You will retrieve all apps, where you are assigned as a contributor.",
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "_links": {
+                        "_links": {
+                          "href": "href",
+                          "method": "method",
+                        },
+                      },
+                      "canAccessApi": true,
+                      "canAccessContent": true,
+                      "created": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "id": "id",
+                      "label": "label",
+                      "lastModified": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "permissions": [
+                        "permissions",
+                      ],
+                      "roleName": "roleName",
+                      "roleProperties": {
+                        "roleProperties": {
+                          "key": "value",
+                        },
+                      },
+                      "teamId": "teamId",
+                      "version": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -520,7 +647,23 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "allowAnonymous": true,
+                        "apiCallsLimit": 1,
+                        "apiTrafficLimit": 1,
+                        "id": "id",
+                        "name": "name",
+                        "role": "role",
+                        "secret": "secret",
+                      },
+                    ],
                   },
                 },
               },
@@ -563,7 +706,20 @@ You will retrieve all apps, where you are assigned as a contributor.",
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -621,7 +777,23 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "englishName": "englishName",
+                        "fallback": [
+                          "fallback",
+                        ],
+                        "isMaster": true,
+                        "isOptional": true,
+                        "iso2Code": "iso2Code",
+                      },
+                    ],
                   },
                 },
               },
@@ -653,7 +825,9 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   "app": "app",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    "string",
+                  ],
                 },
               },
             ],
@@ -692,7 +866,24 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "isDefaultRole": true,
+                        "name": "name",
+                        "numClients": 1,
+                        "numContributors": 1,
+                        "permissions": [
+                          "permissions",
+                        ],
+                        "properties": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -732,10 +923,21 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "method": "method",
                       },
                     },
-                    "editors": [],
+                    "editors": [
+                      {
+                        "name": "name",
+                        "url": "url",
+                      },
+                    ],
                     "hideDateTimeModeButton": true,
                     "hideScheduler": true,
-                    "patterns": [],
+                    "patterns": [
+                      {
+                        "message": "message",
+                        "name": "name",
+                        "regex": "regex",
+                      },
+                    ],
                     "version": 1,
                   },
                 },
@@ -768,7 +970,35 @@ You will retrieve all apps, where you are assigned as a contributor.",
                   "team": "team",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "_links": {
+                        "_links": {
+                          "href": "href",
+                          "method": "method",
+                        },
+                      },
+                      "canAccessApi": true,
+                      "canAccessContent": true,
+                      "created": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "id": "id",
+                      "label": "label",
+                      "lastModified": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "permissions": [
+                        "permissions",
+                      ],
+                      "roleName": "roleName",
+                      "roleProperties": {
+                        "roleProperties": {
+                          "key": "value",
+                        },
+                      },
+                      "teamId": "teamId",
+                      "version": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -807,8 +1037,28 @@ You will retrieve all apps, where you are assigned as a contributor.",
                         "method": "method",
                       },
                     },
-                    "errors": [],
-                    "items": [],
+                    "errors": [
+                      "errors",
+                    ],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "id": "id",
+                        "initial": "initial",
+                        "name": "name",
+                        "schemaIds": [
+                          "schemaIds",
+                        ],
+                        "steps": {
+                          "steps": {},
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -858,7 +1108,9 @@ You will be assigned as owner of the new app automatically.",
                     "label": "label",
                     "lastModified": "2024-01-15T09:30:00Z",
                     "name": "name",
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                     "roleName": "roleName",
                     "roleProperties": {
                       "roleProperties": {
@@ -922,7 +1174,23 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "allowAnonymous": true,
+                        "apiCallsLimit": 1,
+                        "apiTrafficLimit": 1,
+                        "id": "id",
+                        "name": "name",
+                        "role": "role",
+                        "secret": "secret",
+                      },
+                    ],
                   },
                 },
               },
@@ -982,7 +1250,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -1030,7 +1311,23 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "englishName": "englishName",
+                        "fallback": [
+                          "fallback",
+                        ],
+                        "isMaster": true,
+                        "isOptional": true,
+                        "iso2Code": "iso2Code",
+                      },
+                    ],
                   },
                 },
               },
@@ -1087,7 +1384,24 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "isDefaultRole": true,
+                        "name": "name",
+                        "numClients": 1,
+                        "numContributors": 1,
+                        "permissions": [
+                          "permissions",
+                        ],
+                        "properties": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -1144,8 +1458,28 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "errors": [],
-                    "items": [],
+                    "errors": [
+                      "errors",
+                    ],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "id": "id",
+                        "initial": "initial",
+                        "name": "name",
+                        "schemaIds": [
+                          "schemaIds",
+                        ],
+                        "steps": {
+                          "steps": {},
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -1208,7 +1542,9 @@ The client secret is auto generated on the server and returned. The client does 
                     "label": "label",
                     "lastModified": "2024-01-15T09:30:00Z",
                     "name": "name",
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                     "roleName": "roleName",
                     "roleProperties": {
                       "roleProperties": {
@@ -1283,7 +1619,9 @@ The client secret is auto generated on the server and returned. The client does 
                     "label": "label",
                     "lastModified": "2024-01-15T09:30:00Z",
                     "name": "name",
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                     "roleName": "roleName",
                     "roleProperties": {
                       "roleProperties": {
@@ -1433,7 +1771,23 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "allowAnonymous": true,
+                        "apiCallsLimit": 1,
+                        "apiTrafficLimit": 1,
+                        "id": "id",
+                        "name": "name",
+                        "role": "role",
+                        "secret": "secret",
+                      },
+                    ],
                   },
                 },
               },
@@ -1509,7 +1863,23 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "englishName": "englishName",
+                        "fallback": [
+                          "fallback",
+                        ],
+                        "isMaster": true,
+                        "isOptional": true,
+                        "iso2Code": "iso2Code",
+                      },
+                    ],
                   },
                 },
               },
@@ -1568,7 +1938,9 @@ The client secret is auto generated on the server and returned. The client does 
                   "roleName": "roleName",
                 },
                 "request": {
-                  "permissions": [],
+                  "permissions": [
+                    "permissions",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -1579,7 +1951,24 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "isDefaultRole": true,
+                        "name": "name",
+                        "numClients": 1,
+                        "numContributors": 1,
+                        "permissions": [
+                          "permissions",
+                        ],
+                        "properties": {},
+                      },
+                    ],
                   },
                 },
               },
@@ -1633,8 +2022,18 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                 },
                 "request": {
-                  "editors": [],
-                  "patterns": [],
+                  "editors": [
+                    {
+                      "name": "name",
+                      "url": "url",
+                    },
+                  ],
+                  "patterns": [
+                    {
+                      "name": "name",
+                      "regex": "regex",
+                    },
+                  ],
                 },
                 "response": {
                   "body": {
@@ -1645,10 +2044,21 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "editors": [],
+                    "editors": [
+                      {
+                        "name": "name",
+                        "url": "url",
+                      },
+                    ],
                     "hideDateTimeModeButton": true,
                     "hideScheduler": true,
-                    "patterns": [],
+                    "patterns": [
+                      {
+                        "message": "message",
+                        "name": "name",
+                        "regex": "regex",
+                      },
+                    ],
                     "version": 1,
                   },
                 },
@@ -1722,8 +2132,28 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "errors": [],
-                    "items": [],
+                    "errors": [
+                      "errors",
+                    ],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "id": "id",
+                        "initial": "initial",
+                        "name": "name",
+                        "schemaIds": [
+                          "schemaIds",
+                        ],
+                        "steps": {
+                          "steps": {},
+                        },
+                      },
+                    ],
                   },
                 },
               },
@@ -1829,7 +2259,23 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "request": {},
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "contentId": "contentId",
+                      "error": {
+                        "details": [
+                          "details",
+                        ],
+                        "errorCode": "errorCode",
+                        "message": "message",
+                        "statusCode": 1,
+                        "traceId": "traceId",
+                        "type": "type",
+                      },
+                      "id": "id",
+                      "jobIndex": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -1994,6 +2440,9 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
+                    "tags": [
+                      "tags",
+                    ],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -2203,8 +2652,34 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "path": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "folderName": "folderName",
+                        "id": "id",
+                        "parentId": "parentId",
+                        "version": 1,
+                      },
+                    ],
+                    "path": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "folderName": "folderName",
+                        "id": "id",
+                        "parentId": "parentId",
+                        "version": 1,
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -2258,7 +2733,44 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "_meta": {
+                          "isDuplicate": "isDuplicate",
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "editToken": "editToken",
+                        "fileHash": "fileHash",
+                        "fileName": "fileName",
+                        "fileSize": 1,
+                        "fileType": "fileType",
+                        "fileVersion": 1,
+                        "id": "id",
+                        "isImage": true,
+                        "isProtected": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "metadata": {},
+                        "metadataText": "metadataText",
+                        "mimeType": "mimeType",
+                        "parentId": "parentId",
+                        "pixelHeight": 1,
+                        "pixelWidth": 1,
+                        "slug": "slug",
+                        "tags": [
+                          "tags",
+                        ],
+                        "type": "Unknown",
+                        "version": 1,
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -2334,7 +2846,44 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "_meta": {
+                          "isDuplicate": "isDuplicate",
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "editToken": "editToken",
+                        "fileHash": "fileHash",
+                        "fileName": "fileName",
+                        "fileSize": 1,
+                        "fileType": "fileType",
+                        "fileVersion": 1,
+                        "id": "id",
+                        "isImage": true,
+                        "isProtected": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "metadata": {},
+                        "metadataText": "metadataText",
+                        "mimeType": "mimeType",
+                        "parentId": "parentId",
+                        "pixelHeight": 1,
+                        "pixelWidth": 1,
+                        "slug": "slug",
+                        "tags": [
+                          "tags",
+                        ],
+                        "type": "Unknown",
+                        "version": 1,
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -2597,6 +3146,9 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
+                    "tags": [
+                      "tags",
+                    ],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -2866,6 +3418,9 @@ The client secret is auto generated on the server and returned. The client does 
                     "pixelHeight": 1,
                     "pixelWidth": 1,
                     "slug": "slug",
+                    "tags": [
+                      "tags",
+                    ],
                     "type": "Unknown",
                     "version": 1,
                   },
@@ -3071,7 +3626,22 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "handledAssets": 1,
+                        "handledEvents": 1,
+                        "id": "id",
+                        "started": "2024-01-15T09:30:00Z",
+                        "status": "Created",
+                        "stopped": "2024-01-15T09:30:00Z",
+                      },
+                    ],
                   },
                 },
               },
@@ -3100,7 +3670,9 @@ The client secret is auto generated on the server and returned. The client does 
               {
                 "response": {
                   "body": {
-                    "log": [],
+                    "log": [
+                      "log",
+                    ],
                     "started": "2024-01-15T09:30:00Z",
                     "status": "Created",
                     "stopped": "2024-01-15T09:30:00Z",
@@ -3238,6 +3810,27 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "response": {
                   "body": {
+                    "createdComments": [
+                      {
+                        "id": "id",
+                        "text": "text",
+                        "time": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                        "user": "user",
+                      },
+                    ],
+                    "deletedComments": [
+                      "deletedComments",
+                    ],
+                    "updatedComments": [
+                      {
+                        "id": "id",
+                        "text": "text",
+                        "time": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                        "user": "user",
+                      },
+                    ],
                     "version": 1,
                   },
                 },
@@ -3283,7 +3876,9 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    "string",
+                  ],
                 },
               },
             ],
@@ -3421,10 +4016,28 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "request": {
-                  "jobs": [],
+                  "jobs": [
+                    {},
+                  ],
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "contentId": "contentId",
+                      "error": {
+                        "details": [
+                          "details",
+                        ],
+                        "errorCode": "errorCode",
+                        "message": "message",
+                        "statusCode": 1,
+                        "traceId": "traceId",
+                        "type": "type",
+                      },
+                      "id": "id",
+                      "jobIndex": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -3507,8 +4120,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -3608,8 +4263,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -3661,8 +4358,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -3866,8 +4605,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -3928,8 +4709,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -3979,8 +4802,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4040,8 +4905,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4105,8 +5012,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4163,8 +5112,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4221,10 +5212,30 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "request": {
-                  "datas": [],
+                  "datas": [
+                    {
+                      "datas": {},
+                    },
+                  ],
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "contentId": "contentId",
+                      "error": {
+                        "details": [
+                          "details",
+                        ],
+                        "errorCode": "errorCode",
+                        "message": "message",
+                        "statusCode": 1,
+                        "traceId": "traceId",
+                        "type": "type",
+                      },
+                      "id": "id",
+                      "jobIndex": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -4298,8 +5309,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4372,8 +5425,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4431,8 +5526,50 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
-                    "statuses": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "data": {
+                          "key": "value",
+                        },
+                        "editToken": "editToken",
+                        "id": "id",
+                        "isDeleted": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "newStatus": "newStatus",
+                        "newStatusColor": "newStatusColor",
+                        "referenceData": {
+                          "referenceData": {},
+                        },
+                        "scheduleJob": {
+                          "color": "color",
+                          "dueTime": "2024-01-15T09:30:00Z",
+                          "id": "id",
+                          "scheduledBy": "scheduledBy",
+                          "status": "status",
+                        },
+                        "schemaDisplayName": "schemaDisplayName",
+                        "schemaId": "schemaId",
+                        "schemaName": "schemaName",
+                        "status": "status",
+                        "statusColor": "statusColor",
+                        "version": 1,
+                      },
+                    ],
+                    "statuses": [
+                      {
+                        "color": "color",
+                        "status": "status",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -4548,7 +5685,22 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "count": 1,
+                        "error": "error",
+                        "isResetting": true,
+                        "isStopped": true,
+                        "name": "name",
+                        "position": "position",
+                      },
+                    ],
                   },
                 },
               },
@@ -4723,7 +5875,16 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "actor": "actor",
+                      "created": "2024-01-15T09:30:00Z",
+                      "eventId": "eventId",
+                      "eventType": "eventType",
+                      "message": "message",
+                      "version": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -4763,7 +5924,16 @@ The client secret is auto generated on the server and returned. The client does 
                   "team": "team",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "actor": "actor",
+                      "created": "2024-01-15T09:30:00Z",
+                      "eventId": "eventId",
+                      "eventType": "eventType",
+                      "message": "message",
+                      "version": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -4810,7 +5980,13 @@ The client secret is auto generated on the server and returned. The client does 
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "englishName": "englishName",
+                      "iso2Code": "iso2Code",
+                      "nativeName": "nativeName",
+                    },
+                  ],
                 },
               },
             ],
@@ -4843,7 +6019,12 @@ The client secret is auto generated on the server and returned. The client does 
               {
                 "response": {
                   "body": {
-                    "features": [],
+                    "features": [
+                      {
+                        "name": "name",
+                        "text": "text",
+                      },
+                    ],
                     "version": 1,
                   },
                 },
@@ -4920,6 +6101,27 @@ The client secret is auto generated on the server and returned. The client does 
                 },
                 "response": {
                   "body": {
+                    "createdComments": [
+                      {
+                        "id": "id",
+                        "text": "text",
+                        "time": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                        "user": "user",
+                      },
+                    ],
+                    "deletedComments": [
+                      "deletedComments",
+                    ],
+                    "updatedComments": [
+                      {
+                        "id": "id",
+                        "text": "text",
+                        "time": "2024-01-15T09:30:00Z",
+                        "url": "url",
+                        "user": "user",
+                      },
+                    ],
                     "version": 1,
                   },
                 },
@@ -5046,7 +6248,21 @@ The client secret is auto generated on the server and returned. The client does 
                     "currentPlanId": "currentPlanId",
                     "locked": "None",
                     "planOwner": "planOwner",
-                    "plans": [],
+                    "plans": [
+                      {
+                        "confirmText": "confirmText",
+                        "costs": "costs",
+                        "id": "id",
+                        "maxApiBytes": 1,
+                        "maxApiCalls": 1,
+                        "maxAssetSize": 1,
+                        "maxContributors": 1,
+                        "name": "name",
+                        "yearlyConfirmText": "yearlyConfirmText",
+                        "yearlyCosts": "yearlyCosts",
+                        "yearlyId": "yearlyId",
+                      },
+                    ],
                     "portalLink": "portalLink",
                     "referral": {
                       "code": "code",
@@ -5088,7 +6304,21 @@ The client secret is auto generated on the server and returned. The client does 
                     "currentPlanId": "currentPlanId",
                     "locked": "None",
                     "planOwner": "planOwner",
-                    "plans": [],
+                    "plans": [
+                      {
+                        "confirmText": "confirmText",
+                        "costs": "costs",
+                        "id": "id",
+                        "maxApiBytes": 1,
+                        "maxApiCalls": 1,
+                        "maxAssetSize": 1,
+                        "maxContributors": 1,
+                        "name": "name",
+                        "yearlyConfirmText": "yearlyConfirmText",
+                        "yearlyCosts": "yearlyCosts",
+                        "yearlyId": "yearlyId",
+                      },
+                    ],
                     "portalLink": "portalLink",
                     "referral": {
                       "code": "code",
@@ -5408,7 +6638,15 @@ The client secret is auto generated on the server and returned. The client does 
                       "display": "display",
                       "iconColor": "iconColor",
                       "iconImage": "iconImage",
-                      "properties": [],
+                      "properties": [
+                        {
+                          "display": "display",
+                          "editor": "Checkbox",
+                          "isFormattable": true,
+                          "isRequired": true,
+                          "name": "name",
+                        },
+                      ],
                       "readMore": "readMore",
                       "title": "title",
                     },
@@ -5466,7 +6704,9 @@ The client secret is auto generated on the server and returned. The client does 
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    "string",
+                  ],
                 },
               },
             ],
@@ -5499,7 +6739,25 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "created": "2024-01-15T09:30:00Z",
+                        "description": "description",
+                        "eventName": "eventName",
+                        "id": "id",
+                        "jobResult": "Pending",
+                        "lastDump": "lastDump",
+                        "nextAttempt": "2024-01-15T09:30:00Z",
+                        "numCalls": 1,
+                        "result": "Pending",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -5743,7 +7001,25 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "actionData": "actionData",
+                        "actionName": "actionName",
+                        "enrichedEvent": {
+                          "key": "value",
+                        },
+                        "error": "error",
+                        "event": {
+                          "key": "value",
+                        },
+                        "eventId": "eventId",
+                        "eventName": "eventName",
+                        "skipReasons": [
+                          "None",
+                        ],
+                        "uniqueId": "uniqueId",
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -5860,10 +7136,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -5879,6 +7165,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -5945,10 +7234,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -5964,6 +7263,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6063,10 +7365,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6082,6 +7394,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6148,10 +7463,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6167,6 +7492,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6236,10 +7564,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6255,6 +7593,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6321,10 +7662,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6340,6 +7691,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6407,10 +7761,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6426,6 +7790,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6481,7 +7848,47 @@ The client secret is auto generated on the server and returned. The client does 
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "category": "category",
+                        "created": "2024-01-15T09:30:00Z",
+                        "createdBy": "createdBy",
+                        "fieldRules": [
+                          {
+                            "action": "Disable",
+                            "field": "field",
+                          },
+                        ],
+                        "fields": [],
+                        "fieldsInLists": [
+                          "fieldsInLists",
+                        ],
+                        "fieldsInReferences": [
+                          "fieldsInReferences",
+                        ],
+                        "id": "id",
+                        "isPublished": true,
+                        "isSingleton": true,
+                        "lastModified": "2024-01-15T09:30:00Z",
+                        "lastModifiedBy": "lastModifiedBy",
+                        "name": "name",
+                        "previewUrls": {
+                          "previewUrls": "previewUrls",
+                        },
+                        "properties": {
+                          "validateOnPublish": true,
+                        },
+                        "scripts": {},
+                        "type": "Default",
+                        "version": 1,
+                      },
+                    ],
                   },
                 },
               },
@@ -6527,10 +7934,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6546,6 +7963,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6612,10 +8032,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6631,6 +8061,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6700,10 +8133,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6719,6 +8162,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6785,10 +8231,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6804,6 +8260,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -6941,10 +8400,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -6960,6 +8429,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7040,10 +8512,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7059,6 +8541,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7120,10 +8605,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7139,6 +8634,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7272,7 +8770,9 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "request": {
-                  "fieldIds": [],
+                  "fieldIds": [
+                    1,
+                  ],
                 },
                 "response": {
                   "body": {
@@ -7286,10 +8786,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7305,6 +8815,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7375,10 +8888,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7394,6 +8917,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7458,10 +8984,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7477,6 +9013,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7553,10 +9092,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7572,6 +9121,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7658,7 +9210,9 @@ The client secret is auto generated on the server and returned. The client does 
                   "schema": "schema",
                 },
                 "request": {
-                  "fieldIds": [],
+                  "fieldIds": [
+                    1,
+                  ],
                 },
                 "response": {
                   "body": {
@@ -7672,10 +9226,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7691,6 +9255,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7759,10 +9326,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7778,6 +9355,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7859,10 +9439,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7878,6 +9468,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -7956,10 +9549,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -7975,6 +9578,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8039,10 +9645,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -8058,6 +9674,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8124,10 +9743,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -8143,6 +9772,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8211,10 +9843,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "category": "category",
                     "created": "2024-01-15T09:30:00Z",
                     "createdBy": "createdBy",
-                    "fieldRules": [],
+                    "fieldRules": [
+                      {
+                        "action": "Disable",
+                        "condition": "condition",
+                        "field": "field",
+                      },
+                    ],
                     "fields": [],
-                    "fieldsInLists": [],
-                    "fieldsInReferences": [],
+                    "fieldsInLists": [
+                      "fieldsInLists",
+                    ],
+                    "fieldsInReferences": [
+                      "fieldsInReferences",
+                    ],
                     "id": "id",
                     "isPublished": true,
                     "isSingleton": true,
@@ -8230,6 +9872,9 @@ The client secret is auto generated on the server and returned. The client does 
                       "contentsSidebarUrl": "contentsSidebarUrl",
                       "hints": "hints",
                       "label": "label",
+                      "tags": [
+                        "tags",
+                      ],
                       "validateOnPublish": true,
                     },
                     "scripts": {
@@ -8288,7 +9933,19 @@ The client secret is auto generated on the server and returned. The client does 
                   "app": "app",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "_links": {
+                        "_links": {
+                          "href": "href",
+                          "method": "method",
+                        },
+                      },
+                      "label": "label",
+                      "name": "name",
+                      "type": "Asset",
+                    },
+                  ],
                 },
               },
             ],
@@ -8408,7 +10065,13 @@ The client secret is auto generated on the server and returned. The client does 
                   "toDate": "toDate",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "date": "date",
+                      "totalCount": 1,
+                      "totalSize": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -8449,7 +10112,13 @@ The client secret is auto generated on the server and returned. The client does 
                   "toDate": "toDate",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "date": "date",
+                      "totalCount": 1,
+                      "totalSize": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -8530,7 +10199,14 @@ The client secret is auto generated on the server and returned. The client does 
                     "averageElapsedMs": 1.1,
                     "blockingApiCalls": 1,
                     "details": {
-                      "details": [],
+                      "details": [
+                        {
+                          "averageElapsedMs": 1.1,
+                          "date": "date",
+                          "totalBytes": 1,
+                          "totalCalls": 1,
+                        },
+                      ],
                     },
                     "monthBytes": 1,
                     "monthCalls": 1,
@@ -8583,7 +10259,14 @@ The client secret is auto generated on the server and returned. The client does 
                     "averageElapsedMs": 1.1,
                     "blockingApiCalls": 1,
                     "details": {
-                      "details": [],
+                      "details": [
+                        {
+                          "averageElapsedMs": 1.1,
+                          "date": "date",
+                          "totalBytes": 1,
+                          "totalCalls": 1,
+                        },
+                      ],
                     },
                     "monthBytes": 1,
                     "monthCalls": 1,
@@ -8652,7 +10335,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -8701,7 +10397,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -8745,7 +10454,20 @@ The client secret is auto generated on the server and returned. The client does 
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -8820,7 +10542,22 @@ You will retrieve all teams, where you are assigned as a contributor.",
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "_links": {
+                        "_links": {
+                          "href": "href",
+                          "method": "method",
+                        },
+                      },
+                      "created": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "lastModified": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "roleName": "roleName",
+                      "version": 1,
+                    },
+                  ],
                 },
               },
             ],
@@ -8860,7 +10597,20 @@ You will retrieve all teams, where you are assigned as a contributor.",
                     "_meta": {
                       "isInvited": "isInvited",
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "contributorEmail": "contributorEmail",
+                        "contributorId": "contributorId",
+                        "contributorName": "contributorName",
+                        "role": "role",
+                      },
+                    ],
                     "maxContributors": 1,
                   },
                 },
@@ -9067,7 +10817,20 @@ You will be assigned as owner of the new team automatically.",
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "description": "description",
+                        "isStarter": true,
+                        "name": "name",
+                        "title": "title",
+                      },
+                    ],
                   },
                 },
               },
@@ -9212,7 +10975,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9248,7 +11013,23 @@ You will be assigned as owner of the new team automatically.",
                         "method": "method",
                       },
                     },
-                    "items": [],
+                    "items": [
+                      {
+                        "_links": {
+                          "_links": {
+                            "href": "href",
+                            "method": "method",
+                          },
+                        },
+                        "displayName": "displayName",
+                        "email": "email",
+                        "id": "id",
+                        "isLocked": true,
+                        "permissions": [
+                          "permissions",
+                        ],
+                      },
+                    ],
                     "total": 1,
                   },
                 },
@@ -9306,7 +11087,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9338,7 +11121,9 @@ You will be assigned as owner of the new team automatically.",
                   "displayName": "displayName",
                   "email": "email",
                   "password": "password",
-                  "permissions": [],
+                  "permissions": [
+                    "permissions",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -9353,7 +11138,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9407,7 +11194,9 @@ You will be assigned as owner of the new team automatically.",
                 "request": {
                   "displayName": "displayName",
                   "email": "email",
-                  "permissions": [],
+                  "permissions": [
+                    "permissions",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -9422,7 +11211,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9493,7 +11284,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9548,7 +11341,9 @@ You will be assigned as owner of the new team automatically.",
                     "email": "email",
                     "id": "id",
                     "isLocked": true,
-                    "permissions": [],
+                    "permissions": [
+                      "permissions",
+                    ],
                   },
                 },
               },
@@ -9622,7 +11417,23 @@ You will be assigned as owner of the new team automatically.",
             "examples": [
               {
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "_links": {
+                        "_links": {
+                          "href": "href",
+                          "method": "method",
+                        },
+                      },
+                      "displayName": "displayName",
+                      "email": "email",
+                      "id": "id",
+                      "isLocked": true,
+                      "permissions": [
+                        "permissions",
+                      ],
+                    },
+                  ],
                 },
               },
             ],

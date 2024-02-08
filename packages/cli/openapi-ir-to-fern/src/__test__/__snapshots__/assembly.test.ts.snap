@@ -60,7 +60,9 @@ exports[`open api parser assembly simple 1`] = `
             "examples": [
               {
                 "request": {
-                  "transcript_ids": [],
+                  "transcript_ids": [
+                    "transcript_ids",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -136,13 +138,24 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "questions": [],
-                  "transcript_ids": [],
+                  "questions": [
+                    {
+                      "question": "question",
+                    },
+                  ],
+                  "transcript_ids": [
+                    "transcript_ids",
+                  ],
                 },
                 "response": {
                   "body": {
                     "request_id": "request_id",
-                    "response": [],
+                    "response": [
+                      {
+                        "answer": "answer",
+                        "question": "question",
+                      },
+                    ],
                   },
                 },
               },
@@ -185,7 +198,9 @@ The LLM response data, as well as any context provided in the original request w
             "examples": [
               {
                 "request": {
-                  "transcript_ids": [],
+                  "transcript_ids": [
+                    "transcript_ids",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -235,7 +250,9 @@ The LLM response data, as well as any context provided in the original request w
               {
                 "request": {
                   "prompt": "prompt",
-                  "transcript_ids": [],
+                  "transcript_ids": [
+                    "transcript_ids",
+                  ],
                 },
                 "response": {
                   "body": {
@@ -361,25 +378,93 @@ The LLM response data, as well as any context provided in the original request w
                     "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "text",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
                     },
                     "boost_param": "boost_param",
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "gist",
+                        "headline": "headline",
+                        "start": 1,
+                        "summary": "summary",
+                      },
+                    ],
                     "confidence": 1.1,
                     "content_safety": true,
                     "content_safety_labels": {
-                      "results": [],
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "label",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "severity_score_summary": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "summary": 1.1,
+                          },
+                          "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
                       "status": "success",
                     },
+                    "custom_spelling": [
+                      {
+                        "from": [
+                          "from",
+                        ],
+                        "to": "to",
+                      },
+                    ],
                     "custom_topics": true,
                     "disfluencies": true,
                     "dual_channel": true,
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "entity_detection": true,
                     "error": "error",
                     "filter_profanity": true,
                     "format_text": true,
                     "iab_categories": true,
                     "iab_categories_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "text": "text",
+                        },
+                      ],
                       "status": "success",
                       "summary": {
                         "summary": 1.1,
@@ -393,8 +478,21 @@ The LLM response data, as well as any context provided in the original request w
                     "redact_pii": true,
                     "redact_pii_audio": true,
                     "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
                     "redact_pii_sub": "entity_type",
                     "sentiment_analysis": true,
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "speaker_labels": true,
                     "speakers_expected": 1,
                     "speech_threshold": 1.1,
@@ -406,10 +504,42 @@ The LLM response data, as well as any context provided in the original request w
                     "summary_type": "summary_type",
                     "text": "text",
                     "throttled": true,
+                    "topics": [
+                      "topics",
+                    ],
+                    "utterances": [
+                      {
+                        "channel": "channel",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "text",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
                     "webhook_auth": true,
                     "webhook_auth_header_name": "webhook_auth_header_name",
                     "webhook_status_code": 1,
                     "webhook_url": "webhook_url",
+                    "word_boost": [
+                      "word_boost",
+                    ],
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                   },
                 },
               },
@@ -464,25 +594,93 @@ The LLM response data, as well as any context provided in the original request w
                     "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "text",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
                     },
                     "boost_param": "boost_param",
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "gist",
+                        "headline": "headline",
+                        "start": 1,
+                        "summary": "summary",
+                      },
+                    ],
                     "confidence": 1.1,
                     "content_safety": true,
                     "content_safety_labels": {
-                      "results": [],
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "label",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "severity_score_summary": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "summary": 1.1,
+                          },
+                          "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
                       "status": "success",
                     },
+                    "custom_spelling": [
+                      {
+                        "from": [
+                          "from",
+                        ],
+                        "to": "to",
+                      },
+                    ],
                     "custom_topics": true,
                     "disfluencies": true,
                     "dual_channel": true,
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "entity_detection": true,
                     "error": "error",
                     "filter_profanity": true,
                     "format_text": true,
                     "iab_categories": true,
                     "iab_categories_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "text": "text",
+                        },
+                      ],
                       "status": "success",
                       "summary": {
                         "summary": 1.1,
@@ -496,8 +694,21 @@ The LLM response data, as well as any context provided in the original request w
                     "redact_pii": true,
                     "redact_pii_audio": true,
                     "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
                     "redact_pii_sub": "entity_type",
                     "sentiment_analysis": true,
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "speaker_labels": true,
                     "speakers_expected": 1,
                     "speech_threshold": 1.1,
@@ -509,10 +720,42 @@ The LLM response data, as well as any context provided in the original request w
                     "summary_type": "summary_type",
                     "text": "text",
                     "throttled": true,
+                    "topics": [
+                      "topics",
+                    ],
+                    "utterances": [
+                      {
+                        "channel": "channel",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "text",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
                     "webhook_auth": true,
                     "webhook_auth_header_name": "webhook_auth_header_name",
                     "webhook_status_code": 1,
                     "webhook_url": "webhook_url",
+                    "word_boost": [
+                      "word_boost",
+                    ],
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                   },
                 },
               },
@@ -557,25 +800,93 @@ The LLM response data, as well as any context provided in the original request w
                     "auto_chapters": true,
                     "auto_highlights": true,
                     "auto_highlights_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "count": 1,
+                          "rank": 1.1,
+                          "text": "text",
+                          "timestamps": [
+                            {
+                              "end": 1,
+                              "start": 1,
+                            },
+                          ],
+                        },
+                      ],
                     },
                     "boost_param": "boost_param",
+                    "chapters": [
+                      {
+                        "end": 1,
+                        "gist": "gist",
+                        "headline": "headline",
+                        "start": 1,
+                        "summary": "summary",
+                      },
+                    ],
                     "confidence": 1.1,
                     "content_safety": true,
                     "content_safety_labels": {
-                      "results": [],
+                      "results": [
+                        {
+                          "labels": [
+                            {
+                              "confidence": 1.1,
+                              "label": "label",
+                              "severity": 1.1,
+                            },
+                          ],
+                          "sentences_idx_end": 1,
+                          "sentences_idx_start": 1,
+                          "severity_score_summary": {
+                            "severity_score_summary": {
+                              "high": 1.1,
+                              "low": 1.1,
+                              "medium": 1.1,
+                            },
+                          },
+                          "summary": {
+                            "summary": 1.1,
+                          },
+                          "text": "text",
+                          "timestamp": {
+                            "end": 1,
+                            "start": 1,
+                          },
+                        },
+                      ],
                       "status": "success",
                     },
+                    "custom_spelling": [
+                      {
+                        "from": [
+                          "from",
+                        ],
+                        "to": "to",
+                      },
+                    ],
                     "custom_topics": true,
                     "disfluencies": true,
                     "dual_channel": true,
+                    "entities": [
+                      {
+                        "end": 1,
+                        "entity_type": "banking_information",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "entity_detection": true,
                     "error": "error",
                     "filter_profanity": true,
                     "format_text": true,
                     "iab_categories": true,
                     "iab_categories_result": {
-                      "results": [],
+                      "results": [
+                        {
+                          "text": "text",
+                        },
+                      ],
                       "status": "success",
                       "summary": {
                         "summary": 1.1,
@@ -589,8 +900,21 @@ The LLM response data, as well as any context provided in the original request w
                     "redact_pii": true,
                     "redact_pii_audio": true,
                     "redact_pii_audio_quality": "redact_pii_audio_quality",
+                    "redact_pii_policies": [
+                      "medical_process",
+                    ],
                     "redact_pii_sub": "entity_type",
                     "sentiment_analysis": true,
+                    "sentiment_analysis_results": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "sentiment": "POSITIVE",
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                     "speaker_labels": true,
                     "speakers_expected": 1,
                     "speech_threshold": 1.1,
@@ -602,10 +926,42 @@ The LLM response data, as well as any context provided in the original request w
                     "summary_type": "summary_type",
                     "text": "text",
                     "throttled": true,
+                    "topics": [
+                      "topics",
+                    ],
+                    "utterances": [
+                      {
+                        "channel": "channel",
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "text",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
                     "webhook_auth": true,
                     "webhook_auth_header_name": "webhook_auth_header_name",
                     "webhook_status_code": 1,
                     "webhook_url": "webhook_url",
+                    "word_boost": [
+                      "word_boost",
+                    ],
+                    "words": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "speaker": "speaker",
+                        "start": 1,
+                        "text": "text",
+                      },
+                    ],
                   },
                 },
               },
@@ -645,7 +1001,22 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_duration": 1.1,
                     "confidence": 1.1,
                     "id": "id",
-                    "paragraphs": [],
+                    "paragraphs": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "text",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -723,7 +1094,22 @@ The LLM response data, as well as any context provided in the original request w
                     "audio_duration": 1.1,
                     "confidence": 1.1,
                     "id": "id",
-                    "sentences": [],
+                    "sentences": [
+                      {
+                        "confidence": 1.1,
+                        "end": 1,
+                        "start": 1,
+                        "text": "text",
+                        "words": [
+                          {
+                            "confidence": 1.1,
+                            "end": 1,
+                            "start": 1,
+                            "text": "text",
+                          },
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -794,7 +1180,16 @@ The LLM response data, as well as any context provided in the original request w
                       "prev_url": "prev_url",
                       "result_count": 1,
                     },
-                    "transcripts": [],
+                    "transcripts": [
+                      {
+                        "audio_url": "audio_url",
+                        "completed": "2024-01-15T09:30:00Z",
+                        "created": "2024-01-15T09:30:00Z",
+                        "id": "id",
+                        "resource_url": "resource_url",
+                        "status": "queued",
+                      },
+                    ],
                   },
                 },
               },

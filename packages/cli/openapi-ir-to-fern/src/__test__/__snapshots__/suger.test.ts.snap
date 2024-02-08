@@ -104,8 +104,14 @@ exports[`open api parser suger simple 1`] = `
                       "collectableAmount": 1.1,
                       "disbursedAmount": 1.1,
                       "gcpBuyer": {
+                        "approvals": [
+                          {},
+                        ],
                         "createTime": "2024-01-15T09:30:00Z",
                         "id": "id",
+                        "inputProperties": [
+                          1,
+                        ],
                         "name": "name",
                         "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
@@ -151,7 +157,23 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "description": "description",
+                      "externalID": "externalID",
+                      "id": "id",
+                      "info": {
+                        "collectableAmount": 1.1,
+                        "disbursedAmount": 1.1,
+                        "invoicedAmount": 1.1,
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                    },
+                  ],
                 },
               },
             ],
@@ -203,8 +225,14 @@ exports[`open api parser suger simple 1`] = `
                       "collectableAmount": 1.1,
                       "disbursedAmount": 1.1,
                       "gcpBuyer": {
+                        "approvals": [
+                          {},
+                        ],
                         "createTime": "2024-01-15T09:30:00Z",
                         "id": "id",
+                        "inputProperties": [
+                          1,
+                        ],
                         "name": "name",
                         "provider": "provider",
                         "state": "ACCOUNT_STATE_UNSPECIFIED",
@@ -348,14 +376,35 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "autoRenew": true,
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {},
+                      ],
                       "collectableAmount": 1.1,
                       "commitAmount": 1.1,
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "disbursedAmount": 1.1,
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
                       "invoicedAmount": 1.1,
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
@@ -403,7 +452,62 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementTermID": "entitlementTermID",
+                      "externalBuyerID": "externalBuyerID",
+                      "externalID": "externalID",
+                      "externalProductID": "externalProductID",
+                      "id": "id",
+                      "info": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "ACTIVE",
+                      "type": "type",
+                    },
+                  ],
                 },
               },
             ],
@@ -434,7 +538,62 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementTermID": "entitlementTermID",
+                      "externalBuyerID": "externalBuyerID",
+                      "externalID": "externalID",
+                      "externalProductID": "externalProductID",
+                      "id": "id",
+                      "info": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "ACTIVE",
+                      "type": "type",
+                    },
+                  ],
                 },
               },
             ],
@@ -469,7 +628,62 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementTermID": "entitlementTermID",
+                      "externalBuyerID": "externalBuyerID",
+                      "externalID": "externalID",
+                      "externalProductID": "externalProductID",
+                      "id": "id",
+                      "info": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "ACTIVE",
+                      "type": "type",
+                    },
+                  ],
                 },
               },
             ],
@@ -504,7 +718,62 @@ exports[`open api parser suger simple 1`] = `
                   "partner": "AWS",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementTermID": "entitlementTermID",
+                      "externalBuyerID": "externalBuyerID",
+                      "externalID": "externalID",
+                      "externalProductID": "externalProductID",
+                      "id": "id",
+                      "info": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "ACTIVE",
+                      "type": "type",
+                    },
+                  ],
                 },
               },
             ],
@@ -539,7 +808,62 @@ exports[`open api parser suger simple 1`] = `
                   "productId": "productId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementTermID": "entitlementTermID",
+                      "externalBuyerID": "externalBuyerID",
+                      "externalID": "externalID",
+                      "externalProductID": "externalProductID",
+                      "id": "id",
+                      "info": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "name": "name",
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "ACTIVE",
+                      "type": "type",
+                    },
+                  ],
                 },
               },
             ],
@@ -586,14 +910,35 @@ exports[`open api parser suger simple 1`] = `
                     "id": "id",
                     "info": {
                       "autoRenew": true,
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {},
+                      ],
                       "collectableAmount": 1.1,
                       "commitAmount": 1.1,
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "disbursedAmount": 1.1,
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
                       "invoicedAmount": 1.1,
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
@@ -683,14 +1028,35 @@ exports[`open api parser suger simple 1`] = `
                     "entitlementID": "entitlementID",
                     "entitlementInfo": {
                       "autoRenew": true,
+                      "awsEntitlements": [
+                        {},
+                      ],
+                      "azureSubscriptions": [
+                        {},
+                      ],
                       "collectableAmount": 1.1,
                       "commitAmount": 1.1,
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "disbursedAmount": 1.1,
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpEntitlements": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
                       "invoicedAmount": 1.1,
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
                     },
@@ -746,7 +1112,62 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "buyerID": "buyerID",
+                      "commitAmount": 1.1,
+                      "creditAmount": 1.1,
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "entitlementID": "entitlementID",
+                      "entitlementInfo": {
+                        "autoRenew": true,
+                        "awsEntitlements": [
+                          {},
+                        ],
+                        "azureSubscriptions": [
+                          {},
+                        ],
+                        "collectableAmount": 1.1,
+                        "commitAmount": 1.1,
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "disbursedAmount": 1.1,
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpEntitlements": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "invoicedAmount": 1.1,
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "externalEntitlementID": "externalEntitlementID",
+                      "id": "id",
+                      "info": {
+                        "type": "",
+                      },
+                      "offerID": "offerID",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "usedCommitAmount": 1.1,
+                      "usedCreditAmount": 1.1,
+                    },
+                  ],
                 },
               },
             ],
@@ -819,6 +1240,9 @@ exports[`open api parser suger simple 1`] = `
                         "mdfsFullSyncDone": true,
                         "mdfsKmsKeyArn": "mdfsKmsKeyArn",
                         "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [
+                          "policyArns",
+                        ],
                         "revenueRecordFullSyncDone": true,
                       },
                       "azureIntegration": {
@@ -835,6 +1259,9 @@ exports[`open api parser suger simple 1`] = `
                         "reportFullSyncDone": true,
                         "reportStartDate": "2024-01-15T09:30:00Z",
                         "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [
+                          "serviceNames",
+                        ],
                         "workloadIdentityPoolId": "workloadIdentityPoolId",
                       },
                       "hubspotCrmIntegration": {
@@ -842,6 +1269,9 @@ exports[`open api parser suger simple 1`] = `
                         "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
+                        "filters": [
+                          {},
+                        ],
                         "instanceUrl": "instanceUrl",
                         "isSandbox": true,
                         "secretKey": "secretKey",
@@ -972,6 +1402,9 @@ exports[`open api parser suger simple 1`] = `
                         "mdfsFullSyncDone": true,
                         "mdfsKmsKeyArn": "mdfsKmsKeyArn",
                         "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [
+                          "policyArns",
+                        ],
                         "revenueRecordFullSyncDone": true,
                       },
                       "azureIntegration": {
@@ -988,6 +1421,9 @@ exports[`open api parser suger simple 1`] = `
                         "reportFullSyncDone": true,
                         "reportStartDate": "2024-01-15T09:30:00Z",
                         "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [
+                          "serviceNames",
+                        ],
                         "workloadIdentityPoolId": "workloadIdentityPoolId",
                       },
                       "hubspotCrmIntegration": {
@@ -995,6 +1431,9 @@ exports[`open api parser suger simple 1`] = `
                         "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
+                        "filters": [
+                          {},
+                        ],
                         "instanceUrl": "instanceUrl",
                         "isSandbox": true,
                         "secretKey": "secretKey",
@@ -1055,7 +1494,18 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "service": "MARKETPLACE",
+                      "status": "CREATED",
+                    },
+                  ],
                 },
               },
             ],
@@ -1115,6 +1565,9 @@ exports[`open api parser suger simple 1`] = `
                         "mdfsFullSyncDone": true,
                         "mdfsKmsKeyArn": "mdfsKmsKeyArn",
                         "mdfsS3BucketArn": "mdfsS3BucketArn",
+                        "policyArns": [
+                          "policyArns",
+                        ],
                         "revenueRecordFullSyncDone": true,
                       },
                       "azureIntegration": {
@@ -1131,6 +1584,9 @@ exports[`open api parser suger simple 1`] = `
                         "reportFullSyncDone": true,
                         "reportStartDate": "2024-01-15T09:30:00Z",
                         "serviceAccountEmail": "serviceAccountEmail",
+                        "serviceNames": [
+                          "serviceNames",
+                        ],
                         "workloadIdentityPoolId": "workloadIdentityPoolId",
                       },
                       "hubspotCrmIntegration": {
@@ -1138,6 +1594,9 @@ exports[`open api parser suger simple 1`] = `
                         "secretKey": "secretKey",
                       },
                       "salesforceCrmIntegration": {
+                        "filters": [
+                          {},
+                        ],
                         "instanceUrl": "instanceUrl",
                         "isSandbox": true,
                         "secretKey": "secretKey",
@@ -1397,8 +1856,19 @@ exports[`open api parser suger simple 1`] = `
                     "entitlementTermID": "entitlementTermID",
                     "id": "id",
                     "info": {
+                      "awsMeteringResponse": {
+                        "results": [
+                          {},
+                        ],
+                        "unprocessedRecords": [
+                          {},
+                        ],
+                      },
                       "azureMeteringResponse": {
                         "count": 1,
+                        "result": [
+                          {},
+                        ],
                       },
                       "commitAmount": 1.1,
                       "creditAmount": 1.1,
@@ -1410,6 +1880,9 @@ exports[`open api parser suger simple 1`] = `
                       },
                       "endTime": "2024-01-15T09:30:00Z",
                       "gcpMeteringResponse": {
+                        "reportErrors": [
+                          {},
+                        ],
                         "serviceConfigId": "serviceConfigId",
                         "serviceRolloutId": "serviceRolloutId",
                       },
@@ -1420,6 +1893,9 @@ exports[`open api parser suger simple 1`] = `
                         "reportedRecords": 1.1,
                       },
                       "startTime": "2024-01-15T09:30:00Z",
+                      "usageRecordGroupIds": [
+                        "usageRecordGroupIds",
+                      ],
                       "usedCommitAmount": 1.1,
                       "usedCommitAmountIncrement": 1.1,
                       "usedCreditAmount": 1.1,
@@ -1465,6 +1941,21 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordGroups": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "id": "id",
+                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "organizationID": "organizationID",
+                        "records": {
+                          "records": 1.1,
+                        },
+                        "serialID": 1,
+                        "status": "status",
+                        "usageRecordReportID": "usageRecordReportID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1523,6 +2014,21 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordGroups": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "id": "id",
+                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "organizationID": "organizationID",
+                        "records": {
+                          "records": 1.1,
+                        },
+                        "serialID": 1,
+                        "status": "status",
+                        "usageRecordReportID": "usageRecordReportID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1578,6 +2084,21 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordGroups": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "id": "id",
+                        "lastUpdateTime": "2024-01-15T09:30:00Z",
+                        "organizationID": "organizationID",
+                        "records": {
+                          "records": 1.1,
+                        },
+                        "serialID": 1,
+                        "status": "status",
+                        "usageRecordReportID": "usageRecordReportID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1637,6 +2158,16 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordReports": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "entitlementTermID": "entitlementTermID",
+                        "id": "id",
+                        "organizationID": "organizationID",
+                        "productID": "productID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1699,6 +2230,16 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordReports": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "entitlementTermID": "entitlementTermID",
+                        "id": "id",
+                        "organizationID": "organizationID",
+                        "productID": "productID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1754,6 +2295,16 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "usageRecordReports": [
+                      {
+                        "creationTime": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "entitlementTermID": "entitlementTermID",
+                        "id": "id",
+                        "organizationID": "organizationID",
+                        "productID": "productID",
+                      },
+                    ],
                   },
                 },
               },
@@ -1953,27 +2504,57 @@ exports[`open api parser suger simple 1`] = `
                         "plan": "plan",
                         "product": "product",
                         "resourceName": "resourceName",
+                        "validations": [
+                          {},
+                        ],
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
                         "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {},
+                        ],
                         "eTag": "eTag",
                         "end": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "lastModified": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "notificationContacts": [
+                          "notificationContacts",
+                        ],
                         "preparedBy": "preparedBy",
+                        "pricing": [
+                          {},
+                        ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
                         "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
+                        "validations": [
+                          {},
+                        ],
                         "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {},
+                        ],
+                        "cloudAvailabilities": [
+                          "cloudAvailabilities",
+                        ],
                         "conversionPaths": "conversionPaths",
+                        "extendedProperties": [
+                          {},
+                        ],
                         "externalID": "externalID",
+                        "featureAvailabilities": [
+                          {},
+                        ],
                         "friendlyName": "friendlyName",
                         "id": "id",
                         "leadGenID": "leadGenID",
@@ -1981,10 +2562,31 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [
+                        "buyerAwsAccountIds",
+                      ],
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "privateOfferUrl": "privateOfferUrl",
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
@@ -1994,8 +2596,14 @@ exports[`open api parser suger simple 1`] = `
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
+                      "contacts": [
+                        {},
+                      ],
                       "isAgreementBasedOffer": true,
                       "isRenewalOffer": true,
+                      "notifications": [
+                        {},
+                      ],
                     },
                     "name": "name",
                     "offerType": "DEFAULT",
@@ -2053,27 +2661,57 @@ exports[`open api parser suger simple 1`] = `
                         "plan": "plan",
                         "product": "product",
                         "resourceName": "resourceName",
+                        "validations": [
+                          {},
+                        ],
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
                         "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {},
+                        ],
                         "eTag": "eTag",
                         "end": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "lastModified": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "notificationContacts": [
+                          "notificationContacts",
+                        ],
                         "preparedBy": "preparedBy",
+                        "pricing": [
+                          {},
+                        ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
                         "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
+                        "validations": [
+                          {},
+                        ],
                         "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {},
+                        ],
+                        "cloudAvailabilities": [
+                          "cloudAvailabilities",
+                        ],
                         "conversionPaths": "conversionPaths",
+                        "extendedProperties": [
+                          {},
+                        ],
                         "externalID": "externalID",
+                        "featureAvailabilities": [
+                          {},
+                        ],
                         "friendlyName": "friendlyName",
                         "id": "id",
                         "leadGenID": "leadGenID",
@@ -2081,10 +2719,31 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [
+                        "buyerAwsAccountIds",
+                      ],
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "privateOfferUrl": "privateOfferUrl",
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
@@ -2094,8 +2753,14 @@ exports[`open api parser suger simple 1`] = `
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
+                      "contacts": [
+                        {},
+                      ],
                       "isAgreementBasedOffer": true,
                       "isRenewalOffer": true,
+                      "notifications": [
+                        {},
+                      ],
                     },
                     "name": "name",
                     "offerType": "DEFAULT",
@@ -2187,27 +2852,57 @@ exports[`open api parser suger simple 1`] = `
                         "plan": "plan",
                         "product": "product",
                         "resourceName": "resourceName",
+                        "validations": [
+                          {},
+                        ],
                       },
                       "azurePrivateOffer": {
                         "$schema": "schema",
                         "acceptBy": "2024-01-15T09:30:00Z",
+                        "acceptanceLinks": [
+                          {},
+                        ],
+                        "beneficiaries": [
+                          {},
+                        ],
                         "eTag": "eTag",
                         "end": "2024-01-15T09:30:00Z",
                         "id": "id",
                         "lastModified": "2024-01-15T09:30:00Z",
                         "name": "name",
+                        "notificationContacts": [
+                          "notificationContacts",
+                        ],
                         "preparedBy": "preparedBy",
+                        "pricing": [
+                          {},
+                        ],
                         "privateOfferType": "customerPromotion",
                         "resourceName": "resourceName",
                         "start": "2024-01-15T09:30:00Z",
                         "state": "draft",
                         "subState": "pendingAcceptance",
                         "termsAndConditionsDocSasUrl": "termsAndConditionsDocSasUrl",
+                        "validations": [
+                          {},
+                        ],
                         "variableStartDate": true,
                       },
                       "azureProductVariant": {
+                        "azureGovernmentCertifications": [
+                          {},
+                        ],
+                        "cloudAvailabilities": [
+                          "cloudAvailabilities",
+                        ],
                         "conversionPaths": "conversionPaths",
+                        "extendedProperties": [
+                          {},
+                        ],
                         "externalID": "externalID",
+                        "featureAvailabilities": [
+                          {},
+                        ],
                         "friendlyName": "friendlyName",
                         "id": "id",
                         "leadGenID": "leadGenID",
@@ -2215,10 +2910,31 @@ exports[`open api parser suger simple 1`] = `
                         "resourceType": "AzureSkuVariant",
                         "state": "InActive",
                       },
+                      "buyerAwsAccountIds": [
+                        "buyerAwsAccountIds",
+                      ],
+                      "buyerAzureTenants": [
+                        {},
+                      ],
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "discount": 1.1,
                       "eulaType": "",
                       "eulaUrl": "eulaUrl",
+                      "gcpMetrics": [
+                        {},
+                      ],
+                      "gcpPlans": [
+                        {},
+                      ],
+                      "paymentInstallments": [
+                        {},
+                      ],
                       "privateOfferUrl": "privateOfferUrl",
                       "refundCancelationPolicy": "refundCancelationPolicy",
                       "sellerNotes": "sellerNotes",
@@ -2228,8 +2944,14 @@ exports[`open api parser suger simple 1`] = `
                     "lastUpdatedBy": "lastUpdatedBy",
                     "metaInfo": {
                       "baseAgreementId": "baseAgreementId",
+                      "contacts": [
+                        {},
+                      ],
                       "isAgreementBasedOffer": true,
                       "isRenewalOffer": true,
+                      "notifications": [
+                        {},
+                      ],
                     },
                     "name": "name",
                     "offerType": "DEFAULT",
@@ -2272,7 +2994,67 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "expireTime": "2024-01-15T09:30:00Z",
+                      "externalID": "externalID",
+                      "id": "id",
+                      "info": {
+                        "buyerAwsAccountIds": [
+                          "buyerAwsAccountIds",
+                        ],
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpMetrics": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "privateOfferUrl": "privateOfferUrl",
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                        "visibility": "PRIVATE",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "metaInfo": {
+                        "baseAgreementId": "baseAgreementId",
+                        "contacts": [
+                          {},
+                        ],
+                        "isAgreementBasedOffer": true,
+                        "isRenewalOffer": true,
+                        "notifications": [
+                          {},
+                        ],
+                      },
+                      "name": "name",
+                      "offerType": "DEFAULT",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -2306,7 +3088,67 @@ exports[`open api parser suger simple 1`] = `
                   "partner": "AWS",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "expireTime": "2024-01-15T09:30:00Z",
+                      "externalID": "externalID",
+                      "id": "id",
+                      "info": {
+                        "buyerAwsAccountIds": [
+                          "buyerAwsAccountIds",
+                        ],
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpMetrics": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "privateOfferUrl": "privateOfferUrl",
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                        "visibility": "PRIVATE",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "metaInfo": {
+                        "baseAgreementId": "baseAgreementId",
+                        "contacts": [
+                          {},
+                        ],
+                        "isAgreementBasedOffer": true,
+                        "isRenewalOffer": true,
+                        "notifications": [
+                          {},
+                        ],
+                      },
+                      "name": "name",
+                      "offerType": "DEFAULT",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -2351,7 +3193,67 @@ exports[`open api parser suger simple 1`] = `
                   "productId": "productId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "expireTime": "2024-01-15T09:30:00Z",
+                      "externalID": "externalID",
+                      "id": "id",
+                      "info": {
+                        "buyerAwsAccountIds": [
+                          "buyerAwsAccountIds",
+                        ],
+                        "buyerAzureTenants": [
+                          {},
+                        ],
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "discount": 1.1,
+                        "eulaType": "",
+                        "eulaUrl": "eulaUrl",
+                        "gcpMetrics": [
+                          {},
+                        ],
+                        "gcpPlans": [
+                          {},
+                        ],
+                        "paymentInstallments": [
+                          {},
+                        ],
+                        "privateOfferUrl": "privateOfferUrl",
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                        "visibility": "PRIVATE",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "metaInfo": {
+                        "baseAgreementId": "baseAgreementId",
+                        "contacts": [
+                          {},
+                        ],
+                        "isAgreementBasedOffer": true,
+                        "isRenewalOffer": true,
+                        "notifications": [
+                          {},
+                        ],
+                      },
+                      "name": "name",
+                      "offerType": "DEFAULT",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productID": "productID",
+                      "service": "MARKETPLACE",
+                      "status": "ACCEPTED",
+                    },
+                  ],
                 },
               },
             ],
@@ -2405,7 +3307,17 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "endTime": "2024-01-15T09:30:00Z",
+                      "id": "id",
+                      "message": "message",
+                      "name": "name",
+                      "startTime": "2024-01-15T09:30:00Z",
+                      "status": "status",
+                      "type": "TemporalWorkflow",
+                    },
+                  ],
                 },
               },
             ],
@@ -2514,16 +3426,55 @@ exports[`open api parser suger simple 1`] = `
                         "attributes": "attributes",
                       },
                       "awsSaasProduct": {
+                        "Dimensions": [
+                          {},
+                        ],
+                        "Versions": [
+                          {},
+                        ],
                         "dataFeedProductId": "dataFeedProductId",
                         "productId": "productId",
                       },
+                      "awsSnsSubscriptions": [
+                        {},
+                      ],
                       "azureProduct": {
+                        "availabilities": [
+                          {},
+                        ],
+                        "branches": [
+                          {},
+                        ],
+                        "externalIDs": [
+                          {},
+                        ],
                         "id": "id",
                         "isModularPublishing": true,
+                        "listings": [
+                          {},
+                        ],
                         "name": "name",
+                        "packageConfigurations": [
+                          {},
+                        ],
+                        "properties": [
+                          {},
+                        ],
                         "resourceType": "resourceType",
+                        "submissions": [
+                          {},
+                        ],
+                        "variants": [
+                          {},
+                        ],
                       },
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "eulaUrl": "eulaUrl",
                       "gcpProduct": {
                         "createTime": "2024-01-15T09:30:00Z",
@@ -2578,7 +3529,17 @@ exports[`open api parser suger simple 1`] = `
                   "productId": "productId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "Description": "Description",
+                      "Key": "Key",
+                      "Name": "Name",
+                      "Types": [
+                        "Types",
+                      ],
+                      "Unit": "Unit",
+                    },
+                  ],
                 },
               },
             ],
@@ -2612,7 +3573,41 @@ exports[`open api parser suger simple 1`] = `
                   "orgId": "orgId",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "externalID": "externalID",
+                      "fulfillmentUrl": "fulfillmentUrl",
+                      "id": "id",
+                      "info": {
+                        "attributes": {
+                          "attributes": "attributes",
+                        },
+                        "awsSnsSubscriptions": [
+                          {},
+                        ],
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "eulaUrl": "eulaUrl",
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "name": "name",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                      "status": "status",
+                    },
+                  ],
                 },
               },
             ],
@@ -2643,7 +3638,41 @@ exports[`open api parser suger simple 1`] = `
                   "partner": "AWS",
                 },
                 "response": {
-                  "body": [],
+                  "body": [
+                    {
+                      "createdBy": "createdBy",
+                      "creationTime": "2024-01-15T09:30:00Z",
+                      "externalID": "externalID",
+                      "fulfillmentUrl": "fulfillmentUrl",
+                      "id": "id",
+                      "info": {
+                        "attributes": {
+                          "attributes": "attributes",
+                        },
+                        "awsSnsSubscriptions": [
+                          {},
+                        ],
+                        "commits": [
+                          {},
+                        ],
+                        "currency": "currency",
+                        "dimensions": [
+                          {},
+                        ],
+                        "eulaUrl": "eulaUrl",
+                        "refundCancelationPolicy": "refundCancelationPolicy",
+                        "sellerNotes": "sellerNotes",
+                      },
+                      "lastUpdateTime": "2024-01-15T09:30:00Z",
+                      "lastUpdatedBy": "lastUpdatedBy",
+                      "name": "name",
+                      "organizationID": "organizationID",
+                      "partner": "AWS",
+                      "productType": "UNKNOWN",
+                      "service": "MARKETPLACE",
+                      "status": "status",
+                    },
+                  ],
                 },
               },
             ],
@@ -2694,16 +3723,55 @@ exports[`open api parser suger simple 1`] = `
                         "attributes": "attributes",
                       },
                       "awsSaasProduct": {
+                        "Dimensions": [
+                          {},
+                        ],
+                        "Versions": [
+                          {},
+                        ],
                         "dataFeedProductId": "dataFeedProductId",
                         "productId": "productId",
                       },
+                      "awsSnsSubscriptions": [
+                        {},
+                      ],
                       "azureProduct": {
+                        "availabilities": [
+                          {},
+                        ],
+                        "branches": [
+                          {},
+                        ],
+                        "externalIDs": [
+                          {},
+                        ],
                         "id": "id",
                         "isModularPublishing": true,
+                        "listings": [
+                          {},
+                        ],
                         "name": "name",
+                        "packageConfigurations": [
+                          {},
+                        ],
+                        "properties": [
+                          {},
+                        ],
                         "resourceType": "resourceType",
+                        "submissions": [
+                          {},
+                        ],
+                        "variants": [
+                          {},
+                        ],
                       },
+                      "commits": [
+                        {},
+                      ],
                       "currency": "currency",
+                      "dimensions": [
+                        {},
+                      ],
                       "eulaUrl": "eulaUrl",
                       "gcpProduct": {
                         "createTime": "2024-01-15T09:30:00Z",
@@ -2804,6 +3872,30 @@ exports[`open api parser suger simple 1`] = `
                     "productID": "productID",
                     "reportDate": "2024-01-15T09:30:00Z",
                     "reportType": "InvoicedAmount",
+                    "revenueRecords": [
+                      {
+                        "amount": 1.1,
+                        "buyerID": "buyerID",
+                        "collectableAmount": 1.1,
+                        "currency": "currency",
+                        "date": "2024-01-15T09:30:00Z",
+                        "disburseAmount": 1.1,
+                        "disburseDate": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "id": "id",
+                        "invoiceAmount": 1.1,
+                        "invoiceDate": "2024-01-15T09:30:00Z",
+                        "organizationID": "organizationID",
+                        "partner": "partner",
+                        "paymentDueDate": "2024-01-15T09:30:00Z",
+                        "productID": "productID",
+                        "refundDisburseAmount": 1.1,
+                        "refundDisburseDate": "2024-01-15T09:30:00Z",
+                        "refundInvoiceAmount": 1.1,
+                        "refundInvoiceDate": "2024-01-15T09:30:00Z",
+                        "taxAmount": 1.1,
+                      },
+                    ],
                     "service": "service",
                   },
                 },
@@ -2875,6 +3967,20 @@ exports[`open api parser suger simple 1`] = `
                     "entitlementID": "entitlementID",
                     "organizationID": "organizationID",
                     "reportDate": "2024-01-15T09:30:00Z",
+                    "usageRecords": [
+                      {
+                        "amounts": [
+                          1.1,
+                        ],
+                        "date": "2024-01-15T09:30:00Z",
+                        "keys": [
+                          "keys",
+                        ],
+                        "quantities": [
+                          1.1,
+                        ],
+                      },
+                    ],
                   },
                 },
               },
@@ -2920,6 +4026,9 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "revenueRecordDetails": [
+                      {},
+                    ],
                   },
                 },
               },
@@ -2991,6 +4100,30 @@ exports[`open api parser suger simple 1`] = `
                 "response": {
                   "body": {
                     "nextOffset": 1,
+                    "revenueRecords": [
+                      {
+                        "amount": 1.1,
+                        "buyerID": "buyerID",
+                        "collectableAmount": 1.1,
+                        "currency": "currency",
+                        "date": "2024-01-15T09:30:00Z",
+                        "disburseAmount": 1.1,
+                        "disburseDate": "2024-01-15T09:30:00Z",
+                        "entitlementID": "entitlementID",
+                        "id": "id",
+                        "invoiceAmount": 1.1,
+                        "invoiceDate": "2024-01-15T09:30:00Z",
+                        "organizationID": "organizationID",
+                        "partner": "partner",
+                        "paymentDueDate": "2024-01-15T09:30:00Z",
+                        "productID": "productID",
+                        "refundDisburseAmount": 1.1,
+                        "refundDisburseDate": "2024-01-15T09:30:00Z",
+                        "refundInvoiceAmount": 1.1,
+                        "refundInvoiceDate": "2024-01-15T09:30:00Z",
+                        "taxAmount": 1.1,
+                      },
+                    ],
                   },
                 },
               },

@@ -31,6 +31,85 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "configs": {
+                        "properties": {
+                          "connections": {
+                            "primitive": {
+                              "string": "connections",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "strategy": {
+                            "enum": "first_attempt",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "deleted_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "disabled_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "delivery",
+                        "type": "enum",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -2041,6 +2120,144 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "archived_at": {
+                        "primitive": {
+                          "string": "archived_at",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "attempt_number": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "bulk_retry_id": {
+                        "primitive": {
+                          "string": "bulk_retry_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "delivered_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "delivery_latency": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "destination_id": {
+                        "primitive": {
+                          "string": "destination_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "error_code": {
+                        "enum": "TIMEOUT",
+                        "type": "enum",
+                      },
+                      "event_id": {
+                        "primitive": {
+                          "string": "event_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "requested_url": {
+                        "primitive": {
+                          "string": "requested_url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "responded_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "response_latency": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "response_status": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "state": {
+                        "enum": "DELIVERING",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "enum": "QUEUED",
+                        "type": "enum",
+                      },
+                      "successful_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "trigger": {
+                        "enum": "INITIAL",
+                        "type": "enum",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -2605,6 +2822,91 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "alias": {
+                        "primitive": {
+                          "string": "alias",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "event_data_id": {
+                        "primitive": {
+                          "string": "event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "label",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_used_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -4267,7 +4569,183 @@ exports[`open api parser hookdeck parse open api 1`] = `
             "type": "object",
           },
           "response": {
-            "array": [],
+            "array": [
+              {
+                "properties": {
+                  "attempts": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "cli_id": {
+                    "primitive": {
+                      "string": "cli_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "created_at_id": {
+                    "primitive": {
+                      "string": "created_at_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "data": {
+                    "properties": {
+                      "body": {
+                        "primitive": {
+                          "string": "body",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "headers": {
+                        "primitive": {
+                          "string": "headers",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "is_large_payload": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "parsed_query": {
+                        "primitive": {
+                          "string": "parsed_query",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "path": {
+                        "primitive": {
+                          "string": "path",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "query": {
+                        "primitive": {
+                          "string": "query",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                  "destination_id": {
+                    "primitive": {
+                      "string": "destination_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "event_data_id": {
+                    "primitive": {
+                      "string": "event_data_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "id": {
+                    "primitive": {
+                      "string": "id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "last_attempt_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "last_attempt_at_id": {
+                    "primitive": {
+                      "string": "last_attempt_at_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "next_attempt_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "request_id": {
+                    "primitive": {
+                      "string": "request_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "response_status": {
+                    "primitive": {
+                      "int": 1,
+                      "type": "int",
+                    },
+                    "type": "primitive",
+                  },
+                  "source_id": {
+                    "primitive": {
+                      "string": "source_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "status": {
+                    "enum": "SCHEDULED",
+                    "type": "enum",
+                  },
+                  "successful_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "team_id": {
+                    "primitive": {
+                      "string": "team_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                  "updated_at": {
+                    "primitive": {
+                      "datetime": "2024-01-15T09:30:00Z",
+                      "type": "datetime",
+                    },
+                    "type": "primitive",
+                  },
+                  "webhook_id": {
+                    "primitive": {
+                      "string": "webhook_id",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                },
+                "type": "object",
+              },
+            ],
             "type": "array",
           },
         },
@@ -4397,6 +4875,90 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "archived_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "cli_path": {
+                        "primitive": {
+                          "string": "cli_path",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "path_forwarding_disabled": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "rate_limit": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "rate_limit_period": {
+                        "enum": "second",
+                        "type": "enum",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -6836,6 +7398,151 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "attempts": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "cli_id": {
+                        "primitive": {
+                          "string": "cli_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at_id": {
+                        "primitive": {
+                          "string": "created_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "destination_id": {
+                        "primitive": {
+                          "string": "destination_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_data_id": {
+                        "primitive": {
+                          "string": "event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at_id": {
+                        "primitive": {
+                          "string": "last_attempt_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "next_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "request_id": {
+                        "primitive": {
+                          "string": "request_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "response_status": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "source_id": {
+                        "primitive": {
+                          "string": "source_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "SCHEDULED",
+                        "type": "enum",
+                      },
+                      "successful_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -9842,6 +10549,114 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "cancelled_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "failed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "in_progress": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "processed_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "progress": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -16994,6 +17809,114 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "cancelled_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "failed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "in_progress": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "processed_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "progress": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -19159,6 +20082,103 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "configs": {
+                        "properties": {
+                          "algorithm": {
+                            "enum": "md5",
+                            "type": "enum",
+                          },
+                          "encoding": {
+                            "enum": "base64",
+                            "type": "enum",
+                          },
+                          "header_key": {
+                            "primitive": {
+                              "string": "header_key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "webhook_secret_key": {
+                            "primitive": {
+                              "string": "webhook_secret_key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "features": {
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "label",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "provider": {
+                        "enum": "twitter",
+                        "type": "enum",
+                      },
+                      "sources": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "sources",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -19324,7 +20344,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "object",
               },
               "features": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "label": {
@@ -19378,7 +20403,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "features": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -19400,7 +20430,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
               "sources": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "sources",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -19645,7 +20683,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "features": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -19667,7 +20710,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
               "sources": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "sources",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -19808,7 +20859,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "features": {
-                "array": [],
+                "array": [
+                  {
+                    "enum": "VERIFICATION",
+                    "type": "enum",
+                  },
+                ],
                 "type": "array",
               },
               "id": {
@@ -19830,7 +20886,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
               "sources": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "sources",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -24044,6 +25108,134 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "cli_events_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "duplicate_hash": {
+                        "primitive": {
+                          "string": "duplicate_hash",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "duplicate_hits": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "events_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "ignored_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "ingest_priority": {
+                        "enum": "NORMAL",
+                        "type": "enum",
+                      },
+                      "ingested_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "ingested_at_id": {
+                        "primitive": {
+                          "string": "ingested_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "original_event_data_id": {
+                        "primitive": {
+                          "string": "original_event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "rejection_cause": {
+                        "enum": "SOURCE_ARCHIVED",
+                        "type": "enum",
+                      },
+                      "source_id": {
+                        "primitive": {
+                          "string": "source_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "verified": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -26007,7 +27199,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
           "request": {
             "properties": {
               "webhook_ids": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "webhook_ids",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -26015,6 +27215,151 @@ exports[`open api parser hookdeck parse open api 1`] = `
           },
           "response": {
             "properties": {
+              "events": {
+                "array": [
+                  {
+                    "properties": {
+                      "attempts": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "cli_id": {
+                        "primitive": {
+                          "string": "cli_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at_id": {
+                        "primitive": {
+                          "string": "created_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "destination_id": {
+                        "primitive": {
+                          "string": "destination_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_data_id": {
+                        "primitive": {
+                          "string": "event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at_id": {
+                        "primitive": {
+                          "string": "last_attempt_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "next_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "request_id": {
+                        "primitive": {
+                          "string": "request_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "response_status": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "source_id": {
+                        "primitive": {
+                          "string": "source_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "SCHEDULED",
+                        "type": "enum",
+                      },
+                      "successful_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "request": {
                 "properties": {
                   "cli_events_count": {
@@ -26306,6 +27651,151 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "attempts": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "cli_id": {
+                        "primitive": {
+                          "string": "cli_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at_id": {
+                        "primitive": {
+                          "string": "created_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "destination_id": {
+                        "primitive": {
+                          "string": "destination_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "event_data_id": {
+                        "primitive": {
+                          "string": "event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_attempt_at_id": {
+                        "primitive": {
+                          "string": "last_attempt_at_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "next_attempt_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "request_id": {
+                        "primitive": {
+                          "string": "request_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "response_status": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "source_id": {
+                        "primitive": {
+                          "string": "source_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "status": {
+                        "enum": "SCHEDULED",
+                        "type": "enum",
+                      },
+                      "successful_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -28352,6 +29842,66 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "cause": {
+                        "enum": "ARCHIVED",
+                        "type": "enum",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "meta": {
+                        "enum": "body",
+                        "type": "enum",
+                      },
+                      "request_id": {
+                        "primitive": {
+                          "string": "request_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -28722,6 +30272,114 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "cancelled_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "completed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "estimated_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "failed_count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "in_progress": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "number": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "processed_batch": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "progress": {
+                        "primitive": {
+                          "float": 1.1,
+                          "type": "float",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -34651,6 +36309,86 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "archived_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "is_team_default": {
+                        "primitive": {
+                          "boolean": true,
+                          "type": "boolean",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "rules": {
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "pagination": {
                 "properties": {
                   "dir": {
@@ -35726,7 +37464,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -35931,7 +37700,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -36135,7 +37935,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -36277,7 +38108,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -36536,7 +38398,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -36673,7 +38566,38 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "primitive",
               },
               "rules": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "team_id": {
@@ -36770,6 +38694,104 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "archived_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "integration": {
+                        "properties": {
+                          "features": {
+                            "array": [
+                              {
+                                "enum": "VERIFICATION",
+                                "type": "enum",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "label",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "provider": {
+                            "enum": "twitter",
+                            "type": "enum",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "integration_id": {
+                        "primitive": {
+                          "string": "integration_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "url": {
+                        "primitive": {
+                          "string": "url",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -37641,7 +39663,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -37825,7 +39852,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -38008,7 +40040,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -38180,7 +40217,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -38418,7 +40460,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -38585,7 +40632,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
               "integration": {
                 "properties": {
                   "features": {
-                    "array": [],
+                    "array": [
+                      {
+                        "enum": "VERIFICATION",
+                        "type": "enum",
+                      },
+                    ],
                     "type": "array",
                   },
                   "id": {
@@ -38731,6 +40783,15 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "string",
                 },
                 "type": "primitive",
+              },
+              "topics": {
+                "array": [
+                  {
+                    "enum": "issue.opened",
+                    "type": "enum",
+                  },
+                ],
+                "type": "array",
               },
             },
             "type": "object",
@@ -38886,6 +40947,72 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "code": {
+                        "primitive": {
+                          "string": "code",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "encrypted_env": {
+                        "primitive": {
+                          "string": "encrypted_env",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "iv": {
+                        "primitive": {
+                          "string": "iv",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -40290,6 +42417,27 @@ exports[`open api parser hookdeck parse open api 1`] = `
           },
           "response": {
             "properties": {
+              "console": {
+                "array": [
+                  {
+                    "properties": {
+                      "message": {
+                        "primitive": {
+                          "string": "message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "error",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "execution_id": {
                 "primitive": {
                   "string": "execution_id",
@@ -40755,6 +42903,128 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "issue_id": {
+                        "primitive": {
+                          "string": "issue_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "log_level": {
+                        "enum": "debug",
+                        "type": "enum",
+                      },
+                      "logs": {
+                        "array": [
+                          {
+                            "properties": {
+                              "message": {
+                                "primitive": {
+                                  "string": "message",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "type": {
+                                "enum": "error",
+                                "type": "enum",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "original_event_data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "original_event_data_id": {
+                        "primitive": {
+                          "string": "original_event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "transformation_id": {
+                        "primitive": {
+                          "string": "transformation_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "transformed_event_data": {
+                        "properties": {
+                          "path": {
+                            "primitive": {
+                              "string": "path",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "transformed_event_data_id": {
+                        "primitive": {
+                          "string": "transformed_event_data_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "webhook_id": {
+                        "primitive": {
+                          "string": "webhook_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -41513,7 +43783,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 "type": "enum",
               },
               "logs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "message": {
+                        "primitive": {
+                          "string": "message",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "error",
+                        "type": "enum",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "original_event_data": {
@@ -41749,6 +44036,262 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "type": "int",
                 },
                 "type": "primitive",
+              },
+              "models": {
+                "array": [
+                  {
+                    "properties": {
+                      "archived_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "created_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "destination": {
+                        "properties": {
+                          "created_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "team_id": {
+                            "primitive": {
+                              "string": "team_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "updated_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "name": {
+                        "primitive": {
+                          "string": "name",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "paused_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "resolved_rules": {
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "rules": {
+                        "array": [
+                          {
+                            "properties": {
+                              "strategy": {
+                                "enum": "linear",
+                                "type": "enum",
+                              },
+                              "type": {
+                                "literal": {
+                                  "string": "retry",
+                                  "type": "string",
+                                },
+                                "type": "literal",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "ruleset": {
+                        "properties": {
+                          "created_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "is_team_default": {
+                            "primitive": {
+                              "boolean": true,
+                              "type": "boolean",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "rules": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "strategy": {
+                                    "enum": "linear",
+                                    "type": "enum",
+                                  },
+                                  "type": {
+                                    "literal": {
+                                      "string": "retry",
+                                      "type": "string",
+                                    },
+                                    "type": "literal",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                          "team_id": {
+                            "primitive": {
+                              "string": "team_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "updated_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "source": {
+                        "properties": {
+                          "created_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "name": {
+                            "primitive": {
+                              "string": "name",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "team_id": {
+                            "primitive": {
+                              "string": "team_id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "updated_at": {
+                            "primitive": {
+                              "datetime": "2024-01-15T09:30:00Z",
+                              "type": "datetime",
+                            },
+                            "type": "primitive",
+                          },
+                          "url": {
+                            "primitive": {
+                              "string": "url",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "team_id": {
+                        "primitive": {
+                          "string": "team_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "updated_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
               },
               "pagination": {
                 "properties": {
@@ -42962,6 +45505,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -43000,7 +45613,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -43046,7 +45676,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -43795,6 +46430,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -43833,7 +46538,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -43879,7 +46601,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -44627,6 +47354,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -44665,7 +47462,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -44711,7 +47525,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -44990,6 +47809,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -45028,7 +47917,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -45074,7 +47980,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -45542,6 +48453,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -45580,7 +48561,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -45626,7 +48624,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -45900,6 +48903,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -45938,7 +49011,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -45984,7 +49074,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -46258,6 +49353,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -46296,7 +49461,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -46342,7 +49524,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {
@@ -46616,6 +49803,76 @@ exports[`open api parser hookdeck parse open api 1`] = `
                 },
                 "type": "primitive",
               },
+              "resolved_rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
+              "rules": {
+                "array": [
+                  {
+                    "properties": {
+                      "count": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "interval": {
+                        "primitive": {
+                          "int": 1,
+                          "type": "int",
+                        },
+                        "type": "primitive",
+                      },
+                      "strategy": {
+                        "enum": "linear",
+                        "type": "enum",
+                      },
+                      "type": {
+                        "literal": {
+                          "string": "retry",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
               "ruleset": {
                 "properties": {
                   "archived_at": {
@@ -46654,7 +49911,24 @@ exports[`open api parser hookdeck parse open api 1`] = `
                     "type": "primitive",
                   },
                   "rules": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "strategy": {
+                            "enum": "linear",
+                            "type": "enum",
+                          },
+                          "type": {
+                            "literal": {
+                              "string": "retry",
+                              "type": "string",
+                            },
+                            "type": "literal",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "team_id": {
@@ -46700,7 +49974,12 @@ exports[`open api parser hookdeck parse open api 1`] = `
                   "integration": {
                     "properties": {
                       "features": {
-                        "array": [],
+                        "array": [
+                          {
+                            "enum": "VERIFICATION",
+                            "type": "enum",
+                          },
+                        ],
                         "type": "array",
                       },
                       "id": {

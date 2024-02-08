@@ -65,7 +65,15 @@ Used to retrieve a deployment given its ID or name.
           "response": {
             "properties": {
               "active_model_version_ids": {
-                "array": [],
+                "array": [
+                  {
+                    "primitive": {
+                      "string": "active_model_version_ids",
+                      "type": "string",
+                    },
+                    "type": "primitive",
+                  },
+                ],
                 "type": "array",
               },
               "created": {
@@ -578,6 +586,98 @@ Used to list documents. Optionally filter on supported fields.
                 },
                 "type": "primitive",
               },
+              "results": {
+                "array": [
+                  {
+                    "properties": {
+                      "document_to_document_indexes": {
+                        "array": [
+                          {
+                            "properties": {
+                              "document_index_id": {
+                                "primitive": {
+                                  "string": "document_index_id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "external_id": {
+                        "primitive": {
+                          "string": "external_id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "id": {
+                        "primitive": {
+                          "string": "id",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "keywords": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "keywords",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "label": {
+                        "primitive": {
+                          "string": "label",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "last_uploaded_at": {
+                        "primitive": {
+                          "datetime": "2024-01-15T09:30:00Z",
+                          "type": "datetime",
+                        },
+                        "type": "primitive",
+                      },
+                      "processing_failure_reason": {
+                        "literal": {
+                          "string": "EXCEEDED_CHARACTER_LIMIT",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                      "processing_state": {
+                        "enum": "QUEUED",
+                        "type": "enum",
+                      },
+                      "status": {
+                        "literal": {
+                          "string": "ACTIVE",
+                          "type": "string",
+                        },
+                        "type": "literal",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
+                "type": "array",
+              },
             },
             "type": "object",
           },
@@ -791,7 +891,17 @@ Generate a completion using a previously defined deployment.
           "request": {
             "properties": {
               "requests": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "input_values": {
+                        "map": [],
+                        "type": "map",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -800,7 +910,61 @@ Generate a completion using a previously defined deployment.
           "response": {
             "properties": {
               "results": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "data": {
+                        "properties": {
+                          "completions": {
+                            "array": [
+                              {
+                                "properties": {
+                                  "id": {
+                                    "primitive": {
+                                      "string": "id",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "model_version_id": {
+                                    "primitive": {
+                                      "string": "model_version_id",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                  "text": {
+                                    "primitive": {
+                                      "string": "text",
+                                      "type": "string",
+                                    },
+                                    "type": "primitive",
+                                  },
+                                },
+                                "type": "object",
+                              },
+                            ],
+                            "type": "array",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "error": {
+                        "properties": {
+                          "message": {
+                            "primitive": {
+                              "string": "message",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -1010,7 +1174,20 @@ Used to retrieve a model version given its ID.
               "exec_config": {
                 "properties": {
                   "input_variables": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "parameters": {
@@ -1035,6 +1212,18 @@ Used to retrieve a model version given its ID.
                           "type": "double",
                         },
                         "type": "primitive",
+                      },
+                      "stop": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "stop",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
                       },
                       "temperature": {
                         "primitive": {
@@ -1063,7 +1252,28 @@ Used to retrieve a model version given its ID.
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "version": {
@@ -1391,13 +1601,47 @@ Under the hood, this endpoint creates a new sandbox, a new model version, and a 
               "prompt": {
                 "properties": {
                   "input_variables": {
-                    "array": [],
+                    "array": [
+                      {
+                        "properties": {
+                          "key": {
+                            "primitive": {
+                              "string": "key",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                    ],
                     "type": "array",
                   },
                   "prompt_block_data": {
                     "properties": {
                       "blocks": {
-                        "array": [],
+                        "array": [
+                          {
+                            "properties": {
+                              "block_type": {
+                                "enum": "CHAT_MESSAGE",
+                                "type": "enum",
+                              },
+                              "id": {
+                                "primitive": {
+                                  "string": "id",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                              "properties": {
+                                "properties": {},
+                                "type": "object",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
                         "type": "array",
                       },
                       "version": {
@@ -1649,6 +1893,18 @@ or overwritten with default values.",
                     },
                     "type": "object",
                   },
+                  {
+                    "properties": {
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
                 ],
                 "type": "array",
               },
@@ -1672,7 +1928,52 @@ or overwritten with default values.",
                 "type": "primitive",
               },
               "inputs": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "chat_history": {
+                        "array": [
+                          {
+                            "properties": {
+                              "role": {
+                                "enum": "SYSTEM",
+                                "type": "enum",
+                              },
+                              "text": {
+                                "primitive": {
+                                  "string": "text",
+                                  "type": "string",
+                                },
+                                "type": "primitive",
+                              },
+                            },
+                            "type": "object",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "key": {
+                        "primitive": {
+                          "string": "key",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                      "type": {
+                        "enum": "TEXT",
+                        "type": "enum",
+                      },
+                      "value": {
+                        "primitive": {
+                          "string": "value",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
               "label": {
@@ -1946,7 +2247,58 @@ Perform a search against a document index.
           "response": {
             "properties": {
               "results": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {
+                      "document": {
+                        "properties": {
+                          "id": {
+                            "primitive": {
+                              "string": "id",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                          "label": {
+                            "primitive": {
+                              "string": "label",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        },
+                        "type": "object",
+                      },
+                      "keywords": {
+                        "array": [
+                          {
+                            "primitive": {
+                              "string": "keywords",
+                              "type": "string",
+                            },
+                            "type": "primitive",
+                          },
+                        ],
+                        "type": "array",
+                      },
+                      "score": {
+                        "primitive": {
+                          "double": 1.1,
+                          "type": "double",
+                        },
+                        "type": "primitive",
+                      },
+                      "text": {
+                        "primitive": {
+                          "string": "text",
+                          "type": "string",
+                        },
+                        "type": "primitive",
+                      },
+                    },
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
@@ -2029,7 +2381,12 @@ Used to submit feedback regarding the quality of previously generated completion
           "request": {
             "properties": {
               "actuals": {
-                "array": [],
+                "array": [
+                  {
+                    "properties": {},
+                    "type": "object",
+                  },
+                ],
                 "type": "array",
               },
             },
