@@ -11,6 +11,6 @@ export interface BasicSecuritySchemeNames {
     password?: SecuritySchemeNames;
 }
 
-export function getBasicSecuritySchemeNames(openapi: OpenAPIV3.Document): BasicSecuritySchemeNames | undefined {
+export function getBasicSecuritySchemeNameAndEnvvar(openapi: OpenAPIV3.Document): BasicSecuritySchemeNames | undefined {
     return getExtension<BasicSecuritySchemeNames>(openapi, FernOpenAPIExtension.FERN_BASIC_AUTH);
 }
