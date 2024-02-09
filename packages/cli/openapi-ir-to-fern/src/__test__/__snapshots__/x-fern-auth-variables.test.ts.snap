@@ -72,10 +72,12 @@ exports[`x-fern-auth-variables x-fern-auth-variables simple 1`] = `
     "auth-schemes": {
       "BasicAuthScheme": {
         "password": {
+          "env": "MY_PaSSwoOD",
           "name": "password",
         },
         "scheme": "basic",
         "username": {
+          "env": "MY_USERNAME",
           "name": "username",
         },
       },

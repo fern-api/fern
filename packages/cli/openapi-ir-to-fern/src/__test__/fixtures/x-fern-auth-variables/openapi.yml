@@ -44,7 +44,7 @@ components:
       x-fern-basic:
         username:
           name: username
-          envvar: MY_USERNAME
+          env: MY_USERNAME
         password:
           name: password
-          envvar: MY_PaSSwoOD
+          env: MY_PaSSwoOD

@@ -37,7 +37,7 @@ For authentication within your SDK, you may want to customize the:
 - Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
 
 By default, Fern uses selects names for authentication parameters like api_key, username and password, etc.
-Note that this configuration is optional, and even when provided `name` or `envvar` may be provided alone, both are not required.
+Note that this configuration is optional, and even when provided `name` or `env` may be provided alone, both are not required.
 
 For bearer authentication:
 
@@ -49,7 +49,7 @@ components:
       scheme: bearer
       x-fern-bearer:
         name: apiKey
-        envvar: FERN_API_KEY
+        env: FERN_API_KEY
 ```
 
 In a Python SDK for example, the above configuration would produce a client that looks like:
@@ -72,11 +72,11 @@ components:
       scheme: basic
       x-fern-basic:
         username:
-          name: username
-          envvar: MY_USERNAME
+          name: clientId
+          env: MY_CLIENT_ID
         password:
-          name: password
-          envvar: MY_PASSWORD
+          name: clientSecret
+          env: MY_CLIENT_SECRET
 ```
 
 And for a custom auth header configuration:
@@ -89,7 +89,7 @@ components:
       scheme: schemeName
       x-fern-header:
         name: header
-        envvar: MY_HEADER_ENVVAR
+        env: MY_HEADER_ENVVAR
 ```
 
 
