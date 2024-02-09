@@ -36,16 +36,15 @@ paths:
                       type: string
                       format: uuid
 
-x-fern-basic:
-  username:
-    name: username
-    envvar: MY_USERNAME
-  password:
-    name: password
-    envvar: MY_PaSSwoOD
-
 components:
   securitySchemes:
     BasicAuth:
       type: http
       scheme: basic
+      x-fern-basic:
+        username:
+          name: username
+          envvar: MY_USERNAME
+        password:
+          name: password
+          envvar: MY_PaSSwoOD

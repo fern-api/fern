@@ -8717,22 +8717,10 @@ exports[`open api parser hookdeck simple 1`] = `
     "auth": "BearerAuthScheme",
     "auth-schemes": {
       "BasicAuthScheme": {
-        "password": {
-          "env": undefined,
-          "name": undefined,
-        },
         "scheme": "basic",
-        "username": {
-          "env": undefined,
-          "name": undefined,
-        },
       },
       "BearerAuthScheme": {
         "scheme": "bearer",
-        "token": {
-          "env": undefined,
-          "name": undefined,
-        },
       },
     },
     "default-environment": "Default",

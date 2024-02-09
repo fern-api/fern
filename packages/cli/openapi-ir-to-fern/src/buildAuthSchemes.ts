@@ -15,14 +15,44 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
                 scheme: "basic"
             };
-            basicAuthScheme.username = {
-                name: securityScheme.usernameVariableName ?? undefined,
-                env: securityScheme.usernameEnvVar ?? undefined
-            };
-            basicAuthScheme.password = {
-                name: securityScheme.passwordVariableName ?? undefined,
-                env: securityScheme.passwordEnvVar ?? undefined
-            };
+
+            if (securityScheme.usernameVariableName != null) {
+                if (basicAuthScheme.username === undefined) {
+                    basicAuthScheme.username = {
+                        name: securityScheme.usernameVariableName
+                    };
+                } else {
+                    basicAuthScheme.username.name = securityScheme.usernameVariableName;
+                }
+            }
+            if (securityScheme.usernameEnvVar != null) {
+                if (basicAuthScheme.username === undefined) {
+                    basicAuthScheme.username = {
+                        env: securityScheme.usernameEnvVar
+                    };
+                } else {
+                    basicAuthScheme.username.env = securityScheme.usernameEnvVar;
+                }
+            }
+
+            if (securityScheme.passwordVariableName != null) {
+                if (basicAuthScheme.password === undefined) {
+                    basicAuthScheme.password = {
+                        name: securityScheme.passwordVariableName
+                    };
+                } else {
+                    basicAuthScheme.password.name = securityScheme.passwordVariableName;
+                }
+            }
+            if (securityScheme.passwordEnvVar != null) {
+                if (basicAuthScheme.password === undefined) {
+                    basicAuthScheme.password = {
+                        env: securityScheme.passwordEnvVar
+                    };
+                } else {
+                    basicAuthScheme.password.env = securityScheme.passwordEnvVar;
+                }
+            }
 
             context.builder.addAuthScheme({
                 name: BASIC_AUTH_SCHEME,
@@ -36,10 +66,25 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
                 scheme: "bearer"
             };
-            bearerAuthScheme.token = {
-                name: securityScheme.tokenVariableName ?? undefined,
-                env: securityScheme.tokenEnvVar ?? undefined
-            };
+
+            if (securityScheme.tokenVariableName != null) {
+                if (bearerAuthScheme.token === undefined) {
+                    bearerAuthScheme.token = {
+                        name: securityScheme.tokenVariableName
+                    };
+                } else {
+                    bearerAuthScheme.token.name = securityScheme.tokenVariableName;
+                }
+            }
+            if (securityScheme.tokenEnvVar != null) {
+                if (bearerAuthScheme.token === undefined) {
+                    bearerAuthScheme.token = {
+                        env: securityScheme.tokenEnvVar
+                    };
+                } else {
+                    bearerAuthScheme.token.env = securityScheme.tokenEnvVar;
+                }
+            }
 
             context.builder.addAuthScheme({
                 name: BEARER_AUTH_SCHEME,

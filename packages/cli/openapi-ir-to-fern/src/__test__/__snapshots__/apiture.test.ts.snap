@@ -3513,10 +3513,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
     "auth-schemes": {
       "BearerAuthScheme": {
         "scheme": "bearer",
-        "token": {
-          "env": undefined,
-          "name": undefined,
-        },
       },
       "apiKey": {
         "env": undefined,

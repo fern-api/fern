@@ -4,13 +4,15 @@ import { getExtension } from "./getExtension";
 
 export interface SecuritySchemeNames {
     name?: string;
-    envvar?: string;
+    env?: string;
 }
 export interface BasicSecuritySchemeNames {
     username?: SecuritySchemeNames;
     password?: SecuritySchemeNames;
 }
 
-export function getBasicSecuritySchemeNameAndEnvvar(openapi: OpenAPIV3.Document): BasicSecuritySchemeNames | undefined {
-    return getExtension<BasicSecuritySchemeNames>(openapi, FernOpenAPIExtension.FERN_BASIC_AUTH);
+export function getBasicSecuritySchemeNameAndEnvvar(
+    securityScheme: OpenAPIV3.SecuritySchemeObject
+): BasicSecuritySchemeNames | undefined {
+    return getExtension<BasicSecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BASIC_AUTH);
 }
