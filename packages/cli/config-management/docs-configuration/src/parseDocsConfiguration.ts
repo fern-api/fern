@@ -108,14 +108,16 @@ export async function parseDocsConfiguration({
             : undefined;
 
     const cssPromise = convertCssConfig(rawCssConfig);
+    const jsPromise = convertJsConfig(js, absoluteFilepathToDocsConfig);
 
-    const [convertedNavigation, pages, favicon, backgroundImage, typography, css] = await Promise.all([
+    const [convertedNavigation, pages, favicon, backgroundImage, typography, css, js] = await Promise.all([
         convertedNavigationPromise,
         pagesPromise,
         faviconPromise,
         backgroundImagePromise,
         typographyPromise,
-        cssPromise
+        cssPromise,
+        jsPromise
     ]);
 
     return {
@@ -133,7 +135,7 @@ export async function parseDocsConfiguration({
         typography,
         layout: convertLayoutConfig(layout),
         css,
-        js: convertJsConfig(js)
+        js
     };
 }
 
@@ -164,7 +166,10 @@ function isFileJsConfig(
     return Object.hasOwn(config, "path");
 }
 
-function convertJsConfig(js: RawDocs.JsConfig | undefined): JavascriptConfig {
+async function convertJsConfig(
+    js: RawDocs.JsConfig | undefined,
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
+): Promise<JavascriptConfig> {
     const remote: DocsV1Write.JsRemoteConfig[] = [];
     const files: AbsoluteJsFileConfig[] = [];
     if (js == null) {
@@ -175,11 +180,21 @@ function convertJsConfig(js: RawDocs.JsConfig | undefined): JavascriptConfig {
 
     for (const config of configs) {
         if (typeof config === "string") {
-            files.push({ absolutePath: AbsoluteFilePath.of(config) });
+            files.push({
+                absolutePath: await resolveFilepath({
+                    rawUnresolvedFilepath: config,
+                    absolutePath: absoluteFilepathToDocsConfig
+                })
+            });
         } else if (isRemoteJsConfig(config)) {
             remote.push(config);
         } else if (isFileJsConfig(config)) {
-            files.push({ absolutePath: AbsoluteFilePath.of(config.path), strategy: config.strategy });
+            files.push({
+                absolutePath: await resolveFilepath({
+                    rawUnresolvedFilepath: config.path,
+                    absolutePath: absoluteFilepathToDocsConfig
+                })
+            });
         }
     }
 
