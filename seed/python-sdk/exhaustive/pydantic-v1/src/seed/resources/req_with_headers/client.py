@@ -8,6 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -17,7 +18,14 @@ class ReqWithHeadersClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_custom_header(self, *, request: str, x_test_service_header: str, x_test_endpoint_header: str) -> None:
+    def get_with_custom_header(
+        self,
+        *,
+        request: str,
+        x_test_service_header: str,
+        x_test_endpoint_header: str,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - request: str.
@@ -25,19 +33,23 @@ class ReqWithHeadersClient:
             - x_test_service_header: str.
 
             - x_test_endpoint_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "test-headers/custom-header"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
             headers=remove_none_from_dict(
                 {
                     **self._client_wrapper.get_headers(),
                     "X-TEST-SERVICE-HEADER": x_test_service_header,
                     "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                    **(request_options.additional_headers if request_options is not None else {}),
                 }
             ),
-            timeout=60,
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -53,7 +65,12 @@ class AsyncReqWithHeadersClient:
         self._client_wrapper = client_wrapper
 
     async def get_with_custom_header(
-        self, *, request: str, x_test_service_header: str, x_test_endpoint_header: str
+        self,
+        *,
+        request: str,
+        x_test_service_header: str,
+        x_test_endpoint_header: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -62,19 +79,23 @@ class AsyncReqWithHeadersClient:
             - x_test_service_header: str.
 
             - x_test_endpoint_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "test-headers/custom-header"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
             headers=remove_none_from_dict(
                 {
                     **self._client_wrapper.get_headers(),
                     "X-TEST-SERVICE-HEADER": x_test_service_header,
                     "X-TEST-ENDPOINT-HEADER": x_test_endpoint_header,
+                    **(request_options.additional_headers if request_options is not None else {}),
                 }
             ),
-            timeout=60,
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return

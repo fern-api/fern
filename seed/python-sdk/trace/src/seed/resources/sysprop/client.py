@@ -6,6 +6,8 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ..commons.types.language import Language
 
 try:
@@ -18,20 +20,30 @@ class SyspropClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
+    def set_num_warm_instances(
+        self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
             - language: Language.
 
             - num_warm_instances: int.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -41,12 +53,24 @@ class SyspropClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_num_warm_instances(self) -> typing.Dict[Language, int]:
+    def get_num_warm_instances(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[Language, int]:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+        """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sysprop/num-warm-instances"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -61,20 +85,30 @@ class AsyncSyspropClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def set_num_warm_instances(self, language: Language, num_warm_instances: int) -> None:
+    async def set_num_warm_instances(
+        self, language: Language, num_warm_instances: int, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Parameters:
             - language: Language.
 
             - num_warm_instances: int.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"sysprop/num-warm-instances/{language}/{num_warm_instances}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -84,12 +118,24 @@ class AsyncSyspropClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_num_warm_instances(self) -> typing.Dict[Language, int]:
+    async def get_num_warm_instances(
+        self, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Dict[Language, int]:
+        """
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
+        """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "sysprop/num-warm-instances"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()

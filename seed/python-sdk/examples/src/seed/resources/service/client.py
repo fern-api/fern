@@ -8,6 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ..types.types.metadata import Metadata
 from ..types.types.movie import Movie
 from ..types.types.movie_id import MovieId
@@ -25,10 +26,12 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_movie(self, movie_id: MovieId) -> Movie:
+    def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters:
             - movie_id: MovieId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -44,8 +47,14 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -55,10 +64,12 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def create_movie(self, *, request: Movie) -> MovieId:
+    def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
         """
         Parameters:
             - request: Movie.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed import Movie
         from seed.client import SeedExamples
@@ -82,9 +93,15 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
@@ -100,6 +117,7 @@ class ServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         x_api_version: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
         """
         Parameters:
@@ -108,6 +126,8 @@ class ServiceClient:
             - tag: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - x_api_version: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -125,9 +145,21 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "metadata"),
-            params=remove_none_from_dict({"shallow": shallow, "tag": tag}),
-            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "X-API-Version": x_api_version}),
-            timeout=60,
+            params=remove_none_from_dict(
+                {
+                    "shallow": shallow,
+                    "tag": tag,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
+                }
+            ),
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "X-API-Version": x_api_version,
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Metadata, _response.json())  # type: ignore
@@ -142,10 +174,12 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_movie(self, movie_id: MovieId) -> Movie:
+    async def get_movie(self, movie_id: MovieId, *, request_options: typing.Optional[RequestOptions] = None) -> Movie:
         """
         Parameters:
             - movie_id: MovieId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -161,8 +195,14 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"movie/{movie_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Movie, _response.json())  # type: ignore
@@ -172,10 +212,12 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def create_movie(self, *, request: Movie) -> MovieId:
+    async def create_movie(self, *, request: Movie, request_options: typing.Optional[RequestOptions] = None) -> MovieId:
         """
         Parameters:
             - request: Movie.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed import Movie
         from seed.client import AsyncSeedExamples
@@ -199,9 +241,15 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "movie"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(MovieId, _response.json())  # type: ignore
@@ -217,6 +265,7 @@ class AsyncServiceClient:
         shallow: typing.Optional[bool] = None,
         tag: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         x_api_version: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Metadata:
         """
         Parameters:
@@ -225,6 +274,8 @@ class AsyncServiceClient:
             - tag: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - x_api_version: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -242,9 +293,21 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "metadata"),
-            params=remove_none_from_dict({"shallow": shallow, "tag": tag}),
-            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "X-API-Version": x_api_version}),
-            timeout=60,
+            params=remove_none_from_dict(
+                {
+                    "shallow": shallow,
+                    "tag": tag,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
+                }
+            ),
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "X-API-Version": x_api_version,
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Metadata, _response.json())  # type: ignore

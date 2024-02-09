@@ -10,6 +10,7 @@ from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.datetime_utils import serialize_datetime
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .errors.playlist_id_not_found_error import PlaylistIdNotFoundError
 from .errors.unauthorized_error import UnauthorizedError
 from .types.playlist import Playlist
@@ -38,6 +39,7 @@ class PlaylistClient:
         datetime: dt.datetime,
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Playlist:
         """
         Create a new playlist
@@ -50,6 +52,8 @@ class PlaylistClient:
             - optional_datetime: typing.Optional[dt.datetime].
 
             - request: PlaylistCreateRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -60,11 +64,17 @@ class PlaylistClient:
                     "optionalDatetime": serialize_datetime(optional_datetime)
                     if optional_datetime is not None
                     else None,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -83,6 +93,7 @@ class PlaylistClient:
         multi_line_docs: str,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         multiple_field: typing.Union[str, typing.List[str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
         Returns the user's playlists
@@ -99,6 +110,8 @@ class PlaylistClient:
             - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - multiple_field: typing.Union[str, typing.List[str]].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
@@ -110,10 +123,16 @@ class PlaylistClient:
                     "multiLineDocs": multi_line_docs,
                     "optionalMultipleField": optional_multiple_field,
                     "multipleField": multiple_field,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -123,7 +142,9 @@ class PlaylistClient:
             return pydantic.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
+    def get_playlist(
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Playlist:
         """
         Returns a playlist
 
@@ -131,14 +152,22 @@ class PlaylistClient:
             - service_param: int.
 
             - playlist_id: PlaylistId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -156,7 +185,12 @@ class PlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request: typing.Optional[UpdatePlaylistRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[Playlist]:
         """
         Updates a playlist
@@ -167,15 +201,23 @@ class PlaylistClient:
             - playlist_id: PlaylistId.
 
             - request: typing.Optional[UpdatePlaylistRequest].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -190,7 +232,9 @@ class PlaylistClient:
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
+    def delete_playlist(
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Deletes a playlist
 
@@ -198,14 +242,22 @@ class PlaylistClient:
             - service_param: int.
 
             - playlist_id: PlaylistId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -227,6 +279,7 @@ class AsyncPlaylistClient:
         datetime: dt.datetime,
         optional_datetime: typing.Optional[dt.datetime] = None,
         request: PlaylistCreateRequest,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> Playlist:
         """
         Create a new playlist
@@ -239,6 +292,8 @@ class AsyncPlaylistClient:
             - optional_datetime: typing.Optional[dt.datetime].
 
             - request: PlaylistCreateRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -249,11 +304,17 @@ class AsyncPlaylistClient:
                     "optionalDatetime": serialize_datetime(optional_datetime)
                     if optional_datetime is not None
                     else None,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -272,6 +333,7 @@ class AsyncPlaylistClient:
         multi_line_docs: str,
         optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         multiple_field: typing.Union[str, typing.List[str]],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.List[Playlist]:
         """
         Returns the user's playlists
@@ -288,6 +350,8 @@ class AsyncPlaylistClient:
             - optional_multiple_field: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - multiple_field: typing.Union[str, typing.List[str]].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
@@ -299,10 +363,16 @@ class AsyncPlaylistClient:
                     "multiLineDocs": multi_line_docs,
                     "optionalMultipleField": optional_multiple_field,
                     "multipleField": multiple_field,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -312,7 +382,9 @@ class AsyncPlaylistClient:
             return pydantic.parse_obj_as(typing.List[Playlist], _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_playlist(self, service_param: int, playlist_id: PlaylistId) -> Playlist:
+    async def get_playlist(
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Playlist:
         """
         Returns a playlist
 
@@ -320,14 +392,22 @@ class AsyncPlaylistClient:
             - service_param: int.
 
             - playlist_id: PlaylistId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -345,7 +425,12 @@ class AsyncPlaylistClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_playlist(
-        self, service_param: int, playlist_id: PlaylistId, *, request: typing.Optional[UpdatePlaylistRequest] = None
+        self,
+        service_param: int,
+        playlist_id: PlaylistId,
+        *,
+        request: typing.Optional[UpdatePlaylistRequest] = None,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> typing.Optional[Playlist]:
         """
         Updates a playlist
@@ -356,15 +441,23 @@ class AsyncPlaylistClient:
             - playlist_id: PlaylistId.
 
             - request: typing.Optional[UpdatePlaylistRequest].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -379,7 +472,9 @@ class AsyncPlaylistClient:
                 )
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_playlist(self, service_param: int, playlist_id: PlaylistId) -> None:
+    async def delete_playlist(
+        self, service_param: int, playlist_id: PlaylistId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Deletes a playlist
 
@@ -387,14 +482,22 @@ class AsyncPlaylistClient:
             - service_param: int.
 
             - playlist_id: PlaylistId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return

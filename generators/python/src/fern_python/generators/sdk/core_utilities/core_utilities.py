@@ -51,6 +51,15 @@ class CoreUtilities:
             ),
             exports={"remove_none_from_dict"},
         )
+        self._copy_file_to_project(
+            project=project,
+            relative_filepath_on_disk="request_options.py",
+            filepath_in_project=Filepath(
+                directories=self.filepath,
+                file=Filepath.FilepathPart(module_name="request_options"),
+            ),
+            exports={"RequestOptions"},
+        )
         project.add_dependency(PYDANTIC_DEPENDENCY)
 
     def _copy_file_to_project(
@@ -169,4 +178,12 @@ class CoreUtilities:
                 ),
                 args=[datetime],
             )
+        )
+
+    def get_reference_to_request_options(self) -> AST.ClassReference:
+        return AST.ClassReference(
+            qualified_name_excluding_import=(),
+            import_=AST.ReferenceImport(
+                module=AST.Module.local(*self._module_path, "request_options"), named_import="RequestOptions"
+            ),
         )

@@ -7,6 +7,7 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .types.migration import Migration
 
 try:
@@ -19,16 +20,27 @@ class MigrationClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
+    def get_attempted_migrations(
+        self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[Migration]:
         """
         Parameters:
             - admin_key_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "migration-info/all"),
-            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "admin-key-header": admin_key_header,
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -43,16 +55,27 @@ class AsyncMigrationClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_attempted_migrations(self, *, admin_key_header: str) -> typing.List[Migration]:
+    async def get_attempted_migrations(
+        self, *, admin_key_header: str, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.List[Migration]:
         """
         Parameters:
             - admin_key_header: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "migration-info/all"),
-            headers=remove_none_from_dict({**self._client_wrapper.get_headers(), "admin-key-header": admin_key_header}),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    "admin-key-header": admin_key_header,
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()

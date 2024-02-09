@@ -9,6 +9,8 @@ import typing_extensions
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .types.create_options_response import CreateOptionsResponse
 from .types.options import Options
 from .types.undiscriminated_options import UndiscriminatedOptions
@@ -26,17 +28,27 @@ class LiteralClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_options(self, *, values: typing.Dict[str, str]) -> CreateOptionsResponse:
+    def create_options(
+        self, *, values: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateOptionsResponse:
         """
         Parameters:
             - values: typing.Dict[str, str].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"values": values}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(CreateOptionsResponse, _response.json())  # type: ignore
@@ -46,17 +58,27 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
+    def get_options(
+        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+    ) -> Options:
         """
         Parameters:
             - dry_run: typing_extensions.Literal[True].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"dryRun": dry_run}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Options, _response.json())  # type: ignore
@@ -66,17 +88,27 @@ class LiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
+    def get_undiscriminated_options(
+        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+    ) -> UndiscriminatedOptions:
         """
         Parameters:
             - dry_run: typing_extensions.Literal[True].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"dryRun": dry_run}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(UndiscriminatedOptions, _response.json())  # type: ignore
@@ -91,17 +123,27 @@ class AsyncLiteralClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_options(self, *, values: typing.Dict[str, str]) -> CreateOptionsResponse:
+    async def create_options(
+        self, *, values: typing.Dict[str, str], request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateOptionsResponse:
         """
         Parameters:
             - values: typing.Dict[str, str].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"values": values}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(CreateOptionsResponse, _response.json())  # type: ignore
@@ -111,17 +153,27 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_options(self, *, dry_run: typing_extensions.Literal[True]) -> Options:
+    async def get_options(
+        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+    ) -> Options:
         """
         Parameters:
             - dry_run: typing_extensions.Literal[True].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"dryRun": dry_run}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(Options, _response.json())  # type: ignore
@@ -131,17 +183,27 @@ class AsyncLiteralClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def get_undiscriminated_options(self, *, dry_run: typing_extensions.Literal[True]) -> UndiscriminatedOptions:
+    async def get_undiscriminated_options(
+        self, *, dry_run: typing_extensions.Literal[True], request_options: typing.Optional[RequestOptions] = None
+    ) -> UndiscriminatedOptions:
         """
         Parameters:
             - dry_run: typing_extensions.Literal[True].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"dryRun": dry_run}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(UndiscriminatedOptions, _response.json())  # type: ignore

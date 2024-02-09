@@ -8,6 +8,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .types.maybe_list import MaybeList
 from .types.maybe_list_or_set import MaybeListOrSet
 from .types.my_object import MyObject
@@ -37,6 +38,7 @@ class ServiceClient:
         maybe_list_or_set: MaybeListOrSet,
         optional_maybe_list_or_set: typing.Optional[MaybeListOrSet] = None,
         list_of_objects: typing.List[MyObject],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -67,10 +69,13 @@ class ServiceClient:
             - optional_maybe_list_or_set: typing.Optional[MaybeListOrSet].
 
             - list_of_objects: typing.List[MyObject].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             data=jsonable_encoder(
                 {
                     "maybeString": maybe_string,
@@ -88,8 +93,13 @@ class ServiceClient:
                 }
             ),
             files={"file": file, "maybeFile": maybe_file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -99,18 +109,26 @@ class ServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def just_file(self, *, file: typing.IO) -> None:
+    def just_file(self, *, file: typing.IO, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - file: typing.IO.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             data=jsonable_encoder({}),
             files={"file": file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -129,6 +147,7 @@ class ServiceClient:
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         file: typing.IO,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -143,6 +162,8 @@ class ServiceClient:
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - file: typing.IO.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -154,12 +175,18 @@ class ServiceClient:
                     "maybeInteger": maybe_integer,
                     "listOfStrings": list_of_strings,
                     "optionalListOfStrings": optional_list_of_strings,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
             data=jsonable_encoder({}),
             files={"file": file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -191,6 +218,7 @@ class AsyncServiceClient:
         maybe_list_or_set: MaybeListOrSet,
         optional_maybe_list_or_set: typing.Optional[MaybeListOrSet] = None,
         list_of_objects: typing.List[MyObject],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -221,10 +249,13 @@ class AsyncServiceClient:
             - optional_maybe_list_or_set: typing.Optional[MaybeListOrSet].
 
             - list_of_objects: typing.List[MyObject].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             data=jsonable_encoder(
                 {
                     "maybeString": maybe_string,
@@ -242,8 +273,13 @@ class AsyncServiceClient:
                 }
             ),
             files={"file": file, "maybeFile": maybe_file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -253,18 +289,26 @@ class AsyncServiceClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def just_file(self, *, file: typing.IO) -> None:
+    async def just_file(self, *, file: typing.IO, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - file: typing.IO.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             data=jsonable_encoder({}),
             files={"file": file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -283,6 +327,7 @@ class AsyncServiceClient:
         list_of_strings: typing.Union[str, typing.List[str]],
         optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]] = None,
         file: typing.IO,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -297,6 +342,8 @@ class AsyncServiceClient:
             - optional_list_of_strings: typing.Optional[typing.Union[str, typing.List[str]]].
 
             - file: typing.IO.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -308,12 +355,18 @@ class AsyncServiceClient:
                     "maybeInteger": maybe_integer,
                     "listOfStrings": list_of_strings,
                     "optionalListOfStrings": optional_list_of_strings,
+                    **(request_options.additional_query_parameters if request_options is not None else None),
                 }
             ),
             data=jsonable_encoder({}),
             files={"file": file},
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return

@@ -6,6 +6,8 @@ from json.decoder import JSONDecodeError
 
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 
 # this is used as the default value for optional parameters
 OMIT = typing.cast(typing.Any, ...)
@@ -15,17 +17,25 @@ class ServiceClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def upload(self, *, request: bytes) -> None:
+    def upload(self, *, request: bytes, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - request: bytes.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "upload-content"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             content=request,
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -40,17 +50,25 @@ class AsyncServiceClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def upload(self, *, request: bytes) -> None:
+    async def upload(self, *, request: bytes, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - request: bytes.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "upload-content"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             content=request,
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return

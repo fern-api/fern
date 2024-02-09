@@ -7,6 +7,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ..commons.types.problem_id import ProblemId
 from ..commons.types.variable_type import VariableType
 from .types.create_problem_request import CreateProblemRequest
@@ -28,19 +30,29 @@ class ProblemClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
+    def create_problem(
+        self, *, request: CreateProblemRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateProblemResponse:
         """
         Creates a problem
 
         Parameters:
             - request: CreateProblemRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/create"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -50,7 +62,13 @@ class ProblemClient:
             return pydantic.parse_obj_as(CreateProblemResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
+    def update_problem(
+        self,
+        problem_id: ProblemId,
+        *,
+        request: CreateProblemRequest,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProblemResponse:
         """
         Updates a problem
 
@@ -58,13 +76,21 @@ class ProblemClient:
             - problem_id: ProblemId.
 
             - request: CreateProblemRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -74,18 +100,26 @@ class ProblemClient:
             return pydantic.parse_obj_as(UpdateProblemResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete_problem(self, problem_id: ProblemId) -> None:
+    def delete_problem(self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Soft deletes a problem
 
         Parameters:
             - problem_id: ProblemId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -96,7 +130,12 @@ class ProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def get_default_starter_files(
-        self, *, input_params: typing.List[VariableTypeAndName], output_type: VariableType, method_name: str
+        self,
+        *,
+        input_params: typing.List[VariableTypeAndName],
+        output_type: VariableType,
+        method_name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetDefaultStarterFilesResponse:
         """
         Returns default starter files for problem
@@ -113,13 +152,20 @@ class ProblemClient:
                                   - Equals `=`
                                   - Period `.`
 
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/default-starter-files"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -134,19 +180,29 @@ class AsyncProblemClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def create_problem(self, *, request: CreateProblemRequest) -> CreateProblemResponse:
+    async def create_problem(
+        self, *, request: CreateProblemRequest, request_options: typing.Optional[RequestOptions] = None
+    ) -> CreateProblemResponse:
         """
         Creates a problem
 
         Parameters:
             - request: CreateProblemRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/create"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -156,7 +212,13 @@ class AsyncProblemClient:
             return pydantic.parse_obj_as(CreateProblemResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def update_problem(self, problem_id: ProblemId, *, request: CreateProblemRequest) -> UpdateProblemResponse:
+    async def update_problem(
+        self,
+        problem_id: ProblemId,
+        *,
+        request: CreateProblemRequest,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> UpdateProblemResponse:
         """
         Updates a problem
 
@@ -164,13 +226,21 @@ class AsyncProblemClient:
             - problem_id: ProblemId.
 
             - request: CreateProblemRequest.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/update/{problem_id}"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()
@@ -180,18 +250,28 @@ class AsyncProblemClient:
             return pydantic.parse_obj_as(UpdateProblemResponse, _response_json)  # type: ignore
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete_problem(self, problem_id: ProblemId) -> None:
+    async def delete_problem(
+        self, problem_id: ProblemId, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> None:
         """
         Soft deletes a problem
 
         Parameters:
             - problem_id: ProblemId.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problem-crud/delete/{problem_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -202,7 +282,12 @@ class AsyncProblemClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def get_default_starter_files(
-        self, *, input_params: typing.List[VariableTypeAndName], output_type: VariableType, method_name: str
+        self,
+        *,
+        input_params: typing.List[VariableTypeAndName],
+        output_type: VariableType,
+        method_name: str,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> GetDefaultStarterFilesResponse:
         """
         Returns default starter files for problem
@@ -219,13 +304,20 @@ class AsyncProblemClient:
                                   - Equals `=`
                                   - Period `.`
 
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problem-crud/default-starter-files"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"inputParams": input_params, "outputType": output_type, "methodName": method_name}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         try:
             _response_json = _response.json()

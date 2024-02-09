@@ -9,6 +9,7 @@ from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
 from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from .types.currency import Currency
 
 try:
@@ -25,7 +26,13 @@ class PaymentClient:
         self._client_wrapper = client_wrapper
 
     def create(
-        self, *, amount: int, currency: Currency, idempotency_key: str, idempotency_expiration: int
+        self,
+        *,
+        amount: int,
+        currency: Currency,
+        idempotency_key: str,
+        idempotency_expiration: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
         Parameters:
@@ -36,19 +43,23 @@ class PaymentClient:
             - idempotency_key: str.
 
             - idempotency_expiration: int.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "payment"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"amount": amount, "currency": currency}),
             headers=remove_none_from_dict(
                 {
                     **self._client_wrapper.get_headers(),
                     "Idempotency-Key": idempotency_key,
                     "Idempotency-Expiration": idempotency_expiration,
+                    **(request_options.additional_headers if request_options is not None else {}),
                 }
             ),
-            timeout=60,
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -58,16 +69,24 @@ class PaymentClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def delete(self, payment_id: str) -> None:
+    def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - payment_id: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"payment/{payment_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -83,7 +102,13 @@ class AsyncPaymentClient:
         self._client_wrapper = client_wrapper
 
     async def create(
-        self, *, amount: int, currency: Currency, idempotency_key: str, idempotency_expiration: int
+        self,
+        *,
+        amount: int,
+        currency: Currency,
+        idempotency_key: str,
+        idempotency_expiration: int,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> uuid.UUID:
         """
         Parameters:
@@ -94,19 +119,23 @@ class AsyncPaymentClient:
             - idempotency_key: str.
 
             - idempotency_expiration: int.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "payment"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"amount": amount, "currency": currency}),
             headers=remove_none_from_dict(
                 {
                     **self._client_wrapper.get_headers(),
                     "Idempotency-Key": idempotency_key,
                     "Idempotency-Expiration": idempotency_expiration,
+                    **(request_options.additional_headers if request_options is not None else {}),
                 }
             ),
-            timeout=60,
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -116,16 +145,24 @@ class AsyncPaymentClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def delete(self, payment_id: str) -> None:
+    async def delete(self, payment_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> None:
         """
         Parameters:
             - payment_id: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"payment/{payment_id}"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return

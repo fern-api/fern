@@ -7,6 +7,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ..errors.errors.bad_request import BadRequest
 from ..errors.errors.unauthorized_request import UnauthorizedRequest
 from ..errors.types.unauthorized_request_error_body import UnauthorizedRequestErrorBody
@@ -24,15 +26,24 @@ class CustomAuthClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def get_with_custom_auth(self) -> bool:
+    def get_with_custom_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         GET request with custom auth scheme
+
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "custom-auth"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
@@ -46,19 +57,29 @@ class CustomAuthClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def post_with_custom_auth(self, *, request: typing.Any) -> bool:
+    def post_with_custom_auth(
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> bool:
         """
         POST request with custom auth scheme
 
         Parameters:
             - request: typing.Any.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "custom-auth"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
@@ -79,15 +100,24 @@ class AsyncCustomAuthClient:
     def __init__(self, *, client_wrapper: AsyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    async def get_with_custom_auth(self) -> bool:
+    async def get_with_custom_auth(self, *, request_options: typing.Optional[RequestOptions] = None) -> bool:
         """
         GET request with custom auth scheme
+
+        Parameters:
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "custom-auth"),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            params=request_options.additional_query_parameters if request_options is not None else None,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
@@ -101,19 +131,29 @@ class AsyncCustomAuthClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def post_with_custom_auth(self, *, request: typing.Any) -> bool:
+    async def post_with_custom_auth(
+        self, *, request: typing.Any, request_options: typing.Optional[RequestOptions] = None
+    ) -> bool:
         """
         POST request with custom auth scheme
 
         Parameters:
             - request: typing.Any.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "custom-auth"),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore

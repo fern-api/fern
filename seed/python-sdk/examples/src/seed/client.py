@@ -8,6 +8,8 @@ import httpx
 from .core.api_error import ApiError
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from .core.jsonable_encoder import jsonable_encoder
+from .core.remove_none_from_dict import remove_none_from_dict
+from .core.request_options import RequestOptions
 from .environment import SeedExamplesEnvironment
 from .resources.file.client import AsyncFileClient, FileClient
 from .resources.health.client import AsyncHealthClient, HealthClient
@@ -41,10 +43,12 @@ class SeedExamples:
         self.health = HealthClient(client_wrapper=self._client_wrapper)
         self.service = ServiceClient(client_wrapper=self._client_wrapper)
 
-    def echo(self, *, request: str) -> str:
+    def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - request: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import SeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -60,9 +64,15 @@ class SeedExamples:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -92,10 +102,12 @@ class AsyncSeedExamples:
         self.health = AsyncHealthClient(client_wrapper=self._client_wrapper)
         self.service = AsyncServiceClient(client_wrapper=self._client_wrapper)
 
-    async def echo(self, *, request: str) -> str:
+    async def echo(self, *, request: str, request_options: typing.Optional[RequestOptions] = None) -> str:
         """
         Parameters:
             - request: str.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         ---
         from seed.client import AsyncSeedExamples
         from seed.environment import SeedExamplesEnvironment
@@ -111,9 +123,15 @@ class AsyncSeedExamples:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

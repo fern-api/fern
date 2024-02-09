@@ -7,6 +7,8 @@ from json.decoder import JSONDecodeError
 from ...core.api_error import ApiError
 from ...core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
 from ...core.jsonable_encoder import jsonable_encoder
+from ...core.remove_none_from_dict import remove_none_from_dict
+from ...core.request_options import RequestOptions
 from ..submission.types.submission_id import SubmissionId
 from ..submission.types.test_case_result_with_stdout import TestCaseResultWithStdout
 from ..submission.types.test_submission_status import TestSubmissionStatus
@@ -26,21 +28,35 @@ class AdminClient:
     def __init__(self, *, client_wrapper: SyncClientWrapper):
         self._client_wrapper = client_wrapper
 
-    def update_test_submission_status(self, submission_id: SubmissionId, *, request: TestSubmissionStatus) -> None:
+    def update_test_submission_status(
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: TestSubmissionStatus,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: TestSubmissionStatus.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -50,21 +66,35 @@ class AdminClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
+    def send_test_submission_update(
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: TestSubmissionUpdate,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: TestSubmissionUpdate.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -75,22 +105,34 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def update_workspace_submission_status(
-        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: WorkspaceSubmissionStatus,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: WorkspaceSubmissionStatus.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -101,22 +143,34 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def send_workspace_submission_update(
-        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: WorkspaceSubmissionUpdate,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: WorkspaceSubmissionUpdate.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -133,6 +187,7 @@ class AdminClient:
         *,
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -143,6 +198,8 @@ class AdminClient:
             - result: TestCaseResultWithStdout.
 
             - trace_responses: typing.List[TraceResponse].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -150,9 +207,15 @@ class AdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -163,7 +226,12 @@ class AdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     def store_traced_test_case_v_2(
-        self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
+        self,
+        submission_id: SubmissionId,
+        test_case_id: TestCaseId,
+        *,
+        request: typing.List[TraceResponseV2],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -172,6 +240,8 @@ class AdminClient:
             - test_case_id: TestCaseId.
 
             - request: typing.List[TraceResponseV2].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
@@ -179,9 +249,15 @@ class AdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -197,6 +273,7 @@ class AdminClient:
         *,
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -205,15 +282,23 @@ class AdminClient:
             - workspace_run_details: WorkspaceRunDetails.
 
             - trace_responses: typing.List[TraceResponse].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -223,21 +308,35 @@ class AdminClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    def store_traced_workspace_v_2(self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]) -> None:
+    def store_traced_workspace_v_2(
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: typing.List[TraceResponseV2],
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: typing.List[TraceResponseV2].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -253,22 +352,34 @@ class AsyncAdminClient:
         self._client_wrapper = client_wrapper
 
     async def update_test_submission_status(
-        self, submission_id: SubmissionId, *, request: TestSubmissionStatus
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: TestSubmissionStatus,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: TestSubmissionStatus.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -278,21 +389,35 @@ class AsyncAdminClient:
             raise ApiError(status_code=_response.status_code, body=_response.text)
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
-    async def send_test_submission_update(self, submission_id: SubmissionId, *, request: TestSubmissionUpdate) -> None:
+    async def send_test_submission_update(
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: TestSubmissionUpdate,
+        request_options: typing.Optional[RequestOptions] = None,
+    ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: TestSubmissionUpdate.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -303,22 +428,34 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def update_workspace_submission_status(
-        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionStatus
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: WorkspaceSubmissionStatus,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: WorkspaceSubmissionStatus.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -329,22 +466,34 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def send_workspace_submission_update(
-        self, submission_id: SubmissionId, *, request: WorkspaceSubmissionUpdate
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: WorkspaceSubmissionUpdate,
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: WorkspaceSubmissionUpdate.
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -361,6 +510,7 @@ class AsyncAdminClient:
         *,
         result: TestCaseResultWithStdout,
         trace_responses: typing.List[TraceResponse],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -371,6 +521,8 @@ class AsyncAdminClient:
             - result: TestCaseResultWithStdout.
 
             - trace_responses: typing.List[TraceResponse].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -378,9 +530,15 @@ class AsyncAdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -391,7 +549,12 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def store_traced_test_case_v_2(
-        self, submission_id: SubmissionId, test_case_id: TestCaseId, *, request: typing.List[TraceResponseV2]
+        self,
+        submission_id: SubmissionId,
+        test_case_id: TestCaseId,
+        *,
+        request: typing.List[TraceResponseV2],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -400,6 +563,8 @@ class AsyncAdminClient:
             - test_case_id: TestCaseId.
 
             - request: typing.List[TraceResponseV2].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
@@ -407,9 +572,15 @@ class AsyncAdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -425,6 +596,7 @@ class AsyncAdminClient:
         *,
         workspace_run_details: WorkspaceRunDetails,
         trace_responses: typing.List[TraceResponse],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
@@ -433,15 +605,23 @@ class AsyncAdminClient:
             - workspace_run_details: WorkspaceRunDetails.
 
             - trace_responses: typing.List[TraceResponse].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses}),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -452,22 +632,34 @@ class AsyncAdminClient:
         raise ApiError(status_code=_response.status_code, body=_response_json)
 
     async def store_traced_workspace_v_2(
-        self, submission_id: SubmissionId, *, request: typing.List[TraceResponseV2]
+        self,
+        submission_id: SubmissionId,
+        *,
+        request: typing.List[TraceResponseV2],
+        request_options: typing.Optional[RequestOptions] = None,
     ) -> None:
         """
         Parameters:
             - submission_id: SubmissionId.
 
             - request: typing.List[TraceResponseV2].
+
+            - request_options: typing.Optional[RequestOptions]. Additional options for request-specific configuration when calling APIs via the SDK.
         """
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
+            params=request_options.additional_query_parameters if request_options is not None else None,
             json=jsonable_encoder(request),
-            headers=self._client_wrapper.get_headers(),
-            timeout=60,
+            headers=remove_none_from_dict(
+                {
+                    **self._client_wrapper.get_headers(),
+                    **(request_options.additional_headers if request_options is not None else {}),
+                }
+            ),
+            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
         )
         if 200 <= _response.status_code < 300:
             return
