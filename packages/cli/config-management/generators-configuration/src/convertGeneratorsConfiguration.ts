@@ -195,7 +195,6 @@ async function convertOutputMode({
                 })
             );
         case "nuget":
-            throw new Error("Nuget is not supported");
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
@@ -283,7 +282,6 @@ function getGithubPublishInfo(output: GeneratorOutputSchema): FernFiddle.GithubP
                           }
             });
         case "nuget":
-            throw new Error("Nuget is not supported");
         case "rubygems":
             return FernFiddle.GithubPublishInfo.rubygems({
                 registryUrl: output.url ?? "https://rubygems.org/",
