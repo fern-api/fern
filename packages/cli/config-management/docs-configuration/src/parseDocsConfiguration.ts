@@ -193,7 +193,8 @@ async function convertJsConfig(
                 absolutePath: await resolveFilepath({
                     rawUnresolvedFilepath: config.path,
                     absolutePath: absoluteFilepathToDocsConfig
-                })
+                }),
+                strategy: config.strategy
             });
         }
     }
