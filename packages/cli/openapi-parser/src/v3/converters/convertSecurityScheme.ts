@@ -3,49 +3,48 @@ import { EnumSchema } from "@fern-fern/openapi-ir-model/finalIr";
 import { OpenAPIV3 } from "openapi-types";
 import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
-import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import { getExtension } from "../extensions/getExtension";
+import { getBasicSecuritySchemeNames, SecuritySchemeNames } from "../extensions/getSecuritySchemeNames";
 import { convertSchemaWithExampleToSchema } from "../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertEnum } from "./schema/convertEnum";
 
 export function convertSecurityScheme(
+    openapi: OpenAPIV3.Document,
     securityScheme: OpenAPIV3.SecuritySchemeObject | OpenAPIV3.ReferenceObject
 ): SecurityScheme | undefined {
     if (isReferenceObject(securityScheme)) {
         throw new Error(`Converting referenced security schemes is unsupported: ${JSON.stringify(securityScheme)}`);
     }
-    return convertSecuritySchemeHelper(securityScheme);
+    return convertSecuritySchemeHelper(openapi, securityScheme);
 }
 
-function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObject): SecurityScheme | undefined {
+function convertSecuritySchemeHelper(
+    openapi: OpenAPIV3.Document,
+    securityScheme: OpenAPIV3.SecuritySchemeObject
+): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
+        const bearerNames = getExtension<SecuritySchemeNames>(openapi, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.header({
             headerName: securityScheme.name,
             prefix: bearerFormat != null ? "Bearer" : undefined,
-            headerVariableName: getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
-            headerEnvVar: getExtension<string>(securityScheme, FernOpenAPIExtension.AUTH_ENVIRONMENT_VARIABLE_NAME)
+            headerVariableName: bearerNames?.name,
+            headerEnvVar: bearerNames?.envvar
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
-        const tokenVariableName = getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME);
+        const bearerNames = getExtension<SecuritySchemeNames>(openapi, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.bearer({
-            tokenVariableName: tokenVariableName ?? undefined,
-            tokenEnvVar: getExtension<string>(securityScheme, FernOpenAPIExtension.AUTH_ENVIRONMENT_VARIABLE_NAME)
+            tokenVariableName: bearerNames?.name,
+            tokenEnvVar: bearerNames?.envvar
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
-        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
+        const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(openapi);
         return SecurityScheme.basic({
-            usernameVariableName: basicSecuritySchemeNaming.usernameVariable ?? undefined,
-            usernameEnvVar: getExtension<string>(
-                securityScheme,
-                FernOpenAPIExtension.AUTH_USERNAME_ENVIRONMENT_VARIABLE_NAME
-            ),
-            passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined,
-            passwordEnvVar: getExtension<string>(
-                securityScheme,
-                FernOpenAPIExtension.AUTH_PASSWORD_ENVIRONMENT_VARIABLE_NAME
-            )
+            usernameVariableName: basicSecuritySchemeNaming?.username?.name,
+            usernameEnvVar: basicSecuritySchemeNaming?.username?.envvar,
+            passwordVariableName: basicSecuritySchemeNaming?.password?.name,
+            passwordEnvVar: basicSecuritySchemeNaming?.password?.envvar
         });
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({

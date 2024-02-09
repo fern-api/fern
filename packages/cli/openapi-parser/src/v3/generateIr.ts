@@ -31,11 +31,11 @@ export function generateIr(openApi: OpenAPIV3.Document, taskContext: TaskContext
 
     const securitySchemes: Record<string, SecurityScheme> = Object.fromEntries(
         Object.entries(openApi.components?.securitySchemes ?? {}).map(([key, securityScheme]) => {
-            const convertedSecurityScheme = convertSecurityScheme(securityScheme);
+            const convertedSecurityScheme = convertSecurityScheme(openApi, securityScheme);
             if (convertedSecurityScheme == null) {
                 return [];
             }
-            return [key, convertSecurityScheme(securityScheme)];
+            return [key, convertSecurityScheme(openApi, securityScheme)];
         })
     );
     const authHeaders = new Set(

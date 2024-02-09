@@ -117,36 +117,6 @@ export const FernOpenAPIExtension = {
     PARAMETER_NAME: "x-fern-parameter-name",
 
     /**
-     * securitySchemes:
-     *   Basic:
-     *     scheme: http
-     *     type: basic
-     *     x-fern-username-variable-name: clientId
-     *     x-fern-password-variable-name: clientSecret
-     */
-    BASIC_AUTH_USERNAME_VARIABLE_NAME: "x-fern-username-variable-name",
-    BASIC_AUTH_PASSWORD_VARIABLE_NAME: "x-fern-password-variable-name",
-
-    /**
-     * securitySchemes:
-     *   Bearer:
-     *     scheme: http
-     *     type: bearer
-     *     x-fern-token-variable-name: apiKey
-     */
-    BEARER_TOKEN_VARIABLE_NAME: "x-fern-token-variable-name",
-
-    /**
-     * securitySchemes:
-     *   Bearer:
-     *     type: apiKey
-     *     in: header
-     *     name: X-API-KEY-ID
-     *     x-fern-header-variable-name: apiKeyId
-     */
-    HEADER_VARIABLE_NAME: "x-fern-header-variable-name",
-
-    /**
      * The x-fern-enum allows you to specify docs for the enum value.
      * If your enum is not codegen friendly (not alphanumeric), then you can specify a codegen name as well.
      *
@@ -235,24 +205,29 @@ export const FernOpenAPIExtension = {
     EXAMPLES: "x-fern-examples",
 
     /**
-     * securitySchemes:
-     *   Bearer:
-     *     scheme: http
-     *     type: bearer
-     *     x-fern-auth-environment-variable-name: MY_AUTH_TOKEN
+     * x-fern-bearer:
+     *   name: apiKey
+     *   envvar: MY_AUTH_TOKEN
      */
-    AUTH_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-environment-variable-name",
+    FERN_BEARER_TOKEN: "x-fern-bearer",
+
     /**
-     * For basic auth, you must specify the environment variable for both fie;lds
-     * securitySchemes:
-     *   Basic:
-     *     scheme: http
-     *     type: basic
-     *     x-fern-auth-username-environment-variable-name: BASIC_USERNAME
-     *     x-fern-auth-password-environment-variable-name: BASIC_PASSWORD
+     * x-fern-header:
+     *   name: header
+     *   envvar: MY_AUTH_TOKEN
      */
-    AUTH_USERNAME_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-username-environment-variable-name",
-    AUTH_PASSWORD_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-password-environment-variable-name"
+    FERN_HEADER_AUTH: "x-fern-header",
+
+    /**
+     * x-fern-basic:
+     *   username:
+     *      name: username
+     *      envvar: MY_USERNAME
+     *   password:
+     *      name: password
+     *      envvar: MY_PASSWORD
+     */
+    FERN_BASIC_AUTH: "x-fern-basic"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
