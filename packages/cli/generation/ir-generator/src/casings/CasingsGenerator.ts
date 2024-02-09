@@ -8,6 +8,8 @@ export interface CasingsGenerator {
     generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
 }
 
+const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
+
 export function constructCasingsGenerator({
     generationLanguage,
     smartCasing
@@ -27,7 +29,10 @@ export function constructCasingsGenerator({
             let snakeCaseName = snakeCase(name);
             const camelCaseWords = words(camelCaseName);
             if (smartCasing) {
-                if (!hasAdjacentCommonInitialisms(camelCaseWords)) {
+                if (
+                    !hasAdjacentCommonInitialisms(camelCaseWords) &&
+                    (generationLanguage == null || CAPITALIZE_INITIALISM.includes(generationLanguage))
+                ) {
                     camelCaseName = camelCaseWords
                         .map((word, index) => {
                             if (index > 0) {
