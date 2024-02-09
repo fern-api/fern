@@ -99726,8 +99726,10 @@ For \`session_expired\` errors, the description can be (among others):
   },
   "securitySchemes": {
     "basicAuth": {
+      "passwordEnvVar": undefined,
       "passwordVariableName": undefined,
       "type": "basic",
+      "usernameEnvVar": undefined,
       "usernameVariableName": undefined,
     },
   },

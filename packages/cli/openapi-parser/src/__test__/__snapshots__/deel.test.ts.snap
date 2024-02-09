@@ -47444,6 +47444,7 @@ exports[`open api parser deel parse open api 1`] = `
   },
   "securitySchemes": {
     "deelToken": {
+      "tokenEnvVar": undefined,
       "tokenVariableName": undefined,
       "type": "bearer",
     },

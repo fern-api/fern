@@ -15,16 +15,45 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             const basicAuthScheme: RawSchemas.BasicAuthSchemeSchema = {
                 scheme: "basic"
             };
+
             if (securityScheme.usernameVariableName != null) {
-                basicAuthScheme.username = {
-                    name: securityScheme.usernameVariableName
-                };
+                if (basicAuthScheme.username === undefined) {
+                    basicAuthScheme.username = {
+                        name: securityScheme.usernameVariableName
+                    };
+                } else {
+                    basicAuthScheme.username.name = securityScheme.usernameVariableName;
+                }
             }
+            if (securityScheme.usernameEnvVar != null) {
+                if (basicAuthScheme.username === undefined) {
+                    basicAuthScheme.username = {
+                        env: securityScheme.usernameEnvVar
+                    };
+                } else {
+                    basicAuthScheme.username.env = securityScheme.usernameEnvVar;
+                }
+            }
+
             if (securityScheme.passwordVariableName != null) {
-                basicAuthScheme.password = {
-                    name: securityScheme.passwordVariableName
-                };
+                if (basicAuthScheme.password === undefined) {
+                    basicAuthScheme.password = {
+                        name: securityScheme.passwordVariableName
+                    };
+                } else {
+                    basicAuthScheme.password.name = securityScheme.passwordVariableName;
+                }
             }
+            if (securityScheme.passwordEnvVar != null) {
+                if (basicAuthScheme.password === undefined) {
+                    basicAuthScheme.password = {
+                        env: securityScheme.passwordEnvVar
+                    };
+                } else {
+                    basicAuthScheme.password.env = securityScheme.passwordEnvVar;
+                }
+            }
+
             context.builder.addAuthScheme({
                 name: BASIC_AUTH_SCHEME,
                 schema: basicAuthScheme
@@ -37,11 +66,26 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             const bearerAuthScheme: RawSchemas.AuthSchemeDeclarationSchema = {
                 scheme: "bearer"
             };
+
             if (securityScheme.tokenVariableName != null) {
-                bearerAuthScheme.token = {
-                    name: securityScheme.tokenVariableName
-                };
+                if (bearerAuthScheme.token === undefined) {
+                    bearerAuthScheme.token = {
+                        name: securityScheme.tokenVariableName
+                    };
+                } else {
+                    bearerAuthScheme.token.name = securityScheme.tokenVariableName;
+                }
             }
+            if (securityScheme.tokenEnvVar != null) {
+                if (bearerAuthScheme.token === undefined) {
+                    bearerAuthScheme.token = {
+                        env: securityScheme.tokenEnvVar
+                    };
+                } else {
+                    bearerAuthScheme.token.env = securityScheme.tokenEnvVar;
+                }
+            }
+
             context.builder.addAuthScheme({
                 name: BEARER_AUTH_SCHEME,
                 schema: bearerAuthScheme
@@ -52,14 +96,20 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             }
         } else if (securityScheme.type === "header") {
             if (!setAuth) {
+                const schema: RawSchemas.AuthSchemeDeclarationSchema = {
+                    header: securityScheme.headerName,
+                    name: securityScheme.headerVariableName ?? "apiKey",
+                    type: "string"
+                };
+                if (securityScheme.headerEnvVar != null) {
+                    schema.env = securityScheme.headerEnvVar;
+                }
+                if (securityScheme.prefix != null) {
+                    schema.prefix = securityScheme.prefix;
+                }
                 context.builder.addAuthScheme({
                     name: id,
-                    schema: {
-                        header: securityScheme.headerName,
-                        name: securityScheme.headerVariableName ?? "apiKey",
-                        type: "string",
-                        prefix: securityScheme.prefix ?? undefined
-                    }
+                    schema
                 });
                 context.builder.setAuth(id);
                 setAuth = true;

@@ -11843,6 +11843,7 @@ The default value is 'en_us'.
   },
   "securitySchemes": {
     "ApiKey": {
+      "headerEnvVar": undefined,
       "headerName": "Authorization",
       "headerVariableName": undefined,
       "prefix": undefined,
