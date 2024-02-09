@@ -28,6 +28,21 @@ types:
       - literal<"fern">
       - string
 
+  UnionWithTime:
+    discriminated: false
+    union:
+      - integer
+      - date
+      - datetime
+      - optional<date>
+      - optional<datetime>
+
+  UnionWithOptionalTime:
+    discriminated: false
+    union:
+      - optional<date>
+      - optional<datetime>
+
   Foo:
     properties:
       name: string

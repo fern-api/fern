@@ -250,6 +250,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	}
 	files = append(files, modelFiles...)
 	files = append(files, newStringerFile(g.coordinator))
+	files = append(files, newTimeFile(g.coordinator))
 	// Then handle mode-specific generation tasks.
 	var generatedClient *GeneratedClient
 	switch mode {
@@ -859,6 +860,14 @@ func newStringerFile(coordinator *coordinator.Client) *File {
 		coordinator,
 		"core/stringer.go",
 		[]byte(stringerFile),
+	)
+}
+
+func newTimeFile(coordinator *coordinator.Client) *File {
+	return NewFile(
+		coordinator,
+		"core/time.go",
+		[]byte(timeFile),
 	)
 }
 

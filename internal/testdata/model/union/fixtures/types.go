@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/model/union/fixtures/core"
+	time "time"
 )
 
 type Bar struct {
@@ -28,12 +29,16 @@ func (b *Baz) Extended() string {
 }
 
 func (b *Baz) UnmarshalJSON(data []byte) error {
-	type unmarshaler Baz
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed Baz
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*b),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*b = Baz(value)
+	*b = Baz(unmarshaler.embed)
 	b.extended = "extended"
 	return nil
 }
@@ -311,6 +316,90 @@ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 	}
 }
 
+type UnionWithOptionalTime struct {
+	Type     string
+	Date     *time.Time
+	Dateimte *time.Time
+}
+
+func NewUnionWithOptionalTimeFromDate(value *time.Time) *UnionWithOptionalTime {
+	return &UnionWithOptionalTime{Type: "date", Date: value}
+}
+
+func NewUnionWithOptionalTimeFromDateimte(value *time.Time) *UnionWithOptionalTime {
+	return &UnionWithOptionalTime{Type: "dateimte", Dateimte: value}
+}
+
+func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "date":
+		var valueUnmarshaler struct {
+			Date *core.Date `json:"value,omitempty" format:"date"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Date = valueUnmarshaler.Date.TimePtr()
+	case "dateimte":
+		var valueUnmarshaler struct {
+			Dateimte *core.DateTime `json:"value,omitempty"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Dateimte = valueUnmarshaler.Dateimte.TimePtr()
+	}
+	return nil
+}
+
+func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "date":
+		var marshaler = struct {
+			Type string     `json:"type"`
+			Date *core.Date `json:"value,omitempty" format:"date"`
+		}{
+			Type: u.Type,
+			Date: core.NewOptionalDate(u.Date),
+		}
+		return json.Marshal(marshaler)
+	case "dateimte":
+		var marshaler = struct {
+			Type     string         `json:"type"`
+			Dateimte *core.DateTime `json:"value,omitempty"`
+		}{
+			Type:     u.Type,
+			Dateimte: core.NewOptionalDateTime(u.Dateimte),
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionWithOptionalTimeVisitor interface {
+	VisitDate(*time.Time) error
+	VisitDateimte(*time.Time) error
+}
+
+func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "date":
+		return visitor.VisitDate(u.Date)
+	case "dateimte":
+		return visitor.VisitDateimte(u.Dateimte)
+	}
+}
+
 type UnionWithPrimitive struct {
 	Type    string
 	Boolean bool
@@ -392,6 +481,115 @@ func (u *UnionWithPrimitive) Accept(visitor UnionWithPrimitiveVisitor) error {
 		return visitor.VisitBoolean(u.Boolean)
 	case "string":
 		return visitor.VisitString(u.String)
+	}
+}
+
+type UnionWithTime struct {
+	Type     string
+	Value    int
+	Date     time.Time
+	Datetime time.Time
+}
+
+func NewUnionWithTimeFromValue(value int) *UnionWithTime {
+	return &UnionWithTime{Type: "value", Value: value}
+}
+
+func NewUnionWithTimeFromDate(value time.Time) *UnionWithTime {
+	return &UnionWithTime{Type: "date", Date: value}
+}
+
+func NewUnionWithTimeFromDatetime(value time.Time) *UnionWithTime {
+	return &UnionWithTime{Type: "datetime", Datetime: value}
+}
+
+func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
+	var unmarshaler struct {
+		Type string `json:"type"`
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	u.Type = unmarshaler.Type
+	switch unmarshaler.Type {
+	case "value":
+		var valueUnmarshaler struct {
+			Value int `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Value = valueUnmarshaler.Value
+	case "date":
+		var valueUnmarshaler struct {
+			Date *core.Date `json:"value" format:"date"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Date = valueUnmarshaler.Date.Time()
+	case "datetime":
+		var valueUnmarshaler struct {
+			Datetime *core.DateTime `json:"value"`
+		}
+		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
+			return err
+		}
+		u.Datetime = valueUnmarshaler.Datetime.Time()
+	}
+	return nil
+}
+
+func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+	switch u.Type {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "value":
+		var marshaler = struct {
+			Type  string `json:"type"`
+			Value int    `json:"value"`
+		}{
+			Type:  u.Type,
+			Value: u.Value,
+		}
+		return json.Marshal(marshaler)
+	case "date":
+		var marshaler = struct {
+			Type string     `json:"type"`
+			Date *core.Date `json:"value" format:"date"`
+		}{
+			Type: u.Type,
+			Date: core.NewDate(u.Date),
+		}
+		return json.Marshal(marshaler)
+	case "datetime":
+		var marshaler = struct {
+			Type     string         `json:"type"`
+			Datetime *core.DateTime `json:"value"`
+		}{
+			Type:     u.Type,
+			Datetime: core.NewDateTime(u.Datetime),
+		}
+		return json.Marshal(marshaler)
+	}
+}
+
+type UnionWithTimeVisitor interface {
+	VisitValue(int) error
+	VisitDate(time.Time) error
+	VisitDatetime(time.Time) error
+}
+
+func (u *UnionWithTime) Accept(visitor UnionWithTimeVisitor) error {
+	switch u.Type {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.Type, u)
+	case "value":
+		return visitor.VisitValue(u.Value)
+	case "date":
+		return visitor.VisitDate(u.Date)
+	case "datetime":
+		return visitor.VisitDatetime(u.Datetime)
 	}
 }
 

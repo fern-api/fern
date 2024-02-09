@@ -710,6 +710,78 @@
                         },
                         "availability": null,
                         "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "nineteen",
+                                "camelCase": {
+                                    "unsafeName": "nineteen",
+                                    "safeName": "nineteen"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "nineteen",
+                                    "safeName": "nineteen"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "NINETEEN",
+                                    "safeName": "NINETEEN"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Nineteen",
+                                    "safeName": "Nineteen"
+                                }
+                            },
+                            "wireValue": "nineteen"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE_TIME"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
+                    },
+                    {
+                        "name": {
+                            "name": {
+                                "originalName": "twenty",
+                                "camelCase": {
+                                    "unsafeName": "twenty",
+                                    "safeName": "twenty"
+                                },
+                                "snakeCase": {
+                                    "unsafeName": "twenty",
+                                    "safeName": "twenty"
+                                },
+                                "screamingSnakeCase": {
+                                    "unsafeName": "TWENTY",
+                                    "safeName": "TWENTY"
+                                },
+                                "pascalCase": {
+                                    "unsafeName": "Twenty",
+                                    "safeName": "Twenty"
+                                }
+                            },
+                            "wireValue": "twenty"
+                        },
+                        "valueType": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE"
+                                }
+                            }
+                        },
+                        "availability": null,
+                        "docs": null
                     }
                 ]
             },

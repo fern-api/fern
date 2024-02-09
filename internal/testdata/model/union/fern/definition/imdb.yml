@@ -47,6 +47,17 @@ types:
     union:
       fern: literal<"fern">
 
+  UnionWithTime:
+    union:
+      value: integer
+      date: date
+      datetime: datetime
+
+  UnionWithOptionalTime:
+    union:
+      date: optional<date>
+      dateimte: optional<datetime>
+
   Foo:
     properties:
       name: string

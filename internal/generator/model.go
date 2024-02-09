@@ -15,6 +15,9 @@ import (
 var (
 	//go:embed model/core/stringer.go
 	stringerFile string
+
+	//go:embed model/core/time.go
+	timeFile string
 )
 
 // WriteType writes a complete type, including all of its properties.
@@ -120,7 +123,7 @@ func (t *typeVisitor) VisitEnum(enum *ir.EnumTypeDeclaration) error {
 
 func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	t.writer.P("type ", t.typeName, " struct {")
-	_, literals := t.visitObjectProperties(object, true /* includeTags */, false /* includeOptionals */)
+	objectProperties := t.visitObjectProperties(object, true /* includeTags */, false /* includeOptionals */)
 
 	// If the object has a literal, it needs custom [de]serialization logic,
 	// and a getter method to access the field so that it's impossible for
@@ -128,8 +131,8 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	//
 	// Literals are ignored in visitObjectProperties, so we need to write them
 	// here.
-	for _, literal := range literals {
-		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+	for _, literal := range objectProperties.literals {
+		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
 	if t.includeRawJSON {
 		t.writer.P()
@@ -141,46 +144,77 @@ func (t *typeVisitor) VisitObject(object *ir.ObjectTypeDeclaration) error {
 	receiver := typeNameToReceiver(t.typeName)
 
 	// Implement the getter methods.
-	for _, literal := range literals {
-		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-		t.writer.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
+	for _, literal := range objectProperties.literals {
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
 
 	// Implement the json.Unmarshaler interface.
-	if t.includeRawJSON || len(literals) > 0 {
-		t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
-		t.writer.P("type unmarshaler ", t.typeName)
-		t.writer.P("var value unmarshaler")
-		t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
-		t.writer.P("return err")
-		t.writer.P("}")
-		t.writer.P("*", receiver, " = ", t.typeName, "(value)")
-		for _, literal := range literals {
-			t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
-		}
-		if t.includeRawJSON {
+	if t.includeRawJSON || len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 {
+		if t.includeRawJSON && len(objectProperties.literals) == 0 && len(objectProperties.dates) == 0 {
+			// If we don't require any special unmarshaling, prefer the simpler implementation.
+			t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+			t.writer.P("type unmarshaler ", t.typeName)
+			t.writer.P("var value unmarshaler")
+			t.writer.P("if err := json.Unmarshal(data, &value); err != nil {")
+			t.writer.P("return err")
+			t.writer.P("}")
+			t.writer.P("*", receiver, " = ", t.typeName, "(value)")
 			t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+			t.writer.P("return nil")
+			t.writer.P("}")
+			t.writer.P()
+		} else {
+			t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
+			t.writer.P("type embed ", t.typeName)
+			t.writer.P("var unmarshaler = struct{")
+			t.writer.P("embed")
+			for _, date := range objectProperties.dates {
+				t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+			}
+			t.writer.P("}{")
+			t.writer.P("embed: embed(*", receiver, "),")
+			t.writer.P("}")
+			t.writer.P("if err := json.Unmarshal(data, &unmarshaler); err != nil {")
+			t.writer.P("return err")
+			t.writer.P("}")
+			t.writer.P("*", receiver, " = ", t.typeName, "(unmarshaler.embed)")
+			for _, date := range objectProperties.dates {
+				t.writer.P(receiver, ".", date.Name.Name.PascalCase.UnsafeName, " = unmarshaler.", date.Name.Name.PascalCase.UnsafeName, ".", date.TimeMethod)
+			}
+			for _, literal := range objectProperties.literals {
+				t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+			}
+			if t.includeRawJSON {
+				t.writer.P(receiver, "._rawJSON = json.RawMessage(data)")
+			}
+			t.writer.P("return nil")
+			t.writer.P("}")
+			t.writer.P()
 		}
-		t.writer.P("return nil")
-		t.writer.P("}")
-		t.writer.P()
 	}
 
-	// Implement the json.Marshaler interface (if we have any literals).
-	if len(literals) > 0 {
+	// Implement the json.Marshaler interface.
+	if len(objectProperties.literals) > 0 || len(objectProperties.dates) > 0 {
 		t.writer.P("func (", receiver, " *", t.typeName, ") MarshalJSON() ([]byte, error) {")
 		t.writer.P("type embed ", t.typeName)
 		t.writer.P("var marshaler = struct{")
 		t.writer.P("embed")
-		for _, literal := range literals {
-			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+		for _, date := range objectProperties.dates {
+			t.writer.P(date.Name.Name.PascalCase.UnsafeName, " ", date.TypeDeclaration, " ", date.StructTag)
+		}
+		for _, literal := range objectProperties.literals {
+			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
 		}
 		t.writer.P("}{")
 		t.writer.P("embed: embed(*", receiver, "),")
-		for _, literal := range literals {
-			t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+		for _, date := range objectProperties.dates {
+			t.writer.P(date.Name.Name.PascalCase.UnsafeName, ": ", date.Constructor, "(", receiver, ".", date.Name.Name.PascalCase.UnsafeName, "),")
+		}
+		for _, literal := range objectProperties.literals {
+			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		t.writer.P("}")
 		t.writer.P("return json.Marshal(marshaler)")
@@ -214,12 +248,12 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string")
 	var literals []*literal
 	for _, extend := range union.Extends {
-		_, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */, false /* includeOptionals */)
-		literals = append(literals, extendedLiterals...)
+		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, false /* includeTags */, false /* includeOptionals */)
+		literals = append(literals, extendedObjectProperties.literals...)
 	}
 	for _, property := range union.BaseProperties {
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
-			literals = append(literals, &literal{Name: property.Name.Name, Value: property.ValueType.Container.Literal})
+			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false))
@@ -229,7 +263,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// specified by the user.
 	var unionLiterals []*literal
 	for _, unionType := range union.Types {
-		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		typeName := singleUnionProperty.goType
 		if typeName == "" {
 			// If the union has no properties, there's nothing for us to do.
 			continue
@@ -242,7 +277,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				unionLiterals = append(
 					unionLiterals,
 					&literal{
-						Name:  unionType.DiscriminantValue.Name,
+						Name:  unionType.DiscriminantValue,
 						Value: unionType.Shape.SingleProperty.Type.Container.Literal,
 					},
 				)
@@ -252,7 +287,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName)
 	}
 	for _, literal := range literals {
-		t.writer.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+		t.writer.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -267,7 +302,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P("func New", t.typeName, "With", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "() *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": ", literalToValue(literal), "}")
 		} else {
-			t.writer.P("func New", t.typeName, "From", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(value ", singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath), ") *", t.typeName, "{")
+			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+			t.writer.P("func New", t.typeName, "From", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(value ", singleUnionProperty.goType, ") *", t.typeName, "{")
 			t.writer.P("return &", t.typeName, "{", discriminantName, ": \"", unionType.DiscriminantValue.Name.OriginalName, "\", ", fieldName, ": value}")
 		}
 		t.writer.P("}")
@@ -278,8 +314,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 
 	// Implement the getter methods.
 	for _, literal := range append(literals, unionLiterals...) {
-		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-		t.writer.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
+		t.writer.P("func (", receiver, " *", t.typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		t.writer.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		t.writer.P("}")
 		t.writer.P()
 	}
@@ -290,8 +326,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 	var propertyNames []string
 	for _, extend := range union.Extends {
-		extendedProperties, _ := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
-		propertyNames = append(propertyNames, extendedProperties...)
+		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
+		propertyNames = append(propertyNames, extendedObjectProperties.names...)
 	}
 	for _, property := range union.BaseProperties {
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
@@ -312,7 +348,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(receiver, ".", propertyName, " = unmarshaler.", propertyName)
 	}
 	for _, literal := range literals {
-		t.writer.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		t.writer.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
 
 	// Generate the switch to unmarshal the appropriate type.
@@ -335,13 +371,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			//    Boolean bool  `json:"value"`
 			//  }
 			t.writer.P("var valueUnmarshaler struct {")
-			typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
+			singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
 			t.writer.P("}")
 			t.writer.P("if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {")
 			t.writer.P("return err")
 			t.writer.P("}")
-			t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			t.writer.P(receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " = valueUnmarshaler.", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, singleUnionProperty.valueUnmarshalerMethodSuffix)
 			continue
 		}
 		t.writer.P(singleUnionTypePropertiesToInitializer(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, unionType.DiscriminantValue.Name.PascalCase.UnsafeName, receiver))
@@ -369,7 +405,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 		t.writer.P(discriminantName, " string `json:\"", union.Discriminant.WireValue, "\"`")
 		// Include all of the extended and base properties.
 		for _, extend := range union.Extends {
-			_, _ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
+			_ = t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, true /* includeTags */, false /* includeOptionals */)
 		}
 		for _, property := range union.BaseProperties {
 			if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
@@ -378,12 +414,13 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false), jsonTagForType(property.Name.WireValue, property.ValueType, t.writer.types))
 		}
 		for _, literal := range literals {
-			t.writer.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
 		}
-		typeName := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		typeName := singleUnionProperty.goType
 		switch unionType.Shape.PropertiesType {
 		case "singleProperty":
-			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", typeName, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
+			t.writer.P(unionType.DiscriminantValue.Name.PascalCase.UnsafeName, " ", singleUnionProperty.valueMarshalerGoType, jsonTagForType(unionType.Shape.SingleProperty.Name.WireValue, unionType.Shape.SingleProperty.Type, t.writer.types))
 		case "samePropertiesAsObject":
 			t.writer.P(typeName)
 		case "noProperties":
@@ -397,7 +434,7 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 			t.writer.P(propertyName, ": ", receiver, ".", propertyName, ",")
 		}
 		for _, literal := range literals {
-			t.writer.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+			t.writer.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		if unionType.Shape.SingleProperty != nil && unionType.Shape.SingleProperty.Type.Container != nil && unionType.Shape.SingleProperty.Type.Container.Literal != nil {
 			literal := unionType.Shape.SingleProperty.Type.Container.Literal
@@ -409,7 +446,11 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 				// the object's name, without any leading pointers.
 				marshalerFieldName = typeNameToFieldName(typeName)
 			}
-			t.writer.P(marshalerFieldName, ": ", receiver, ".", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, ",")
+			marshalerFieldValue := fmt.Sprintf("%s.%s", receiver, unionType.DiscriminantValue.Name.PascalCase.UnsafeName)
+			if constructor := singleUnionProperty.valueMarshalerConstructor; constructor != "" {
+				marshalerFieldValue = fmt.Sprintf("%s(%s)", constructor, marshalerFieldValue)
+			}
+			t.writer.P(marshalerFieldName, ": ", marshalerFieldValue, ",")
 		}
 		t.writer.P("}")
 		t.writer.P("return json.Marshal(marshaler)")
@@ -421,7 +462,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 	// Generate the Visitor interface.
 	t.writer.P("type ", t.typeName, "Visitor interface {")
 	for _, unionType := range union.Types {
-		t.writer.P("Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath), ") error")
+		singleUnionProperty := singleUnionTypePropertiesToGoType(unionType.Shape, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath)
+		t.writer.P("Visit", unionType.DiscriminantValue.Name.PascalCase.UnsafeName, "(", singleUnionProperty.goType, ") error")
 	}
 	t.writer.P("}")
 	t.writer.P()
@@ -450,6 +492,8 @@ func (t *typeVisitor) VisitUnion(union *ir.UnionTypeDeclaration) error {
 }
 
 func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTypeDeclaration) error {
+	receiver := typeNameToReceiver(t.typeName)
+
 	// member represents a single undiscriminated union member.
 	//
 	// We define a separate struct here so that we can collect
@@ -464,6 +508,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		docs      *string
 		literal   string
 		isLiteral bool
+
+		// Optional; only applies to date[-time] values.
+		valueMarshalerValue          string
+		valueUnmarshalerTypeName     string
+		valueUnmarshalerMethodSuffix string
 	}
 	var members []*member
 	var hasLiteral bool
@@ -479,17 +528,32 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			literal = literalToValue(unionMember.Type.Container.Literal)
 		}
 		hasLiteral = hasLiteral || isLiteral
+
+		var (
+			valueMarshalerValue          = ""
+			valueUnmarshalerTypeName     = ""
+			valueUnmarshalerMethodSuffix = ""
+		)
+		if date := maybeDate(unionMember.Type, false); date != nil {
+			valueMarshalerValue = fmt.Sprintf("%s(%s.%s)", date.Constructor, receiver, field)
+			valueUnmarshalerTypeName = date.TypeDeclaration
+			valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
+		}
+
 		members = append(
 			members,
 			&member{
-				typeName:  typeName,
-				field:     field,
-				variable:  fmt.Sprintf("value%s", strings.Title(field)),
-				caseName:  firstLetterToLower(field),
-				value:     typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
-				docs:      unionMember.Docs,
-				literal:   literal,
-				isLiteral: isLiteral,
+				typeName:                     typeName,
+				field:                        field,
+				variable:                     fmt.Sprintf("value%s", strings.Title(field)),
+				caseName:                     firstLetterToLower(field),
+				value:                        typeReferenceToGoType(unionMember.Type, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, false),
+				docs:                         unionMember.Docs,
+				literal:                      literal,
+				isLiteral:                    isLiteral,
+				valueMarshalerValue:          valueMarshalerValue,
+				valueUnmarshalerTypeName:     valueUnmarshalerTypeName,
+				valueUnmarshalerMethodSuffix: valueUnmarshalerMethodSuffix,
 			},
 		)
 	}
@@ -517,8 +581,6 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 		t.writer.P()
 	}
 
-	receiver := typeNameToReceiver(t.typeName)
-
 	// Write getters for literal values, if any.
 	for _, member := range members {
 		if !member.isLiteral {
@@ -534,6 +596,9 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 	t.writer.P("func (", receiver, " *", t.typeName, ") UnmarshalJSON(data []byte) error {")
 	for _, member := range members {
 		value := member.value
+		if member.valueUnmarshalerTypeName != "" {
+			value = member.valueUnmarshalerTypeName
+		}
 		format := "var " + member.variable + " %s"
 		if member.typeName != "" && isPointer(t.writer.types[member.typeName]) {
 			format = member.variable + " := new(%s)"
@@ -552,8 +617,12 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("}")
 			continue
 		}
+		variable := member.variable
+		if member.valueUnmarshalerMethodSuffix != "" {
+			variable += member.valueUnmarshalerMethodSuffix
+		}
 		t.writer.P(receiver, ".typeName = \"", member.caseName, "\"")
-		t.writer.P(receiver, ".", member.field, " = ", member.variable)
+		t.writer.P(receiver, ".", member.field, " = ", variable)
 		t.writer.P("return nil")
 		t.writer.P("}")
 	}
@@ -575,7 +644,11 @@ func (t *typeVisitor) VisitUndiscriminatedUnion(union *ir.UndiscriminatedUnionTy
 			t.writer.P("return json.Marshal(", member.literal, ")")
 			continue
 		}
-		t.writer.P("return json.Marshal(", receiver, ".", member.field, ")")
+		field := fmt.Sprintf("%s.%s", receiver, member.field)
+		if member.valueMarshalerValue != "" {
+			field = member.valueMarshalerValue
+		}
+		t.writer.P("return json.Marshal(", field, ")")
 	}
 	t.writer.P("}")
 	t.writer.P("}")
@@ -677,9 +750,28 @@ func (u *undiscriminatedUnionContainerTypeVisitor) VisitLiteral(literal *ir.Lite
 	return nil
 }
 
+type objectProperties struct {
+	names    []string
+	literals []*literal
+	dates    []*date
+}
+
+// date contains the information required to generate code for date and date-time
+// properties.
+type date struct {
+	Name            *ir.NameAndWireValue
+	ValueType       *ir.TypeReference
+	Constructor     string
+	TimeMethod      string
+	TypeDeclaration string
+	StructTag       string
+	IsOptional      bool
+	IsDateTime      bool
+}
+
 // literal contains the information required to generate code for literal properties.
 type literal struct {
-	Name  *ir.Name
+	Name  *ir.NameAndWireValue
 	Value *ir.Literal
 }
 
@@ -693,20 +785,27 @@ func (t *typeVisitor) visitObjectProperties(
 	object *ir.ObjectTypeDeclaration,
 	includeTags bool,
 	includeOptionals bool,
-) ([]string, []*literal) {
-	var names []string
-	var literals []*literal
+) *objectProperties {
+	var (
+		names    []string
+		literals []*literal
+		dates    []*date
+	)
 	for _, extend := range object.Extends {
 		// You can only extend other objects.
-		extendedNames, extendedLiterals := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags, includeOptionals)
-		names = append(names, extendedNames...)
-		literals = append(literals, extendedLiterals...)
+		extendedObjectProperties := t.visitObjectProperties(t.writer.types[extend.TypeId].Shape.Object, includeTags, includeOptionals)
+		names = append(names, extendedObjectProperties.names...)
+		literals = append(literals, extendedObjectProperties.literals...)
+		dates = append(dates, extendedObjectProperties.dates...)
 	}
 	for _, property := range object.Properties {
 		t.writer.WriteDocs(property.Docs)
 		if property.ValueType.Container != nil && property.ValueType.Container.Literal != nil {
-			literals = append(literals, &literal{Name: property.Name.Name, Value: property.ValueType.Container.Literal})
+			literals = append(literals, &literal{Name: property.Name, Value: property.ValueType.Container.Literal})
 			continue
+		}
+		if date := maybeDateProperty(property.ValueType, property.Name, false); date != nil {
+			dates = append(dates, date)
 		}
 		names = append(names, property.Name.Name.PascalCase.UnsafeName)
 		goType := typeReferenceToGoType(property.ValueType, t.writer.types, t.writer.scope, t.baseImportPath, t.importPath, includeOptionals)
@@ -716,7 +815,11 @@ func (t *typeVisitor) visitObjectProperties(
 		}
 		t.writer.P(property.Name.Name.PascalCase.UnsafeName, " ", goType)
 	}
-	return names, literals
+	return &objectProperties{
+		names:    names,
+		literals: literals,
+		dates:    dates,
+	}
 }
 
 // typeReferenceVisitor retrieves the string representation of type references
@@ -817,7 +920,11 @@ func (c *containerTypeVisitor) VisitLiteral(literal *ir.Literal) error {
 // singleUnionTypePropertiesVisitor retrieves the string representation of
 // single union type properties.
 type singleUnionTypePropertiesVisitor struct {
-	value          string
+	goType                       string
+	valueMarshalerGoType         string
+	valueMarshalerConstructor    string
+	valueUnmarshalerMethodSuffix string
+
 	baseImportPath string
 	importPath     string
 	scope          *gospec.Scope
@@ -836,17 +943,28 @@ func (c *singleUnionTypePropertiesVisitor) VisitSamePropertiesAsObject(named *ir
 	if importPath := fernFilepathToImportPath(c.baseImportPath, named.FernFilepath); importPath != c.importPath {
 		name = c.scope.AddImport(importPath) + "." + name
 	}
-	c.value = fmt.Sprintf(format, name)
+	c.goType = fmt.Sprintf(format, name)
+	c.valueMarshalerGoType = c.goType
 	return nil
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitSingleProperty(property *ir.SingleUnionTypeProperty) error {
-	c.value = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
+	c.goType = typeReferenceToGoType(property.Type, c.types, c.scope, c.baseImportPath, c.importPath, false)
+
+	if date := maybeDateProperty(property.Type, property.Name, false); date != nil {
+		c.valueMarshalerGoType = date.TypeDeclaration
+		c.valueMarshalerConstructor = date.Constructor
+		c.valueUnmarshalerMethodSuffix = fmt.Sprintf(".%s", date.TimeMethod)
+		return nil
+	}
+
+	c.valueMarshalerGoType = c.goType
 	return nil
 }
 
 func (c *singleUnionTypePropertiesVisitor) VisitNoProperties(_ any) error {
-	c.value = "interface{}"
+	c.goType = "interface{}"
+	c.valueMarshalerGoType = c.goType
 	return nil
 }
 
@@ -969,6 +1087,15 @@ func containerTypeToGoType(
 	return visitor.value
 }
 
+type singleUnionProperty struct {
+	goType               string
+	valueMarshalerGoType string
+
+	// Optional; required for date[-time] properties.
+	valueMarshalerConstructor    string
+	valueUnmarshalerMethodSuffix string
+}
+
 // singleUnionTypePropertiesToGoType maps the given container type into its Go-equivalent.
 func singleUnionTypePropertiesToGoType(
 	singleUnionTypeProperties *ir.SingleUnionTypeProperties,
@@ -976,7 +1103,7 @@ func singleUnionTypePropertiesToGoType(
 	scope *gospec.Scope,
 	baseImportPath string,
 	importPath string,
-) string {
+) *singleUnionProperty {
 	visitor := &singleUnionTypePropertiesVisitor{
 		baseImportPath: baseImportPath,
 		importPath:     importPath,
@@ -984,7 +1111,12 @@ func singleUnionTypePropertiesToGoType(
 		types:          types,
 	}
 	_ = singleUnionTypeProperties.Accept(visitor)
-	return visitor.value
+	return &singleUnionProperty{
+		goType:                       visitor.goType,
+		valueMarshalerGoType:         visitor.valueMarshalerGoType,
+		valueMarshalerConstructor:    visitor.valueMarshalerConstructor,
+		valueUnmarshalerMethodSuffix: visitor.valueUnmarshalerMethodSuffix,
+	}
 }
 
 // singleUnionTypePropertiesToInitializer maps the given container type into its Go-equivalent initializer.
@@ -1245,6 +1377,106 @@ func primitiveToUndiscriminatedUnionField(primitive ir.PrimitiveType) string {
 	default:
 		return "Any"
 	}
+}
+
+// mayybeDateProperty returns the *date associated with the given type reference, if any.
+func maybeDateProperty(valueType *ir.TypeReference, name *ir.NameAndWireValue, isOptional bool) *date {
+	if valueType.Primitive == ir.PrimitiveTypeDate {
+		var (
+			typeDeclaration = "*core.Date"
+			constructor     = "core.NewDate"
+			timeMethod      = "Time()"
+			structTag       = fmt.Sprintf("`json:%q`", name.WireValue)
+		)
+		if isOptional {
+			constructor = "core.NewOptionalDate"
+			timeMethod = "TimePtr()"
+			structTag = fmt.Sprintf("`json:\"%s,omitempty\"`", name.WireValue)
+		}
+		return &date{
+			Name:            name,
+			ValueType:       valueType,
+			Constructor:     constructor,
+			TimeMethod:      timeMethod,
+			TypeDeclaration: typeDeclaration,
+			StructTag:       structTag,
+			IsOptional:      isOptional,
+		}
+	}
+	if valueType.Primitive == ir.PrimitiveTypeDateTime {
+		var (
+			typeDeclaration = "*core.DateTime"
+			constructor     = "core.NewDateTime"
+			timeMethod      = "Time()"
+			structTag       = fmt.Sprintf("`json:%q`", name.WireValue)
+		)
+		if isOptional {
+			constructor = "core.NewOptionalDateTime"
+			timeMethod = "TimePtr()"
+			structTag = fmt.Sprintf("`json:\"%s,omitempty\"`", name.WireValue)
+		}
+		return &date{
+			Name:            name,
+			ValueType:       valueType,
+			Constructor:     constructor,
+			TimeMethod:      timeMethod,
+			TypeDeclaration: typeDeclaration,
+			StructTag:       structTag,
+			IsOptional:      isOptional,
+			IsDateTime:      true,
+		}
+	}
+	if valueType.Container != nil && valueType.Container.Optional != nil {
+		return maybeDateProperty(valueType.Container.Optional, name, true)
+	}
+	return nil
+}
+
+// maybeDate retrieves the type information for the given date, excluding
+// any property-oriented information. This is tailored to the undiscriminated
+// union use case.
+func maybeDate(valueType *ir.TypeReference, isOptional bool) *date {
+	if valueType.Primitive == ir.PrimitiveTypeDate {
+		var (
+			typeDeclaration = "*core.Date"
+			constructor     = "core.NewDate"
+			timeMethod      = "Time()"
+		)
+		if isOptional {
+			constructor = "core.NewOptionalDate"
+			timeMethod = "TimePtr()"
+		}
+		return &date{
+			ValueType:       valueType,
+			Constructor:     constructor,
+			TimeMethod:      timeMethod,
+			TypeDeclaration: typeDeclaration,
+			IsOptional:      isOptional,
+		}
+	}
+	if valueType.Primitive == ir.PrimitiveTypeDateTime {
+		var (
+			typeDeclaration = "*core.DateTime"
+			constructor     = "core.NewDateTime"
+			timeMethod      = "Time()"
+		)
+		if isOptional {
+			constructor = "core.NewOptionalDateTime"
+			timeMethod = "TimePtr()"
+		}
+		return &date{
+			ValueType:       valueType,
+			Constructor:     constructor,
+			TimeMethod:      timeMethod,
+			TypeDeclaration: typeDeclaration,
+			IsOptional:      isOptional,
+			IsDateTime:      true,
+		}
+	}
+	if valueType.Container != nil && valueType.Container.Optional != nil {
+		return maybeDate(valueType.Container.Optional, true)
+	}
+	return nil
 }
 
 // maybeFormatStructTag returns the layout struct tag for [optional] date types.

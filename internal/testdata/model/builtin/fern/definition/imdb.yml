@@ -20,3 +20,5 @@ types:
       sixteen: list<map<string, integer>>
       seventeen: list<optional<uuid>>
       eighteen: literal<"fern">
+      nineteen: optional<datetime>
+      twenty: optional<date>

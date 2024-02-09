@@ -28,7 +28,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 			literals = append(
 				literals,
 				&literal{
-					Name:  header.Name.Name,
+					Name:  header.Name,
 					Value: header.ValueType.Container.Literal,
 				},
 			)
@@ -47,7 +47,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 			literals = append(
 				literals,
 				&literal{
-					Name:  queryParam.Name.Name,
+					Name:  queryParam.Name,
 					Value: queryParam.ValueType.Container.Literal,
 				},
 			)
@@ -58,32 +58,32 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 	if endpoint.RequestBody == nil {
 		// If the request doesn't have a body, we don't need any custom [de]serialization logic.
 		for _, literal := range literals {
-			f.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+			f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 		}
 		f.P("}")
 		f.P()
 		for _, literal := range literals {
-			f.P("func (", receiver, " *", typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-			f.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
+			f.P("func (", receiver, " *", typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+			f.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 			f.P("}")
 			f.P()
 		}
 		return nil
 	}
-	fieldLiterals, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
+	requestBody, err := requestBodyToFieldDeclaration(endpoint.RequestBody, f, importPath, bodyField, includeGenericOptionals)
 	if err != nil {
 		return err
 	}
-	literals = append(literals, fieldLiterals...)
+	literals = append(literals, requestBody.literals...)
 	for _, literal := range literals {
-		f.P(literal.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
+		f.P(literal.Name.Name.CamelCase.SafeName, " ", literalToGoType(literal.Value))
 	}
 	f.P("}")
 	f.P()
 	// Implement the getter methods.
 	for _, literal := range literals {
-		f.P("func (", receiver, " *", typeName, ") ", literal.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
-		f.P("return ", receiver, ".", literal.Name.CamelCase.SafeName)
+		f.P("func (", receiver, " *", typeName, ") ", literal.Name.Name.PascalCase.UnsafeName, "()", literalToGoType(literal.Value), "{")
+		f.P("return ", receiver, ".", literal.Name.Name.CamelCase.SafeName)
 		f.P("}")
 		f.P()
 	}
@@ -136,7 +136,7 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 		f.P("*", receiver, " = ", typeName, "(body)")
 	}
 	for _, literal := range literals {
-		f.P(receiver, ".", literal.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
+		f.P(receiver, ".", literal.Name.Name.CamelCase.SafeName, " = ", literalToValue(literal.Value))
 	}
 	f.P("return nil")
 	f.P("}")
@@ -156,12 +156,12 @@ func (f *fileWriter) WriteFiberRequestType(fernFilepath *ir.FernFilepath, endpoi
 		f.P("var marshaler = struct{")
 		f.P("embed")
 		for _, literal := range literals {
-			f.P(literal.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.OriginalName, "\"`")
+			f.P(literal.Name.Name.PascalCase.UnsafeName, " ", literalToGoType(literal.Value), " `json:\"", literal.Name.WireValue, "\"`")
 		}
 		f.P("}{")
 		f.P("embed: embed(*", receiver, "),")
 		for _, literal := range literals {
-			f.P(literal.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
+			f.P(literal.Name.Name.PascalCase.UnsafeName, ": ", literalToValue(literal.Value), ",")
 		}
 		f.P("}")
 		f.P("return json.Marshal(marshaler)")

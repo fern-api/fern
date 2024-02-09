@@ -686,6 +686,231 @@
             "availability": null,
             "docs": null
         },
+        "type_imdb:UnionWithTime": {
+            "name": {
+                "name": {
+                    "originalName": "UnionWithTime",
+                    "camelCase": {
+                        "unsafeName": "unionWithTime",
+                        "safeName": "unionWithTime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_time",
+                        "safeName": "union_with_time"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_TIME",
+                        "safeName": "UNION_WITH_TIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithTime",
+                        "safeName": "UnionWithTime"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:UnionWithTime"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": "INTEGER"
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": "DATE"
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "primitive",
+                            "primitive": "DATE_TIME"
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE"
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE_TIME"
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        },
+        "type_imdb:UnionWithOptionalTime": {
+            "name": {
+                "name": {
+                    "originalName": "UnionWithOptionalTime",
+                    "camelCase": {
+                        "unsafeName": "unionWithOptionalTime",
+                        "safeName": "unionWithOptionalTime"
+                    },
+                    "snakeCase": {
+                        "unsafeName": "union_with_optional_time",
+                        "safeName": "union_with_optional_time"
+                    },
+                    "screamingSnakeCase": {
+                        "unsafeName": "UNION_WITH_OPTIONAL_TIME",
+                        "safeName": "UNION_WITH_OPTIONAL_TIME"
+                    },
+                    "pascalCase": {
+                        "unsafeName": "UnionWithOptionalTime",
+                        "safeName": "UnionWithOptionalTime"
+                    }
+                },
+                "fernFilepath": {
+                    "allParts": [
+                        {
+                            "originalName": "imdb",
+                            "camelCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "snakeCase": {
+                                "unsafeName": "imdb",
+                                "safeName": "imdb"
+                            },
+                            "screamingSnakeCase": {
+                                "unsafeName": "IMDB",
+                                "safeName": "IMDB"
+                            },
+                            "pascalCase": {
+                                "unsafeName": "Imdb",
+                                "safeName": "Imdb"
+                            }
+                        }
+                    ],
+                    "packagePath": [],
+                    "file": {
+                        "originalName": "imdb",
+                        "camelCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "snakeCase": {
+                            "unsafeName": "imdb",
+                            "safeName": "imdb"
+                        },
+                        "screamingSnakeCase": {
+                            "unsafeName": "IMDB",
+                            "safeName": "IMDB"
+                        },
+                        "pascalCase": {
+                            "unsafeName": "Imdb",
+                            "safeName": "Imdb"
+                        }
+                    }
+                },
+                "typeId": "type_imdb:UnionWithOptionalTime"
+            },
+            "shape": {
+                "_type": "undiscriminatedUnion",
+                "members": [
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE"
+                                }
+                            }
+                        },
+                        "docs": null
+                    },
+                    {
+                        "type": {
+                            "_type": "container",
+                            "container": {
+                                "_type": "optional",
+                                "optional": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE_TIME"
+                                }
+                            }
+                        },
+                        "docs": null
+                    }
+                ]
+            },
+            "referencedTypes": [],
+            "examples": [],
+            "availability": null,
+            "docs": null
+        },
         "type_imdb:Foo": {
             "name": {
                 "name": {
@@ -1047,6 +1272,8 @@
             "type_imdb:Union",
             "type_imdb:AnotherUnion",
             "type_imdb:UnionWithLiteral",
+            "type_imdb:UnionWithTime",
+            "type_imdb:UnionWithOptionalTime",
             "type_imdb:Foo",
             "type_imdb:Bar",
             "type_imdb:Baz"
@@ -1122,6 +1349,8 @@
                 "type_imdb:Union",
                 "type_imdb:AnotherUnion",
                 "type_imdb:UnionWithLiteral",
+                "type_imdb:UnionWithTime",
+                "type_imdb:UnionWithOptionalTime",
                 "type_imdb:Foo",
                 "type_imdb:Bar",
                 "type_imdb:Baz"

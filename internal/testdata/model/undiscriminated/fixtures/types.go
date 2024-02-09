@@ -6,6 +6,7 @@ import (
 	json "encoding/json"
 	fmt "fmt"
 	core "github.com/fern-api/fern-go/internal/testdata/model/undiscriminated/fixtures/core"
+	time "time"
 )
 
 type AnotherUnion struct {
@@ -393,5 +394,167 @@ func (u *UnionWithLiteral) Accept(visitor UnionWithLiteralVisitor) error {
 		return visitor.VisitFernStringLiteral(u.fernStringLiteral)
 	case "string":
 		return visitor.VisitString(u.String)
+	}
+}
+
+type UnionWithOptionalTime struct {
+	typeName         string
+	DateOptional     *time.Time
+	DateTimeOptional *time.Time
+}
+
+func NewUnionWithOptionalTimeFromDateOptional(value *time.Time) *UnionWithOptionalTime {
+	return &UnionWithOptionalTime{typeName: "dateOptional", DateOptional: value}
+}
+
+func NewUnionWithOptionalTimeFromDateTimeOptional(value *time.Time) *UnionWithOptionalTime {
+	return &UnionWithOptionalTime{typeName: "dateTimeOptional", DateTimeOptional: value}
+}
+
+func (u *UnionWithOptionalTime) UnmarshalJSON(data []byte) error {
+	var valueDateOptional *core.Date
+	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
+		u.typeName = "dateOptional"
+		u.DateOptional = valueDateOptional.TimePtr()
+		return nil
+	}
+	var valueDateTimeOptional *core.DateTime
+	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
+		u.typeName = "dateTimeOptional"
+		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithOptionalTime) MarshalJSON() ([]byte, error) {
+	switch u.typeName {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "dateOptional":
+		return json.Marshal(core.NewOptionalDate(u.DateOptional))
+	case "dateTimeOptional":
+		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
+	}
+}
+
+type UnionWithOptionalTimeVisitor interface {
+	VisitDateOptional(*time.Time) error
+	VisitDateTimeOptional(*time.Time) error
+}
+
+func (u *UnionWithOptionalTime) Accept(visitor UnionWithOptionalTimeVisitor) error {
+	switch u.typeName {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "dateOptional":
+		return visitor.VisitDateOptional(u.DateOptional)
+	case "dateTimeOptional":
+		return visitor.VisitDateTimeOptional(u.DateTimeOptional)
+	}
+}
+
+type UnionWithTime struct {
+	typeName         string
+	Integer          int
+	Date             time.Time
+	DateTime         time.Time
+	DateOptional     *time.Time
+	DateTimeOptional *time.Time
+}
+
+func NewUnionWithTimeFromInteger(value int) *UnionWithTime {
+	return &UnionWithTime{typeName: "integer", Integer: value}
+}
+
+func NewUnionWithTimeFromDate(value time.Time) *UnionWithTime {
+	return &UnionWithTime{typeName: "date", Date: value}
+}
+
+func NewUnionWithTimeFromDateTime(value time.Time) *UnionWithTime {
+	return &UnionWithTime{typeName: "dateTime", DateTime: value}
+}
+
+func NewUnionWithTimeFromDateOptional(value *time.Time) *UnionWithTime {
+	return &UnionWithTime{typeName: "dateOptional", DateOptional: value}
+}
+
+func NewUnionWithTimeFromDateTimeOptional(value *time.Time) *UnionWithTime {
+	return &UnionWithTime{typeName: "dateTimeOptional", DateTimeOptional: value}
+}
+
+func (u *UnionWithTime) UnmarshalJSON(data []byte) error {
+	var valueInteger int
+	if err := json.Unmarshal(data, &valueInteger); err == nil {
+		u.typeName = "integer"
+		u.Integer = valueInteger
+		return nil
+	}
+	var valueDate *core.Date
+	if err := json.Unmarshal(data, &valueDate); err == nil {
+		u.typeName = "date"
+		u.Date = valueDate.Time()
+		return nil
+	}
+	var valueDateTime *core.DateTime
+	if err := json.Unmarshal(data, &valueDateTime); err == nil {
+		u.typeName = "dateTime"
+		u.DateTime = valueDateTime.Time()
+		return nil
+	}
+	var valueDateOptional *core.Date
+	if err := json.Unmarshal(data, &valueDateOptional); err == nil {
+		u.typeName = "dateOptional"
+		u.DateOptional = valueDateOptional.TimePtr()
+		return nil
+	}
+	var valueDateTimeOptional *core.DateTime
+	if err := json.Unmarshal(data, &valueDateTimeOptional); err == nil {
+		u.typeName = "dateTimeOptional"
+		u.DateTimeOptional = valueDateTimeOptional.TimePtr()
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
+}
+
+func (u UnionWithTime) MarshalJSON() ([]byte, error) {
+	switch u.typeName {
+	default:
+		return nil, fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "integer":
+		return json.Marshal(u.Integer)
+	case "date":
+		return json.Marshal(core.NewDate(u.Date))
+	case "dateTime":
+		return json.Marshal(core.NewDateTime(u.DateTime))
+	case "dateOptional":
+		return json.Marshal(core.NewOptionalDate(u.DateOptional))
+	case "dateTimeOptional":
+		return json.Marshal(core.NewOptionalDateTime(u.DateTimeOptional))
+	}
+}
+
+type UnionWithTimeVisitor interface {
+	VisitInteger(int) error
+	VisitDate(time.Time) error
+	VisitDateTime(time.Time) error
+	VisitDateOptional(*time.Time) error
+	VisitDateTimeOptional(*time.Time) error
+}
+
+func (u *UnionWithTime) Accept(visitor UnionWithTimeVisitor) error {
+	switch u.typeName {
+	default:
+		return fmt.Errorf("invalid type %s in %T", u.typeName, u)
+	case "integer":
+		return visitor.VisitInteger(u.Integer)
+	case "date":
+		return visitor.VisitDate(u.Date)
+	case "dateTime":
+		return visitor.VisitDateTime(u.DateTime)
+	case "dateOptional":
+		return visitor.VisitDateOptional(u.DateOptional)
+	case "dateTimeOptional":
+		return visitor.VisitDateTimeOptional(u.DateTimeOptional)
 	}
 }

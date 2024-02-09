@@ -3,6 +3,7 @@
 package api
 
 import (
+	json "encoding/json"
 	fmt "fmt"
 	uuid "github.com/google/uuid"
 	core "sdk/core"
@@ -19,6 +20,38 @@ type Type struct {
 	Seven time.Time `json:"seven" url:"seven" format:"date"`
 	Eight uuid.UUID `json:"eight" url:"eight"`
 	Nine  []byte    `json:"nine" url:"nine"`
+}
+
+func (t *Type) UnmarshalJSON(data []byte) error {
+	type embed Type
+	var unmarshaler = struct {
+		embed
+		Six   *core.DateTime `json:"six"`
+		Seven *core.Date     `json:"seven"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*t = Type(unmarshaler.embed)
+	t.Six = unmarshaler.Six.Time()
+	t.Seven = unmarshaler.Seven.Time()
+	return nil
+}
+
+func (t *Type) MarshalJSON() ([]byte, error) {
+	type embed Type
+	var marshaler = struct {
+		embed
+		Six   *core.DateTime `json:"six"`
+		Seven *core.Date     `json:"seven"`
+	}{
+		embed: embed(*t),
+		Six:   core.NewDateTime(t.Six),
+		Seven: core.NewDate(t.Seven),
+	}
+	return json.Marshal(marshaler)
 }
 
 func (t *Type) String() string {

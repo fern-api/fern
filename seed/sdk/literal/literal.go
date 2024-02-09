@@ -171,12 +171,16 @@ func (o *Options) Enabled() bool {
 }
 
 func (o *Options) UnmarshalJSON(data []byte) error {
-	type unmarshaler Options
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed Options
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*o),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*o = Options(value)
+	*o = Options(unmarshaler.embed)
 	o.id = "options"
 	o.enabled = true
 	o._rawJSON = json.RawMessage(data)

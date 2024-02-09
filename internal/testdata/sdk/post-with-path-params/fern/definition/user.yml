@@ -38,6 +38,8 @@ service:
         body:
           properties:
             userName: string
+            date: date
+            datetime: datetime
       response: string
 
     setNameV3:
@@ -104,4 +106,6 @@ service:
             filter: Filter
             optionalUnion: optional<Union>
             optionalFilter: optional<Filter>
+            optionalDate: optional<date>
+            optionalDatetime: optional<datetime>
       response: string

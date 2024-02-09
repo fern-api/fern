@@ -2451,20 +2451,20 @@ func (e *ExamplePrimitive) UnmarshalJSON(data []byte) error {
 		e.Long = valueUnmarshaler.Long
 	case "datetime":
 		var valueUnmarshaler struct {
-			Datetime time.Time `json:"datetime"`
+			Datetime *core.DateTime `json:"datetime"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		e.Datetime = valueUnmarshaler.Datetime
+		e.Datetime = valueUnmarshaler.Datetime.Time()
 	case "date":
 		var valueUnmarshaler struct {
-			Date time.Time `json:"date" format:"date"`
+			Date *core.Date `json:"date" format:"date"`
 		}
 		if err := json.Unmarshal(data, &valueUnmarshaler); err != nil {
 			return err
 		}
-		e.Date = valueUnmarshaler.Date
+		e.Date = valueUnmarshaler.Date.Time()
 	case "uuid":
 		var valueUnmarshaler struct {
 			Uuid uuid.UUID `json:"uuid"`
@@ -2528,20 +2528,20 @@ func (e ExamplePrimitive) MarshalJSON() ([]byte, error) {
 		return json.Marshal(marshaler)
 	case "datetime":
 		var marshaler = struct {
-			Type     string    `json:"type"`
-			Datetime time.Time `json:"datetime"`
+			Type     string         `json:"type"`
+			Datetime *core.DateTime `json:"datetime"`
 		}{
 			Type:     e.Type,
-			Datetime: e.Datetime,
+			Datetime: core.NewDateTime(e.Datetime),
 		}
 		return json.Marshal(marshaler)
 	case "date":
 		var marshaler = struct {
-			Type string    `json:"type"`
-			Date time.Time `json:"date" format:"date"`
+			Type string     `json:"type"`
+			Date *core.Date `json:"date" format:"date"`
 		}{
 			Type: e.Type,
-			Date: e.Date,
+			Date: core.NewDate(e.Date),
 		}
 		return json.Marshal(marshaler)
 	case "uuid":

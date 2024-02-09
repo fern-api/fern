@@ -1121,6 +1121,64 @@
                                     "primitive": "STRING"
                                 },
                                 "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "date",
+                                        "camelCase": {
+                                            "unsafeName": "date",
+                                            "safeName": "date"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "date",
+                                            "safeName": "date"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DATE",
+                                            "safeName": "DATE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Date",
+                                            "safeName": "Date"
+                                        }
+                                    },
+                                    "wireValue": "date"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE"
+                                },
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "datetime",
+                                        "camelCase": {
+                                            "unsafeName": "datetime",
+                                            "safeName": "datetime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "datetime",
+                                            "safeName": "datetime"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "DATETIME",
+                                            "safeName": "DATETIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "Datetime",
+                                            "safeName": "Datetime"
+                                        }
+                                    },
+                                    "wireValue": "datetime"
+                                },
+                                "valueType": {
+                                    "_type": "primitive",
+                                    "primitive": "DATE_TIME"
+                                },
+                                "docs": null
                             }
                         ]
                     },
@@ -2934,6 +2992,76 @@
                                                 }
                                             },
                                             "typeId": "type_user:Filter"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "optionalDate",
+                                        "camelCase": {
+                                            "unsafeName": "optionalDate",
+                                            "safeName": "optionalDate"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_date",
+                                            "safeName": "optional_date"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_DATE",
+                                            "safeName": "OPTIONAL_DATE"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalDate",
+                                            "safeName": "OptionalDate"
+                                        }
+                                    },
+                                    "wireValue": "optionalDate"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "primitive",
+                                            "primitive": "DATE"
+                                        }
+                                    }
+                                },
+                                "docs": null
+                            },
+                            {
+                                "name": {
+                                    "name": {
+                                        "originalName": "optionalDatetime",
+                                        "camelCase": {
+                                            "unsafeName": "optionalDatetime",
+                                            "safeName": "optionalDatetime"
+                                        },
+                                        "snakeCase": {
+                                            "unsafeName": "optional_datetime",
+                                            "safeName": "optional_datetime"
+                                        },
+                                        "screamingSnakeCase": {
+                                            "unsafeName": "OPTIONAL_DATETIME",
+                                            "safeName": "OPTIONAL_DATETIME"
+                                        },
+                                        "pascalCase": {
+                                            "unsafeName": "OptionalDatetime",
+                                            "safeName": "OptionalDatetime"
+                                        }
+                                    },
+                                    "wireValue": "optionalDatetime"
+                                },
+                                "valueType": {
+                                    "_type": "container",
+                                    "container": {
+                                        "_type": "optional",
+                                        "optional": {
+                                            "_type": "primitive",
+                                            "primitive": "DATE_TIME"
                                         }
                                     }
                                 },

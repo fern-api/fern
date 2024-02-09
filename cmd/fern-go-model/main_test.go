@@ -196,6 +196,84 @@ func TestUndiscriminatedUnion(t *testing.T) {
 	assert.Empty(t, unionWithLiteral.String)
 }
 
+func TestTime(t *testing.T) {
+	date := time.Date(1994, time.March, 16, 0, 0, 0, 0, time.UTC)
+
+	t.Run("union (required)", func(t *testing.T) {
+		value := union.NewUnionWithTimeFromDatetime(date)
+
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
+		assert.Equal(t, `{"type":"datetime","value":"1994-03-16T00:00:00Z"}`, string(bytes))
+
+		var decode union.UnionWithTime
+		require.NoError(t, json.Unmarshal(bytes, &decode))
+
+		assert.Equal(t, "datetime", decode.Type)
+		assert.Equal(t, 1994, decode.Datetime.Year())
+		assert.Equal(t, time.March, decode.Datetime.Month())
+		assert.Equal(t, 16, decode.Datetime.Day())
+	})
+
+	t.Run("union (optional)", func(t *testing.T) {
+		empty := union.NewUnionWithOptionalTimeFromDate(nil)
+
+		emptyBytes, err := json.Marshal(empty)
+		require.NoError(t, err)
+		assert.Equal(t, `{"type":"date"}`, string(emptyBytes))
+
+		value := union.NewUnionWithOptionalTimeFromDate(&date)
+
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
+		assert.Equal(t, `{"type":"date","value":"1994-03-16"}`, string(bytes))
+
+		var decode union.UnionWithOptionalTime
+		require.NoError(t, json.Unmarshal(bytes, &decode))
+
+		assert.Equal(t, "date", decode.Type)
+		assert.Equal(t, 1994, decode.Date.Year())
+		assert.Equal(t, time.March, decode.Date.Month())
+		assert.Equal(t, 16, decode.Date.Day())
+	})
+
+	t.Run("undiscrimnated union (required)", func(t *testing.T) {
+		value := undiscriminated.NewUnionWithTimeFromDate(date)
+
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
+		assert.Equal(t, `"1994-03-16"`, string(bytes))
+
+		var decode undiscriminated.UnionWithTime
+		require.NoError(t, json.Unmarshal(bytes, &decode))
+
+		assert.Equal(t, 1994, decode.Date.Year())
+		assert.Equal(t, time.March, decode.Date.Month())
+		assert.Equal(t, 16, decode.Date.Day())
+	})
+
+	t.Run("undiscrimnated union (optional)", func(t *testing.T) {
+		empty := undiscriminated.NewUnionWithOptionalTimeFromDateOptional(nil)
+
+		emptyBytes, err := json.Marshal(empty)
+		require.NoError(t, err)
+		assert.Equal(t, `null`, string(emptyBytes))
+
+		value := undiscriminated.NewUnionWithOptionalTimeFromDateOptional(&date)
+
+		bytes, err := json.Marshal(value)
+		require.NoError(t, err)
+		assert.Equal(t, `"1994-03-16"`, string(bytes))
+
+		var decode undiscriminated.UnionWithOptionalTime
+		require.NoError(t, json.Unmarshal(bytes, &decode))
+
+		assert.Equal(t, 1994, decode.DateOptional.Year())
+		assert.Equal(t, time.March, decode.DateOptional.Month())
+		assert.Equal(t, 16, decode.DateOptional.Day())
+	})
+}
+
 func newUUID(t *testing.T) uuid.UUID {
 	u, err := uuid.NewRandom()
 	require.NoError(t, err)

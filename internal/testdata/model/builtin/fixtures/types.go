@@ -28,6 +28,8 @@ type Type struct {
 	Fifteen   [][]int          `json:"fifteen,omitempty" url:"fifteen,omitempty"`
 	Sixteen   []map[string]int `json:"sixteen,omitempty" url:"sixteen,omitempty"`
 	Seventeen []*uuid.UUID     `json:"seventeen,omitempty" url:"seventeen,omitempty"`
+	Nineteen  *time.Time       `json:"nineteen,omitempty" url:"nineteen,omitempty"`
+	Twenty    *time.Time       `json:"twenty,omitempty" url:"twenty,omitempty" format:"date"`
 	eighteen  string
 }
 
@@ -36,12 +38,24 @@ func (t *Type) Eighteen() string {
 }
 
 func (t *Type) UnmarshalJSON(data []byte) error {
-	type unmarshaler Type
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
+	type embed Type
+	var unmarshaler = struct {
+		embed
+		Six      *core.DateTime `json:"six"`
+		Seven    *core.Date     `json:"seven"`
+		Nineteen *core.DateTime `json:"nineteen,omitempty"`
+		Twenty   *core.Date     `json:"twenty,omitempty"`
+	}{
+		embed: embed(*t),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
 		return err
 	}
-	*t = Type(value)
+	*t = Type(unmarshaler.embed)
+	t.Six = unmarshaler.Six.Time()
+	t.Seven = unmarshaler.Seven.Time()
+	t.Nineteen = unmarshaler.Nineteen.TimePtr()
+	t.Twenty = unmarshaler.Twenty.TimePtr()
 	t.eighteen = "fern"
 	return nil
 }
@@ -50,9 +64,17 @@ func (t *Type) MarshalJSON() ([]byte, error) {
 	type embed Type
 	var marshaler = struct {
 		embed
-		Eighteen string `json:"eighteen"`
+		Six      *core.DateTime `json:"six"`
+		Seven    *core.Date     `json:"seven"`
+		Nineteen *core.DateTime `json:"nineteen,omitempty"`
+		Twenty   *core.Date     `json:"twenty,omitempty"`
+		Eighteen string         `json:"eighteen"`
 	}{
 		embed:    embed(*t),
+		Six:      core.NewDateTime(t.Six),
+		Seven:    core.NewDate(t.Seven),
+		Nineteen: core.NewOptionalDateTime(t.Nineteen),
+		Twenty:   core.NewOptionalDate(t.Twenty),
 		Eighteen: "fern",
 	}
 	return json.Marshal(marshaler)
