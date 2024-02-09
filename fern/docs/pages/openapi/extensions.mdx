@@ -30,6 +30,54 @@ paths:
       x-fern-sdk-method-name: create_user
 ```
 
+## Authentication overrides
+
+For authentication within your SDK, you may want to customize the:
+- Names of the parameters a user will populate to provide their credentials
+- Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
+
+By default, Fern uses selects names for authentication parameters like api_key, username and password, etc.
+Note that this configuration is optional, and even when provided `name` or `envvar` may be provided alone, both are not required.
+
+For bearer authentication:
+
+```yaml openapi.yaml
+x-fern-bearer:
+  name: apiKey
+  envvar: FERN_API_KEY
+```
+
+In a Python SDK for example, the above configuration would produce a client that looks like:
+
+```python
+import os
+
+class Client:
+
+  def __init__(self, *, apiKey: str = os.getenv("FERN_API_KEY"))
+```
+
+Similarly, for basic authentication the configuration is:
+
+```yaml openapi.yaml
+x-fern-basic:
+  username:
+     name: username
+     envvar: MY_USERNAME
+  password:
+     name: password
+     envvar: MY_PASSWORD
+```
+
+And for a custom auth header configuration:
+
+```yaml openapi.yaml
+x-fern-header:
+  name: header
+  envvar: MY_HEADER_ENVVAR
+```
+
+
 ## Enum descriptions and names
 
 OpenAPI doesn't natively support adding descriptions to enum values. To do this in Fern you can use the `x-fern-enum`
