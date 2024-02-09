@@ -107,7 +107,7 @@ export async function parseDocsConfiguration({
               })
             : undefined;
 
-    const cssPromise = convertCssConfig(rawCssConfig, absolutePathToFernFolder);
+    const cssPromise = convertCssConfig(rawCssConfig, absoluteFilepathToDocsConfig);
     const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
     const [convertedNavigation, pages, favicon, backgroundImage, typography, css, js] = await Promise.all([
@@ -141,7 +141,7 @@ export async function parseDocsConfiguration({
 
 async function convertCssConfig(
     css: RawDocs.CssConfig | undefined,
-    absolutePathToFernFolder: AbsoluteFilePath
+    absoluteFilepathToDocsConfig: AbsoluteFilePath
 ): Promise<ParsedDocsConfiguration["css"]> {
     if (css == null) {
         return undefined;
@@ -153,7 +153,7 @@ async function convertCssConfig(
                 const content = await readFile(
                     await resolveFilepath({
                         rawUnresolvedFilepath: cssFilePath,
-                        absolutePath: absolutePathToFernFolder
+                        absolutePath: absoluteFilepathToDocsConfig
                     })
                 );
                 return content.toString();
