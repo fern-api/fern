@@ -19,12 +19,14 @@ generators:
       license: MIT
 ```
 
-- Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a `publishInfo` configuration
+- Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a publishing configuration
 ```
 generators: 
   - name: 
-     output: 
+     output:  # <-- Publishing configuration
        location: rubygems
+       api-key: ${API_KEY}
+       package-name: "petstore"
 ```
 
 ## [0.0.5] - 2024-02-06
@@ -60,8 +62,8 @@ generators:
 groups:
  - name: ...
     version: ...
-    location:
-       output: rubygems
+    output:
+       location: rubygems
        api-key: ${API_KEY}
        package-name: "petstore"
 ```
