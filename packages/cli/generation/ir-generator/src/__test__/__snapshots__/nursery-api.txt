@@ -651,12 +651,12 @@ exports[`generate IR 1`] = `
                   "unsafeName": "3D",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "3_D",
-                  "unsafeName": "3_D",
+                  "safeName": "3D",
+                  "unsafeName": "3D",
                 },
                 "snakeCase": {
-                  "safeName": "3_d",
-                  "unsafeName": "3_d",
+                  "safeName": "3d",
+                  "unsafeName": "3d",
                 },
               },
               "wireValue": "3d",

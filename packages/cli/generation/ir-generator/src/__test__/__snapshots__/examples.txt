@@ -6707,12 +6707,12 @@ exports[`generate IR 1`] = `
                   "unsafeName": "Base64",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "BASE_64",
-                  "unsafeName": "BASE_64",
+                  "safeName": "BASE64",
+                  "unsafeName": "BASE64",
                 },
                 "snakeCase": {
-                  "safeName": "base_64",
-                  "unsafeName": "base_64",
+                  "safeName": "base64",
+                  "unsafeName": "base64",
                 },
               },
               "wireValue": "base64",
@@ -8670,12 +8670,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -8970,12 +8970,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -9341,12 +9341,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example0",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_0",
-              "unsafeName": "EXAMPLE_0",
+              "safeName": "EXAMPLE0",
+              "unsafeName": "EXAMPLE0",
             },
             "snakeCase": {
-              "safeName": "example_0",
-              "unsafeName": "example_0",
+              "safeName": "example0",
+              "unsafeName": "example0",
             },
           },
           "shape": {
@@ -9652,12 +9652,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "Example1",
             },
             "screamingSnakeCase": {
-              "safeName": "EXAMPLE_1",
-              "unsafeName": "EXAMPLE_1",
+              "safeName": "EXAMPLE1",
+              "unsafeName": "EXAMPLE1",
             },
             "snakeCase": {
-              "safeName": "example_1",
-              "unsafeName": "example_1",
+              "safeName": "example1",
+              "unsafeName": "example1",
             },
           },
           "shape": {
