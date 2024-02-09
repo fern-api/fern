@@ -1,0 +1,8 @@
+name: api
+auth: BearerAuthScheme
+auth-schemes:
+  BearerAuthScheme:
+    scheme: bearer
+    token:
+      name: api_key
+

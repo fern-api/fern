@@ -1,0 +1,8 @@
+default-group: local
+groups:
+  local:
+    generators:
+      - name: fernapi/fern-go-model
+        version: latest
+        github:
+          repository: example/repository

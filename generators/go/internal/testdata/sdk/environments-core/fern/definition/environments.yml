@@ -1,0 +1,5 @@
+types:
+  Environments:
+    enum:
+      - Inside
+      - Outside
