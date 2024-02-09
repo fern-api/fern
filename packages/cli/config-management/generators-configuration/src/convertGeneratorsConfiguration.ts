@@ -195,7 +195,6 @@ async function convertOutputMode({
                 })
             );
         case "nuget":
-            throw new Error("Nuget is not supported");
         case "rubygems":
             return FernFiddle.OutputMode.publishV2(
                 FernFiddle.remoteGen.PublishOutputModeV2.rubyGemsOverride({
