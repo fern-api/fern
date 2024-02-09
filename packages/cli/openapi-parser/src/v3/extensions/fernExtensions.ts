@@ -235,27 +235,40 @@ export const FernOpenAPIExtension = {
     EXAMPLES: "x-fern-examples",
 
     /**
-     * x-fern-bearer:
-     *   name: apiKey
-     *   env: MY_AUTH_TOKEN
+     * securitySchemes:
+     *   Bearer:
+     *     scheme: http
+     *     type: bearer
+     *     x-fern-bearer:
+     *       name: apiKey
+     *       env: MY_AUTH_TOKEN
      */
     FERN_BEARER_TOKEN: "x-fern-bearer",
 
     /**
-     * x-fern-header:
-     *   name: header
-     *   env: MY_AUTH_TOKEN
+     * securitySchemes:
+     *   Bearer:
+     *     type: apiKey
+     *     in: header
+     *     name: X-API-KEY-ID
+     *     x-fern-header:
+     *       name: header
+     *       env: MY_AUTH_TOKEN
      */
     FERN_HEADER_AUTH: "x-fern-header",
 
     /**
-     * x-fern-basic:
-     *   username:
-     *      name: username
-     *      env: MY_USERNAME
-     *   password:
-     *      name: password
-     *      env: MY_PASSWORD
+     * securitySchemes:
+     *   Basic:
+     *     scheme: http
+     *     type: basic
+     *     x-fern-basic:
+     *       username:
+     *          name: username
+     *          env: MY_USERNAME
+     *       password:
+     *          name: password
+     *          env: MY_PASSWORD
      */
     FERN_BASIC_AUTH: "x-fern-basic"
 } as const;

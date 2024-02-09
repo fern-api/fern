@@ -84,9 +84,10 @@ And for a custom auth header configuration:
 ```yaml openapi.yaml
 components:
   securitySchemes:
-    HeaderName:
-      type: http
-      scheme: schemeName
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
       x-fern-header:
         name: header
         env: MY_HEADER_ENVVAR
