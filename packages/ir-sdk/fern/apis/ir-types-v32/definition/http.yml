@@ -27,16 +27,30 @@ types:
       name: EndpointName
       displayName: optional<string>
       method: HttpMethod
-      headers: list<HttpHeader>
+      headers:
+        type: list<HttpHeader>
+        docs: Per-endpoint headers, this does not include global or auth headers that may also be applicable to this endpoint.
       baseUrl: optional<environment.EnvironmentBaseUrlId>
       path: HttpPath
       fullPath: HttpPath
       pathParameters: list<PathParameter>
       allPathParameters: list<PathParameter>
       queryParameters: list<QueryParameter>
-      requestBody: optional<HttpRequestBody>
-      sdkRequest: optional<SdkRequest>
-      response: optional<HttpResponse>
+      requestBody:
+        type: optional<HttpRequestBody>
+        docs: |
+          The wire format to send to the API. 
+            `reference` -> the object serialized to JSON inline (properties spread into the JSON body)
+            `inlinedRequestBody` -> has it's parameters that make up the JSON, and the properties of the objects within `extends` are not already flattened and included within properties
+      sdkRequest:
+        type: optional<SdkRequest>
+        docs: |
+          Used to understand the function signature for this endpoint within the SDK. This could mean whether the properties of the object.
+          are spread as individual properties or if the object is directly referenced as one parameter. Depending on the language, you
+          may want to generate a new "wrapper object" to include the body object, as well as necessary headers and query parameters.
+          This is NOT related to the data sent over the wire, `requestBody` defines what to send over the wire.
+      response:
+        type: optional<HttpResponse>
       errors: ResponseErrors
       auth: boolean
       idempotent: boolean
