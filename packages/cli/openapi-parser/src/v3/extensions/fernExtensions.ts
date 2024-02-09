@@ -232,7 +232,27 @@ export const FernOpenAPIExtension = {
      *          name: Console Log My Endpoint
      *          description: This is a code sample that logs the response
      */
-    EXAMPLES: "x-fern-examples"
+    EXAMPLES: "x-fern-examples",
+
+    /**
+     * securitySchemes:
+     *   Bearer:
+     *     scheme: http
+     *     type: bearer
+     *     x-fern-auth-environment-variable-name: MY_AUTH_TOKEN
+     */
+    AUTH_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-environment-variable-name",
+    /**
+     * For basic auth, you must specify the environment variable for both fie;lds
+     * securitySchemes:
+     *   Basic:
+     *     scheme: http
+     *     type: basic
+     *     x-fern-auth-username-environment-variable-name: BASIC_USERNAME
+     *     x-fern-auth-password-environment-variable-name: BASIC_PASSWORD
+     */
+    AUTH_USERNAME_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-username-environment-variable-name",
+    AUTH_PASSWORD_ENVIRONMENT_VARIABLE_NAME: "x-fern-auth-password-environment-variable-name"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;
