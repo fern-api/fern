@@ -7,9 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-## [0.0.6] - 2024-02-07
+## [0.0.6] - 2024-02-09
 - Improvement: license files are now specified within the gem config if they are provided
+```
+generators: 
+  - name: fernapi/fern-ruby-sdk
+    version: 0.0.6
+    github:
+      repository: org/repo-name
+      mode: pull-request
+      license: MIT
+```
+
 - Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a `publishInfo` configuration
+```
+generators: 
+  - name: 
+     output: 
+       location: rubygems
+```
 
 ## [0.0.5] - 2024-02-06
 
