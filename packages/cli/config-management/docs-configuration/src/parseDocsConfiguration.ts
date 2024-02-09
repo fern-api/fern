@@ -49,7 +49,7 @@ export async function parseDocsConfiguration({
         versions,
         layout,
         css: rawCssConfig,
-        js
+        js: rawJsConfig
     } = rawDocsConfiguration;
 
     const convertedNavigationPromise = getNavigationConfiguration({
@@ -108,7 +108,7 @@ export async function parseDocsConfiguration({
             : undefined;
 
     const cssPromise = convertCssConfig(rawCssConfig);
-    const jsPromise = convertJsConfig(js, absoluteFilepathToDocsConfig);
+    const jsPromise = convertJsConfig(rawJsConfig, absoluteFilepathToDocsConfig);
 
     const [convertedNavigation, pages, favicon, backgroundImage, typography, css, js] = await Promise.all([
         convertedNavigationPromise,
