@@ -96,15 +96,20 @@ export function buildAuthSchemes(context: OpenApiIrConverterContext): void {
             }
         } else if (securityScheme.type === "header") {
             if (!setAuth) {
+                const schema: RawSchemas.AuthSchemeDeclarationSchema = {
+                    header: securityScheme.headerName,
+                    name: securityScheme.headerVariableName ?? "apiKey",
+                    type: "string"
+                };
+                if (securityScheme.headerEnvVar != null) {
+                    schema.env = securityScheme.headerEnvVar;
+                }
+                if (securityScheme.prefix != null) {
+                    schema.prefix = securityScheme.prefix;
+                }
                 context.builder.addAuthScheme({
                     name: id,
-                    schema: {
-                        header: securityScheme.headerName,
-                        name: securityScheme.headerVariableName ?? "apiKey",
-                        type: "string",
-                        prefix: securityScheme.prefix ?? undefined,
-                        env: securityScheme.headerEnvVar ?? undefined
-                    }
+                    schema
                 });
                 context.builder.setAuth(id);
                 setAuth = true;

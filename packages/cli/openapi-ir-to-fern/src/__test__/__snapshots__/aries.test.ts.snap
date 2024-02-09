@@ -22375,10 +22375,8 @@ exports[`open api parser aries simple 1`] = `
     "auth": "AuthorizationHeader",
     "auth-schemes": {
       "AuthorizationHeader": {
-        "env": undefined,
         "header": "Authorization",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

@@ -2455,10 +2455,8 @@ Used to submit feedback regarding the quality of previously generated completion
     "auth": "apiKeyAuth",
     "auth-schemes": {
       "apiKeyAuth": {
-        "env": undefined,
         "header": "X_API_KEY",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

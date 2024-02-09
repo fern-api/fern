@@ -3515,10 +3515,8 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
         "scheme": "bearer",
       },
       "apiKey": {
-        "env": undefined,
         "header": "API-Key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

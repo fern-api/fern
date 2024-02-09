@@ -5606,10 +5606,8 @@ In order to make individual events retrievable, you also need to pass in a uniqu
     "auth": "x-api-key",
     "auth-schemes": {
       "x-api-key": {
-        "env": undefined,
         "header": "x-api-key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },
