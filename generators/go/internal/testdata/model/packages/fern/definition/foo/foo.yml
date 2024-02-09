@@ -1,0 +1,6 @@
+imports:
+  top: ../foo.yml
+types:
+  Foo:
+    properties:
+      foo: top.Foo
