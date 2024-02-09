@@ -9473,6 +9473,10 @@ The actions represents the ways you can interact with a protected resource.",
     "auth-schemes": {
       "BearerAuthScheme": {
         "scheme": "bearer",
+        "token": {
+          "env": undefined,
+          "name": undefined,
+        },
       },
     },
     "default-environment": "Default",

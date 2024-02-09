@@ -2586,6 +2586,7 @@ The default value is 'en_us'.
     "auth": "ApiKey",
     "auth-schemes": {
       "ApiKey": {
+        "env": undefined,
         "header": "Authorization",
         "name": "apiKey",
         "prefix": undefined,

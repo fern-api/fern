@@ -43992,6 +43992,7 @@ the same customer, dimension, and time, but a different quantity.",
   },
   "securitySchemes": {
     "BearerTokenAuth": {
+      "headerEnvVar": undefined,
       "headerName": "Authorization",
       "headerVariableName": undefined,
       "prefix": undefined,

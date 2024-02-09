@@ -15032,6 +15032,10 @@ You will be assigned as owner of the new team automatically.",
     "auth-schemes": {
       "BearerAuthScheme": {
         "scheme": "bearer",
+        "token": {
+          "env": undefined,
+          "name": undefined,
+        },
       },
     },
     "default-environment": "Default",

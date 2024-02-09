@@ -25935,7 +25935,15 @@ For \`session_expired\` errors, the description can be (among others):
     "auth": "BasicAuthScheme",
     "auth-schemes": {
       "BasicAuthScheme": {
+        "password": {
+          "env": undefined,
+          "name": undefined,
+        },
         "scheme": "basic",
+        "username": {
+          "env": undefined,
+          "name": undefined,
+        },
       },
     },
     "default-environment": "Production",

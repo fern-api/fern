@@ -4585,6 +4585,7 @@ unique.
     "auth": "auth-token",
     "auth-schemes": {
       "auth-token": {
+        "env": undefined,
         "header": "Authorization",
         "name": "apiKey",
         "prefix": undefined,

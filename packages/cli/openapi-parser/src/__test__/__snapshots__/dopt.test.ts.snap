@@ -2794,6 +2794,7 @@ exports[`open api parser dopt parse open api 1`] = `
   },
   "securitySchemes": {
     "ApiKeyAuth": {
+      "headerEnvVar": undefined,
       "headerName": "X-Api-Key",
       "headerVariableName": undefined,
       "prefix": undefined,

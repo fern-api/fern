@@ -974,6 +974,10 @@ exports[`open api parser superagent simple 1`] = `
     "auth-schemes": {
       "BearerAuthScheme": {
         "scheme": "bearer",
+        "token": {
+          "env": undefined,
+          "name": undefined,
+        },
       },
     },
     "display-name": "Superagent",

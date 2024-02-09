@@ -11953,6 +11953,7 @@ Upload a document to be indexed and used for search.
   },
   "securitySchemes": {
     "apiKeyAuth": {
+      "headerEnvVar": undefined,
       "headerName": "X_API_KEY",
       "headerVariableName": undefined,
       "prefix": undefined,

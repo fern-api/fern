@@ -994,6 +994,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
     "auth": "Authentication",
     "auth-schemes": {
       "Authentication": {
+        "env": undefined,
         "header": "X-Hume-Api-Key",
         "name": "apiKey",
         "prefix": undefined,

@@ -2288,6 +2288,10 @@ exports[`open api parser hathora simple 1`] = `
     "auth-schemes": {
       "BearerAuthScheme": {
         "scheme": "bearer",
+        "token": {
+          "env": undefined,
+          "name": undefined,
+        },
       },
     },
     "default-environment": "Default",
