@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/ts/express/express-service-generator"
+    "directory": "generators/typescript/express/express-service-generator"
   },
   "files": [
     "lib"

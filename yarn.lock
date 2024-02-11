@@ -2316,15 +2316,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-api/core-utils@npm:0.0.248-7-gb4189be0":
-  version: 0.0.248-7-gb4189be0
-  resolution: "@fern-api/core-utils@npm:0.0.248-7-gb4189be0"
-  dependencies:
-    strip-ansi: ^7.0.1
-  checksum: b92669edd72f96ebc771fc51175c730641d990a06af7ab76d9960ed4f47de275266eb8454805e9129f9fdaff977e00d21095f78c7ea0572f1c91fadcec25038a
-  languageName: node
-  linkType: hard
-
 "@fern-api/core-utils@workspace:*, @fern-api/core-utils@workspace:packages/commons/core-utils":
   version: 0.0.0-use.local
   resolution: "@fern-api/core-utils@workspace:packages/commons/core-utils"
@@ -2806,7 +2797,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/loadable@workspace:packages/commons/loadable"
   dependencies:
-    "@fern-api/core-utils": 0.0.248-7-gb4189be0
+    "@fern-api/core-utils": "workspace:*"
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3835,9 +3826,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-typescript/abstract-error-class-generator@workspace:*, @fern-typescript/abstract-error-class-generator@workspace:generators/ts/utils/abstract-error-class-generator":
+"@fern-typescript/abstract-error-class-generator@workspace:*, @fern-typescript/abstract-error-class-generator@workspace:generators/typescript/utils/abstract-error-class-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/abstract-error-class-generator@workspace:generators/ts/utils/abstract-error-class-generator"
+  resolution: "@fern-typescript/abstract-error-class-generator@workspace:generators/typescript/utils/abstract-error-class-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3856,9 +3847,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/abstract-generator-cli@workspace:*, @fern-typescript/abstract-generator-cli@workspace:generators/ts/utils/abstract-generator-cli":
+"@fern-typescript/abstract-generator-cli@workspace:*, @fern-typescript/abstract-generator-cli@workspace:generators/typescript/utils/abstract-generator-cli":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/abstract-generator-cli@workspace:generators/ts/utils/abstract-generator-cli"
+  resolution: "@fern-typescript/abstract-generator-cli@workspace:generators/typescript/utils/abstract-generator-cli"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3880,9 +3871,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/abstract-schema-generator@workspace:*, @fern-typescript/abstract-schema-generator@workspace:generators/ts/utils/abstract-schema-generator":
+"@fern-typescript/abstract-schema-generator@workspace:*, @fern-typescript/abstract-schema-generator@workspace:generators/typescript/utils/abstract-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/abstract-schema-generator@workspace:generators/ts/utils/abstract-schema-generator"
+  resolution: "@fern-typescript/abstract-schema-generator@workspace:generators/typescript/utils/abstract-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3901,9 +3892,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/auth@workspace:generators/ts/utils/core-utilities/auth":
+"@fern-typescript/auth@workspace:generators/typescript/utils/core-utilities/auth":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/auth@workspace:generators/ts/utils/core-utilities/auth"
+  resolution: "@fern-typescript/auth@workspace:generators/typescript/utils/core-utilities/auth"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3921,9 +3912,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/base-core-utilities@workspace:generators/ts/utils/core-utilities/base":
+"@fern-typescript/base-core-utilities@workspace:generators/typescript/utils/core-utilities/base":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/base-core-utilities@workspace:generators/ts/utils/core-utilities/base"
+  resolution: "@fern-typescript/base-core-utilities@workspace:generators/typescript/utils/core-utilities/base"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3939,9 +3930,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/callback-queue@workspace:generators/ts/utils/core-utilities/callback-queue":
+"@fern-typescript/callback-queue@workspace:generators/typescript/utils/core-utilities/callback-queue":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/callback-queue@workspace:generators/ts/utils/core-utilities/callback-queue"
+  resolution: "@fern-typescript/callback-queue@workspace:generators/typescript/utils/core-utilities/callback-queue"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -3957,14 +3948,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:generators/ts/utils/commons":
+"@fern-typescript/commons@workspace:*, @fern-typescript/commons@workspace:generators/typescript/utils/commons":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/commons@workspace:generators/ts/utils/commons"
+  resolution: "@fern-typescript/commons@workspace:generators/typescript/utils/commons"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
     "@babel/preset-typescript": ^7.18.6
-    "@fern-api/core-utils": 0.0.248-7-gb4189be0
+    "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
@@ -3997,9 +3988,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/contexts@workspace:*, @fern-typescript/contexts@workspace:generators/ts/utils/contexts":
+"@fern-typescript/contexts@workspace:*, @fern-typescript/contexts@workspace:generators/typescript/utils/contexts":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/contexts@workspace:generators/ts/utils/contexts"
+  resolution: "@fern-typescript/contexts@workspace:generators/typescript/utils/contexts"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4019,9 +4010,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/endpoint-error-union-generator@workspace:*, @fern-typescript/endpoint-error-union-generator@workspace:generators/ts/sdk/endpoint-error-union-generator":
+"@fern-typescript/endpoint-error-union-generator@workspace:*, @fern-typescript/endpoint-error-union-generator@workspace:generators/typescript/sdk/endpoint-error-union-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/endpoint-error-union-generator@workspace:generators/ts/sdk/endpoint-error-union-generator"
+  resolution: "@fern-typescript/endpoint-error-union-generator@workspace:generators/typescript/sdk/endpoint-error-union-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4043,9 +4034,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/environments-generator@workspace:*, @fern-typescript/environments-generator@workspace:generators/ts/sdk/environments-generator":
+"@fern-typescript/environments-generator@workspace:*, @fern-typescript/environments-generator@workspace:generators/typescript/sdk/environments-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/environments-generator@workspace:generators/ts/sdk/environments-generator"
+  resolution: "@fern-typescript/environments-generator@workspace:generators/typescript/sdk/environments-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4065,9 +4056,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-endpoint-type-schemas-generator@workspace:*, @fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/ts/express/express-endpoint-type-schemas-generator":
+"@fern-typescript/express-endpoint-type-schemas-generator@workspace:*, @fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/typescript/express/express-endpoint-type-schemas-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/ts/express/express-endpoint-type-schemas-generator"
+  resolution: "@fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/typescript/express/express-endpoint-type-schemas-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4089,9 +4080,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-error-generator@workspace:*, @fern-typescript/express-error-generator@workspace:generators/ts/express/express-error-generator":
+"@fern-typescript/express-error-generator@workspace:*, @fern-typescript/express-error-generator@workspace:generators/typescript/express/express-error-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-error-generator@workspace:generators/ts/express/express-error-generator"
+  resolution: "@fern-typescript/express-error-generator@workspace:generators/typescript/express/express-error-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4112,9 +4103,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-error-schema-generator@workspace:*, @fern-typescript/express-error-schema-generator@workspace:generators/ts/express/express-error-schema-generator":
+"@fern-typescript/express-error-schema-generator@workspace:*, @fern-typescript/express-error-schema-generator@workspace:generators/typescript/express/express-error-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-error-schema-generator@workspace:generators/ts/express/express-error-schema-generator"
+  resolution: "@fern-typescript/express-error-schema-generator@workspace:generators/typescript/express/express-error-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4136,9 +4127,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-generator-cli@workspace:generators/ts/express/cli":
+"@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-generator-cli@workspace:generators/ts/express/cli"
+  resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4173,9 +4164,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-generator@workspace:*, @fern-typescript/express-generator@workspace:generators/ts/express/generator":
+"@fern-typescript/express-generator@workspace:*, @fern-typescript/express-generator@workspace:generators/typescript/express/generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-generator@workspace:generators/ts/express/generator"
+  resolution: "@fern-typescript/express-generator@workspace:generators/typescript/express/generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4210,9 +4201,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-inlined-request-body-generator@workspace:*, @fern-typescript/express-inlined-request-body-generator@workspace:generators/ts/express/express-inlined-request-body-generator":
+"@fern-typescript/express-inlined-request-body-generator@workspace:*, @fern-typescript/express-inlined-request-body-generator@workspace:generators/typescript/express/express-inlined-request-body-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-inlined-request-body-generator@workspace:generators/ts/express/express-inlined-request-body-generator"
+  resolution: "@fern-typescript/express-inlined-request-body-generator@workspace:generators/typescript/express/express-inlined-request-body-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4231,9 +4222,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-inlined-request-schema-generator@workspace:*, @fern-typescript/express-inlined-request-schema-generator@workspace:generators/ts/express/express-inlined-request-body-schema-generator":
+"@fern-typescript/express-inlined-request-schema-generator@workspace:*, @fern-typescript/express-inlined-request-schema-generator@workspace:generators/typescript/express/express-inlined-request-body-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-inlined-request-schema-generator@workspace:generators/ts/express/express-inlined-request-body-schema-generator"
+  resolution: "@fern-typescript/express-inlined-request-schema-generator@workspace:generators/typescript/express/express-inlined-request-body-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4254,9 +4245,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-register-generator@workspace:*, @fern-typescript/express-register-generator@workspace:generators/ts/express/express-register-generator":
+"@fern-typescript/express-register-generator@workspace:*, @fern-typescript/express-register-generator@workspace:generators/typescript/express/express-register-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-register-generator@workspace:generators/ts/express/express-register-generator"
+  resolution: "@fern-typescript/express-register-generator@workspace:generators/typescript/express/express-register-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4279,9 +4270,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/express-service-generator@workspace:*, @fern-typescript/express-service-generator@workspace:generators/ts/express/express-service-generator":
+"@fern-typescript/express-service-generator@workspace:*, @fern-typescript/express-service-generator@workspace:generators/typescript/express/express-service-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/express-service-generator@workspace:generators/ts/express/express-service-generator"
+  resolution: "@fern-typescript/express-service-generator@workspace:generators/typescript/express/express-service-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4302,9 +4293,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/fetcher@workspace:*, @fern-typescript/fetcher@workspace:generators/ts/utils/core-utilities/fetcher":
+"@fern-typescript/fetcher@workspace:*, @fern-typescript/fetcher@workspace:generators/typescript/utils/core-utilities/fetcher":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/fetcher@workspace:generators/ts/utils/core-utilities/fetcher"
+  resolution: "@fern-typescript/fetcher@workspace:generators/typescript/utils/core-utilities/fetcher"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4325,9 +4316,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/form-data-utils@workspace:generators/ts/utils/core-utilities/form-data-utils":
+"@fern-typescript/form-data-utils@workspace:generators/typescript/utils/core-utilities/form-data-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/form-data-utils@workspace:generators/ts/utils/core-utilities/form-data-utils"
+  resolution: "@fern-typescript/form-data-utils@workspace:generators/typescript/utils/core-utilities/form-data-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4344,9 +4335,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/generic-express-error-generators@workspace:*, @fern-typescript/generic-express-error-generators@workspace:generators/ts/express/generic-express-error-generators":
+"@fern-typescript/generic-express-error-generators@workspace:*, @fern-typescript/generic-express-error-generators@workspace:generators/typescript/express/generic-express-error-generators":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/generic-express-error-generators@workspace:generators/ts/express/generic-express-error-generators"
+  resolution: "@fern-typescript/generic-express-error-generators@workspace:generators/typescript/express/generic-express-error-generators"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4366,9 +4357,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/generic-sdk-error-generators@workspace:*, @fern-typescript/generic-sdk-error-generators@workspace:generators/ts/sdk/generic-sdk-error-generators":
+"@fern-typescript/generic-sdk-error-generators@workspace:*, @fern-typescript/generic-sdk-error-generators@workspace:generators/typescript/sdk/generic-sdk-error-generators":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/generic-sdk-error-generators@workspace:generators/ts/sdk/generic-sdk-error-generators"
+  resolution: "@fern-typescript/generic-sdk-error-generators@workspace:generators/typescript/sdk/generic-sdk-error-generators"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4388,9 +4379,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/request-wrapper-generator@workspace:*, @fern-typescript/request-wrapper-generator@workspace:generators/ts/sdk/request-wrapper-generator":
+"@fern-typescript/request-wrapper-generator@workspace:*, @fern-typescript/request-wrapper-generator@workspace:generators/typescript/sdk/request-wrapper-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/request-wrapper-generator@workspace:generators/ts/sdk/request-wrapper-generator"
+  resolution: "@fern-typescript/request-wrapper-generator@workspace:generators/typescript/sdk/request-wrapper-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4411,9 +4402,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/resolvers@workspace:*, @fern-typescript/resolvers@workspace:generators/ts/utils/resolvers":
+"@fern-typescript/resolvers@workspace:*, @fern-typescript/resolvers@workspace:generators/typescript/utils/resolvers":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/resolvers@workspace:generators/ts/utils/resolvers"
+  resolution: "@fern-typescript/resolvers@workspace:generators/typescript/utils/resolvers"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4431,9 +4422,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-client-class-generator@workspace:*, @fern-typescript/sdk-client-class-generator@workspace:generators/ts/sdk/client-class-generator":
+"@fern-typescript/sdk-client-class-generator@workspace:*, @fern-typescript/sdk-client-class-generator@workspace:generators/typescript/sdk/client-class-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-client-class-generator@workspace:generators/ts/sdk/client-class-generator"
+  resolution: "@fern-typescript/sdk-client-class-generator@workspace:generators/typescript/sdk/client-class-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4455,9 +4446,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:*, @fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/ts/sdk/sdk-endpoint-type-schemas-generator":
+"@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:*, @fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/ts/sdk/sdk-endpoint-type-schemas-generator"
+  resolution: "@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4481,9 +4472,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-error-generator@workspace:*, @fern-typescript/sdk-error-generator@workspace:generators/ts/sdk/sdk-error-generator":
+"@fern-typescript/sdk-error-generator@workspace:*, @fern-typescript/sdk-error-generator@workspace:generators/typescript/sdk/sdk-error-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-error-generator@workspace:generators/ts/sdk/sdk-error-generator"
+  resolution: "@fern-typescript/sdk-error-generator@workspace:generators/typescript/sdk/sdk-error-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4504,9 +4495,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-error-schema-generator@workspace:*, @fern-typescript/sdk-error-schema-generator@workspace:generators/ts/sdk/sdk-error-schema-generator":
+"@fern-typescript/sdk-error-schema-generator@workspace:*, @fern-typescript/sdk-error-schema-generator@workspace:generators/typescript/sdk/sdk-error-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-error-schema-generator@workspace:generators/ts/sdk/sdk-error-schema-generator"
+  resolution: "@fern-typescript/sdk-error-schema-generator@workspace:generators/typescript/sdk/sdk-error-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4528,9 +4519,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-generator-cli@workspace:generators/ts/sdk/cli":
+"@fern-typescript/sdk-generator-cli@workspace:generators/typescript/sdk/cli":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-generator-cli@workspace:generators/ts/sdk/cli"
+  resolution: "@fern-typescript/sdk-generator-cli@workspace:generators/typescript/sdk/cli"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4566,9 +4557,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-generator@workspace:*, @fern-typescript/sdk-generator@workspace:generators/ts/sdk/generator":
+"@fern-typescript/sdk-generator@workspace:*, @fern-typescript/sdk-generator@workspace:generators/typescript/sdk/generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-generator@workspace:generators/ts/sdk/generator"
+  resolution: "@fern-typescript/sdk-generator@workspace:generators/typescript/sdk/generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4609,9 +4600,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/sdk-inlined-request-schema-generator@workspace:*, @fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/ts/sdk/sdk-inlined-request-body-schema-generator":
+"@fern-typescript/sdk-inlined-request-schema-generator@workspace:*, @fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/ts/sdk/sdk-inlined-request-body-schema-generator"
+  resolution: "@fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4643,9 +4634,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-typescript/stream-utils@workspace:generators/ts/utils/core-utilities/stream-utils":
+"@fern-typescript/stream-utils@workspace:generators/typescript/utils/core-utilities/stream-utils":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/stream-utils@workspace:generators/ts/utils/core-utilities/stream-utils"
+  resolution: "@fern-typescript/stream-utils@workspace:generators/typescript/utils/core-utilities/stream-utils"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4661,9 +4652,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/type-generator@workspace:*, @fern-typescript/type-generator@workspace:generators/ts/model/type-generator":
+"@fern-typescript/type-generator@workspace:*, @fern-typescript/type-generator@workspace:generators/typescript/model/type-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/type-generator@workspace:generators/ts/model/type-generator"
+  resolution: "@fern-typescript/type-generator@workspace:generators/typescript/model/type-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4684,9 +4675,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/type-reference-converters@workspace:*, @fern-typescript/type-reference-converters@workspace:generators/ts/model/type-reference-converters":
+"@fern-typescript/type-reference-converters@workspace:*, @fern-typescript/type-reference-converters@workspace:generators/typescript/model/type-reference-converters":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/type-reference-converters@workspace:generators/ts/model/type-reference-converters"
+  resolution: "@fern-typescript/type-reference-converters@workspace:generators/typescript/model/type-reference-converters"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4706,9 +4697,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/type-reference-example-generator@workspace:*, @fern-typescript/type-reference-example-generator@workspace:generators/ts/model/type-reference-example-generator":
+"@fern-typescript/type-reference-example-generator@workspace:*, @fern-typescript/type-reference-example-generator@workspace:generators/typescript/model/type-reference-example-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/type-reference-example-generator@workspace:generators/ts/model/type-reference-example-generator"
+  resolution: "@fern-typescript/type-reference-example-generator@workspace:generators/typescript/model/type-reference-example-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4729,9 +4720,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/type-schema-generator@workspace:*, @fern-typescript/type-schema-generator@workspace:generators/ts/model/type-schema-generator":
+"@fern-typescript/type-schema-generator@workspace:*, @fern-typescript/type-schema-generator@workspace:generators/typescript/model/type-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/type-schema-generator@workspace:generators/ts/model/type-schema-generator"
+  resolution: "@fern-typescript/type-schema-generator@workspace:generators/typescript/model/type-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4753,9 +4744,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/union-generator@workspace:*, @fern-typescript/union-generator@workspace:generators/ts/model/union-generator":
+"@fern-typescript/union-generator@workspace:*, @fern-typescript/union-generator@workspace:generators/typescript/model/union-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/union-generator@workspace:generators/ts/model/union-generator"
+  resolution: "@fern-typescript/union-generator@workspace:generators/typescript/model/union-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4776,9 +4767,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/union-schema-generator@workspace:*, @fern-typescript/union-schema-generator@workspace:generators/ts/model/union-schema-generator":
+"@fern-typescript/union-schema-generator@workspace:*, @fern-typescript/union-schema-generator@workspace:generators/typescript/model/union-schema-generator":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/union-schema-generator@workspace:generators/ts/model/union-schema-generator"
+  resolution: "@fern-typescript/union-schema-generator@workspace:generators/typescript/model/union-schema-generator"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20
@@ -4799,9 +4790,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@fern-typescript/zurg@workspace:*, @fern-typescript/zurg@workspace:generators/ts/utils/core-utilities/zurg":
+"@fern-typescript/zurg@workspace:*, @fern-typescript/zurg@workspace:generators/typescript/utils/core-utilities/zurg":
   version: 0.0.0-use.local
-  resolution: "@fern-typescript/zurg@workspace:generators/ts/utils/core-utilities/zurg"
+  resolution: "@fern-typescript/zurg@workspace:generators/typescript/utils/core-utilities/zurg"
   dependencies:
     "@babel/core": ^7.19.1
     "@babel/preset-env": ^7.22.20

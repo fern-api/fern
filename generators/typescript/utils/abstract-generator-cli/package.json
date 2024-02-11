@@ -4,7 +4,7 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/fern-api/fern.git",
-    "directory": "generators/ts/utils/abstract-generator-cli"
+    "directory": "generators/typescript/utils/abstract-generator-cli"
   },
   "files": [
     "lib"
