@@ -233,11 +233,21 @@ class EndpointFunctionGenerator:
                 else None
             )
 
+            method = endpoint.method.visit(
+                        get=lambda: "GET",
+                        post=lambda: "POST",
+                        put=lambda: "PUT",
+                        patch=lambda: "PATCH",
+                        delete=lambda: "DELETE",
+                    )
+
             def write_request_body(writer: AST.NodeWriter) -> None:
                 additional_body_parameters_expression = f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_headers if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None"
                 if encoded_json_request_body:
                     writer.write("{")
-                    writer.write(f"**{encoded_json_request_body},")
+                    writer.write("**{")
+                    writer.write_node(encoded_json_request_body)
+                    writer.write("},")
                     writer.write(f"**({additional_body_parameters_expression} else {'{}'}),")
                     writer.write_line("}")
                 else:
@@ -262,7 +272,7 @@ class EndpointFunctionGenerator:
                 else f"{self._context.custom_config.timeout_in_seconds}"
             )
             timeout = AST.Expression(
-                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds is not None else {timeout_default}"
+                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None and {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.timeout_in_seconds is not None else {timeout_default}"
             )
 
             writer.write_node(
@@ -277,15 +287,9 @@ class EndpointFunctionGenerator:
                             self._get_path_for_endpoint(endpoint),
                         )
                     ),
-                    method=endpoint.method.visit(
-                        get=lambda: "GET",
-                        post=lambda: "POST",
-                        put=lambda: "PUT",
-                        patch=lambda: "PATCH",
-                        delete=lambda: "DELETE",
-                    ),
+                    method=method,
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
-                    request_body=AST.Expression(AST.CodeWriter(write_request_body)),
+                    request_body=AST.Expression(AST.CodeWriter(write_request_body)) if (method is not "GET" and method is not "DELETE") else None,
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=request_body_parameters.get_files() if request_body_parameters is not None else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,

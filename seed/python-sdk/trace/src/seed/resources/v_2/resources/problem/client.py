@@ -6,6 +6,7 @@ from json.decoder import JSONDecodeError
 
 from .....core.api_error import ApiError
 from .....core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .....core.jsonable_encoder import jsonable_encoder
 from .....core.remove_none_from_dict import remove_none_from_dict
 from .....core.request_options import RequestOptions
 from ....commons.types.problem_id import ProblemId
@@ -34,14 +35,20 @@ class ProblemClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -61,14 +68,20 @@ class ProblemClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -92,14 +105,20 @@ class ProblemClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{problem_id}"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -128,14 +147,20 @@ class ProblemClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -162,14 +187,20 @@ class AsyncProblemClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/lightweight-problem-info"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -191,14 +222,20 @@ class AsyncProblemClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "problems-v2/problem-info"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -222,14 +259,20 @@ class AsyncProblemClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"problems-v2/problem-info/{problem_id}"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -258,14 +301,20 @@ class AsyncProblemClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"problems-v2/problem-info/{problem_id}/version/{problem_version}",
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()

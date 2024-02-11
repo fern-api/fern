@@ -75,31 +75,42 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            data=jsonable_encoder(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "setOfStrings": set_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "optionalSetOfStrings": optional_set_of_strings,
-                    "maybeList": maybe_list,
-                    "optionalMaybeList": optional_maybe_list,
-                    "maybeListOrSet": maybe_list_or_set,
-                    "optionalMaybeListOrSet": optional_maybe_list_or_set,
-                    "listOfObjects": list_of_objects,
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
+            data={
+                **{
+                    jsonable_encoder(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "setOfStrings": set_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            "optionalSetOfStrings": optional_set_of_strings,
+                            "maybeList": maybe_list,
+                            "optionalMaybeList": optional_maybe_list,
+                            "maybeListOrSet": maybe_list_or_set,
+                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
+                            "listOfObjects": list_of_objects,
+                        }
+                    )
+                },
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
             files={"file": file, "maybeFile": maybe_file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -119,16 +130,25 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            data=jsonable_encoder({}),
-            files={"file": file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            data={
+                **{jsonable_encoder({})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            files={"file": file},
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -168,25 +188,34 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
-            params=remove_none_from_dict(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "maybeString": maybe_string,
+                        "integer": integer,
+                        "maybeInteger": maybe_integer,
+                        "listOfStrings": list_of_strings,
+                        "optionalListOfStrings": optional_list_of_strings,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            data=jsonable_encoder({}),
+            data={
+                **{jsonable_encoder({})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
             files={"file": file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -255,31 +284,42 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            data=jsonable_encoder(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "setOfStrings": set_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    "optionalSetOfStrings": optional_set_of_strings,
-                    "maybeList": maybe_list,
-                    "optionalMaybeList": optional_maybe_list,
-                    "maybeListOrSet": maybe_list_or_set,
-                    "optionalMaybeListOrSet": optional_maybe_list_or_set,
-                    "listOfObjects": list_of_objects,
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
+            data={
+                **{
+                    jsonable_encoder(
+                        {
+                            "maybeString": maybe_string,
+                            "integer": integer,
+                            "maybeInteger": maybe_integer,
+                            "listOfStrings": list_of_strings,
+                            "setOfStrings": set_of_strings,
+                            "optionalListOfStrings": optional_list_of_strings,
+                            "optionalSetOfStrings": optional_set_of_strings,
+                            "maybeList": maybe_list,
+                            "optionalMaybeList": optional_maybe_list,
+                            "maybeListOrSet": maybe_list_or_set,
+                            "optionalMaybeListOrSet": optional_maybe_list_or_set,
+                            "listOfObjects": list_of_objects,
+                        }
+                    )
+                },
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
             files={"file": file, "maybeFile": maybe_file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -299,16 +339,25 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            data=jsonable_encoder({}),
-            files={"file": file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            data={
+                **{jsonable_encoder({})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            files={"file": file},
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -348,25 +397,34 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file-with-query-params"),
-            params=remove_none_from_dict(
-                {
-                    "maybeString": maybe_string,
-                    "integer": integer,
-                    "maybeInteger": maybe_integer,
-                    "listOfStrings": list_of_strings,
-                    "optionalListOfStrings": optional_list_of_strings,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "maybeString": maybe_string,
+                        "integer": integer,
+                        "maybeInteger": maybe_integer,
+                        "listOfStrings": list_of_strings,
+                        "optionalListOfStrings": optional_list_of_strings,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            data=jsonable_encoder({}),
+            data={
+                **{jsonable_encoder({})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
             files={"file": file},
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

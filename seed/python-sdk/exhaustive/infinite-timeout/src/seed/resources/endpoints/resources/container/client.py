@@ -36,15 +36,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[str], _response.json())  # type: ignore
@@ -66,15 +75,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
@@ -96,15 +114,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
@@ -126,15 +153,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
@@ -156,15 +192,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Dict[str, str], _response.json())  # type: ignore
@@ -189,15 +234,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Dict[str, ObjectWithRequiredField], _response.json())  # type: ignore
@@ -222,15 +276,24 @@ class ContainerClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore
@@ -257,15 +320,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-primitives"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[str], _response.json())  # type: ignore
@@ -287,15 +359,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/list-of-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
@@ -317,15 +398,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-primitives"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Set[str], _response.json())  # type: ignore
@@ -347,15 +437,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/set-of-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.List[ObjectWithRequiredField], _response.json())  # type: ignore
@@ -377,15 +476,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-prim"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Dict[str, str], _response.json())  # type: ignore
@@ -410,15 +518,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/map-prim-to-object"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Dict[str, ObjectWithRequiredField], _response.json())  # type: ignore
@@ -443,15 +560,24 @@ class AsyncContainerClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "container/opt-objects"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(typing.Optional[ObjectWithRequiredField], _response.json())  # type: ignore

@@ -58,23 +58,32 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
-            params=remove_none_from_dict(
-                {
-                    "datetime": serialize_datetime(datetime),
-                    "optionalDatetime": serialize_datetime(optional_datetime)
-                    if optional_datetime is not None
-                    else None,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "datetime": serialize_datetime(datetime),
+                        "optionalDatetime": serialize_datetime(optional_datetime)
+                        if optional_datetime is not None
+                        else None,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -116,23 +125,29 @@ class PlaylistClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
-            params=remove_none_from_dict(
-                {
-                    "limit": limit,
-                    "otherField": other_field,
-                    "multiLineDocs": multi_line_docs,
-                    "optionalMultipleField": optional_multiple_field,
-                    "multipleField": multiple_field,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "limit": limit,
+                        "otherField": other_field,
+                        "multiLineDocs": multi_line_docs,
+                        "optionalMultipleField": optional_multiple_field,
+                        "multipleField": multiple_field,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -160,14 +175,20 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -209,15 +230,24 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -250,14 +280,20 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return
@@ -298,23 +334,32 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/create"),
-            params=remove_none_from_dict(
-                {
-                    "datetime": serialize_datetime(datetime),
-                    "optionalDatetime": serialize_datetime(optional_datetime)
-                    if optional_datetime is not None
-                    else None,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "datetime": serialize_datetime(datetime),
+                        "optionalDatetime": serialize_datetime(optional_datetime)
+                        if optional_datetime is not None
+                        else None,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -356,23 +401,29 @@ class AsyncPlaylistClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/all"),
-            params=remove_none_from_dict(
-                {
-                    "limit": limit,
-                    "otherField": other_field,
-                    "multiLineDocs": multi_line_docs,
-                    "optionalMultipleField": optional_multiple_field,
-                    "multipleField": multiple_field,
-                    **(request_options.additional_query_parameters if request_options is not None else None),
-                }
+            params=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        "limit": limit,
+                        "otherField": other_field,
+                        "multiLineDocs": multi_line_docs,
+                        "optionalMultipleField": optional_multiple_field,
+                        "multipleField": multiple_field,
+                        **(request_options.additional_query_parameters if request_options is not None else None),
+                    }
+                )
             ),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -400,14 +451,20 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -449,15 +506,24 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         try:
             _response_json = _response.json()
@@ -490,14 +556,20 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return

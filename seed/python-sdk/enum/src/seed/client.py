@@ -5,6 +5,9 @@ import typing
 import httpx
 
 from .core.client_wrapper import AsyncClientWrapper, SyncClientWrapper
+from .resources.inlined_request.client import AsyncInlinedRequestClient, InlinedRequestClient
+from .resources.path_param.client import AsyncPathParamClient, PathParamClient
+from .resources.query_param.client import AsyncQueryParamClient, QueryParamClient
 
 
 class SeedEnum:
@@ -14,6 +17,9 @@ class SeedEnum:
         self._client_wrapper = SyncClientWrapper(
             base_url=base_url, httpx_client=httpx.Client(timeout=timeout) if httpx_client is None else httpx_client
         )
+        self.inlined_request = InlinedRequestClient(client_wrapper=self._client_wrapper)
+        self.path_param = PathParamClient(client_wrapper=self._client_wrapper)
+        self.query_param = QueryParamClient(client_wrapper=self._client_wrapper)
 
 
 class AsyncSeedEnum:
@@ -27,3 +33,6 @@ class AsyncSeedEnum:
         self._client_wrapper = AsyncClientWrapper(
             base_url=base_url, httpx_client=httpx.AsyncClient(timeout=timeout) if httpx_client is None else httpx_client
         )
+        self.inlined_request = AsyncInlinedRequestClient(client_wrapper=self._client_wrapper)
+        self.path_param = AsyncPathParamClient(client_wrapper=self._client_wrapper)
+        self.query_param = AsyncQueryParamClient(client_wrapper=self._client_wrapper)

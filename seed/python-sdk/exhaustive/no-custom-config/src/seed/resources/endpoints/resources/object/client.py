@@ -42,15 +42,24 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -74,15 +83,24 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
@@ -104,15 +122,24 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
@@ -136,15 +163,24 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
@@ -168,15 +204,24 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore
@@ -205,15 +250,24 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithOptionalField, _response.json())  # type: ignore
@@ -237,15 +291,24 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithRequiredField, _response.json())  # type: ignore
@@ -267,15 +330,24 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(ObjectWithMapOfMap, _response.json())  # type: ignore
@@ -299,15 +371,24 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(NestedObjectWithOptionalField, _response.json())  # type: ignore
@@ -331,15 +412,24 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(NestedObjectWithRequiredField, _response.json())  # type: ignore

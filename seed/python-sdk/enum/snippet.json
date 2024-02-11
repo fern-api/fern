@@ -1,7 +1,40 @@
 {
     "types": {
-        "type_:Enum": "from seed import Enum\n\nEnum.THREE\n",
-        "type_:One": "from seed import One\n\nOne.ONE\n"
+        "type_:Operand": "from seed import Operand\n\nOperand.\n"
     },
-    "endpoints": []
+    "endpoints": [
+        {
+            "id": {
+                "path": "/inlined-request",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.inlined_request.send(value=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.inlined_request.send(value=Operand., )\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/path-param/{value}",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.path_param.send(value=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.path_param.send(value=Operand., )\n",
+                "type": "python"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST"
+            },
+            "snippet": {
+                "sync_client": "from seed import Operand\nfrom seed.client import SeedEnum\n\nclient = SeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nclient.query_param.send(value=Operand., )\n",
+                "async_client": "from seed import Operand\nfrom seed.client import AsyncSeedEnum\n\nclient = AsyncSeedEnum(base_url=\"https://yourhost.com/path/to/api\", )\nawait client.query_param.send(value=Operand., )\n",
+                "type": "python"
+            }
+        }
+    ]
 }

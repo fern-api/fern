@@ -35,15 +35,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -63,15 +72,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(int, _response.json())  # type: ignore
@@ -91,15 +109,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(int, _response.json())  # type: ignore
@@ -121,15 +148,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(float, _response.json())  # type: ignore
@@ -149,15 +185,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
@@ -179,15 +224,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(dt.datetime, _response.json())  # type: ignore
@@ -209,15 +263,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(dt.date, _response.json())  # type: ignore
@@ -239,15 +302,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -267,15 +339,24 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -302,15 +383,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore
@@ -330,15 +420,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(int, _response.json())  # type: ignore
@@ -360,15 +459,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(int, _response.json())  # type: ignore
@@ -390,15 +498,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(float, _response.json())  # type: ignore
@@ -420,15 +537,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(bool, _response.json())  # type: ignore
@@ -450,15 +576,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(dt.datetime, _response.json())  # type: ignore
@@ -480,15 +615,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(dt.date, _response.json())  # type: ignore
@@ -510,15 +654,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(uuid.UUID, _response.json())  # type: ignore
@@ -540,15 +693,24 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder(request),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else None,
+            json={
+                **{jsonable_encoder(request)},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else None,
         )
         if 200 <= _response.status_code < 300:
             return pydantic.parse_obj_as(str, _response.json())  # type: ignore

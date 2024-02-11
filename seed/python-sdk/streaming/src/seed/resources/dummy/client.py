@@ -37,15 +37,24 @@ class DummyClient:
         with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder({"num_events": num_events}),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder({"num_events": num_events})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         ) as _response:
             if 200 <= _response.status_code < 300:
                 for _text in _response.iter_lines():
@@ -77,15 +86,24 @@ class AsyncDummyClient:
         async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=request_options.additional_query_parameters if request_options is not None else None,
-            json=jsonable_encoder({"num_events": num_events}),
-            headers=remove_none_from_dict(
-                {
-                    **self._client_wrapper.get_headers(),
-                    **(request_options.additional_headers if request_options is not None else {}),
-                }
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
             ),
-            timeout=request_options.timeout_in_seconds if request_options.timeout_in_seconds is not None else 60,
+            json={
+                **{jsonable_encoder({"num_events": num_events})},
+                **(request_options.additional_headers if request_options is not None else {}),
+            },
+            headers=jsonable_encoder(
+                remove_none_from_dict(
+                    {
+                        **self._client_wrapper.get_headers(),
+                        **(request_options.additional_headers if request_options is not None else {}),
+                    }
+                )
+            ),
+            timeout=request_options.timeout_in_seconds
+            if request_options is not None and request_options.timeout_in_seconds is not None
+            else 60,
         ) as _response:
             if 200 <= _response.status_code < 300:
                 async for _text in _response.aiter_lines():
