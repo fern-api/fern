@@ -55,7 +55,7 @@ class SourceFileImpl(SourceFile):
         should_format: bool,
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
-        whilelabel: bool = False,
+        whitelabel: bool = False,
     ):
         self._module_path = module_path
         self._reference_resolver = reference_resolver
@@ -68,7 +68,7 @@ class SourceFileImpl(SourceFile):
         self._should_format = should_format
         self._should_format_as_snippet = should_format_as_snippet
         self._should_include_header = should_include_header
-        self._whitelabel = whilelabel
+        self._whitelabel = whitelabel
 
     def add_declaration(
         self,
