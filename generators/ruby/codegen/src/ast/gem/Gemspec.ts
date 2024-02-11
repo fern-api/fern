@@ -27,16 +27,41 @@ export class Gemspec extends FunctionInvocation {
         license,
         hasFileBasedDependencies = false
     }: Gemspec.Init) {
+        // +  spec.add_dependency "faraday-multipart", ">= 0.0", "< 1.1"
         const globalDependencies: ExternalDependency[] = [
-            new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
-            new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
-            new ExternalDependency({ packageName: "async-http-faraday", specifier: "~>", version: "0.12" })
+            new ExternalDependency({
+                packageName: "faraday",
+                lowerBound: { specifier: ">=", version: "1.0" },
+                upperBound: { specifier: "<=", version: "2.9" }
+            }),
+            new ExternalDependency({
+                packageName: "faraday-net_http",
+                lowerBound: { specifier: ">=", version: "1.0" },
+                upperBound: { specifier: "<", version: "3.2" }
+            }),
+            new ExternalDependency({
+                packageName: "faraday-retry",
+                lowerBound: { specifier: ">=", version: "1.0" },
+                upperBound: { specifier: "<", version: "2.3" }
+            }),
+            new ExternalDependency({
+                packageName: "async-http-faraday",
+                lowerBound: { specifier: ">=", version: "0.0" },
+                upperBound: { specifier: "<", version: "0.13" }
+            })
         ];
         if (hasFileBasedDependencies) {
             globalDependencies.push(
                 ...[
-                    new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
-                    new ExternalDependency({ packageName: "faraday-multipart", specifier: "~>", version: "1.0" })
+                    new ExternalDependency({
+                        packageName: "mini_mime",
+                        lowerBound: { specifier: "~>", version: "1.1" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-multipart",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "1.1" }
+                    })
                 ]
             );
         }
