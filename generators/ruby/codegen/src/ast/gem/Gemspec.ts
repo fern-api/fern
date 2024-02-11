@@ -32,22 +32,22 @@ export class Gemspec extends FunctionInvocation {
             new ExternalDependency({
                 packageName: "faraday",
                 lowerBound: { specifier: ">=", version: "1.0" },
-                upperBound: { specifier: "<=", version: "2.9" }
+                upperBound: { specifier: "<", version: "3.0" }
             }),
             new ExternalDependency({
                 packageName: "faraday-net_http",
                 lowerBound: { specifier: ">=", version: "1.0" },
-                upperBound: { specifier: "<", version: "3.2" }
+                upperBound: { specifier: "<", version: "4.0" }
             }),
             new ExternalDependency({
                 packageName: "faraday-retry",
                 lowerBound: { specifier: ">=", version: "1.0" },
-                upperBound: { specifier: "<", version: "2.3" }
+                upperBound: { specifier: "<", version: "3.0" }
             }),
             new ExternalDependency({
                 packageName: "async-http-faraday",
                 lowerBound: { specifier: ">=", version: "0.0" },
-                upperBound: { specifier: "<", version: "0.13" }
+                upperBound: { specifier: "<", version: "1.0" }
             })
         ];
         if (hasFileBasedDependencies) {
@@ -60,7 +60,7 @@ export class Gemspec extends FunctionInvocation {
                     new ExternalDependency({
                         packageName: "faraday-multipart",
                         lowerBound: { specifier: ">=", version: "0.0" },
-                        upperBound: { specifier: "<", version: "1.1" }
+                        upperBound: { specifier: "<", version: "2.0" }
                     })
                 ]
             );
