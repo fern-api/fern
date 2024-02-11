@@ -6,4 +6,6 @@ import * as SeedAudiences from "../../../..";
 
 export interface FindRequest {
     optionalString?: SeedAudiences.OptionalString;
+    publicProperty?: string;
+    privateProperty?: number;
 }

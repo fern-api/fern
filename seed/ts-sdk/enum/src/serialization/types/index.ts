@@ -1,2 +1,1 @@
-export * from "./Enum";
-export * from "./One";
+export * from "./Operand";

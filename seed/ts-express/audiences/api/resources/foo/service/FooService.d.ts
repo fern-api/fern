@@ -4,7 +4,7 @@
 import * as SeedAudiences from "../../..";
 import express from "express";
 export interface FooServiceMethods {
-    find(req: express.Request<never, SeedAudiences.ImportingType, never, {
+    find(req: express.Request<never, SeedAudiences.ImportingType, SeedAudiences.FindRequest, {
         optionalString?: SeedAudiences.OptionalString;
     }>, res: {
         send: (responseBody: SeedAudiences.ImportingType) => Promise<void>;

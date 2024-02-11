@@ -34,3 +34,4 @@ exports.folderB = __importStar(require("./folderB"));
 exports.folderC = __importStar(require("./folderC"));
 exports.foo = __importStar(require("./foo"));
 __exportStar(require("./foo/types"), exports);
+__exportStar(require("./foo/service/requests"), exports);

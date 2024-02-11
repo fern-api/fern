@@ -3,6 +3,5 @@
  */
 /**
  * Several different types are accepted.
- *
  */
 export declare type MyUnion = string | string[] | number | number[] | number[][];

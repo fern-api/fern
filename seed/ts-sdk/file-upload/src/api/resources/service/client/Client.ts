@@ -175,4 +175,49 @@ export class Service {
                 });
         }
     }
+
+    public async justFileWithQueryParams(
+        file: File | fs.ReadStream,
+        requestOptions?: Service.RequestOptions
+    ): Promise<void> {
+        const _request = new FormData();
+        _request.append("file", file);
+        const _response = await core.fetcher({
+            url: urlJoin(await core.Supplier.get(this._options.environment), "/just-file-with-query-params"),
+            method: "POST",
+            headers: {
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "",
+                "X-Fern-SDK-Version": "0.0.1",
+            },
+            contentType: "multipart/form-data; boundary=" + _request.getBoundary(),
+            body: _request,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+        });
+        if (_response.ok) {
+            return;
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.SeedFileUploadError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.SeedFileUploadError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.SeedFileUploadTimeoutError();
+            case "unknown":
+                throw new errors.SeedFileUploadError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
 }

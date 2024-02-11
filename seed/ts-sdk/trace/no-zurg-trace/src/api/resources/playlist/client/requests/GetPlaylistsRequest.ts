@@ -11,7 +11,6 @@ export interface GetPlaylistsRequest {
     /**
      * I'm a multiline
      * description
-     *
      */
     multiLineDocs: string;
     optionalMultipleField?: string | string[];

@@ -4,10 +4,7 @@
 import * as SeedTrace from "../../..";
 export interface ExecutionSessionState {
     lastTimeContacted?: string;
-    /**
-     * The auto-generated session id. Formatted as a uuid.
-     *
-     */
+    /** The auto-generated session id. Formatted as a uuid. */
     sessionId: string;
     isWarmInstance: boolean;
     awsTaskId?: string;

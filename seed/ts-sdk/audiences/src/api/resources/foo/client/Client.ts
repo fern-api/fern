@@ -25,7 +25,7 @@ export class Foo {
         request: SeedAudiences.FindRequest = {},
         requestOptions?: Foo.RequestOptions
     ): Promise<SeedAudiences.ImportingType> {
-        const { optionalString } = request;
+        const { optionalString, ..._body } = request;
         const _queryParams: Record<string, string | string[]> = {};
         if (optionalString != null) {
             _queryParams["optionalString"] = optionalString;
@@ -41,6 +41,7 @@ export class Foo {
             },
             contentType: "application/json",
             queryParameters: _queryParams,
+            body: await serializers.FindRequest.jsonOrThrow(_body, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
         });

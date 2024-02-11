@@ -5,7 +5,6 @@ import * as SeedObject from "..";
 /**
  * Exercises all of the built-in types.
  *
- *
  * @example
  *     {
  *         one: 1,
