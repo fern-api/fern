@@ -7,8 +7,11 @@ on:
   pull_request:
     paths:
       - "packages/**"
+      # Add any generators that are written in TypeScript
       - "generators/openapi/**"
       - "generators/postman/**"
+      - "generators/ruby/**"
+      - "generators/typescript/**"
     branches:
       - main
 

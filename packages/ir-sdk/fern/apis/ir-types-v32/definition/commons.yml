@@ -5,6 +5,10 @@ types:
     properties:
       docs: optional<string>
   FernFilepath:
+    docs: |
+      The literal filepath to this definition within the Fern definition, note that directories within the Fern definition
+      denote packages/subpackages which are namespaces, so across subpackages names (for objects, endpoints, etc.) may be 
+      shared, however within the file itself (e.g. the service) names cannot be duplicated.
     properties:
       allParts: list<Name>
       packagePath: list<Name>
@@ -26,11 +30,13 @@ types:
   SafeAndUnsafeString:
     properties:
       unsafeName:
-        docs: this name might overlap with reserved keywords of the language being
+        docs:
+          this name might overlap with reserved keywords of the language being
           generated
         type: string
       safeName:
-        docs: this name will NOT overlap with reserved keywords of the language being
+        docs:
+          this name will NOT overlap with reserved keywords of the language being
           generated
         type: string
   EscapedString:

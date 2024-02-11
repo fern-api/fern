@@ -2588,7 +2588,6 @@ The default value is 'en_us'.
       "ApiKey": {
         "header": "Authorization",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

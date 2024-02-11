@@ -1,0 +1,35 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/inlined-request",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.inlinedRequest.send({\n    value: SeedEnum.Operand.GreaterThan\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/path-param/{value}",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.pathParam.send(SeedEnum.Operand.GreaterThan);\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/query",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedEnumClient, SeedEnum } from \"\";\n\nconst seedEnum = new SeedEnumClient;\nawait seedEnum.queryParam.send({\n    value: SeedEnum.Operand.GreaterThan\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

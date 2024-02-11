@@ -61921,11 +61921,14 @@ exports[`open api parser hookdeck parse open api 1`] = `
   },
   "securitySchemes": {
     "basicAuth": {
+      "passwordEnvVar": undefined,
       "passwordVariableName": undefined,
       "type": "basic",
+      "usernameEnvVar": undefined,
       "usernameVariableName": undefined,
     },
     "bearerAuth": {
+      "tokenEnvVar": undefined,
       "tokenVariableName": undefined,
       "type": "bearer",
     },

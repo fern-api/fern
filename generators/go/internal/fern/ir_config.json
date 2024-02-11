@@ -1,0 +1,15 @@
+{
+    "irFilepath": "ir.json",
+    "output": {
+        "mode": {
+            "type": "downloadFiles"
+        },
+        "path": "ir"
+    },
+    "workspaceName": "ir",
+    "organization": "fernbot",
+    "environment": {
+        "_type": "local"
+    },
+    "dryRun": false
+}

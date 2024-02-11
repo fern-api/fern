@@ -8,3 +8,18 @@ fixtures: []
 scripts: []
 allowedFailures:
   - streaming
+features:
+  requestOptions: true
+  idempotency: false
+  autoPagination: false
+  oauth: false
+  authEnvVarScanning: true
+  websocket: false
+  streamingJson: false
+  fileUpload: true
+  fileDownlaod: true
+  snippets: false
+  errors: false
+  forwardCompatibleEnums: true
+  additionalProperties: true
+  whitelabel: false

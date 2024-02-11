@@ -3517,7 +3517,6 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
       "apiKey": {
         "header": "API-Key",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

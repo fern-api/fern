@@ -2457,7 +2457,6 @@ Used to submit feedback regarding the quality of previously generated completion
       "apiKeyAuth": {
         "header": "X_API_KEY",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

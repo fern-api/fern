@@ -1,0 +1,1 @@
+export { ExpressRegisterGenerator } from "./ExpressRegisterGenerator";

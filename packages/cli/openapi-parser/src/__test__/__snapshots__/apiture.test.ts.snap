@@ -12148,10 +12148,12 @@ For recurring transfer schedules, \`endsOn\`, \`count\`, and \`amountLimit\` are
   },
   "securitySchemes": {
     "accessToken": {
+      "tokenEnvVar": undefined,
       "tokenVariableName": undefined,
       "type": "bearer",
     },
     "apiKey": {
+      "headerEnvVar": undefined,
       "headerName": "API-Key",
       "headerVariableName": undefined,
       "prefix": undefined,

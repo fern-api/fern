@@ -17657,6 +17657,7 @@ empty.
   },
   "securitySchemes": {
     "auth-token": {
+      "headerEnvVar": undefined,
       "headerName": "Authorization",
       "headerVariableName": undefined,
       "prefix": undefined,
