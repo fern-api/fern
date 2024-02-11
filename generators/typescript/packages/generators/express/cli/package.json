@@ -35,7 +35,7 @@
     "@fern-typescript/contexts": "workspace:*",
     "@fern-typescript/express-generator": "workspace:*",
     "lodash-es": "^4.17.21",
-    "zod": "^3.14.3"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",

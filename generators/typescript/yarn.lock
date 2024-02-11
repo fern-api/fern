@@ -2274,7 +2274,7 @@ __metadata:
     webpack: 5.76.0
     webpack-bundle-analyzer: 4.10.1
     webpack-cli: 5.1.4
-    zod: ^3.14.3
+    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 
@@ -2667,7 +2667,7 @@ __metadata:
     webpack: 5.76.0
     webpack-bundle-analyzer: 4.10.1
     webpack-cli: 5.1.4
-    zod: ^3.14.3
+    zod: ^3.22.3
   languageName: unknown
   linkType: soft
 
@@ -5430,7 +5430,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.2.0, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
+"debug@npm:*, debug@npm:4, debug@npm:^4.1.0, debug@npm:^4.1.1, debug@npm:^4.2.0, debug@npm:^4.3.2, debug@npm:^4.3.3, debug@npm:^4.3.4":
   version: 4.3.4
   resolution: "debug@npm:4.3.4"
   dependencies:
@@ -9405,7 +9405,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"supports-color@npm:^8.0.0":
+"supports-color@npm:^8.0.0, supports-color@npm:^8.1.1":
   version: 8.1.1
   resolution: "supports-color@npm:8.1.1"
   dependencies:
@@ -10282,9 +10282,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod@npm:^3.14.3":
-  version: 3.18.0
-  resolution: "zod@npm:3.18.0"
-  checksum: 86a9a9928f4b40a07020d4b9832842fa4a70050c2d7bd1b2866bc1acfd734aa53a40f87a99a4312a637341a608b0105770c7a1f83b56df78e97691b4f5badcd8
+"zod@npm:^3.22.3":
+  version: 3.22.4
+  resolution: "zod@npm:3.22.4"
+  checksum: 80bfd7f8039b24fddeb0718a2ec7c02aa9856e4838d6aa4864335a047b6b37a3273b191ef335bf0b2002e5c514ef261ffcda5a589fb084a48c336ffc4cdbab7f
   languageName: node
   linkType: hard
