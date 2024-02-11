@@ -1,0 +1,8 @@
+{
+  "extends": "./shared/tsconfig.shared.json",
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

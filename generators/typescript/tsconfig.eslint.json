@@ -1,0 +1,7 @@
+{
+  "extends": "./shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "types": ["@types/node"],
+    "noEmit": true
+  }
+}
