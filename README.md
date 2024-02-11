@@ -85,8 +85,8 @@ Postman Collections, Server boilerplate, etc.). To add a generator run `fern add
 
 ### Server-side Generators
 
-Fern's server-side generators dump boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, 
-who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code.
+Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, 
+who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video). 
 
 | Generator ID                           | Latest Version | Changelog                                                      | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -96,7 +96,7 @@ who write their API definition (as an OpenAPI spec or Fern definition) and want 
 
 ### Model Generators
 
-Fern's model generators will just output all models defined in your OpenAPI spec or Fern Definition. 
+Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition. 
 
 | Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
