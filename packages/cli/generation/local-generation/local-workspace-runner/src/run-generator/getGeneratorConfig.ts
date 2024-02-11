@@ -94,7 +94,7 @@ export function getGeneratorConfig({
             organization,
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
             dryRun: false,
-            whitelabel: true
+            whitelabel: false
         }
     };
 }
