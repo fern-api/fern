@@ -8,3 +8,5 @@ fixtures: []
 scripts: []
 allowedFailures:
   - streaming
+features: 
+  whitelabel: false

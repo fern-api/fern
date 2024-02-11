@@ -19,3 +19,5 @@ allowedFailures:
   - extends
   - reserved-keywords
   - trace
+features: 
+  whitelabel: true

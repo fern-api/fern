@@ -27,3 +27,5 @@ allowedFailures:
   - query-parameters
   - response-property
   - streaming
+features: 
+  whitelabel: true

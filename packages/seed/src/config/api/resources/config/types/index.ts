@@ -5,3 +5,4 @@ export * from "./Language";
 export * from "./GeneratorType";
 export * from "./FixtureConfigurations";
 export * from "./OutputMode";
+export * from "./GeneratorFeatureMatrix";

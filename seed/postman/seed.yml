@@ -3,3 +3,5 @@ docker: fernapi/fern-postman:latest
 dockerCommand: yarn workspace @fern-api/postman-generator dockerTagLatest
 generatorType: Documentation
 defaultOutputMode: local_files
+features: 
+  whitelabel: false

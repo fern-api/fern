@@ -87,3 +87,5 @@ scripts:
 allowedFailures: 
   - bytes
   - plain-text
+features: 
+  whitelabel: true
