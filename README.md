@@ -75,7 +75,7 @@ Generators are process that take your API Definition as input and output artifac
 Postman Collections, Server boilerplate, etc.). To add a generator run `fern add <generator id>`
 
 <details>
-<summary><h2>SDK Generators</h2></summary>
+<summary><h4> SDK Generators</h4></summary>
 
 | Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
 | -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
