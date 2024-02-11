@@ -28,6 +28,7 @@ export abstract class ExternalDependency {
 
     protected withNamedImport<T>(
         namedImport: string,
+        // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
     ): T {
         return this.withImport(namedImport, { namedImports: [namedImport] }, run);
@@ -35,6 +36,7 @@ export abstract class ExternalDependency {
 
     protected withNamespaceImport<T>(
         namespaceImport: string,
+        // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, namedImport: string) => T
     ): T {
         return this.withImport(namespaceImport, { namespaceImport }, run);
@@ -42,6 +44,7 @@ export abstract class ExternalDependency {
 
     protected withDefaultImport<T>(
         defaultImport: string,
+        // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, defaultImport: string) => T,
         { isSynthetic = false }: { isSynthetic?: boolean } = {}
     ): T {
@@ -61,8 +64,10 @@ export abstract class ExternalDependency {
     private withImport<T>(
         importedItem: string,
         importDeclaration: ImportDeclaration,
+        // eslint-disable-next-line @typescript-eslint/ban-types
         run: (withImport: <F extends Function>(f: F) => F, importedItem: string) => T
     ): T {
+        // eslint-disable-next-line @typescript-eslint/ban-types
         return run(<F extends Function>(f: F): F => {
             const wrapped = (...args: unknown[]) => {
                 if (this.PACKAGE.version != null) {

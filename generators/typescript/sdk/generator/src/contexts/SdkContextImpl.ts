@@ -165,9 +165,7 @@ export class SdkContextImpl implements SdkContext {
     }: SdkContextImpl.Init) {
         this.targetRuntime = targetRuntime;
         this.sdkInstanceReferenceForSnippet = ts.factory.createIdentifier(
-            typeDeclarationReferencer.namespaceExport != null
-                ? camelCase(typeDeclarationReferencer.namespaceExport)
-                : "client"
+            camelCase(typeDeclarationReferencer.namespaceExport)
         );
         this.namespaceExport = typeDeclarationReferencer.namespaceExport;
         this.sourceFile = sourceFile;

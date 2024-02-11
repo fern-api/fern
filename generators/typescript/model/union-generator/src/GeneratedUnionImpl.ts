@@ -211,7 +211,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     }
 
     public getBasePropertyKey(rawKey: string): string {
-        const baseProperty = this.baseProperties.find((property) => property.name.wireValue == rawKey);
+        const baseProperty = this.baseProperties.find((property) => property.name.wireValue === rawKey);
         if (baseProperty == null) {
             throw new Error("No base property exists for key " + rawKey);
         }

@@ -224,6 +224,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 license: this.npmPackage.license as any
             };
         }

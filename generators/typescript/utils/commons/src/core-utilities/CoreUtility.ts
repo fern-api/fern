@@ -34,6 +34,7 @@ export abstract class CoreUtility {
         this.getReferenceToExportInCoreUtilities = init.getReferenceToExport;
     }
 
+    // eslint-disable-next-line @typescript-eslint/ban-types
     protected withExportedName<F extends Function>(
         exportedName: string,
         run: (referenceToExportedName: Reference) => F

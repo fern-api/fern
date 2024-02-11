@@ -51,7 +51,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         example: ExampleEndpointCall;
         opts: GetReferenceOpts;
     }): ts.Expression | undefined {
-        if (example.request == null || example.request.type != "reference") {
+        if (example.request == null || example.request.type !== "reference") {
             return undefined;
         }
         const generatedExample = context.type.getGeneratedExample(example.request);

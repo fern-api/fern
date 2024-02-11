@@ -68,7 +68,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             if (this.endpoint.sdkRequest == null) {
                 throw new Error("SdkRequest is not defined for file upload endpoint");
             }
-            if (this.endpoint.sdkRequest.shape.type != "wrapper") {
+            if (this.endpoint.sdkRequest.shape.type !== "wrapper") {
                 throw new Error("SdkRequest is not a wrapper for file upload endpoint");
             }
             this.requestParameter = new FileUploadRequestParameter({
