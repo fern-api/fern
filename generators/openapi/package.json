@@ -46,7 +46,7 @@
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.9",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.11.17",
     "@yarnpkg/esbuild-plugin-pnp": "^3.0.0-rc.14",
     "depcheck": "^1.4.6",
     "env-cmd": "toddbluhm/env-cmd",

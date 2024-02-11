@@ -42,7 +42,7 @@
     "@ts-morph/common": "^0.21.0",
     "@types/jest": "^29.0.3",
     "@types/lodash-es": "^4.17.9",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.11.17",
     "@types/tmp": "^0.2.4",
     "@types/webpack-bundle-analyzer": "^4.6.3",
     "depcheck": "^1.4.6",

@@ -44,7 +44,7 @@
     "@types/jest": "^29.0.3",
     "@types/js-yaml": "^4.0.8",
     "@types/lodash-es": "^4.17.9",
-    "@types/node": "^18.7.18",
+    "@types/node": "^20.11.17",
     "@types/swagger2openapi": "^7.0.4",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
