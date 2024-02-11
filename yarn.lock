@@ -107,16 +107,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/code-frame@npm:^7.23.5":
-  version: 7.23.5
-  resolution: "@babel/code-frame@npm:7.23.5"
-  dependencies:
-    "@babel/highlight": ^7.23.4
-    chalk: ^2.4.2
-  checksum: d90981fdf56a2824a9b14d19a4c0e8db93633fd488c772624b4e83e0ceac6039a27cd298a247c3214faa952bf803ba23696172ae7e7235f3b97f43ba278c569a
-  languageName: node
-  linkType: hard
-
 "@babel/compat-data@npm:^7.19.1":
   version: 7.19.1
   resolution: "@babel/compat-data@npm:7.19.1"
@@ -158,29 +148,6 @@ __metadata:
     json5: ^2.2.1
     semver: ^6.3.0
   checksum: 941c8c119b80bdba5fafc80bbaa424d51146b6d3c30b8fae35879358dd37c11d3d0926bc7e970a0861229656eedaa8c884d4a3a25cc904086eb73b827a2f1168
-  languageName: node
-  linkType: hard
-
-"@babel/core@npm:^7.19.1":
-  version: 7.23.9
-  resolution: "@babel/core@npm:7.23.9"
-  dependencies:
-    "@ampproject/remapping": ^2.2.0
-    "@babel/code-frame": ^7.23.5
-    "@babel/generator": ^7.23.6
-    "@babel/helper-compilation-targets": ^7.23.6
-    "@babel/helper-module-transforms": ^7.23.3
-    "@babel/helpers": ^7.23.9
-    "@babel/parser": ^7.23.9
-    "@babel/template": ^7.23.9
-    "@babel/traverse": ^7.23.9
-    "@babel/types": ^7.23.9
-    convert-source-map: ^2.0.0
-    debug: ^4.1.0
-    gensync: ^1.0.0-beta.2
-    json5: ^2.2.3
-    semver: ^6.3.1
-  checksum: 634a511f74db52a5f5a283c1121f25e2227b006c095b84a02a40a9213842489cd82dc7d61cdc74e10b5bcd9bb0a4e28bab47635b54c7e2256d47ab57356e2a76
   languageName: node
   linkType: hard
 
@@ -227,18 +194,6 @@ __metadata:
     "@jridgewell/trace-mapping": ^0.3.17
     jsesc: ^2.5.1
   checksum: 8efe24adad34300f1f8ea2add420b28171a646edc70f2a1b3e1683842f23b8b7ffa7e35ef0119294e1901f45bfea5b3dc70abe1f10a1917ccdfb41bed69be5f1
-  languageName: node
-  linkType: hard
-
-"@babel/generator@npm:^7.23.6":
-  version: 7.23.6
-  resolution: "@babel/generator@npm:7.23.6"
-  dependencies:
-    "@babel/types": ^7.23.6
-    "@jridgewell/gen-mapping": ^0.3.2
-    "@jridgewell/trace-mapping": ^0.3.17
-    jsesc: ^2.5.1
-  checksum: 1a1a1c4eac210f174cd108d479464d053930a812798e09fee069377de39a893422df5b5b146199ead7239ae6d3a04697b45fc9ac6e38e0f6b76374390f91fc6c
   languageName: node
   linkType: hard
 
@@ -325,25 +280,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0
   checksum: 52c500d8d164abb3a360b1b7c4b8fff77bc4a5920d3a2b41ae6e1d30617b0dc0b972c1f5db35b1752007e04a748908b4a99bc872b73549ae837e87dcdde005a3
-  languageName: node
-  linkType: hard
-
-"@babel/helper-create-class-features-plugin@npm:^7.23.6":
-  version: 7.23.10
-  resolution: "@babel/helper-create-class-features-plugin@npm:7.23.10"
-  dependencies:
-    "@babel/helper-annotate-as-pure": ^7.22.5
-    "@babel/helper-environment-visitor": ^7.22.20
-    "@babel/helper-function-name": ^7.23.0
-    "@babel/helper-member-expression-to-functions": ^7.23.0
-    "@babel/helper-optimise-call-expression": ^7.22.5
-    "@babel/helper-replace-supers": ^7.22.20
-    "@babel/helper-skip-transparent-expression-wrappers": ^7.22.5
-    "@babel/helper-split-export-declaration": ^7.22.6
-    semver: ^6.3.1
-  peerDependencies:
-    "@babel/core": ^7.0.0
-  checksum: ff0730c21f0e73b9e314701bca6568bb5885dff2aa3c32b1e2e3d18ed2818f56851b9ffdbe2e8008c9bb94b265a1443883ae4c1ca5dde278ce71ac4218006d68
   languageName: node
   linkType: hard
 
@@ -443,15 +379,6 @@ __metadata:
   dependencies:
     "@babel/types": ^7.22.15
   checksum: c7c5d01c402dd8902c2ec3093f203ed0fc3bc5f669328a084d2e663c4c06dd0415480ee8220c6f96ba9b2dc49545c0078f221fc3900ab1e65de69a12fe7b361f
-  languageName: node
-  linkType: hard
-
-"@babel/helper-member-expression-to-functions@npm:^7.23.0":
-  version: 7.23.0
-  resolution: "@babel/helper-member-expression-to-functions@npm:7.23.0"
-  dependencies:
-    "@babel/types": ^7.23.0
-  checksum: 494659361370c979ada711ca685e2efe9460683c36db1b283b446122596602c901e291e09f2f980ecedfe6e0f2bd5386cb59768285446530df10c14df1024e75
   languageName: node
   linkType: hard
 
@@ -722,17 +649,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helpers@npm:^7.23.9":
-  version: 7.23.9
-  resolution: "@babel/helpers@npm:7.23.9"
-  dependencies:
-    "@babel/template": ^7.23.9
-    "@babel/traverse": ^7.23.9
-    "@babel/types": ^7.23.9
-  checksum: 2678231192c0471dbc2fc403fb19456cc46b1afefcfebf6bc0f48b2e938fdb0fef2e0fe90c8c8ae1f021dae5012b700372e4b5d15867f1d7764616532e4a6324
-  languageName: node
-  linkType: hard
-
 "@babel/highlight@npm:^7.18.6":
   version: 7.18.6
   resolution: "@babel/highlight@npm:7.18.6"
@@ -752,17 +668,6 @@ __metadata:
     chalk: ^2.4.2
     js-tokens: ^4.0.0
   checksum: 7266d2bff8aa8fc78eb65b6e92a8211e12897a731126a282d2f9bb50d8fcaa4c1b02af2284f990ac7e3ab8d892d448a2cab8f5ed0ea8a90bce2c025b11ebe802
-  languageName: node
-  linkType: hard
-
-"@babel/highlight@npm:^7.23.4":
-  version: 7.23.4
-  resolution: "@babel/highlight@npm:7.23.4"
-  dependencies:
-    "@babel/helper-validator-identifier": ^7.22.20
-    chalk: ^2.4.2
-    js-tokens: ^4.0.0
-  checksum: 643acecdc235f87d925979a979b539a5d7d1f31ae7db8d89047269082694122d11aa85351304c9c978ceeb6d250591ccadb06c366f358ccee08bb9c122476b89
   languageName: node
   linkType: hard
 
@@ -799,15 +704,6 @@ __metadata:
   bin:
     parser: ./bin/babel-parser.js
   checksum: 453fdf8b9e2c2b7d7b02139e0ce003d1af21947bbc03eb350fb248ee335c9b85e4ab41697ddbdd97079698de825a265e45a0846bb2ed47a2c7c1df833f42a354
-  languageName: node
-  linkType: hard
-
-"@babel/parser@npm:^7.23.9":
-  version: 7.23.9
-  resolution: "@babel/parser@npm:7.23.9"
-  bin:
-    parser: ./bin/babel-parser.js
-  checksum: e7cd4960ac8671774e13803349da88d512f9292d7baa952173260d3e8f15620a28a3701f14f709d769209022f9e7b79965256b8be204fc550cfe783cdcabe7c7
   languageName: node
   linkType: hard
 
@@ -977,17 +873,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-jsx@npm:^7.23.3":
-  version: 7.23.3
-  resolution: "@babel/plugin-syntax-jsx@npm:7.23.3"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.22.5
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 89037694314a74e7f0e7a9c8d3793af5bf6b23d80950c29b360db1c66859d67f60711ea437e70ad6b5b4b29affe17eababda841b6c01107c2b638e0493bafb4e
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-syntax-jsx@npm:^7.7.2":
   version: 7.18.6
   resolution: "@babel/plugin-syntax-jsx@npm:7.18.6"
@@ -1095,17 +980,6 @@ __metadata:
   peerDependencies:
     "@babel/core": ^7.0.0-0
   checksum: 8ab7718fbb026d64da93681a57797d60326097fd7cb930380c8bffd9eb101689e90142c760a14b51e8e69c88a73ba3da956cb4520a3b0c65743aee5c71ef360a
-  languageName: node
-  linkType: hard
-
-"@babel/plugin-syntax-typescript@npm:^7.23.3":
-  version: 7.23.3
-  resolution: "@babel/plugin-syntax-typescript@npm:7.23.3"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.22.5
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: abfad3a19290d258b028e285a1f34c9b8a0cbe46ef79eafed4ed7ffce11b5d0720b5e536c82f91cbd8442cde35a3dd8e861fa70366d87ff06fdc0d4756e30876
   languageName: node
   linkType: hard
 
@@ -1692,20 +1566,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-transform-typescript@npm:^7.23.3":
-  version: 7.23.6
-  resolution: "@babel/plugin-transform-typescript@npm:7.23.6"
-  dependencies:
-    "@babel/helper-annotate-as-pure": ^7.22.5
-    "@babel/helper-create-class-features-plugin": ^7.23.6
-    "@babel/helper-plugin-utils": ^7.22.5
-    "@babel/plugin-syntax-typescript": ^7.23.3
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 0462241843d14dff9f1a4c49ab182a6f01a5f7679957c786b08165dac3e8d49184011f05ca204183d164c54b9d3496d1b3005f904fa8708e394e6f15bf5548e6
-  languageName: node
-  linkType: hard
-
 "@babel/plugin-transform-unicode-escapes@npm:^7.23.3":
   version: 7.23.3
   resolution: "@babel/plugin-transform-unicode-escapes@npm:7.23.3"
@@ -1753,7 +1613,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.22.20, @babel/preset-env@npm:^7.23.9":
+"@babel/preset-env@npm:^7.23.9":
   version: 7.23.9
   resolution: "@babel/preset-env@npm:7.23.9"
   dependencies:
@@ -1856,21 +1716,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-typescript@npm:^7.18.6":
-  version: 7.23.3
-  resolution: "@babel/preset-typescript@npm:7.23.3"
-  dependencies:
-    "@babel/helper-plugin-utils": ^7.22.5
-    "@babel/helper-validator-option": ^7.22.15
-    "@babel/plugin-syntax-jsx": ^7.23.3
-    "@babel/plugin-transform-modules-commonjs": ^7.23.3
-    "@babel/plugin-transform-typescript": ^7.23.3
-  peerDependencies:
-    "@babel/core": ^7.0.0-0
-  checksum: 105a2d39bbc464da0f7e1ad7f535c77c5f62d6b410219355b20e552e7d29933567a5c55339b5d0aec1a5c7a0a7dfdf1b54aae601a4fe15a157d54dcbfcb3e854
-  languageName: node
-  linkType: hard
-
 "@babel/preset-typescript@npm:^7.23.0":
   version: 7.23.0
   resolution: "@babel/preset-typescript@npm:7.23.0"
@@ -1924,17 +1769,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/template@npm:^7.23.9":
-  version: 7.23.9
-  resolution: "@babel/template@npm:7.23.9"
-  dependencies:
-    "@babel/code-frame": ^7.23.5
-    "@babel/parser": ^7.23.9
-    "@babel/types": ^7.23.9
-  checksum: 6e67414c0f7125d7ecaf20c11fab88085fa98a96c3ef10da0a61e962e04fdf3a18a496a66047005ddd1bb682a7cc7842d556d1db2f3f3f6ccfca97d5e445d342
-  languageName: node
-  linkType: hard
-
 "@babel/traverse@npm:7.23.2":
   version: 7.23.2
   resolution: "@babel/traverse@npm:7.23.2"
@@ -1975,7 +1809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/types@npm:^7.22.19, @babel/types@npm:^7.23.6, @babel/types@npm:^7.23.9":
+"@babel/types@npm:^7.22.19":
   version: 7.23.9
   resolution: "@babel/types@npm:7.23.9"
   dependencies:
@@ -3775,9 +3609,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/abstract-error-class-generator@workspace:generators/typescript/utils/abstract-error-class-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3796,9 +3627,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/abstract-generator-cli@workspace:generators/typescript/utils/abstract-generator-cli"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
@@ -3820,9 +3648,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/abstract-schema-generator@workspace:generators/typescript/utils/abstract-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
     "@types/jest": ^29.0.3
@@ -3841,9 +3666,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/auth@workspace:generators/typescript/utils/core-utilities/auth"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     buffer: ^6.0.3
@@ -3861,9 +3683,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/base-core-utilities@workspace:generators/typescript/utils/core-utilities/base"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3879,9 +3698,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/callback-queue@workspace:generators/typescript/utils/core-utilities/callback-queue"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -3897,9 +3713,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/commons@workspace:generators/typescript/utils/commons"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
@@ -3937,9 +3750,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/contexts@workspace:generators/typescript/utils/contexts"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/logger": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
@@ -3959,9 +3769,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/endpoint-error-union-generator@workspace:generators/typescript/sdk/endpoint-error-union-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -3983,9 +3790,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/environments-generator@workspace:generators/typescript/sdk/environments-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4005,9 +3809,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-endpoint-type-schemas-generator@workspace:generators/typescript/express/express-endpoint-type-schemas-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
@@ -4029,9 +3830,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-error-generator@workspace:generators/typescript/express/express-error-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4052,9 +3850,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-error-schema-generator@workspace:generators/typescript/express/express-error-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
@@ -4076,9 +3871,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/umd-compat-loader": ^2.1.4
     "@fern-fern/generator-exec-sdk": ^0.0.538
     "@fern-fern/ir-sdk": 0.0.3294
@@ -4113,9 +3905,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-generator@workspace:generators/typescript/express/generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
@@ -4150,9 +3939,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-inlined-request-body-generator@workspace:generators/typescript/express/express-inlined-request-body-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4171,9 +3957,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-inlined-request-schema-generator@workspace:generators/typescript/express/express-inlined-request-body-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4194,9 +3977,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-register-generator@workspace:generators/typescript/express/express-register-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4219,9 +3999,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/express-service-generator@workspace:generators/typescript/express/express-service-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4242,9 +4019,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/fetcher@workspace:generators/typescript/utils/core-utilities/fetcher"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     "@types/node-fetch": ^2.6.9
@@ -4265,9 +4039,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/form-data-utils@workspace:generators/typescript/utils/core-utilities/form-data-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4284,9 +4055,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/generic-express-error-generators@workspace:generators/typescript/express/generic-express-error-generators"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4306,9 +4074,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/generic-sdk-error-generators@workspace:generators/typescript/sdk/generic-sdk-error-generators"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4328,9 +4093,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/request-wrapper-generator@workspace:generators/typescript/sdk/request-wrapper-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
@@ -4351,9 +4113,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/resolvers@workspace:generators/typescript/utils/resolvers"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@types/jest": ^29.0.3
@@ -4371,9 +4130,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-client-class-generator@workspace:generators/typescript/sdk/client-class-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
@@ -4395,9 +4151,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-endpoint-type-schemas-generator@workspace:generators/typescript/sdk/sdk-endpoint-type-schemas-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
@@ -4421,9 +4174,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-error-generator@workspace:generators/typescript/sdk/sdk-error-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-error-class-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4444,9 +4194,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-error-schema-generator@workspace:generators/typescript/sdk/sdk-error-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
@@ -4468,9 +4215,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-generator-cli@workspace:generators/typescript/sdk/cli"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/umd-compat-loader": ^2.1.4
     "@fern-fern/generator-exec-sdk": ^0.0.538
@@ -4506,9 +4250,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-generator@workspace:generators/typescript/sdk/generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": ^0.0.538
@@ -4549,9 +4290,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/sdk-inlined-request-schema-generator@workspace:generators/typescript/sdk/sdk-inlined-request-body-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4583,9 +4321,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/stream-utils@workspace:generators/typescript/utils/core-utilities/stream-utils"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -4601,9 +4336,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-generator@workspace:generators/typescript/model/type-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4624,9 +4356,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-reference-converters@workspace:generators/typescript/model/type-reference-converters"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/resolvers": "workspace:*"
@@ -4646,9 +4375,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-reference-example-generator@workspace:generators/typescript/model/type-reference-example-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
@@ -4669,9 +4395,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/type-schema-generator@workspace:generators/typescript/model/type-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4693,9 +4416,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/union-generator@workspace:generators/typescript/model/union-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-api/core-utils": "workspace:*"
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
@@ -4716,9 +4436,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/union-schema-generator@workspace:generators/typescript/model/union-schema-generator"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-schema-generator": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4739,9 +4456,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-typescript/zurg@workspace:generators/typescript/utils/core-utilities/zurg"
   dependencies:
-    "@babel/core": ^7.19.1
-    "@babel/preset-env": ^7.22.20
-    "@babel/preset-typescript": ^7.18.6
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
