@@ -3005,13 +3005,8 @@ __metadata:
     "@fern-api/register": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-<<<<<<< HEAD
     "@fern-fern/docs-config": 0.0.75
-    "@fern-fern/fiddle-sdk": ^0.0.400
-=======
-    "@fern-fern/docs-config": 0.0.70
     "@fern-fern/fiddle-sdk": ^0.0.411
->>>>>>> main
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -3236,15 +3231,9 @@ __metadata:
     "@fern-api/semver-utils": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/yaml-schema": "workspace:*"
-<<<<<<< HEAD
     "@fern-fern/docs-config": 0.0.75
-    "@fern-fern/fiddle-sdk": ^0.0.400
-    "@fern-fern/openapi-ir-model": 0.0.165
-=======
-    "@fern-fern/docs-config": 0.0.70
     "@fern-fern/fiddle-sdk": ^0.0.411
     "@fern-fern/openapi-ir-model": 0.0.170
->>>>>>> main
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
     "@types/lodash-es": ^4.17.7

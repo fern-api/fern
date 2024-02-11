@@ -4860,13 +4860,8 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/register", "workspace:packages/cli/register"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-<<<<<<< HEAD
             ["@fern-fern/docs-config", "npm:0.0.75"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.400"],\
-=======
-            ["@fern-fern/docs-config", "npm:0.0.70"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
->>>>>>> main
             ["@types/decompress", "npm:4.2.7"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.7"],\
@@ -5104,15 +5099,9 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
             ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
             ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-<<<<<<< HEAD
             ["@fern-fern/docs-config", "npm:0.0.75"],\
-            ["@fern-fern/fiddle-sdk", "npm:0.0.400"],\
-            ["@fern-fern/openapi-ir-model", "npm:0.0.165"],\
-=======
-            ["@fern-fern/docs-config", "npm:0.0.70"],\
             ["@fern-fern/fiddle-sdk", "npm:0.0.411"],\
             ["@fern-fern/openapi-ir-model", "npm:0.0.170"],\
->>>>>>> main
             ["@types/jest", "npm:29.0.3"],\
             ["@types/js-yaml", "npm:4.0.8"],\
             ["@types/lodash-es", "npm:4.17.7"],\
