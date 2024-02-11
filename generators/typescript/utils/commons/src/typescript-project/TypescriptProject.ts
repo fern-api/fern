@@ -1,5 +1,4 @@
 import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
-import { string } from "@fern-typescript/zurg";
 import { mkdir, writeFile } from "fs/promises";
 import Dirent from "memfs/lib/Dirent";
 import { Volume } from "memfs/lib/volume";
@@ -34,7 +33,7 @@ export abstract class TypescriptProject {
         extraDependencies,
         extraDevDependencies,
         extraFiles,
-        extraScripts,
+        extraScripts
     }: TypescriptProject.Init) {
         this.tsMorphProject = tsMorphProject;
         this.extraDependencies = extraDependencies;
@@ -59,10 +58,10 @@ export abstract class TypescriptProject {
 
         return new PersistedTypescriptProject({
             directory: directoryOnDiskToWriteTo,
-            srcDirectory: TypescriptProject.SRC_DIRECTORY,
-            distDirectory: TypescriptProject.DIST_DIRECTORY,
+            srcDirectory: RelativeFilePath.of(TypescriptProject.SRC_DIRECTORY),
+            distDirectory: RelativeFilePath.of(TypescriptProject.DIST_DIRECTORY),
             yarnBuildCommand: this.getYarnBuildCommand(),
-            yarnFormatCommand: this.getYarnFormatCommand(),
+            yarnFormatCommand: this.getYarnFormatCommand()
         });
     }
 
@@ -84,13 +83,13 @@ export abstract class TypescriptProject {
     private async writeVolumeToDisk(directoryOnDiskToWriteTo: AbsoluteFilePath): Promise<void> {
         await this.writeVolumeToDiskRecursive({
             directoryOnDiskToWriteTo,
-            directoryInVolume: "/",
+            directoryInVolume: "/"
         });
     }
 
     private async writeVolumeToDiskRecursive({
         directoryOnDiskToWriteTo,
-        directoryInVolume,
+        directoryInVolume
     }: {
         directoryOnDiskToWriteTo: string;
         directoryInVolume: string;
@@ -103,7 +102,7 @@ export abstract class TypescriptProject {
                 await mkdir(fullPathOnDisk, { recursive: true });
                 await this.writeVolumeToDiskRecursive({
                     directoryOnDiskToWriteTo,
-                    directoryInVolume: fullPathInVolume,
+                    directoryInVolume: fullPathInVolume
                 });
             } else {
                 const contents = await this.volume.promises.readFile(fullPathInVolume);

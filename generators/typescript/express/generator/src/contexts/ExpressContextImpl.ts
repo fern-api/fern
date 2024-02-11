@@ -6,6 +6,7 @@ import {
     ExternalDependencies,
     ImportsManager
 } from "@fern-typescript/commons";
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
     ExpressContext,
     ExpressErrorSchemaContext,
@@ -31,7 +32,6 @@ import { ExpressInlinedRequestBodyDeclarationReferencer } from "../declaration-r
 import { ExpressServiceDeclarationReferencer } from "../declaration-referencers/ExpressServiceDeclarationReferencer";
 import { GenericAPIExpressErrorDeclarationReferencer } from "../declaration-referencers/GenericAPIExpressErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
-import { CoreUtilities } from "../generators/typescript/utils/commons/src/core-utilities/CoreUtilities";
 import { ExpressEndpointTypeSchemasContextImpl } from "./express-endpoint-type-schemas/ExpressEndpointTypeSchemasContextImpl";
 import { ExpressErrorSchemaContextImpl } from "./express-error-schema/ExpressErrorSchemaContextImpl";
 import { ExpressErrorContextImpl } from "./express-error/ExpressErrorContextImpl";

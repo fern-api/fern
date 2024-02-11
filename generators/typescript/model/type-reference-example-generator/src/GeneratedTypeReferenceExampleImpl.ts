@@ -3,7 +3,7 @@ import {
     ExampleContainer,
     ExamplePrimitive,
     ExampleTypeReference,
-    ExampleTypeReferenceShape,
+    ExampleTypeReferenceShape
 } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedTypeReferenceExample, ModelContext } from "@fern-typescript/contexts";
@@ -29,7 +29,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
     private buildExample({
         example,
         context,
-        opts,
+        opts
     }: {
         example: ExampleTypeReference;
         context: ModelContext;
@@ -46,12 +46,12 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     uuid: (uuidExample) => ts.factory.createStringLiteral(uuidExample),
                     datetime: (datetimeExample) =>
                         ts.factory.createNewExpression(ts.factory.createIdentifier("Date"), undefined, [
-                            ts.factory.createStringLiteral(datetimeExample.toISOString()),
+                            ts.factory.createStringLiteral(datetimeExample.toISOString())
                         ]),
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
-                    },
+                    }
                 }),
             container: (exampleContainer) => {
                 return ExampleContainer._visit<ts.Expression>(exampleContainer, {
@@ -67,7 +67,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                                 exampleItems.map((exampleItem) =>
                                     this.buildExample({ example: exampleItem, context, opts })
                                 )
-                            ),
+                            )
                         ]),
                     map: (examplePairs) =>
                         ts.factory.createObjectLiteralExpression(
@@ -85,7 +85,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                             : ts.factory.createIdentifier("undefined"),
                     _other: () => {
                         throw new Error("Unknown example container type: " + exampleContainer.type);
-                    },
+                    }
                 });
             },
             named: ({ typeName, shape: example }) => {
@@ -100,14 +100,14 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             },
             _other: () => {
                 throw new Error("Unknown example type: " + example.shape.type);
-            },
+            }
         });
     }
 
     private getExampleAsPropertyName({
         example,
         context,
-        opts,
+        opts
     }: {
         example: ExampleTypeReference;
         context: ModelContext;
@@ -129,7 +129,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     date: (dateExample) => ts.factory.createStringLiteral(dateExample),
                     _other: () => {
                         throw new Error("Unknown primitive example: " + primitiveExample.type);
-                    },
+                    }
                 }),
             container: () => {
                 throw new Error("Cannot convert container to property name");
@@ -151,6 +151,8 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
                     }
                     case "alias":
                         return this.getExampleAsPropertyName({ example: example.value, context, opts });
+                    case "undiscriminatedUnion":
+                        throw new Error("Cannot convert undiscriminated union to property name");
                     default:
                         assertNever(example);
                 }
@@ -160,7 +162,7 @@ export class GeneratedTypeReferenceExampleImpl implements GeneratedTypeReference
             },
             _other: () => {
                 throw new Error("Unknown example type: " + example.shape.type);
-            },
+            }
         });
     }
 }

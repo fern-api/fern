@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
 import { CoreUtility } from "../CoreUtility";
 import { StreamUtils } from "./StreamUtils";
@@ -7,13 +7,13 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
     public readonly MANIFEST = {
         name: "stream-utils",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/stream-utils/src"),
+            path: RelativeFilePath.of("packages/core-utilities/stream-utils/src")
         },
-        originalPathOnDocker: "/assets/stream-utils" as const,
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/stream-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "streaming-fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (): void => {
             return;
-        },
+        }
     };
 
     public Stream = {
@@ -23,7 +23,7 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
                 ({
                     stream,
                     parse,
-                    terminator,
+                    terminator
                 }: {
                     stream: ts.Expression;
                     parse: ts.Expression;
@@ -37,10 +37,10 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
                                     ts.factory.createIdentifier("terminator"),
                                     ts.factory.createStringLiteral(terminator)
                                 ),
-                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse),
+                                ts.factory.createPropertyAssignment(ts.factory.createIdentifier("parse"), parse)
                             ],
                             true
-                        ),
+                        )
                     ]);
                 }
         ),
@@ -49,6 +49,6 @@ export class StreamingUtilsImpl extends CoreUtility implements StreamUtils {
             "Stream",
             (APIResponse) => (response: ts.TypeNode) =>
                 ts.factory.createTypeReferenceNode(APIResponse.getEntityName(), [response])
-        ),
+        )
     };
 }

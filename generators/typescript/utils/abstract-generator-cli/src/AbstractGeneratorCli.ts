@@ -1,4 +1,4 @@
-import { AbsoluteFilePath, join } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, join, RelativeFilePath } from "@fern-api/fs-utils";
 import { CONSOLE_LOGGER, createLogger, Logger, LogLevel } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
 import * as GeneratorExecParsing from "@fern-fern/generator-exec-sdk/serialization";
@@ -18,7 +18,7 @@ const LOG_LEVEL_CONVERSIONS: Record<LogLevel, FernGeneratorExec.logging.LogLevel
     [LogLevel.Debug]: FernGeneratorExec.logging.LogLevel.Debug,
     [LogLevel.Info]: FernGeneratorExec.logging.LogLevel.Info,
     [LogLevel.Warn]: FernGeneratorExec.logging.LogLevel.Warn,
-    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error,
+    [LogLevel.Error]: FernGeneratorExec.logging.LogLevel.Error
 };
 
 export abstract class AbstractGeneratorCli<CustomConfig> {
@@ -38,10 +38,10 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 ...rawConfig,
                 // in this version of the fiddle client, it requires unknown
                 // properties to be present
-                customConfig: rawConfig.customConfig ?? {},
+                customConfig: rawConfig.customConfig ?? {}
             },
             {
-                unrecognizedObjectKeys: "passthrough",
+                unrecognizedObjectKeys: "passthrough"
             }
         );
         const generatorNotificationService =
@@ -57,20 +57,20 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 generatorNotificationService?.bufferUpdate(
                     FernGeneratorExec.GeneratorUpdate.log({
                         message: message.join(" "),
-                        level: LOG_LEVEL_CONVERSIONS[level],
+                        level: LOG_LEVEL_CONVERSIONS[level]
                     })
                 );
             });
 
             const npmPackage = constructNpmPackage({
                 generatorConfig: config,
-                isPackagePrivate: this.isPackagePrivate(customConfig),
+                isPackagePrivate: this.isPackagePrivate(customConfig)
             });
 
             await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.initV2({
                     publishingToRegistry:
-                        npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined,
+                        npmPackage?.publishInfo != null ? FernGeneratorExec.RegistryType.Npm : undefined
                 })
             );
 
@@ -80,13 +80,16 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                 customConfig,
                 npmPackage,
                 generatorContext,
-                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath),
+                intermediateRepresentation: await loadIntermediateRepresentation(config.irFilepath)
             });
             if (!generatorContext.didSucceed()) {
                 throw new Error("Failed to generate TypeScript project.");
             }
 
-            const destinationZip = join(AbsoluteFilePath.of(config.output.path), OUTPUT_ZIP_FILENAME);
+            const destinationZip = join(
+                AbsoluteFilePath.of(config.output.path),
+                RelativeFilePath.of(OUTPUT_ZIP_FILENAME)
+            );
             await config.output.mode._visit<void | Promise<void>>({
                 publish: async () => {
                     await publishPackage({
@@ -94,11 +97,11 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         npmPackage,
                         dryRun: config.dryRun,
                         generatorNotificationService,
-                        typescriptProject,
+                        typescriptProject
                     });
                     await typescriptProject.npmPackAsZipTo({
                         logger,
-                        destinationZip,
+                        destinationZip
                     });
                 },
                 github: async (githubOutputMode) => {
@@ -108,36 +111,36 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
                         await writeGitHubWorkflows({
                             githubOutputMode,
                             isPackagePrivate: npmPackage != null && npmPackage.private,
-                            pathToProject,
+                            pathToProject
                         });
                     });
                     await typescriptProject.copyProjectAsZipTo({
                         logger,
-                        destinationZip,
+                        destinationZip
                     });
                 },
                 downloadFiles: async () => {
                     if (this.outputSourceFiles(customConfig)) {
                         await typescriptProject.copySrcAsZipTo({
                             destinationZip,
-                            logger,
+                            logger
                         });
                     } else {
                         await typescriptProject.copyDistAsZipTo({
                             destinationZip,
-                            logger,
+                            logger
                         });
                     }
                 },
                 _other: ({ type }) => {
                     throw new Error(`${type} mode is not implemented`);
-                },
+                }
             });
 
             await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.successful({
-                        zipFilename: OUTPUT_ZIP_FILENAME,
+                        zipFilename: OUTPUT_ZIP_FILENAME
                     })
                 )
             );
@@ -147,7 +150,7 @@ export abstract class AbstractGeneratorCli<CustomConfig> {
             await generatorNotificationService?.sendUpdate(
                 FernGeneratorExec.GeneratorUpdate.exitStatusUpdate(
                     FernGeneratorExec.ExitStatusUpdate.error({
-                        message: e instanceof Error ? e.message : "Encountered error",
+                        message: e instanceof Error ? e.message : "Encountered error"
                     })
                 )
             );

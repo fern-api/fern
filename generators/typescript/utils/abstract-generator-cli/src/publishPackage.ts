@@ -1,7 +1,6 @@
 import { Logger } from "@fern-api/logger";
 import { FernGeneratorExec } from "@fern-fern/generator-exec-sdk";
-import { NpmPackage } from "../generators/typescript/utils/commons/src/NpmPackage";
-import { PersistedTypescriptProject } from "../generators/typescript/utils/commons/src/typescript-project/PersistedTypescriptProject";
+import { NpmPackage, PersistedTypescriptProject } from "@fern-typescript/commons";
 import { GeneratorNotificationService } from "./GeneratorNotificationService";
 
 export async function publishPackage({

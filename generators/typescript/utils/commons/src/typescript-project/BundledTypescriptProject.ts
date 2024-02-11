@@ -39,7 +39,10 @@ export class BundledTypescriptProject extends TypescriptProject {
     }
 
     protected async addFilesToVolume(): Promise<void> {
-        await this.writeFileToVolume(BundledTypescriptProject.BUILD_SCRIPT_FILENAME, this.getBuildScriptContents());
+        await this.writeFileToVolume(
+            RelativeFilePath.of(BundledTypescriptProject.BUILD_SCRIPT_FILENAME),
+            this.getBuildScriptContents()
+        );
         await this.generateGitIgnore();
         await this.generatePrettierRc();
         await this.generateStubTypeDeclarations();
@@ -121,7 +124,7 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
 
     private async generateGitIgnore(): Promise<void> {
         await this.writeFileToVolume(
-            ".gitignore",
+            RelativeFilePath.of(".gitignore"),
             [
                 "node_modules",
                 ".DS_Store",
@@ -135,17 +138,17 @@ async function runEsbuild({ platform, target, format, entryPoint, outfile }) {
                 "!.yarn/plugins",
                 "!.yarn/releases",
                 "!.yarn/sdks",
-                "!.yarn/versions",
+                "!.yarn/versions"
             ].join("\n")
         );
     }
 
     private async generatePrettierRc(): Promise<void> {
         await this.writeFileToVolume(
-            ".prettierrc.yml",
+            RelativeFilePath.of(".prettierrc.yml"),
             yaml.dump({
                 tabWidth: 4,
-                printWidth: 120,
+                printWidth: 120
             })
         );
     }
@@ -187,16 +190,16 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             noUnusedParameters: true,
             outDir: BundledTypescriptProject.TYPES_DIRECTORY,
             rootDir: BundledTypescriptProject.SRC_DIRECTORY,
-            baseUrl: BundledTypescriptProject.SRC_DIRECTORY,
+            baseUrl: BundledTypescriptProject.SRC_DIRECTORY
         };
 
         await this.writeFileToVolume(
-            "tsconfig.json",
+            RelativeFilePath.of("tsconfig.json"),
             JSON.stringify(
                 {
                     compilerOptions,
                     include: [BundledTypescriptProject.SRC_DIRECTORY],
-                    exclude: [],
+                    exclude: []
                 },
                 undefined,
                 4
@@ -206,7 +209,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
 
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
-            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package",
+            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package"
         };
 
         if (this.npmPackage != null) {
@@ -214,14 +217,14 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 ...packageJson,
                 version: this.npmPackage.version,
                 private: this.npmPackage.private,
-                repository: this.npmPackage.repoUrl,
+                repository: this.npmPackage.repoUrl
             };
         }
 
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                license: this.npmPackage.license as any,
+                license: this.npmPackage.license as any
             };
         }
 
@@ -229,8 +232,8 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             ...packageJson,
             scripts: {
                 ...packageJson.scripts,
-                ...this.extraScripts,
-            },
+                ...this.extraScripts
+            }
         };
 
         packageJson = {
@@ -238,21 +241,21 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             files: [
                 BundledTypescriptProject.DIST_DIRECTORY,
                 BundledTypescriptProject.TYPES_DIRECTORY,
-                ...this.getAllStubTypeFiles(),
+                ...this.getAllStubTypeFiles()
             ],
             exports: {
                 ".": this.getExportsForBundle(BundledTypescriptProject.API_BUNDLE_FILENAME, {
-                    pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
+                    pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`
                 }),
                 ...BundledTypescriptProject.NON_EXPORTED_FOLDERS.reduce(
                     (acc, folder) => ({
                         ...acc,
                         [`./${folder}`]: this.getExportsForBundle(`${this.getBundleForNonExportedFolder(folder)}`, {
-                            pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`,
-                        }),
+                            pathToTypesFile: `./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}/index.d.ts`
+                        })
                     }),
                     {}
-                ),
+                )
             },
             types: `./${BundledTypescriptProject.TYPES_DIRECTORY}/index.d.ts`,
             scripts: {
@@ -261,16 +264,16 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
                 [BundledTypescriptProject.BUNDLE_SCRIPT_NAME]: `node ${BundledTypescriptProject.BUILD_SCRIPT_FILENAME}`,
                 [BundledTypescriptProject.BUILD_SCRIPT_NAME]: [
                     `yarn ${BundledTypescriptProject.COMPILE_SCRIPT_NAME}`,
-                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`,
-                ].join(" && "),
-            },
+                    `yarn ${BundledTypescriptProject.BUNDLE_SCRIPT_NAME}`
+                ].join(" && ")
+            }
         };
 
         packageJson = produce(packageJson, (draft) => {
             if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
                 draft.dependencies = {
                     ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies,
+                    ...this.extraDependencies
                 };
             }
             if (Object.keys(this.dependencies[DependencyType.PEER]).length > 0) {
@@ -279,11 +282,11 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             draft.devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
-                ...this.extraDevDependencies,
+                ...this.extraDevDependencies
             };
         });
 
-        await this.writeFileToVolume("package.json", JSON.stringify(packageJson, undefined, 4));
+        await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }
 
     private getExportsForBundle(bundleFilename: string, { pathToTypesFile }: { pathToTypesFile: string }) {
@@ -292,7 +295,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             import: this.getPathToBrowserEsmDistFile(bundleFilename),
             require: this.getPathToBrowserCjsDistFile(bundleFilename),
             default: this.getPathToBrowserCjsDistFile(bundleFilename),
-            types: pathToTypesFile,
+            types: pathToTypesFile
         };
     }
 
@@ -317,7 +320,7 @@ export * from "./${BundledTypescriptProject.TYPES_DIRECTORY}/${folder}";
             "@types/node": "17.0.33",
             esbuild: "0.16.15",
             prettier: "2.7.1",
-            typescript: "4.6.4",
+            typescript: "4.6.4"
         };
     }
 }

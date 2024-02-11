@@ -1,3 +1,4 @@
+import { RelativeFilePath } from "@fern-api/fs-utils";
 import produce from "immer";
 import yaml from "js-yaml";
 import { IPackageJson } from "package-json-type";
@@ -50,19 +51,19 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private async generateGitIgnore(): Promise<void> {
         await this.writeFileToVolume(
-            ".gitignore",
+            RelativeFilePath.of(".gitignore"),
             [
                 "node_modules",
                 ".DS_Store",
                 `/${SimpleTypescriptProject.DIST_DIRECTORY}`,
-                ...this.getDistFiles().map((distFile) => `/${distFile}`),
+                ...this.getDistFiles().map((distFile) => `/${distFile}`)
             ].join("\n")
         );
     }
 
     private async generateNpmIgnore(): Promise<void> {
         await this.writeFileToVolume(
-            ".npmignore",
+            RelativeFilePath.of(".npmignore"),
             [
                 "node_modules",
                 SimpleTypescriptProject.SRC_DIRECTORY,
@@ -71,17 +72,17 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 FERN_IGNORE_FILENAME,
                 SimpleTypescriptProject.PRETTIER_RC_FILENAME,
                 "tsconfig.json",
-                "yarn.lock",
+                "yarn.lock"
             ].join("\n")
         );
     }
 
     private async generatePrettierRc(): Promise<void> {
         await this.writeFileToVolume(
-            SimpleTypescriptProject.PRETTIER_RC_FILENAME,
+            RelativeFilePath.of(SimpleTypescriptProject.PRETTIER_RC_FILENAME),
             yaml.dump({
                 tabWidth: 4,
-                printWidth: 120,
+                printWidth: 120
             })
         );
     }
@@ -99,16 +100,16 @@ export class SimpleTypescriptProject extends TypescriptProject {
             noUnusedParameters: true,
             outDir: SimpleTypescriptProject.DIST_DIRECTORY,
             rootDir: SimpleTypescriptProject.SRC_DIRECTORY,
-            baseUrl: SimpleTypescriptProject.SRC_DIRECTORY,
+            baseUrl: SimpleTypescriptProject.SRC_DIRECTORY
         };
 
         await this.writeFileToVolume(
-            "tsconfig.json",
+            RelativeFilePath.of("tsconfig.json"),
             JSON.stringify(
                 {
                     compilerOptions,
                     include: [SimpleTypescriptProject.SRC_DIRECTORY],
-                    exclude: [],
+                    exclude: []
                 },
                 undefined,
                 4
@@ -118,7 +119,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
 
     private async generatePackageJson(): Promise<void> {
         let packageJson: IPackageJson = {
-            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package",
+            name: this.npmPackage != null ? this.npmPackage.packageName : "test-package"
         };
 
         if (this.npmPackage != null) {
@@ -126,14 +127,14 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 ...packageJson,
                 version: this.npmPackage.version,
                 private: this.npmPackage.private,
-                repository: this.npmPackage.repoUrl,
+                repository: this.npmPackage.repoUrl
             };
         }
 
         if (this.npmPackage?.license != null) {
             packageJson = {
                 ...packageJson,
-                license: this.npmPackage.license as any,
+                license: this.npmPackage.license as any
             };
         }
 
@@ -144,23 +145,23 @@ export class SimpleTypescriptProject extends TypescriptProject {
             scripts: {
                 [SimpleTypescriptProject.FORMAT_SCRIPT_NAME]: `prettier --write '${SimpleTypescriptProject.SRC_DIRECTORY}/**/*.ts'`,
                 [SimpleTypescriptProject.BUILD_SCRIPT_NAME]: "tsc",
-                prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`,
-            },
+                prepack: `cp -rv ${SimpleTypescriptProject.DIST_DIRECTORY}/. .`
+            }
         };
 
         packageJson = {
             ...packageJson,
             scripts: {
                 ...packageJson.scripts,
-                ...this.extraScripts,
-            },
+                ...this.extraScripts
+            }
         };
 
         packageJson = produce(packageJson, (draft) => {
             if (Object.keys(this.dependencies[DependencyType.PROD]).length > 0) {
                 draft.dependencies = {
                     ...this.dependencies[DependencyType.PROD],
-                    ...this.extraDependencies,
+                    ...this.extraDependencies
                 };
             }
             if (Object.keys(this.dependencies[DependencyType.PEER]).length > 0) {
@@ -169,18 +170,18 @@ export class SimpleTypescriptProject extends TypescriptProject {
             draft.devDependencies = {
                 ...this.dependencies[DependencyType.DEV],
                 ...this.getDevDependencies(),
-                ...this.extraDevDependencies,
+                ...this.extraDevDependencies
             };
         });
 
-        await this.writeFileToVolume("package.json", JSON.stringify(packageJson, undefined, 4));
+        await this.writeFileToVolume(RelativeFilePath.of("package.json"), JSON.stringify(packageJson, undefined, 4));
     }
 
     private getDevDependencies(): Record<string, string> {
         return {
             "@types/node": "17.0.33",
             prettier: "2.7.1",
-            typescript: "4.6.4",
+            typescript: "4.6.4"
         };
     }
 
@@ -195,7 +196,7 @@ export class SimpleTypescriptProject extends TypescriptProject {
                 const baseName = file.getBaseNameWithoutExtension();
                 return [`${baseName}.d.ts`, `${baseName}.js`];
             }),
-            ...rootDirectory.getDirectories().map((directory) => directory.getBaseName()),
+            ...rootDirectory.getDirectories().map((directory) => directory.getBaseName())
         ];
     }
 }

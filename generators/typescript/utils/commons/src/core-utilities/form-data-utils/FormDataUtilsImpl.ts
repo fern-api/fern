@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
@@ -8,13 +8,13 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
     public readonly MANIFEST = {
         name: "form-data-utils",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/form-data-utils/src"),
+            path: RelativeFilePath.of("packages/core-utilities/form-data-utils/src")
         },
-        originalPathOnDocker: "/assets/form-data-utils" as const,
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/form-data-utils"),
         pathInCoreUtilities: [{ nameOnDisk: "form-data-utils", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "4.0.0");
-        },
+        }
     };
 
     public readonly getFormDataContentLength = this.withExportedName(
@@ -26,7 +26,7 @@ export class FormDataUtilsImpl extends CoreUtility implements FormDataUtils {
                         ts.factory.createParenthesizedExpression(
                             ts.factory.createAwaitExpression(
                                 ts.factory.createCallExpression(getFormDataContentLength.getExpression(), undefined, [
-                                    referenceToFormData,
+                                    referenceToFormData
                                 ])
                             )
                         ),

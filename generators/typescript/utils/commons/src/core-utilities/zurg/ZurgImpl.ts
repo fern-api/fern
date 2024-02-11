@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { SchemaOptions } from "@fern-typescript/zurg";
 import { ts } from "ts-morph";
 import { Reference } from "../../referencing";
@@ -10,10 +10,10 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         name: "zurg",
         repoInfoForTesting: {
             path: RelativeFilePath.of("packages/core-utilities/zurg/src"),
-            ignoreGlob: "**/__test__",
+            ignoreGlob: "**/__test__"
         },
-        originalPathOnDocker: "/assets/zurg" as const,
-        pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }],
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/zurg"),
+        pathInCoreUtilities: [{ nameOnDisk: "schemas", exportDeclaration: { namespaceExport: "serialization" } }]
     };
 
     public object = this.withExportedName("object", (object) => (properties: Zurg.Property[]): Zurg.ObjectSchema => {
@@ -21,15 +21,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             isOptional: false,
             toExpression: () =>
                 ts.factory.createCallExpression(object.getExpression(), undefined, [
-                    this.constructObjectLiteralForProperties(properties),
-                ]),
+                    this.constructObjectLiteralForProperties(properties)
+                ])
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema),
             ...this.getObjectLikeUtils(baseSchema),
-            ...this.getObjectUtils(baseSchema),
+            ...this.getObjectUtils(baseSchema)
         };
     });
 
@@ -41,15 +41,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     isOptional: false,
                     toExpression: () =>
                         ts.factory.createCallExpression(objectWithoutOptionalProperties.getExpression(), undefined, [
-                            this.constructObjectLiteralForProperties(properties),
-                        ]),
+                            this.constructObjectLiteralForProperties(properties)
+                        ])
                 };
 
                 return {
                     ...baseSchema,
                     ...this.getSchemaUtils(baseSchema),
                     ...this.getObjectLikeUtils(baseSchema),
-                    ...this.getObjectUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema)
                 };
             }
     );
@@ -69,7 +69,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
 
     private getObjectUtils(objectSchema: Zurg.BaseSchema): Zurg.ObjectUtils {
         return {
-            extend: (extension) => this.extend(objectSchema, extension),
+            extend: (extension) => this.extend(objectSchema, extension)
         };
     }
 
@@ -84,14 +84,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     ),
                     undefined,
                     [extension.toExpression()]
-                ),
+                )
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema),
             ...this.getObjectLikeUtils(baseSchema),
-            ...this.getObjectUtils(baseSchema),
+            ...this.getObjectUtils(baseSchema)
         };
     }
 
@@ -101,7 +101,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             (rawValue: string, value: ts.Expression): ts.Expression => {
                 return ts.factory.createCallExpression(property.getExpression(), undefined, [
                     ts.factory.createStringLiteral(rawValue),
-                    value,
+                    value
                 ]);
             }
     );
@@ -109,7 +109,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     private getObjectLikeUtils(objectLike: Zurg.BaseSchema): Zurg.ObjectLikeUtils {
         return {
             withParsedProperties: (additionalProperties: Zurg.AdditionalProperty[]) =>
-                this.withParsedProperties(objectLike, additionalProperties),
+                this.withParsedProperties(objectLike, additionalProperties)
         };
     }
 
@@ -150,7 +150,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                                       undefined,
                                                       undefined,
                                                       parsedIdentifier
-                                                  ),
+                                                  )
                                               ],
                                               undefined,
                                               undefined,
@@ -169,15 +169,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                 );
                             }),
                             true
-                        ),
+                        )
                     ]
-                ),
+                )
         };
 
         return {
             ...baseSchema,
             ...this.getSchemaUtils(baseSchema),
-            ...this.getObjectLikeUtils(baseSchema),
+            ...this.getObjectLikeUtils(baseSchema)
         };
     }
 
@@ -203,14 +203,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                     )
                                 ),
                                 true
-                            ),
-                        ]),
+                            )
+                        ])
                 };
 
                 return {
                     ...baseSchema,
                     ...this.getSchemaUtils(baseSchema),
-                    ...this.getObjectLikeUtils(baseSchema),
+                    ...this.getObjectLikeUtils(baseSchema)
                 };
             }
     );
@@ -220,14 +220,14 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         (discriminant) =>
             ({
                 parsedDiscriminant,
-                rawDiscriminant,
+                rawDiscriminant
             }: {
                 parsedDiscriminant: string;
                 rawDiscriminant: string;
             }): ts.Expression => {
                 return ts.factory.createCallExpression(discriminant.getExpression(), undefined, [
                     ts.factory.createStringLiteral(parsedDiscriminant),
-                    ts.factory.createStringLiteral(rawDiscriminant),
+                    ts.factory.createStringLiteral(rawDiscriminant)
                 ]);
             }
     );
@@ -239,13 +239,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 isOptional: false,
                 toExpression: () =>
                     ts.factory.createCallExpression(undiscriminatedUnion.getExpression(), undefined, [
-                        ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression())),
-                    ]),
+                        ts.factory.createArrayLiteralExpression(schemas.map((schema) => schema.toExpression()))
+                    ])
             };
 
             return {
                 ...baseSchema,
-                ...this.getSchemaUtils(baseSchema),
+                ...this.getSchemaUtils(baseSchema)
             };
         }
     );
@@ -254,12 +254,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             toExpression: () =>
-                ts.factory.createCallExpression(list.getExpression(), undefined, [itemSchema.toExpression()]),
+                ts.factory.createCallExpression(list.getExpression(), undefined, [itemSchema.toExpression()])
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -267,12 +267,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
             toExpression: () =>
-                ts.factory.createCallExpression(set.getExpression(), undefined, [itemSchema.toExpression()]),
+                ts.factory.createCallExpression(set.getExpression(), undefined, [itemSchema.toExpression()])
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -285,13 +285,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     toExpression: () =>
                         ts.factory.createCallExpression(record.getExpression(), undefined, [
                             keySchema.toExpression(),
-                            valueSchema.toExpression(),
-                        ]),
+                            valueSchema.toExpression()
+                        ])
                 };
 
                 return {
                     ...baseSchema,
-                    ...this.getSchemaUtils(baseSchema),
+                    ...this.getSchemaUtils(baseSchema)
                 };
             }
     );
@@ -303,25 +303,25 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createCallExpression(enum_.getExpression(), undefined, [
                     ts.factory.createArrayLiteralExpression(
                         values.map((value) => ts.factory.createStringLiteral(value))
-                    ),
-                ]),
+                    )
+                ])
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
     public string = this.withExportedName("string", (string: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
-            toExpression: () => ts.factory.createCallExpression(string.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(string.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -330,13 +330,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             isOptional: false,
             toExpression: () =>
                 ts.factory.createCallExpression(stringLiteral.getExpression(), undefined, [
-                    ts.factory.createStringLiteral(literal),
-                ]),
+                    ts.factory.createStringLiteral(literal)
+                ])
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -347,13 +347,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 isOptional: false,
                 toExpression: () =>
                     ts.factory.createCallExpression(booleanLiteral.getExpression(), undefined, [
-                        literal ? ts.factory.createTrue() : ts.factory.createFalse(),
-                    ]),
+                        literal ? ts.factory.createTrue() : ts.factory.createFalse()
+                    ])
             };
 
             return {
                 ...baseSchema,
-                ...this.getSchemaUtils(baseSchema),
+                ...this.getSchemaUtils(baseSchema)
             };
         }
     );
@@ -361,60 +361,60 @@ export class ZurgImpl extends CoreUtility implements Zurg {
     public number = this.withExportedName("number", (number: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
-            toExpression: () => ts.factory.createCallExpression(number.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(number.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
     public boolean = this.withExportedName("boolean", (boolean: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
-            toExpression: () => ts.factory.createCallExpression(boolean.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(boolean.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
     public date = this.withExportedName("date", (date: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
-            toExpression: () => ts.factory.createCallExpression(date.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(date.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
     public any = this.withExportedName("any", (any: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: false,
-            toExpression: () => ts.factory.createCallExpression(any.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(any.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
     public unknown = this.withExportedName("unknown", (unknown: Reference) => () => {
         const baseSchema: Zurg.BaseSchema = {
             isOptional: true,
-            toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined),
+            toExpression: () => ts.factory.createCallExpression(unknown.getExpression(), undefined, undefined)
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -456,7 +456,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             transform: ({
                 newShape,
                 transform,
-                untransform,
+                untransform
             }: {
                 newShape: ts.TypeNode | undefined;
                 transform: ts.Expression;
@@ -464,8 +464,8 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             }) =>
                 this.transform(baseSchema, {
                     newShape,
-                    transformer: this.Schema._fromTransformers({ transform, untransform }),
-                }),
+                    transformer: this.Schema._fromTransformers({ transform, untransform })
+                })
         };
     }
 
@@ -533,12 +533,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     ),
                     undefined,
                     []
-                ),
+                )
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     }
 
@@ -556,12 +556,12 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                     ),
                     newShape != null ? [newShape] : undefined,
                     [transformer.toExpression()]
-                ),
+                )
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     }
 
@@ -577,13 +577,13 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                         undefined,
                         undefined,
                         schema.toExpression()
-                    ),
-                ]),
+                    )
+                ])
         };
 
         return {
             ...baseSchema,
-            ...this.getSchemaUtils(baseSchema),
+            ...this.getSchemaUtils(baseSchema)
         };
     });
 
@@ -602,15 +602,15 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                                 undefined,
                                 undefined,
                                 schema.toExpression()
-                            ),
-                        ]),
+                            )
+                        ])
                 };
 
                 return {
                     ...baseSchema,
                     ...this.getSchemaUtils(baseSchema),
                     ...this.getObjectLikeUtils(baseSchema),
-                    ...this.getObjectUtils(baseSchema),
+                    ...this.getObjectUtils(baseSchema)
                 };
             }
     );
@@ -626,18 +626,18 @@ export class ZurgImpl extends CoreUtility implements Zurg {
         _fromExpression: (expression: ts.Expression): Zurg.Schema => {
             const baseSchema: Zurg.BaseSchema = {
                 isOptional: false,
-                toExpression: () => expression,
+                toExpression: () => expression
             };
 
             return {
                 ...baseSchema,
-                ...this.getSchemaUtils(baseSchema),
+                ...this.getSchemaUtils(baseSchema)
             };
         },
 
         _fromTransformers: ({
             transform,
-            untransform,
+            untransform
         }: {
             transform: ts.Expression;
             untransform: ts.Expression;
@@ -646,7 +646,7 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment("transform", transform),
-                        ts.factory.createPropertyAssignment("untransform", untransform),
+                        ts.factory.createPropertyAssignment("untransform", untransform)
                     ],
                     true
                 )
@@ -681,9 +681,9 @@ export class ZurgImpl extends CoreUtility implements Zurg {
                         ),
                         true
                     )
-                ),
+                )
             ];
-        },
+        }
     };
 
     public ObjectSchema = {
@@ -692,21 +692,21 @@ export class ZurgImpl extends CoreUtility implements Zurg {
             (ObjectSchema) =>
                 ({ rawShape, parsedShape }: { rawShape: ts.TypeNode; parsedShape: ts.TypeNode }) =>
                     ts.factory.createTypeReferenceNode(ObjectSchema.getEntityName(), [rawShape, parsedShape])
-        ),
+        )
     };
 
     public MaybeValid = {
         ok: "ok" as const,
         Valid: {
-            value: "value" as const,
+            value: "value" as const
         },
         Invalid: {
-            errors: "errors" as const,
-        },
+            errors: "errors" as const
+        }
     };
 
     public ValidationError = {
         path: "path" as const,
-        message: "message" as const,
+        message: "message" as const
     };
 }

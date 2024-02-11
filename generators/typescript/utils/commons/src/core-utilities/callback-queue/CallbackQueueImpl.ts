@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
 import { CoreUtility } from "../CoreUtility";
 import { CallbackQueue } from "./CallbackQueue";
@@ -8,10 +8,10 @@ export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
         name: "callback-queue",
         repoInfoForTesting: {
             path: RelativeFilePath.of("packages/core-utilities/callback-queue/src"),
-            ignoreGlob: "**/__test__",
+            ignoreGlob: "**/__test__"
         },
-        originalPathOnDocker: "/assets/callback-queue" as const,
-        pathInCoreUtilities: [{ nameOnDisk: "callback-queue", exportDeclaration: { exportAll: true } }],
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/callback-queue"),
+        pathInCoreUtilities: [{ nameOnDisk: "callback-queue", exportDeclaration: { exportAll: true } }]
     };
 
     public readonly _instantiate = this.withExportedName(
@@ -21,7 +21,7 @@ export class CallbackQueueImpl extends CoreUtility implements CallbackQueue {
 
     public readonly wrap = ({
         referenceToCallbackQueue,
-        functionToWrap,
+        functionToWrap
     }: {
         referenceToCallbackQueue: ts.Expression;
         functionToWrap: ts.Expression;

@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
 import { DependencyManager, DependencyType } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
@@ -8,21 +8,21 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
     public readonly MANIFEST = {
         name: "fetcher",
         repoInfoForTesting: {
-            path: RelativeFilePath.of("packages/core-utilities/fetcher/src"),
+            path: RelativeFilePath.of("packages/core-utilities/fetcher/src")
         },
-        originalPathOnDocker: "/assets/fetcher" as const,
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/fetcher"),
         pathInCoreUtilities: [{ nameOnDisk: "fetcher", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("form-data", "4.0.0");
             dependencyManager.addDependency("node-fetch", "2.7.0");
             dependencyManager.addDependency("qs", "6.11.2");
             dependencyManager.addDependency("@types/qs", "6.9.8", {
-                type: DependencyType.DEV,
+                type: DependencyType.DEV
             });
             dependencyManager.addDependency("@types/node-fetch", "2.6.9", {
-                type: DependencyType.DEV,
+                type: DependencyType.DEV
             });
-        },
+        }
     };
 
     public readonly Fetcher: Fetcher["Fetcher"] = {
@@ -37,35 +37,35 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 body: "body",
                 timeoutMs: "timeoutMs",
                 withCredentials: "withCredentials",
-                responseType: "responseType",
+                responseType: "responseType"
             },
-            _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args"),
+            _getReferenceToType: this.getReferenceToTypeInFetcherModule("Args")
         },
         Error: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("Error"),
-            reason: "reason",
+            reason: "reason"
         },
         FailedStatusCodeError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("FailedStatusCodeError"),
             _reasonLiteralValue: "status-code",
             statusCode: "statusCode",
-            body: "body",
+            body: "body"
         },
         NonJsonError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("NonJsonError"),
             _reasonLiteralValue: "non-json",
             statusCode: "statusCode",
-            rawBody: "rawBody",
+            rawBody: "rawBody"
         },
         TimeoutSdkError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("TimeoutSdkError"),
-            _reasonLiteralValue: "timeout",
+            _reasonLiteralValue: "timeout"
         },
         UnknownError: {
             _getReferenceToType: this.getReferenceToTypeInFetcherModule("UnknownError"),
             _reasonLiteralValue: "unknown",
-            message: "errorMessage",
-        },
+            message: "errorMessage"
+        }
     };
 
     public readonly fetcher = {
@@ -76,7 +76,7 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
         ): ts.Expression => {
             const properties: ts.PropertyAssignment[] = [
                 ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.url, args.url),
-                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method),
+                ts.factory.createPropertyAssignment(this.Fetcher.Args.properties.method, args.method)
             ];
             if (args.headers.length > 0) {
                 properties.push(
@@ -132,10 +132,10 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
 
             return ts.factory.createAwaitExpression(
                 ts.factory.createCallExpression(referenceToFetcher, cast != null ? [cast] : [], [
-                    ts.factory.createObjectLiteralExpression(properties, true),
+                    ts.factory.createObjectLiteralExpression(properties, true)
                 ])
             );
-        },
+        }
     };
 
     public readonly APIResponse = {
@@ -152,12 +152,12 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createTrue()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body),
+                        ts.factory.createPropertyAssignment(this.APIResponse.SuccessfulResponse.body, body)
                     ],
                     true
                 ),
             body: "body",
-            headers: "headers",
+            headers: "headers"
         },
 
         FailedResponse: {
@@ -165,12 +165,12 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                 ts.factory.createObjectLiteralExpression(
                     [
                         ts.factory.createPropertyAssignment(this.APIResponse.ok, ts.factory.createFalse()),
-                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error),
+                        ts.factory.createPropertyAssignment(this.APIResponse.FailedResponse.error, error)
                     ],
                     true
                 ),
-            error: "error",
-        },
+            error: "error"
+        }
     };
 
     public Supplier = {
@@ -186,14 +186,14 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
                     [supplier]
                 )
             );
-        }),
+        })
     };
 
     public FetchFunction = {
         _getReferenceToType: this.withExportedName(
             "FetchFunction",
             (FetchFunction) => () => FetchFunction.getTypeNode()
-        ),
+        )
     };
 
     public getHeader = {
@@ -202,16 +202,16 @@ export class FetcherImpl extends CoreUtility implements Fetcher {
             (getHeader) =>
                 ({
                     referenceToResponseHeaders,
-                    header,
+                    header
                 }: {
                     referenceToResponseHeaders: ts.Expression;
                     header: string;
                 }) =>
                     ts.factory.createCallExpression(getHeader.getExpression(), undefined, [
                         referenceToResponseHeaders,
-                        ts.factory.createStringLiteral(header),
+                        ts.factory.createStringLiteral(header)
                     ])
-        ),
+        )
     };
 
     private getReferenceToTypeInFetcherModule(typeName: string) {

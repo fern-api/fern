@@ -200,10 +200,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         "reference": "workspace:generators/typescript/utils/resolvers"\
       },\
       {\
-        "name": "@fern-api/compile-root",\
-        "reference": "workspace:packages/_root"\
-      },\
-      {\
         "name": "@fern-api/auth",\
         "reference": "workspace:packages/cli/auth"\
       },\
@@ -377,7 +373,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
     "fallbackExclusionList": [\
       ["@fern-api/auth", ["workspace:packages/cli/auth"]],\
       ["@fern-api/cli", ["workspace:packages/cli/cli"]],\
-      ["@fern-api/compile-root", ["workspace:packages/_root"]],\
       ["@fern-api/config-management-commons", ["workspace:packages/cli/config-management/commons"]],\
       ["@fern-api/core", ["workspace:packages/core"]],\
       ["@fern-api/core-utils", ["workspace:packages/commons/core-utils"]],\
@@ -5553,63 +5548,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"],\
             ["validate-npm-package-name", "npm:4.0.0"],\
             ["yargs", "npm:17.7.2"]\
-          ],\
-          "linkType": "SOFT"\
-        }]\
-      ]],\
-      ["@fern-api/compile-root", [\
-        ["workspace:packages/_root", {\
-          "packageLocation": "./packages/_root/",\
-          "packageDependencies": [\
-            ["@fern-api/compile-root", "workspace:packages/_root"],\
-            ["@fern-api/auth", "workspace:packages/cli/auth"],\
-            ["@fern-api/cli", "workspace:packages/cli/cli"],\
-            ["@fern-api/config-management-commons", "workspace:packages/cli/config-management/commons"],\
-            ["@fern-api/core", "workspace:packages/core"],\
-            ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
-            ["@fern-api/dependencies-configuration", "workspace:packages/cli/config-management/dependencies-configuration"],\
-            ["@fern-api/docker-utils", "workspace:packages/cli/generation/local-generation/docker-utils"],\
-            ["@fern-api/docs-configuration", "workspace:packages/cli/config-management/docs-configuration"],\
-            ["@fern-api/docs-preview", "workspace:packages/cli/docs-preview"],\
-            ["@fern-api/docs-validator", "workspace:packages/cli/yaml/docs-validator"],\
-            ["@fern-api/ete-tests", "workspace:packages/cli/ete-tests"],\
-            ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-api/generators-configuration", "workspace:packages/cli/config-management/generators-configuration"],\
-            ["@fern-api/init", "workspace:packages/cli/init"],\
-            ["@fern-api/ir-generator", "workspace:packages/cli/generation/ir-generator"],\
-            ["@fern-api/ir-migrations", "workspace:packages/cli/generation/ir-migrations"],\
-            ["@fern-api/json-schema", "workspace:packages/cli/yaml/json-schema"],\
-            ["@fern-api/loadable", "workspace:packages/commons/loadable"],\
-            ["@fern-api/local-workspace-runner", "workspace:packages/cli/generation/local-generation/local-workspace-runner"],\
-            ["@fern-api/logger", "workspace:packages/cli/logger"],\
-            ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-api/login", "workspace:packages/cli/login"],\
-            ["@fern-api/manage-generator", "workspace:packages/cli/config-management/manage-generator"],\
-            ["@fern-api/mock", "workspace:packages/cli/mock"],\
-            ["@fern-api/openapi-ir-to-fern", "workspace:packages/cli/openapi-ir-to-fern"],\
-            ["@fern-api/openapi-parser", "workspace:packages/cli/openapi-parser"],\
-            ["@fern-api/posthog-manager", "workspace:packages/cli/posthog-manager"],\
-            ["@fern-api/project-configuration", "workspace:packages/cli/config-management/project-configuration"],\
-            ["@fern-api/project-loader", "workspace:packages/cli/project-loader"],\
-            ["@fern-api/register", "workspace:packages/cli/register"],\
-            ["@fern-api/remote-workspace-runner", "workspace:packages/cli/generation/remote-generation/remote-workspace-runner"],\
-            ["@fern-api/scripts", "workspace:packages/scripts"],\
-            ["@fern-api/seed-cli", "workspace:packages/seed"],\
-            ["@fern-api/semver-utils", "workspace:packages/cli/semver-utils"],\
-            ["@fern-api/task-context", "workspace:packages/cli/task-context"],\
-            ["@fern-api/validator", "workspace:packages/cli/yaml/validator"],\
-            ["@fern-api/workspace-loader", "workspace:packages/cli/workspace-loader"],\
-            ["@fern-api/yaml-formatter", "workspace:packages/cli/yaml/formatter"],\
-            ["@fern-api/yaml-migrations", "workspace:packages/cli/yaml/yaml-migrations"],\
-            ["@fern-api/yaml-schema", "workspace:packages/cli/yaml/yaml-schema"],\
-            ["@types/jest", "npm:29.0.3"],\
-            ["@types/node", "npm:18.7.18"],\
-            ["depcheck", "npm:1.4.6"],\
-            ["eslint", "npm:8.56.0"],\
-            ["jest", "virtual:f8e21c9fa0a798b21a87ac455600e39198fef65848556a3a2cd5c956b0460181f9e618173dcff6d9d4fb96fb870055dfe1a3ec3db5db0700e71c0184e4711659#npm:29.7.0"],\
-            ["organize-imports-cli", "npm:0.10.0"],\
-            ["prettier", "npm:2.7.1"],\
-            ["typescript", "patch:typescript@npm%3A4.6.4#~builtin<compat/typescript>::version=4.6.4&hash=5d3a66"]\
           ],\
           "linkType": "SOFT"\
         }]\

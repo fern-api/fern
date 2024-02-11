@@ -1,4 +1,4 @@
-import { RelativeFilePath } from "@fern-api/fs-utils";
+import { AbsoluteFilePath, RelativeFilePath } from "@fern-api/fs-utils";
 import { ts } from "ts-morph";
 import { DependencyManager } from "../../dependency-manager/DependencyManager";
 import { CoreUtility } from "../CoreUtility";
@@ -9,13 +9,13 @@ export class AuthImpl extends CoreUtility implements Auth {
         name: "auth",
         repoInfoForTesting: {
             path: RelativeFilePath.of("packages/core-utilities/auth/src"),
-            ignoreGlob: "**/__test__",
+            ignoreGlob: "**/__test__"
         },
-        originalPathOnDocker: "/assets/auth" as const,
+        originalPathOnDocker: AbsoluteFilePath.of("/assets/auth"),
         pathInCoreUtilities: [{ nameOnDisk: "auth", exportDeclaration: { exportAll: true } }],
         addDependencies: (dependencyManager: DependencyManager): void => {
             dependencyManager.addDependency("js-base64", "3.7.2");
-        },
+        }
     };
 
     public readonly BearerToken = {
@@ -47,7 +47,7 @@ export class AuthImpl extends CoreUtility implements Auth {
                         [header]
                     );
                 }
-        ),
+        )
     };
 
     public readonly BasicAuth = {
@@ -72,10 +72,10 @@ export class AuthImpl extends CoreUtility implements Auth {
                                     ts.factory.createPropertyAssignment(
                                         ts.factory.createIdentifier("password"),
                                         password
-                                    ),
+                                    )
                                 ],
                                 true
-                            ),
+                            )
                         ]
                     );
                 }
@@ -93,6 +93,6 @@ export class AuthImpl extends CoreUtility implements Auth {
                         [header]
                     );
                 }
-        ),
+        )
     };
 }

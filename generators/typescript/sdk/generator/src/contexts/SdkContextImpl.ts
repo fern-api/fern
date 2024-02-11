@@ -8,6 +8,7 @@ import {
     JavaScriptRuntime,
     NpmPackage
 } from "@fern-typescript/commons";
+import { CoreUtilities } from "@fern-typescript/commons/src/core-utilities/CoreUtilities";
 import {
     EnvironmentsContext,
     GenericAPISdkErrorContext,
@@ -40,7 +41,6 @@ import { SdkErrorDeclarationReferencer } from "../declaration-referencers/SdkErr
 import { SdkInlinedRequestBodyDeclarationReferencer } from "../declaration-referencers/SdkInlinedRequestBodyDeclarationReferencer";
 import { TimeoutSdkErrorDeclarationReferencer } from "../declaration-referencers/TimeoutSdkErrorDeclarationReferencer";
 import { TypeDeclarationReferencer } from "../declaration-referencers/TypeDeclarationReferencer";
-import { CoreUtilities } from "../generators/typescript/utils/commons/src/core-utilities/CoreUtilities";
 import { EndpointErrorUnionContextImpl } from "./endpoint-error-union/EndpointErrorUnionContextImpl";
 import { EnvironmentsContextImpl } from "./environments/EnvironmentsContextImpl";
 import { GenericAPISdkErrorContextImpl } from "./generic-api-sdk-error/GenericAPISdkErrorContextImpl";
