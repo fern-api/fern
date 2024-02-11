@@ -5,7 +5,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class GetBasicSolutionFileRequest
         attr_reader :method_name, :signature, :additional_properties
 

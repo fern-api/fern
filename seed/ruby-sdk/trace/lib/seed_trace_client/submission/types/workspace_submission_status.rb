@@ -6,7 +6,7 @@ require_relative "error_info"
 require_relative "workspace_run_details"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceSubmissionStatus
       attr_reader :member, :discriminant
 

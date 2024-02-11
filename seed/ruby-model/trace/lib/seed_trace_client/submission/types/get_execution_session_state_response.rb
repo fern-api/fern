@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GetExecutionSessionStateResponse
       attr_reader :states, :num_warming_instances, :warming_session_ids, :additional_properties
 

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Commons
+  class Commons
     PROBLEM_ID = String
   end
 end

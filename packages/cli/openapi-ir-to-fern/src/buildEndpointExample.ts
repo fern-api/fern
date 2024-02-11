@@ -1,4 +1,4 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish } from "@fern-api/core-utils";
 import { RawSchemas } from "@fern-api/yaml-schema";
 import {
     FullExample,
@@ -21,6 +21,10 @@ export function buildEndpointExample({
 
     if (endpointExample.name != null) {
         example.name = endpointExample.name;
+    }
+
+    if (endpointExample.description != null) {
+        example.docs = endpointExample.description;
     }
 
     if (endpointExample.pathParameters != null && endpointExample.pathParameters.length > 0) {
@@ -48,13 +52,26 @@ export function buildEndpointExample({
     }
 
     if (endpointExample.codeSamples.length > 0) {
-        example["code-samples"] = endpointExample.codeSamples.map((codeSample) => ({
-            language: codeSample.language,
-            code: codeSample.code,
-            name: codeSample.name ?? undefined,
-            install: codeSample.install ?? undefined,
-            docs: codeSample.description ?? undefined
-        }));
+        example["code-samples"] = endpointExample.codeSamples
+            .map((codeSample) => {
+                if (codeSample.type === "language") {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        language: codeSample.language,
+                        code: codeSample.code,
+                        install: codeSample.install ?? undefined
+                    };
+                } else {
+                    return {
+                        name: codeSample.name ?? undefined,
+                        docs: codeSample.description ?? undefined,
+                        sdk: codeSample.sdk,
+                        code: codeSample.code
+                    };
+                }
+            })
+            .filter(isNonNullish);
     }
 
     return example;

@@ -2,6 +2,7 @@ import { FernToken } from "@fern-api/auth";
 import { GeneratorGroup, GeneratorInvocation } from "@fern-api/generators-configuration";
 import { TaskContext } from "@fern-api/task-context";
 import { FernWorkspace } from "@fern-api/workspace-loader";
+import { FernFiddle } from "@fern-fern/fiddle-sdk";
 import { runRemoteGenerationForGenerator } from "./runRemoteGenerationForGenerator";
 
 export interface RemoteGenerationForAPIWorkspaceResponse {
@@ -15,7 +16,8 @@ export async function runRemoteGenerationForAPIWorkspace({
     generatorGroup,
     version,
     shouldLogS3Url,
-    token
+    token,
+    whitelabel
 }: {
     organization: string;
     workspace: FernWorkspace;
@@ -24,6 +26,7 @@ export async function runRemoteGenerationForAPIWorkspace({
     version: string | undefined;
     shouldLogS3Url: boolean;
     token: FernToken;
+    whitelabel: FernFiddle.WhitelabelConfig | undefined;
 }): Promise<RemoteGenerationForAPIWorkspaceResponse | null> {
     if (generatorGroup.generators.length === 0) {
         context.logger.warn("No generators specified.");
@@ -44,7 +47,8 @@ export async function runRemoteGenerationForAPIWorkspace({
                     version,
                     audiences: generatorGroup.audiences,
                     shouldLogS3Url,
-                    token
+                    token,
+                    whitelabel
                 });
                 if (remoteTaskHandlerResponse != null && remoteTaskHandlerResponse.createdSnippets) {
                     snippetsProducedBy.push(generatorInvocation);

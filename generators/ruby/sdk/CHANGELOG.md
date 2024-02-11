@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.0.6] - 2024-02-09
+- Improvement: license files are now specified within the gem config if they are provided
+```
+generators: 
+  - name: fernapi/fern-ruby-sdk
+    version: 0.0.6
+    github:
+      repository: org/repo-name
+      mode: pull-request
+      license: MIT
+```
+
+- Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a publishing configuration
+```
+generators: 
+  - name: 
+     output:  # <-- Publishing configuration
+       location: rubygems
+       api-key: ${API_KEY}
+       package-name: "petstore"
+```
+
+## [0.0.5] - 2024-02-06
+
+- This release contains no changes to the API.
+
+- Bug fixes:
+  - Syntactic error in block parameter usage: we now ensure block parameters are the final parameter for functions
+  - Add properties to subpackages: previously properties on subpackages were not being exposed
+  - Ensure optional properties in from_json are only parsed if present
+
 ## [0.0.4] - 2024-02-05
 
 - This release contains no changes to the API.
@@ -31,8 +62,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 groups:
  - name: ...
     version: ...
-    location:
-       output: rubygems
+    output:
+       location: rubygems
        api-key: ${API_KEY}
        package-name: "petstore"
 ```

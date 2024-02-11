@@ -4,7 +4,7 @@ require_relative "variable_value"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class TestCase
       attr_reader :id, :params, :additional_properties
 
@@ -29,7 +29,7 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         id = struct.id
-        params = parsed_json["params"].map do |v|
+        params = parsed_json["params"]&.map do |v|
           v = v.to_json
           Commons::VariableValue.from_json(json_object: v)
         end

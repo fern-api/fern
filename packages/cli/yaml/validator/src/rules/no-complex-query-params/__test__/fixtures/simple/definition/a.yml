@@ -2,11 +2,43 @@ types:
   Object:
     properties:
       foo: string
+  NestedObject:
+    properties:
+      foo: string
+      object: Object
+  ObjectWithLiteral:
+    properties:
+      foo: string
+      helloWorld: literal<"hello world">
+  NestedObjectWithLiteral:
+    properties:
+      foo: string
+      object: ObjectWithLiteral
+  ObjectWithUnion:
+    properties:
+      foo: string
+      union: Union
+  NestedObjectWithUnion:
+    properties:
+      foo: string
+      object: ObjectWithUnion
+
   AliasOfObject: Object
   AliasOfAliasOfObject: Object
 
   AliasOfPrimitive: boolean
   AliasOfAliasOfPrimitive: string
+
+  Union:
+    union:
+      str: string
+      bool: boolean
+
+  UndiscriminatedUnion:
+    discriminated: false
+    union:
+      - string
+      - boolean
 
   Color:
     enum:
@@ -35,3 +67,14 @@ service:
           h: MadeUpType
           i: optional<Color>
           j: literal<"hello world">
+          k: Object
+          l: ObjectWithLiteral
+          m: NestedObject
+          n: NestedObjectWithLiteral
+          o: Union
+          p: UndiscriminatedUnion
+          q: ObjectWithUnion
+          r: NestedObjectWithUnion
+          s: map<string, string>
+          t: map<string, User>
+          u: map<string, ObjectWithLiteral>

@@ -4,7 +4,7 @@ require "json"
 
 module SeedAudiencesClient
   module FolderC
-    module Common
+    class Common
       class Foo
         attr_reader :bar_property, :additional_properties
 

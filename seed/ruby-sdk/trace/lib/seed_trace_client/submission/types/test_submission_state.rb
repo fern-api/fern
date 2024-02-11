@@ -6,7 +6,7 @@ require_relative "test_submission_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionState
       attr_reader :problem_id, :default_test_cases, :custom_test_cases, :status, :additional_properties
 
@@ -37,11 +37,11 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         problem_id = struct.problemId
-        default_test_cases = parsed_json["defaultTestCases"].map do |v|
+        default_test_cases = parsed_json["defaultTestCases"]&.map do |v|
           v = v.to_json
           Commons::TestCase.from_json(json_object: v)
         end
-        custom_test_cases = parsed_json["customTestCases"].map do |v|
+        custom_test_cases = parsed_json["customTestCases"]&.map do |v|
           v = v.to_json
           Commons::TestCase.from_json(json_object: v)
         end

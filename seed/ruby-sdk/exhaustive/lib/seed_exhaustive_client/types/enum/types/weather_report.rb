@@ -2,7 +2,7 @@
 
 module SeedExhaustiveClient
   module Types
-    module Enum
+    class Enum
       # @type [WEATHER_REPORT]
       WEATHER_REPORT = { sunny: "SUNNY", cloudy: "CLOUDY", raining: "RAINING", snowing: "SNOWING" }.freeze
     end

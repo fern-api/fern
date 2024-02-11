@@ -4,7 +4,7 @@ require_relative "variable_type"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class MapType
       attr_reader :key_type, :value_type, :additional_properties
 

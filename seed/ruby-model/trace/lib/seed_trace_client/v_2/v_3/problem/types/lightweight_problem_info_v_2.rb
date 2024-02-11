@@ -7,7 +7,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class LightweightProblemInfoV2
           attr_reader :problem_id, :problem_name, :problem_version, :variable_types, :additional_properties
 

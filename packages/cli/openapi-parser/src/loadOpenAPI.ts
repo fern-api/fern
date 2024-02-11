@@ -93,9 +93,15 @@ export async function loadOpenAPI({
             return context.failAndThrow(`Failed to read OpenAPI overrides from file ${overridesFilepath}`);
         }
 
-        // Rather than merging nested arrarys, we replace them with the overrides
         const merged = mergeWith({}, parsed, parsedOverrides, (obj, src) =>
-            Array.isArray(obj) && Array.isArray(src) ? [...src] : undefined
+            Array.isArray(obj) && Array.isArray(src)
+                ? src.every((element) => typeof element === "object") &&
+                  obj.every((element) => typeof element === "object")
+                    ? // nested arrays of objects are merged
+                      undefined
+                    : // nested arrays of primitives are replaced
+                      [...src]
+                : undefined
         ) as OpenAPI.Document;
         return merged;
     }

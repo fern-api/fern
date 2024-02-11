@@ -6,7 +6,7 @@ require_relative "custom_test_cases_unsupported"
 require_relative "unexpected_language_error"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class InvalidRequestCause
       attr_reader :member, :discriminant
 

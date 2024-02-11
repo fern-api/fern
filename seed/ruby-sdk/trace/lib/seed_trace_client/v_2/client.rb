@@ -5,11 +5,11 @@ require "async"
 
 module SeedTraceClient
   module V2
-    class Client
+    class V2Client
       attr_reader :request_client
 
       # @param request_client [RequestClient]
-      # @return [V2::Client]
+      # @return [V2::V2Client]
       def initialize(request_client:)
         # @type [RequestClient]
         @request_client = request_client
@@ -27,11 +27,11 @@ module SeedTraceClient
       end
     end
 
-    class AsyncClient
+    class AsyncV2Client
       attr_reader :request_client
 
       # @param request_client [AsyncRequestClient]
-      # @return [V2::AsyncClient]
+      # @return [V2::AsyncV2Client]
       def initialize(request_client:)
         # @type [AsyncRequestClient]
         @request_client = request_client

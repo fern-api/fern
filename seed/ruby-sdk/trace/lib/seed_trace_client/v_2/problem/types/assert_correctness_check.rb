@@ -6,7 +6,7 @@ require_relative "void_function_definition_that_takes_actual_result"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class AssertCorrectnessCheck
         attr_reader :member, :discriminant
 

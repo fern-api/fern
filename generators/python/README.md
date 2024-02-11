@@ -183,6 +183,21 @@ config:
     version: v1 # or v2 or "both"
 ```
 
+#### ✨ `async_handlers`
+
+**Type:** boolean
+
+**Default:** "false"
+
+When enabled, all generated services will leverage async endpoint handlers, allowing you to leverage async functions within your APIs.
+
+#### ✨ `skip_formatting`
+
+**Type:** boolean
+
+**Default:** `true`
+
+
 ### Pydantic Generator Configuration
 
 The Pydantic generator supports the following options:

@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Admin
+  class Admin
     class Test
       attr_reader :member, :discriminant
 

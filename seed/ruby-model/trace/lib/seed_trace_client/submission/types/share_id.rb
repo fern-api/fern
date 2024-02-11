@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Submission
+  class Submission
     SHARE_ID = String
   end
 end

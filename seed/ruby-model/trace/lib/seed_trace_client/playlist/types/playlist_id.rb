@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module SeedTraceClient
-  module Playlist
+  class Playlist
     PLAYLIST_ID = String
   end
 end

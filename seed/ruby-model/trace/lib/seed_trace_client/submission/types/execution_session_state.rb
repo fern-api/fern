@@ -5,7 +5,7 @@ require_relative "execution_session_status"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class ExecutionSessionState
       attr_reader :last_time_contacted, :session_id, :is_warm_instance, :aws_task_id, :language, :status,
                   :additional_properties

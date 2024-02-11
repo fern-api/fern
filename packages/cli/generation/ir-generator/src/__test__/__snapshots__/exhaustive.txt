@@ -9831,12 +9831,12 @@ exports[`generate IR 1`] = `
               "unsafeName": "GetAndReturnBase64",
             },
             "screamingSnakeCase": {
-              "safeName": "GET_AND_RETURN_BASE_64",
-              "unsafeName": "GET_AND_RETURN_BASE_64",
+              "safeName": "GET_AND_RETURN_BASE64",
+              "unsafeName": "GET_AND_RETURN_BASE64",
             },
             "snakeCase": {
-              "safeName": "get_and_return_base_64",
-              "unsafeName": "get_and_return_base_64",
+              "safeName": "get_and_return_base64",
+              "unsafeName": "get_and_return_base64",
             },
           },
           "path": {
@@ -14900,12 +14900,12 @@ exports[`generate IR 1`] = `
                   "unsafeName": "Base64",
                 },
                 "screamingSnakeCase": {
-                  "safeName": "BASE_64",
-                  "unsafeName": "BASE_64",
+                  "safeName": "BASE64",
+                  "unsafeName": "BASE64",
                 },
                 "snakeCase": {
-                  "safeName": "base_64",
-                  "unsafeName": "base_64",
+                  "safeName": "base64",
+                  "unsafeName": "base64",
                 },
               },
               "wireValue": "base64",

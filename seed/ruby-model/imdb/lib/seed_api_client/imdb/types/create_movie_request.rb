@@ -3,7 +3,7 @@
 require "json"
 
 module SeedApiClient
-  module Imdb
+  class Imdb
     class CreateMovieRequest
       attr_reader :title, :rating, :additional_properties
 

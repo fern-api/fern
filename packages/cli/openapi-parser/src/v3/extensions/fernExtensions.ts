@@ -215,18 +215,62 @@ export const FernOpenAPIExtension = {
      * paths:
      *  /path/to/my:
      *    get:
-     *      x-fern-code-samples:
-     *      - language: typescript
-     *        install: npm install my-client
-     *        code: |
-     *          import { MyClient } from "my-client";
-     *          const client = new MyClient();
-     *          const response = await client.myEndpoint();
-     *          console.log(response);
-     *        name: Console Log My Endpoint
-     *        description: This is a code sample that logs the response
+     *     x-fern-fern-examples:
+     *      - name: Example 1
+     *        docs: This is an example
+     *        request: {}
+     *        response:
+     *          body: {}
+     *        code-samples:
+     *        - language: typescript
+     *          install: npm install my-client
+     *          code: |
+     *            import { MyClient } from "my-client";
+     *            const client = new MyClient();
+     *            const response = await client.myEndpoint();
+     *            console.log(response);
+     *          name: Console Log My Endpoint
+     *          description: This is a code sample that logs the response
      */
-    CUSTOM_CODE_SAMPLES: "x-fern-code-samples"
+    EXAMPLES: "x-fern-examples",
+
+    /**
+     * securitySchemes:
+     *   Bearer:
+     *     scheme: http
+     *     type: bearer
+     *     x-fern-bearer:
+     *       name: apiKey
+     *       env: MY_AUTH_TOKEN
+     */
+    FERN_BEARER_TOKEN: "x-fern-bearer",
+
+    /**
+     * securitySchemes:
+     *   Bearer:
+     *     type: apiKey
+     *     in: header
+     *     name: X-API-KEY-ID
+     *     x-fern-header:
+     *       name: header
+     *       env: MY_AUTH_TOKEN
+     */
+    FERN_HEADER_AUTH: "x-fern-header",
+
+    /**
+     * securitySchemes:
+     *   Basic:
+     *     scheme: http
+     *     type: basic
+     *     x-fern-basic:
+     *       username:
+     *          name: username
+     *          env: MY_USERNAME
+     *       password:
+     *          name: password
+     *          env: MY_PASSWORD
+     */
+    FERN_BASIC_AUTH: "x-fern-basic"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

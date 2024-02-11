@@ -6,11 +6,11 @@ require "async"
 module SeedApiClient
   module A
     module C
-      class Client
+      class CClient
         attr_reader :request_client
 
         # @param request_client [RequestClient]
-        # @return [A::C::Client]
+        # @return [A::C::CClient]
         def initialize(request_client:)
           # @type [RequestClient]
           @request_client = request_client
@@ -26,11 +26,11 @@ module SeedApiClient
         end
       end
 
-      class AsyncClient
+      class AsyncCClient
         attr_reader :request_client
 
         # @param request_client [AsyncRequestClient]
-        # @return [A::C::AsyncClient]
+        # @return [A::C::AsyncCClient]
         def initialize(request_client:)
           # @type [AsyncRequestClient]
           @request_client = request_client

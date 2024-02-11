@@ -6,7 +6,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class DefaultProvidedFile
         attr_reader :file, :related_types, :additional_properties
 
@@ -36,7 +36,7 @@ module SeedTraceClient
             file = parsed_json["file"].to_json
             file = V2::Problem::FileInfoV2.from_json(json_object: file)
           end
-          related_types = parsed_json["relatedTypes"].map do |v|
+          related_types = parsed_json["relatedTypes"]&.map do |v|
             v = v.to_json
             Commons::VariableType.from_json(json_object: v)
           end

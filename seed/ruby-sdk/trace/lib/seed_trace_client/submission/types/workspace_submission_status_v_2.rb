@@ -4,7 +4,7 @@ require_relative "workspace_submission_update"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceSubmissionStatusV2
       attr_reader :updates, :additional_properties
 
@@ -25,7 +25,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        updates = parsed_json["updates"].map do |v|
+        updates = parsed_json["updates"]&.map do |v|
           v = v.to_json
           Submission::WorkspaceSubmissionUpdate.from_json(json_object: v)
         end

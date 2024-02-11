@@ -3,7 +3,7 @@
 require "json"
 
 module SeedLiteralClient
-  module Literal
+  class Literal
     class UndiscriminatedOptions
       attr_reader :member
       alias kind_of? is_a?

@@ -6,7 +6,7 @@ require_relative "submission_type_state"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class GetSubmissionStateResponse
       attr_reader :time_submitted, :submission, :language, :submission_type_state, :additional_properties
 
@@ -36,7 +36,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        time_submitted = DateTime.parse(parsed_json["timeSubmitted"])
+        time_submitted = (DateTime.parse(parsed_json["timeSubmitted"]) unless parsed_json["timeSubmitted"].nil?)
         submission = struct.submission
         language = Commons::LANGUAGE.key(parsed_json["language"]) || parsed_json["language"]
         if parsed_json["submissionTypeState"].nil?

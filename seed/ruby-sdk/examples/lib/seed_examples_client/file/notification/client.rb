@@ -7,6 +7,8 @@ module SeedExamplesClient
   module File
     module Notification
       class Client
+        attr_reader :service
+
         # @param request_client [RequestClient]
         # @return [File::Notification::Client]
         def initialize(request_client:)
@@ -15,6 +17,8 @@ module SeedExamplesClient
       end
 
       class AsyncClient
+        attr_reader :service
+
         # @param request_client [RequestClient]
         # @return [File::Notification::AsyncClient]
         def initialize(request_client:)

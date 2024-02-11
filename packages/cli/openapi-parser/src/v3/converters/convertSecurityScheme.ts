@@ -5,6 +5,10 @@ import { OpenAPIExtension } from "../extensions/extensions";
 import { FernOpenAPIExtension } from "../extensions/fernExtensions";
 import { getBasicSecuritySchemeNames } from "../extensions/getBasicSecuritySchemeNames";
 import { getExtension } from "../extensions/getExtension";
+import {
+    getBasicSecuritySchemeNameAndEnvvar,
+    SecuritySchemeNames
+} from "../extensions/getSecuritySchemeNameAndEnvvars";
 import { convertSchemaWithExampleToSchema } from "../utils/convertSchemaWithExampleToSchema";
 import { isReferenceObject } from "../utils/isReferenceObject";
 import { convertEnum } from "./schema/convertEnum";
@@ -21,25 +25,37 @@ export function convertSecurityScheme(
 function convertSecuritySchemeHelper(securityScheme: OpenAPIV3.SecuritySchemeObject): SecurityScheme | undefined {
     if (securityScheme.type === "apiKey" && securityScheme.in === "header") {
         const bearerFormat = getExtension<string>(securityScheme, OpenAPIExtension.BEARER_FORMAT);
+        const headerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_HEADER_AUTH);
         return SecurityScheme.header({
             headerName: securityScheme.name,
             prefix: bearerFormat != null ? "Bearer" : undefined,
-            headerVariableName: getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME)
+            headerVariableName:
+                headerNames?.name ?? getExtension<string>(securityScheme, FernOpenAPIExtension.HEADER_VARIABLE_NAME),
+            headerEnvVar: headerNames?.env
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "bearer") {
-        const tokenVariableName = getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME);
+        const bearerNames = getExtension<SecuritySchemeNames>(securityScheme, FernOpenAPIExtension.FERN_BEARER_TOKEN);
         return SecurityScheme.bearer({
-            tokenVariableName: tokenVariableName ?? undefined
+            tokenVariableName:
+                bearerNames?.name ??
+                getExtension<string>(securityScheme, FernOpenAPIExtension.BEARER_TOKEN_VARIABLE_NAME),
+            tokenEnvVar: bearerNames?.env
         });
     } else if (securityScheme.type === "http" && securityScheme.scheme === "basic") {
+        const basicSecuritySchemeNamingAndEnvvar = getBasicSecuritySchemeNameAndEnvvar(securityScheme);
         const basicSecuritySchemeNaming = getBasicSecuritySchemeNames(securityScheme);
         return SecurityScheme.basic({
-            usernameVariableName: basicSecuritySchemeNaming.usernameVariable ?? undefined,
-            passwordVariableName: basicSecuritySchemeNaming.passwordVariable ?? undefined
+            usernameVariableName:
+                basicSecuritySchemeNamingAndEnvvar?.username?.name ?? basicSecuritySchemeNaming.usernameVariable,
+            usernameEnvVar: basicSecuritySchemeNamingAndEnvvar?.username?.env,
+            passwordVariableName:
+                basicSecuritySchemeNamingAndEnvvar?.password?.name ?? basicSecuritySchemeNaming.passwordVariable,
+            passwordEnvVar: basicSecuritySchemeNamingAndEnvvar?.password?.env
         });
     } else if (securityScheme.type === "openIdConnect") {
         return SecurityScheme.bearer({
-            tokenVariableName: undefined
+            tokenVariableName: undefined,
+            tokenEnvVar: undefined
         });
     } else if (securityScheme.type === "oauth2") {
         return SecurityScheme.oauth({

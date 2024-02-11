@@ -6,7 +6,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class TestCaseWithActualResultImplementation
         attr_reader :get_actual_result, :assert_correctness_check, :additional_properties
 

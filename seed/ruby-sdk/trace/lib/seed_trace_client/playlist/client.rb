@@ -72,6 +72,8 @@ module SeedTraceClient
           "multipleField": multiple_field
         }.compact
       end
+      return if response.body.nil?
+
       response.body.map do |v|
         v = v.to_json
         Playlist::Playlist.from_json(json_object: v)
@@ -196,7 +198,7 @@ module SeedTraceClient
             "multipleField": multiple_field
           }.compact
         end
-        response.body.map do |v|
+        response.body&.map do |v|
           v = v.to_json
           Playlist::Playlist.from_json(json_object: v)
         end

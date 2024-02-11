@@ -3,7 +3,7 @@
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         TEST_CASE_ID = String
       end
     end

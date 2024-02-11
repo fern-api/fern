@@ -7,7 +7,7 @@ require_relative "workspace_submit_request"
 require_relative "stop_request"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionRequest
       attr_reader :member, :discriminant
 

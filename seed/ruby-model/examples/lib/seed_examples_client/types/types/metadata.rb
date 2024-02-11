@@ -4,7 +4,7 @@ require "set"
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class Metadata
       attr_reader :member, :discriminant, :extra, :tags
 

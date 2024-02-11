@@ -4,7 +4,7 @@ require_relative "node_id"
 require "json"
 
 module SeedTraceClient
-  module Commons
+  class Commons
     class DoublyLinkedListValue
       attr_reader :head, :nodes, :additional_properties
 

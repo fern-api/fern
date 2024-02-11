@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestCaseHiddenGrade
       attr_reader :passed, :additional_properties
 

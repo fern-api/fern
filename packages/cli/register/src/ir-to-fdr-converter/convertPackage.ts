@@ -1,6 +1,6 @@
-import { assertNever } from "@fern-api/core-utils";
+import { assertNever, isNonNullish, WithoutQuestionMarks } from "@fern-api/core-utils";
 import { APIV1Write } from "@fern-api/fdr-sdk";
-import { FernIr as Ir } from "@fern-api/ir-sdk";
+import { ExampleCodeSample, FernIr as Ir } from "@fern-api/ir-sdk";
 import { startCase } from "lodash-es";
 import { convertTypeReference } from "./convertTypeShape";
 
@@ -361,8 +361,9 @@ function convertResponseErrorsV2(
 function convertExampleEndpointCall(
     irExample: Ir.http.ExampleEndpointCall,
     ir: Ir.ir.IntermediateRepresentation
-): APIV1Write.ExampleEndpointCall {
+): WithoutQuestionMarks<APIV1Write.ExampleEndpointCall> {
     return {
+        name: irExample.name?.originalName,
         description: irExample.docs ?? undefined,
         path: irExample.url,
         pathParameters: [...irExample.servicePathParameters, ...irExample.endpointPathParameters].reduce<
@@ -385,6 +386,7 @@ function convertExampleEndpointCall(
             return headers;
         }, {}),
         requestBody: irExample.request?.jsonExample,
+        requestBodyV3: irExample.request != null ? { type: "json", value: irExample.request.jsonExample } : undefined,
         responseStatusCode: Ir.http.ExampleResponse._visit(irExample.response, {
             ok: ({ body }) => (body != null ? 200 : 204),
             error: ({ error: errorName }) => {
@@ -399,12 +401,30 @@ function convertExampleEndpointCall(
             }
         }),
         responseBody: irExample.response.body?.jsonExample,
-        codeSamples: irExample.codeSamples?.map((codeSample) => ({
-            name: codeSample.name?.originalName,
-            language: codeSample.language,
-            code: codeSample.code,
-            install: codeSample.install
-        }))
+        responseBodyV3:
+            irExample.response.body != null ? { type: "json", value: irExample.response.body.jsonExample } : undefined,
+        codeSamples: irExample.codeSamples
+            ?.map((codeSample) =>
+                ExampleCodeSample._visit<WithoutQuestionMarks<APIV1Write.CustomCodeSample> | undefined>(codeSample, {
+                    language: (value) => ({
+                        language: value.language,
+                        code: value.code,
+                        name: value.name?.originalName,
+                        description: value.docs ?? undefined,
+                        install: value.install
+                    }),
+                    sdk: (value) => ({
+                        // TODO: switch to storing as SDK
+                        language: value.sdk,
+                        code: value.code,
+                        name: value.name?.originalName,
+                        description: value.docs ?? undefined,
+                        install: undefined
+                    }),
+                    _other: () => undefined
+                })
+            )
+            .filter(isNonNullish)
     };
 }
 

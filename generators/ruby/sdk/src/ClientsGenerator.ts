@@ -5,7 +5,6 @@ import {
     IntermediateRepresentation,
     Name,
     ObjectProperty,
-    Package,
     ServiceId,
     Subpackage,
     SubpackageId,
@@ -153,7 +152,7 @@ export class ClientsGenerator {
         // These classes just hold instance variables of instantiated service clients.
         function getServiceClasses(
             packageId: SubpackageId,
-            package_: Package,
+            subpackage: Subpackage,
             services: Map<ServiceId, HttpService>,
             clientName: string,
             crf: ClassReferenceFactory,
@@ -161,16 +160,17 @@ export class ClientsGenerator {
             generatedClasses: Map<TypeId, Class_>,
             flattenedProperties: Map<TypeId, ObjectProperty[]>
         ): ClientClassPair {
-            if (package_.service === undefined) {
+            if (subpackage.service === undefined) {
                 throw new Error("Calling getServiceClasses without a service defined within the subpackage.");
             }
-            const service = services.get(package_.service);
+            const service = services.get(subpackage.service);
             if (service === undefined) {
-                throw new Error(`Service ${package_.service} was not defined within in the IR`);
+                throw new Error(`Service ${subpackage.service} was not defined within in the IR`);
             }
 
             const serviceClasses = generateService(
                 service,
+                subpackage,
                 syncClientClass.classReference,
                 asyncClientClass.classReference,
                 crf,
@@ -184,12 +184,13 @@ export class ClientsGenerator {
             const serviceModule = Module_.wrapInModules(
                 clientName,
                 [serviceClasses.syncClientClass, serviceClasses.asyncClientClass],
-                package_.fernFilepath,
+                subpackage.fernFilepath,
+                [],
                 false
             );
             const serviceFile = new GeneratedRubyFile({
                 rootNode: serviceModule,
-                fullPath: locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client")
+                fullPath: locationGenerator.getLocationFromFernFilepath(subpackage.fernFilepath, "client")
             });
 
             clientFiles.push(serviceFile);
@@ -200,7 +201,7 @@ export class ClientsGenerator {
         function getSubpackageClasses(
             subpackageName: Name,
             packageId: SubpackageId,
-            package_: Package,
+            subpackage: Subpackage,
             services: Map<ServiceId, HttpService>,
             subpackages: Map<SubpackageId, Subpackage>,
             clientName: string,
@@ -210,10 +211,10 @@ export class ClientsGenerator {
             generatedClasses: Map<TypeId, Class_>,
             flattenedProperties: Map<TypeId, ObjectProperty[]>
         ): ClientClassPair | undefined {
-            if (package_.service !== undefined) {
+            if (subpackage.service !== undefined) {
                 return getServiceClasses(
                     packageId,
-                    package_,
+                    subpackage,
                     services,
                     clientName,
                     crf,
@@ -224,8 +225,8 @@ export class ClientsGenerator {
             } else {
                 // We create these subpackage files to support dot access for service clients,
                 // if the package has no services then this isn't necessary.
-                if (package_.hasEndpointsInTree) {
-                    const classPairs: ClientClassPair[] = package_.subpackages
+                if (subpackage.hasEndpointsInTree) {
+                    const classPairs: ClientClassPair[] = subpackage.subpackages
                         .map((subpackageId) => {
                             const subpackage = subpackages.get(subpackageId);
                             if (subpackage === undefined) {
@@ -254,7 +255,7 @@ export class ClientsGenerator {
 
                     const subpackageClasses = generateSubpackage(
                         subpackageName,
-                        package_,
+                        subpackage,
                         syncClientClass.classReference,
                         asyncClientClass.classReference,
                         locationGenerator,
@@ -265,11 +266,11 @@ export class ClientsGenerator {
                     const subpackageModule = Module_.wrapInModules(
                         clientName,
                         [subpackageClasses.syncClientClass, subpackageClasses.asyncClientClass],
-                        package_.fernFilepath
+                        subpackage.fernFilepath
                     );
                     const subpackageFile = new GeneratedRubyFile({
                         rootNode: subpackageModule,
-                        fullPath: locationGenerator.getLocationFromFernFilepath(package_.fernFilepath, "client")
+                        fullPath: locationGenerator.getLocationFromFernFilepath(subpackage.fernFilepath, "client")
                     });
                     clientFiles.push(subpackageFile);
                     subpackageClassReferences.set(packageId, subpackageClasses);
@@ -280,11 +281,11 @@ export class ClientsGenerator {
             }
         }
 
-        Array.from(this.subpackages.entries()).forEach(([packageId, package_]) =>
+        Array.from(this.subpackages.entries()).forEach(([packageId, subpackage]) =>
             getSubpackageClasses(
-                package_.name,
+                subpackage.name,
                 packageId,
-                package_,
+                subpackage,
                 this.services,
                 this.subpackages,
                 this.clientName,

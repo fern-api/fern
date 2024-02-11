@@ -3,7 +3,7 @@
 require "json"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class ExceptionInfo
       attr_reader :exception_type, :exception_message, :exception_stacktrace, :additional_properties
 

@@ -194,4 +194,28 @@ describe("casingsGenerator", () => {
         const actual = casingsGenerator.generateName(expected.originalName);
         expect(actual).toEqual(expected);
     });
+
+    it("alphanumeric snake casing", () => {
+        const expected: Name = {
+            originalName: "application v1",
+            camelCase: {
+                safeName: "applicationV1",
+                unsafeName: "applicationV1"
+            },
+            pascalCase: {
+                safeName: "ApplicationV1",
+                unsafeName: "ApplicationV1"
+            },
+            snakeCase: {
+                safeName: "application_v1",
+                unsafeName: "application_v1"
+            },
+            screamingSnakeCase: {
+                safeName: "APPLICATION_V1",
+                unsafeName: "APPLICATION_V1"
+            }
+        };
+        const actual = casingsGenerator.generateName(expected.originalName);
+        expect(actual).toEqual(expected);
+    });
 });

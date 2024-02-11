@@ -1,10 +1,10 @@
-import { ComplexTypeDetector } from "../../ComplexTypeDetector";
+import { ComplexQueryParamTypeDetector } from "../../ComplexQueryParamTypeDetector";
 import { Rule } from "../../Rule";
 
 export const NoComplexQueryParamsRule: Rule = {
     name: "no-complex-query-params",
     create: ({ workspace }) => {
-        const complexTypeDetector = new ComplexTypeDetector(workspace);
+        const complexTypeDetector = new ComplexQueryParamTypeDetector(workspace);
 
         return {
             definitionFile: {

@@ -5,7 +5,7 @@ require "json"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class FileInfoV2
           attr_reader :filename, :directory, :contents, :editable, :additional_properties
 

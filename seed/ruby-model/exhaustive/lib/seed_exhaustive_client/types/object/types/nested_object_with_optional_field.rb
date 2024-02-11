@@ -5,7 +5,7 @@ require "json"
 
 module SeedExhaustiveClient
   module Types
-    module Object
+    class Object
       class NestedObjectWithOptionalField
         attr_reader :string, :nested_object, :additional_properties
 

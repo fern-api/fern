@@ -3,7 +3,7 @@
 require "json"
 
 module SeedLiteralClient
-  module Literal
+  class Literal
     class Options
       attr_reader :id, :enabled, :values, :additional_properties
 

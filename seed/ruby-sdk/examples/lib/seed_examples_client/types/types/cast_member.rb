@@ -6,7 +6,7 @@ require_relative "actress"
 require_relative "stunt_double"
 
 module SeedExamplesClient
-  module Types
+  class Types
     class CastMember
       attr_reader :member
       alias kind_of? is_a?

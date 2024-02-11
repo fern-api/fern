@@ -6,7 +6,7 @@ require_relative "../../v_2/problem/types/problem_info_v_2"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TestSubmissionStatusV2
       attr_reader :updates, :problem_id, :problem_version, :problem_info, :additional_properties
 
@@ -36,7 +36,7 @@ module SeedTraceClient
       def self.from_json(json_object:)
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
-        updates = parsed_json["updates"].map do |v|
+        updates = parsed_json["updates"]&.map do |v|
           v = v.to_json
           Submission::TestSubmissionUpdate.from_json(json_object: v)
         end

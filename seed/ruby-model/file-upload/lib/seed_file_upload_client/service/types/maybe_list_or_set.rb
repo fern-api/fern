@@ -4,7 +4,7 @@ require "json"
 require "set"
 
 module SeedFileUploadClient
-  module Service
+  class Service
     class MaybeListOrSet
       attr_reader :member
       alias kind_of? is_a?

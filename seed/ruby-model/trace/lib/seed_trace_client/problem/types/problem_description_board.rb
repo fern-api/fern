@@ -4,7 +4,7 @@ require "json"
 require_relative "../../commons/types/variable_value"
 
 module SeedTraceClient
-  module Problem
+  class Problem
     class ProblemDescriptionBoard
       attr_reader :member, :discriminant
 

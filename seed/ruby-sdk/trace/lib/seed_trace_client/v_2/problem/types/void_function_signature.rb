@@ -5,7 +5,7 @@ require "json"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class VoidFunctionSignature
         attr_reader :parameters, :additional_properties
 
@@ -26,7 +26,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          parameters = parsed_json["parameters"].map do |v|
+          parameters = parsed_json["parameters"]&.map do |v|
             v = v.to_json
             V2::Problem::Parameter.from_json(json_object: v)
           end

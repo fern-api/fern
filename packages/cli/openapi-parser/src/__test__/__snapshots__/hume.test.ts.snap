@@ -8,39 +8,16 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Sort and filter jobs.",
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
-          "queryParameters": [
-            {
-              "name": "when",
-              "value": {
-                "enum": "created_before",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "sort_by",
-              "value": {
-                "enum": "created",
-                "type": "enum",
-              },
-            },
-            {
-              "name": "direction",
-              "value": {
-                "enum": "asc",
-                "type": "enum",
-              },
-            },
-          ],
+          "queryParameters": [],
           "request": undefined,
           "response": {
             "array": [],
@@ -222,71 +199,25 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Start a new batch job.",
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [],
           "queryParameters": [],
           "request": {
-            "properties": {
-              "models": {
-                "properties": {
-                  "face": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "language": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                    },
-                    "type": "object",
-                  },
-                  "ner": {
-                    "properties": {},
-                    "type": "object",
-                  },
-                  "prosody": {
-                    "properties": {
-                      "granularity": {
-                        "enum": "word",
-                        "type": "enum",
-                      },
-                      "window": {
-                        "properties": {},
-                        "type": "object",
-                      },
-                    },
-                    "type": "object",
-                  },
-                },
-                "type": "object",
-              },
-              "transcription": {
-                "properties": {
-                  "language": {
-                    "enum": "zh",
-                    "type": "enum",
-                  },
-                },
-                "type": "object",
-              },
-            },
+            "properties": {},
             "type": "object",
           },
           "response": {
             "properties": {
               "job_id": {
                 "primitive": {
-                  "string": "string",
+                  "string": "job_id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -344,13 +275,12 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the JSON predictions of a completed job.",
       "errorStatusCode": [],
       "examples": [
         {
           "codeSamples": [],
-          "docs": undefined,
+          "description": undefined,
           "headers": [],
           "name": undefined,
           "pathParameters": [
@@ -358,7 +288,7 @@ exports[`open api parser hume parse open api 1`] = `
               "name": "id",
               "value": {
                 "primitive": {
-                  "string": "string",
+                  "string": "id",
                   "type": "string",
                 },
                 "type": "primitive",
@@ -433,7 +363,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the artifacts ZIP of a completed job.",
       "errorStatusCode": [],
       "examples": [],
@@ -480,7 +409,6 @@ exports[`open api parser hume parse open api 1`] = `
       "audiences": [],
       "authed": true,
       "availability": undefined,
-      "customCodeSamples": [],
       "description": "Get the request details and state of a given job.",
       "errorStatusCode": [],
       "examples": [],
@@ -1322,7 +1250,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "ErrorFile",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "File",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2481,7 +2409,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
             "description": "A segment of text (like a word or a sentence).",
             "generatedName": "LanguagePredictionText",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "Text",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -2540,7 +2468,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "LanguagePredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },
@@ -3105,7 +3033,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "NerPredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },
@@ -3244,7 +3172,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
             "description": "A file path relative to the top level source URL or file.",
             "generatedName": "PredictionFile",
             "groupName": undefined,
-            "nameOverride": undefined,
+            "nameOverride": "File",
             "schema": {
               "maxLength": undefined,
               "minLength": undefined,
@@ -3687,7 +3615,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "A segment of text (like a word or a sentence).",
               "generatedName": "ProsodyPredictionText",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Text",
               "schema": {
                 "maxLength": undefined,
                 "minLength": undefined,
@@ -3726,7 +3654,7 @@ Compared to returning one estimate of sentiment, this enables a more nuanced ana
               "description": "Value between \`0.0\` and \`1.0\` that indicates our transcription model’s relative confidence in this text.",
               "generatedName": "ProsodyPredictionConfidence",
               "groupName": undefined,
-              "nameOverride": undefined,
+              "nameOverride": "Confidence",
               "schema": {
                 "type": "double",
               },
@@ -4665,6 +4593,7 @@ If you wish to supply more than 100 URLs, consider providing them as an archive 
   },
   "securitySchemes": {
     "Authentication": {
+      "headerEnvVar": undefined,
       "headerName": "X-Hume-Api-Key",
       "headerVariableName": undefined,
       "prefix": undefined,

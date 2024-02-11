@@ -1,5 +1,6 @@
 import { FernFilepath } from "@fern-fern/ir-sdk/api";
 import { BLOCK_END } from "../utils/RubyConstants";
+import { ClassReference } from "./classes/ClassReference";
 import { Class_ } from "./classes/Class_";
 import { AstNode } from "./core/AstNode";
 import { Import } from "./Import";
@@ -36,11 +37,19 @@ export class Module_ extends AstNode {
         rootModule: string,
         child: T,
         path?: FernFilepath,
-        includeFullPath = true,
-        arbitraryImports?: Import[]
-    ): Module_ | T {
-        const moduleBreadcrumbs = path ? Module_.getModulePathFromTypeName(path, includeFullPath) : [];
-        let moduleWrappedItem: Module_ | T = child;
+        arbitraryImports?: Import[],
+        includeFilename = true
+    ): Module_ | Class_ | T {
+        const moduleBreadcrumbs = path ? Module_.getModulePathFromTypeName(path) : [];
+        const classWrapper = path ? Module_.getClassPathFromTypeName(path) : undefined;
+        let moduleWrappedItem: Module_ | Class_ | T = child;
+        if (classWrapper !== undefined && includeFilename) {
+            moduleWrappedItem = new Class_({
+                classReference: new ClassReference({ name: classWrapper }),
+                includeInitializer: false,
+                children: child
+            });
+        }
         [rootModule, ...moduleBreadcrumbs].reverse().forEach(
             (mod) =>
                 (moduleWrappedItem = new Module_({
@@ -54,10 +63,18 @@ export class Module_ extends AstNode {
         return moduleWrappedItem;
     }
 
-    static getModulePathFromTypeName(path: FernFilepath, includeFullPath: boolean): string[] {
-        return (includeFullPath ? path.allParts : path.packagePath).map(
-            (pathSegment) => pathSegment.pascalCase.safeName
-        );
+    static getModuleBreadcrumbs(path: FernFilepath, includeFilename: boolean): string[] {
+        const modulePath = Module_.getModulePathFromTypeName(path);
+        const classPath = Module_.getClassPathFromTypeName(path);
+        return includeFilename && classPath !== undefined ? modulePath.concat([classPath]) : modulePath;
+    }
+
+    static getModulePathFromTypeName(path: FernFilepath): string[] {
+        return path.packagePath.map((pathSegment) => pathSegment.pascalCase.safeName);
+    }
+
+    static getClassPathFromTypeName(path: FernFilepath): string | undefined {
+        return path.file?.pascalCase.safeName;
     }
 
     public getImports(): Set<Import> {

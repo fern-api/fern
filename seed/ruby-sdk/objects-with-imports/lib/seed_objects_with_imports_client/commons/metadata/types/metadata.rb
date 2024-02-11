@@ -4,7 +4,7 @@ require "json"
 
 module SeedObjectsWithImportsClient
   module Commons
-    module Metadata
+    class Metadata
       class Metadata
         attr_reader :id, :data, :additional_properties
 

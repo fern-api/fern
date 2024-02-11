@@ -4,7 +4,7 @@ require_relative "trace_response_v_2"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TraceResponsesPageV2
       attr_reader :offset, :trace_responses, :additional_properties
 
@@ -31,7 +31,7 @@ module SeedTraceClient
         struct = JSON.parse(json_object, object_class: OpenStruct)
         parsed_json = JSON.parse(json_object)
         offset = struct.offset
-        trace_responses = parsed_json["traceResponses"].map do |v|
+        trace_responses = parsed_json["traceResponses"]&.map do |v|
           v = v.to_json
           Submission::TraceResponseV2.from_json(json_object: v)
         end

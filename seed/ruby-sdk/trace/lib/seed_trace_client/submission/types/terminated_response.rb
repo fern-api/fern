@@ -3,7 +3,7 @@
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class TerminatedResponse
       attr_reader :additional_properties
 

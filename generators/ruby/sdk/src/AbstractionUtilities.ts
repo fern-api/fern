@@ -37,6 +37,7 @@ import {
     PathParameter,
     SdkConfig,
     SingleBaseUrlEnvironments,
+    Subpackage,
     TypeId
 } from "@fern-fern/ir-sdk/api";
 import { snakeCase } from "lodash-es";
@@ -73,7 +74,6 @@ export function generateEndpoints(
             if (EndpointGenerator.isStreamingResponse(endpoint)) {
                 return;
             }
-            // throw new Error(endpoint.name.snakeCase.safeName + ": " + endpoint.path.parts);
             const path = [irBasePath, serviceBasePath, generateRubyPathTemplate(endpoint.pathParameters, endpoint.path)]
                 .filter((pathPart) => pathPart !== "")
                 .join("/");
@@ -117,15 +117,7 @@ export function generateEndpoints(
 
             return new Function_({
                 name: endpoint.name.snakeCase.safeName,
-                parameters: [
-                    ...generator.getEndpointParameters(),
-                    // Optional request_options, e.g. the per-request customizer, optional
-                    new Parameter({
-                        name: requestOptionsVariable.name,
-                        type: requestOptionsVariable.type,
-                        isOptional: true
-                    })
-                ],
+                parameters: generator.getEndpointParameters(),
                 functionBody: isAsync
                     ? [
                           new FunctionInvocation({
@@ -306,8 +298,8 @@ export function generateRootPackage(
         clientName,
         [clientClass, asyncClientClass],
         undefined,
-        true,
-        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport]
+        maybeEnvironmentImport !== undefined ? [maybeEnvironmentImport, typeExporterImport] : [typeExporterImport],
+        true
     );
     return new GeneratedRubyFile({
         rootNode,
@@ -337,6 +329,9 @@ export function generateSubpackage(
     const syncClientClass = new Class_({
         classReference: syncClassReference,
         includeInitializer: false,
+        properties: Array.from(subpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
@@ -354,8 +349,8 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(requestClientProperty.toVariable(VariableType.LOCAL), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(requestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
@@ -378,6 +373,9 @@ export function generateSubpackage(
     const asyncClientClass = new Class_({
         classReference: asyncClassReference,
         includeInitializer: false,
+        properties: Array.from(asyncSubpackages.entries()).map(
+            ([spName, sp]) => new Property({ name: snakeCase(spName), type: sp.classReference })
+        ),
         initializerOverride: new Function_({
             name: "initialize",
             invocationName: "new",
@@ -395,8 +393,8 @@ export function generateSubpackage(
                             ? new FunctionInvocation({
                                   onObject: sp.classReference,
                                   baseFunction: sp.initializer,
-                                  arguments_: sp.properties.map((prop) =>
-                                      prop.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL), true)
+                                  arguments_: sp.initializer.parameters.map((param) =>
+                                      param.toArgument(asyncRequestClientProperty.toVariable(VariableType.LOCAL))
                                   )
                               })
                             : sp.classReference,
@@ -407,12 +405,12 @@ export function generateSubpackage(
             returnValue: asyncClassReference
         })
     });
-
     return { subpackageName: subpackageName.pascalCase.safeName, syncClientClass, asyncClientClass };
 }
 
 export function generateService(
     service: HttpService,
+    subpackage: Subpackage,
     requestClientCr: ClassReference,
     asyncRequestClientCr: ClassReference,
     crf: ClassReferenceFactory,
@@ -423,7 +421,7 @@ export function generateService(
     fileUploadUtility: FileUploadUtility,
     locationGenerator: LocationGenerator
 ): ClientClassPair {
-    const serviceName = service.name.fernFilepath.file?.pascalCase.safeName ?? "";
+    const serviceName = subpackage.name.pascalCase.safeName;
     const import_ = new Import({
         from: locationGenerator.getLocationForServiceDeclaration(service.name),
         isExternal: false

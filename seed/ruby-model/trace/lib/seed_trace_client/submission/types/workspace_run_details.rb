@@ -5,7 +5,7 @@ require_relative "exception_info"
 require "json"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class WorkspaceRunDetails
       attr_reader :exception_v_2, :exception, :stdout, :additional_properties
 

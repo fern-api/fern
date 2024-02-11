@@ -30,6 +30,70 @@ paths:
       x-fern-sdk-method-name: create_user
 ```
 
+## Authentication overrides
+
+For authentication within your SDK, you may want to customize the:
+- Names of the parameters a user will populate to provide their credentials
+- Any environment variable the SDK can scan for to automatically provide the user's credentials automatically
+
+By default, Fern uses selects names for authentication parameters like api_key, username and password, etc.
+Note that this configuration is optional, and even when provided `name` or `env` may be provided alone, both are not required.
+
+For bearer authentication:
+
+```yaml openapi.yaml
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      x-fern-bearer:
+        name: apiKey
+        env: FERN_API_KEY
+```
+
+In a Python SDK for example, the above configuration would produce a client that looks like:
+
+```python
+import os
+
+class Client:
+
+  def __init__(self, *, apiKey: str = os.getenv("FERN_API_KEY"))
+```
+
+Similarly, for basic authentication the configuration is:
+
+```yaml openapi.yaml
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+      x-fern-basic:
+        username:
+          name: clientId
+          env: MY_CLIENT_ID
+        password:
+          name: clientSecret
+          env: MY_CLIENT_SECRET
+```
+
+And for a custom auth header configuration:
+
+```yaml openapi.yaml
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      x-fern-header:
+        name: header
+        env: MY_HEADER_ENVVAR
+```
+
+
 ## Enum descriptions and names
 
 OpenAPI doesn't natively support adding descriptions to enum values. To do this in Fern you can use the `x-fern-enum`
@@ -442,6 +506,68 @@ shown in the third tab.
     </CodeBlock>
 </CodeBlocks>
 
-## Request an OpenAPI extension 
+## Request + Response Examples
+
+While OpenAPI has several fields for examples, there is no easy way 
+to associate a request with a response. This is expecially useful when 
+you want to show more than one example in your documentation. 
+
+`x-fern-examples` is an array of examples. Each element of the array 
+can contain `path-parameters`, `query-parameters`, `request` and `response`
+examples values that are all associated. 
+```yaml openapi.yml 
+paths: 
+  /users/{userId}: 
+    get:
+      x-fern-examples:
+        - path-parameters: # <----- Example 1
+            userId: user-1234
+          response: 
+            body: 
+              name: Foo
+              ssn: 1234
+        - path-parameters: # <----- Example 2
+            userId: user-4567
+          response: 
+            body: 
+              name: Foo
+              ssn: 4567
+components: 
+  schemas: 
+    User: 
+      type: object
+      properties: 
+        name: 
+          type: string
+        ssn: 
+          type: integer
+```
+
+### Code Samples
+
+If you'd like to specify custom code samples for your example, 
+use `code-samples`. 
+
+```yaml openapi.yml 
+paths: 
+  /users/{userId}: 
+    get:
+      x-fern-examples:
+        - path-parameters: 
+            userId: user-1234
+          response: 
+            body: 
+              name: Foo
+              ssn: 1234
+          code-samples: # <----------- Add your code samples here
+            sdk: typescript
+            code: | 
+              import { UserClient } from "..."; 
+
+              client.users.get("user-1234")
+```
+
+If you're on the Fern Starter plan for SDKs you won't 
+have to worry about manually adding code samples! Our generators will do that for you. 
 
 If there's an extension you want that doesn't already exist, file an [issue](https://github.com/fern-api/fern/issues/new) to start a discussion about it.

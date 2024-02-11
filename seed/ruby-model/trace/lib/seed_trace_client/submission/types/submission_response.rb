@@ -7,7 +7,7 @@ require_relative "terminated_response"
 require_relative "../../commons/types/problem_id"
 
 module SeedTraceClient
-  module Submission
+  class Submission
     class SubmissionResponse
       attr_reader :member, :discriminant
 

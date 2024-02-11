@@ -8,7 +8,7 @@ require_relative "../../../../commons/types/language"
 module SeedTraceClient
   module V2
     module V3
-      module Problem
+      class Problem
         class BasicCustomFiles
           attr_reader :method_name, :signature, :additional_files, :basic_test_case_template, :additional_properties
 
@@ -46,7 +46,7 @@ module SeedTraceClient
               signature = parsed_json["signature"].to_json
               signature = V2::V3::Problem::NonVoidFunctionSignature.from_json(json_object: signature)
             end
-            additional_files = parsed_json["additionalFiles"].transform_values do |_k, v|
+            additional_files = parsed_json["additionalFiles"]&.transform_values do |_k, v|
               v = v.to_json
               Commons::LANGUAGE.key(v) || v
             end

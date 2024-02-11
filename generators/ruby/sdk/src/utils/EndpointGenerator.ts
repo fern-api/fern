@@ -191,7 +191,13 @@ export class EndpointGenerator {
             ...this.queryParametersAsProperties.map((queryProp) =>
                 queryProp.toParameter({ describeAsHashInYardoc: true })
             ),
-            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true }))
+            ...this.bodyAsProperties.map((bodyProp) => bodyProp.toParameter({ describeAsHashInYardoc: true })),
+            // Optional request_options, e.g. the per-request customizer, optional
+            new Parameter({
+                name: this.requestOptionsVariable.name,
+                type: this.requestOptionsVariable.type,
+                isOptional: true
+            })
         ];
         if (this.streamProcessingBlock !== undefined) {
             params.push(this.streamProcessingBlock);
@@ -393,7 +399,7 @@ export class EndpointGenerator {
             expressions.push(
                 new Expression({
                     leftSide: `${this.blockArg}.options.on_data`,
-                    rightSide: this.streamProcessingBlock.write({}),
+                    rightSide: this.streamProcessingBlock.toVariable().write({}),
                     isAssignment: true
                 })
             );

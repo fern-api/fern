@@ -6,7 +6,7 @@ require_relative "object_value"
 require_relative "container_value"
 
 module SeedApiClient
-  module Ast
+  class Ast
     class FieldValue
       attr_reader :member, :discriminant
 

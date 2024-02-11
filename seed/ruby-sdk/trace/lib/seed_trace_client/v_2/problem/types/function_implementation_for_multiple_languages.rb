@@ -5,7 +5,7 @@ require_relative "../../../commons/types/language"
 
 module SeedTraceClient
   module V2
-    module Problem
+    class Problem
       class FunctionImplementationForMultipleLanguages
         attr_reader :code_by_language, :additional_properties
 
@@ -26,7 +26,7 @@ module SeedTraceClient
         def self.from_json(json_object:)
           struct = JSON.parse(json_object, object_class: OpenStruct)
           parsed_json = JSON.parse(json_object)
-          code_by_language = parsed_json["codeByLanguage"].transform_values do |_k, v|
+          code_by_language = parsed_json["codeByLanguage"]&.transform_values do |_k, v|
             v = v.to_json
             Commons::LANGUAGE.key(v) || v
           end

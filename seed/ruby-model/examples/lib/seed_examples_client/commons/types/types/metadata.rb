@@ -4,7 +4,7 @@ require "json"
 
 module SeedExamplesClient
   module Commons
-    module Types
+    class Types
       class Metadata
         attr_reader :id, :data, :json_string, :additional_properties
 

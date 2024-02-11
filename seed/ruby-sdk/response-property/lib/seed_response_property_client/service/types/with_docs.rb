@@ -3,7 +3,7 @@
 require "json"
 
 module SeedResponsePropertyClient
-  module Service
+  class Service
     class WithDocs
       attr_reader :docs, :additional_properties
 

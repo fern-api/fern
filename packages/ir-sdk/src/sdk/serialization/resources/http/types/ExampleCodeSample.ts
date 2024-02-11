@@ -6,23 +6,34 @@ import * as serializers from "../../..";
 import * as FernIr from "../../../../api";
 import * as core from "../../../../core";
 
-export const ExampleCodeSample: core.serialization.ObjectSchema<
-    serializers.ExampleCodeSample.Raw,
-    FernIr.ExampleCodeSample
-> = core.serialization
-    .objectWithoutOptionalProperties({
-        name: core.serialization.lazyObject(async () => (await import("../../..")).Name).optional(),
-        language: core.serialization.string(),
-        code: core.serialization.string(),
-        install: core.serialization.string().optional(),
-    })
-    .extend(core.serialization.lazyObject(async () => (await import("../../..")).WithDocs));
+export const ExampleCodeSample: core.serialization.Schema<serializers.ExampleCodeSample.Raw, FernIr.ExampleCodeSample> =
+    core.serialization
+        .union("type", {
+            language: core.serialization.lazyObject(async () => (await import("../../..")).ExampleCodeSampleLanguage),
+            sdk: core.serialization.lazyObject(async () => (await import("../../..")).ExampleCodeSampleSdk),
+        })
+        .transform<FernIr.ExampleCodeSample>({
+            transform: (value) => {
+                switch (value.type) {
+                    case "language":
+                        return FernIr.ExampleCodeSample.language(value);
+                    case "sdk":
+                        return FernIr.ExampleCodeSample.sdk(value);
+                    default:
+                        return value as FernIr.ExampleCodeSample;
+                }
+            },
+            untransform: ({ _visit, ...value }) => value as any,
+        });
 
 export declare namespace ExampleCodeSample {
-    interface Raw extends serializers.WithDocs.Raw {
-        name?: serializers.Name.Raw | null;
-        language: string;
-        code: string;
-        install?: string | null;
+    type Raw = ExampleCodeSample.Language | ExampleCodeSample.Sdk;
+
+    interface Language extends serializers.ExampleCodeSampleLanguage.Raw {
+        type: "language";
+    }
+
+    interface Sdk extends serializers.ExampleCodeSampleSdk.Raw {
+        type: "sdk";
     }
 }

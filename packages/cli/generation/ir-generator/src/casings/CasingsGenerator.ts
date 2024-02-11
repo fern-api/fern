@@ -8,6 +8,8 @@ export interface CasingsGenerator {
     generateNameAndWireValue(args: { name: string; wireValue: string }): NameAndWireValue;
 }
 
+const CAPITALIZE_INITIALISM: GenerationLanguage[] = ["go", "ruby"];
+
 export function constructCasingsGenerator({
     generationLanguage,
     smartCasing
@@ -24,12 +26,29 @@ export function constructCasingsGenerator({
 
             let camelCaseName = camelCase(name);
             let pascalCaseName = upperFirst(camelCaseName);
-            const snakeCaseName = snakeCase(name);
+            let snakeCaseName = snakeCase(name);
             const camelCaseWords = words(camelCaseName);
-            if (smartCasing && !hasAdjacentCommonInitialisms(camelCaseWords)) {
-                camelCaseName = camelCaseWords
-                    .map((word, index) => {
-                        if (index > 0) {
+            if (smartCasing) {
+                if (
+                    !hasAdjacentCommonInitialisms(camelCaseWords) &&
+                    (generationLanguage == null || CAPITALIZE_INITIALISM.includes(generationLanguage))
+                ) {
+                    camelCaseName = camelCaseWords
+                        .map((word, index) => {
+                            if (index > 0) {
+                                const pluralInitialism = maybeGetPluralInitialism(word);
+                                if (pluralInitialism != null) {
+                                    return pluralInitialism;
+                                }
+                                if (isCommonInitialism(word)) {
+                                    return word.toUpperCase();
+                                }
+                            }
+                            return word;
+                        })
+                        .join("");
+                    pascalCaseName = camelCaseWords
+                        .map((word, index) => {
                             const pluralInitialism = maybeGetPluralInitialism(word);
                             if (pluralInitialism != null) {
                                 return pluralInitialism;
@@ -37,25 +56,21 @@ export function constructCasingsGenerator({
                             if (isCommonInitialism(word)) {
                                 return word.toUpperCase();
                             }
-                        }
-                        return word;
-                    })
-                    .join("");
-                pascalCaseName = camelCaseWords
-                    .map((word, index) => {
-                        const pluralInitialism = maybeGetPluralInitialism(word);
-                        if (pluralInitialism != null) {
-                            return pluralInitialism;
-                        }
-                        if (isCommonInitialism(word)) {
-                            return word.toUpperCase();
-                        }
-                        if (index === 0) {
-                            return upperFirst(word);
-                        }
-                        return word;
-                    })
-                    .join("");
+                            if (index === 0) {
+                                return upperFirst(word);
+                            }
+                            return word;
+                        })
+                        .join("");
+                }
+
+                // In smartCasing, manage numbers next to letters differently:
+                // _.snakeCase("v2") = "v_2"
+                // smartCasing("v2") = "v2", other examples: "test2This2 2v22" => "test2this2_2v22", "applicationV1" => "application_v1"
+                snakeCaseName = name
+                    .split(" ")
+                    .map((part) => part.split(/(\d+)/).map(snakeCase).join(""))
+                    .join("_");
             }
 
             return {
