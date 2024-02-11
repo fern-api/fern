@@ -232,7 +232,45 @@ export const FernOpenAPIExtension = {
      *          name: Console Log My Endpoint
      *          description: This is a code sample that logs the response
      */
-    EXAMPLES: "x-fern-examples"
+    EXAMPLES: "x-fern-examples",
+
+    /**
+     * securitySchemes:
+     *   Bearer:
+     *     scheme: http
+     *     type: bearer
+     *     x-fern-bearer:
+     *       name: apiKey
+     *       env: MY_AUTH_TOKEN
+     */
+    FERN_BEARER_TOKEN: "x-fern-bearer",
+
+    /**
+     * securitySchemes:
+     *   Bearer:
+     *     type: apiKey
+     *     in: header
+     *     name: X-API-KEY-ID
+     *     x-fern-header:
+     *       name: header
+     *       env: MY_AUTH_TOKEN
+     */
+    FERN_HEADER_AUTH: "x-fern-header",
+
+    /**
+     * securitySchemes:
+     *   Basic:
+     *     scheme: http
+     *     type: basic
+     *     x-fern-basic:
+     *       username:
+     *          name: username
+     *          env: MY_USERNAME
+     *       password:
+     *          name: password
+     *          env: MY_PASSWORD
+     */
+    FERN_BASIC_AUTH: "x-fern-basic"
 } as const;
 
 export type FernOpenAPIExtension = Values<typeof FernOpenAPIExtension>;

@@ -1,7 +1,7 @@
-imports: 
+imports:
   finalIr: finalIr.yml
 
-types: 
+types:
   WithDescription:
     properties:
       description: optional<string>
@@ -18,11 +18,11 @@ types:
           of the type declarations. 
           [MyType -> propA -> propB] will turn into MyTypePropAPropB
           [MyType] will turn into MyType
-  
+
   SchemaId:
     type: string
     docs: The name of the schema.
-  
+
   TagId:
     type: string
     docs: The name of the tag.
@@ -35,7 +35,7 @@ types:
   SecuritySchemeId:
     type: string
     docs: The name of the security scheme.
-  
+
   SecurityScheme:
     union:
       basic: BasicSecurityScheme
@@ -44,30 +44,34 @@ types:
       query:
         type: QuerySecurityScheme
         docs: parameter sent as a security scheme
-      oauth: 
+      oauth:
         type: OauthSecurityScheme
 
   BearerSecurityScheme:
     properties:
       tokenVariableName: optional<string>
+      tokenEnvVar: optional<string>
 
   BasicSecurityScheme:
     properties:
       usernameVariableName: optional<string>
+      usernameEnvVar: optional<string>
       passwordVariableName: optional<string>
+      passwordEnvVar: optional<string>
 
   HeaderSecurityScheme:
     properties:
       headerName: string
       prefix: optional<string>
       headerVariableName: optional<string>
+      headerEnvVar: optional<string>
 
   QuerySecurityScheme:
     properties:
       queryParameterName: string
-  
-  OauthSecurityScheme: 
-    properties: 
+
+  OauthSecurityScheme:
+    properties:
       scopesEnum: optional<finalIr.EnumSchema>
 
   StatusCode:
@@ -80,11 +84,11 @@ types:
         type: optional<string>
         docs: Populated by `X-Server-Name`
       url: string
-  
-  SdkGroupName: 
+
+  SdkGroupName:
     type: string
     docs: This is populated by `x-fern-sdk-method-name`
 
-  WithSdkGroupName:   
-    properties: 
+  WithSdkGroupName:
+    properties:
       groupName: optional<SdkGroupName>

@@ -24,6 +24,8 @@ types:
       layout:
         type: optional<LayoutConfig>
         availability: in-development
+      css: optional<CssConfig>
+      js: optional<JsConfig>
 
   TabId: string
 
@@ -338,3 +340,89 @@ types:
     properties:
       url: string
       text: string
+
+  CssConfig:
+    docs: |-
+      The `css` object allows you to customize the appearance of your docs site by injecting custom CSS, i.e.
+
+      ```yaml
+      css: "path/to/css/file.css"
+      ```
+
+      or, multiple files:
+
+      ```yaml
+      css:
+        - "path/to/css/file.css"
+        - "path/to/another/css/file.css"
+      ```
+    discriminated: false
+    union:
+      - string # path to css file
+      - list<string>
+
+  JsConfig:
+    docs: |-
+      The `js` object allows you to customize the behavior of your docs site by injecting custom JavaScript, i.e.
+
+      ```yaml
+      js: "path/to/js/file.js"
+      ```
+
+      or, multiple files:
+
+      ```yaml
+      js:
+        - "path/to/js/file.js"
+        - "path/to/another/js/file.js"
+      ```
+
+      or remote js:
+
+      ```yaml
+      js:
+        url: "https://example.com/path/to/js/file.js"
+        strategy: "afterInteractive"
+      ```
+
+      or, mixed:
+
+      ```yaml
+      js:
+        - "path/to/js/file.js"
+        - path: "path/to/another/js/file.js"
+          strategy: "beforeInteractive"
+        - url: "https://example.com/path/to/js/file.js"
+      ```
+    discriminated: false
+    union:
+      - JsConfigOptions
+      - list<JsConfigOptions>
+
+  JsConfigOptions:
+    discriminated: false
+    union:
+      - JsRemoteConfig
+      - JsFileConfig
+
+  JsRemoteConfig:
+    properties:
+      url: string
+      strategy: optional<JsScriptStrategy>
+
+  JsFileConfig:
+    discriminated: false
+    union:
+      - string # path to js file
+      - JsFileConfigSettings
+
+  JsFileConfigSettings:
+    properties:
+      path: string
+      strategy: optional<JsScriptStrategy>
+
+  JsScriptStrategy:
+    enum:
+      - beforeInteractive
+      - afterInteractive # default
+      - lazyOnload

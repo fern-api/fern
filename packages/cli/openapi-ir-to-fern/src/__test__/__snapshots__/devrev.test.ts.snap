@@ -4587,7 +4587,6 @@ unique.
       "auth-token": {
         "header": "Authorization",
         "name": "apiKey",
-        "prefix": undefined,
         "type": "string",
       },
     },

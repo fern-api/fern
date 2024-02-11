@@ -1,6 +1,7 @@
 ../packages/ir-sdk/**
 ../packages/seed/src/config/**
 ../scripts/**
+../seed/**
 
 **/*.yaml
 **/*.yml

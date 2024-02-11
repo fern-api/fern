@@ -62,16 +62,13 @@ export function buildEndpointExample({
                         code: codeSample.code,
                         install: codeSample.install ?? undefined
                     };
-                } else if (codeSample.sdk != null) {
+                } else {
                     return {
                         name: codeSample.name ?? undefined,
                         docs: codeSample.description ?? undefined,
                         sdk: codeSample.sdk,
                         code: codeSample.code
                     };
-                } else {
-                    context.logger.warn("Code sample is missing language or SDK field.");
-                    return undefined;
                 }
             })
             .filter(isNonNullish);

@@ -69,23 +69,53 @@ Check out docs built with Fern:
 
 Get started [here](https://github.com/fern-api/docs-starter). 
 
-## Generators
+## 🌿 Generators
 
 Generators are process that take your API Definition as input and output artifacts (SDKs, 
-Postman Collections, Server boilerplate, etc.). Below you can find a list of all of Fern's generators.
+Postman Collections, Server boilerplate, etc.). To add a generator run `fern add <generator id>`
 
-| Generator ID                  | Output                       | Latest Version | Changelog                                                 | Entrypoint                                                                      |
-| ---------------------------   | ---------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `fernapi/fern-python-sdk`     | Python SDK                   | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-pydantic-model` | Pydantic Models              | `0.7.7`        | [CHANGELOG.md](./generators/python/sdk/CHANGELOG.md)      | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-fastapi-server` | FastAPI boilerplate          | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)  | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
-| `fernapi/fern-openapi`        | OpenAPI Spec                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
-| `fernapi/fern-ruby-model`     | Ruby Models                  | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                    |
-| `fernapi/fern-java-sdk`       | Java SDK                     | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
-| `fernapi/java-model`          | Java Models                  | `0.7.1`        | [CHANGELOG.md](./generators/java/model/CHANGELOG.md)      | [Cli.java](./generators/java/model/src/main/java/com/fern/java/model/Cli.java)  |
-| `fernapi/fern-java-spring`    | Spring boilerplate           | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)     | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java)|
+### SDK Generators
 
-## CLI Commands
+| Generator ID                           | Latest Version | Changelog                                                    | Entrypoint                                                                      |
+| -------------------------------------- | -------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------- |
+| `fernapi/fern-typescript-node-sdk`     | `0.9.7`        | [CHANGELOG.md](./generators/typescript/sdk/CHANGELOG.md)     | [cli.ts](./generators/typescript/sdk/cli/src/nodeCli.ts)                        |
+| `fernapi/fern-python-sdk`              | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md)    | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-sdk`                | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)           | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/fern-ruby-sdk`                | `0.0.6`        | [CHANGELOG.md](./generators/ruby/sdk/CHANGELOG.md)           | [cli.ts](./generators/ruby/sdk/src/cli.ts)                                    |
+
+### Server-side Generators
+
+Fern's server-side generators output boilerplate application code (models and networking logic). This is intended for spec-first or API-first developers, 
+who write their API definition (as an OpenAPI spec or Fern definition) and want to geenerate backend code. Watch a demo [here](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video). 
+
+| Generator ID                           | Latest Version | Changelog                                                      | Entrypoint                                                                      |
+| -------------------------------------- | -------------- | -------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `fernapi/fern-express-server`          | `0.9.7`        | [CHANGELOG.md](./generators/typescript/express/CHANGELOG.md)   | [cli.ts](./generators/typescript/express/cli/src/cli.ts)                        |
+| `fernapi/fern-fastapi-server`          | `0.7.7`        | [CHANGELOG.md](./generators/python/fastapi/CHANGELOG.md)       | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-spring`             | `0.7.1`        | [CHANGELOG.md](./generators/java/spring/CHANGELOG.md)          | [Cli.java](./generators/java/spring/src/main/java/com/fern/java/spring/Cli.java)|
+
+### Model Generators
+
+Fern's model generators will output schemas or types defined in your OpenAPI spec or Fern Definition. 
+
+| Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
+| -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `fernapi/fern-pydantic-model`          | `0.8.0`        | [CHANGELOG.md](./generators/python/pydantic/CHANGELOG.md) | [cli.py](./generators/python/src/fern_python/generators/sdk/cli.py)             |
+| `fernapi/fern-java-model`              | `0.7.1`        | [CHANGELOG.md](./generators/java/sdk/CHANGELOG.md)        | [Cli.java](./generators/java/sdk/src/main/java/com/fern/java/client/Cli.java)   |
+| `fernapi/fern-ruby-model`              | `0.0.6`        | [CHANGELOG.md](./generators/ruby/model/CHANGELOG.md)      | [cli.ts](./generators/ruby/model/src/cli.ts)                                    |
+
+### Spec Generators
+
+Fern's spec generators can output an OpenAPI spec or a Postman collection. 
+
+> **Note**: The OpenAPI spec generator is primarly intended for Fern Definition users. This prevents lock-in so that one can always export to OpenAPI. 
+
+| Generator ID                           | Latest Version | Changelog                                                 | Entrypoint                                                                      |
+| -------------------------------------- | -------------- | --------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `fernapi/fern-openapi`                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
+| `fernapi/fern-postman`                 | `0.0.30`       | [CHANGELOG.md](./generators/openapi/CHANGELOG.md)         | [cli.ts](./generators/openapi/src/cli.ts)                                       |
+
+## 🌿 CLI Commands
 
 Here's a quick look at the most popular CLI commands. View the documentation for [all CLI commands](https://docs.buildwithfern.com/overview/cli/cli).
 
@@ -98,13 +128,6 @@ Here's a quick look at the most popular CLI commands. View the documentation for
 `fern generate --local`: run the generators specified in `generators.yml` in docker locally.
 
 `fern add <generator>`: include a new generator in your `generators.yml`. For example, `fern add fern-python-sdk`.
-
-## Customer Showcase
-
-See developer-focused companies that use Fern.
-
-[![Customer Showcase](/fern/docs/images/showcase.png)](https://buildwithfern.com/showcase)
-
 
 ## Advanced 
 

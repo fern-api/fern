@@ -14,8 +14,8 @@
     "!generators/**/dist"
   ],
   "scripts": {
-    "clean": "yarn workspace @fern-api/compile-root run clean",
-    "compile": "yarn workspace @fern-api/compile-root run compile",
+    "clean": "yarn workspaces foreach --verbose --parallel --topological-dev run clean",
+    "compile": "yarn workspaces foreach --verbose --parallel --topological-dev run compile",
     "test": "yarn compile && jest --passWithNoTests",
     "test:ete": "yarn workspace @fern-api/cli dist:cli:dev && yarn workspace @fern-api/seed-cli dist:cli && yarn workspace @fern-api/ete-tests test",
     "lint:eslint": "eslint --max-warnings 0 . --report-unused-disable-directives --ignore-path .eslintignore",
@@ -59,7 +59,7 @@
     "@types/lodash-es": "^4.17.6",
     "@types/node": "^18.7.18",
     "@typescript-eslint/eslint-plugin": "^5.27.1",
-    "@typescript-eslint/parser": "^5.27.1",
+    "@typescript-eslint/parser": "^6.21.0",
     "chalk": "^5.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",

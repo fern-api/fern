@@ -1,0 +1,14 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": {
+    "composite": true,
+    "outDir": "../express-error-schema-generator/lib",
+    "rootDir": "../express-error-schema-generator/src"
+  },
+  "include": ["../express-error-schema-generator/src"],
+  "references": [
+    { "path": "../../../abstract-schema-generator" },
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" }
+  ]
+}
