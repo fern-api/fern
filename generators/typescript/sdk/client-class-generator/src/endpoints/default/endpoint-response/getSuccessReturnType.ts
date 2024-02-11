@@ -19,7 +19,7 @@ export function getSuccessReturnType(
             return getFileType({
                 targetRuntime: context.targetRuntime,
                 context,
-                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse,
+                includeContentHeadersOnResponse: opts.includeContentHeadersOnResponse
             });
         }
         case "json":
@@ -44,7 +44,7 @@ export const CONTENT_LENGTH_RESPONSE_KEY = "contentLengthInBytes";
 function getFileType({
     targetRuntime,
     context,
-    includeContentHeadersOnResponse,
+    includeContentHeadersOnResponse
 }: {
     targetRuntime: JavaScriptRuntime;
     context: SdkContext;
@@ -52,7 +52,7 @@ function getFileType({
 }): ts.TypeNode {
     const fileType = visitJavaScriptRuntime(targetRuntime, {
         browser: () => ts.factory.createTypeReferenceNode("Blob"),
-        node: () => context.externalDependencies.stream.Readable._getReferenceToType(),
+        node: () => context.externalDependencies.stream.Readable._getReferenceToType()
     });
     if (includeContentHeadersOnResponse) {
         return ts.factory.createTypeLiteralNode([
@@ -73,7 +73,7 @@ function getFileType({
                 CONTENT_TYPE_RESPONSE_KEY,
                 ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-            ),
+            )
         ]);
     }
     return fileType;

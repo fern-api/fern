@@ -6,7 +6,7 @@ import {
     Type,
     TypeDeclaration,
     TypeId,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 
 /**
@@ -51,7 +51,7 @@ export class TypeResolver {
             unknown: ResolvedTypeReference.unknown,
             _other: () => {
                 throw new Error("Unknown type reference type: " + type.type);
-            },
+            }
         });
     }
 
@@ -61,26 +61,26 @@ export class TypeResolver {
             enum: () =>
                 ResolvedTypeReference.named({
                     name: typeName,
-                    shape: ShapeType.Enum,
+                    shape: ShapeType.Enum
                 }),
             object: () =>
                 ResolvedTypeReference.named({
                     name: typeName,
-                    shape: ShapeType.Object,
+                    shape: ShapeType.Object
                 }),
             union: () =>
                 ResolvedTypeReference.named({
                     name: typeName,
-                    shape: ShapeType.Union,
+                    shape: ShapeType.Union
                 }),
             undiscriminatedUnion: () =>
                 ResolvedTypeReference.named({
                     name: typeName,
-                    shape: ShapeType.UndiscriminatedUnion,
+                    shape: ShapeType.UndiscriminatedUnion
                 }),
             _other: () => {
                 throw new Error("Unknown type declaration type: " + declaration.type);
-            },
+            }
         });
     }
 

@@ -36,26 +36,26 @@ export class GeneratedAliasTypeSchemaImpl<Context extends ModelContext>
                         VALUE_PARAMETER_NAME,
                         undefined,
                         undefined
-                    ),
+                    )
                 ],
                 undefined,
                 undefined,
                 ts.factory.createIdentifier(VALUE_PARAMETER_NAME)
-            ),
+            )
         });
     }
 
     protected override generateRawTypeDeclaration(context: Context, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode),
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.shape.aliasOf).typeNode)
         });
     }
 
     protected override getReferenceToSchemaType({
         context,
         rawShape,
-        parsedShape,
+        parsedShape
     }: {
         context: Context;
         rawShape: ts.TypeNode;

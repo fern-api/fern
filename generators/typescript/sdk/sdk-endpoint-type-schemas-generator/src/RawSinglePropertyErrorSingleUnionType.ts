@@ -39,8 +39,8 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
         return [
             {
                 name: `"${this.discriminationStrategy.contentProperty.wireValue}"`,
-                type: getTextOfTsNode(type),
-            },
+                type: getTextOfTsNode(type)
+            }
         ];
     }
 
@@ -58,10 +58,10 @@ export class RawSinglePropertyErrorSingleUnionType extends AbstractRawSingleUnio
             {
                 key: {
                     parsed: this.discriminationStrategy.contentProperty.name.camelCase.unsafeName,
-                    raw: this.discriminationStrategy.contentProperty.wireValue,
+                    raw: this.discriminationStrategy.contentProperty.wireValue
                 },
-                value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type),
-            },
+                value: context.typeSchema.getSchemaOfTypeReference(errorDeclaration.type)
+            }
         ]);
     }
 }

@@ -14,19 +14,19 @@ export class TypeDeclarationReferencer extends AbstractDeclarationReferencer<Dec
                     fernFilepath: typeName.fernFilepath,
                     subExports: {
                         [RelativeFilePath.of(TYPES_DIRECTORY_NAME)]: {
-                            exportAll: true,
-                        },
-                    },
+                            exportAll: true
+                        }
+                    }
                 }),
                 {
                     nameOnDisk: TYPES_DIRECTORY_NAME,
-                    exportDeclaration: { exportAll: true },
-                },
+                    exportDeclaration: { exportAll: true }
+                }
             ],
             file: {
                 nameOnDisk: this.getFilename(typeName),
-                exportDeclaration: { exportAll: true },
-            },
+                exportDeclaration: { exportAll: true }
+            }
         };
     }
 

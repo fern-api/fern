@@ -27,7 +27,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
         intermediateRepresentation,
         registerFunctionName,
         areImplementationsOptional,
-        packageResolver,
+        packageResolver
     }: GeneratedExpressRegisterImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.registerFunctionName = registerFunctionName;
@@ -45,9 +45,9 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     type: getTextOfTsNode(
                         ts.factory.createUnionTypeNode([
                             context.externalDependencies.express.Express(),
-                            context.externalDependencies.express.Router._getReferenceToType(),
+                            context.externalDependencies.express.Router._getReferenceToType()
                         ])
-                    ),
+                    )
                 },
                 {
                     name: GeneratedExpressRegisterImpl.EXPRESS_SERVICES_PARAMETER_NAME,
@@ -57,8 +57,8 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             this.intermediateRepresentation.rootPackage,
                             context
                         )
-                    ),
-                },
+                    )
+                }
             ],
             returnType: "void",
             statements: this.packageResolver
@@ -82,7 +82,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                             path: ts.factory.createStringLiteral(convertHttpPathToExpressRoute(service.basePath)),
                             router: context.expressService
                                 .getGeneratedExpressService(packageId)
-                                .toRouter(this.getReferenceToServiceArgument(packageId)),
+                                .toRouter(this.getReferenceToServiceArgument(packageId))
                         })
                     );
                     if (this.areImplementationsOptional) {
@@ -97,7 +97,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
                     }
                     return [statement];
                 })
-                .map(getTextOfTsNode),
+                .map(getTextOfTsNode)
         });
     }
 
@@ -185,7 +185,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             this.areImplementationsOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
             context.expressService
                 .getReferenceToExpressService(packageId, {
-                    importAlias: this.getImportAliasForService(packageId),
+                    importAlias: this.getImportAliasForService(packageId)
                 })
                 .getTypeNode()
         );
@@ -197,7 +197,7 @@ export class GeneratedExpressRegisterImpl implements GeneratedExpressRegister {
             ...package_.fernFilepath.packagePath.map((part) => part.camelCase.unsafeName),
             package_.fernFilepath.file != null
                 ? `${package_.fernFilepath.file.pascalCase.unsafeName}Service`
-                : "RootService",
+                : "RootService"
         ].join("_");
     }
 }

@@ -17,9 +17,9 @@ export class GeneratedUndiscriminatedUnionTypeImpl<Context extends ModelContext>
             type: getWriterForMultiLineUnionType(
                 this.shape.members.map((value) => ({
                     docs: value.docs,
-                    node: context.type.getReferenceToType(value.type).typeNode,
+                    node: context.type.getReferenceToType(value.type).typeNode
                 }))
-            ),
+            )
         });
 
         maybeAddDocs(type, this.getDocs(context));

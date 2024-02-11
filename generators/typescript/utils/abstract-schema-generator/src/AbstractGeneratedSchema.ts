@@ -28,12 +28,12 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
                         this.getReferenceToSchemaType({
                             context,
                             rawShape: this.getReferenceToRawShape(context),
-                            parsedShape: this.getReferenceToParsedShape(context),
+                            parsedShape: this.getReferenceToParsedShape(context)
                         })
                     ),
-                    initializer: getTextOfTsNode(this.buildSchema(context).toExpression()),
-                },
-            ],
+                    initializer: getTextOfTsNode(this.buildSchema(context).toExpression())
+                }
+            ]
         });
 
         this.generateModule(context);
@@ -55,7 +55,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
     protected getReferenceToSchemaType({
         context,
         rawShape,
-        parsedShape,
+        parsedShape
     }: {
         context: Context;
         rawShape: ts.TypeNode;
@@ -68,7 +68,7 @@ export abstract class AbstractGeneratedSchema<Context extends BaseContext> {
         const module = context.sourceFile.addModule({
             name: this.getModuleName(),
             isExported: true,
-            hasDeclareKeyword: true,
+            hasDeclareKeyword: true
         });
         this.generateRawTypeDeclaration(context, module);
     }

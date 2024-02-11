@@ -27,7 +27,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
     public generateInlinedRequestBodySchema({
         packageId,
         endpoint,
-        typeName,
+        typeName
     }: SdkInlinedRequestBodySchemaGenerator.generateInlinedRequestBodySchema.Args): GeneratedSdkInlinedRequestBodySchema {
         if (endpoint.requestBody?.type !== "inlinedRequestBody") {
             throw new Error("Request is not inlined");
@@ -37,7 +37,7 @@ export class SdkInlinedRequestBodySchemaGenerator {
             endpoint,
             inlinedRequestBody: endpoint.requestBody,
             typeName,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

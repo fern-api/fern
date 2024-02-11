@@ -23,7 +23,7 @@ export class GenericAPISdkErrorContextImpl implements GenericAPISdkErrorContext 
         genericAPISdkErrorDeclarationReferencer,
         genericAPISdkErrorGenerator,
         importsManager,
-        sourceFile,
+        sourceFile
     }: GenericAPISdkErrorContextImpl.Init) {
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
@@ -34,13 +34,13 @@ export class GenericAPISdkErrorContextImpl implements GenericAPISdkErrorContext 
     public getReferenceToGenericAPISdkError(): Reference {
         return this.genericAPISdkErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 
     public getGeneratedGenericAPISdkError(): GeneratedGenericAPISdkError {
         return this.genericAPISdkErrorGenerator.generateGenericAPISdkError({
-            errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName(),
+            errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName()
         });
     }
 }

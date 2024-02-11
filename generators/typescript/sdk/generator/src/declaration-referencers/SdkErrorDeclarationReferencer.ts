@@ -15,19 +15,19 @@ export class SdkErrorDeclarationReferencer extends AbstractDeclarationReferencer
                     fernFilepath: errorName.fernFilepath,
                     subExports: {
                         [RelativeFilePath.of(ERRORS_DIRECTORY_NAME)]: {
-                            exportAll: true,
-                        },
-                    },
+                            exportAll: true
+                        }
+                    }
                 }),
                 {
                     nameOnDisk: ERRORS_DIRECTORY_NAME,
-                    exportDeclaration: { exportAll: true },
-                },
+                    exportDeclaration: { exportAll: true }
+                }
             ],
             file: {
                 nameOnDisk: this.getFilename(errorName),
-                exportDeclaration: { exportAll: true },
-            },
+                exportDeclaration: { exportAll: true }
+            }
         };
     }
 

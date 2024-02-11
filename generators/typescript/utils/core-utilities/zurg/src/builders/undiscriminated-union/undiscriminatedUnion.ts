@@ -25,12 +25,12 @@ export function undiscriminatedUnion<Schemas extends [Schema<any, any>, ...Schem
                 opts
             );
         },
-        getType: () => SchemaType.UNDISCRIMINATED_UNION,
+        getType: () => SchemaType.UNDISCRIMINATED_UNION
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -48,7 +48,7 @@ async function validateAndTransformUndiscriminatedUnion<Transformed>(
             for (const error of transformed.errors) {
                 errors.push({
                     path: error.path,
-                    message: `[Variant ${index}] ${error.message}`,
+                    message: `[Variant ${index}] ${error.message}`
                 });
             }
         }
@@ -56,6 +56,6 @@ async function validateAndTransformUndiscriminatedUnion<Transformed>(
 
     return {
         ok: false,
-        errors,
+        errors
     };
 }

@@ -22,13 +22,13 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                             this.noOptionalProperties ? value.typeNode : value.typeNodeWithoutUndefined
                         ),
                         hasQuestionToken: !this.noOptionalProperties && value.isOptional,
-                        docs: property.docs != null ? [{ description: property.docs }] : undefined,
+                        docs: property.docs != null ? [{ description: property.docs }] : undefined
                     };
 
                     return propertyNode;
-                }),
+                })
             ],
-            isExported: true,
+            isExported: true
         });
 
         maybeAddDocs(interfaceNode, this.getDocs(context));
@@ -91,7 +91,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
             ...this.shape.properties.map((property) => ({
                 wireKey: property.name.wireValue,
                 propertyKey: this.getPropertyKeyFromProperty(property),
-                type: property.valueType,
+                type: property.valueType
             })),
             ...this.shape.extends.flatMap((extension) => {
                 const generatedType = context.type.getGeneratedType(extension);
@@ -99,7 +99,7 @@ export class GeneratedObjectTypeImpl<Context extends ModelContext>
                     throw new Error("Type extends non-object");
                 }
                 return generatedType.getAllPropertiesIncludingExtensions(context);
-            }),
+            })
         ];
     }
 }

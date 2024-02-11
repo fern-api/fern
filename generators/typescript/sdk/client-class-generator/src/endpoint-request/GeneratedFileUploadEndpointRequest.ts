@@ -3,14 +3,14 @@ import {
     HttpEndpoint,
     HttpRequestBody,
     HttpService,
-    IntermediateRepresentation,
+    IntermediateRepresentation
 } from "@fern-fern/ir-sdk/api";
 import {
     Fetcher,
     getTextOfTsNode,
     JavaScriptRuntime,
     PackageId,
-    visitJavaScriptRuntime,
+    visitJavaScriptRuntime
 } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
 import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
@@ -55,7 +55,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
         endpoint,
         requestBody,
         generatedSdkClientClass,
-        targetRuntime,
+        targetRuntime
     }: GeneratedFileUploadEndpointRequest.Init) {
         this.ir = ir;
         this.service = service;
@@ -75,11 +75,11 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 packageId,
                 service,
                 endpoint,
-                sdkRequest: this.endpoint.sdkRequest,
+                sdkRequest: this.endpoint.sdkRequest
             });
 
             this.queryParams = new GeneratedQueryParams({
-                requestParameter: this.requestParameter,
+                requestParameter: this.requestParameter
             });
         }
     }
@@ -94,14 +94,14 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             if (property.type === "file") {
                 parameters.push({
                     name: getParameterNameForFile(property),
-                    type: getTextOfTsNode(this.getFileParameterType(property, context)),
+                    type: getTextOfTsNode(this.getFileParameterType(property, context))
                 });
             }
         }
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
-                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }
 
@@ -120,7 +120,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             },
             browser: () => {
                 types.push(ts.factory.createTypeReferenceNode("Blob"));
-            },
+            }
         });
 
         if (property.isOptional) {
@@ -150,7 +150,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                             undefined,
                             undefined,
                             context.externalDependencies.formData._instantiate()
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
@@ -164,7 +164,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                     referenceToFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
                     ),
-                    requestParameter: this.requestParameter,
+                    requestParameter: this.requestParameter
                 })
             );
         }
@@ -185,9 +185,9 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
                 context.externalDependencies.formData.getBoundary({
                     referencetoFormData: ts.factory.createIdentifier(
                         GeneratedFileUploadEndpointRequest.FORM_DATA_VARIABLE_NAME
-                    ),
+                    )
                 })
-            ),
+            )
         };
     }
 
@@ -198,7 +198,7 @@ export class GeneratedFileUploadEndpointRequest implements GeneratedEndpointRequ
             idempotencyHeaders: this.ir.idempotencyHeaders,
             generatedSdkClientClass: this.generatedSdkClientClass,
             service: this.service,
-            endpoint: this.endpoint,
+            endpoint: this.endpoint
         });
     }
 

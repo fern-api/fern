@@ -10,7 +10,7 @@ import { buildUrl } from "./utils/buildUrl";
 import {
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
+    getTimeoutExpression
 } from "./utils/requestOptionsParameter";
 
 export declare namespace GeneratedFileDownloadEndpointImplementation {
@@ -41,7 +41,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         defaultTimeoutInSeconds,
         request,
         response,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedFileDownloadEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -65,10 +65,10 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
-                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint),
-                }),
+                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
+                })
             ],
-            returnTypeWithoutPromise: this.response.getReturnType(context),
+            returnTypeWithoutPromise: this.response.getReturnType(context)
         };
     }
 
@@ -93,7 +93,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
         return [
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
-            ...this.response.getReturnResponseStatements(context),
+            ...this.response.getReturnResponseStatements(context)
         ];
     }
 
@@ -107,7 +107,7 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -125,18 +125,18 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
             withCredentials: this.includeCredentialsOnCrossOriginRequests,
             responseType: visitJavaScriptRuntime(context.targetRuntime, {
                 browser: () => "blob",
-                node: () => "streaming",
-            }),
+                node: () => "streaming"
+            })
         };
 
         return [
@@ -152,14 +152,14 @@ export class GeneratedFileDownloadEndpointImplementation implements GeneratedEnd
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
                                 cast: visitJavaScriptRuntime(context.targetRuntime, {
                                     browser: () => ts.factory.createTypeReferenceNode("Blob"),
-                                    node: () => context.externalDependencies.stream.Readable._getReferenceToType(),
-                                }),
+                                    node: () => context.externalDependencies.stream.Readable._getReferenceToType()
+                                })
                             })
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
-            ),
+            )
         ];
     }
 }

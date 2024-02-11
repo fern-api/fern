@@ -14,40 +14,40 @@ export default (): webpack.Configuration => {
                 {
                     test: /\.js$/,
                     resolve: {
-                        fullySpecified: false,
-                    },
+                        fullySpecified: false
+                    }
                 },
                 {
                     test: /\.ts$/,
                     loader: "ts-loader",
                     options: {
                         projectReferences: true,
-                        transpileOnly: true,
+                        transpileOnly: true
                     },
-                    exclude: /node_modules/,
-                },
+                    exclude: /node_modules/
+                }
             ],
             parser: {
                 javascript: {
-                    commonjsMagicComments: true,
-                },
-            },
+                    commonjsMagicComments: true
+                }
+            }
         },
         resolve: {
             extensions: [
                 // js is first so that if we encounter equivalent TS and JS source files side-by-side
                 // (e.g. in node_modules), prefer the js
                 ".js",
-                ".ts",
-            ],
+                ".ts"
+            ]
         },
         plugins: [new webpack.BannerPlugin({ banner: "#!/usr/bin/env node", raw: true })],
         output: {
             path: path.join(__dirname, "dist"),
-            filename: "bundle.cjs",
+            filename: "bundle.cjs"
         },
         optimization: {
-            minimize: false,
-        },
+            minimize: false
+        }
     };
 };

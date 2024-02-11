@@ -5,7 +5,7 @@ import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
-    SingleUnionTypeGenerator,
+    SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 
 export declare namespace ParsedSingleUnionTypeForError {
@@ -28,16 +28,16 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
         errorDiscriminationStrategy,
         errorResolver,
         includeUtilsOnUnionMembers,
-        noOptionalProperties,
+        noOptionalProperties
     }: ParsedSingleUnionTypeForError.Init) {
         const errorDeclaration = errorResolver.getErrorDeclarationFromName(error.error);
         super({
             singleUnionType: getSingleUnionTypeGenerator({
                 errorDiscriminationStrategy,
                 errorDeclaration,
-                noOptionalProperties,
+                noOptionalProperties
             }),
-            includeUtilsOnUnionMembers,
+            includeUtilsOnUnionMembers
         });
 
         this.errorDiscriminationStrategy = errorDiscriminationStrategy;
@@ -59,7 +59,7 @@ export class ParsedSingleUnionTypeForError extends AbstractKnownSingleUnionType<
             statusCode: () => this.errorDeclaration.statusCode,
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
-            },
+            }
         });
     }
 
@@ -77,7 +77,7 @@ const CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS = "content";
 function getSingleUnionTypeGenerator({
     errorDiscriminationStrategy,
     errorDeclaration,
-    noOptionalProperties,
+    noOptionalProperties
 }: {
     errorDiscriminationStrategy: ErrorDiscriminationStrategy;
     errorDeclaration: ErrorDeclaration;
@@ -93,12 +93,12 @@ function getSingleUnionTypeGenerator({
         statusCode: () => CONTENT_PROPERTY_FOR_STATUS_CODE_DISCRIMINATED_ERRORS,
         _other: () => {
             throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
-        },
+        }
     });
 
     return new SinglePropertySingleUnionTypeGenerator<SdkContext>({
         propertyName,
         getReferenceToPropertyType: (context) => context.type.getReferenceToType(type),
-        noOptionalProperties,
+        noOptionalProperties
     });
 }

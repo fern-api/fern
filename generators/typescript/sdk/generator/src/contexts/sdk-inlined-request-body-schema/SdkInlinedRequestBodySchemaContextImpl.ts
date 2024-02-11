@@ -29,7 +29,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
         packageResolver,
         sourceFile,
         sdkInlinedRequestBodySchemaDeclarationReferencer,
-        sdkInlinedRequestBodySchemaGenerator,
+        sdkInlinedRequestBodySchemaGenerator
     }: SdkInlinedRequestBodySchemaContextImpl.Init) {
         this.sdkInlinedRequestBodySchemaGenerator = sdkInlinedRequestBodySchemaGenerator;
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = sdkInlinedRequestBodySchemaDeclarationReferencer;
@@ -54,8 +54,8 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
             endpoint,
             typeName: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
                 packageId,
-                endpoint,
-            }),
+                endpoint
+            })
         });
     }
 
@@ -71,7 +71,7 @@ export class SdkInlinedRequestBodySchemaContextImpl implements SdkInlinedRequest
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }
 }

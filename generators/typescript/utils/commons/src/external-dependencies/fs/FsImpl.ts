@@ -14,6 +14,6 @@ export class FsImpl extends ExternalDependency implements Fs {
                     []
                 );
             })
-        ),
+        )
     };
 }

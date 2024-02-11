@@ -2,7 +2,7 @@ import {
     EnvironmentBaseUrlId,
     EnvironmentId,
     SingleBaseUrlEnvironment,
-    SingleBaseUrlEnvironments,
+    SingleBaseUrlEnvironments
 } from "@fern-fern/ir-sdk/api";
 import { FernWriters, getTextOfTsNode } from "@fern-typescript/commons";
 import { GeneratedEnvironments, SdkContext } from "@fern-typescript/contexts";
@@ -33,7 +33,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
             objectWriter.addProperty({
                 key: this.getNameOfEnvironment(environment),
                 value: `"${environment.url}"`,
-                docs: environment.docs ?? undefined,
+                docs: environment.docs ?? undefined
             });
         }
 
@@ -43,9 +43,9 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
             declarations: [
                 {
                     name: this.environmentEnumName,
-                    initializer: objectWriter.toFunction(),
-                },
-            ],
+                    initializer: objectWriter.toFunction()
+                }
+            ]
         });
 
         context.sourceFile.addTypeAlias({
@@ -63,7 +63,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
                         )
                     )
                 )
-            ),
+            )
         });
     }
 
@@ -86,7 +86,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
     public getTypeForUserSuppliedEnvironment(context: SdkContext): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             context.environments.getReferenceToEnvironmentsEnum().getTypeNode(),
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
         ]);
     }
 
@@ -96,7 +96,7 @@ export class GeneratedSingleUrlEnvironmentsImpl implements GeneratedEnvironments
 
     public getReferenceToEnvironmentUrl({
         referenceToEnvironmentValue,
-        baseUrlId,
+        baseUrlId
     }: {
         referenceToEnvironmentValue: ts.Expression;
         baseUrlId: EnvironmentBaseUrlId | undefined;

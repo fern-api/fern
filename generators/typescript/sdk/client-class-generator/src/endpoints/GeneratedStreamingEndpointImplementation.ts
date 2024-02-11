@@ -10,7 +10,7 @@ import { buildUrl } from "./utils/buildUrl";
 import {
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
+    getTimeoutExpression
 } from "./utils/requestOptionsParameter";
 
 export declare namespace GeneratedStreamingEndpointImplementation {
@@ -45,7 +45,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         response,
         defaultTimeoutInSeconds,
         request,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedStreamingEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -67,7 +67,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
     public getSignature(context: SdkContext): EndpointSignature {
         return {
             parameters: this.getEndpointParameters(context),
-            returnTypeWithoutPromise: this.response.getReturnType(context),
+            returnTypeWithoutPromise: this.response.getReturnType(context)
         };
     }
 
@@ -75,8 +75,8 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return [
             ...this.request.getEndpointParameters(context),
             getRequestOptionsParameter({
-                requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint),
-            }),
+                requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
+            })
         ];
     }
 
@@ -88,7 +88,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
         return [
             ...this.getRequestBuilderStatements(context),
             ...this.invokeFetcher(context),
-            ...this.response.getReturnResponseStatements(context),
+            ...this.response.getReturnResponseStatements(context)
         ];
     }
 
@@ -102,7 +102,7 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -120,15 +120,15 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
             responseType: "streaming",
-            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 
         return [
@@ -142,13 +142,13 @@ export class GeneratedStreamingEndpointImplementation implements GeneratedEndpoi
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: context.externalDependencies.stream.Readable._getReferenceToType(),
+                                cast: context.externalDependencies.stream.Readable._getReferenceToType()
                             })
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
-            ),
+            )
         ];
     }
 

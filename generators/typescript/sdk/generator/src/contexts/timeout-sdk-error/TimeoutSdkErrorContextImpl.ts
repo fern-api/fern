@@ -23,7 +23,7 @@ export class TimeoutSdkErrorContextImpl implements TimeoutSdkErrorContext {
         timeoutSdkErrorDeclarationReferencer,
         timeoutSdkErrorGenerator,
         importsManager,
-        sourceFile,
+        sourceFile
     }: TimeoutSdkErrorContextImpl.Init) {
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
@@ -34,13 +34,13 @@ export class TimeoutSdkErrorContextImpl implements TimeoutSdkErrorContext {
     public getReferenceToTimeoutSdkError(): Reference {
         return this.timeoutSdkErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 
     public getGeneratedTimeoutSdkError(): GeneratedTimeoutSdkError {
         return this.timeoutSdkErrorGenerator.generateTimeoutSdkError({
-            errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName(),
+            errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName()
         });
     }
 }

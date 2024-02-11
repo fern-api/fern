@@ -25,7 +25,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
         sourceFile,
         importsManager,
         sdkClientClassGenerator,
-        sdkClientClassDeclarationReferencer,
+        sdkClientClassDeclarationReferencer
     }: SdkClientClassContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -36,7 +36,7 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
     public getGeneratedSdkClientClass(packageId: PackageId): GeneratedSdkClientClass {
         return this.sdkClientClassGenerator.generateService({
             packageId,
-            serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId),
+            serviceClassName: this.sdkClientClassDeclarationReferencer.getExportedName(packageId)
         });
     }
 
@@ -49,14 +49,14 @@ export class SdkClientClassContextImpl implements SdkClientClassContext {
                 name: packageId,
                 referencedIn: this.sourceFile,
                 importsManager: this.importsManager,
-                importStrategy: { type: "fromPackage", packageName: npmPackage.packageName },
+                importStrategy: { type: "fromPackage", packageName: npmPackage.packageName }
             });
         }
         return this.sdkClientClassDeclarationReferencer.getReferenceToClient({
             name: packageId,
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: { type: "direct", alias: importAlias },
+            importStrategy: { type: "direct", alias: importAlias }
         });
     }
 }

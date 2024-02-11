@@ -16,13 +16,13 @@ export declare namespace createExternalDependencies {
 
 export function createExternalDependencies({
     importsManager,
-    dependencyManager,
+    dependencyManager
 }: createExternalDependencies.Args): ExternalDependencies {
     return {
         urlJoin: new UrlJoinImpl({ importsManager, dependencyManager }),
         express: new ExpressImpl({ importsManager, dependencyManager }),
         formData: new FormDataImpl({ importsManager, dependencyManager }),
         fs: new FsImpl({ importsManager, dependencyManager }),
-        stream: new StreamImpl({ importsManager, dependencyManager }),
+        stream: new StreamImpl({ importsManager, dependencyManager })
     };
 }

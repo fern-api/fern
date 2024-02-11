@@ -5,7 +5,7 @@ import {
     OptionalKind,
     ParameterDeclarationStructure,
     PropertyDeclarationStructure,
-    ts,
+    ts
 } from "ts-morph";
 
 export declare namespace AbstractErrorClassGenerator {
@@ -27,7 +27,7 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
             isAbstract: this.isAbstract(),
             isExported: true,
             extends: getTextOfTsNode(this.getBaseClass(context)),
-            properties: this.getClassProperties(context),
+            properties: this.getClassProperties(context)
         });
 
         class_.addConstructor({
@@ -52,12 +52,12 @@ export abstract class AbstractErrorClassGenerator<Context extends BaseContext> {
                             ts.factory.createPropertyAccessExpression(
                                 ts.factory.createIdentifier(this.errorClassName),
                                 ts.factory.createIdentifier("prototype")
-                            ),
+                            )
                         ]
                     )
                 ),
-                ...this.getConstructorStatements(context),
-            ].map(getTextOfTsNode),
+                ...this.getConstructorStatements(context)
+            ].map(getTextOfTsNode)
         });
 
         this.addToClass(class_, context);

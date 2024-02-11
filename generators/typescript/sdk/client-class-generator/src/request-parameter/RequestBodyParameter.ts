@@ -45,7 +45,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
     public generateExample({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;
@@ -62,7 +62,7 @@ export class RequestBodyParameter extends AbstractRequestParameter {
         const type = context.type.getReferenceToType(this.requestBodyReference.requestBodyType);
         return {
             type: type.typeNodeWithoutUndefined,
-            hasQuestionToken: type.isOptional,
+            hasQuestionToken: type.isOptional
         };
     }
 }

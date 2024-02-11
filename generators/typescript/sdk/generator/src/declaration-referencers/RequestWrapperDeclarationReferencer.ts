@@ -20,20 +20,20 @@ export class RequestWrapperDeclarationReferencer extends AbstractSdkClientClassD
             directories: [
                 ...this.getExportedDirectory(name, {
                     subExports: {
-                        [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true },
-                    },
+                        [RelativeFilePath.of(REQUESTS_DIRECTORY_NAME)]: { exportAll: true }
+                    }
                 }),
                 {
                     nameOnDisk: REQUESTS_DIRECTORY_NAME,
-                    exportDeclaration: { exportAll: true },
-                },
+                    exportDeclaration: { exportAll: true }
+                }
             ],
             file: {
                 nameOnDisk: this.getFilename(name),
                 exportDeclaration: {
-                    namedExports: [this.getExportedName(name)],
-                },
-            },
+                    namedExports: [this.getExportedName(name)]
+                }
+            }
         };
     }
 

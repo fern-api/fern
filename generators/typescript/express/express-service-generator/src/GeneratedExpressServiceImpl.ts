@@ -5,7 +5,7 @@ import {
     HttpResponse,
     HttpService,
     Package,
-    PathParameter,
+    PathParameter
 } from "@fern-fern/ir-sdk/api";
 import { convertHttpPathToExpressRoute, getTextOfTsNode, maybeAddDocs, PackageId } from "@fern-typescript/commons";
 import { ExpressContext, GeneratedExpressService } from "@fern-typescript/contexts";
@@ -46,7 +46,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         serviceClassName,
         service,
         doNotHandleUnrecognizedErrors,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedExpressServiceImpl.Init) {
         this.serviceClassName = serviceClassName;
         this.service = service;
@@ -59,7 +59,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     public writeToFile(context: ExpressContext): void {
         const methodsInterface = context.sourceFile.addInterface({
             name: this.getMethodsInterfaceName(),
-            isExported: true,
+            isExported: true
         });
 
         for (const endpoint of this.service.endpoints) {
@@ -68,13 +68,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
 
         const serviceClass = context.sourceFile.addClass({
             name: this.serviceClassName,
-            isExported: true,
+            isExported: true
         });
         maybeAddDocs(serviceClass, this.package_.docs);
 
         serviceClass.addProperty({
             scope: Scope.Private,
-            name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME,
+            name: GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
         });
 
         this.addConstructor(serviceClass, context);
@@ -92,8 +92,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         ts.factory.createThis(),
                         GeneratedExpressServiceImpl.ROUTER_PROPERTY_NAME
                     )
-                ),
-            ].map(getTextOfTsNode),
+                )
+            ].map(getTextOfTsNode)
         });
     }
 
@@ -105,15 +105,15 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     name: GeneratedExpressServiceImpl.METHODS_PROPERTY_NAME,
                     isReadonly: true,
                     scope: Scope.Private,
-                    type: this.getMethodsInterfaceName(),
+                    type: this.getMethodsInterfaceName()
                 },
                 {
                     name: middlewareParameterName,
                     type: getTextOfTsNode(
                         ts.factory.createArrayTypeNode(context.externalDependencies.express.RequestHandler())
                     ),
-                    initializer: getTextOfTsNode(ts.factory.createArrayLiteralExpression([])),
-                },
+                    initializer: getTextOfTsNode(ts.factory.createArrayLiteralExpression([]))
+                }
             ],
             statements: [
                 ts.factory.createExpressionStatement(
@@ -125,16 +125,16 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         ts.factory.createToken(ts.SyntaxKind.EqualsToken),
                         context.externalDependencies.express.Router.use({
                             referenceToRouter: context.externalDependencies.express.Router._instantiate({
-                                mergeParams: true,
+                                mergeParams: true
                             }),
                             handlers: [
                                 context.externalDependencies.express.json({ strict: false }),
-                                ts.factory.createSpreadElement(ts.factory.createIdentifier(middlewareParameterName)),
-                            ],
+                                ts.factory.createSpreadElement(ts.factory.createIdentifier(middlewareParameterName))
+                            ]
                         })
                     )
-                ),
-            ].map(getTextOfTsNode),
+                )
+            ].map(getTextOfTsNode)
         });
     }
 
@@ -152,7 +152,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private addEndpointMethodToInterface({
         endpoint,
         methodsInterface,
-        context,
+        context
     }: {
         endpoint: HttpEndpoint;
         methodsInterface: InterfaceDeclaration;
@@ -213,15 +213,15 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     ? this.getReferenceToParsedRequestBody({
                                           endpoint,
                                           requestBody: endpoint.requestBody,
-                                          context,
+                                          context
                                       })
                                     : undefined,
                             response:
                                 endpoint.response != null
                                     ? this.getResponseBodyType(endpoint.response, context)
-                                    : undefined,
+                                    : undefined
                         })
-                    ),
+                    )
                 },
                 {
                     name: RESPONSE_PARAMETER_NAME,
@@ -242,11 +242,11 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                   GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME,
                                                   undefined,
                                                   this.getResponseBodyType(endpoint.response, context)
-                                              ),
+                                              )
                                           ]
                                         : [],
                                     ts.factory.createTypeReferenceNode("Promise", [
-                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+                                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                                     ])
                                 )
                             ),
@@ -282,7 +282,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             COOKIE_OPTIONS_PARAMETER_NAME,
                                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                             context.externalDependencies.express.CookieOptions._getReferenceToType()
-                                        ),
+                                        )
                                     ],
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                                 )
@@ -292,25 +292,25 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 ts.factory.createIdentifier(GeneratedExpressServiceImpl.LOCALS_PROPERTY_NAME),
                                 undefined,
                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                            ),
+                            )
                         ])
-                    ),
-                },
+                    )
+                }
             ],
             returnType: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
                     ts.factory.createTypeReferenceNode("Promise", [
-                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
-                    ]),
+                        ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
+                    ])
                 ])
-            ),
+            )
         });
     }
 
     private addAddMiddlewareMethod({
         serviceClass,
-        context,
+        context
     }: {
         serviceClass: ClassDeclaration;
         context: ExpressContext;
@@ -323,19 +323,19 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             parameters: [
                 {
                     name: HANDLER_PARAMETER_NAME,
-                    type: getTextOfTsNode(context.externalDependencies.express.RequestHandler()),
-                },
+                    type: getTextOfTsNode(context.externalDependencies.express.RequestHandler())
+                }
             ],
             returnType: getTextOfTsNode(ts.factory.createThisTypeNode()),
             statements: [
                 ts.factory.createExpressionStatement(
                     context.externalDependencies.express.Router.use({
                         referenceToRouter: this.getReferenceToRouter(),
-                        handlers: [ts.factory.createIdentifier(HANDLER_PARAMETER_NAME)],
+                        handlers: [ts.factory.createIdentifier(HANDLER_PARAMETER_NAME)]
                     })
                 ),
-                ts.factory.createReturnStatement(ts.factory.createThis()),
-            ].map(getTextOfTsNode),
+                ts.factory.createReturnStatement(ts.factory.createThis())
+            ].map(getTextOfTsNode)
         });
     }
 
@@ -354,7 +354,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                 delete: () => "delete",
                 _other: () => {
                     throw new Error("Unknown ");
-                },
+                }
             }),
             path: convertHttpPathToExpressRoute(endpoint.path),
             buildHandler: ({ expressRequest, expressResponse, next }) => {
@@ -367,7 +367,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                   next,
                                   endpoint,
                                   context,
-                                  requestBody: endpoint.requestBody,
+                                  requestBody: endpoint.requestBody
                               })
                             : [
                                   this.getTryCatch({
@@ -375,13 +375,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                       expressResponse,
                                       next,
                                       endpoint,
-                                      context,
-                                  }),
-                              ]),
+                                      context
+                                  })
+                              ])
                     ],
                     true
                 );
-            },
+            }
         });
     }
 
@@ -391,7 +391,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         next,
         endpoint,
         requestBody,
-        context,
+        context
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
@@ -418,8 +418,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                     expressResponse,
                     next,
                     endpoint,
-                    context,
-                }),
+                    context
+                })
             ];
         }
 
@@ -436,9 +436,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 endpoint,
                                 requestBodyType: requestBody,
                                 referenceToBody: referenceToExpressBody,
-                                context,
+                                context
                             })
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
@@ -460,8 +460,8 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                             expressResponse,
                             next,
                             endpoint,
-                            context,
-                        }),
+                            context
+                        })
                     ],
                     invalid: (requestErrors) => {
                         const ERROR_VARIABLE_NAME = "error";
@@ -470,7 +470,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 context.externalDependencies.express.Response.json({
                                     referenceToExpressResponse: context.externalDependencies.express.Response.status({
                                         referenceToExpressResponse: expressResponse,
-                                        status: 422,
+                                        status: 422
                                     }),
                                     valueToSend: ts.factory.createObjectLiteralExpression([
                                         ts.factory.createPropertyAssignment(
@@ -491,7 +491,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                 undefined,
                                                                 undefined,
                                                                 ERROR_VARIABLE_NAME
-                                                            ),
+                                                            )
                                                         ],
                                                         undefined,
                                                         ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
@@ -512,7 +512,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                                         context.coreUtilities.zurg
                                                                                             .ValidationError.path
                                                                                     )
-                                                                                ),
+                                                                                )
                                                                             ],
                                                                             false
                                                                         ),
@@ -530,20 +530,20 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                 context.coreUtilities.zurg.ValidationError.message
                                                             )
                                                         )
-                                                    ),
+                                                    )
                                                 ]
                                             )
-                                        ),
-                                    ]),
+                                        )
+                                    ])
                                 })
                             ),
                             ts.factory.createExpressionStatement(
                                 ts.factory.createCallExpression(next, undefined, [requestErrors])
-                            ),
+                            )
                         ];
-                    },
+                    }
                 }
-            ),
+            )
         ];
     }
 
@@ -552,7 +552,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressResponse,
         next,
         endpoint,
-        context,
+        context
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
@@ -575,7 +575,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressResponse,
         next,
         endpoint,
-        context,
+        context
     }: {
         expressRequest: ts.Expression;
         expressResponse: ts.Expression;
@@ -617,7 +617,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                           undefined,
                                                           undefined,
                                                           GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME
-                                                      ),
+                                                      )
                                                   ]
                                                 : [],
                                             undefined,
@@ -638,13 +638,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                                                               GeneratedExpressServiceImpl.RESPONSE_BODY_PARAMETER_NAME
                                                                           ),
                                                                           context
-                                                                      ),
+                                                                      )
                                                               })
                                                             : context.externalDependencies.express.Response.sendStatus({
                                                                   referenceToExpressResponse: expressResponse,
-                                                                  status: 204,
+                                                                  status: 204
                                                               })
-                                                    ),
+                                                    )
                                                 ],
                                                 true
                                             )
@@ -653,18 +653,18 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                     ts.factory.createPropertyAssignment(
                                         GeneratedExpressServiceImpl.SEND_COOKIE_RESPONSE_PROPERTY_NAME,
                                         context.externalDependencies.express.Response.cookie._getBoundReference({
-                                            referenceToExpressResponse: expressResponse,
+                                            referenceToExpressResponse: expressResponse
                                         })
                                     ),
                                     ts.factory.createPropertyAssignment(
                                         GeneratedExpressServiceImpl.LOCALS_PROPERTY_NAME,
                                         context.externalDependencies.express.Response.locals({
-                                            referenceToExpressResponse: expressResponse,
+                                            referenceToExpressResponse: expressResponse
                                         })
-                                    ),
+                                    )
                                 ],
                                 true
-                            ),
+                            )
                         ]
                     )
                 )
@@ -683,7 +683,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         expressResponse,
         next,
         context,
-        endpoint,
+        endpoint
     }: {
         expressResponse: ts.Expression;
         next: ts.Expression;
@@ -718,9 +718,9 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                 ts.factory.createExpressionStatement(
                                     context.genericAPIExpressError.getGeneratedGenericAPIExpressError().send({
                                         error: ts.factory.createIdentifier(ERROR_NAME),
-                                        expressResponse,
+                                        expressResponse
                                     })
-                                ),
+                                )
                             ],
                             true
                         ),
@@ -733,18 +733,18 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                               referenceToExpressResponse:
                                                   context.externalDependencies.express.Response.status({
                                                       referenceToExpressResponse: expressResponse,
-                                                      status: 500,
+                                                      status: 500
                                                   }),
-                                              valueToSend: ts.factory.createStringLiteral("Internal Server Error"),
+                                              valueToSend: ts.factory.createStringLiteral("Internal Server Error")
                                           })
-                                      ),
+                                      )
                                   ],
                                   true
                               )
                     ),
                     ts.factory.createExpressionStatement(
                         ts.factory.createCallExpression(next, undefined, [ts.factory.createIdentifier(ERROR_NAME)])
-                    ),
+                    )
                 ],
                 true
             )
@@ -778,7 +778,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             ts.factory.createIdentifier("name")
                                         ),
                                         ts.factory.createTemplateTail(".")
-                                    ),
+                                    )
                                 ]
                             ),
                             ts.factory.createToken(ts.SyntaxKind.PlusToken),
@@ -796,13 +796,13 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                                             ts.factory.createIdentifier("name")
                                         ),
                                         ts.factory.createTemplateTail(" to")
-                                    ),
+                                    )
                                 ]
                             )
                         ),
                         ts.factory.createToken(ts.SyntaxKind.PlusToken),
                         ts.factory.createStringLiteral(" the endpoint's errors list in your Fern Definition.")
-                    ),
+                    )
                 ]
             )
         );
@@ -815,7 +815,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getErrorClassName({
                 referenceToError: ts.factory.createIdentifier(
                     GeneratedExpressServiceImpl.CATCH_BLOCK_ERROR_VARIABLE_NAME
-                ),
+                )
             }),
             ts.factory.createCaseBlock([
                 ...endpoint.errors.map((error, index) =>
@@ -824,7 +824,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
                         index < endpoint.errors.length - 1 ? [] : [ts.factory.createBreakStatement()]
                     )
                 ),
-                ts.factory.createDefaultClause([warnStatement]),
+                ts.factory.createDefaultClause([warnStatement])
             ])
         );
     }
@@ -843,7 +843,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
     private getReferenceToParsedRequestBody({
         endpoint,
         requestBody,
-        context,
+        context
     }: {
         endpoint: HttpEndpoint;
         requestBody: HttpRequestBody;
@@ -863,7 +863,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             },
             _other: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBody.type);
-            },
+            }
         });
     }
 
@@ -871,7 +871,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
         endpoint,
         requestBodyType,
         referenceToBody,
-        context,
+        context
     }: {
         endpoint: HttpEndpoint;
         requestBodyType: HttpRequestBody;
@@ -895,7 +895,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             },
             _other: () => {
                 throw new Error("Unknown HttpRequestBody: " + requestBodyType.type);
-            },
+            }
         });
     }
 
@@ -917,7 +917,7 @@ export class GeneratedExpressServiceImpl implements GeneratedExpressService {
             },
             _other: () => {
                 throw new Error("Unknown HttpResponse: " + response.type);
-            },
+            }
         });
     }
 }

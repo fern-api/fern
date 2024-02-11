@@ -3,14 +3,14 @@ export type PackageDependencies = Record<DependencyType, Record<string, string>>
 export enum DependencyType {
     PROD,
     DEV,
-    PEER,
+    PEER
 }
 
 export class DependencyManager {
     private dependencies: PackageDependencies = {
         [DependencyType.PROD]: {},
         [DependencyType.DEV]: {},
-        [DependencyType.PEER]: {},
+        [DependencyType.PEER]: {}
     };
 
     public addDependency(

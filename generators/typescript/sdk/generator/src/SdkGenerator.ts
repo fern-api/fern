@@ -17,7 +17,7 @@ import {
     NpmPackage,
     PackageId,
     SimpleTypescriptProject,
-    TypescriptProject,
+    TypescriptProject
 } from "@fern-typescript/commons";
 import { GeneratorContext } from "@fern-typescript/contexts";
 import { EndpointErrorUnionGenerator } from "@fern-typescript/endpoint-error-union-generator";
@@ -139,7 +139,7 @@ export class SdkGenerator {
         context,
         npmPackage,
         config,
-        generateJestTests,
+        generateJestTests
     }: SdkGenerator.Init) {
         this.context = context;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -151,7 +151,7 @@ export class SdkGenerator {
         this.coreUtilitiesManager = new CoreUtilitiesManager();
 
         this.project = new Project({
-            useInMemoryFileSystem: true,
+            useInMemoryFileSystem: true
         });
         this.rootDirectory = this.project.createDirectory("/");
         this.typeResolver = new TypeResolver(intermediateRepresentation);
@@ -161,69 +161,69 @@ export class SdkGenerator {
         const apiDirectory: ExportedDirectory[] = [
             {
                 nameOnDisk: "api",
-                exportDeclaration: { namespaceExport },
-            },
+                exportDeclaration: { namespaceExport }
+            }
         ];
 
         const schemaDirectory: ExportedDirectory[] = [
             {
-                nameOnDisk: "serialization",
-            },
+                nameOnDisk: "serialization"
+            }
         ];
 
         this.typeDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport,
+            namespaceExport
         });
         this.typeSchemaDeclarationReferencer = new TypeDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport,
+            namespaceExport
         });
         this.errorDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: apiDirectory,
-            namespaceExport,
+            namespaceExport
         });
         this.sdkErrorSchemaDeclarationReferencer = new SdkErrorDeclarationReferencer({
             containingDirectory: schemaDirectory,
-            namespaceExport,
+            namespaceExport
         });
         this.sdkClientClassDeclarationReferencer = new SdkClientClassDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
         this.endpointErrorUnionDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
         this.requestWrapperDeclarationReferencer = new RequestWrapperDeclarationReferencer({
             containingDirectory: apiDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
         this.sdkInlinedRequestBodySchemaDeclarationReferencer = new SdkInlinedRequestBodyDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
         this.sdkEndpointSchemaDeclarationReferencer = new EndpointDeclarationReferencer({
             containingDirectory: schemaDirectory,
             namespaceExport,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
         this.environmentsDeclarationReferencer = new EnvironmentsDeclarationReferencer({
             containingDirectory: [],
             namespaceExport,
-            environmentsConfig: intermediateRepresentation.environments ?? undefined,
+            environmentsConfig: intermediateRepresentation.environments ?? undefined
         });
         this.genericAPISdkErrorDeclarationReferencer = new GenericAPISdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport,
+            namespaceExport
         });
         this.timeoutSdkErrorDeclarationReferencer = new TimeoutSdkErrorDeclarationReferencer({
             containingDirectory: [],
-            namespaceExport,
+            namespaceExport
         });
 
         this.typeGenerator = new TypeGenerator({
@@ -231,32 +231,32 @@ export class SdkGenerator {
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: config.includeOtherInUnionTypes,
             includeSerdeLayer: config.includeSerdeLayer,
-            noOptionalProperties: config.noOptionalProperties,
+            noOptionalProperties: config.noOptionalProperties
         });
         this.typeSchemaGenerator = new TypeSchemaGenerator({
             includeUtilsOnUnionMembers: config.includeUtilsOnUnionMembers,
-            noOptionalProperties: config.noOptionalProperties,
+            noOptionalProperties: config.noOptionalProperties
         });
         this.typeReferenceExampleGenerator = new TypeReferenceExampleGenerator();
         this.sdkErrorGenerator = new SdkErrorGenerator({
-            neverThrowErrors: config.neverThrowErrors,
+            neverThrowErrors: config.neverThrowErrors
         });
         this.sdkErrorSchemaGenerator = new SdkErrorSchemaGenerator({
             skipValidation: config.skipResponseValidation,
-            includeSerdeLayer: config.includeSerdeLayer,
+            includeSerdeLayer: config.includeSerdeLayer
         });
         this.endpointErrorUnionGenerator = new EndpointErrorUnionGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             includeSerdeLayer: config.includeSerdeLayer,
-            noOptionalProperties: config.noOptionalProperties,
+            noOptionalProperties: config.noOptionalProperties
         });
         this.sdkEndpointTypeSchemasGenerator = new SdkEndpointTypeSchemasGenerator({
             errorResolver: this.errorResolver,
             intermediateRepresentation,
             shouldGenerateErrors: config.neverThrowErrors,
             skipResponseValidation: config.skipResponseValidation,
-            includeSerdeLayer: config.includeSerdeLayer,
+            includeSerdeLayer: config.includeSerdeLayer
         });
         this.requestWrapperGenerator = new RequestWrapperGenerator();
         this.environmentsGenerator = new EnvironmentsGenerator();
@@ -272,12 +272,12 @@ export class SdkGenerator {
             npmPackage,
             targetRuntime: config.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: config.includeContentHeadersOnFileDownloadResponse,
-            includeSerdeLayer: config.includeSerdeLayer,
+            includeSerdeLayer: config.includeSerdeLayer
         });
         this.genericAPISdkErrorGenerator = new GenericAPISdkErrorGenerator();
         this.timeoutSdkErrorGenerator = new TimeoutSdkErrorGenerator();
         this.sdkInlinedRequestBodySchemaGenerator = new SdkInlinedRequestBodySchemaGenerator({
-            includeSerdeLayer: config.includeSerdeLayer,
+            includeSerdeLayer: config.includeSerdeLayer
         });
     }
 
@@ -341,7 +341,7 @@ module.exports = {
             this.generateSnippets();
             const snippets: FernGeneratorExec.Snippets = {
                 endpoints: this.endpointSnippets,
-                types: {},
+                types: {}
             };
             await writeFile(
                 this.config.snippetFilepath,
@@ -357,7 +357,7 @@ module.exports = {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraFiles: this.extraFiles,
-                  extraScripts: this.extraScripts,
+                  extraScripts: this.extraScripts
               })
             : new SimpleTypescriptProject({
                   npmPackage: this.npmPackage,
@@ -367,7 +367,7 @@ module.exports = {
                   extraDependencies: this.config.extraDependencies,
                   extraDevDependencies: this.config.extraDevDependencies,
                   extraFiles: this.extraFiles,
-                  extraScripts: this.extraScripts,
+                  extraScripts: this.extraScripts
               });
     }
 
@@ -382,7 +382,7 @@ module.exports = {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.type.getGeneratedType(typeDeclaration.name).writeToFile(context);
-                },
+                }
             });
         }
     }
@@ -394,7 +394,7 @@ module.exports = {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.typeSchema.getGeneratedTypeSchema(typeDeclaration.name).writeToFile(context);
-                },
+                }
             });
         }
     }
@@ -406,7 +406,7 @@ module.exports = {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkError.getGeneratedSdkError(errorDeclaration.name)?.writeToFile(context);
-                },
+                }
             });
         }
     }
@@ -418,7 +418,7 @@ module.exports = {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkErrorSchema.getGeneratedSdkErrorSchema(errorDeclaration.name)?.writeToFile(context);
-                },
+                }
             });
         }
     }
@@ -429,14 +429,14 @@ module.exports = {
                 this.withSourceFile({
                     filepath: this.endpointErrorUnionDeclarationReferencer.getExportedFilepath({
                         packageId,
-                        endpoint,
+                        endpoint
                     }),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
                         context.endpointErrorUnion
                             .getGeneratedEndpointErrorUnion(packageId, endpoint.name)
                             .writeToFile(context);
-                    },
+                    }
                 });
             }
         });
@@ -448,14 +448,14 @@ module.exports = {
                 this.withSourceFile({
                     filepath: this.sdkEndpointSchemaDeclarationReferencer.getExportedFilepath({
                         packageId,
-                        endpoint,
+                        endpoint
                     }),
                     run: ({ sourceFile, importsManager }) => {
                         const context = this.generateSdkContext({ sourceFile, importsManager });
                         context.sdkEndpointTypeSchemas
                             .getGeneratedEndpointTypeSchemas(packageId, endpoint.name)
                             .writeToFile(context);
-                    },
+                    }
                 });
             }
         });
@@ -468,14 +468,14 @@ module.exports = {
                     this.withSourceFile({
                         filepath: this.requestWrapperDeclarationReferencer.getExportedFilepath({
                             packageId,
-                            endpoint,
+                            endpoint
                         }),
                         run: ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.requestWrapper
                                 .getGeneratedRequestWrapper(packageId, endpoint.name)
                                 .writeToFile(context);
-                        },
+                        }
                     });
                 }
             }
@@ -489,14 +489,14 @@ module.exports = {
                     this.withSourceFile({
                         filepath: this.sdkInlinedRequestBodySchemaDeclarationReferencer.getExportedFilepath({
                             packageId,
-                            endpoint,
+                            endpoint
                         }),
                         run: ({ sourceFile, importsManager }) => {
                             const context = this.generateSdkContext({ sourceFile, importsManager });
                             context.sdkInlinedRequestBodySchema
                                 .getGeneratedInlinedRequestBodySchema(packageId, endpoint.name)
                                 .writeToFile(context);
-                        },
+                        }
                     });
                 }
             }
@@ -515,7 +515,7 @@ module.exports = {
                 run: ({ sourceFile, importsManager }) => {
                     const context = this.generateSdkContext({ sourceFile, importsManager });
                     context.sdkClientClass.getGeneratedSdkClientClass(packageId).writeToFile(context);
-                },
+                }
             });
         }
     }
@@ -544,7 +544,7 @@ module.exports = {
                                             undefined,
                                             undefined,
                                             clientInstantiation
-                                        ),
+                                        )
                                     ],
                                     ts.NodeFlags.Const
                                 )
@@ -555,23 +555,23 @@ module.exports = {
                                     context,
                                     endpointId: endpoint.id,
                                     example,
-                                    clientReference: context.sdkInstanceReferenceForSnippet,
+                                    clientReference: context.sdkInstanceReferenceForSnippet
                                 });
                             if (endpointInvocation == null) {
                                 return undefined;
                             }
                             return [clientAssignment, ts.factory.createExpressionStatement(endpointInvocation)];
-                        },
+                        }
                     });
                     if (snippet != null) {
                         this.endpointSnippets.push({
                             id: {
                                 path: FernGeneratorExec.EndpointPath(this.getFullPathForEndpoint(endpoint)),
-                                method: endpoint.method,
+                                method: endpoint.method
                             },
                             snippet: FernGeneratorExec.EndpointSnippet.typescript({
-                                client: snippet,
-                            }),
+                                client: snippet
+                            })
                         });
                     }
                 }
@@ -600,7 +600,7 @@ module.exports = {
             run: ({ sourceFile, importsManager }) => {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 context.environments.getGeneratedEnvironments().writeToFile(context);
-            },
+            }
         });
     }
 
@@ -611,10 +611,10 @@ module.exports = {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.genericAPISdkErrorGenerator
                     .generateGenericAPISdkError({
-                        errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName(),
+                        errorClassName: this.genericAPISdkErrorDeclarationReferencer.getExportedName()
                     })
                     .writeToFile(context);
-            },
+            }
         });
     }
 
@@ -625,20 +625,20 @@ module.exports = {
                 const context = this.generateSdkContext({ sourceFile, importsManager });
                 this.timeoutSdkErrorGenerator
                     .generateTimeoutSdkError({
-                        errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName(),
+                        errorClassName: this.timeoutSdkErrorDeclarationReferencer.getExportedName()
                     })
                     .writeToFile(context);
-            },
+            }
         });
     }
 
     private withSnippet({
-        run,
+        run
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => ts.Node[] | undefined;
     }): string | undefined {
         const project = new Project({
-            useInMemoryFileSystem: true,
+            useInMemoryFileSystem: true
         });
         const sourceFile = project.createSourceFile("snippet");
         const importsManager = new ImportsManager();
@@ -653,7 +653,7 @@ module.exports = {
 
     private withSourceFile({
         run,
-        filepath,
+        filepath
     }: {
         run: (args: { sourceFile: SourceFile; importsManager: ImportsManager }) => void;
         filepath: ExportedFilePath;
@@ -688,7 +688,7 @@ module.exports = {
             { isRoot: true },
             ...Object.keys(this.intermediateRepresentation.subpackages).map(
                 (subpackageId): PackageId => ({ isRoot: false, subpackageId })
-            ),
+            )
         ];
     }
 
@@ -704,7 +704,7 @@ module.exports = {
     private generateSdkContext(
         {
             sourceFile,
-            importsManager,
+            importsManager
         }: {
             sourceFile: SourceFile;
             importsManager: ImportsManager;
@@ -750,7 +750,7 @@ module.exports = {
             timeoutSdkErrorGenerator: this.timeoutSdkErrorGenerator,
             treatUnknownAsAny: this.config.treatUnknownAsAny,
             includeSerdeLayer: this.config.includeSerdeLayer,
-            targetRuntime: this.config.targetRuntime,
+            targetRuntime: this.config.targetRuntime
         });
     }
 }

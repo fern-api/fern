@@ -3,7 +3,7 @@ export {
     type BaseGeneratedAliasType,
     type BrandedGeneratedAliasType,
     type GeneratedAliasType,
-    type NotBrandedGeneratedAliasType,
+    type NotBrandedGeneratedAliasType
 } from "./GeneratedAliasType";
 export { type GeneratedEnumType } from "./GeneratedEnumType";
 export { type GeneratedObjectType } from "./GeneratedObjectType";

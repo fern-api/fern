@@ -8,7 +8,7 @@ export class RequestWrapperExampleGenerator {
         bodyPropertyName,
         example,
         packageId,
-        endpointName,
+        endpointName
     }: {
         bodyPropertyName: string;
         example: ExampleEndpointCall;
@@ -19,7 +19,7 @@ export class RequestWrapperExampleGenerator {
             bodyPropertyName,
             example,
             packageId,
-            endpointName,
+            endpointName
         });
     }
 }

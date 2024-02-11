@@ -20,7 +20,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
     constructor({
         propertyName,
         getReferenceToPropertyType,
-        noOptionalProperties,
+        noOptionalProperties
     }: SinglePropertySingleUnionTypeGenerator.Init<Context>) {
         this.propertyName = propertyName;
         this.getReferenceToPropertyType = getReferenceToPropertyType;
@@ -37,8 +37,8 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
             {
                 name: this.propertyName,
                 type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
-                hasQuestionToken: !this.noOptionalProperties && type.isOptional,
-            },
+                hasQuestionToken: !this.noOptionalProperties && type.isOptional
+            }
         ];
     }
 
@@ -52,7 +52,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
                 SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 type.isOptional ? ts.factory.createToken(ts.SyntaxKind.QuestionToken) : undefined,
                 type.typeNodeWithoutUndefined
-            ),
+            )
         ];
     }
 
@@ -61,7 +61,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
             ts.factory.createPropertyAssignment(
                 this.propertyName,
                 ts.factory.createIdentifier(SinglePropertySingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
-            ),
+            )
         ];
     }
 
@@ -70,7 +70,7 @@ export class SinglePropertySingleUnionTypeGenerator<Context> implements SingleUn
     }
 
     public getVisitorArguments({
-        localReferenceToUnionValue,
+        localReferenceToUnionValue
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {

@@ -3,7 +3,7 @@ import { NpmPackage } from "@fern-typescript/commons";
 
 export function constructNpmPackage({
     generatorConfig,
-    isPackagePrivate,
+    isPackagePrivate
 }: {
     generatorConfig: FernGeneratorExec.GeneratorConfig;
     isPackagePrivate: boolean;
@@ -19,10 +19,10 @@ export function constructNpmPackage({
                 private: isPackagePrivate,
                 publishInfo: {
                     registryUrl: outputMode.registriesV2.npm.registryUrl,
-                    token: outputMode.registriesV2.npm.token,
+                    token: outputMode.registriesV2.npm.token
                 },
                 license: undefined,
-                repoUrl: undefined,
+                repoUrl: undefined
             };
         case "github":
             if (outputMode.publishInfo != null && outputMode.publishInfo.type !== "npm") {
@@ -41,8 +41,8 @@ export function constructNpmPackage({
                     custom: (custom) => `See ${custom.filename}`,
                     _other: () => {
                         return undefined;
-                    },
-                }),
+                    }
+                })
             };
         default:
             throw new Error(`Encountered unknown output mode: ${outputMode}`);

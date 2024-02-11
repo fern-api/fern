@@ -7,7 +7,7 @@ export function property<RawKey extends string, RawValue, ParsedValue>(
     return {
         rawKey,
         valueSchema,
-        isProperty: true,
+        isProperty: true
     };
 }
 

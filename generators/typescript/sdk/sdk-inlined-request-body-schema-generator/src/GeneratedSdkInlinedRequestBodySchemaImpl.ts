@@ -49,7 +49,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
-            breadcrumbsPrefix: [],
+            breadcrumbsPrefix: []
         });
     }
 
@@ -60,7 +60,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
             context,
-            inlinedRequestBody: this.inlinedRequestBody,
+            inlinedRequestBody: this.inlinedRequestBody
         });
         module.addInterface({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
@@ -69,12 +69,12 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                 return {
                     name: `"${property.name.wireValue}"`,
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                    hasQuestionToken: type.isOptional,
+                    hasQuestionToken: type.isOptional
                 };
             }),
             extends: this.inlinedRequestBody.extends.map((extension) =>
                 getTextOfTsNode(context.typeSchema.getReferenceToRawNamedType(extension).getTypeNode())
-            ),
+            )
         });
     }
 
@@ -97,7 +97,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                     nonBodyKeys.map((nonBodyKey) =>
                         ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(nonBodyKey.propertyName))
                     )
-                ),
+                )
             ]);
         }
     }
@@ -105,7 +105,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
     protected buildSchema(context: SdkContext): Zurg.Schema {
         const nonLiteralProperties = this.getAllNonLiteralPropertiesFromInlinedRequest({
             context,
-            inlinedRequestBody: this.inlinedRequestBody,
+            inlinedRequestBody: this.inlinedRequestBody
         });
         let schema = context.coreUtilities.zurg.object(
             nonLiteralProperties.map((property) => ({
@@ -113,9 +113,9 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
                     parsed: context.requestWrapper
                         .getGeneratedRequestWrapper(this.packageId, this.endpoint.name)
                         .getInlinedRequestBodyPropertyKey(property),
-                    raw: property.name.wireValue,
+                    raw: property.name.wireValue
                 },
-                value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
+                value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             }))
         );
 
@@ -128,7 +128,7 @@ export class GeneratedSdkInlinedRequestBodySchemaImpl
 
     private getAllNonLiteralPropertiesFromInlinedRequest({
         context,
-        inlinedRequestBody,
+        inlinedRequestBody
     }: {
         context: SdkContext;
         inlinedRequestBody: InlinedRequestBody;

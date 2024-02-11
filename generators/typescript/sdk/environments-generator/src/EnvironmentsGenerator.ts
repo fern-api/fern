@@ -18,7 +18,7 @@ export class EnvironmentsGenerator {
     public generateEnvironments({
         environmentEnumName,
         environmentUrlsTypeName,
-        environmentsConfig,
+        environmentsConfig
     }: EnvironmentsGenerator.generateEnvironments.Args): GeneratedEnvironments {
         if (environmentsConfig == null) {
             return new EmptyGeneratedEnvironmentsImpl();
@@ -28,18 +28,18 @@ export class EnvironmentsGenerator {
                 new GeneratedSingleUrlEnvironmentsImpl({
                     environments: singleBaseUrlEnvironments,
                     environmentEnumName,
-                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
                 }),
             multipleBaseUrls: (mulitpleBaseUrlEnvironments) =>
                 new GeneratedMultipleUrlsEnvironmentsImpl({
                     environments: mulitpleBaseUrlEnvironments,
                     environmentEnumName,
                     environmentUrlsTypeName,
-                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined,
+                    defaultEnvironmentId: environmentsConfig.defaultEnvironment ?? undefined
                 }),
             _other: () => {
                 throw new Error("Unknown environments: " + environmentsConfig.environments.type);
-            },
+            }
         });
     }
 }

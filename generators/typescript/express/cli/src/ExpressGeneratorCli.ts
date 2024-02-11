@@ -21,7 +21,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             noSerdeLayer,
             outputEsm: parsed?.outputEsm ?? false,
-            outputSourceFiles: parsed?.outputSourceFiles ?? false,
+            outputSourceFiles: parsed?.outputSourceFiles ?? false
         };
     }
 
@@ -30,7 +30,7 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
         customConfig,
         npmPackage,
         generatorContext,
-        intermediateRepresentation,
+        intermediateRepresentation
     }: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: ExpressCustomConfig;
@@ -53,14 +53,14 @@ export class ExpressGeneratorCli extends AbstractGeneratorCli<ExpressCustomConfi
                 includeOtherInUnionTypes: customConfig.includeOtherInUnionTypes,
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
-                outputEsm: customConfig.outputEsm,
-            },
+                outputEsm: customConfig.outputEsm
+            }
         });
 
         const typescriptProject = await expressGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await expressGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });
 
         return persistedTypescriptProject;

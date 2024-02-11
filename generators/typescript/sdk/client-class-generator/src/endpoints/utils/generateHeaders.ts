@@ -14,7 +14,7 @@ export function generateHeaders({
     service,
     endpoint,
     idempotencyHeaders,
-    additionalHeaders = [],
+    additionalHeaders = []
 }: {
     context: SdkContext;
     generatedSdkClientClass: GeneratedSdkClientClassImpl;
@@ -30,7 +30,7 @@ export function generateHeaders({
     if (authorizationHeaderValue != null) {
         elements.push({
             header: "Authorization",
-            value: authorizationHeaderValue,
+            value: authorizationHeaderValue
         });
     }
 
@@ -39,7 +39,7 @@ export function generateHeaders({
     for (const header of [...service.headers, ...endpoint.headers]) {
         elements.push({
             header: header.name.wireValue,
-            value: getValueExpressionForHeader({ header, context, requestParameter }),
+            value: getValueExpressionForHeader({ header, context, requestParameter })
         });
     }
 
@@ -47,7 +47,7 @@ export function generateHeaders({
         for (const header of idempotencyHeaders) {
             elements.push({
                 header: header.name.wireValue,
-                value: getValueExpressionForIdempotencyHeader({ header, context }),
+                value: getValueExpressionForIdempotencyHeader({ header, context })
             });
         }
     }
@@ -62,7 +62,7 @@ export function generateHeaders({
 function getValueExpressionForHeader({
     header,
     context,
-    requestParameter,
+    requestParameter
 }: {
     header: HttpHeader;
     context: SdkContext;
@@ -84,7 +84,7 @@ function getValueExpressionForHeader({
 
 function getValueExpressionForIdempotencyHeader({
     header,
-    context,
+    context
 }: {
     header: HttpHeader;
     context: SdkContext;

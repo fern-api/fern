@@ -44,17 +44,17 @@ export class GeneratedEndpointErrorSchemaImpl implements GeneratedEndpointErrorS
                 if (errorDeclaration.type == null) {
                     return new RawNoPropertiesSingleUnionType({
                         discriminant: discriminationStrategy.discriminant,
-                        discriminantValue: errorDeclaration.discriminantValue,
+                        discriminantValue: errorDeclaration.discriminantValue
                     });
                 } else {
                     return new RawSinglePropertyErrorSingleUnionType({
                         discriminant: discriminationStrategy.discriminant,
                         discriminantValue: errorDeclaration.discriminantValue,
                         errorName: responseError.error,
-                        discriminationStrategy,
+                        discriminationStrategy
                     });
                 }
-            }),
+            })
         });
     }
 

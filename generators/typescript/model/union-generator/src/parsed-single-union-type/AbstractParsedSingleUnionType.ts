@@ -35,10 +35,10 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
             jsonProperties: [
                 {
                     name: generatedUnion.discriminant,
-                    type: getTextOfTsNode(this.getDiscriminantValueType()),
+                    type: getTextOfTsNode(this.getDiscriminantValueType())
                 },
-                ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context),
-            ],
+                ...this.singleUnionType.getNonDiscriminantPropertiesForInterface(context)
+            ]
         };
     }
 
@@ -68,7 +68,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                                   ts.factory.createTypeParameterDeclaration(
                                                       undefined,
                                                       GeneratedUnionImpl.VISITOR_RETURN_TYPE
-                                                  ),
+                                                  )
                                               ],
                                               [
                                                   ts.factory.createParameterDeclaration(
@@ -87,7 +87,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                                       AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME,
                                                       undefined,
                                                       generatedUnion.getReferenceToVisitorInterface(context)
-                                                  ),
+                                                  )
                                               ],
                                               undefined,
                                               ts.factory.createBlock(
@@ -105,20 +105,20 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                                                                   ts.factory.createThis(),
                                                                   ts.factory.createIdentifier(
                                                                       AbstractParsedSingleUnionType.VISITOR_PARAMETER_NAME
-                                                                  ),
+                                                                  )
                                                               ]
                                                           )
-                                                      ),
+                                                      )
                                                   ],
                                                   true
                                               )
                                           )
-                                      ),
+                                      )
                                   ]
                                 : this.getNonVisitProperties({ context, generatedUnion }),
                             true
                         )
-                    ),
+                    )
                 ],
                 true
             )
@@ -130,7 +130,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
     }
 
     public getVisitMethod({
-        localReferenceToUnionValue,
+        localReferenceToUnionValue
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.ArrowFunction {
@@ -143,7 +143,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                     undefined,
                     undefined,
                     GeneratedUnionImpl.VISITOR_PARAMETER_NAME
-                ),
+                )
             ],
             undefined,
             undefined,
@@ -160,7 +160,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
 
     public getVisitMethodSignature(context: Context, generatedUnion: GeneratedUnionImpl<Context>): ts.FunctionTypeNode {
         const parameterType = this.singleUnionType.getVisitMethodParameterType(context, {
-            discriminant: generatedUnion.discriminant,
+            discriminant: generatedUnion.discriminant
         });
         return ts.factory.createFunctionTypeNode(
             undefined,
@@ -173,7 +173,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
                           GeneratedUnionImpl.VISITEE_PARAMETER_NAME,
                           undefined,
                           parameterType
-                      ),
+                      )
                   ]
                 : [],
             ts.factory.createTypeReferenceNode(ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE))
@@ -182,7 +182,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
 
     public invokeVisitMethod({
         localReferenceToUnionValue,
-        localReferenceToVisitor,
+        localReferenceToVisitor
     }: {
         localReferenceToUnionValue: ts.Expression;
         localReferenceToVisitor: ts.Expression;
@@ -206,7 +206,7 @@ export abstract class AbstractParsedSingleUnionType<Context extends ModelContext
 
     protected abstract getNonVisitProperties({
         context,
-        generatedUnion,
+        generatedUnion
     }: {
         context: Context;
         generatedUnion: GeneratedUnionImpl<Context>;

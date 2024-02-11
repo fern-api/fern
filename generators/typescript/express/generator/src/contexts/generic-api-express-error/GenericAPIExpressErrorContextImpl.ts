@@ -23,7 +23,7 @@ export class GenericAPIExpressErrorContextImpl implements GenericAPIExpressError
         genericAPIExpressErrorDeclarationReferencer,
         genericAPIExpressErrorGenerator,
         importsManager,
-        sourceFile,
+        sourceFile
     }: GenericAPIExpressErrorContextImpl.Init) {
         this.importsManager = importsManager;
         this.sourceFile = sourceFile;
@@ -34,13 +34,13 @@ export class GenericAPIExpressErrorContextImpl implements GenericAPIExpressError
     public getReferenceToGenericAPIExpressError(): Reference {
         return this.genericAPIExpressErrorDeclarationReferencer.getReferenceToError({
             importsManager: this.importsManager,
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 
     public getGeneratedGenericAPIExpressError(): GeneratedGenericAPIExpressError {
         return this.genericAPIExpressErrorGenerator.generateGenericAPIExpressError({
-            errorClassName: this.genericAPIExpressErrorDeclarationReferencer.getExportedName(),
+            errorClassName: this.genericAPIExpressErrorDeclarationReferencer.getExportedName()
         });
     }
 }

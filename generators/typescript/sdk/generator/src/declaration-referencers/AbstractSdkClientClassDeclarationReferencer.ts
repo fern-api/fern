@@ -5,7 +5,7 @@ import {
     ExportDeclaration,
     ExportedDirectory,
     getExportedDirectoriesForFernFilepath,
-    PackageId,
+    PackageId
 } from "@fern-typescript/commons";
 import { PackageResolver } from "@fern-typescript/resolvers";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -39,16 +39,16 @@ export abstract class AbstractSdkClientClassDeclarationReferencer<Name> extends 
                         ? entries(subExports).reduce(
                               (acc, [pathToSubExport, exportDeclaration]) => ({
                                   ...acc,
-                                  [join(RelativeFilePath.of(CLIENT_DIRECTORY), pathToSubExport)]: exportDeclaration,
+                                  [join(RelativeFilePath.of(CLIENT_DIRECTORY), pathToSubExport)]: exportDeclaration
                               }),
                               {}
                           )
-                        : undefined,
+                        : undefined
             }),
             {
                 nameOnDisk: CLIENT_DIRECTORY,
-                exportDeclaration: { exportAll: true },
-            },
+                exportDeclaration: { exportAll: true }
+            }
         ];
     }
 

@@ -25,7 +25,7 @@ export class ImportsManager {
         const importsForModuleSpecifier = (this.imports[moduleSpecifier] ??= {
             namespaceImports: new Set(),
             namedImports: [],
-            defaultImports: new Set(),
+            defaultImports: new Set()
         });
 
         if (importDeclaration.namespaceImport != null) {
@@ -70,7 +70,7 @@ export class ImportsManager {
             if (namespaceImport != null) {
                 sourceFile.addImportDeclaration({
                     moduleSpecifier,
-                    namespaceImport,
+                    namespaceImport
                 });
             }
 
@@ -81,8 +81,8 @@ export class ImportsManager {
                     defaultImport,
                     namedImports: [...combinedImportDeclarations.namedImports].sort().map((namedImport) => ({
                         name: namedImport.name,
-                        alias: namedImport.alias,
-                    })),
+                        alias: namedImport.alias
+                    }))
                 });
             }
         }

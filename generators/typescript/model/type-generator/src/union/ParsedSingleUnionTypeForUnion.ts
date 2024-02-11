@@ -3,14 +3,14 @@ import {
     SingleUnionType,
     SingleUnionTypeProperties,
     SingleUnionTypeProperty,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { ModelContext } from "@fern-typescript/contexts";
 import {
     AbstractKnownSingleUnionType,
     NoPropertiesSingleUnionTypeGenerator,
     SinglePropertySingleUnionTypeGenerator,
-    SingleUnionTypeGenerator,
+    SingleUnionTypeGenerator
 } from "@fern-typescript/union-generator";
 import { SamePropertiesAsObjectSingleUnionTypeGenerator } from "./SamePropertiesAsObjectSingleUnionTypeGenerator";
 
@@ -34,7 +34,7 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
         union,
         includeUtilsOnUnionMembers,
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: ParsedSingleUnionTypeForUnion.Init) {
         super({
             singleUnionType: SingleUnionTypeProperties._visit<SingleUnionTypeGenerator<Context>>(
@@ -46,18 +46,18 @@ export class ParsedSingleUnionTypeForUnion<Context extends ModelContext> extends
                     singleProperty: (singleProperty) =>
                         new SinglePropertySingleUnionTypeGenerator({
                             propertyName: ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
-                                includeSerdeLayer,
+                                includeSerdeLayer
                             }),
                             getReferenceToPropertyType: (context) =>
                                 context.type.getReferenceToType(singleProperty.type),
-                            noOptionalProperties,
+                            noOptionalProperties
                         }),
                     _other: () => {
                         throw new Error("Unknown SingleUnionTypeProperties: " + singleUnionType.shape.propertiesType);
-                    },
+                    }
                 }
             ),
-            includeUtilsOnUnionMembers,
+            includeUtilsOnUnionMembers
         });
 
         this.union = union;

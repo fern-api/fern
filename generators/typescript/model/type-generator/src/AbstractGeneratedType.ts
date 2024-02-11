@@ -37,7 +37,7 @@ export abstract class AbstractGeneratedType<Shape, Context> implements BaseGener
         docs,
         fernFilepath,
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: AbstractGeneratedType.Init<Shape, Context>) {
         this.typeName = typeName;
         this.shape = shape;

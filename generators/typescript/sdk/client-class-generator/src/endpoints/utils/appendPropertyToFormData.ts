@@ -8,7 +8,7 @@ export function appendPropertyToFormData({
     property,
     context,
     referenceToFormData,
-    requestParameter,
+    requestParameter
 }: {
     property: FileUploadRequestProperty;
     context: SdkContext;
@@ -20,7 +20,7 @@ export function appendPropertyToFormData({
             let statement = context.externalDependencies.formData.append({
                 referencetoFormData: referenceToFormData,
                 key: property.key.wireValue,
-                value: ts.factory.createIdentifier(getParameterNameForFile(property)),
+                value: ts.factory.createIdentifier(getParameterNameForFile(property))
             });
 
             if (property.isOptional) {
@@ -56,7 +56,7 @@ export function appendPropertyToFormData({
                                 undefined,
                                 undefined,
                                 undefined
-                            ),
+                            )
                         ],
                         ts.NodeFlags.Const
                     ),
@@ -70,8 +70,8 @@ export function appendPropertyToFormData({
                                     ts.factory.createIdentifier(FOR_LOOP_ITEM_VARIABLE_NAME),
                                     property.valueType,
                                     context
-                                ),
-                            }),
+                                )
+                            })
                         ],
                         true
                     )
@@ -110,8 +110,8 @@ export function appendPropertyToFormData({
                     referencetoFormData: referenceToFormData,
                     key: property.name.wireValue,
                     value: context.type.stringify(referenceToBodyProperty, property.valueType, {
-                        includeNullCheckIfOptional: false,
-                    }),
+                        includeNullCheckIfOptional: false
+                    })
                 });
             }
 
@@ -130,7 +130,7 @@ export function appendPropertyToFormData({
         },
         _other: () => {
             throw new Error("Unknown addPropertyToFormData: " + property.type);
-        },
+        }
     });
 }
 
@@ -145,7 +145,7 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 optional: (itemType) => isMaybeIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
-                },
+                }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
@@ -157,14 +157,14 @@ function isMaybeIterable(typeReference: TypeReference, context: SdkContext): boo
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeIterable(member.type, context)),
                 _other: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape.type);
-                },
+                }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
             throw new Error("Unknown TypeReference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -183,7 +183,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                 optional: (itemType) => stringifyIterableItemType(value, itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
-                },
+                }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
@@ -202,7 +202,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
                     context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
                 _other: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape.type);
-                },
+                }
             });
         },
         primitive: () => {
@@ -211,7 +211,7 @@ function stringifyIterableItemType(value: ts.Expression, iterable: TypeReference
         unknown: () => context.type.stringify(value, TypeReference.unknown(), { includeNullCheckIfOptional: false }),
         _other: () => {
             throw new Error("Unknown TypeReference: " + iterable.type);
-        },
+        }
     });
 }
 
@@ -226,7 +226,7 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                 optional: (itemType) => isDefinitelyIterable(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
-                },
+                }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
@@ -239,14 +239,14 @@ function isDefinitelyIterable(typeReference: TypeReference, context: SdkContext)
                     members.every((member) => isDefinitelyIterable(member.type, context)),
                 _other: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape.type);
-                },
+                }
             });
         },
         primitive: () => false,
         unknown: () => false,
         _other: () => {
             throw new Error("Unknown TypeReference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -261,7 +261,7 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 optional: (itemType) => isMaybeList(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
-                },
+                }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
@@ -273,14 +273,14 @@ function isMaybeList(typeReference: TypeReference, context: SdkContext): boolean
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeList(member.type, context)),
                 _other: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape.type);
-                },
+                }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
             throw new Error("Unknown TypeReference: " + typeReference.type);
-        },
+        }
     });
 }
 
@@ -295,7 +295,7 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 optional: (itemType) => isMaybeSet(itemType, context),
                 _other: () => {
                     throw new Error("Unknown ContainerType: " + container.type);
-                },
+                }
             }),
         named: (typeName) => {
             const typeDeclaration = context.type.getTypeDeclaration(typeName);
@@ -307,13 +307,13 @@ function isMaybeSet(typeReference: TypeReference, context: SdkContext): boolean 
                 undiscriminatedUnion: ({ members }) => members.some((member) => isMaybeSet(member.type, context)),
                 _other: () => {
                     throw new Error("Unknown Type: " + typeDeclaration.shape.type);
-                },
+                }
             });
         },
         primitive: () => false,
         unknown: () => true,
         _other: () => {
             throw new Error("Unknown TypeReference: " + typeReference.type);
-        },
+        }
     });
 }

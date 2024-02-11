@@ -7,8 +7,8 @@ export class ExpressServiceDeclarationReferencer extends AbstractExpressServiceD
         return {
             directories: [...this.getExportedDirectory(name)],
             file: {
-                nameOnDisk: this.getFilename(name),
-            },
+                nameOnDisk: this.getFilename(name)
+            }
         };
     }
 

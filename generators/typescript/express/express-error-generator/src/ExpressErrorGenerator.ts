@@ -14,11 +14,11 @@ export declare namespace ExpressErrorGenerator {
 export class ExpressErrorGenerator {
     public generateError({
         errorDeclaration,
-        errorName,
+        errorName
     }: ExpressErrorGenerator.generateError.Args): GeneratedExpressError {
         return new GeneratedExpressErrorImpl({
             errorClassName: errorName,
-            errorDeclaration,
+            errorDeclaration
         });
     }
 }

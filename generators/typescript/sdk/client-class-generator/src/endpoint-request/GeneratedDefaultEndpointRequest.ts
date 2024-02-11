@@ -7,7 +7,7 @@ import {
     InlinedRequestBody,
     IntermediateRepresentation,
     SdkRequest,
-    SdkRequestShape,
+    SdkRequestShape
 } from "@fern-fern/ir-sdk/api";
 import { Fetcher, GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -56,7 +56,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         service,
         endpoint,
         requestBody,
-        generatedSdkClientClass,
+        generatedSdkClientClass
     }: GeneratedDefaultEndpointRequest.Init) {
         this.ir = ir;
         this.packageId = packageId;
@@ -76,18 +76,18 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                               requestBodyReference,
                               service,
                               endpoint,
-                              sdkRequest,
+                              sdkRequest
                           });
                       },
                       wrapper: () => new RequestWrapperParameter({ packageId, service, endpoint, sdkRequest }),
                       _other: () => {
                           throw new Error("Unknown SdkRequest: " + this.endpoint.sdkRequest?.shape.type);
-                      },
+                      }
                   })
                 : undefined;
 
         this.queryParams = new GeneratedQueryParams({
-            requestParameter: this.requestParameter,
+            requestParameter: this.requestParameter
         });
     }
 
@@ -96,7 +96,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         for (const pathParameter of getPathParametersForEndpointSignature(this.service, this.endpoint)) {
             parameters.push({
                 name: getParameterNameForPathParameter(pathParameter),
-                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode),
+                type: getTextOfTsNode(context.type.getReferenceToType(pathParameter.valueType).typeNode)
             });
         }
         if (this.requestParameter != null) {
@@ -108,7 +108,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     public getExampleEndpointParameters({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;
@@ -143,7 +143,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
         if (this.requestParameter != null) {
             statements.push(
                 ...this.requestParameter.getInitialStatements(context, {
-                    variablesInScope: this.getEndpointParameters(context).map((param) => param.name),
+                    variablesInScope: this.getEndpointParameters(context).map((param) => param.name)
                 })
             );
         }
@@ -160,7 +160,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             headers: this.getHeaders(context),
             queryParameters: this.queryParams.getReferenceTo(context),
             body: this.getSerializedRequestBodyWithNullCheck(context),
-            contentType: "application/json",
+            contentType: "application/json"
         };
     }
 
@@ -171,7 +171,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
             generatedSdkClientClass: this.generatedSdkClientClass,
             idempotencyHeaders: this.ir.idempotencyHeaders,
             service: this.service,
-            endpoint: this.endpoint,
+            endpoint: this.endpoint
         });
     }
 
@@ -220,7 +220,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                 return this.serializeInlinedRequestBodyWithLiterals({
                     inlinedRequestBody: requestBody,
                     serializeExpression,
-                    context,
+                    context
                 });
             }
             case "reference":
@@ -235,7 +235,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
     private serializeInlinedRequestBodyWithLiterals({
         inlinedRequestBody,
         serializeExpression,
-        context,
+        context
     }: {
         inlinedRequestBody: InlinedRequestBody;
         serializeExpression: ts.Expression;
@@ -254,7 +254,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                             ? ts.factory.createTrue()
                             : ts.factory.createFalse()
                     );
-                }),
+                })
             ]);
         } else {
             return serializeExpression;
@@ -263,7 +263,7 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
 
     private getLiteralProperties({
         inlinedRequestBody,
-        context,
+        context
     }: {
         inlinedRequestBody: InlinedRequestBody;
         context: SdkContext;
@@ -278,9 +278,9 @@ export class GeneratedDefaultEndpointRequest implements GeneratedEndpointRequest
                         boolean: (val) => val,
                         _other: () => {
                             throw new Error("Encountered non-boolean, non-string literal");
-                        },
+                        }
                     }),
-                    propertyWireKey: property.name.wireValue,
+                    propertyWireKey: property.name.wireValue
                 });
             }
         }

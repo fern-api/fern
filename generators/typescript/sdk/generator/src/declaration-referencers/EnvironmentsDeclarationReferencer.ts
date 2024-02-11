@@ -3,7 +3,7 @@ import {
     ExportedFilePath,
     getReferenceToExportViaNamespaceImport,
     ImportsManager,
-    Reference,
+    Reference
 } from "@fern-typescript/commons";
 import { SourceFile } from "ts-morph";
 import { AbstractDeclarationReferencer } from "./AbstractDeclarationReferencer";
@@ -33,9 +33,9 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             file: {
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: {
-                    namedExports,
-                },
-            },
+                    namedExports
+                }
+            }
         };
     }
 
@@ -53,7 +53,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
 
     public getReferenceToEnvironmentsEnum({
         importsManager,
-        sourceFile,
+        sourceFile
     }: {
         importsManager: ImportsManager;
         sourceFile: SourceFile;
@@ -61,13 +61,13 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         return this.getReferenceToExport({
             importsManager,
             sourceFile,
-            exportedName: this.getExportedNameOfEnvironmentsEnum(),
+            exportedName: this.getExportedNameOfEnvironmentsEnum()
         });
     }
 
     public getReferenceToEnvironmentUrls({
         importsManager,
-        sourceFile,
+        sourceFile
     }: {
         importsManager: ImportsManager;
         sourceFile: SourceFile;
@@ -75,14 +75,14 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
         return this.getReferenceToExport({
             importsManager,
             sourceFile,
-            exportedName: this.getExportedNameOfEnvironmentUrls(),
+            exportedName: this.getExportedNameOfEnvironmentUrls()
         });
     }
 
     private getReferenceToExport({
         importsManager,
         sourceFile,
-        exportedName,
+        exportedName
     }: {
         importsManager: ImportsManager;
         sourceFile: SourceFile;
@@ -94,7 +94,7 @@ export class EnvironmentsDeclarationReferencer extends AbstractDeclarationRefere
             filepathInsideNamespaceImport: undefined,
             namespaceImport: "environments",
             importsManager,
-            referencedIn: sourceFile,
+            referencedIn: sourceFile
         });
     }
 }

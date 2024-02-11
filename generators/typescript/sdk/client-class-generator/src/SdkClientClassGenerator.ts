@@ -54,7 +54,7 @@ export class SdkClientClassGenerator {
         npmPackage,
         targetRuntime,
         includeContentHeadersOnFileDownloadResponse,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: SdkClientClassGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -72,7 +72,7 @@ export class SdkClientClassGenerator {
 
     public generateService({
         packageId,
-        serviceClassName,
+        serviceClassName
     }: SdkClientClassGenerator.generateService.Args): GeneratedSdkClientClass {
         return new GeneratedSdkClientClassImpl({
             intermediateRepresentation: this.intermediateRepresentation,
@@ -88,7 +88,7 @@ export class SdkClientClassGenerator {
             npmPackage: this.npmPackage,
             targetRuntime: this.targetRuntime,
             includeContentHeadersOnFileDownloadResponse: this.includeContentHeadersOnFileDownloadResponse,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

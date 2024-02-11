@@ -34,7 +34,7 @@ export class SdkEndpointTypeSchemasGenerator {
         intermediateRepresentation,
         shouldGenerateErrors,
         skipResponseValidation,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: SdkEndpointTypeSchemasGenerator.Init) {
         this.errorResolver = errorResolver;
         this.intermediateRepresentation = intermediateRepresentation;
@@ -46,7 +46,7 @@ export class SdkEndpointTypeSchemasGenerator {
     public generateEndpointTypeSchemas({
         packageId,
         service,
-        endpoint,
+        endpoint
     }: SdkEndpointTypeSchemasGenerator.generateEndpointTypeSchemas.Args): GeneratedSdkEndpointTypeSchemas {
         return new GeneratedSdkEndpointTypeSchemasImpl({
             packageId,
@@ -56,7 +56,7 @@ export class SdkEndpointTypeSchemasGenerator {
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             shouldGenerateErrors: this.shouldGenerateErrors,
             skipResponseValidation: this.skipResponseValidation,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

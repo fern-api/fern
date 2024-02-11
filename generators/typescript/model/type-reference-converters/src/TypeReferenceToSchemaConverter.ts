@@ -61,7 +61,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
             boolean: (value) => this.zurg.booleanLiteral(value),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
-            },
+            }
         });
     }
 
@@ -72,7 +72,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
     protected override mapWithNonEnumKeys({ keyType, valueType }: MapType): Zurg.Schema {
         return this.zurg.record({
             keySchema: this.convert(keyType),
-            valueSchema: this.convert(valueType),
+            valueSchema: this.convert(valueType)
         });
     }
 
@@ -80,7 +80,7 @@ export class TypeReferenceToSchemaConverter extends AbstractTypeReferenceConvert
         const valueSchema = this.convert(valueType);
         return this.zurg.record({
             keySchema: this.convert(keyType),
-            valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional(),
+            valueSchema: valueSchema.isOptional ? valueSchema : valueSchema.optional()
         });
     }
 

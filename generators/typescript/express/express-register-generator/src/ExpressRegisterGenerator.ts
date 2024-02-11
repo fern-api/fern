@@ -22,7 +22,7 @@ export class ExpressRegisterGenerator {
         intermediateRepresentation,
         registerFunctionName,
         areImplementationsOptional,
-        packageResolver,
+        packageResolver
     }: ExpressRegisterGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.registerFunctionName = registerFunctionName;
@@ -38,7 +38,7 @@ export class ExpressRegisterGenerator {
             intermediateRepresentation: this.intermediateRepresentation,
             registerFunctionName: this.registerFunctionName,
             areImplementationsOptional: this.areImplementationsOptional,
-            packageResolver: this.packageResolver,
+            packageResolver: this.packageResolver
         });
     }
 }

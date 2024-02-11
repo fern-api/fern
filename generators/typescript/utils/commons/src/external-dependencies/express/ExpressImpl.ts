@@ -14,7 +14,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     pathParameters,
                     request,
                     response,
-                    queryParameters,
+                    queryParameters
                 }: {
                     pathParameters: ts.TypeNode | undefined;
                     request: ts.TypeNode | undefined;
@@ -27,12 +27,12 @@ export class ExpressImpl extends ExternalDependency implements Express {
                             pathParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             response ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
                             request ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
-                            queryParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword),
+                            queryParameters ?? ts.factory.createKeywordTypeNode(ts.SyntaxKind.NeverKeyword)
                         ]
                     );
                 }
             )
-        ),
+        )
     };
 
     public readonly Response = {
@@ -47,7 +47,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
 
         json: ({
             referenceToExpressResponse,
-            valueToSend,
+            valueToSend
         }: {
             referenceToExpressResponse: ts.Expression;
             valueToSend: ts.Expression;
@@ -61,7 +61,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
 
         cookie: {
             _getBoundReference: ({
-                referenceToExpressResponse,
+                referenceToExpressResponse
             }: {
                 referenceToExpressResponse: ts.Expression;
             }): ts.Expression => {
@@ -76,12 +76,12 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     undefined,
                     [referenceToExpressResponse]
                 );
-            },
+            }
         },
 
         status: ({
             referenceToExpressResponse,
-            status,
+            status
         }: {
             referenceToExpressResponse: ts.Expression;
             status: number;
@@ -94,7 +94,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
         },
         sendStatus: ({
             referenceToExpressResponse,
-            status,
+            status
         }: {
             referenceToExpressResponse: ts.Expression;
             status: number;
@@ -107,7 +107,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
         },
         locals: ({ referenceToExpressResponse }: { referenceToExpressResponse: ts.Expression }): ts.Expression => {
             return ts.factory.createPropertyAccessExpression(referenceToExpressResponse, "locals");
-        },
+        }
     };
 
     public readonly Express = this.withDefaultImport("express", (withImport, express) =>
@@ -129,7 +129,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
     public readonly Router = {
         use: ({
             referenceToRouter,
-            handlers,
+            handlers
         }: {
             referenceToRouter: ts.Expression;
             handlers: ts.Expression[];
@@ -153,10 +153,10 @@ export class ExpressImpl extends ExternalDependency implements Express {
                                       ts.factory.createPropertyAssignment(
                                           ts.factory.createIdentifier("mergeParams"),
                                           mergeParams ? ts.factory.createTrue() : ts.factory.createFalse()
-                                      ),
+                                      )
                                   ],
                                   false
-                              ),
+                              )
                           ]
                         : []
                 );
@@ -175,7 +175,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
             referenceToRouter,
             method,
             path,
-            buildHandler,
+            buildHandler
         }: {
             referenceToRouter: ts.Expression;
             method: ExpressHttpVerb;
@@ -217,27 +217,27 @@ export class ExpressImpl extends ExternalDependency implements Express {
                                     undefined,
                                     undefined,
                                     NEXT_PARAMETER_NAME
-                                ),
+                                )
                             ],
                             undefined,
                             undefined,
                             buildHandler({
                                 expressRequest: ts.factory.createIdentifier(REQUEST_PARAMETER_NAME),
                                 expressResponse: ts.factory.createIdentifier(RESPONSE_PARAMETER_NAME),
-                                next: ts.factory.createIdentifier(NEXT_PARAMETER_NAME),
+                                next: ts.factory.createIdentifier(NEXT_PARAMETER_NAME)
                             })
-                        ),
+                        )
                     ]
                 )
             );
-        },
+        }
     };
 
     public readonly App = {
         use: ({
             referenceToApp,
             path,
-            router,
+            router
         }: {
             referenceToApp: ts.Expression;
             path: ts.Expression;
@@ -248,7 +248,7 @@ export class ExpressImpl extends ExternalDependency implements Express {
                 undefined,
                 [path, router]
             );
-        },
+        }
     };
 
     public readonly json = this.withDefaultImport("express", (withImport, express) =>
@@ -274,6 +274,6 @@ export class ExpressImpl extends ExternalDependency implements Express {
                     ts.factory.createQualifiedName(ts.factory.createIdentifier(express), "CookieOptions")
                 );
             })
-        ),
+        )
     };
 }

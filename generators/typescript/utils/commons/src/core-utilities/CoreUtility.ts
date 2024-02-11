@@ -41,7 +41,7 @@ export abstract class CoreUtility {
         const wrapper = (...args: unknown[]) => {
             const reference = this.getReferenceToExportInCoreUtilities({
                 manifest: this.MANIFEST,
-                exportedName,
+                exportedName
             });
             return run(reference)(...args);
         };

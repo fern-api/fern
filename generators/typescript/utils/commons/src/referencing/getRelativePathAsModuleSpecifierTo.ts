@@ -3,7 +3,7 @@ import { Directory, SourceFile } from "ts-morph";
 
 export function getRelativePathAsModuleSpecifierTo({
     from,
-    to,
+    to
 }: {
     from: Directory | SourceFile | string;
     to: Directory | SourceFile | string;

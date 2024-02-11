@@ -26,7 +26,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             unknown: () => this.unknown().isOptional,
             _other: () => {
                 throw new Error("Unexpected ResolvedTypeReference type: " + resolvedType.type);
-            },
+            }
         });
 
         const typeNodeWithoutUndefined = ts.factory.createTypeReferenceNode(this.getReferenceToNamedType(typeName));
@@ -36,7 +36,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
             return {
                 isOptional: true,
                 typeNodeWithoutUndefined,
-                typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined),
+                typeNode: this.addUndefinedToTypeNode(typeNodeWithoutUndefined)
             };
         }
     }
@@ -60,14 +60,14 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return {
             isOptional: true,
             typeNode: this.addUndefinedToTypeNode(referencedToValueType),
-            typeNodeWithoutUndefined: referencedToValueType,
+            typeNodeWithoutUndefined: referencedToValueType
         };
     }
 
     private addUndefinedToTypeNode(typeNode: ts.TypeNode): ts.TypeNode {
         return ts.factory.createUnionTypeNode([
             typeNode,
-            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+            ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
         ]);
     }
 
@@ -76,7 +76,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return {
             isOptional: true,
             typeNode,
-            typeNodeWithoutUndefined: typeNode,
+            typeNodeWithoutUndefined: typeNode
         };
     }
 
@@ -85,7 +85,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return {
             isOptional: true,
             typeNode,
-            typeNodeWithoutUndefined: typeNode,
+            typeNodeWithoutUndefined: typeNode
         };
     }
 
@@ -102,7 +102,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                 return {
                     isOptional: false,
                     typeNode,
-                    typeNodeWithoutUndefined: typeNode,
+                    typeNodeWithoutUndefined: typeNode
                 };
             },
             boolean: (value) => {
@@ -112,12 +112,12 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
                 return {
                     isOptional: false,
                     typeNode,
-                    typeNodeWithoutUndefined: typeNode,
+                    typeNodeWithoutUndefined: typeNode
                 };
             },
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
-            },
+            }
         });
     }
 
@@ -129,7 +129,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createTypeReferenceNode("Record", [
                 this.convert(map.keyType).typeNode,
-                this.convert(map.valueType).typeNode,
+                this.convert(map.valueType).typeNode
             ])
         );
     }
@@ -139,7 +139,7 @@ export abstract class AbstractTypeReferenceToTypeNodeConverter extends AbstractT
         return this.generateNonOptionalTypeReferenceNode(
             ts.factory.createTypeReferenceNode("Record", [
                 this.convert(map.keyType).typeNode,
-                (valueType.isOptional ? valueType : this.optional(map.valueType)).typeNode,
+                (valueType.isOptional ? valueType : this.optional(map.valueType)).typeNode
             ])
         );
     }

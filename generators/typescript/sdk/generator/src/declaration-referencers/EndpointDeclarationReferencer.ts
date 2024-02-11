@@ -16,9 +16,9 @@ export class EndpointDeclarationReferencer extends AbstractSdkClientClassDeclara
             file: {
                 nameOnDisk: this.getFilename(name),
                 exportDeclaration: {
-                    namespaceExport: this.getNamespaceExport(name),
-                },
-            },
+                    namespaceExport: this.getNamespaceExport(name)
+                }
+            }
         };
     }
 
@@ -39,7 +39,7 @@ export class EndpointDeclarationReferencer extends AbstractSdkClientClassDeclara
     protected override getExportedFilepathForReference(name: EndpointDeclarationReferencer.Name): ExportedFilePath {
         return {
             directories: this.getExportedDirectory(name),
-            file: undefined,
+            file: undefined
         };
     }
 

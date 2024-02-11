@@ -9,7 +9,7 @@ export function buildUrl({
     endpoint,
     generatedClientClass,
     context,
-    includeSerdeLayer,
+    includeSerdeLayer
 }: {
     endpoint: HttpEndpoint;
     generatedClientClass: GeneratedSdkClientClassImpl;
@@ -38,14 +38,14 @@ export function buildUrl({
             if (includeSerdeLayer && pathParameter.valueType.type === "named") {
                 referenceToPathParameterValue = context.typeSchema
                     .getSchemaOfNamedType(pathParameter.valueType, {
-                        isGeneratingSchema: false,
+                        isGeneratingSchema: false
                     })
                     .jsonOrThrow(referenceToPathParameterValue, {
                         unrecognizedObjectKeys: "fail",
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             }
 
@@ -61,7 +61,7 @@ export function buildUrl({
 
 function getReferenceToPathParameter({
     pathParameter,
-    generatedClientClass,
+    generatedClientClass
 }: {
     pathParameter: PathParameter;
     generatedClientClass: GeneratedSdkClientClassImpl;

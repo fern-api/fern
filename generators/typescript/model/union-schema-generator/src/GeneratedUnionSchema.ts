@@ -65,7 +65,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         )
                     )
                 )
-            ),
+            )
         });
 
         for (const interfaceStructure of interfaces) {
@@ -83,9 +83,9 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     return {
                         name: `"${property.name.wireValue}"`,
                         type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                        hasQuestionToken: type.isOptional,
+                        hasQuestionToken: type.isOptional
                     };
-                }),
+                })
             });
         }
     }
@@ -109,7 +109,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         );
                 }
                 return singleUnionTypeSchema;
-            }),
+            })
         });
 
         if (this.includeUtilsOnUnionMembers) {
@@ -136,9 +136,9 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                                     undefined,
                                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
                                     undefined
-                                ),
+                                )
                             ])
-                        ),
+                        )
                     ],
                     undefined,
                     undefined,
@@ -146,7 +146,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                         ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     )
-                ),
+                )
             });
         } else {
             schema = schema.transform({
@@ -160,7 +160,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                             undefined,
                             undefined,
                             ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
-                        ),
+                        )
                     ],
                     undefined,
                     undefined,
@@ -175,12 +175,12 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                             undefined,
                             undefined,
                             ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
-                        ),
+                        )
                     ],
                     undefined,
                     undefined,
                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME)
-                ),
+                )
             });
         }
 
@@ -206,15 +206,15 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                                             raw: baseProperty.name.wireValue,
                                             parsed: this.getGeneratedUnion(context).getBasePropertyKey(
                                                 baseProperty.name.wireValue
-                                            ),
+                                            )
                                         },
-                                        value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType),
+                                        value: context.typeSchema.getSchemaOfTypeReference(baseProperty.valueType)
                                     }))
                                 )
                                 .toExpression()
-                        ),
-                    },
-                ],
+                        )
+                    }
+                ]
             });
         }
 
@@ -233,7 +233,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
                     undefined,
                     undefined
-                ),
+                )
             ],
             undefined,
             undefined,
@@ -245,7 +245,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                             this.getParsedDiscriminant(context)
                         ),
                         ts.factory.createCaseBlock(this.getSwitchClauses(context))
-                    ),
+                    )
                 ],
                 true
             )
@@ -259,9 +259,9 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     this.buildParsedUnion({
                         discriminantValueToBuild: singleUnionType.discriminantValue,
                         existingValue: ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
-                        context,
+                        context
                     })
-                ),
+                )
             ])
         );
 
@@ -271,9 +271,9 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
                     ts.factory.createReturnStatement(
                         this.getGeneratedUnion(context).buildUnknown({
                             existingValue: ts.factory.createIdentifier(GeneratedUnionSchema.VALUE_PARAMETER_NAME),
-                            context,
+                            context
                         })
-                    ),
+                    )
                 ])
             );
         }
@@ -291,7 +291,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
     private buildParsedUnion({
         discriminantValueToBuild,
         existingValue,
-        context,
+        context
     }: {
         discriminantValueToBuild: string;
         existingValue: ts.Expression;
@@ -300,7 +300,7 @@ export class GeneratedUnionSchema<Context extends ModelContext> extends Abstract
         return this.getGeneratedUnion(context).buildFromExistingValue({
             discriminantValueToBuild,
             existingValue,
-            context,
+            context
         });
     }
 

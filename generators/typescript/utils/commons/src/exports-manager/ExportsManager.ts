@@ -35,9 +35,9 @@ export class ExportsManager {
             directory: pathToDirectory,
             moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                 from: pathToDirectory,
-                to: fromPath,
+                to: fromPath
             }),
-            exportDeclaration,
+            exportDeclaration
         });
     }
 
@@ -54,9 +54,9 @@ export class ExportsManager {
                 directory: directoryFilepath,
                 moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                     from: directoryFilepath,
-                    to: nextDirectoryPath,
+                    to: nextDirectoryPath
                 }),
-                exportDeclaration: part.exportDeclaration,
+                exportDeclaration: part.exportDeclaration
             });
 
             if (part.subExports != null) {
@@ -65,9 +65,9 @@ export class ExportsManager {
                         directory: directoryFilepath,
                         moduleSpecifierToExport: getRelativePathAsModuleSpecifierTo({
                             from: directoryFilepath,
-                            to: path.join(nextDirectoryPath, relativeFilePath),
+                            to: path.join(nextDirectoryPath, relativeFilePath)
                         }),
-                        exportDeclaration,
+                        exportDeclaration
                     });
                 }
             }
@@ -78,7 +78,7 @@ export class ExportsManager {
     private addExportDeclarationForDirectory({
         directory,
         moduleSpecifierToExport,
-        exportDeclaration,
+        exportDeclaration
     }: {
         directory: Directory | PathToDirectory;
         moduleSpecifierToExport: ModuleSpecifier;
@@ -90,7 +90,7 @@ export class ExportsManager {
         const exportsForModuleSpecifier = (exportsForDirectory[moduleSpecifierToExport] ??= {
             exportAll: false,
             namespaceExports: new Set(),
-            namedExports: new Set(),
+            namedExports: new Set()
         });
 
         if (exportDeclaration == null) {
@@ -119,25 +119,25 @@ export class ExportsManager {
         for (const [pathToDirectory, moduleSpecifierToExports] of Object.entries(this.exports)) {
             const exportsFile = getExportsFileForDirectory({
                 pathToDirectory,
-                rootDirectory,
+                rootDirectory
             });
 
             for (const [moduleSpecifier, combinedExportDeclarations] of Object.entries(moduleSpecifierToExports)) {
                 for (const namespaceExport of combinedExportDeclarations.namespaceExports) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
-                        namespaceExport,
+                        namespaceExport
                     });
                 }
 
                 if (combinedExportDeclarations.exportAll) {
                     exportsFile.addExportDeclaration({
-                        moduleSpecifier,
+                        moduleSpecifier
                     });
                 } else if (combinedExportDeclarations.namedExports.size > 0) {
                     exportsFile.addExportDeclaration({
                         moduleSpecifier,
-                        namedExports: [...combinedExportDeclarations.namedExports],
+                        namedExports: [...combinedExportDeclarations.namedExports]
                     });
                 }
             }
@@ -151,7 +151,7 @@ export class ExportsManager {
 
 function getExportsFileForDirectory({
     pathToDirectory,
-    rootDirectory,
+    rootDirectory
 }: {
     pathToDirectory: PathToDirectory;
     rootDirectory: Directory;

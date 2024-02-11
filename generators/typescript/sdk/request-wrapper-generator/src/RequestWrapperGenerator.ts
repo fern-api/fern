@@ -21,14 +21,14 @@ export class RequestWrapperGenerator {
         service,
         endpoint,
         wrapperName,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: RequestWrapperGenerator.generateRequestWrapper.Args): GeneratedRequestWrapper {
         return new GeneratedRequestWrapperImpl({
             packageId,
             service,
             endpoint,
             wrapperName,
-            includeSerdeLayer,
+            includeSerdeLayer
         });
     }
 }

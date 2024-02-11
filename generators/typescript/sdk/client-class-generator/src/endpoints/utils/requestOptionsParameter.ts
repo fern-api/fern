@@ -4,20 +4,20 @@ import { OptionalKind, ParameterDeclarationStructure, ts } from "ts-morph";
 export const REQUEST_OPTIONS_PARAMETER_NAME = "requestOptions";
 
 export const getRequestOptionsParameter = ({
-    requestOptionsReference,
+    requestOptionsReference
 }: {
     requestOptionsReference: ts.TypeReferenceNode;
 }): OptionalKind<ParameterDeclarationStructure> => {
     return {
         name: REQUEST_OPTIONS_PARAMETER_NAME,
         type: getTextOfTsNode(requestOptionsReference),
-        hasQuestionToken: true,
+        hasQuestionToken: true
     };
 };
 
 export const getTimeoutExpression = ({
     defaultTimeoutInSeconds,
-    timeoutInSecondsReference,
+    timeoutInSecondsReference
 }: {
     defaultTimeoutInSeconds: number | "infinity" | undefined;
     timeoutInSecondsReference: (args: {
@@ -29,7 +29,7 @@ export const getTimeoutExpression = ({
         ts.factory.createBinaryExpression(
             timeoutInSecondsReference({
                 referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                isNullable: true,
+                isNullable: true
             }),
             ts.factory.createToken(ts.SyntaxKind.ExclamationEqualsToken),
             ts.factory.createIdentifier("null")
@@ -39,7 +39,7 @@ export const getTimeoutExpression = ({
             ts.factory.createBinaryExpression(
                 timeoutInSecondsReference({
                     referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-                    isNullable: false,
+                    isNullable: false
                 }),
                 ts.factory.createToken(ts.SyntaxKind.AsteriskToken),
                 ts.factory.createNumericLiteral("1000")
@@ -54,12 +54,12 @@ export const getTimeoutExpression = ({
 };
 
 export const getMaxRetriesExpression = ({
-    maxRetriesReference,
+    maxRetriesReference
 }: {
     maxRetriesReference: (args: { referenceToRequestOptions: ts.Expression; isNullable: boolean }) => ts.Expression;
 }): ts.Expression => {
     return maxRetriesReference({
         referenceToRequestOptions: ts.factory.createIdentifier(REQUEST_OPTIONS_PARAMETER_NAME),
-        isNullable: true,
+        isNullable: true
     });
 };

@@ -27,13 +27,13 @@ export class ExpressEndpointTypeSchemasGenerator {
     public generateEndpointTypeSchemas({
         packageId,
         service,
-        endpoint,
+        endpoint
     }: ExpressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas.Args): GeneratedExpressEndpointTypeSchemas {
         return new GeneratedExpressEndpointTypeSchemasImpl({
             packageId,
             service,
             endpoint,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

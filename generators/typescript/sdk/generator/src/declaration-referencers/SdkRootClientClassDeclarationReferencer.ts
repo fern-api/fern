@@ -9,9 +9,9 @@ export class SdkRootClientClassDeclarationReferencer extends AbstractSdkClientCl
             file: {
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: {
-                    namedExports: [this.getExportedName()],
-                },
-            },
+                    namedExports: [this.getExportedName()]
+                }
+            }
         };
     }
 

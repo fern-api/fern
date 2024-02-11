@@ -49,7 +49,7 @@ export abstract class ExternalDependency {
             return this.withImport(
                 defaultImport,
                 {
-                    namedImports: [{ name: "default", alias: defaultImport }],
+                    namedImports: [{ name: "default", alias: defaultImport }]
                 },
                 run
             );
@@ -70,7 +70,7 @@ export abstract class ExternalDependency {
                 }
                 if (this.TYPES_PACKAGE?.version != null) {
                     this.dependencyManager.addDependency(this.TYPES_PACKAGE.name, this.TYPES_PACKAGE.version, {
-                        type: DependencyType.DEV,
+                        type: DependencyType.DEV
                     });
                 }
                 this.importsManager.addImport(this.PACKAGE.name, importDeclaration);

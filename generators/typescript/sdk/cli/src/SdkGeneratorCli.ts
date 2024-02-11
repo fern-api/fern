@@ -46,7 +46,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
             treatUnknownAsAny: parsed?.treatUnknownAsAny ?? false,
             includeContentHeadersOnFileDownloadResponse: parsed?.includeContentHeadersOnFileDownloadResponse ?? false,
             noSerdeLayer,
-            noOptionalProperties: parsed?.noOptionalProperties ?? false,
+            noOptionalProperties: parsed?.noOptionalProperties ?? false
         };
     }
 
@@ -55,7 +55,7 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
         customConfig,
         npmPackage,
         generatorContext,
-        intermediateRepresentation,
+        intermediateRepresentation
     }: {
         config: FernGeneratorExec.GeneratorConfig;
         customConfig: SdkCustomConfig;
@@ -96,13 +96,13 @@ export class SdkGeneratorCli extends AbstractGeneratorCli<SdkCustomConfig> {
                 treatUnknownAsAny: customConfig.treatUnknownAsAny,
                 includeContentHeadersOnFileDownloadResponse: customConfig.includeContentHeadersOnFileDownloadResponse,
                 includeSerdeLayer: !customConfig.noSerdeLayer,
-                noOptionalProperties: customConfig.noOptionalProperties,
-            },
+                noOptionalProperties: customConfig.noOptionalProperties
+            }
         });
         const typescriptProject = await sdkGenerator.generate();
         const persistedTypescriptProject = await typescriptProject.persist();
         await sdkGenerator.copyCoreUtilities({
-            pathToSrc: persistedTypescriptProject.getSrcDirectory(),
+            pathToSrc: persistedTypescriptProject.getSrcDirectory()
         });
 
         return persistedTypescriptProject;

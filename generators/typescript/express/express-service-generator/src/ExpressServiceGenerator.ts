@@ -34,7 +34,7 @@ export class ExpressServiceGenerator {
     public generateService({
         packageId,
         service,
-        serviceClassName,
+        serviceClassName
     }: ExpressServiceGenerator.generateService.Args): GeneratedExpressService {
         const package_ = this.packageResolver.resolvePackage(packageId);
         return new GeneratedExpressServiceImpl({
@@ -43,7 +43,7 @@ export class ExpressServiceGenerator {
             service,
             serviceClassName,
             doNotHandleUnrecognizedErrors: this.doNotHandleUnrecognizedErrors,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

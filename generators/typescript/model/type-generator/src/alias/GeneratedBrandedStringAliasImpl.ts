@@ -25,7 +25,7 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
             throw new Error("Example is not for an alias");
         }
         return ts.factory.createCallExpression(this.getReferenceToCreator(context, opts), undefined, [
-            context.type.getGeneratedExample(example.value).build(context, opts),
+            context.type.getGeneratedExample(example.value).build(context, opts)
         ]);
     }
 
@@ -42,11 +42,11 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                             this.getStringBrand(),
                             undefined,
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
-                        ),
-                    ]),
+                        )
+                    ])
                 ])
             ),
-            isExported: true,
+            isExported: true
         });
         maybeAddDocs(typeAlias, this.getDocs(context));
     }
@@ -58,8 +58,8 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
             parameters: [
                 {
                     name: VALUE_PARAMETER_NAME,
-                    type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword),
-                },
+                    type: getTextOfTsKeyword(ts.SyntaxKind.StringKeyword)
+                }
             ],
             returnType: getTextOfTsNode(this.getReferenceToSelf(context).getTypeNode()),
             statements: [
@@ -73,9 +73,9 @@ export class GeneratedBrandedStringAliasImpl<Context extends ModelContext>
                             this.getReferenceToSelf(context).getTypeNode()
                         )
                     )
-                ),
+                )
             ],
-            isExported: true,
+            isExported: true
         });
     }
 

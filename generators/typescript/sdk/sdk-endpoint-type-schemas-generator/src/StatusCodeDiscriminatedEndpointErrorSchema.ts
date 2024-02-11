@@ -9,5 +9,5 @@ export const StatusCodeDiscriminatedEndpointErrorSchema: GeneratedEndpointErrorS
     },
     getReferenceToZurgSchema: () => {
         throw new Error("No endpoint error schema was generated because errors are status-code discriminated.");
-    },
+    }
 };

@@ -2,7 +2,7 @@ import { Name } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, PackageId, Reference } from "@fern-typescript/commons";
 import {
     ExpressInlinedRequestBodySchemaContext,
-    GeneratedExpressInlinedRequestBodySchema,
+    GeneratedExpressInlinedRequestBodySchema
 } from "@fern-typescript/contexts";
 import { ExpressInlinedRequestBodySchemaGenerator } from "@fern-typescript/express-inlined-request-schema-generator";
 import { PackageResolver } from "@fern-typescript/resolvers";
@@ -32,7 +32,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
         packageResolver,
         sourceFile,
         expressInlinedRequestBodySchemaDeclarationReferencer,
-        expressInlinedRequestBodySchemaGenerator,
+        expressInlinedRequestBodySchemaGenerator
     }: ExpressInlinedRequestBodySchemaContextImpl.Init) {
         this.expressInlinedRequestBodySchemaGenerator = expressInlinedRequestBodySchemaGenerator;
         this.expressInlinedRequestBodySchemaDeclarationReferencer =
@@ -58,8 +58,8 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             endpoint,
             typeName: this.expressInlinedRequestBodySchemaDeclarationReferencer.getExportedName({
                 packageId,
-                endpoint,
-            }),
+                endpoint
+            })
         });
     }
 
@@ -75,7 +75,7 @@ export class ExpressInlinedRequestBodySchemaContextImpl implements ExpressInline
             name: { packageId, endpoint },
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
-            importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
+            importStrategy: getSchemaImportStrategy({ useDynamicImport: false })
         });
     }
 }

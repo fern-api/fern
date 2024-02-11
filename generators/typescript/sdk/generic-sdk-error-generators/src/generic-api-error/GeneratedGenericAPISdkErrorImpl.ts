@@ -27,7 +27,7 @@ export class GeneratedGenericAPISdkErrorImpl
         {
             message,
             statusCode,
-            responseBody,
+            responseBody
         }: {
             message: ts.Expression | undefined;
             statusCode: ts.Expression | undefined;
@@ -44,7 +44,7 @@ export class GeneratedGenericAPISdkErrorImpl
     public buildConstructorArguments({
         message,
         statusCode,
-        responseBody,
+        responseBody
     }: {
         message: ts.Expression | undefined;
         statusCode: ts.Expression | undefined;
@@ -85,14 +85,14 @@ export class GeneratedGenericAPISdkErrorImpl
                 name: GeneratedGenericAPISdkErrorImpl.STATUS_CODE_PROPERTY_NAME,
                 isReadonly: true,
                 hasQuestionToken: true,
-                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword),
+                type: getTextOfTsKeyword(ts.SyntaxKind.NumberKeyword)
             },
             {
                 name: GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME,
                 isReadonly: true,
                 hasQuestionToken: true,
-                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword),
-            },
+                type: getTextOfTsKeyword(ts.SyntaxKind.UnknownKeyword)
+            }
         ];
     }
 
@@ -119,7 +119,7 @@ export class GeneratedGenericAPISdkErrorImpl
                             undefined,
                             undefined,
                             ts.factory.createIdentifier(GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_PROPERTY_NAME)
-                        ),
+                        )
                     ])
                 ),
                 type: getTextOfTsNode(
@@ -147,10 +147,10 @@ export class GeneratedGenericAPISdkErrorImpl
                             ),
                             ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword)
-                        ),
+                        )
                     ])
-                ),
-            },
+                )
+            }
         ];
     }
 
@@ -173,12 +173,12 @@ export class GeneratedGenericAPISdkErrorImpl
                             ts.factory.createShorthandPropertyAssignment(
                                 GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME,
                                 undefined
-                            ),
+                            )
                         ],
                         false
-                    ),
+                    )
                 ]
-            ),
+            )
         ];
     }
 
@@ -205,7 +205,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                     GeneratedGenericAPISdkErrorImpl.STATUS_CODE_CONSTRUCTOR_PARAMETER_NAME
                                 )
                             )
-                        ),
+                        )
                     ],
                     true
                 )
@@ -233,11 +233,11 @@ export class GeneratedGenericAPISdkErrorImpl
                                     GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                                 )
                             )
-                        ),
+                        )
                     ],
                     true
                 )
-            ),
+            )
         ];
     }
 
@@ -275,7 +275,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                 undefined,
                                 GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME,
                                 undefined
-                            ),
+                            )
                         ])
                     ),
                     type: getTextOfTsNode(
@@ -286,7 +286,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                 undefined,
                                 ts.factory.createUnionTypeNode([
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                                 ])
                             ),
                             ts.factory.createPropertySignature(
@@ -295,7 +295,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                 undefined,
                                 ts.factory.createUnionTypeNode([
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.NumberKeyword),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                                 ])
                             ),
                             ts.factory.createPropertySignature(
@@ -304,12 +304,12 @@ export class GeneratedGenericAPISdkErrorImpl
                                 undefined,
                                 ts.factory.createUnionTypeNode([
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.UnknownKeyword),
-                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                                 ])
-                            ),
+                            )
                         ])
-                    ),
-                },
+                    )
+                }
             ],
             returnType: "string",
             statements: [
@@ -324,7 +324,7 @@ export class GeneratedGenericAPISdkErrorImpl
                                     ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
                                 ),
                                 ts.factory.createArrayLiteralExpression([], false)
-                            ),
+                            )
                         ],
                         ts.NodeFlags.Let
                     )
@@ -347,10 +347,10 @@ export class GeneratedGenericAPISdkErrorImpl
                                     [
                                         ts.factory.createIdentifier(
                                             GeneratedGenericAPISdkErrorImpl.MESSAGE_CONSTRUCTOR_PARAMETER_NAME
-                                        ),
+                                        )
                                     ]
                                 )
-                            ),
+                            )
                         ],
                         true
                     ),
@@ -387,12 +387,12 @@ export class GeneratedGenericAPISdkErrorImpl
                                                         []
                                                     ),
                                                     ts.factory.createTemplateTail("")
-                                                ),
+                                                )
                                             ]
-                                        ),
+                                        )
                                     ]
                                 )
-                            ),
+                            )
                         ],
                         true
                     ),
@@ -429,15 +429,15 @@ export class GeneratedGenericAPISdkErrorImpl
                                                             GeneratedGenericAPISdkErrorImpl.RESPONSE_BODY_CONSTRUCTOR_PARAMETER_NAME
                                                         ),
                                                         ts.factory.createIdentifier("undefined"),
-                                                        ts.factory.createNumericLiteral("2"),
+                                                        ts.factory.createNumericLiteral("2")
                                                     ]
                                                 ),
                                                 ts.factory.createTemplateTail("")
-                                            ),
-                                        ]),
+                                            )
+                                        ])
                                     ]
                                 )
-                            ),
+                            )
                         ],
                         true
                     ),
@@ -452,8 +452,8 @@ export class GeneratedGenericAPISdkErrorImpl
                         undefined,
                         [ts.factory.createStringLiteral("\n")]
                     )
-                ),
-            ].map(getTextOfTsNode),
+                )
+            ].map(getTextOfTsNode)
         });
     }
 }

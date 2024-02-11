@@ -28,7 +28,7 @@ export class SdkErrorContextImpl implements SdkErrorContext {
         importsManager,
         errorDeclarationReferencer,
         sdkErrorGenerator,
-        errorResolver,
+        errorResolver
     }: SdkErrorContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -42,14 +42,14 @@ export class SdkErrorContextImpl implements SdkErrorContext {
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager,
+            importsManager: this.importsManager
         });
     }
 
     public getGeneratedSdkError(errorName: DeclaredErrorName): GeneratedSdkError | undefined {
         return this.sdkErrorGenerator.generateError({
             errorName: this.errorDeclarationReferencer.getExportedName(errorName),
-            errorDeclaration: this.getErrorDeclaration(errorName),
+            errorDeclaration: this.getErrorDeclaration(errorName)
         });
     }
 

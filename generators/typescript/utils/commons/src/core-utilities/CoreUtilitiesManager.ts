@@ -38,7 +38,7 @@ export class CoreUtilitiesManager {
             auth: new AuthImpl({ getReferenceToExport }),
             base: new BaseCoreUtilitiesImpl({ getReferenceToExport }),
             callbackQueue: new CallbackQueueImpl({ getReferenceToExport }),
-            formDataUtils: new FormDataUtilsImpl({ getReferenceToExport }),
+            formDataUtils: new FormDataUtilsImpl({ getReferenceToExport })
         };
     }
 
@@ -67,7 +67,7 @@ export class CoreUtilitiesManager {
                 if (utility.repoInfoForTesting.ignoreGlob != null && process.env.NODE_ENV === "test") {
                     const filesToDelete = await glob(utility.repoInfoForTesting.ignoreGlob, {
                         cwd: toPath,
-                        absolute: true,
+                        absolute: true
                     });
                     await Promise.all(filesToDelete.map((filepath) => rm(filepath, { recursive: true })));
                 }
@@ -84,7 +84,7 @@ export class CoreUtilitiesManager {
                 filepathToNamespaceImport: { directories: this.getCoreUtilitiesFilepath(), file: undefined },
                 namespaceImport: "core",
                 referencedIn: sourceFile,
-                importsManager,
+                importsManager
             });
         };
     }
@@ -96,8 +96,8 @@ export class CoreUtilitiesManager {
     private getCoreUtilitiesFilepath(): ExportedDirectory[] {
         return [
             {
-                nameOnDisk: "core",
-            },
+                nameOnDisk: "core"
+            }
         ];
     }
 }

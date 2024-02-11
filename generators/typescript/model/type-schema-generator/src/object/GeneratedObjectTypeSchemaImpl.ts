@@ -21,9 +21,9 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
             (property): Zurg.Property => ({
                 key: {
                     raw: property.name.wireValue,
-                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue }),
+                    parsed: generatedType.getPropertyKey({ propertyWireKey: property.name.wireValue })
                 },
-                value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
+                value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             })
         );
 
@@ -51,16 +51,16 @@ export class GeneratedObjectTypeSchemaImpl<Context extends ModelContext>
                 return {
                     name: `"${property.name.wireValue}"`,
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                    hasQuestionToken: type.isOptional,
+                    hasQuestionToken: type.isOptional
                 };
-            }),
+            })
         });
     }
 
     protected override getReferenceToSchemaType({
         context,
         rawShape,
-        parsedShape,
+        parsedShape
     }: {
         context: Context;
         rawShape: ts.TypeNode;

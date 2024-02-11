@@ -5,7 +5,7 @@ import {
     MapType,
     PrimitiveType,
     ShapeType,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { TypeReferenceNode } from "@fern-typescript/commons";
 import { TypeResolver } from "@fern-typescript/resolvers";
@@ -36,7 +36,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             unknown: this.treatUnknownAsAny ? this.any.bind(this) : this.unknown.bind(this),
             _other: () => {
                 throw new Error("Unexpected type reference: " + typeReference.type);
-            },
+            }
         });
     }
 
@@ -49,7 +49,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             literal: this.literal.bind(this),
             _other: () => {
                 throw new Error("Unexpected container type: " + container.type);
-            },
+            }
         });
     }
 
@@ -78,7 +78,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
             base64: this.string.bind(this),
             _other: () => {
                 throw new Error("Unexpected primitive type: " + primitive);
-            },
+            }
         });
     }
 
@@ -109,7 +109,7 @@ export abstract class AbstractTypeReferenceConverter<T> {
         return {
             isOptional: false,
             typeNode,
-            typeNodeWithoutUndefined: typeNode,
+            typeNodeWithoutUndefined: typeNode
         };
     }
 }

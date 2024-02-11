@@ -9,7 +9,7 @@ export class Stream<T> implements AsyncIterable<T> {
     constructor({
         stream,
         parse,
-        terminator,
+        terminator
     }: {
         stream: Readable | ReadableStream;
         parse: (val: unknown) => Promise<T>;

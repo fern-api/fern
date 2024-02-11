@@ -3,7 +3,7 @@ import {
     GetReferenceOpts,
     getTextOfTsNode,
     getWriterForMultiLineUnionType,
-    maybeAddDocs,
+    maybeAddDocs
 } from "@fern-typescript/commons";
 import { BaseContext, GeneratedEnumType } from "@fern-typescript/contexts";
 import { OptionalKind, PropertySignatureStructure, ts, VariableDeclarationKind } from "ts-morph";
@@ -41,9 +41,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
             type: getWriterForMultiLineUnionType(
                 this.shape.values.map((value) => ({
                     docs: value.docs,
-                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue)),
+                    node: ts.factory.createLiteralTypeNode(ts.factory.createStringLiteral(value.name.wireValue))
                 }))
-            ),
+            )
         });
 
         maybeAddDocs(type, this.getDocs(context));
@@ -74,7 +74,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                 GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
                                 undefined,
                                 undefined
-                            ),
+                            )
                         ],
                         [
                             ts.factory.createParameterDeclaration(
@@ -101,11 +101,11 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                         ts.factory.createTypeReferenceNode(
                                             GeneratedEnumTypeImpl.VISITOR_RETURN_TYPE_PARAMETER,
                                             undefined
-                                        ),
+                                        )
                                     ]
                                 ),
                                 undefined
-                            ),
+                            )
                         ],
                         undefined,
                         ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
@@ -132,7 +132,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                                             undefined,
                                                             []
                                                         )
-                                                    ),
+                                                    )
                                                 ]
                                             )
                                         ),
@@ -148,10 +148,10 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                                     undefined,
                                                     []
                                                 )
-                                            ),
-                                        ]),
+                                            )
+                                        ])
                                     ])
-                                ),
+                                )
                             ],
                             true
                         )
@@ -171,9 +171,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                             ts.factory.createObjectLiteralExpression(constProperties, true),
                             ts.factory.createTypeReferenceNode("const")
                         )
-                    ),
-                },
-            ],
+                    )
+                }
+            ]
         });
     }
 
@@ -181,7 +181,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
         const enumModule = context.sourceFile.addModule({
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true,
+            hasDeclareKeyword: true
         });
 
         enumModule.addInterface({
@@ -200,7 +200,7 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                     undefined
                                 )
                             )
-                        ),
+                        )
                     })
                 ),
                 {
@@ -214,9 +214,9 @@ export class GeneratedEnumTypeImpl<Context extends BaseContext>
                                 undefined
                             )
                         )
-                    ),
-                },
-            ],
+                    )
+                }
+            ]
         });
     }
 

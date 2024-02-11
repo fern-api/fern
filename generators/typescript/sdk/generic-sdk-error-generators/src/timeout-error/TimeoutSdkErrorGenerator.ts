@@ -11,7 +11,7 @@ export declare namespace TimeoutSdkErrorGenerator {
 
 export class TimeoutSdkErrorGenerator {
     public generateTimeoutSdkError({
-        errorClassName,
+        errorClassName
     }: TimeoutSdkErrorGenerator.generateTimeoutSdkError.Args): GeneratedTimeoutSdkError {
         return new GeneratedTimeoutSdkErrorImpl({ errorClassName });
     }

@@ -7,11 +7,11 @@ describe("withParsedProperties", () => {
     it("Added properties included on parsed object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
-            bar: stringLiteral("bar"),
+            bar: stringLiteral("bar")
         }).withParsedProperties({
             printFoo: (parsed) => () => parsed.foo,
             printHelloWorld: () => () => "Hello world",
-            helloWorld: "Hello world",
+            helloWorld: "Hello world"
         });
 
         const parsed = await schema.parse({ raw_foo: "value of foo", bar: "bar" });
@@ -26,9 +26,9 @@ describe("withParsedProperties", () => {
     it("Added property is removed on raw object", async () => {
         const schema = object({
             foo: property("raw_foo", string()),
-            bar: stringLiteral("bar"),
+            bar: stringLiteral("bar")
         }).withParsedProperties({
-            printFoo: (parsed) => () => parsed.foo,
+            printFoo: (parsed) => () => parsed.foo
         });
 
         const original = { raw_foo: "value of foo", bar: "bar" } as const;
@@ -51,7 +51,7 @@ describe("withParsedProperties", () => {
         it("doesn't compile with non-object schema", () => {
             () =>
                 object({
-                    foo: string(),
+                    foo: string()
                 })
                     // @ts-expect-error
                     .withParsedProperties(42);

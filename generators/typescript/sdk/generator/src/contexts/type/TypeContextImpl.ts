@@ -3,7 +3,7 @@ import {
     ExampleTypeReference,
     ResolvedTypeReference,
     TypeDeclaration,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ImportsManager, NpmPackage, Reference, TypeReferenceNode } from "@fern-typescript/commons";
 import { GeneratedType, GeneratedTypeReferenceExample, TypeContext } from "@fern-typescript/contexts";
@@ -11,7 +11,7 @@ import { TypeResolver } from "@fern-typescript/resolvers";
 import { TypeGenerator } from "@fern-typescript/type-generator";
 import {
     TypeReferenceToParsedTypeNodeConverter,
-    TypeReferenceToStringExpressionConverter,
+    TypeReferenceToStringExpressionConverter
 } from "@fern-typescript/type-reference-converters";
 import { TypeReferenceExampleGenerator } from "@fern-typescript/type-reference-example-generator";
 import { SourceFile, ts } from "ts-morph";
@@ -55,7 +55,7 @@ export class TypeContextImpl implements TypeContext {
         typeGenerator,
         typeReferenceExampleGenerator,
         treatUnknownAsAny,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: TypeContextImpl.Init) {
         this.npmPackage = npmPackage;
         this.isForSnippet = isForSnippet;
@@ -71,12 +71,12 @@ export class TypeContextImpl implements TypeContext {
             getReferenceToNamedType: (typeName) => this.getReferenceToNamedType(typeName).getEntityName(),
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer,
+            includeSerdeLayer
         });
         this.typeReferenceToStringExpressionConverter = new TypeReferenceToStringExpressionConverter({
             typeResolver,
             treatUnknownAsAny,
-            includeSerdeLayer,
+            includeSerdeLayer
         });
     }
 
@@ -95,17 +95,17 @@ export class TypeContextImpl implements TypeContext {
                 importStrategy: {
                     type: "fromPackage",
                     namespaceImport: this.typeDeclarationReferencer.namespaceExport,
-                    packageName: this.npmPackage?.packageName ?? "api",
+                    packageName: this.npmPackage?.packageName ?? "api"
                 },
                 referencedIn: this.sourceFile,
-                importsManager: this.importsManager,
+                importsManager: this.importsManager
             });
         } else {
             return this.typeDeclarationReferencer.getReferenceToType({
                 name: typeName,
                 importStrategy: { type: "fromRoot", namespaceImport: this.typeDeclarationReferencer.namespaceExport },
                 referencedIn: this.sourceFile,
-                importsManager: this.importsManager,
+                importsManager: this.importsManager
             });
         }
     }
@@ -132,7 +132,7 @@ export class TypeContextImpl implements TypeContext {
             examples: typeDeclaration.examples,
             fernFilepath: typeDeclaration.name.fernFilepath,
             getReferenceToSelf: (context) => context.type.getReferenceToNamedType(typeName),
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 

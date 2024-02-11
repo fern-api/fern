@@ -14,7 +14,7 @@ export interface GeneratedEndpointRequest {
     getExampleEndpointParameters({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;

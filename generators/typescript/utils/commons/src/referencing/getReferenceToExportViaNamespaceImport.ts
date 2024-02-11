@@ -2,7 +2,7 @@ import { SourceFile, ts } from "ts-morph";
 import {
     convertExportedFilePathToFilePath,
     ExportedDirectory,
-    ExportedFilePath,
+    ExportedFilePath
 } from "../exports-manager/ExportedFilePath";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { getEntityNameOfDirectory } from "./getEntityNameOfDirectory";
@@ -17,7 +17,7 @@ export function getReferenceToExportViaNamespaceImport({
     namespaceImport,
     importsManager,
     referencedIn,
-    subImport = [],
+    subImport = []
 }: {
     exportedName: string;
     filepathToNamespaceImport: ExportedFilePath;
@@ -31,7 +31,7 @@ export function getReferenceToExportViaNamespaceImport({
         importsManager.addImport(
             getRelativePathAsModuleSpecifierTo({
                 from: referencedIn,
-                to: convertExportedFilePathToFilePath(filepathToNamespaceImport),
+                to: convertExportedFilePathToFilePath(filepathToNamespaceImport)
             }),
             { namespaceImport }
         );
@@ -48,7 +48,7 @@ export function getReferenceToExportViaNamespaceImport({
         (acc, part) => ts.factory.createQualifiedName(acc, part),
         getEntityNameOfDirectory({
             pathToDirectory: pathToDirectoryInsideNamespaceImport,
-            prefix: ts.factory.createIdentifier(namespaceImport),
+            prefix: ts.factory.createIdentifier(namespaceImport)
         })
     );
 
@@ -56,7 +56,7 @@ export function getReferenceToExportViaNamespaceImport({
         (acc, part) => ts.factory.createPropertyAccessExpression(acc, part),
         getExpressionToDirectory({
             pathToDirectory: pathToDirectoryInsideNamespaceImport,
-            prefix: ts.factory.createIdentifier(namespaceImport),
+            prefix: ts.factory.createIdentifier(namespaceImport)
         })
     );
 
@@ -78,6 +78,6 @@ export function getReferenceToExportViaNamespaceImport({
                 addImport();
             }
             return expression;
-        },
+        }
     };
 }

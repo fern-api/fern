@@ -3,7 +3,7 @@ import {
     ErrorDiscriminationStrategy,
     HttpEndpoint,
     HttpResponse,
-    ResponseError,
+    ResponseError
 } from "@fern-fern/ir-sdk/api";
 import { getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -16,7 +16,7 @@ import {
     CONTENT_LENGTH_VARIABLE_NAME,
     CONTENT_TYPE_RESPONSE_KEY,
     getSuccessReturnType,
-    READABLE_RESPONSE_KEY,
+    READABLE_RESPONSE_KEY
 } from "./getSuccessReturnType";
 
 export declare namespace GeneratedThrowingEndpointResponse {
@@ -46,7 +46,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         response,
         errorDiscriminationStrategy,
         errorResolver,
-        includeContentHeadersOnResponse,
+        includeContentHeadersOnResponse
     }: GeneratedThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -68,7 +68,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
 
     public getReturnType(context: SdkContext): ts.TypeNode {
         return getSuccessReturnType(this.response, context, {
-            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse,
+            includeContentHeadersOnResponse: this.includeContentHeadersOnResponse
         });
     }
 
@@ -100,9 +100,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                 undefined,
                                 context.coreUtilities.fetcher.getHeader._invoke({
                                     referenceToResponseHeaders: this.getReferenceToResponseHeaders(context),
-                                    header: "Content-Length",
+                                    header: "Content-Length"
                                 })
-                            ),
+                            )
                         ],
                         ts.NodeFlags.Const
                     )
@@ -129,7 +129,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     ),
                                     ts.factory.createToken(ts.SyntaxKind.QuestionToken),
                                     ts.factory.createCallExpression(ts.factory.createIdentifier("Number"), undefined, [
-                                        ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME),
+                                        ts.factory.createIdentifier(CONTENT_LENGTH_VARIABLE_NAME)
                                     ]),
                                     ts.factory.createToken(ts.SyntaxKind.ColonToken),
                                     ts.factory.createIdentifier("undefined")
@@ -139,13 +139,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                 ts.factory.createIdentifier(CONTENT_TYPE_RESPONSE_KEY),
                                 context.coreUtilities.fetcher.getHeader._invoke({
                                     referenceToResponseHeaders: this.getReferenceToResponseHeaders(context),
-                                    header: "Content-Type",
+                                    header: "Content-Type"
                                 })
-                            ),
+                            )
                         ],
                         true
                     )
-                ),
+                )
             ];
         } else if (this.response?.type === "streaming") {
             return [
@@ -168,7 +168,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     undefined,
                                     undefined,
                                     GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                ),
+                                )
                             ],
                             undefined,
                             ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
@@ -181,15 +181,15 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                 context,
                                                 referenceToRawStreamData: ts.factory.createIdentifier(
                                                     GeneratedStreamingEndpointImplementation.DATA_PARAMETER_NAME
-                                                ),
+                                                )
                                             })
-                                    ),
+                                    )
                                 ],
                                 true
                             )
-                        ),
+                        )
                     })
-                ),
+                )
             ];
         }
         return [
@@ -201,7 +201,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     ),
                     context
                 )
-            ),
+            )
         ];
     }
 
@@ -234,7 +234,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                 responseBody: ts.factory.createPropertyAccessExpression(
                     referenceToError,
                     context.coreUtilities.fetcher.Fetcher.FailedStatusCodeError.body
-                ),
+                )
             })
         );
 
@@ -269,27 +269,27 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                                   referenceToBody:
                                                       generatedSdkErrorSchema != null
                                                           ? generatedSdkErrorSchema.deserializeBody(context, {
-                                                                referenceToBody: referenceToErrorBody,
+                                                                referenceToBody: referenceToErrorBody
                                                             })
-                                                          : undefined,
+                                                          : undefined
                                               })
-                                          ),
+                                          )
                                       ];
                                   },
-                                  defaultBody: [defaultThrow],
+                                  defaultBody: [defaultThrow]
                               })
-                            : defaultThrow,
+                            : defaultThrow
                     ],
                     true
                 )
-            ),
+            )
         ];
     }
 
     private getSwitchStatementForErrors({
         context,
         generateCaseBody,
-        defaultBody,
+        defaultBody
     }: {
         context: SdkContext;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
@@ -301,17 +301,17 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                     context,
                     propertyErrorDiscriminationStrategy,
                     generateCaseBody,
-                    defaultBody,
+                    defaultBody
                 }),
             statusCode: () =>
                 this.getSwitchStatementForStatusCodeDiscriminatedErrors({
                     context,
                     generateCaseBody,
-                    defaultBody,
+                    defaultBody
                 }),
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
-            },
+            }
         });
     }
 
@@ -319,7 +319,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
         context,
         propertyErrorDiscriminationStrategy,
         generateCaseBody,
-        defaultBody,
+        defaultBody
     }: {
         context: SdkContext;
         propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
@@ -344,7 +344,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         generateCaseBody(error)
                     )
                 ),
-                ts.factory.createDefaultClause(defaultBody),
+                ts.factory.createDefaultClause(defaultBody)
             ])
         );
     }
@@ -352,7 +352,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
     private getSwitchStatementForStatusCodeDiscriminatedErrors({
         context,
         generateCaseBody,
-        defaultBody,
+        defaultBody
     }: {
         context: SdkContext;
         generateCaseBody: (responseError: ResponseError) => ts.Statement[];
@@ -371,7 +371,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         generateCaseBody(error)
                     );
                 }),
-                ts.factory.createDefaultClause(defaultBody),
+                ts.factory.createDefaultClause(defaultBody)
             ])
         );
     }
@@ -400,9 +400,9 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                     responseBody: ts.factory.createPropertyAccessExpression(
                                         referenceToError,
                                         context.coreUtilities.fetcher.Fetcher.NonJsonError.rawBody
-                                    ),
+                                    )
                                 })
-                            ),
+                            )
                         ]
                     ),
                     ts.factory.createCaseClause(
@@ -412,7 +412,7 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                         [
                             ts.factory.createThrowStatement(
                                 context.timeoutSdkError.getGeneratedTimeoutSdkError().build(context)
-                            ),
+                            )
                         ]
                     ),
                     ts.factory.createCaseClause(
@@ -427,13 +427,13 @@ export class GeneratedThrowingEndpointResponse implements GeneratedEndpointRespo
                                         context.coreUtilities.fetcher.Fetcher.UnknownError.message
                                     ),
                                     statusCode: undefined,
-                                    responseBody: undefined,
+                                    responseBody: undefined
                                 })
-                            ),
+                            )
                         ]
-                    ),
+                    )
                 ])
-            ),
+            )
         ];
     }
 

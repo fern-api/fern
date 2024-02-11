@@ -11,7 +11,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
     } {
         return {
             type: context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name),
-            hasQuestionToken: false,
+            hasQuestionToken: false
         };
     }
 
@@ -45,7 +45,7 @@ export class FileUploadRequestParameter extends AbstractRequestParameter {
             ),
             context,
             queryParamSetter,
-            queryParamItemSetter,
+            queryParamItemSetter
         });
     }
 

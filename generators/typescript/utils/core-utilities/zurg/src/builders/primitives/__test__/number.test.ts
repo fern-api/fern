@@ -8,7 +8,7 @@ describe("number", () => {
     itValidate("non-number", number(), "hello", [
         {
             path: [],
-            message: 'Expected number. Received "hello".',
-        },
+            message: 'Expected number. Received "hello".'
+        }
     ]);
 });

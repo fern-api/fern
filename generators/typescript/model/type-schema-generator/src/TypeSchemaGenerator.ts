@@ -4,7 +4,7 @@ import {
     ObjectTypeDeclaration,
     Type,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
 import {
@@ -14,7 +14,7 @@ import {
     GeneratedType,
     GeneratedTypeSchema,
     GeneratedUnionTypeSchema,
-    ModelContext,
+    ModelContext
 } from "@fern-typescript/contexts";
 import { ts } from "ts-morph";
 import { GeneratedAliasTypeSchemaImpl } from "./alias/GeneratedAliasTypeSchemaImpl";
@@ -54,7 +54,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         typeName,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: TypeSchemaGenerator.generateTypeSchema.Args<Context>): GeneratedTypeSchema<Context> {
         return Type._visit<GeneratedTypeSchema<Context>>(shape, {
             union: (shape) =>
@@ -63,7 +63,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
-                    getReferenceToGeneratedTypeSchema,
+                    getReferenceToGeneratedTypeSchema
                 }),
             undiscriminatedUnion: (shape) =>
                 this.generateUndiscriminatedUnion({
@@ -71,7 +71,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
-                    getReferenceToGeneratedTypeSchema,
+                    getReferenceToGeneratedTypeSchema
                 }),
             object: (shape) =>
                 this.generateObject({
@@ -79,7 +79,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
-                    getReferenceToGeneratedTypeSchema,
+                    getReferenceToGeneratedTypeSchema
                 }),
             enum: (shape) =>
                 this.generateEnum({
@@ -87,7 +87,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
-                    getReferenceToGeneratedTypeSchema,
+                    getReferenceToGeneratedTypeSchema
                 }),
             alias: (shape) =>
                 this.generateAlias({
@@ -95,11 +95,11 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
                     shape,
                     getGeneratedType,
                     getReferenceToGeneratedType,
-                    getReferenceToGeneratedTypeSchema,
+                    getReferenceToGeneratedTypeSchema
                 }),
             _other: () => {
                 throw new Error("Unknown type declaration shape: " + shape.type);
-            },
+            }
         });
     }
 
@@ -108,7 +108,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
         shape: UnionTypeDeclaration;
@@ -123,7 +123,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -132,7 +132,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
         shape: ObjectTypeDeclaration;
@@ -146,7 +146,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -155,7 +155,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
         shape: EnumTypeDeclaration;
@@ -169,7 +169,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -178,7 +178,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
         shape: AliasTypeDeclaration;
@@ -192,7 +192,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -201,7 +201,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
         shape,
         getGeneratedType,
         getReferenceToGeneratedType,
-        getReferenceToGeneratedTypeSchema,
+        getReferenceToGeneratedTypeSchema
     }: {
         typeName: string;
         shape: UndiscriminatedUnionTypeDeclaration;
@@ -215,7 +215,7 @@ export class TypeSchemaGenerator<Context extends ModelContext = ModelContext> {
             getGeneratedType,
             getReferenceToGeneratedType,
             getReferenceToGeneratedTypeSchema,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 }

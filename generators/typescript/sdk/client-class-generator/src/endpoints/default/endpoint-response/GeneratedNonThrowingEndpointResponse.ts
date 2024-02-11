@@ -2,7 +2,7 @@ import {
     ErrorDiscriminationByPropertyStrategy,
     ErrorDiscriminationStrategy,
     HttpEndpoint,
-    HttpResponse,
+    HttpResponse
 } from "@fern-fern/ir-sdk/api";
 import { PackageId } from "@fern-typescript/commons";
 import { GeneratedEndpointErrorUnion, GeneratedSdkEndpointTypeSchemas, SdkContext } from "@fern-typescript/contexts";
@@ -38,7 +38,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
         response,
         errorDiscriminationStrategy,
         errorResolver,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedNonThrowingEndpointResponse.Init) {
         this.packageId = packageId;
         this.endpoint = endpoint;
@@ -135,7 +135,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                     )
                 ),
                 ts.factory.createBlock([this.getSwitchStatementForErrors(context)], true)
-            ),
+            )
         ];
     }
 
@@ -144,18 +144,18 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
             property: (propertyErrorDiscriminationStrategy) =>
                 this.getSwitchStatementForPropertyDiscriminatedErrors({
                     context,
-                    propertyErrorDiscriminationStrategy,
+                    propertyErrorDiscriminationStrategy
                 }),
             statusCode: () => this.getSwitchStatementForStatusCodeDiscriminatedErrors(context),
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + this.errorDiscriminationStrategy.type);
-            },
+            }
         });
     }
 
     private getSwitchStatementForPropertyDiscriminatedErrors({
         context,
-        propertyErrorDiscriminationStrategy,
+        propertyErrorDiscriminationStrategy
     }: {
         context: SdkContext;
         propertyErrorDiscriminationStrategy: ErrorDiscriminationByPropertyStrategy;
@@ -195,10 +195,10 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                               context
                                           )
                                       )
-                                  ),
+                                  )
                               ]
                     )
-                ),
+                )
             ])
         );
     }
@@ -228,13 +228,13 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                                         builderArgument:
                                             generatedSdkErrorSchema != null
                                                 ? generatedSdkErrorSchema.deserializeBody(context, {
-                                                      referenceToBody: this.getReferenceToErrorBody(context),
+                                                      referenceToBody: this.getReferenceToErrorBody(context)
                                                   })
                                                 : undefined,
-                                        context,
+                                        context
                                     })
                             )
-                        ),
+                        )
                     ]);
                 })
             )
@@ -248,7 +248,7 @@ export class GeneratedNonThrowingEndpointResponse implements GeneratedEndpointRe
                     .getErrorUnion()
                     .buildUnknown({
                         existingValue: this.getReferenceToError(context),
-                        context,
+                        context
                     })
             )
         );

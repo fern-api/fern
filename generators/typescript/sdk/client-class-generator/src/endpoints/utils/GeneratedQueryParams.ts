@@ -37,11 +37,11 @@ export class GeneratedQueryParams {
                                             ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword),
                                             ts.factory.createArrayTypeNode(
                                                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                                            ),
-                                        ]),
+                                            )
+                                        ])
                                     ]),
                                     ts.factory.createObjectLiteralExpression([], false)
-                                ),
+                                )
                             ],
                             ts.NodeFlags.Const
                         )
@@ -69,7 +69,7 @@ export class GeneratedQueryParams {
                                                 { includeNullCheckIfOptional: false }
                                             )
                                         )
-                                    ),
+                                    )
                                 ];
                             },
                             (referenceToQueryParameter) => {
@@ -101,7 +101,7 @@ export class GeneratedQueryParams {
                                                                 ts.factory.createIdentifier("item"),
                                                                 undefined,
                                                                 undefined
-                                                            ),
+                                                            )
                                                         ],
                                                         undefined,
                                                         ts.factory.createToken(ts.SyntaxKind.EqualsGreaterThanToken),
@@ -110,11 +110,11 @@ export class GeneratedQueryParams {
                                                             queryParameter.valueType,
                                                             { includeNullCheckIfOptional: false }
                                                         )
-                                                    ),
+                                                    )
                                                 ]
                                             )
                                         )
-                                    ),
+                                    )
                                 ];
                             }
                         )

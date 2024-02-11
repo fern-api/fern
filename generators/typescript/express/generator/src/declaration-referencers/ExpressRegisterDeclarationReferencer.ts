@@ -8,9 +8,9 @@ export class ExpressRegisterDeclarationReferencer extends AbstractDeclarationRef
             file: {
                 nameOnDisk: this.getFilename(),
                 exportDeclaration: {
-                    namedExports: [this.getRegisterFunctionName()],
-                },
-            },
+                    namedExports: [this.getRegisterFunctionName()]
+                }
+            }
         };
     }
 

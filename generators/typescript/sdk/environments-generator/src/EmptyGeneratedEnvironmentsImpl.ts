@@ -19,7 +19,7 @@ export class EmptyGeneratedEnvironmentsImpl implements GeneratedEnvironments {
     }
 
     public getReferenceToEnvironmentUrl({
-        referenceToEnvironmentValue,
+        referenceToEnvironmentValue
     }: {
         referenceToEnvironmentValue: ts.Expression;
     }): ts.Expression {

@@ -48,7 +48,7 @@ export class ObjectWriter {
         this.#isEmpty = false;
         this.blocks.push({
             ...property,
-            type: "property",
+            type: "property"
         });
         return this;
     }
@@ -58,7 +58,7 @@ export class ObjectWriter {
             this.blocks.push({
                 key,
                 value,
-                type: "property",
+                type: "property"
             });
         }
         return this;
@@ -69,7 +69,7 @@ export class ObjectWriter {
             type: "custom",
             writer: (writer) => {
                 writer.newLine();
-            },
+            }
         });
         return this;
     }

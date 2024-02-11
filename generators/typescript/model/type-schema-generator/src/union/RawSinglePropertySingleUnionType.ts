@@ -33,8 +33,8 @@ export class RawSinglePropertySingleUnionType<
             {
                 name: `"${this.singleProperty.name.wireValue}"`,
                 type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                hasQuestionToken: type.isOptional,
-            },
+                hasQuestionToken: type.isOptional
+            }
         ];
     }
 
@@ -49,10 +49,10 @@ export class RawSinglePropertySingleUnionType<
             {
                 key: {
                     parsed: unionBeingGenerated.getSinglePropertyKey(this.singleProperty),
-                    raw: this.singleProperty.name.wireValue,
+                    raw: this.singleProperty.name.wireValue
                 },
-                value: context.typeSchema.getSchemaOfTypeReference(this.singleProperty.type),
-            },
+                value: context.typeSchema.getSchemaOfTypeReference(this.singleProperty.type)
+            }
         ]);
     }
 }

@@ -14,7 +14,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
     }
 
     public getVisitorArguments({
-        localReferenceToUnionValue,
+        localReferenceToUnionValue
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {
@@ -31,7 +31,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                 ts.factory.createIdentifier(discriminant),
                 undefined,
                 ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-            ),
+            )
         ]);
     }
 
@@ -52,9 +52,9 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                         ts.factory.createIdentifier(discriminant),
                         undefined,
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.StringKeyword)
-                    ),
+                    )
                 ])
-            ),
+            )
         ];
     }
 
@@ -71,7 +71,7 @@ export class UnknownSingleUnionTypeGenerator implements SingleUnionTypeGenerator
                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
                     )
                 )
-            ),
+            )
         ];
     }
 }

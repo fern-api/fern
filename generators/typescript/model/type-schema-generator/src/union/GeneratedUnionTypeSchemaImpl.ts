@@ -4,7 +4,7 @@ import { GeneratedUnionType, GeneratedUnionTypeSchema, ModelContext } from "@fer
 import {
     GeneratedUnionSchema,
     RawNoPropertiesSingleUnionType,
-    RawSingleUnionType,
+    RawSingleUnionType
 } from "@fern-typescript/union-schema-generator";
 import { ModuleDeclaration, ts } from "ts-morph";
 import { AbstractGeneratedTypeSchema } from "../AbstractGeneratedTypeSchema";
@@ -44,28 +44,28 @@ export class GeneratedUnionTypeSchemaImpl<Context extends ModelContext>
                     noProperties: () =>
                         new RawNoPropertiesSingleUnionType({
                             discriminant,
-                            discriminantValue,
+                            discriminantValue
                         }),
                     samePropertiesAsObject: (extended) =>
                         new RawSamePropertiesAsObjectSingleUnionType({
                             extended,
                             discriminant,
-                            discriminantValue,
+                            discriminantValue
                         }),
                     singleProperty: (singleProperty) =>
                         new RawSinglePropertySingleUnionType({
                             singleProperty,
                             discriminant,
                             discriminantValue,
-                            getGeneratedType: this.getGeneratedType.bind(this),
+                            getGeneratedType: this.getGeneratedType.bind(this)
                         }),
                     _other: () => {
                         throw new Error(
                             "Unknown SingleUnionTypeProperties type: " + singleUnionType.shape.propertiesType
                         );
-                    },
+                    }
                 });
-            }),
+            })
         });
     }
 

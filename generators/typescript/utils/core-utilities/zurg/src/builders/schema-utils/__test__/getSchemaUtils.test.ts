@@ -6,12 +6,12 @@ describe("getSchemaUtils", () => {
     describe("optional()", () => {
         itSchema("optional fields allow original schema", string().optional(), {
             raw: "hello",
-            parsed: "hello",
+            parsed: "hello"
         });
 
         itSchema("optional fields are not required", string().optional(), {
             raw: null,
-            parsed: undefined,
+            parsed: undefined
         });
     });
 
@@ -20,11 +20,11 @@ describe("getSchemaUtils", () => {
             "transorm and untransform run correctly",
             string().transform({
                 transform: (x) => x + "X",
-                untransform: (x) => (x as string).slice(0, -1),
+                untransform: (x) => (x as string).slice(0, -1)
             }),
             {
                 raw: "hello",
-                parsed: "helloX",
+                parsed: "helloX"
             }
         );
     });

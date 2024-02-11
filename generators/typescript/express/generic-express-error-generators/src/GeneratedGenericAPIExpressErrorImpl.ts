@@ -8,7 +8,7 @@ import {
     ParameterDeclarationStructure,
     PropertyDeclarationStructure,
     Scope,
-    ts,
+    ts
 } from "ts-morph";
 
 export class GeneratedGenericAPIExpressErrorImpl
@@ -34,8 +34,8 @@ export class GeneratedGenericAPIExpressErrorImpl
                 type: "string",
                 hasQuestionToken: true,
                 isReadonly: true,
-                scope: Scope.Public,
-            },
+                scope: Scope.Public
+            }
         ];
     }
 
@@ -59,14 +59,14 @@ export class GeneratedGenericAPIExpressErrorImpl
             parameters: [
                 {
                     name: GeneratedGenericAPIExpressErrorImpl.SEND_RESPONSE_PARAMETER_NAME,
-                    type: getTextOfTsNode(context.externalDependencies.express.Response._getReferenceToType()),
-                },
+                    type: getTextOfTsNode(context.externalDependencies.express.Response._getReferenceToType())
+                }
             ],
             returnType: getTextOfTsNode(
                 ts.factory.createTypeReferenceNode("Promise", [
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.VoidKeyword)
                 ])
-            ),
+            )
         };
     }
 
@@ -85,8 +85,8 @@ export class GeneratedGenericAPIExpressErrorImpl
             statements: generateBody({
                 expressResponse: ts.factory.createIdentifier(
                     GeneratedGenericAPIExpressErrorImpl.SEND_RESPONSE_PARAMETER_NAME
-                ),
-            }).map(getTextOfTsNode),
+                )
+            }).map(getTextOfTsNode)
         };
     }
 

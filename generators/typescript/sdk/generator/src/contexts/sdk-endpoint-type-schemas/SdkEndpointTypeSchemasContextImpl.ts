@@ -29,7 +29,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
         importsManager,
         sdkEndpointTypeSchemasGenerator,
         sdkEndpointSchemaDeclarationReferencer,
-        packageResolver,
+        packageResolver
     }: SdkEndpointTypeSchemasContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -49,7 +49,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
         return this.sdkEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
             packageId,
             service: serviceDeclaration,
-            endpoint,
+            endpoint
         });
     }
 
@@ -70,7 +70,7 @@ export class SdkEndpointTypeSchemasContextImpl implements SdkEndpointTypeSchemas
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
-            subImport: typeof export_ === "string" ? [export_] : export_,
+            subImport: typeof export_ === "string" ? [export_] : export_
         });
     }
 }

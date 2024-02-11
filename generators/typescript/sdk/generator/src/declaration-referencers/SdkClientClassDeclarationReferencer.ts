@@ -42,12 +42,12 @@ export class SdkClientClassDeclarationReferencer extends AbstractSdkClientClassD
         if (args.name.isRoot) {
             return this.rootClientClassDeclarationReferencer.getReferenceToClient({
                 ...args,
-                name: undefined as never,
+                name: undefined as never
             });
         } else {
             return this.subpackageClientClassDeclarationReferencer.getReferenceToClient({
                 ...args,
-                name: args.name.subpackageId,
+                name: args.name.subpackageId
             });
         }
     }

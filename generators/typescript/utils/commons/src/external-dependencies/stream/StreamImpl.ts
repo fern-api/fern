@@ -14,6 +14,6 @@ export class StreamImpl extends ExternalDependency implements Stream {
                     []
                 );
             })
-        ),
+        )
     };
 }

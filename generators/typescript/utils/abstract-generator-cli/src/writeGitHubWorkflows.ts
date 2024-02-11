@@ -6,7 +6,7 @@ import path from "path";
 export async function writeGitHubWorkflows({
     githubOutputMode,
     isPackagePrivate,
-    pathToProject,
+    pathToProject
 }: {
     githubOutputMode: FernGeneratorExec.GithubOutputMode;
     isPackagePrivate: boolean;
@@ -19,7 +19,7 @@ export async function writeGitHubWorkflows({
     }
     const workflowYaml = constructWorkflowYaml({
         publishInfo: githubOutputMode.publishInfo,
-        isPackagePrivate,
+        isPackagePrivate
     });
     const githubWorkflowsDir = path.join(pathToProject, ".github", "workflows");
     await mkdir(githubWorkflowsDir, { recursive: true });
@@ -28,7 +28,7 @@ export async function writeGitHubWorkflows({
 
 function constructWorkflowYaml({
     publishInfo,
-    isPackagePrivate,
+    isPackagePrivate
 }: {
     publishInfo: FernGeneratorExec.NpmGithubPublishInfo | undefined;
     isPackagePrivate: boolean;

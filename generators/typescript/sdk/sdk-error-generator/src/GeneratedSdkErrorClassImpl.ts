@@ -58,8 +58,8 @@ export class GeneratedSdkErrorClassImpl
             {
                 name: GeneratedSdkErrorClassImpl.BODY_CONSTRUCTOR_PARAMETER_NAME,
                 hasQuestionToken: referenceToType.isOptional,
-                type: getTextOfTsNode(referenceToType.typeNodeWithoutUndefined),
-            },
+                type: getTextOfTsNode(referenceToType.typeNodeWithoutUndefined)
+            }
         ];
     }
 
@@ -70,7 +70,7 @@ export class GeneratedSdkErrorClassImpl
             responseBody:
                 this.errorDeclaration.type != null
                     ? ts.factory.createIdentifier(GeneratedSdkErrorClassImpl.BODY_CONSTRUCTOR_PARAMETER_NAME)
-                    : undefined,
+                    : undefined
         });
     }
 

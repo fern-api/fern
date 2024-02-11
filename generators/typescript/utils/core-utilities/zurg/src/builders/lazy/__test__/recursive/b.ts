@@ -4,5 +4,5 @@ import { schemaA } from "./a";
 
 // @ts-expect-error
 export const schemaB = object({
-    a: optional(schemaA),
+    a: optional(schemaA)
 });

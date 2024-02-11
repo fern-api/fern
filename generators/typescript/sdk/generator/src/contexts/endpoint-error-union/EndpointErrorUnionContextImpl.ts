@@ -28,7 +28,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
         importsManager,
         endpointErrorUnionDeclarationReferencer,
         endpointErrorUnionGenerator,
-        packageResolver,
+        packageResolver
     }: EndpointErrorUnionContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -47,7 +47,7 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
         }
         return this.endpointErrorUnionGenerator.generateEndpointErrorUnion({
             packageId,
-            endpoint,
+            endpoint
         });
     }
 
@@ -69,9 +69,9 @@ export class EndpointErrorUnionContextImpl implements EndpointErrorUnionContext 
             importsManager: this.importsManager,
             importStrategy: {
                 type: "fromRoot",
-                namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport,
+                namespaceImport: this.endpointErrorUnionDeclarationReferencer.namespaceExport
             },
-            subImport: typeof export_ === "string" ? [export_] : export_,
+            subImport: typeof export_ === "string" ? [export_] : export_
         });
     }
 }

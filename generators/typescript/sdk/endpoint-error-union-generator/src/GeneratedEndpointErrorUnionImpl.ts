@@ -31,7 +31,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
         errorResolver,
         errorDiscriminationStrategy,
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: GeneratedEndpointErrorUnionImpl.Init) {
         this.endpoint = endpoint;
 
@@ -51,7 +51,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                         errorResolver,
                         errorDiscriminationStrategy,
                         includeUtilsOnUnionMembers,
-                        noOptionalProperties,
+                        noOptionalProperties
                     })
             ),
             getReferenceToUnion: (context) =>
@@ -62,11 +62,11 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
                 ),
             unknownSingleUnionType: new UnknownErrorSingleUnionType({
                 singleUnionType: unknownErrorSingleUnionTypeGenerator,
-                includeUtilsOnUnionMembers,
+                includeUtilsOnUnionMembers
             }),
             includeOtherInUnionTypes: true,
             includeSerdeLayer,
-            noOptionalProperties,
+            noOptionalProperties
         });
     }
 
@@ -76,7 +76,7 @@ export class GeneratedEndpointErrorUnionImpl implements GeneratedEndpointErrorUn
             statusCode: () => GeneratedEndpointErrorUnionImpl.STATUS_CODE_DISCRIMINANT,
             _other: () => {
                 throw new Error("Unknown error discrimination strategy: " + errorDiscriminationStrategy.type);
-            },
+            }
         });
     }
 

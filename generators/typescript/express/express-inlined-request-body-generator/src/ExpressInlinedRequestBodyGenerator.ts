@@ -14,11 +14,11 @@ export declare namespace ExpressInlinedRequestBodyGenerator {
 export class ExpressInlinedRequestBodyGenerator {
     public generateInlinedRequestBody({
         requestBody,
-        typeName,
+        typeName
     }: ExpressInlinedRequestBodyGenerator.generateInlinedRequestBody.Args): GeneratedExpressInlinedRequestBody {
         return new GeneratedExpressInlinedRequestBodyImpl({
             requestBody,
-            typeName,
+            typeName
         });
     }
 }

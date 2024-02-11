@@ -7,7 +7,7 @@ import {
     Type,
     TypeReference,
     UndiscriminatedUnionTypeDeclaration,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { Reference } from "@fern-typescript/commons";
 import {
@@ -17,7 +17,7 @@ import {
     GeneratedType,
     GeneratedUndiscriminatedUnionType,
     GeneratedUnionType,
-    ModelContext,
+    ModelContext
 } from "@fern-typescript/contexts";
 import { GeneratedAliasTypeImpl } from "./alias/GeneratedAliasTypeImpl";
 import { GeneratedBrandedStringAliasImpl } from "./alias/GeneratedBrandedStringAliasImpl";
@@ -60,7 +60,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         includeUtilsOnUnionMembers,
         includeOtherInUnionTypes,
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: TypeGenerator.Init) {
         this.useBrandedStringAliases = useBrandedStringAliases;
         this.includeUtilsOnUnionMembers = includeUtilsOnUnionMembers;
@@ -75,7 +75,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         typeName,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: TypeGenerator.generateType.Args<Context>): GeneratedType<Context> {
         return Type._visit<GeneratedType<Context>>(shape, {
             union: (shape) => this.generateUnion({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
@@ -86,7 +86,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                     examples,
                     docs,
                     fernFilepath,
-                    getReferenceToSelf,
+                    getReferenceToSelf
                 }),
             object: (shape) =>
                 this.generateObject({ typeName, shape, examples, docs, fernFilepath, getReferenceToSelf }),
@@ -98,11 +98,11 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                     examples,
                     docs,
                     fernFilepath,
-                    getReferenceToSelf,
+                    getReferenceToSelf
                 }),
             _other: () => {
                 throw new Error("Unknown type declaration shape: " + shape.type);
-            },
+            }
         });
     }
 
@@ -112,7 +112,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: {
         typeName: string;
         shape: UndiscriminatedUnionTypeDeclaration;
@@ -129,7 +129,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -139,7 +139,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: {
         typeName: string;
         shape: UnionTypeDeclaration;
@@ -158,7 +158,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             includeUtilsOnUnionMembers: this.includeUtilsOnUnionMembers,
             includeOtherInUnionTypes: this.includeOtherInUnionTypes,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -168,7 +168,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: {
         typeName: string;
         shape: ObjectTypeDeclaration;
@@ -185,7 +185,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             fernFilepath,
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -195,7 +195,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: {
         typeName: string;
         shape: EnumTypeDeclaration;
@@ -213,7 +213,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
             getReferenceToSelf,
             includeSerdeLayer: this.includeSerdeLayer,
             noOptionalProperties: this.noOptionalProperties,
-            includeEnumUtils: this.includeUtilsOnUnionMembers,
+            includeEnumUtils: this.includeUtilsOnUnionMembers
         });
     }
 
@@ -223,7 +223,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
         examples,
         docs,
         fernFilepath,
-        getReferenceToSelf,
+        getReferenceToSelf
     }: {
         typeName: string;
         aliasOf: TypeReference;
@@ -241,7 +241,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
-                  noOptionalProperties: this.noOptionalProperties,
+                  noOptionalProperties: this.noOptionalProperties
               })
             : new GeneratedAliasTypeImpl({
                   typeName,
@@ -251,7 +251,7 @@ export class TypeGenerator<Context extends ModelContext = ModelContext> {
                   fernFilepath,
                   getReferenceToSelf,
                   includeSerdeLayer: this.includeSerdeLayer,
-                  noOptionalProperties: this.noOptionalProperties,
+                  noOptionalProperties: this.noOptionalProperties
               });
     }
 }
@@ -270,6 +270,6 @@ function isTypeStringLike(type: TypeReference): boolean {
         uuid: () => true,
         date: () => true,
         base64: () => true,
-        _other: () => false,
+        _other: () => false
     });
 }

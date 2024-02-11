@@ -14,6 +14,6 @@ export function getEntityNameOfDirectory({ pathToDirectory, prefix }: getEntityN
         pathToDirectory,
         constructQualifiedName: (left, right) => ts.factory.createQualifiedName(left, right),
         convertToQualifiedName: (value) => ts.factory.createIdentifier(value),
-        prefix,
+        prefix
     });
 }

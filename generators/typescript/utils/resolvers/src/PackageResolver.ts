@@ -7,12 +7,12 @@ export class PackageResolver {
     public getAllPackageIds(): PackageId[] {
         return [
             {
-                isRoot: true,
+                isRoot: true
             },
             ...Object.keys(this.intermediateRepresentation.subpackages).map((subpackageId) => ({
                 isRoot: false,
-                subpackageId,
-            })),
+                subpackageId
+            }))
         ];
     }
 

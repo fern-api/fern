@@ -21,7 +21,7 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
     public writeToFile(context: ExpressContext): void {
         const requestInterface = context.sourceFile.addInterface({
             name: this.typeName,
-            isExported: true,
+            isExported: true
         });
         for (const extension of this.requestBody.extends) {
             requestInterface.addExtends(getTextOfTsNode(context.type.getReferenceToNamedType(extension).getTypeNode()));
@@ -31,7 +31,7 @@ export class GeneratedExpressInlinedRequestBodyImpl implements GeneratedExpressI
             requestInterface.addProperty({
                 name: this.getPropertyKey(property),
                 type: getTextOfTsNode(propertyType.typeNodeWithoutUndefined),
-                hasQuestionToken: propertyType.isOptional,
+                hasQuestionToken: propertyType.isOptional
             });
         }
     }

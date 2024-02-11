@@ -27,13 +27,13 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
         return [
             {
                 name: UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
-                type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()),
-            },
+                type: getTextOfTsNode(context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType())
+            }
         ];
     }
 
     public getVisitorArguments({
-        localReferenceToUnionValue,
+        localReferenceToUnionValue
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {
@@ -53,7 +53,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
                 UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
                 context.coreUtilities.fetcher.Fetcher.Error._getReferenceToType()
-            ),
+            )
         ];
     }
 
@@ -67,7 +67,7 @@ export class UnknownErrorSingleUnionTypeGenerator implements SingleUnionTypeGene
             ts.factory.createPropertyAssignment(
                 UnknownErrorSingleUnionTypeGenerator.CONTENT_PROPERTY_NAME,
                 ts.factory.createIdentifier(UnknownErrorSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
-            ),
+            )
         ];
     }
 }

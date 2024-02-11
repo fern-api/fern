@@ -10,7 +10,7 @@ export function getDirectReferenceToExport({
     importsManager,
     referencedIn,
     importAlias,
-    subImport = [],
+    subImport = []
 }: {
     exportedName: string;
     exportedFromPath: ExportedFilePath;
@@ -21,7 +21,7 @@ export function getDirectReferenceToExport({
 }): Reference {
     const moduleSpecifier = getRelativePathAsModuleSpecifierTo({
         from: referencedIn,
-        to: convertExportedFilePathToFilePath(exportedFromPath),
+        to: convertExportedFilePathToFilePath(exportedFromPath)
     });
 
     const addImport = () => {
@@ -29,9 +29,9 @@ export function getDirectReferenceToExport({
             namedImports: [
                 {
                     name: exportedName,
-                    alias: importAlias !== exportedName ? importAlias : undefined,
-                },
-            ],
+                    alias: importAlias !== exportedName ? importAlias : undefined
+                }
+            ]
         });
     };
 
@@ -60,6 +60,6 @@ export function getDirectReferenceToExport({
                 addImport();
             }
             return ts.factory.createIdentifier(importedName);
-        },
+        }
     };
 }

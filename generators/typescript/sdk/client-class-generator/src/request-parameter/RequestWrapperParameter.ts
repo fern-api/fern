@@ -22,7 +22,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
         return {
             type: context.requestWrapper.getReferenceToRequestWrapper(this.packageId, this.endpoint.name),
             hasQuestionToken: false,
-            initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined,
+            initializer: isOptional ? ts.factory.createObjectLiteralExpression([], false) : undefined
         };
     }
 
@@ -89,11 +89,11 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
                             undefined,
                             undefined,
                             ts.factory.createIdentifier(this.getRequestParameterName())
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
-            ),
+            )
         ];
     }
 
@@ -111,7 +111,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
     public generateExample({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;
@@ -139,7 +139,7 @@ export class RequestWrapperParameter extends AbstractRequestParameter {
             ),
             context,
             queryParamSetter,
-            queryParamItemSetter,
+            queryParamItemSetter
         });
     }
 

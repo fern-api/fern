@@ -28,7 +28,7 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
         importsManager,
         errorDeclarationReferencer,
         expressErrorGenerator,
-        errorResolver,
+        errorResolver
     }: ExpressErrorContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -42,14 +42,14 @@ export class ExpressErrorContextImpl implements ExpressErrorContext {
             name: errorName,
             importStrategy: { type: "fromRoot", namespaceImport: this.errorDeclarationReferencer.namespaceExport },
             referencedIn: this.sourceFile,
-            importsManager: this.importsManager,
+            importsManager: this.importsManager
         });
     }
 
     public getGeneratedExpressError(errorName: DeclaredErrorName): GeneratedExpressError {
         return this.expressErrorGenerator.generateError({
             errorName: this.getErrorClassName(errorName),
-            errorDeclaration: this.getErrorDeclaration(errorName),
+            errorDeclaration: this.getErrorDeclaration(errorName)
         });
     }
 

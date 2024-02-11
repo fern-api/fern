@@ -27,7 +27,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
         expressServiceDeclarationReferencer,
         packageResolver,
         importsManager,
-        sourceFile,
+        sourceFile
     }: ExpressServiceContextImpl.Init) {
         this.expressServiceGenerator = expressServiceGenerator;
         this.expressServiceDeclarationReferencer = expressServiceDeclarationReferencer;
@@ -41,7 +41,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
         return this.expressServiceGenerator.generateService({
             packageId,
             service: serviceDeclaration,
-            serviceClassName: this.expressServiceDeclarationReferencer.getExportedNameOfService(packageId),
+            serviceClassName: this.expressServiceDeclarationReferencer.getExportedNameOfService(packageId)
         });
     }
 
@@ -50,7 +50,7 @@ export class ExpressServiceContextImpl implements ExpressServiceContext {
             name: packageId,
             importsManager: this.importsManager,
             importStrategy: { type: "direct", alias: importAlias },
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 }

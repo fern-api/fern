@@ -31,7 +31,7 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
         packageResolver,
         importsManager,
         sourceFile,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: RequestWrapperContextImpl.Init) {
         this.requestWrapperGenerator = requestWrapperGenerator;
         this.requestWrapperDeclarationReferencer = requestWrapperDeclarationReferencer;
@@ -55,9 +55,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             packageId,
             wrapperName: this.requestWrapperDeclarationReferencer.getExportedName({
                 packageId,
-                endpoint,
+                endpoint
             }),
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 
@@ -74,9 +74,9 @@ export class RequestWrapperContextImpl implements RequestWrapperContext {
             importsManager: this.importsManager,
             importStrategy: {
                 type: "fromRoot",
-                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport,
+                namespaceImport: this.requestWrapperDeclarationReferencer.namespaceExport
             },
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 }

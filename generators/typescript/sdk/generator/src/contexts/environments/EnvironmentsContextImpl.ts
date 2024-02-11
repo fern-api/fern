@@ -27,7 +27,7 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         environmentsGenerator,
         environmentsDeclarationReferencer,
         importsManager,
-        sourceFile,
+        sourceFile
     }: EnvironmentsContextImpl.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.environmentsGenerator = environmentsGenerator;
@@ -40,21 +40,21 @@ export class EnvironmentsContextImpl implements EnvironmentsContext {
         return this.environmentsGenerator.generateEnvironments({
             environmentEnumName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentsEnum(),
             environmentUrlsTypeName: this.environmentsDeclarationReferencer.getExportedNameOfEnvironmentUrls(),
-            environmentsConfig: this.intermediateRepresentation.environments ?? undefined,
+            environmentsConfig: this.intermediateRepresentation.environments ?? undefined
         });
     }
 
     public getReferenceToEnvironmentsEnum(): Reference {
         return this.environmentsDeclarationReferencer.getReferenceToEnvironmentsEnum({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
+            sourceFile: this.sourceFile
         });
     }
 
     public getReferenceToEnvironmentUrls(): Reference {
         return this.environmentsDeclarationReferencer.getReferenceToEnvironmentUrls({
             importsManager: this.importsManager,
-            sourceFile: this.sourceFile,
+            sourceFile: this.sourceFile
         });
     }
 }

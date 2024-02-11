@@ -37,7 +37,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
                 SamePropertiesAsObjectSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME,
                 undefined,
                 context.type.getReferenceToNamedType(this.extended).getTypeNode()
-            ),
+            )
         ];
     }
 
@@ -45,7 +45,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
         return [
             ts.factory.createSpreadAssignment(
                 ts.factory.createIdentifier(SamePropertiesAsObjectSingleUnionTypeGenerator.BUILDER_PARAMETER_NAME)
-            ),
+            )
         ];
     }
 
@@ -54,7 +54,7 @@ export class SamePropertiesAsObjectSingleUnionTypeGenerator<Context extends Mode
     }
 
     public getVisitorArguments({
-        localReferenceToUnionValue,
+        localReferenceToUnionValue
     }: {
         localReferenceToUnionValue: ts.Expression;
     }): ts.Expression[] {

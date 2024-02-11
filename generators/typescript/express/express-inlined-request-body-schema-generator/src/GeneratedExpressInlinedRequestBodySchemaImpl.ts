@@ -49,7 +49,7 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
             allowUnrecognizedEnumValues: false,
             allowUnrecognizedUnionMembers: false,
             skipValidation: false,
-            breadcrumbsPrefix: [],
+            breadcrumbsPrefix: []
         });
     }
 
@@ -68,12 +68,12 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
                 return {
                     name: `"${property.name.wireValue}"`,
                     type: getTextOfTsNode(type.typeNodeWithoutUndefined),
-                    hasQuestionToken: type.isOptional,
+                    hasQuestionToken: type.isOptional
                 };
             }),
             extends: this.inlinedRequestBody.extends.map((extension) =>
                 getTextOfTsNode(context.typeSchema.getReferenceToRawNamedType(extension).getTypeNode())
-            ),
+            )
         });
     }
 
@@ -90,9 +90,9 @@ export class GeneratedExpressInlinedRequestBodySchemaImpl
                     parsed: context.expressInlinedRequestBody
                         .getGeneratedInlinedRequestBody(this.packageId, this.endpoint.name)
                         .getPropertyKey(property),
-                    raw: property.name.wireValue,
+                    raw: property.name.wireValue
                 },
-                value: context.typeSchema.getSchemaOfTypeReference(property.valueType),
+                value: context.typeSchema.getSchemaOfTypeReference(property.valueType)
             }))
         );
 

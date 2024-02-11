@@ -8,7 +8,7 @@ export const number = createIdentitySchemaCreator<number>(
         if (typeof value === "number") {
             return {
                 ok: true,
-                value,
+                value
             };
         } else {
             return {
@@ -16,9 +16,9 @@ export const number = createIdentitySchemaCreator<number>(
                 errors: [
                     {
                         path: breadcrumbsPrefix,
-                        message: getErrorMessageForIncorrectType(value, "number"),
-                    },
-                ],
+                        message: getErrorMessageForIncorrectType(value, "number")
+                    }
+                ]
             };
         }
     }

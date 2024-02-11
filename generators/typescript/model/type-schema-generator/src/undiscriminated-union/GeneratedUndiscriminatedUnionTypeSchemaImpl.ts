@@ -24,7 +24,7 @@ export class GeneratedUndiscriminatedUnionTypeSchemaImpl<Context extends ModelCo
                 ts.factory.createUnionTypeNode(
                     this.shape.members.map((value) => context.typeSchema.getReferenceToRawType(value.type).typeNode)
                 )
-            ),
+            )
         });
     }
 }

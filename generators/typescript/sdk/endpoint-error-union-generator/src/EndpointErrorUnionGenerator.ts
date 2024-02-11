@@ -30,7 +30,7 @@ export class EndpointErrorUnionGenerator {
         intermediateRepresentation,
         errorResolver,
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: EndpointErrorUnionGenerator.Init) {
         this.intermediateRepresentation = intermediateRepresentation;
         this.errorResolver = errorResolver;
@@ -40,7 +40,7 @@ export class EndpointErrorUnionGenerator {
 
     public generateEndpointErrorUnion({
         packageId,
-        endpoint,
+        endpoint
     }: EndpointErrorUnionGenerator.generateEndpointErrorUnion.Args): GeneratedEndpointErrorUnion {
         return new GeneratedEndpointErrorUnionImpl({
             packageId,
@@ -48,7 +48,7 @@ export class EndpointErrorUnionGenerator {
             errorResolver: this.errorResolver,
             errorDiscriminationStrategy: this.intermediateRepresentation.errorDiscriminationStrategy,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 }

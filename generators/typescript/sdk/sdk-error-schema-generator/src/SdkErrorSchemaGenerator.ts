@@ -27,7 +27,7 @@ export class SdkErrorSchemaGenerator {
 
     public generateSdkErrorSchema({
         errorDeclaration,
-        errorName,
+        errorName
     }: SdkErrorSchemaGenerator.generateError.Args): GeneratedSdkErrorSchema | undefined {
         if (errorDeclaration.type == null) {
             return undefined;
@@ -37,7 +37,7 @@ export class SdkErrorSchemaGenerator {
             type: errorDeclaration.type,
             errorName,
             skipValidation: this.skipValidation,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

@@ -28,7 +28,7 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
         expressInlinedRequestBodyDeclarationReferencer,
         packageResolver,
         importsManager,
-        sourceFile,
+        sourceFile
     }: ExpressInlinedRequestBodyContextImpl.Init) {
         this.expressInlinedRequestBodyGenerator = expressInlinedRequestBodyGenerator;
         this.expressInlinedRequestBodyDeclarationReferencer = expressInlinedRequestBodyDeclarationReferencer;
@@ -55,8 +55,8 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
             requestBody: endpoint.requestBody,
             typeName: this.expressInlinedRequestBodyDeclarationReferencer.getExportedName({
                 packageId,
-                endpoint,
-            }),
+                endpoint
+            })
         });
     }
 
@@ -73,9 +73,9 @@ export class ExpressInlinedRequestBodyContextImpl implements ExpressInlinedReque
             importsManager: this.importsManager,
             importStrategy: {
                 type: "fromRoot",
-                namespaceImport: this.expressInlinedRequestBodyDeclarationReferencer.namespaceExport,
+                namespaceImport: this.expressInlinedRequestBodyDeclarationReferencer.namespaceExport
             },
-            referencedIn: this.sourceFile,
+            referencedIn: this.sourceFile
         });
     }
 }

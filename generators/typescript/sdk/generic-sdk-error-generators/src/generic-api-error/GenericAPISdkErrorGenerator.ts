@@ -11,7 +11,7 @@ export declare namespace GenericAPISdkErrorGenerator {
 
 export class GenericAPISdkErrorGenerator {
     public generateGenericAPISdkError({
-        errorClassName,
+        errorClassName
     }: GenericAPISdkErrorGenerator.generateGenericAPISdkError.Args): GeneratedGenericAPISdkError {
         return new GeneratedGenericAPISdkErrorImpl({ errorClassName });
     }

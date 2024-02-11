@@ -29,7 +29,7 @@ export class GeneratedSdkErrorSchemaImpl
         errorDeclaration,
         type,
         skipValidation,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedSdkErrorSchemaImpl.Init) {
         super({ typeName: errorName });
         this.errorDeclaration = errorDeclaration;
@@ -74,7 +74,7 @@ export class GeneratedSdkErrorSchemaImpl
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipValidation,
-                        breadcrumbsPrefix: ["response"],
+                        breadcrumbsPrefix: ["response"]
                     });
             case "unknown":
                 return referenceToBody;
@@ -85,7 +85,7 @@ export class GeneratedSdkErrorSchemaImpl
                     allowUnrecognizedUnionMembers: true,
                     unrecognizedObjectKeys: "passthrough",
                     skipValidation: this.skipValidation,
-                    breadcrumbsPrefix: ["response"],
+                    breadcrumbsPrefix: ["response"]
                 });
             default:
                 assertNever(this.type);
@@ -99,7 +99,7 @@ export class GeneratedSdkErrorSchemaImpl
     protected generateRawTypeDeclaration(context: SdkContext, module: ModuleDeclaration): void {
         module.addTypeAlias({
             name: AbstractGeneratedSchema.RAW_TYPE_NAME,
-            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode),
+            type: getTextOfTsNode(context.typeSchema.getReferenceToRawType(this.type).typeNode)
         });
     }
 

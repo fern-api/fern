@@ -8,7 +8,7 @@ import {
     ParameterDeclarationStructure,
     PropertyDeclarationStructure,
     Scope,
-    ts,
+    ts
 } from "ts-morph";
 
 export declare namespace GeneratedExpressErrorImpl {
@@ -48,9 +48,9 @@ export class GeneratedExpressErrorImpl
                             ts.factory.createExpressionStatement(
                                 context.externalDependencies.express.Response.sendStatus({
                                     referenceToExpressResponse: expressResponse,
-                                    status: this.errorDeclaration.statusCode,
+                                    status: this.errorDeclaration.statusCode
                                 })
-                            ),
+                            )
                         ];
                     }
 
@@ -66,16 +66,16 @@ export class GeneratedExpressErrorImpl
                             context.externalDependencies.express.Response.json({
                                 referenceToExpressResponse: context.externalDependencies.express.Response.status({
                                     referenceToExpressResponse: expressResponse,
-                                    status: this.errorDeclaration.statusCode,
+                                    status: this.errorDeclaration.statusCode
                                 }),
                                 valueToSend: errorSchema.serializeBody(context, {
                                     referenceToBody: ts.factory.createPropertyAccessExpression(
                                         ts.factory.createThis(),
                                         GeneratedExpressErrorImpl.BODY_CONSTRUCTOR_PARAMETER_NAME
-                                    ),
-                                }),
+                                    )
+                                })
                             })
-                        ),
+                        )
                     ];
                 })
         );
@@ -96,14 +96,14 @@ export class GeneratedExpressErrorImpl
                 hasQuestionToken: referenceToType.isOptional,
                 type: getTextOfTsNode(referenceToType.typeNodeWithoutUndefined),
                 scope: Scope.Private,
-                isReadonly: true,
-            },
+                isReadonly: true
+            }
         ];
     }
 
     protected getSuperArguments(context: ExpressContext): ts.Expression[] {
         return context.genericAPIExpressError.getGeneratedGenericAPIExpressError().getConstructorArguments({
-            errorName: this.errorClassName,
+            errorName: this.errorClassName
         });
     }
 

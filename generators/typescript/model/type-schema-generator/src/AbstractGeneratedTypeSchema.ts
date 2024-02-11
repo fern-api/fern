@@ -30,7 +30,7 @@ export abstract class AbstractGeneratedTypeSchema<
         getGeneratedType,
         getReferenceToGeneratedType,
         getReferenceToGeneratedTypeSchema,
-        noOptionalProperties,
+        noOptionalProperties
     }: AbstractGeneratedTypeSchema.Init<Shape, Context>) {
         super({ typeName });
         this.shape = shape;

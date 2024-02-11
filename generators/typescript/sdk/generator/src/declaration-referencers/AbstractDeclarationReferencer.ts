@@ -5,7 +5,7 @@ import {
     getDirectReferenceToExport,
     getReferenceToExportFromPackage,
     getReferenceToExportFromRoot,
-    Reference,
+    Reference
 } from "@fern-typescript/commons";
 import { DeclarationReferencer } from "./DeclarationReferencer";
 
@@ -39,7 +39,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
             importsManager,
             referencedIn,
             subImport,
-            importStrategy,
+            importStrategy
         }: DeclarationReferencer.getReferenceTo.Options<Name>
     ): Reference {
         switch (importStrategy.type) {
@@ -50,7 +50,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importAlias: importStrategy.alias,
                     importsManager,
                     referencedIn,
-                    subImport,
+                    subImport
                 });
             case "fromRoot":
                 return getReferenceToExportFromRoot({
@@ -60,7 +60,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     importsManager,
                     namespaceImport: importStrategy.namespaceImport,
                     useDynamicImport: importStrategy.useDynamicImport,
-                    subImport,
+                    subImport
                 });
             case "fromPackage":
                 return getReferenceToExportFromPackage({
@@ -68,7 +68,7 @@ export abstract class AbstractDeclarationReferencer<Name = never> implements Dec
                     namespaceImport: importStrategy.namespaceImport,
                     packageName: importStrategy.packageName,
                     exportedName,
-                    subImport,
+                    subImport
                 });
             default:
                 assertNever(importStrategy);

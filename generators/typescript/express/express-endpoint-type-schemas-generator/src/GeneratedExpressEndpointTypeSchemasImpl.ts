@@ -40,7 +40,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             service,
                             endpoint,
                             typeName: GeneratedExpressEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                            type: endpoint.requestBody.requestBodyType,
+                            type: endpoint.requestBody.requestBodyType
                         });
                         break;
                     // named requests bodies are not generated - consumers should
@@ -63,7 +63,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                             service,
                             endpoint,
                             typeName: GeneratedExpressEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.value.responseBodyType,
+                            type: endpoint.response.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -117,7 +117,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             case "primitive":
             case "container":
@@ -129,7 +129,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                     allowUnrecognizedEnumValues: false,
                     allowUnrecognizedUnionMembers: false,
                     skipValidation: false,
-                    breadcrumbsPrefix: [],
+                    breadcrumbsPrefix: []
                 });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -166,7 +166,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             case "primitive":
             case "container":
@@ -180,7 +180,7 @@ export class GeneratedExpressEndpointTypeSchemasImpl implements GeneratedExpress
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             default:
                 assertNever(this.endpoint.response.value.responseBodyType);

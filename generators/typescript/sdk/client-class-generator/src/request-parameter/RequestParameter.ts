@@ -19,7 +19,7 @@ export interface RequestParameter {
     generateExample({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;

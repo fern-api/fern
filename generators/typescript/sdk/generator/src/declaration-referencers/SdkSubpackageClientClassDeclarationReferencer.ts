@@ -8,8 +8,8 @@ export class SdkSubpackageClientClassDeclarationReferencer extends AbstractSdkCl
         return {
             directories: this.getExportedDirectory(subpackageId),
             file: {
-                nameOnDisk: this.getFilename(),
-            },
+                nameOnDisk: this.getFilename()
+            }
         };
     }
 

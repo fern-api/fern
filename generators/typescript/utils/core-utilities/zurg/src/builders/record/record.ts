@@ -19,14 +19,14 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 transformKey: (key) =>
                     keySchema.parse(key, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`]
                     }),
                 transformValue: (value, key) =>
                     valueSchema.parse(value, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
         json: async (parsed, opts) => {
@@ -36,22 +36,22 @@ export function record<RawKey extends string | number, RawValue, ParsedValue, Pa
                 transformKey: (key) =>
                     keySchema.json(key, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key} (key)`]
                     }),
                 transformValue: (value, key) =>
                     valueSchema.json(value, {
                         ...opts,
-                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`],
+                        breadcrumbsPrefix: [...(opts?.breadcrumbsPrefix ?? []), `${key}`]
                     }),
-                breadcrumbsPrefix: opts?.breadcrumbsPrefix,
+                breadcrumbsPrefix: opts?.breadcrumbsPrefix
             });
         },
-        getType: () => SchemaType.RECORD,
+        getType: () => SchemaType.RECORD
     };
 
     return {
         ...maybeSkipValidation(baseSchema),
-        ...getSchemaUtils(baseSchema),
+        ...getSchemaUtils(baseSchema)
     };
 }
 
@@ -60,7 +60,7 @@ async function validateAndTransformRecord<TransformedKey extends string | number
     isKeyNumeric,
     transformKey,
     transformValue,
-    breadcrumbsPrefix = [],
+    breadcrumbsPrefix = []
 }: {
     value: unknown;
     isKeyNumeric: boolean;
@@ -74,9 +74,9 @@ async function validateAndTransformRecord<TransformedKey extends string | number
             errors: [
                 {
                     path: breadcrumbsPrefix,
-                    message: getErrorMessageForIncorrectType(value, "object"),
-                },
-            ],
+                    message: getErrorMessageForIncorrectType(value, "object")
+                }
+            ]
         };
     }
 
@@ -105,8 +105,8 @@ async function validateAndTransformRecord<TransformedKey extends string | number
                     ok: true,
                     value: {
                         ...acc.value,
-                        [transformedKey.value]: transformedValue.value,
-                    },
+                        [transformedKey.value]: transformedValue.value
+                    }
                 };
             }
 
@@ -123,7 +123,7 @@ async function validateAndTransformRecord<TransformedKey extends string | number
 
             return {
                 ok: false,
-                errors,
+                errors
             };
         },
         Promise.resolve({ ok: true, value: {} as Record<TransformedKey, TransformedValue> })

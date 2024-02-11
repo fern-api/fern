@@ -17,7 +17,7 @@ export function getReferenceToExportFromPackage({
     packageName,
     namespaceImport,
     exportedName,
-    subImport = [],
+    subImport = []
 }: getReferenceToExportFromPackage.Args): Reference {
     const addImport = () => {
         importsManager.addImport(packageName, { namedImports: [namespaceImport ?? exportedName] });
@@ -65,6 +65,6 @@ export function getReferenceToExportFromPackage({
                 addImport();
             }
             return expression;
-        },
+        }
     };
 }

@@ -11,7 +11,7 @@ export declare namespace GenericAPIExpressErrorGenerator {
 
 export class GenericAPIExpressErrorGenerator {
     public generateGenericAPIExpressError({
-        errorClassName,
+        errorClassName
     }: GenericAPIExpressErrorGenerator.generateGenericAPIExpressError.Args): GeneratedGenericAPIExpressError {
         return new GeneratedGenericAPIExpressErrorImpl({ errorClassName });
     }

@@ -55,7 +55,7 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                                 throw new Error("Property does not come from an object");
                             }
                             const key = originalTypeForProperty.getPropertyKey({
-                                propertyWireKey: property.name.wireValue,
+                                propertyWireKey: property.name.wireValue
                             });
                             return ts.factory.createPropertyAssignment(
                                 key,
@@ -74,12 +74,12 @@ export class GeneratedRequestWrapperExampleImpl implements GeneratedRequestWrapp
                         ts.factory.createPropertyAssignment(
                             this.bodyPropertyName,
                             context.type.getGeneratedExample(type).build(context, opts)
-                        ),
+                        )
                     ];
                 },
                 _other: () => {
                     throw new Error("Encountered unknown example request type");
-                },
+                }
             }) ?? [];
 
         return ts.factory.createObjectLiteralExpression(

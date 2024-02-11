@@ -3,7 +3,7 @@ import {
     convertExportedDirectoryPathToFilePath,
     convertExportedFilePathToFilePath,
     ExportedDirectory,
-    ExportedFilePath,
+    ExportedFilePath
 } from "../exports-manager/ExportedFilePath";
 import { ImportsManager } from "../imports-manager/ImportsManager";
 import { getDirectReferenceToExport } from "./getDirectReferenceToExport";
@@ -32,7 +32,7 @@ export function getReferenceToExportFromRoot({
     referencedIn,
     namespaceImport,
     useDynamicImport = false,
-    subImport = [],
+    subImport = []
 }: getReferenceToExportFromRoot.Args): Reference {
     let prefix: ts.Identifier | undefined;
     let moduleSpecifier: ModuleSpecifier;
@@ -45,7 +45,7 @@ export function getReferenceToExportFromRoot({
     if (firstDirectory?.exportDeclaration?.defaultExport != null) {
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath([]),
+            to: convertExportedDirectoryPathToFilePath([])
         });
 
         const { recommendedImportName } = firstDirectory.exportDeclaration.defaultExport;
@@ -66,7 +66,7 @@ export function getReferenceToExportFromRoot({
             to:
                 firstDirectory != null
                     ? convertExportedDirectoryPathToFilePath([firstDirectory])
-                    : convertExportedFilePathToFilePath(exportedFromPath),
+                    : convertExportedFilePathToFilePath(exportedFromPath)
         });
 
         addImport = () => {
@@ -102,19 +102,19 @@ export function getReferenceToExportFromRoot({
                 importsManager,
                 referencedIn,
                 importAlias: undefined,
-                subImport,
+                subImport
             });
         }
 
         moduleSpecifier = getRelativePathAsModuleSpecifierTo({
             from: referencedIn,
-            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom),
+            to: convertExportedDirectoryPathToFilePath(directoryToImportDirectlyFrom)
         });
 
         const namedImport = firstDirectoryInsideNamespaceExport.exportDeclaration.namespaceExport;
         addImport = () => {
             importsManager.addImport(moduleSpecifier, {
-                namedImports: [namedImport],
+                namedImports: [namedImport]
             });
         };
     }
@@ -123,7 +123,7 @@ export function getReferenceToExportFromRoot({
         (acc, part) => ts.factory.createQualifiedName(acc, part),
         getEntityNameOfDirectory({
             pathToDirectory: directoriesInsideNamespaceExport,
-            prefix,
+            prefix
         })
     );
 
@@ -135,11 +135,11 @@ export function getReferenceToExportFromRoot({
                 ? ts.factory.createParenthesizedExpression(
                       ts.factory.createAwaitExpression(
                           ts.factory.createCallExpression(ts.factory.createIdentifier("import"), undefined, [
-                              ts.factory.createStringLiteral(moduleSpecifier),
+                              ts.factory.createStringLiteral(moduleSpecifier)
                           ])
                       )
                   )
-                : prefix,
+                : prefix
         })
     );
 
@@ -163,6 +163,6 @@ export function getReferenceToExportFromRoot({
                 addImport();
             }
             return expression;
-        },
+        }
     };
 }

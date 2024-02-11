@@ -4,7 +4,7 @@ import {
     HttpHeader,
     HttpService,
     QueryParameter,
-    SdkRequest,
+    SdkRequest
 } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts, getTextOfTsNode, PackageId } from "@fern-typescript/commons";
 import { SdkContext } from "@fern-typescript/contexts";
@@ -40,7 +40,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
             name: this.getRequestParameterName(),
             type: getTextOfTsNode(typeInfo.type),
             hasQuestionToken: typeInfo.hasQuestionToken,
-            initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined,
+            initializer: typeInfo.initializer != null ? getTextOfTsNode(typeInfo.initializer) : undefined
         };
     }
 
@@ -62,7 +62,7 @@ export abstract class AbstractRequestParameter implements RequestParameter {
     public abstract generateExample({
         context,
         example,
-        opts,
+        opts
     }: {
         context: SdkContext;
         example: ExampleEndpointCall;

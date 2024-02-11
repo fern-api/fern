@@ -5,7 +5,7 @@ import { ExportedDirectory } from "../exports-manager/ExportedFilePath";
 
 export function getExportedDirectoriesForFernFilepath({
     fernFilepath,
-    subExports,
+    subExports
 }: {
     fernFilepath: FernFilepath;
     subExports?: Record<RelativeFilePath, ExportDeclaration>;
@@ -13,7 +13,7 @@ export function getExportedDirectoriesForFernFilepath({
     const directories = [
         ...fernFilepath.packagePath.flatMap((fernFilepathPart) =>
             getExportedDirectoriesForFernFilepathPart(fernFilepathPart)
-        ),
+        )
     ];
     if (fernFilepath.file != null) {
         directories.push(...getExportedDirectoriesForFernFilepathPart(fernFilepath.file, { subExports }));
@@ -28,12 +28,12 @@ function getExportedDirectoriesForFernFilepathPart(
     return [
         {
             nameOnDisk: "resources",
-            exportDeclaration: { exportAll: true },
+            exportDeclaration: { exportAll: true }
         },
         {
             nameOnDisk: fernFilepathPart.camelCase.unsafeName,
             exportDeclaration: { namespaceExport: fernFilepathPart.camelCase.safeName },
-            subExports,
-        },
+            subExports
+        }
     ];
 }

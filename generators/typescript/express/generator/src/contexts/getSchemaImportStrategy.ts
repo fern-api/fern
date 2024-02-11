@@ -4,6 +4,6 @@ export function getSchemaImportStrategy({ useDynamicImport }: { useDynamicImport
     return {
         type: "fromRoot",
         namespaceImport: "serializers",
-        useDynamicImport,
+        useDynamicImport
     };
 }

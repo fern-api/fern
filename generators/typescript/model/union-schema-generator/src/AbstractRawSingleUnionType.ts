@@ -30,17 +30,17 @@ export abstract class AbstractRawSingleUnionType<Context> implements RawSingleUn
             properties: [
                 {
                     name: `"${this.disciminant.wireValue}"`,
-                    type: `"${this.discriminantValue}"`,
+                    type: `"${this.discriminantValue}"`
                 },
-                ...this.getNonDiscriminantPropertiesForInterface(context),
-            ],
+                ...this.getNonDiscriminantPropertiesForInterface(context)
+            ]
         };
     }
 
     public getSchema(context: Context): Zurg.union.SingleUnionType {
         return {
             discriminantValue: this.discriminantValue,
-            nonDiscriminantProperties: this.getNonDiscriminantPropertiesForSchema(context),
+            nonDiscriminantProperties: this.getNonDiscriminantPropertiesForSchema(context)
         };
     }
 

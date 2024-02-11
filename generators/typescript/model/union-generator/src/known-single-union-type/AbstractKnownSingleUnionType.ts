@@ -24,14 +24,14 @@ export abstract class AbstractKnownSingleUnionType<Context extends ModelContext>
 
     protected getNonVisitProperties({
         context,
-        generatedUnion,
+        generatedUnion
     }: {
         context: Context;
         generatedUnion: GeneratedUnionImpl<Context>;
     }): ts.ObjectLiteralElementLike[] {
         return [
             ...this.singleUnionType.getNonDiscriminantPropertiesForBuilder(context),
-            ts.factory.createPropertyAssignment(generatedUnion.discriminant, this.getDiscriminantValueAsExpression()),
+            ts.factory.createPropertyAssignment(generatedUnion.discriminant, this.getDiscriminantValueAsExpression())
         ];
     }
 

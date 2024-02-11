@@ -14,6 +14,6 @@ export function getExpressionToDirectory({ pathToDirectory, prefix }: getExpress
         pathToDirectory,
         constructQualifiedName: (left, right) => ts.factory.createPropertyAccessExpression(left, right),
         convertToQualifiedName: (value) => ts.factory.createIdentifier(value),
-        prefix,
+        prefix
     });
 }

@@ -24,7 +24,7 @@ export class SdkErrorGenerator {
 
     public generateError({
         errorDeclaration,
-        errorName,
+        errorName
     }: SdkErrorGenerator.generateError.Args): GeneratedSdkError | undefined {
         if (this.neverThrowErrors) {
             return undefined;
@@ -32,7 +32,7 @@ export class SdkErrorGenerator {
 
         return new GeneratedSdkErrorClassImpl({
             errorClassName: errorName,
-            errorDeclaration,
+            errorDeclaration
         });
     }
 }

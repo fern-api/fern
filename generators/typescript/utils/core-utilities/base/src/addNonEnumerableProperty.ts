@@ -2,7 +2,7 @@ export function addNonEnumerableProperty<T, K extends string, V>(object: T, key:
     const copy = { ...object };
     Object.defineProperty(copy, key, {
         enumerable: false,
-        writable: true,
+        writable: true
     });
     (copy as any)[key] = value;
     return copy as T & Record<K, V>;

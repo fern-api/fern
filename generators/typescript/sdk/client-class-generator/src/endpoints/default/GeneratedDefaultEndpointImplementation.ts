@@ -9,7 +9,7 @@ import { buildUrl } from "../utils/buildUrl";
 import {
     getMaxRetriesExpression,
     getRequestOptionsParameter,
-    getTimeoutExpression,
+    getTimeoutExpression
 } from "../utils/requestOptionsParameter";
 import { GeneratedEndpointResponse } from "./endpoint-response/GeneratedEndpointResponse";
 
@@ -43,7 +43,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         includeCredentialsOnCrossOriginRequests,
         defaultTimeoutInSeconds,
         request,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedDefaultEndpointImplementation.Init) {
         this.endpoint = endpoint;
         this.generatedSdkClientClass = generatedSdkClientClass;
@@ -63,10 +63,10 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             parameters: [
                 ...this.request.getEndpointParameters(context),
                 getRequestOptionsParameter({
-                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint),
-                }),
+                    requestOptionsReference: this.generatedSdkClientClass.getReferenceToRequestOptions(this.endpoint)
+                })
             ],
-            returnTypeWithoutPromise: this.response.getReturnType(context),
+            returnTypeWithoutPromise: this.response.getReturnType(context)
         };
     }
 
@@ -90,7 +90,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 context,
                 example,
                 opts: { isForComment: true },
-                clientReference: context.sdkInstanceReferenceForSnippet,
+                clientReference: context.sdkInstanceReferenceForSnippet
             });
             if (generatedExample == null) {
                 continue;
@@ -111,7 +111,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
         const exampleParameters = this.request.getExampleEndpointParameters({
             context: args.context,
             example: args.example,
-            opts: args.opts,
+            opts: args.opts
         });
         if (exampleParameters == null) {
             return undefined;
@@ -120,7 +120,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             ts.factory.createCallExpression(
                 ts.factory.createPropertyAccessExpression(
                     this.generatedSdkClientClass.accessFromRootClient({
-                        referenceToRootClient: args.clientReference,
+                        referenceToRootClient: args.clientReference
                     }),
                     ts.factory.createIdentifier(this.endpoint.name.camelCase.unsafeName)
                 ),
@@ -144,7 +144,7 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
             endpoint: this.endpoint,
             generatedClientClass: this.generatedSdkClientClass,
             context,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
         if (url != null) {
             return context.externalDependencies.urlJoin.invoke([referenceToEnvironment, url]);
@@ -162,14 +162,14 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                 defaultTimeoutInSeconds: this.defaultTimeoutInSeconds,
                 timeoutInSecondsReference: this.generatedSdkClientClass.getReferenceToTimeoutInSeconds.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
             maxRetries: getMaxRetriesExpression({
                 maxRetriesReference: this.generatedSdkClientClass.getReferenceToMaxRetries.bind(
                     this.generatedSdkClientClass
-                ),
+                )
             }),
-            withCredentials: this.includeCredentialsOnCrossOriginRequests,
+            withCredentials: this.includeCredentialsOnCrossOriginRequests
         };
 
         return [
@@ -183,13 +183,13 @@ export class GeneratedDefaultEndpointImplementation implements GeneratedEndpoint
                             undefined,
                             context.coreUtilities.fetcher.fetcher._invoke(fetcherArgs, {
                                 referenceToFetcher: this.generatedSdkClientClass.getReferenceToFetcher(context),
-                                cast: undefined,
+                                cast: undefined
                             })
-                        ),
+                        )
                     ],
                     ts.NodeFlags.Const
                 )
-            ),
+            )
         ];
     }
 }

@@ -86,7 +86,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             headers,
             body,
             signal: controller.signal,
-            credentials: args.withCredentials ? "include" : undefined,
+            credentials: args.withCredentials ? "include" : undefined
         });
         if (abortId != null) {
             clearTimeout(abortId);
@@ -128,8 +128,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
                         error: {
                             reason: "non-json",
                             statusCode: response.status,
-                            rawBody: text,
-                        },
+                            rawBody: text
+                        }
                     };
                 }
             }
@@ -139,7 +139,7 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             return {
                 ok: true,
                 body: body as R,
-                headers: response.headers,
+                headers: response.headers
             };
         } else {
             return {
@@ -147,8 +147,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
                 error: {
                     reason: "status-code",
                     statusCode: response.status,
-                    body,
-                },
+                    body
+                }
             };
         }
     } catch (error) {
@@ -156,16 +156,16 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             return {
                 ok: false,
                 error: {
-                    reason: "timeout",
-                },
+                    reason: "timeout"
+                }
             };
         } else if (error instanceof Error) {
             return {
                 ok: false,
                 error: {
                     reason: "unknown",
-                    errorMessage: error.message,
-                },
+                    errorMessage: error.message
+                }
             };
         }
 
@@ -173,8 +173,8 @@ async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIResponse
             ok: false,
             error: {
                 reason: "unknown",
-                errorMessage: JSON.stringify(error),
-            },
+                errorMessage: JSON.stringify(error)
+            }
         };
     }
 }

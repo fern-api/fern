@@ -2,7 +2,7 @@ import { assertNever, Values } from "@fern-api/core-utils";
 
 export const JavaScriptRuntime = {
     NODE: "node",
-    BROWSER: "browser",
+    BROWSER: "browser"
 } as const;
 
 export type JavaScriptRuntime = Values<typeof JavaScriptRuntime>;

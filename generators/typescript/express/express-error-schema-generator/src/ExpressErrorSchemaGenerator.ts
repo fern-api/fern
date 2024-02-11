@@ -24,7 +24,7 @@ export class ExpressErrorSchemaGenerator {
 
     public generateExpressErrorSchema({
         errorDeclaration,
-        errorName,
+        errorName
     }: ExpressErrorSchemaGenerator.generateError.Args): GeneratedExpressErrorSchema | undefined {
         if (errorDeclaration.type == null) {
             return undefined;
@@ -33,7 +33,7 @@ export class ExpressErrorSchemaGenerator {
             errorDeclaration,
             type: errorDeclaration.type,
             errorName,
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 }

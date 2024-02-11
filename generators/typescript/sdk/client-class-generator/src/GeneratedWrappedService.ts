@@ -27,7 +27,7 @@ export class GeneratedWrappedService {
         const referenceToWrapped = this.getReferenceToWrappedService(class_, context);
         const generatedWrappedService = context.sdkClientClass.getGeneratedSdkClientClass({
             isRoot: false,
-            subpackageId: this.wrappedSubpackageId,
+            subpackageId: this.wrappedSubpackageId
         });
 
         class_.addProperty({
@@ -36,9 +36,9 @@ export class GeneratedWrappedService {
             type: getTextOfTsNode(
                 ts.factory.createUnionTypeNode([
                     referenceToWrapped.getTypeNode(),
-                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                    ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
                 ])
-            ),
+            )
         });
 
         class_.addGetAccessor({
@@ -57,13 +57,13 @@ export class GeneratedWrappedService {
                                 ts.SyntaxKind.QuestionQuestionEqualsToken,
                                 generatedWrappedService.instantiate({
                                     referenceToClient: referenceToWrapped.getExpression(),
-                                    referenceToOptions: this.wrapperService.getReferenceToOptions(),
+                                    referenceToOptions: this.wrapperService.getReferenceToOptions()
                                 })
                             )
                         )
                     )
-                ),
-            ],
+                )
+            ]
         });
     }
 
@@ -83,12 +83,12 @@ export class GeneratedWrappedService {
     private getReferenceToWrappedService(serviceClass: ClassDeclaration, context: SdkContext): Reference {
         const reference = context.sdkClientClass.getReferenceToClientClass({
             isRoot: false,
-            subpackageId: this.wrappedSubpackageId,
+            subpackageId: this.wrappedSubpackageId
         });
         const wrappedServiceClassName = getTextOfTsNode(
             reference.getTypeNode({
                 // we don't want to add the import unnecessarily
-                isForComment: true,
+                isForComment: true
             })
         );
 
@@ -98,7 +98,7 @@ export class GeneratedWrappedService {
             return context.sdkClientClass.getReferenceToClientClass(
                 { isRoot: false, subpackageId: this.wrappedSubpackageId },
                 {
-                    importAlias: `${wrappedServiceClassName}_`,
+                    importAlias: `${wrappedServiceClassName}_`
                 }
             );
         }

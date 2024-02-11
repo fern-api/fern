@@ -44,7 +44,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         errorDiscriminationStrategy,
         shouldGenerateErrors,
         skipResponseValidation,
-        includeSerdeLayer,
+        includeSerdeLayer
     }: GeneratedSdkEndpointTypeSchemasImpl.Init) {
         this.endpoint = endpoint;
         this.skipResponseValidation = skipResponseValidation;
@@ -62,7 +62,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.REQUEST_SCHEMA_NAME,
-                            type: endpoint.requestBody.requestBodyType,
+                            type: endpoint.requestBody.requestBodyType
                         });
                         break;
                     // named requests bodies are not generated - consumers should
@@ -85,7 +85,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.RESPONSE_SCHEMA_NAME,
-                            type: endpoint.response.value.responseBodyType,
+                            type: endpoint.response.value.responseBodyType
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -111,7 +111,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                             service,
                             endpoint,
                             typeName: GeneratedSdkEndpointTypeSchemasImpl.STREAM_DATA_SCHEMA_NAME,
-                            type: endpoint.response.dataEventType.json,
+                            type: endpoint.response.dataEventType.json
                         });
                         break;
                     // named response bodies are not generated - consumers should
@@ -130,7 +130,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                       packageId,
                       endpoint,
                       errorResolver,
-                      errorDiscriminationStrategy,
+                      errorDiscriminationStrategy
                   })
                 : undefined;
         }
@@ -140,7 +140,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
         packageId,
         endpoint,
         errorResolver,
-        errorDiscriminationStrategy,
+        errorDiscriminationStrategy
     }: {
         packageId: PackageId;
         endpoint: HttpEndpoint;
@@ -153,12 +153,12 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                     packageId,
                     endpoint,
                     errorResolver,
-                    discriminationStrategy: properyDiscriminationStrategy,
+                    discriminationStrategy: properyDiscriminationStrategy
                 }),
             statusCode: () => StatusCodeDiscriminatedEndpointErrorSchema,
             _other: () => {
                 throw new Error("Unknown ErrorDiscriminationStrategy: " + errorDiscriminationStrategy.type);
-            },
+            }
         });
     }
 
@@ -215,7 +215,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             case "primitive":
             case "container":
@@ -229,7 +229,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedEnumValues: false,
                         allowUnrecognizedUnionMembers: false,
                         skipValidation: false,
-                        breadcrumbsPrefix: [],
+                        breadcrumbsPrefix: []
                     });
             default:
                 assertNever(this.endpoint.requestBody.requestBodyType);
@@ -272,7 +272,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"],
+                        breadcrumbsPrefix: ["response"]
                     });
             case "primitive":
             case "container":
@@ -286,7 +286,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"],
+                        breadcrumbsPrefix: ["response"]
                     });
             default:
                 assertNever(this.endpoint.response.value.responseBodyType);
@@ -305,13 +305,13 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
             allowUnrecognizedUnionMembers: true,
             unrecognizedObjectKeys: "passthrough",
             skipValidation: this.skipResponseValidation,
-            breadcrumbsPrefix: ["response"],
+            breadcrumbsPrefix: ["response"]
         });
     }
 
     public deserializeStreamData({
         referenceToRawStreamData,
-        context,
+        context
     }: {
         referenceToRawStreamData: ts.Expression;
         context: SdkContext;
@@ -334,7 +334,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"],
+                        breadcrumbsPrefix: ["response"]
                     });
             case "primitive":
             case "container":
@@ -348,7 +348,7 @@ export class GeneratedSdkEndpointTypeSchemasImpl implements GeneratedSdkEndpoint
                         allowUnrecognizedUnionMembers: true,
                         unrecognizedObjectKeys: "passthrough",
                         skipValidation: this.skipResponseValidation,
-                        breadcrumbsPrefix: ["response"],
+                        breadcrumbsPrefix: ["response"]
                     });
             default:
                 assertNever(this.endpoint.response.dataEventType.json);

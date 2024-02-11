@@ -26,7 +26,7 @@ export class GeneratedAliasTypeImpl<Context extends ModelContext>
         const typeAlias = context.sourceFile.addTypeAlias({
             name: this.typeName,
             type: getTextOfTsNode(context.type.getReferenceToType(this.shape).typeNode),
-            isExported: true,
+            isExported: true
         });
         maybeAddDocs(typeAlias, this.getDocs(context));
     }

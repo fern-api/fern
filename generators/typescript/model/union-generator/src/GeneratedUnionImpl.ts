@@ -5,7 +5,7 @@ import {
     getWriterForMultiLineUnionType,
     maybeAddDocs,
     ObjectWriter,
-    Reference,
+    Reference
 } from "@fern-typescript/commons";
 import { GeneratedUnion, ModelContext } from "@fern-typescript/contexts";
 import {
@@ -13,7 +13,7 @@ import {
     OptionalKind,
     PropertySignatureStructure,
     ts,
-    VariableDeclarationKind,
+    VariableDeclarationKind
 } from "ts-morph";
 import { KnownSingleUnionType } from "./known-single-union-type/KnownSingleUnionType";
 import { ParsedSingleUnionType } from "./parsed-single-union-type/ParsedSingleUnionType";
@@ -75,7 +75,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         includeOtherInUnionTypes,
         baseProperties = [],
         includeSerdeLayer,
-        noOptionalProperties,
+        noOptionalProperties
     }: GeneratedUnionImpl.Init<Context>) {
         this.getReferenceToUnion = getReferenceToUnion;
         this.discriminant = discriminant;
@@ -107,7 +107,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         discriminantValueToBuild,
         builderArgument,
         nonDiscriminantProperties,
-        context,
+        context
     }: {
         discriminantValueToBuild: string | number;
         builderArgument: ts.Expression | undefined;
@@ -119,7 +119,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return this.buildWithBuilder({
                 discriminantValueToBuild,
                 builderArgument,
-                context,
+                context
             });
         } else {
             return ts.factory.createObjectLiteralExpression(
@@ -128,7 +128,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                         ts.factory.createIdentifier(this.discriminant),
                         singleUnionType.getDiscriminantValueAsExpression()
                     ),
-                    ...nonDiscriminantProperties,
+                    ...nonDiscriminantProperties
                 ],
                 true
             );
@@ -138,7 +138,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     public buildWithBuilder({
         discriminantValueToBuild,
         builderArgument,
-        context,
+        context
     }: {
         discriminantValueToBuild: string | number;
         builderArgument: ts.Expression | undefined;
@@ -158,7 +158,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     public buildFromExistingValue({
         discriminantValueToBuild,
         existingValue,
-        context,
+        context
     }: {
         discriminantValueToBuild: string | number;
         existingValue: ts.Expression;
@@ -168,7 +168,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return this.buildSingleUnionTypeFromExistingValue({
             existingValue,
             context,
-            singleUnionType,
+            singleUnionType
         });
     }
 
@@ -177,7 +177,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             return this.buildSingleUnionTypeFromExistingValue({
                 existingValue,
                 context,
-                singleUnionType: this.unknownSingleUnionType,
+                singleUnionType: this.unknownSingleUnionType
             });
         } else {
             return ts.factory.createAsExpression(existingValue, this.getReferenceToUnion(context).getTypeNode());
@@ -187,7 +187,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
     private buildSingleUnionTypeFromExistingValue({
         singleUnionType,
         context,
-        existingValue,
+        existingValue
     }: {
         singleUnionType: ParsedSingleUnionType<Context>;
         context: Context;
@@ -236,10 +236,10 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             type: getWriterForMultiLineUnionType(
                 this.getAllSingleUnionTypesForAlias().map((singleUnionType) => ({
                     node: this.getReferenceToSingleUnionType(singleUnionType, context),
-                    docs: singleUnionType.getDocs(),
+                    docs: singleUnionType.getDocs()
                 }))
             ),
-            isExported: true,
+            isExported: true
         });
         if (this.getDocs != null) {
             maybeAddDocs(typeAlias, this.getDocs(context));
@@ -266,7 +266,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         const module = context.sourceFile.addModule({
             name: this.typeName,
             isExported: true,
-            hasDeclareKeyword: true,
+            hasDeclareKeyword: true
         });
         module.addInterfaces(this.getSingleUnionTypeInterfaces(context));
         if (this.includeUtilsOnUnionMembers) {
@@ -297,7 +297,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         return interfaces.map((interface_) => ({
             name: interface_.name,
             extends: interface_.extends.map(getTextOfTsNode),
-            properties: interface_.jsonProperties,
+            properties: interface_.jsonProperties
         }));
     }
 
@@ -307,9 +307,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             properties: [
                 {
                     name: GeneratedUnionImpl.VISIT_UTIL_PROPERTY_NAME,
-                    type: getTextOfTsNode(this.getVisitSignature(context)),
-                },
-            ],
+                    type: getTextOfTsNode(this.getVisitSignature(context))
+                }
+            ]
         };
     }
 
@@ -322,9 +322,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     name: this._getBasePropertyKey(property),
                     docs: property.docs != null ? [property.docs] : undefined,
                     type: getTextOfTsNode(this.noOptionalProperties ? type.typeNode : type.typeNodeWithoutUndefined),
-                    hasQuestionToken: !this.noOptionalProperties && type.isOptional,
+                    hasQuestionToken: !this.noOptionalProperties && type.isOptional
                 };
-            }),
+            })
         };
     }
 
@@ -336,7 +336,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE),
                     undefined,
                     undefined
-                ),
+                )
             ],
             [
                 ts.factory.createParameterDeclaration(
@@ -346,7 +346,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                     ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_PARAMETER_NAME),
                     undefined,
                     this.getReferenceToVisitorInterface(context)
-                ),
+                )
             ],
             ts.factory.createTypeReferenceNode(
                 ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE),
@@ -360,15 +360,15 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             name: GeneratedUnionImpl.VISITOR_INTERFACE_NAME,
             typeParameters: [
                 {
-                    name: GeneratedUnionImpl.VISITOR_RETURN_TYPE,
-                },
+                    name: GeneratedUnionImpl.VISITOR_RETURN_TYPE
+                }
             ],
             properties: this.getAllSingleUnionTypesIncludingUnknown().map<OptionalKind<PropertySignatureStructure>>(
                 (singleUnionType) => ({
                     name: singleUnionType.getVisitorKey(),
-                    type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this)),
+                    type: getTextOfTsNode(singleUnionType.getVisitMethodSignature(context, this))
                 })
-            ),
+            )
         };
     }
 
@@ -401,10 +401,10 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
             declarations: [
                 {
                     name: this.typeName,
-                    initializer: writer.toFunction(),
-                },
+                    initializer: writer.toFunction()
+                }
             ],
-            isExported: true,
+            isExported: true
         });
     }
 
@@ -419,7 +419,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
         for (const singleUnionType of singleUnionTypes) {
             writer.addProperty({
                 key: singleUnionType.getBuilderName(),
-                value: getTextOfTsNode(singleUnionType.getBuilder(context, this)),
+                value: getTextOfTsNode(singleUnionType.getBuilder(context, this))
             });
             writer.addNewLine();
         }
@@ -436,7 +436,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                         ts.factory.createTypeParameterDeclaration(
                             undefined,
                             ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE)
-                        ),
+                        )
                     ],
                     [
                         ts.factory.createParameterDeclaration(
@@ -456,7 +456,7 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                             undefined,
                             this.getReferenceToVisitorInterface(context),
                             undefined
-                        ),
+                        )
                     ],
                     ts.factory.createTypeReferenceNode(
                         ts.factory.createIdentifier(GeneratedUnionImpl.VISITOR_RETURN_TYPE),
@@ -482,9 +482,9 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                                         ),
                                                         localReferenceToVisitor: ts.factory.createIdentifier(
                                                             GeneratedUnionImpl.VISITOR_PARAMETER_NAME
-                                                        ),
+                                                        )
                                                     })
-                                                ),
+                                                )
                                             ]
                                         )
                                     ),
@@ -504,18 +504,18 @@ export class GeneratedUnionImpl<Context extends ModelContext> implements Generat
                                                             GeneratedUnionImpl.VISITEE_PARAMETER_NAME
                                                         ),
                                                         ts.factory.createKeywordTypeNode(ts.SyntaxKind.AnyKeyword)
-                                                    ),
+                                                    )
                                                 ]
                                             )
-                                        ),
-                                    ]),
+                                        )
+                                    ])
                                 ])
-                            ),
+                            )
                         ],
                         true
                     )
                 )
-            ),
+            )
         });
     }
 

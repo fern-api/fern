@@ -2,7 +2,7 @@ import {
     ExampleSingleUnionTypeProperties,
     ExampleTypeShape,
     SingleUnionTypeProperty,
-    UnionTypeDeclaration,
+    UnionTypeDeclaration
 } from "@fern-fern/ir-sdk/api";
 import { GetReferenceOpts } from "@fern-typescript/commons";
 import { GeneratedUnion, GeneratedUnionType, ModelContext } from "@fern-typescript/contexts";
@@ -43,7 +43,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     union: this.shape,
                     includeUtilsOnUnionMembers,
                     includeSerdeLayer: this.includeSerdeLayer,
-                    noOptionalProperties: this.noOptionalProperties,
+                    noOptionalProperties: this.noOptionalProperties
                 })
         );
 
@@ -61,11 +61,11 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
             parsedSingleUnionTypes,
             unknownSingleUnionType: new UnknownSingleUnionType({
                 singleUnionType: unknownSingleUnionTypeGenerator,
-                includeUtilsOnUnionMembers,
+                includeUtilsOnUnionMembers
             }),
             baseProperties: this.shape.baseProperties,
             includeSerdeLayer: this.includeSerdeLayer,
-            noOptionalProperties: this.noOptionalProperties,
+            noOptionalProperties: this.noOptionalProperties
         });
     }
 
@@ -79,7 +79,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
 
     public getSinglePropertyKey(singleProperty: SingleUnionTypeProperty): string {
         return ParsedSingleUnionTypeForUnion.getSinglePropertyKey(singleProperty, {
-            includeSerdeLayer: this.includeSerdeLayer,
+            includeSerdeLayer: this.includeSerdeLayer
         });
     }
 
@@ -101,7 +101,7 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     noProperties: () => undefined,
                     _other: () => {
                         throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
-                    },
+                    }
                 }
             ),
             nonDiscriminantProperties: ExampleSingleUnionTypeProperties._visit<ts.ObjectLiteralElementLike[]>(
@@ -121,10 +121,10 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                         return [
                             ts.factory.createPropertyAssignment(
                                 ParsedSingleUnionTypeForUnion.getSinglePropertyKey(unionMember.shape, {
-                                    includeSerdeLayer: this.includeSerdeLayer,
+                                    includeSerdeLayer: this.includeSerdeLayer
                                 }),
                                 context.type.getGeneratedExample(property).build(context, opts)
-                            ),
+                            )
                         ];
                     },
                     samePropertiesAsObject: (exampleNamedType) => {
@@ -143,10 +143,10 @@ export class GeneratedUnionTypeImpl<Context extends ModelContext>
                     noProperties: () => [],
                     _other: () => {
                         throw new Error("Unknown ExampleSingleUnionTypeProperties: " + example.type);
-                    },
+                    }
                 }
             ),
-            context,
+            context
         });
     }
 }

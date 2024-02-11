@@ -29,7 +29,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
         importsManager,
         expressEndpointTypeSchemasGenerator,
         expressEndpointSchemaDeclarationReferencer,
-        packageResolver,
+        packageResolver
     }: ExpressEndpointTypeSchemasContextImpl.Init) {
         this.sourceFile = sourceFile;
         this.importsManager = importsManager;
@@ -52,7 +52,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
         return this.expressEndpointTypeSchemasGenerator.generateEndpointTypeSchemas({
             packageId,
             service: serviceDeclaration,
-            endpoint,
+            endpoint
         });
     }
 
@@ -73,7 +73,7 @@ export class ExpressEndpointTypeSchemasContextImpl implements ExpressEndpointTyp
             referencedIn: this.sourceFile,
             importsManager: this.importsManager,
             importStrategy: getSchemaImportStrategy({ useDynamicImport: false }),
-            subImport: typeof export_ === "string" ? [export_] : export_,
+            subImport: typeof export_ === "string" ? [export_] : export_
         });
     }
 }

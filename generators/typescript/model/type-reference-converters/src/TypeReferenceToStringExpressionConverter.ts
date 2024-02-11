@@ -4,7 +4,7 @@ import {
     Literal,
     ResolvedTypeReference,
     ShapeType,
-    TypeReference,
+    TypeReference
 } from "@fern-fern/ir-sdk/api";
 import { ts } from "ts-morph";
 import { AbstractTypeReferenceConverter } from "./AbstractTypeReferenceConverter";
@@ -34,7 +34,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             unknown: () => true,
             _other: () => {
                 throw new Error("Unknown TypeReference: " + type.type);
-            },
+            }
         });
 
         if (!isNullable) {
@@ -67,7 +67,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                     literal: this.literal.bind(this),
                     _other: () => {
                         throw new Error("Unknown ContainerType: " + containerType.type);
-                    },
+                    }
                 }),
             primitive: this.primitive.bind(this),
             named: ({ shape }) => {
@@ -82,7 +82,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
             unknown: this.unknown.bind(this),
             _other: () => {
                 throw new Error("Unknown ResolvedTypeReference: " + resolvedType.type);
-            },
+            }
         });
     }
 
@@ -147,7 +147,7 @@ export class TypeReferenceToStringExpressionConverter extends AbstractTypeRefere
                 ),
             _other: () => {
                 throw new Error("Unknown literal: " + literal.type);
-            },
+            }
         });
     }
 

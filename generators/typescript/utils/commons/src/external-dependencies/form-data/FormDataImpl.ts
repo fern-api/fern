@@ -18,7 +18,7 @@ export class FormDataImpl extends ExternalDependency implements FormData {
     public readonly append = ({
         referencetoFormData,
         key,
-        value,
+        value
     }: {
         referencetoFormData: ts.Expression;
         key: string;

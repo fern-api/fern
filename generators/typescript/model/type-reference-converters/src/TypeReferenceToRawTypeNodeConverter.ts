@@ -17,12 +17,12 @@ export class TypeReferenceToRawTypeNodeConverter extends AbstractTypeReferenceTo
             typeNode: ts.factory.createUnionTypeNode([
                 referencedToValueType,
                 ts.factory.createLiteralTypeNode(ts.factory.createNull()),
-                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword),
+                ts.factory.createKeywordTypeNode(ts.SyntaxKind.UndefinedKeyword)
             ]),
             typeNodeWithoutUndefined: ts.factory.createUnionTypeNode([
                 referencedToValueType,
-                ts.factory.createLiteralTypeNode(ts.factory.createNull()),
-            ]),
+                ts.factory.createLiteralTypeNode(ts.factory.createNull())
+            ])
         };
     }
 

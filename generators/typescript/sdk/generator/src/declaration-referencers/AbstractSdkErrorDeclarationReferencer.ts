@@ -12,13 +12,13 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
                 ...this.containingDirectory,
                 {
                     nameOnDisk: ERRORS_DIRECTORY,
-                    exportDeclaration: { namedExports: [exportedName] },
-                },
+                    exportDeclaration: { namedExports: [exportedName] }
+                }
             ],
             file: {
                 nameOnDisk: this.getFilename(),
-                exportDeclaration: { namedExports: [exportedName] },
-            },
+                exportDeclaration: { namedExports: [exportedName] }
+            }
         };
     }
 
@@ -28,7 +28,7 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
 
     public getReferenceToError({
         importsManager,
-        referencedIn,
+        referencedIn
     }: {
         importsManager: ImportsManager;
         referencedIn: SourceFile;
@@ -39,8 +39,8 @@ export abstract class AbstractSdkErrorDeclarationReferencer extends AbstractDecl
             referencedIn,
             importStrategy: {
                 type: "fromRoot",
-                namespaceImport: "errors",
-            },
+                namespaceImport: "errors"
+            }
         });
     }
 
