@@ -227,6 +227,21 @@ class EndpointFunctionGenerator:
                 writer.write_node(AST.Expression(request_pre_fetch_statements))
 
             json_request_body = request_body_parameters.get_json_body() if request_body_parameters is not None else None
+            encoded_json_request_body = (
+                self._context.core_utilities.jsonable_encoder(json_request_body)
+                if json_request_body is not None
+                else None
+            )
+
+            def write_request_body(writer: AST.NodeWriter) -> None:
+                additional_body_parameters_expression = f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_headers if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None"
+                if encoded_json_request_body:
+                    writer.write("{")
+                    writer.write(f"**{encoded_json_request_body},")
+                    writer.write(f"**({additional_body_parameters_expression} else {'{}'}),")
+                    writer.write_line("}")
+                else:
+                    writer.write(f"{additional_body_parameters_expression} else None")
 
             is_streaming = (
                 True
@@ -270,11 +285,7 @@ class EndpointFunctionGenerator:
                         delete=lambda: "DELETE",
                     ),
                     query_parameters=self._get_query_parameters_for_endpoint(endpoint=endpoint),
-                    request_body=(
-                        self._context.core_utilities.jsonable_encoder(json_request_body)
-                        if json_request_body is not None
-                        else None
-                    ),
+                    request_body=AST.Expression(AST.CodeWriter(write_request_body)),
                     content=request_body_parameters.get_content() if request_body_parameters is not None else None,
                     files=request_body_parameters.get_files() if request_body_parameters is not None else None,
                     response_variable_name=EndpointResponseCodeWriter.RESPONSE_VARIABLE,
@@ -619,8 +630,10 @@ class EndpointFunctionGenerator:
             writer.write_line("}")
 
         if len(headers) == 0:
-            self._context.core_utilities.remove_none_from_dict(
-                AST.Expression(AST.CodeWriter(write_headers_dict_default)),
+            self._context.core_utilities.jsonable_encoder(
+                self._context.core_utilities.remove_none_from_dict(
+                    AST.Expression(AST.CodeWriter(write_headers_dict_default)),
+                )
             )
 
         def write_headers_dict(writer: AST.NodeWriter) -> None:
@@ -637,8 +650,10 @@ class EndpointFunctionGenerator:
             )
             writer.write_line("},")
 
-        return self._context.core_utilities.remove_none_from_dict(
-            AST.Expression(AST.CodeWriter(write_headers_dict)),
+        return self._context.core_utilities.jsonable_encoder(
+            self._context.core_utilities.remove_none_from_dict(
+                AST.Expression(AST.CodeWriter(write_headers_dict)),
+            )
         )
 
     def _get_query_parameters_for_endpoint(
@@ -652,8 +667,10 @@ class EndpointFunctionGenerator:
         ]
 
         if len(query_parameters) == 0:
-            return AST.Expression(
-                f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+            return self._context.core_utilities.jsonable_encoder(
+                AST.Expression(
+                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
+                )
             )
 
         def write_query_parameters_dict(writer: AST.NodeWriter) -> None:
@@ -667,8 +684,10 @@ class EndpointFunctionGenerator:
             )
             writer.write_line("},")
 
-        return self._context.core_utilities.remove_none_from_dict(
-            AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+        return self._context.core_utilities.jsonable_encoder(
+            self._context.core_utilities.remove_none_from_dict(
+                AST.Expression(AST.CodeWriter(write_query_parameters_dict)),
+            )
         )
 
     def _is_datetime(
