@@ -1,10 +1,80 @@
-## Configuring content with docs.yml
+## Add content with Markdown or MDX files
 
-Every Fern Docs website has a special configuation file called `docs.yml`.
+Add pages manually to your documentation by creating [Markdown](https://www.markdownguide.org/) (`.md`) or [MDX](https://mdxjs.com/) (`.mdx`) files and linking to them in [docs.yml](#configure-content-with-docs-yml).
 
-<CodeBlock title="docs.yml">
+<CodeBlock title="Example folder structure in docs.yml">
+```bash
+fern/
+├─ fern.config.json
+├─ docs.yml
+└─ pages/
+  ├─ welcome.mdx
+```
+</CodeBlock>
+
+### Custom components
+Fern has a built-in component library you can use in Markdown and MDX files. [Explore the components.](/generate-docs/component-library/)
+
+### Frontmatter
+
+You can optionally use frontmatter for individual page configuration.
+
+Frontmatter must be added to the top of a `.md` or `.mdx` file, before the rest of the content. Use sets of three dashes to indicate the beginning and end of your frontmatter, as shown below.
+
+<CodeBlock title="Example frontmatter in .md or .mdx file">
+```mdx
+---
+title: Fern Docs Quickstart
+description: Learn how to get started building a documentation site for your product with Fern. Automatically generate a API Reference using your OpenAPI specification, configure site navigation, customize styles, and write documentation in Markdown and MDX. Fern's magic puts it all together and builds an attractive site you can host yourself, or host free with Fern.
+editThisPageUrl: https://github.com/fern-api/fern/blob/main/fern/docs/pages/docs/quickstart.mdx
+image: https://github.com/fern-api/fern/blob/main/fern/docs/images/logo-green.png
+---
+```
+</CodeBlock>
+
+#### title
+**Type**: string<br />
+**Default**: The name of the page as specified in `docs.yml`
+
+Set the content for the [`<title>` element](https://web.dev/learn/html/document-structure#document_title) for a page. This title is displayed in browser tabs, history, and bookmarks, as well as in search engine results. Having a unique and informative title for each page benefits your site's SEO (Search Engine Optimization). For more information, see [Google's guidelines for useful titles](https://developers.google.com/search/docs/appearance/title-link#page-titles).
+
+If no title is provided in the frontmatter of a page, the name of the page in `docs.yml` is used.
+
+#### description
+**Type**: string<br />
+**Default**: None
+
+Set the [meta description](https://web.dev/learn/html/metadata#description) for a page. Like the page title, the meta description is important for SEO. It impacts the text that search engines display about your page in search results snippets. It can also influence search engine indexing and ranking. For more information, see [Google's guidelines for meta descriptions](https://developers.google.com/search/docs/appearance/snippet#meta-descriptions).
+
+#### editThisPageUrl
+**Type**: string (absolute URL)<br />
+**Default**: None
+
+Provide the absolute link to the source `.md` or `.mdx` file in GitHub. Fern uses it to add an `Edit this page` link to the page, which users of your documentation can use to suggest corrections or additions. 
+
+#### image
+**Type**: string (absolute URL)<br />
+**Default**: None
+
+Configure the `<meta property="og:image">` metadata for a page using an absolute path to an image hosted online. This provides an image to show next to a link to your documentation when the link is shared on social media, using a metadata protocol called [OpenGraph](https://ogp.me/). For more information, see the [web.dev explanation of OpenGraph](https://web.dev/learn/html/metadata#open_graph).
+
+### Links in Markdown
+When clicked, links to relative URLs open in the same tab, whereas links to absolute URLs open in a new browser tab. 
+
+In Markdown, use a `/` to begin a relative URL instead of `./`. 
+
+<CodeBlock title="Relative link example">
+```md
+For more information, see the page on [Authentication](/home/authentication).
+```
+</CodeBlock>
+
+## Configure your site with docs.yml
+
+Every Fern Docs website has a special configuation file called `docs.yml`. Use this file to configure the navigation and styles for your documentation site.
+
+<CodeBlock title="An example docs.yml">
 ```yaml
-title: Example | Docs
 navigation:
   - section: Home
     contents:
@@ -30,31 +100,62 @@ favicon: ./images/favicon.png
 ```
 </CodeBlock>
 
-### Title 
-
-The `<title>` tag defines the title of the document. The title must be text-only, and is shown within the browser's tab. The content of a page title is important for search engine optimization (SEO). [Read more.](https://www.w3schools.com/tags/tag_title.asp)
-
 ### Navigation
 
-The navigation organizes your documentation in the left-side nav bar. Each section has a title and a list of contents. Contents contain a page name and a file path. The supported file types are `.md` or `.mdx`.
+#### Sections, contents, and pages
 
-Let's look at a basic navigation configuration. Here we have two sections, the first is called `Introduction` that has a single page `My Page` and the second is API Reference.
+The navigation organizes your documentation in the left-side nav bar. You can create sections for grouping related content. Each `section` has a name and a list of `contents`. The sections appear in the left-side nav bar in the order that they are listed in `docs.yml`. 
 
-<CodeBlock title="Example Navigation Config">
+In `contents`, list your pages with names and corresponding file paths. The supported file types for pages are `.md` or `.mdx`.
+
+A basic navigation configuration with two sections is shown below. The first section is called `Introduction` and contains a single page called `My Page`. The second section is called **API Reference**. This is a special type of section that's automatically generated by Fern, and you do not need to add any pages to it by hand. You can read more about it in the [API Reference section](#api-reference) further below.
+
+<CodeBlock title="Example navigation config">
 ```yaml
 navigation: 
   - section: Introduction
     contents: 
       - page: My Page
-        path: my-page.mdx
+        path: ./pages/my-page.mdx
   - api: API Reference
 ```
 </CodeBlock>
 
-### Nested Sections
-If you'd like a section to toggle into more sections and pages, you can nest sections within sections. Here's an example of how it's done.
-<CodeBlock title="docs.yml">
-```mdx
+If you want to add another page to an existing section, create an `.md` or `.mdx` file. Then in `docs.yml`, create a new `page` in the `contents` list for that section, providing the path to the `.md` or `.mdx` file you created. Example:
+
+<CodeBlock title="Example navigation config">
+```yaml
+navigation: 
+  - section: Introduction
+    contents: 
+      - page: My Page
+        path: ./pages/my-page.mdx
+      - page: Another Page
+        path: ./pages/another-page.mdx
+  - api: API Reference
+```
+</CodeBlock>
+
+To add another section, add another `section` to the `navigation`. Example:
+<CodeBlock title="Example navigation config with additional section">
+```yaml
+navigation: 
+  - section: Introduction
+    contents: 
+      - page: My Page
+        path: ./pages/my-page.mdx
+  - api: API Reference
+  - section: Help Center
+    contents: 
+      - page: Contact Us
+        path: contact-us.mdx
+```
+</CodeBlock>
+
+#### Nested sections
+If you'd like a section to toggle into more sections and pages, you can nest sections within sections. Here's an example:
+<CodeBlock title="Example navigation config with nested sections">
+```yaml
 navigation:
   - tab: guides
     layout:
@@ -77,20 +178,11 @@ navigation:
 
 ![Result of above docs.yml example](https://fern-image-hosting.s3.amazonaws.com/fern/nested-sections.png)
 
-### API Reference
+#### Navigation bar links
 
-A key benefit of using Fern Docs is that you get your API Reference with just one line. 
-Add `- api: API Reference` and Fern will take care of the rest! You'll see your endpoints, types, 
-and errors automatically populated from your API definition. 
+For links that you want to be easily accessible, you can specify a list of links in `navbar-links`. These links appear as buttons in the top right of your documentation website.
 
-If you want to order your API endpoints, see how to configure your
-[__package__.yml](/api-definition/fern-definition/packages#navigation) . 
-
-### Navigation bar links
-
-If you have links that you want to be easily accessible, you can specify a list of links in `navbar-links`. These links will appear as buttons in the top right of your documentation website.
-
-<CodeBlock title="docs.yml">
+<CodeBlock title="Example of navbar-links config">
 ```yaml
 navbar-links:
   - type: secondary
@@ -102,28 +194,37 @@ navbar-links:
 ```
 </CodeBlock>
 
-#### Link type
+##### navbar-link type
 
-A link can be `primary` or `secondary`. Primary links are designed to stand out and indicate that they are clickable with an arrow `>`. You can have one primary link.
+Set the type to either `primary` or `secondary`. Primary links are designed to stand out and indicate that they are clickable with an arrow `>`. You can have one primary link.
 
-#### Link text
+##### navbar-link text
 
-A link has text which is displayed to the user.
+Set the link text that is displayed to the user.
 
-#### Link url
+##### navbar-link url
 
-A link has a URL which a user is directed to. By default, URLs open in a new browser tab.
+Set the target `url` for the link. 
 
-You may want to use a trackable link in your URL. For example, if using [UTM parameters](https://en.wikipedia.org/wiki/UTM_parameters), instead of `www.example.com/login`, set the URL to `www.example.com/login?utm_source=docs&utm_medium=navbar`.
+To use a relative URL, make sure that you use `/` to begin the URL instead of `./`. This link opens in a new browser tab, regardless of whether it is a relative or absolute URL. 
+
+You can use a trackable link in your URL. For example, if using [UTM parameters](https://en.wikipedia.org/wiki/UTM_parameters), instead of `https://www.example.com/login`, set the `url` to `https://www.example.com/login?utm_source=docs&utm_medium=navbar`.
+
+## API Reference
+A key benefit of using Fern Docs is that you get your API Reference with just one line. 
+Add `- api: API Reference` and Fern takes care of the rest! You'll see your endpoints, types, 
+and errors automatically populated from your [OpenAPI specification](/api-definition/openapi/importing-open-api).
+
+## Styles
 
 ### Colors
 
 #### Primary accent
 
-You may specify a primary accent color using the [Hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp). The primary accent color is used in many places, including:
+You can specify a primary accent color using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp). The primary accent color is used for several purposes, including:
 
 - to indicate the page a user is on within the navigation
-- the background of a primary link button
+- as the background of a primary link button
 - to underline hyperlinks
 - the next and previous page navigation buttons
 
@@ -136,7 +237,7 @@ colors:
 
 #### Background
 
-Just like `accentPrimary`, you can specify the background color using the [Hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp).
+Just like `accentPrimary`, you can specify the background color using the [hexadecimal color](https://www.w3schools.com/colors/colors_hexadecimal.asp).
 
 <CodeBlock title="docs.yml">
 ```yaml
@@ -150,7 +251,7 @@ colors:
 
 ### Logo
 
-You can add your logo that will display in the top left of your documentation website.
+Add a logo that displays in the top left of your documentation website.
 
 <CodeBlock title="docs.yml">
 ```yaml
@@ -171,44 +272,47 @@ logo:
 
 #### Logo href
 
-`href` provides a hyperlink for the logo, often used 
-to point to the website homepage. When clicked, the user will be redirected to this link.
+`href` provides a link for the logo, often used 
+to point to the website's homepage. When the logo is clicked, the user is directed to this link.
 
 ### Favicon
 
-Specifies the path to a favicon image, which is typically displayed in a 
+Specifies the path to a `favicon` image, which is typically displayed in a 
 browser tab or bookmark. Supported file types are `.png` and `.ico`.
 
-## Advanced features
+### Advanced features
 
-The following configuration options are optional and allow you to further personalize your documentation website.
+The following configuration options allow you to further personalize your documentation website using `docs.yml`.
 
-### Font 
+#### Fonts
 
-You can specify a custom font for your documentation website.
+You can specify custom fonts for your documentation website. The supported file types are `.woff` and `.woff2`.
 
-<CodeBlock title="fern directory">
+Include the custom fonts in your `fern/` project:
+
+<CodeBlock title="Example custom fonts">
 ```diff
   fern/
   ├─ fern.config.json
   ├─ generators.yml
-  ├─ definition/ # Alternatively, you can have an OpenAPI file
-    ├─ api.yml
-    └─ imdb.yml
-+ ├─ fonts
+  ├─ openapi/
+    ├─ openapi.yml
++ ├─ fonts/
 +   ├─ your-font-regular.woff2
 +   ├─ your-font-bold.woff2
 +   └─ another-font-regular.woff2
 ```
 </CodeBlock>
 
-You can reference the fonts in `docs.yml` by specifying the `path` to the font file. The supported file types are `.woff` and `.woff2`.
+Fern has three font types:
+- `headingsFont`: affects page and section titles
+- `bodyFont`: affects page body text
+- `codeFont`: affects code blocks
 
-The `headingsFont` is used for the page title and section titles. The `bodyFont` is used for the body text. The `codeFont` is used for code blocks.
+To customize the font used for each font type, add a top-level `typography` list to `docs.yml`. 
+Then in it, specify the path of your font file for one or more of the font types.
 
-Here's an example of how to specify custom fonts:
-
-<CodeBlock title="docs.yml">
+<CodeBlock title="Example of specifying custom fonts in docs.yml">
 ```yaml
 typography:
   headingsFont:
@@ -220,9 +324,9 @@ typography:
 ```
 </CodeBlock>
 
-### Tabs
+#### Tabs
 
-Within the navigation, you can add `tabs`. Tabs are used to group content together. Let's add a new tab so that we can include `Help Center` content in addition to our API Reference. Each tab has a `title` and `icon`. [Browse the icons available](/generate-docs/component-library/icons) from FontAwesome.
+Within the navigation, you can add `tabs`. Tabs are used to group sections together. The example below shows tabs for `Help Center` and `API Reference`. Each tab has a `title` and `icon`. [Browse the icons available](/generate-docs/component-library/icons) from FontAwesome.
 
 <CodeBlock title="docs.yml">
 ```yaml
@@ -254,13 +358,13 @@ tabs:
 Here's an example of what the Tabs implementation looks like:
 ![Screenshot showing two vertically stacked tabs labeled API Reference and Help Center](https://fern-image-hosting.s3.amazonaws.com/fern/tabs.png)
 
-### Versions
+#### Versions
 
-If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the versions and their availability:
+If you have multiple versions of your documentation, you can introduce a dropdown version selector by specifying the `versions`.
 
 ![A dropdown of the available versions](https://fern-image-hosting.s3.amazonaws.com/versions.png)
 
-To add a version, specify the `display-name`, which will be visible to users, and `path`, which is a file that must be in a folder called `versions`:
+When adding an entry to the `versions` list, specify the version's `display-name`, which is visible to users, and `path`, which is a file that must be in a folder called `versions/`:
 
 <CodeBlock title="docs.yml">
 ```yaml
