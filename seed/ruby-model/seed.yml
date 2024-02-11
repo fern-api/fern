@@ -6,5 +6,4 @@ generatorType: model
 defaultOutputMode: local_files
 fixtures: []
 scripts: []
-features: 
-  whitelabel: false
+

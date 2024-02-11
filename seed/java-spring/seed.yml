@@ -14,5 +14,4 @@ allowedFailures:
   - plain-text
   - response-property
   - streaming
-features: 
-  whitelabel: true
+

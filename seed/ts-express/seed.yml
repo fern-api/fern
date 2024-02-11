@@ -32,7 +32,6 @@ allowedFailures:
   - file-upload
   - plain-text
   - streaming
-features: 
-  whitelabel: false
+
 
   

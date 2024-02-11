@@ -32,5 +32,4 @@ allowedFailures:
   - enum
   - extends
   - response-property
-features: 
-  whitelabel: true
+

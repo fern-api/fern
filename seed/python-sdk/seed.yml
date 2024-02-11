@@ -35,5 +35,4 @@ scripts:
       - dmypy run .
 allowedFailures: 
   - response-property
-features: 
-  whitelabel: true
+

@@ -18,5 +18,5 @@ export interface SeedWorkspaceConfiguration {
      * just list the fixture name. For configured fixture list {fixture}:{outputFolder}.
      */
     allowedFailures?: string[];
-    features: FernSeedConfig.GeneratorFeatureMatrix;
+    features?: FernSeedConfig.GeneratorFeatures;
 }
