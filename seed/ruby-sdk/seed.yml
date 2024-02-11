@@ -8,3 +8,28 @@ fixtures: []
 scripts: []
 allowedFailures:
   - streaming
+features:
+  requestOptions:
+    isImplemented: true
+  idempotencyHeaders:
+    isImplemented: false
+  autoPagination:
+    isImplemented: false
+  oauthWrapper:
+    isImplemented: false
+  authEnvVarScanning:
+    isImplemented: true
+  asyncApi:
+    isImplemented: false
+  streaming:
+    isImplemented: false
+  fileUploadAndDownload:
+    isImplemented: true
+  codeSnippets:
+    isImplemented: false
+  errorHandling:
+    isImplemented: false
+  forwardCompatibleEnums:
+    isImplemented: true
+  propertyBasedForwardCompatibility:
+    isImplemented: true
