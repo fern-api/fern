@@ -39,6 +39,7 @@ class Project:
         should_format_files: bool,
         sorted_modules: Optional[Sequence[str]] = None,
         flat_layout: bool = False,
+        whitelabel: bool = False,
     ) -> None:
         if flat_layout:
             self._project_filepath = (
@@ -56,6 +57,7 @@ class Project:
         self._python_version = python_version
         self._dependency_manager = DependencyManager()
         self._should_format_files = should_format_files
+        self._whitelabel = whitelabel
 
     def add_dependency(self, dependency: AST.Dependency) -> None:
         self._dependency_manager.add_dependency(dependency)
@@ -84,6 +86,7 @@ class Project:
             ),
             dependency_manager=self._dependency_manager,
             should_format=self._should_format_files,
+            whitelabel=self._whitelabel,
         )
         return source_file
 

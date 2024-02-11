@@ -93,7 +93,8 @@ export function getGeneratorConfig({
             workspaceName,
             organization,
             environment: FernGeneratorExec.GeneratorEnvironment.local(),
-            dryRun: false
+            dryRun: false,
+            whitelabel: true
         }
     };
 }

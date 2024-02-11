@@ -27,7 +27,9 @@ export async function writePostmanCollection(pathToConfig: string): Promise<void
         // eslint-disable-next-line no-console
         console.log(`Read ${pathToConfig}`);
         const rawConfig = JSON.parse(configStr.toString());
-        const config = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig);
+        const config = await GeneratorExecParsing.GeneratorConfig.parse(rawConfig, {
+            unrecognizedObjectKeys: "passthrough"
+        });
 
         if (!config.ok) {
             // eslint-disable-next-line no-console

@@ -52,6 +52,11 @@ const FILE_HEADER = `/**
  */
 `;
 
+const WHITELABEL_FILE_HEADER = `/**
+ * This file was auto-generated from our API Definition.
+ */
+`;
+
 export declare namespace SdkGenerator {
     export interface Init {
         namespaceExport: string;
@@ -63,6 +68,7 @@ export declare namespace SdkGenerator {
     }
 
     export interface Config {
+        whitelabel: boolean;
         snippetFilepath: AbsoluteFilePath | undefined;
         shouldBundle: boolean;
         shouldUseBrandedStringAliases: boolean;
@@ -676,7 +682,11 @@ module.exports = {
             // this needs to be last.
             // https://github.com/dsherret/ts-morph/issues/189#issuecomment-414174283
             sourceFile.insertText(0, (writer) => {
-                writer.writeLine(FILE_HEADER);
+                if (this.config.whitelabel) {
+                    writer.writeLine(WHITELABEL_FILE_HEADER);
+                } else {
+                    writer.writeLine(FILE_HEADER);
+                }
             });
 
             this.context.logger.debug(`Generated ${filepathStr}`);

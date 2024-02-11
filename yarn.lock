@@ -2296,7 +2296,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3277
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2327,7 +2327,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/ruby-codegen": "workspace:*"
     "@fern-api/ruby-generator-cli": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -2374,7 +2374,7 @@ __metadata:
     "@fern-api/ir-sdk": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
@@ -2602,7 +2602,7 @@ __metadata:
     "@fern-api/project-configuration": "workspace:*"
     "@fern-api/task-context": "workspace:*"
     "@fern-api/workspace-loader": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@types/decompress": ^4.2.7
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2731,7 +2731,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/openapi-generator@workspace:generators/openapi"
   dependencies:
-    "@fern-fern/generator-exec-client": ^0.0.6
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.2828
     "@types/jest": ^29.0.3
     "@types/js-yaml": ^4.0.8
@@ -2835,7 +2835,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@fern-api/postman-generator@workspace:generators/postman"
   dependencies:
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.2828
     "@fern-fern/postman-sdk": 0.0.46
     "@types/jest": ^29.0.3
@@ -2982,7 +2982,7 @@ __metadata:
   resolution: "@fern-api/ruby-codegen@workspace:generators/ruby/codegen"
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.9
@@ -3005,7 +3005,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3311,27 +3311,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@fern-fern/generator-exec-client@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "@fern-fern/generator-exec-client@npm:0.0.6"
-  dependencies:
-    "@fern-typescript/service-utils": 0.0.184
-    "@types/url-join": 4.0.1
-    url-join: 4.0.1
-  checksum: 84e55406af4393b5d3f8127a93f0fefed202c9681efb83388e191725b097cbf2eed8f2a966fce12943ffe8dce13a8f55d20df1223c133998eeb4e0c50cf69440
-  languageName: node
-  linkType: hard
-
-"@fern-fern/generator-exec-sdk@npm:^0.0.538":
-  version: 0.0.538
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.538"
+"@fern-fern/generator-exec-sdk@npm:0.0.571":
+  version: 0.0.571
+  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.571"
   dependencies:
     "@types/url-join": 4.0.1
     "@ungap/url-search-params": 0.2.2
     axios: 0.27.2
     axios-retry: 3.2.0
     url-join: 4.0.1
-  checksum: de9288fc574a1d716e4c83ff22b7f0c32cc9fed0a234da3e6b85df4bdeb39baf83ad9768086e5be80566f52766f9d107f52448dcffb2cbc01a4f78744d2a933e
+  checksum: b04a35e67b3fc807e9a560759931a32e9386b5a643a33afea10c5f65e0d4192bb7bdd4bc088196e6ef9cbd1404817f269c6077c60d4b67e3635685303bdd2781
   languageName: node
   linkType: hard
 
@@ -3629,7 +3618,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/logger": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -3872,7 +3861,7 @@ __metadata:
   resolution: "@fern-typescript/express-generator-cli@workspace:generators/typescript/express/cli"
   dependencies:
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4217,7 +4206,7 @@ __metadata:
   dependencies:
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/umd-compat-loader": ^2.1.4
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/abstract-generator-cli": "workspace:*"
     "@fern-typescript/commons": "workspace:*"
@@ -4252,7 +4241,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3294
     "@fern-typescript/commons": "workspace:*"
     "@fern-typescript/contexts": "workspace:*"
@@ -4305,17 +4294,6 @@ __metadata:
     typescript: 4.6.4
   languageName: unknown
   linkType: soft
-
-"@fern-typescript/service-utils@npm:0.0.184":
-  version: 0.0.184
-  resolution: "@fern-typescript/service-utils@npm:0.0.184"
-  dependencies:
-    axios: ^0.27.2
-    basic-auth: ^2.0.1
-    js-base64: ^3.7.2
-  checksum: 173877b5eb6412e65f577cf7f2ce90317e81e5348bbba0cb6c1b272d10b44c0ad74f1bafb16428f88b42a1af51343f45b82d2664728d5d7f1cf00e987bd3f6be
-  languageName: node
-  linkType: hard
 
 "@fern-typescript/stream-utils@workspace:generators/typescript/utils/core-utilities/stream-utils":
   version: 0.0.0-use.local
