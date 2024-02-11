@@ -44,10 +44,10 @@
   "devDependencies": {
     "@types/jest": "^29.0.3",
     "@types/jest-specific-snapshot": "^0.5.7",
-    "@types/lodash-es": "^4.17.7",
+    "@types/lodash-es": "^4.17.9",
     "@types/node": "^18.7.18",
     "@types/prettier": "^2.7.1",
-    "@types/url-join": "^4.0.1",
+    "@types/url-join": "4.0.1",
     "depcheck": "^1.4.6",
     "eslint": "^8.56.0",
     "jest": "^29.7.0",
