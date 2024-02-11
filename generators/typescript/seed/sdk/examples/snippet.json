@@ -1,0 +1,85 @@
+{
+    "endpoints": [
+        {
+            "id": {
+                "path": "/",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.echo(\"Hello world!\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/notification/{notificationId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.notification.service.getException(\"notification-hsy129x\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/file/{filename}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.file.service.getFile(\"file.txt\", {\n    xFileApiVersion: \"0.0.2\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/check/{id}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.check(\"id-2sdx82h\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/ping",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.health.service.ping();\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie/{movieId}",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMovie(\"movie-c06a4ad7\");\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/movie",
+                "method": "POST"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.createMovie({\n    id: \"movie-c06a4ad7\",\n    title: \"The Boy and the Heron\",\n    from: \"Hayao Miyazaki\",\n    rating: 8,\n    type: \"movie\",\n    tag: \"tag-wf9as23d\"\n});\n"
+            }
+        },
+        {
+            "id": {
+                "path": "/metadata",
+                "method": "GET"
+            },
+            "snippet": {
+                "type": "typescript",
+                "client": "import { SeedExamplesClient } from \"\";\n\nconst seedExamples = new SeedExamplesClient({ token: \"YOUR_TOKEN\" });\nawait seedExamples.service.getMetadata({\n    xApiVersion: \"0.0.1\",\n    shallow: false,\n    tag: \"development\"\n});\n"
+            }
+        }
+    ],
+    "types": {}
+}

@@ -1,0 +1,23 @@
+{
+  "extends": "../../../../shared/tsconfig.shared.json",
+  "compilerOptions": { "composite": true, "outDir": "lib", "rootDir": "src" },
+  "include": ["./src"],
+  "references": [
+    { "path": "../../../commons" },
+    { "path": "../../../contexts" },
+    { "path": "../../../resolvers" },
+    { "path": "../../model/type-generator" },
+    { "path": "../../model/type-reference-converters" },
+    { "path": "../../model/type-reference-example-generator" },
+    { "path": "../../model/type-schema-generator" },
+    { "path": "../client-class-generator" },
+    { "path": "../endpoint-error-union-generator" },
+    { "path": "../environments-generator" },
+    { "path": "../generic-sdk-error-generators" },
+    { "path": "../request-wrapper-generator" },
+    { "path": "../sdk-endpoint-type-schemas-generator" },
+    { "path": "../sdk-error-generator" },
+    { "path": "../sdk-error-schema-generator" },
+    { "path": "../sdk-inlined-request-body-schema-generator" }
+  ]
+}

@@ -1,0 +1,1 @@
+export { AbstractGeneratedSchema } from "./AbstractGeneratedSchema";

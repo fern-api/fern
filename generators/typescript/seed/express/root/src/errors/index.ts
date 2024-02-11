@@ -1,0 +1,1 @@
+export { SeedRootError } from "./SeedRootError";

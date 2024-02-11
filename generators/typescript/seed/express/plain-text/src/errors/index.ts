@@ -1,0 +1,1 @@
+export { SeedPlainTextError } from "./SeedPlainTextError";

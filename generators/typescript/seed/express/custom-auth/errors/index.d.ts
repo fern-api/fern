@@ -1,0 +1,1 @@
+export { SeedCustomAuthError } from "./SeedCustomAuthError";
