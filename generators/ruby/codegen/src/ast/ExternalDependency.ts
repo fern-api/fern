@@ -6,13 +6,13 @@ interface Version {
 }
 export declare namespace ExternalDependency {
     export interface Init extends AstNode.Init {
-        lowerBound: Version;
+        lowerBound?: Version;
         upperBound?: Version;
         packageName: string;
     }
 }
 export class ExternalDependency extends AstNode {
-    public lowerBound: Version;
+    public lowerBound: Version | undefined;
     public upperBound: Version | undefined;
     public packageName: string;
 
@@ -25,8 +25,18 @@ export class ExternalDependency extends AstNode {
 
     public writeInternal(startingTabSpaces: number): void {
         this.addText({
-            stringContent: `spec.add_dependency "${this.packageName}", "${this.lowerBound.specifier} ${this.lowerBound.version}"`,
+            stringContent: `spec.add_dependency "${this.packageName}"`,
             startingTabSpaces
+        });
+        this.addText({
+            stringContent: this.lowerBound?.specifier,
+            templateString: ', "%s',
+            appendToLastString: true
+        });
+        this.addText({
+            stringContent: this.lowerBound?.version,
+            templateString: ' %s"',
+            appendToLastString: true
         });
         this.addText({
             stringContent: this.upperBound?.specifier,

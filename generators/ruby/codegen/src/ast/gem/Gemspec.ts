@@ -53,10 +53,7 @@ export class Gemspec extends FunctionInvocation {
         if (hasFileBasedDependencies) {
             globalDependencies.push(
                 ...[
-                    new ExternalDependency({
-                        packageName: "mini_mime",
-                        lowerBound: { specifier: "~>", version: "1.1" }
-                    }),
+                    new ExternalDependency({ packageName: "mini_mime" }),
                     new ExternalDependency({
                         packageName: "faraday-multipart",
                         lowerBound: { specifier: ">=", version: "0.0" },

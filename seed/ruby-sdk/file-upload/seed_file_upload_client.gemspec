@@ -23,5 +23,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "faraday-multipart", ">= 0.0", "< 2.0"
   spec.add_dependency "faraday-net_http", ">= 1.0", "< 4.0"
   spec.add_dependency "faraday-retry", ">= 1.0", "< 3.0"
-  spec.add_dependency "mini_mime", "~> 1.1"
+  spec.add_dependency "mini_mime"
 end
