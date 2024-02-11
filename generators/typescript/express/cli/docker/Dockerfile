@@ -4,13 +4,13 @@ RUN apk --no-cache add git zip && git config --global user.name "fern" && git co
 
 ENV YARN_CACHE_FOLDER=/.yarn
 
-COPY packages/generators/express/cli/docker/cache_heavy_dependencies.sh /
+COPY generators/typescript/express/cli/docker/cache_heavy_dependencies.sh /
 RUN /cache_heavy_dependencies.sh && rm /cache_heavy_dependencies.sh
 
-COPY packages/core-utilities/zurg/src/ /assets/zurg
-COPY packages/core-utilities/base/src/ /assets/base-core-utilities
+COPY generators/typescript/utils/core-utilities/zurg/src/ /assets/zurg
+COPY generators/typescript/utils/core-utilities/base/src/ /assets/base-core-utilities
 RUN find /assets -name __test__ -exec rm -rf {} \+
 
-COPY packages/generators/express/cli/docker/dist/bundle.js /bundle.js
+COPY generators/typescript/express/cli/docker/dist/bundle.js /bundle.js
 
 ENTRYPOINT ["node", "/bundle.js"]
