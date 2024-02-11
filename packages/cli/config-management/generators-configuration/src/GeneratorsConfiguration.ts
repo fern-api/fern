@@ -12,6 +12,7 @@ export interface GeneratorsConfiguration {
     rawConfiguration: GeneratorsConfigurationSchema;
     defaultGroup: string | undefined;
     groups: GeneratorGroup[];
+    whitelabel: FernFiddle.WhitelabelConfig | undefined;
 }
 
 export interface GeneratorGroup {

@@ -71,7 +71,8 @@ export async function generateWorkspace({
             generatorGroup: group,
             version,
             shouldLogS3Url,
-            token
+            token,
+            whitelabel: workspace.generatorsConfiguration.whitelabel
         });
     }
 }
