@@ -57,7 +57,13 @@ export async function convertGeneratorsConfiguration({
                           })
                       )
                   )
-                : []
+                : [],
+        whitelabel:
+            rawGeneratorsConfiguration.whitelabel != null && rawGeneratorsConfiguration.whitelabel.github != null
+                ? {
+                      github: rawGeneratorsConfiguration.whitelabel.github
+                  }
+                : undefined
     };
 }
 
