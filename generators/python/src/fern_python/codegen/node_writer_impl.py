@@ -13,11 +13,13 @@ class NodeWriterImpl(AST.NodeWriter, WriterImpl):
         should_format_as_snippet: bool = False,
         should_include_header: bool = True,
         reference_resolver: ReferenceResolver,
+        whitelabel: bool = False,
     ):
         super().__init__(
             should_format=should_format,
             should_format_as_snippet=should_format_as_snippet,
             should_include_header=should_include_header,
+            whitelabel=whitelabel,
         )
         self._reference_resolver = reference_resolver
 
