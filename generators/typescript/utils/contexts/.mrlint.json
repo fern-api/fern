@@ -2,10 +2,8 @@
   "type": "library",
   "private": false,
   "rules": {
-    "rules": {
-      "duplicate-dependencies": {
-        "exclude": ["@fern-fern/ir-sdk"]
-      }
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
     },
     "ts-config": {
       "exclude": ["./src/**/__test__/**/generated"]

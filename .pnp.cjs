@@ -4175,7 +4175,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
             ["@fern-api/logger", "workspace:packages/cli/logger"],\
             ["@fern-api/logging-execa", "workspace:packages/commons/logging-execa"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -5509,18 +5509,6 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
         }]\
       ]],\
       ["@fern-fern/generator-exec-sdk", [\
-        ["npm:0.0.538", {\
-          "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.538-8b4f323737-de9288fc57.zip/node_modules/@fern-fern/generator-exec-sdk/",\
-          "packageDependencies": [\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
-            ["@types/url-join", "npm:4.0.1"],\
-            ["@ungap/url-search-params", "npm:0.2.2"],\
-            ["axios", "npm:0.27.2"],\
-            ["axios-retry", "npm:3.2.0"],\
-            ["url-join", "npm:4.0.1"]\
-          ],\
-          "linkType": "HARD"\
-        }],\
         ["npm:0.0.571", {\
           "packageLocation": "./.yarn/cache/@fern-fern-generator-exec-sdk-npm-0.0.571-8c559ed89b-b04a35e67b.zip/node_modules/@fern-fern/generator-exec-sdk/",\
           "packageDependencies": [\

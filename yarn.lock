@@ -2140,7 +2140,7 @@ __metadata:
     "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
-    "@types/lodash-es": ^4.17.7
+    "@types/lodash-es": ^4.17.9
     "@types/node": ^18.7.18
     depcheck: ^1.4.6
     eslint: ^8.56.0
@@ -2160,7 +2160,7 @@ __metadata:
     "@fern-api/generator-commons": "workspace:*"
     "@fern-api/logger": "workspace:*"
     "@fern-api/logging-execa": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -3422,19 +3422,6 @@ __metadata:
     axios-retry: 3.2.0
     url-join: 4.0.1
   checksum: b04a35e67b3fc807e9a560759931a32e9386b5a643a33afea10c5f65e0d4192bb7bdd4bc088196e6ef9cbd1404817f269c6077c60d4b67e3635685303bdd2781
-  languageName: node
-  linkType: hard
-
-"@fern-fern/generator-exec-sdk@npm:^0.0.538":
-  version: 0.0.538
-  resolution: "@fern-fern/generator-exec-sdk@npm:0.0.538"
-  dependencies:
-    "@types/url-join": 4.0.1
-    "@ungap/url-search-params": 0.2.2
-    axios: 0.27.2
-    axios-retry: 3.2.0
-    url-join: 4.0.1
-  checksum: de9288fc574a1d716e4c83ff22b7f0c32cc9fed0a234da3e6b85df4bdeb39baf83ad9768086e5be80566f52766f9d107f52448dcffb2cbc01a4f78744d2a933e
   languageName: node
   linkType: hard
 
@@ -5761,7 +5748,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash-es@npm:^4.17.7, @types/lodash-es@npm:^4.17.9":
+"@types/lodash-es@npm:^4.17.9":
   version: 4.17.12
   resolution: "@types/lodash-es@npm:4.17.12"
   dependencies:
