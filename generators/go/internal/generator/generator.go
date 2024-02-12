@@ -131,6 +131,7 @@ func (g *Generator) generateModelTypes(ir *fernir.IntermediateRepresentation, mo
 			fileInfo.filename,
 			fileInfo.packageName,
 			g.config.ImportPath,
+			g.config.Whitelabel,
 			ir.Types,
 			ir.Errors,
 			g.coordinator,
@@ -229,7 +230,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 	// Write all of the package-level documentation, if any (i.e. in a doc.go file).
 	if ir.RootPackage != nil && ir.RootPackage.Docs != nil && len(*ir.RootPackage.Docs) > 0 {
 		fileInfo := fileInfoForPackage(rootPackageName, ir.RootPackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil, g.coordinator)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", g.config.Whitelabel, nil, nil, g.coordinator)
 		writer.WriteDocs(ir.RootPackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
@@ -238,7 +239,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			continue
 		}
 		fileInfo := fileInfoForPackage(rootPackageName, subpackage.FernFilepath)
-		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", nil, nil, g.coordinator)
+		writer := newFileWriter(fileInfo.filename, fileInfo.packageName, "", g.config.Whitelabel, nil, nil, g.coordinator)
 		writer.WriteDocs(subpackage.Docs)
 		files = append(files, writer.DocsFile())
 	}
@@ -267,6 +268,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.filename,
 			fileInfo.packageName,
 			g.config.ImportPath,
+			g.config.Whitelabel,
 			ir.Types,
 			ir.Errors,
 			g.coordinator,
@@ -293,6 +295,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.filename,
 				fileInfo.packageName,
 				g.config.ImportPath,
+				g.config.Whitelabel,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -313,6 +316,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.filename,
 			fileInfo.packageName,
 			g.config.ImportPath,
+			g.config.Whitelabel,
 			ir.Types,
 			ir.Errors,
 			g.coordinator,
@@ -332,6 +336,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.filename,
 				fileInfo.packageName,
 				g.config.ImportPath,
+				g.config.Whitelabel,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -349,6 +354,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.filename,
 				fileInfo.packageName,
 				g.config.ImportPath,
+				g.config.Whitelabel,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -369,6 +375,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.filename,
 				fileInfo.packageName,
 				g.config.ImportPath,
+				g.config.Whitelabel,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -388,6 +395,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 			fileInfo.filename,
 			fileInfo.packageName,
 			g.config.ImportPath,
+			g.config.Whitelabel,
 			ir.Types,
 			ir.Errors,
 			g.coordinator,
@@ -424,6 +432,7 @@ func (g *Generator) generate(ir *fernir.IntermediateRepresentation, mode Mode) (
 				fileInfo.filename,
 				fileInfo.packageName,
 				g.config.ImportPath,
+				g.config.Whitelabel,
 				ir.Types,
 				ir.Errors,
 				g.coordinator,
@@ -608,6 +617,7 @@ func (g *Generator) generateService(
 		fileInfo.filename,
 		fileInfo.packageName,
 		g.config.ImportPath,
+		g.config.Whitelabel,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -648,6 +658,7 @@ func (g *Generator) generateServiceWithoutEndpoints(
 		fileInfo.filename,
 		fileInfo.packageName,
 		g.config.ImportPath,
+		g.config.Whitelabel,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -682,6 +693,7 @@ func (g *Generator) generateRootServiceWithoutEndpoints(
 		fileInfo.filename,
 		fileInfo.packageName,
 		g.config.ImportPath,
+		g.config.Whitelabel,
 		ir.Types,
 		ir.Errors,
 		g.coordinator,
@@ -783,6 +795,7 @@ func newClientTestFile(
 		"client/client_test.go",
 		"client",
 		baseImportPath,
+		false,
 		nil,
 		nil,
 		coordinator,

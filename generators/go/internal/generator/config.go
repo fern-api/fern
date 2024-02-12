@@ -6,6 +6,7 @@ type Config struct {
 	EnableExplicitNull         bool
 	IncludeLegacyClientOptions bool
 	IncludeReadme              bool
+	Whitelabel                 bool
 	Organization               string
 	Version                    string
 	IRFilepath                 string
@@ -38,6 +39,7 @@ func NewConfig(
 	enableExplicitNull bool,
 	includeLegacyClientOptions bool,
 	includeReadme bool,
+	whitelabel bool,
 	organization string,
 	version string,
 	irFilepath string,
@@ -51,6 +53,7 @@ func NewConfig(
 		IncludeLegacyClientOptions: includeLegacyClientOptions,
 		IncludeReadme:              includeReadme,
 		Organization:               organization,
+		Whitelabel:                 whitelabel,
 		Version:                    version,
 		IRFilepath:                 irFilepath,
 		ImportPath:                 importPath,
