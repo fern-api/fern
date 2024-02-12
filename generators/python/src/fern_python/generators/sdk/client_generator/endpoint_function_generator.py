@@ -443,7 +443,8 @@ class EndpointFunctionGenerator:
                             endpoint=endpoint,
                             path_parameter_name=part.path_parameter,
                         ).name,
-                    ) if possible_path_part_literal is None else
+                    )
+                ) if possible_path_part_literal is None else writer.write_node(
                     AST.Expression(f'"{possible_path_part_literal}"')
                 )
                 writer.write("}")
@@ -613,7 +614,11 @@ class EndpointFunctionGenerator:
 
     def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
         possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
-        return self._get_reference_to_query_parameter(query_parameter) if possible_query_literal is None else AST.Expression(f'"{possible_query_literal}"')
+        return (
+            self._get_reference_to_query_parameter(query_parameter)
+            if possible_query_literal is None
+            else AST.Expression(f'"{possible_query_literal}"')
+        )
 
     def _get_query_parameters_for_endpoint(
         self,

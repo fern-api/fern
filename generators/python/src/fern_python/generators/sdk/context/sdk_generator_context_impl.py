@@ -121,6 +121,6 @@ class SdkGeneratorContextImpl(SdkGeneratorContext):
                     string=lambda string: string,
                 )
         return None
-    
+
     def get_literal_header_value(self, header: ir_types.HttpHeader) -> Optional[str]:
         return self.get_literal_value(header.value_type)

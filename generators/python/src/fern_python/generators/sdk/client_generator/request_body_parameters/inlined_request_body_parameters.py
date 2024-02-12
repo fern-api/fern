@@ -26,7 +26,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
             if not self._is_type_literal(property.value_type):
-                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(property.value_type)
+                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    property.value_type
+                )
                 parameters.append(
                     AST.NamedFunctionParameter(
                         name=self._get_property_name(property),
@@ -75,7 +77,9 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
                     property_name = self._get_property_name(property)
                     possible_literal_value = self._context.get_literal_value(property.value_type)
                     stringified_possible_literal_value = f'"{self._context.get_literal_value(property.value_type)}"'
-                    writer.write_line(f'"{property.name.wire_value}": {property_name if possible_literal_value is None else stringified_possible_literal_value},')
+                    writer.write_line(
+                        f'"{property.name.wire_value}": {property_name if possible_literal_value is None else stringified_possible_literal_value},'
+                    )
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
