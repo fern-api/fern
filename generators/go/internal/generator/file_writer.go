@@ -100,7 +100,7 @@ func (f *fileWriter) P(elements ...any) {
 // File formats and writes the content stored in the writer's buffer into a *File.
 func (f *fileWriter) File() (*File, error) {
 	// Start with the package declaration and import statements.
-	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.types, f.errors, f.coordinator)
+	header := newFileWriter(f.filename, f.packageName, f.baseImportPath, f.whitelabel, f.types, f.errors, f.coordinator)
 	if f.whitelabel {
 		header.P(whitelabelFileHeader)
 	} else {
