@@ -7,10 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [0.1.0-rc0] - 2024-02-12
+
+- Improvement: loosen the Faraday dependencies within the generated SDKs, now we are supporting Faraday 1.x, while continuing to support the same upperbound (specifically supporting the latest major version as well).
+- Release a major version as the Ruby generator is now being used in beta!
+
 ## [0.0.6] - 2024-02-09
+
 - Improvement: license files are now specified within the gem config if they are provided
+
 ```
-generators: 
+generators:
   - name: fernapi/fern-ruby-sdk
     version: 0.0.6
     github:
@@ -20,9 +27,10 @@ generators:
 ```
 
 - Improvement: we now create a Github workflow file for publishing the gem automatically, in the presence of a publishing configuration
+
 ```
-generators: 
-  - name: 
+generators:
+  - name:
      output:  # <-- Publishing configuration
        location: rubygems
        api-key: ${API_KEY}
