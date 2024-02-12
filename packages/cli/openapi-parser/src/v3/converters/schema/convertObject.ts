@@ -7,6 +7,7 @@ import {
 import { NamedFullExample, ObjectPropertyWithExample, SchemaWithExample } from "@fern-fern/openapi-ir-model/parseIr";
 import { OpenAPIV3 } from "openapi-types";
 import { AbstractOpenAPIV3ParserContext } from "../../AbstractOpenAPIV3ParserContext";
+import { DummyOpenAPIV3ParserContext } from "../../DummyOpenAPIV3ParserContext";
 import { FernOpenAPIExtension } from "../../extensions/fernExtensions";
 import { getExtension } from "../../extensions/getExtension";
 import { getGeneratedPropertyName } from "../../utils/getSchemaName";
@@ -58,6 +59,29 @@ export function convertObject({
             if (resolvedReference.discriminator != null && resolvedReference.discriminator.mapping != null) {
                 continue;
             }
+            // if allOf element is a oneOf, then don't inherit from it
+            if (resolvedReference.oneOf != null) {
+                // try to grab all properties from the oneOf schemas
+                for (const oneOfSchema of resolvedReference.oneOf) {
+                    const resolvedOneOfSchema = isReferenceObject(oneOfSchema)
+                        ? context.resolveSchemaReference(oneOfSchema)
+                        : oneOfSchema;
+                    const convertedOneOfSchema = convertSchema(
+                        resolvedOneOfSchema,
+                        false,
+                        new DummyOpenAPIV3ParserContext({
+                            document: context.document,
+                            taskContext: context.taskContext
+                        }),
+                        breadcrumbs
+                    );
+                    if (convertedOneOfSchema.type === "object") {
+                        inlinedParentProperties.push(...convertedOneOfSchema.properties);
+                    }
+                }
+                continue;
+            }
+
             const schemaId = getSchemaIdFromReference(allOfElement);
             parents.push({
                 schemaId,
