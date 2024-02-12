@@ -139,8 +139,8 @@ Define your API, and use Fern to generate models, networking code and boilerplat
 type safety to your API implementation - if your backend doesn't implement the API correctly, it won't compile.
 
 Frameworks currently supported:
-- [Express](https://github.com/fern-api/fern-typescript)
-- [Spring Boot](https://github.com/fern-api/fern-java)
+- [Express](./generators/typescript)
+- [Spring Boot](./generators/java)
 - [FastAPI](./generators/python)
 
 For a walkthrough, check out the [Fern + Express video](https://docs.buildwithfern.com/server-boilerplate/server-boilerplate/express-js#demo-video).
