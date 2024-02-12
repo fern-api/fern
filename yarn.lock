@@ -2136,6 +2136,7 @@ __metadata:
   resolution: "@fern-api/csharp-codegen@workspace:generators/csharp/codegen"
   dependencies:
     "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
     "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
