@@ -4150,7 +4150,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-codegen", "workspace:generators/csharp/codegen"],\
             ["@fern-api/core-utils", "workspace:packages/commons/core-utils"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/lodash-es", "npm:4.17.12"],\
@@ -4368,7 +4368,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-generator-cli", "workspace:generators/csharp/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\
@@ -4397,7 +4397,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@fern-api/csharp-generator-cli", "workspace:generators/csharp/cli"],\
             ["@fern-api/fs-utils", "workspace:packages/commons/fs-utils"],\
             ["@fern-api/generator-commons", "workspace:packages/generators/commons"],\
-            ["@fern-fern/generator-exec-sdk", "npm:0.0.538"],\
+            ["@fern-fern/generator-exec-sdk", "npm:0.0.571"],\
             ["@fern-fern/ir-sdk", "npm:0.0.3318"],\
             ["@types/jest", "npm:29.0.3"],\
             ["@types/node", "npm:18.7.18"],\

@@ -2137,7 +2137,7 @@ __metadata:
   dependencies:
     "@fern-api/core-utils": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/lodash-es": ^4.17.7
@@ -2338,7 +2338,7 @@ __metadata:
     "@fern-api/csharp-generator-cli": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
@@ -2367,7 +2367,7 @@ __metadata:
     "@fern-api/csharp-generator-cli": "workspace:*"
     "@fern-api/fs-utils": "workspace:*"
     "@fern-api/generator-commons": "workspace:*"
-    "@fern-fern/generator-exec-sdk": ^0.0.538
+    "@fern-fern/generator-exec-sdk": 0.0.571
     "@fern-fern/ir-sdk": 0.0.3318
     "@types/jest": ^29.0.3
     "@types/node": ^18.7.18
