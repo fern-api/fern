@@ -1,0 +1,30 @@
+name: go
+
+on:
+  pull_request:
+    paths:
+      - "generators/go/**"
+    branches:
+      - main
+  workflow_call:
+
+jobs:
+  compile:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Compile
+        working-directory: ./generators/go
+        run: go build ./...
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run Tests
+        working-directory: ./generators/go
+        run: make test
