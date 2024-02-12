@@ -4,6 +4,11 @@
   "rules": {
     "ts-config": {
       "exclude": ["./src/**/__test__/**/generated"]
+    },
+    "rules": {
+      "duplicate-dependencies": {
+        "exclude": ["@fern-fern/ir-sdk"]
+      }
     }
   }
 }
