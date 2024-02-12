@@ -154,16 +154,17 @@ class EndpointFunctionGenerator:
         parameters: List[AST.NamedFunctionParameter] = []
 
         for query_parameter in endpoint.query_parameters:
-            query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                query_parameter.value_type
-            )
-            parameters.append(
-                AST.NamedFunctionParameter(
-                    name=get_parameter_name(query_parameter.name.name),
-                    docs=query_parameter.docs,
-                    type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
-                ),
-            )
+            if not self._is_type_literal(type_reference=query_parameter.value_type):
+                query_parameter_type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                    query_parameter.value_type
+                )
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(query_parameter.name.name),
+                        docs=query_parameter.docs,
+                        type_hint=self._get_typehint_for_query_param(query_parameter, query_parameter_type_hint),
+                    ),
+                )
 
         if request_body_parameters is not None:
             parameters.extend(request_body_parameters.get_parameters())
@@ -410,15 +411,16 @@ class EndpointFunctionGenerator:
     ) -> List[AST.NamedFunctionParameter]:
         named_parameters: List[AST.NamedFunctionParameter] = []
         for path_parameter in path_parameters:
-            named_parameters.append(
-                AST.NamedFunctionParameter(
-                    name=get_parameter_name(path_parameter.name),
-                    docs=path_parameter.docs,
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        path_parameter.value_type
+            if not self._is_type_literal(path_parameter.value_type):
+                named_parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=get_parameter_name(path_parameter.name),
+                        docs=path_parameter.docs,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            path_parameter.value_type
+                        ),
                     ),
-                ),
-            )
+                )
         return named_parameters
 
     def _get_path_for_endpoint(self, endpoint: ir_types.HttpEndpoint) -> AST.Expression:
@@ -431,7 +433,9 @@ class EndpointFunctionGenerator:
         def write(writer: AST.NodeWriter) -> None:
             writer.write('f"')
             writer.write(head)
-            for part in endpoint.full_path.parts:
+            for i, part in enumerate(endpoint.full_path.parts):
+                parameter_obj = endpoint.all_path_parameters[i]
+                possible_path_part_literal = self._context.get_literal_value(parameter_obj.value_type)
                 writer.write("{")
                 writer.write(
                     get_parameter_name(
@@ -439,7 +443,8 @@ class EndpointFunctionGenerator:
                             endpoint=endpoint,
                             path_parameter_name=part.path_parameter,
                         ).name,
-                    )
+                    ) if possible_path_part_literal is None else
+                    AST.Expression(f'"{possible_path_part_literal}"')
                 )
                 writer.write("}")
                 writer.write(part.tail)
@@ -606,13 +611,17 @@ class EndpointFunctionGenerator:
             AST.Expression(AST.CodeWriter(write_headers_dict)),
         )
 
+    def _get_query_parameter_reference(self, query_parameter: ir_types.QueryParameter) -> AST.Expression:
+        possible_query_literal = self._context.get_literal_value(query_parameter.value_type)
+        return self._get_reference_to_query_parameter(query_parameter) if possible_query_literal is None else AST.Expression(f'"{possible_query_literal}"')
+
     def _get_query_parameters_for_endpoint(
         self,
         *,
         endpoint: ir_types.HttpEndpoint,
     ) -> Optional[AST.Expression]:
         query_parameters = [
-            (query_parameter.name.wire_value, self._get_reference_to_query_parameter(query_parameter))
+            (query_parameter.name.wire_value, self._get_query_parameter_reference(query_parameter))
             for query_parameter in endpoint.query_parameters
         ]
 
@@ -712,6 +721,9 @@ class EndpointFunctionGenerator:
             primitive=lambda primitive: primitive in expected,
             unknown=lambda: False,
         )
+
+    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
+        return self._context.get_literal_value(reference=type_reference) is not None
 
     def _is_header_literal(self, header: ir_types.HttpHeader) -> bool:
         return self._context.get_literal_header_value(header) is not None

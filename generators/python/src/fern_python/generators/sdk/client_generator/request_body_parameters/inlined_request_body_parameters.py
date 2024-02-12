@@ -25,18 +25,22 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
     def get_parameters(self) -> List[AST.NamedFunctionParameter]:
         parameters: List[AST.NamedFunctionParameter] = []
         for property in self._get_all_properties_for_inlined_request_body():
-            type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(property.value_type)
-            parameters.append(
-                AST.NamedFunctionParameter(
-                    name=self._get_property_name(property),
-                    docs=property.docs,
-                    type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
-                        property.value_type
+            if not self._is_type_literal(property.value_type):
+                type_hint = self._context.pydantic_generator_context.get_type_hint_for_type_reference(property.value_type)
+                parameters.append(
+                    AST.NamedFunctionParameter(
+                        name=self._get_property_name(property),
+                        docs=property.docs,
+                        type_hint=self._context.pydantic_generator_context.get_type_hint_for_type_reference(
+                            property.value_type
+                        ),
+                        initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
                     ),
-                    initializer=AST.Expression(DEFAULT_BODY_PARAMETER_VALUE) if type_hint.is_optional else None,
-                ),
-            )
+                )
         return parameters
+
+    def _is_type_literal(self, type_reference: ir_types.TypeReference) -> bool:
+        return self._context.get_literal_value(reference=type_reference) is not None
 
     def _get_all_properties_for_inlined_request_body(self) -> List[ir_types.InlinedRequestBodyProperty]:
         properties = self._request_body.properties.copy()
@@ -68,7 +72,10 @@ class InlinedRequestBodyParameters(AbstractRequestBodyParameters):
             writer.write_line("{")
             with writer.indent():
                 for property in self._get_all_properties_for_inlined_request_body():
-                    writer.write_line(f'"{property.name.wire_value}": {self._get_property_name(property)},')
+                    property_name = self._get_property_name(property)
+                    possible_literal_value = self._context.get_literal_value(property.value_type)
+                    stringified_possible_literal_value = f'"{self._context.get_literal_value(property.value_type)}"'
+                    writer.write_line(f'"{property.name.wire_value}": {property_name if possible_literal_value is None else stringified_possible_literal_value},')
             writer.write_line("}")
 
         return AST.Expression(AST.CodeWriter(write))
