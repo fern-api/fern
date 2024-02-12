@@ -2131,6 +2131,45 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@fern-api/csharp-codegen@workspace:generators/csharp/codegen":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/csharp-codegen@workspace:generators/csharp/codegen"
+  dependencies:
+    "@fern-api/core-utils": "workspace:*"
+    "@fern-api/fs-utils": "workspace:*"
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/csharp-generator-cli@workspace:*, @fern-api/csharp-generator-cli@workspace:generators/csharp/cli":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/csharp-generator-cli@workspace:generators/csharp/cli"
+  dependencies:
+    "@fern-api/fs-utils": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-api/logger": "workspace:*"
+    "@fern-api/logging-execa": "workspace:*"
+    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/ir-sdk": 0.0.3318
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    depcheck: ^1.4.6
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    tmp-promise: ^3.0.3
+    typescript: 4.6.4
+  languageName: unknown
+  linkType: soft
+
 "@fern-api/dependencies-configuration@workspace:*, @fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration":
   version: 0.0.0-use.local
   resolution: "@fern-api/dependencies-configuration@workspace:packages/cli/config-management/dependencies-configuration"
@@ -2287,6 +2326,56 @@ __metadata:
   checksum: 7535be1f84a425bedbbbe7431a60b47256b289fd37fc9c111b727daf18e96f6794e4e0c26ca22775f1987da74ab6708a2935b7eac8eaa5ee7e19dfa64d511c94
   languageName: node
   linkType: hard
+
+"@fern-api/fern-csharp-model@workspace:generators/csharp/model":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fern-csharp-model@workspace:generators/csharp/model"
+  dependencies:
+    "@fern-api/csharp-generator-cli": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/ir-sdk": 0.0.3318
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.22.3
+  bin:
+    fern-csharp-model: ./dist/bundle.cjs
+  languageName: unknown
+  linkType: soft
+
+"@fern-api/fern-csharp-sdk@workspace:generators/csharp/sdk":
+  version: 0.0.0-use.local
+  resolution: "@fern-api/fern-csharp-sdk@workspace:generators/csharp/sdk"
+  dependencies:
+    "@fern-api/csharp-generator-cli": "workspace:*"
+    "@fern-api/generator-commons": "workspace:*"
+    "@fern-fern/generator-exec-sdk": 0.0.571
+    "@fern-fern/ir-sdk": 0.0.3318
+    "@types/jest": ^29.0.3
+    "@types/node": ^18.7.18
+    "@yarnpkg/esbuild-plugin-pnp": ^3.0.0-rc.14
+    depcheck: ^1.4.6
+    env-cmd: toddbluhm/env-cmd
+    esbuild: ^0.15.7
+    eslint: ^8.56.0
+    jest: ^29.7.0
+    organize-imports-cli: ^0.10.0
+    prettier: ^2.7.1
+    typescript: 4.6.4
+    zod: ^3.22.3
+  bin:
+    fern-csharp-sdk: ./dist/bundle.cjs
+  languageName: unknown
+  linkType: soft
 
 "@fern-api/fern-ruby-model@workspace:*, @fern-api/fern-ruby-model@workspace:generators/ruby/model":
   version: 0.0.0-use.local
@@ -3342,6 +3431,13 @@ __metadata:
   version: 0.0.3294
   resolution: "@fern-fern/ir-sdk@npm:0.0.3294"
   checksum: f7efe8a48396243a0fabc0efbbe15217f0aa1e5fa7380e0636c2aab47c2eab1a13c3a79d6ca863ddc928773a18f325985030cfe58c353a6dce828dc06ec8724a
+  languageName: node
+  linkType: hard
+
+"@fern-fern/ir-sdk@npm:0.0.3318":
+  version: 0.0.3318
+  resolution: "@fern-fern/ir-sdk@npm:0.0.3318"
+  checksum: 1dd2cc9ab77e70b19da1b0d70cc9c912ab94f8e72d43f67ff3ebf10ed26e5b37f73894f1c5f48fa13efd0f32deceab3eb1ff20a6fc980467a8ee2e8c54bdb60b
   languageName: node
   linkType: hard
 

@@ -8,6 +8,9 @@
         "dockerTagVersion": "./docker/create_docker.sh"
       }
     },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    },
     "depcheck": {
       "ignores": [
         "webpack-cli",

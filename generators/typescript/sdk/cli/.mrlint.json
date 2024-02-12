@@ -25,6 +25,9 @@
       ],
       "ignore-patterns": ["docker/bundle.js"]
     },
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    },
     "ts-config": {
       "exclude": ["./src/**/__test__/**/generated"]
     }

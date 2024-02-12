@@ -36,7 +36,9 @@ export const V28_TO_V27_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.9.0-2-g6b0be0e",
         [GeneratorName.GO_SDK]: "0.9.0-2-g6b0be0e",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V27.IntermediateRepresentation.jsonOrThrow(ir, {

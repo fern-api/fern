@@ -16,6 +16,8 @@ export const GeneratorName = {
     GO_FIBER: "fernapi/fern-go-fiber",
     RUBY_MODEL: "fernapi/fern-ruby-model",
     RUBY_SDK: "fernapi/fern-ruby-sdk",
+    CSHARP_MODEL: "fernapi/fern-csharp-model",
+    CSHARP_SDK: "fernapi/fern-csharp-sdk",
     OPENAPI: "fernapi/fern-openapi",
     STOPLIGHT: "fernapi/fern-stoplight",
     POSTMAN: "fernapi/fern-postman",

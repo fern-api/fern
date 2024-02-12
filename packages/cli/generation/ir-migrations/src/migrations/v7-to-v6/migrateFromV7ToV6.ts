@@ -34,7 +34,9 @@ export const V7_TO_V6_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: GeneratorWasNotCreatedYet,
         [GeneratorName.GO_SDK]: GeneratorWasNotCreatedYet,
         [GeneratorName.RUBY_MODEL]: GeneratorWasNotCreatedYet,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet
+        [GeneratorName.RUBY_SDK]: GeneratorWasNotCreatedYet,
+        [GeneratorName.CSHARP_MODEL]: GeneratorWasNotCreatedYet,
+        [GeneratorName.CSHARP_SDK]: GeneratorWasNotCreatedYet
     },
     jsonifyEarlierVersion: (ir) => ir,
     migrateBackwards: (v7): IrVersions.V6.ir.IntermediateRepresentation => {

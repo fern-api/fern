@@ -31,7 +31,9 @@ export const V33_TO_V32_MIGRATION: IrMigration<
         [GeneratorName.GO_MODEL]: "0.13.0-3-g8c56a41",
         [GeneratorName.GO_SDK]: "0.13.0-3-g8c56a41",
         [GeneratorName.RUBY_MODEL]: GeneratorWasNeverUpdatedToConsumeNewIR,
-        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR
+        [GeneratorName.RUBY_SDK]: GeneratorWasNeverUpdatedToConsumeNewIR,
+        [GeneratorName.CSHARP_MODEL]: "0.0.0",
+        [GeneratorName.CSHARP_SDK]: "0.0.0"
     },
     jsonifyEarlierVersion: (ir) =>
         IrSerialization.V32.IntermediateRepresentation.jsonOrThrow(ir, {

@@ -1,5 +1,10 @@
 {
   "type": "library",
   "commonJs": true,
-  "private": false
+  "private": false,
+  "rules": {
+    "duplicate-dependencies": {
+      "exclude": ["@fern-fern/ir-sdk"]
+    }
+  }
 }
