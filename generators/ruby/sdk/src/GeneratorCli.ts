@@ -71,7 +71,8 @@ export class RubySdkGeneratorCli extends AbstractGeneratorCli<RubySdkCustomConfi
                 sdkVersion,
                 config.license,
                 hasFileUploadEndpoints(intermediateRepresentation) ||
-                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints
+                    intermediateRepresentation.sdkConfig.hasFileDownloadEndpoints,
+                true
             )
         );
         boilerPlateFiles.push(generateGemConfig(clientName, repoUrl));

@@ -15,6 +15,7 @@ export declare namespace Gemspec {
         dependencies: ExternalDependency[];
         sdkVersion: string | undefined;
         hasFileBasedDependencies?: boolean;
+        hasEndpoints?: boolean;
         license?: { licenseFilePath: string; licenseType?: string };
     }
 }
@@ -25,18 +26,45 @@ export class Gemspec extends FunctionInvocation {
         dependencies,
         sdkVersion,
         license,
-        hasFileBasedDependencies = false
+        hasFileBasedDependencies = false,
+        hasEndpoints = false
     }: Gemspec.Init) {
-        const globalDependencies: ExternalDependency[] = [
-            new ExternalDependency({ packageName: "faraday", specifier: "~>", version: "2.7" }),
-            new ExternalDependency({ packageName: "faraday-retry", specifier: "~>", version: "2.2" }),
-            new ExternalDependency({ packageName: "async-http-faraday", specifier: "~>", version: "0.12" })
-        ];
+        const globalDependencies: ExternalDependency[] = [];
+        if (hasEndpoints) {
+            globalDependencies.push(
+                ...[
+                    new ExternalDependency({
+                        packageName: "faraday",
+                        lowerBound: { specifier: ">=", version: "1.10" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-net_http",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "4.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "faraday-retry",
+                        lowerBound: { specifier: ">=", version: "1.0" },
+                        upperBound: { specifier: "<", version: "3.0" }
+                    }),
+                    new ExternalDependency({
+                        packageName: "async-http-faraday",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "1.0" }
+                    })
+                ]
+            );
+        }
         if (hasFileBasedDependencies) {
             globalDependencies.push(
                 ...[
-                    new ExternalDependency({ packageName: "mini_mime", specifier: "~>", version: "1.1" }),
-                    new ExternalDependency({ packageName: "faraday-multipart", specifier: "~>", version: "1.0" })
+                    new ExternalDependency({ packageName: "mini_mime" }),
+                    new ExternalDependency({
+                        packageName: "faraday-multipart",
+                        lowerBound: { specifier: ">=", version: "0.0" },
+                        upperBound: { specifier: "<", version: "2.0" }
+                    })
                 ]
             );
         }
