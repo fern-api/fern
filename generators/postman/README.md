@@ -46,7 +46,7 @@ By default, Fern runs the generators in the cloud. To run a generator on your lo
 
 ## Versions
 
-Find the latest version number and changelog for this generator in [this SDK Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#sdk-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
+Find the latest version number and changelog for this generator in [this Spec Generators table](https://github.com/fern-api/fern?tab=readme-ov-file#spec-generators). The changelog shows earlier version numbers, if any. You can directly use these version numbers in your generator configuration files.
 
 For instance, if you want to use version `0.0.44` of the Postman generator:
 
