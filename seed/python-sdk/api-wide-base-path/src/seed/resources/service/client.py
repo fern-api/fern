@@ -38,7 +38,9 @@ class ServiceClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"test/{path_param}/{service_param}/{endpoint_param}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
             if request_options is not None
             else None,
@@ -90,7 +92,9 @@ class AsyncServiceClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"test/{path_param}/{service_param}/{endpoint_param}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
             if request_options is not None
             else None,

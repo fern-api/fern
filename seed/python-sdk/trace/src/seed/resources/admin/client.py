@@ -48,7 +48,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -95,7 +97,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -142,7 +146,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -189,7 +195,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -243,7 +251,9 @@ class AdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -294,7 +304,9 @@ class AdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -344,7 +356,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -391,7 +405,9 @@ class AdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -443,7 +459,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -490,7 +508,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-test-submission-status-v2/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -537,7 +557,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -584,7 +606,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-submission-status-v2/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -638,7 +662,9 @@ class AsyncAdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace/submission/{submission_id}/testCase/{test_case_id}",
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"result": result, "traceResponses": trace_responses})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -689,7 +715,9 @@ class AsyncAdminClient:
                 f"{self._client_wrapper.get_base_url()}/",
                 f"admin/store-test-trace-v2/submission/{submission_id}/testCase/{test_case_id}",
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -739,7 +767,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace/submission/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"workspaceRunDetails": workspace_run_details, "traceResponses": trace_responses})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -786,7 +816,9 @@ class AsyncAdminClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"admin/store-workspace-trace-v2/submission/{submission_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {

@@ -22,7 +22,9 @@ class CClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
             if request_options is not None
             else None,
@@ -59,7 +61,9 @@ class AsyncCClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
             if request_options is not None
             else None,

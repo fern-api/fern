@@ -40,7 +40,9 @@ class LiteralClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"values": values})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -79,7 +81,9 @@ class LiteralClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"dryRun": dry_run})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -118,7 +122,9 @@ class LiteralClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"dryRun": dry_run})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -162,7 +168,9 @@ class AsyncLiteralClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"values": values})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -201,7 +209,9 @@ class AsyncLiteralClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"dryRun": dry_run})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -240,7 +250,9 @@ class AsyncLiteralClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "options"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder({"dryRun": dry_run})
             if request_options is None or request_options.additional_body_parameters is None
             else {

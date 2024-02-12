@@ -35,7 +35,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -67,7 +69,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -99,7 +103,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -138,7 +144,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -170,7 +178,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -204,7 +214,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -243,7 +255,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -282,7 +296,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -319,7 +335,9 @@ class PrimitiveClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -363,7 +381,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/string"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -395,7 +415,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/integer"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -429,7 +451,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/long"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -468,7 +492,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/double"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -502,7 +528,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/boolean"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -536,7 +564,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/datetime"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -575,7 +605,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/date"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -614,7 +646,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/uuid"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -653,7 +687,9 @@ class AsyncPrimitiveClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "primitive/base64"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {

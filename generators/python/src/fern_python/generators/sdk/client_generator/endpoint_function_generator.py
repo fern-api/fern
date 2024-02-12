@@ -74,7 +74,9 @@ class EndpointFunctionGenerator:
         is_primitive: bool = (
             self._endpoint.request_body.visit(
                 inlined_request_body=lambda _: False,
-                reference=lambda referenced_request_body: self._is_httpx_primitive_data(type_reference=referenced_request_body.request_body_type, allow_optional=True),
+                reference=lambda referenced_request_body: self._is_httpx_primitive_data(
+                    type_reference=referenced_request_body.request_body_type, allow_optional=True
+                ),
                 file_upload=lambda _: False,
                 bytes=lambda _: False,
             )
@@ -150,7 +152,7 @@ class EndpointFunctionGenerator:
                 idempotency_headers=self._idempotency_headers,
                 request_body_parameters=request_body_parameters,
                 is_async=self._is_async,
-                is_primitive=is_primitive
+                is_primitive=is_primitive,
             ),
         )
         return GeneratedEndpointFunction(
@@ -259,17 +261,23 @@ class EndpointFunctionGenerator:
                     if encoded_json_request_body:
                         writer.write_node(encoded_json_request_body)
                 else:
-                    # If there's an existing request body: 
+                    # If there's an existing request body:
                     #   - Use it if the additional body params are none (e.g. request options has no impact)
                     #   - If additional body params is not none, json encode it and spread both dicts into a new one
-                    #      - NOTE: With the is_primitive bail out, we do not acknowledge the additional body parameters, 
+                    #      - NOTE: With the is_primitive bail out, we do not acknowledge the additional body parameters,
                     #        to not have to merge together an integer and a hash, for example
                     # If there is not an existing request body, send the encoded dict
-                    additional_parameters = f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_body_parameters"
-                    json_encoded_additional_params = self._context.core_utilities.jsonable_encoder(self._context.core_utilities.remove_none_from_dict(AST.Expression(additional_parameters)))
+                    additional_parameters = (
+                        f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_body_parameters"
+                    )
+                    json_encoded_additional_params = self._context.core_utilities.jsonable_encoder(
+                        self._context.core_utilities.remove_none_from_dict(AST.Expression(additional_parameters))
+                    )
                     if encoded_json_request_body:
                         writer.write_node(encoded_json_request_body)
-                        writer.write(f" if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is None or {additional_parameters} is None else")
+                        writer.write(
+                            f" if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is None or {additional_parameters} is None else"
+                        )
                         writer.write(" {**")
                         writer.write_node(encoded_json_request_body)
                         writer.write(", **(")
@@ -701,7 +709,7 @@ class EndpointFunctionGenerator:
         if len(query_parameters) == 0:
             return self._context.core_utilities.jsonable_encoder(
                 AST.Expression(
-                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else {'{}'}"
+                    f"{EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE}.additional_query_parameters if {EndpointFunctionGenerator.REQUEST_OPTIONS_VARIABLE} is not None else None"
                 )
             )
 

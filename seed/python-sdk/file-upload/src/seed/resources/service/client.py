@@ -75,7 +75,9 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             data=jsonable_encoder(
                 {
                     "maybeString": maybe_string,
@@ -143,7 +145,9 @@ class ServiceClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             data=jsonable_encoder({})
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -299,7 +303,9 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             data=jsonable_encoder(
                 {
                     "maybeString": maybe_string,
@@ -367,7 +373,9 @@ class AsyncServiceClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "just-file"),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             data=jsonable_encoder({})
             if request_options is None or request_options.additional_body_parameters is None
             else {

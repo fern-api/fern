@@ -177,7 +177,9 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -230,7 +232,9 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -280,7 +284,9 @@ class PlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -451,7 +457,9 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -504,7 +512,9 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             json=jsonable_encoder(request)
             if request_options is None or request_options.additional_body_parameters is None
             else {
@@ -554,7 +564,9 @@ class AsyncPlaylistClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", f"v2/playlist/{service_param}/{playlist_id}"
             ),
-            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            params=jsonable_encoder(
+                request_options.additional_query_parameters if request_options is not None else None
+            ),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
