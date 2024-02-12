@@ -39,7 +39,7 @@ This generator is used via the [Fern CLI](https://github.com/fern-api/fern) by d
   version: 0.0.44
   output:
     location: local-file-system
-    path: ../../generated/postman
+    path: ../generated/postman
 ```
 
 By default, Fern runs the generators in the cloud. To run a generator on your local machine, use the `--local` flag for `fern generate`. This will run the generator locally in a Docker container, allowing you to inspect its logs and output. [Read more.](https://buildwithfern.com/docs/compiler/cli-reference#running-locally)
@@ -59,15 +59,7 @@ groups:
         version: 0.0.44
         output:
           location: local-file-system
-          path: ../../generated/postman
+          path: ../generated/postman
 ```
 
 Fern will handle the rest automatically.
-
-## Contributing
-
-We greatly value community contributions. All the work on Fern generators happens right here on GitHub, both Fern developers and community contributors work together through submitting code via Pull Requests. See the contribution guidelines in [CONTRIBUTING](./CONTRIBUTING.md) on how you can contribute to Fern!
-
-<a href="https://github.com/fern-api/fern-postman/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=fern-api/fern-postman" />
-</a>
