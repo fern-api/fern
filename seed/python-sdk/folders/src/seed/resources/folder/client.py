@@ -24,10 +24,10 @@ class FolderClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json=request_options.additional_headers if request_options is not None else None,
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -62,10 +62,10 @@ class AsyncFolderClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json=request_options.additional_headers if request_options is not None else None,
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

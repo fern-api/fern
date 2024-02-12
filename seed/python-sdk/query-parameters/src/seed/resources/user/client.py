@@ -67,7 +67,7 @@ class UserClient:
                         "bytes": jsonable_encoder(bytes),
                         "optionalString": optional_string,
                         "filter": filter,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -139,7 +139,7 @@ class AsyncUserClient:
                         "bytes": jsonable_encoder(bytes),
                         "optionalString": optional_string,
                         "filter": filter,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),

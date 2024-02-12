@@ -38,11 +38,13 @@ class QueryParamClient:
                 remove_none_from_dict(
                     {
                         "value": value,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json=request_options.additional_headers if request_options is not None else None,
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -82,11 +84,13 @@ class QueryParamClient:
                 remove_none_from_dict(
                     {
                         "value": value,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json=request_options.additional_headers if request_options is not None else None,
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -134,11 +138,13 @@ class AsyncQueryParamClient:
                 remove_none_from_dict(
                     {
                         "value": value,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json=request_options.additional_headers if request_options is not None else None,
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -178,11 +184,13 @@ class AsyncQueryParamClient:
                 remove_none_from_dict(
                     {
                         "value": value,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json=request_options.additional_headers if request_options is not None else None,
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

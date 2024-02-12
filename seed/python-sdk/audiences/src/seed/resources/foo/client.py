@@ -54,13 +54,15 @@ class FooClient:
                 remove_none_from_dict(
                     {
                         "optionalString": optional_string,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json={
-                **{jsonable_encoder(_request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -117,13 +119,15 @@ class AsyncFooClient:
                 remove_none_from_dict(
                     {
                         "optionalString": optional_string,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
-            json={
-                **{jsonable_encoder(_request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            json=jsonable_encoder(_request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(_request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(

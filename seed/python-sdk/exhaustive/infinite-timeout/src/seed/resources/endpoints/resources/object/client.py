@@ -42,12 +42,12 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -83,12 +83,12 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -122,12 +122,12 @@ class ObjectClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -163,12 +163,12 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -204,12 +204,12 @@ class ObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -250,12 +250,12 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -291,12 +291,12 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -330,12 +330,12 @@ class AsyncObjectClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-with-map-of-map"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -371,12 +371,12 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-optional-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -412,12 +412,12 @@ class AsyncObjectClient:
             urllib.parse.urljoin(
                 f"{self._client_wrapper.get_base_url()}/", "object/get-and-return-nested-with-required-field"
             ),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(

@@ -35,9 +35,7 @@ class HttpMethodsClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -70,12 +68,12 @@ class HttpMethodsClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "http-methods"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -111,12 +109,12 @@ class HttpMethodsClient:
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -152,12 +150,12 @@ class HttpMethodsClient:
         _response = self._client_wrapper.httpx_client.request(
             "PATCH",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -189,9 +187,7 @@ class HttpMethodsClient:
         _response = self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -227,9 +223,7 @@ class AsyncHttpMethodsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -262,12 +256,12 @@ class AsyncHttpMethodsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "http-methods"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -303,12 +297,12 @@ class AsyncHttpMethodsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -344,12 +338,12 @@ class AsyncHttpMethodsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "PATCH",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request)
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder(request),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -381,9 +375,7 @@ class AsyncHttpMethodsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "DELETE",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"http-methods/{id}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

@@ -26,9 +26,7 @@ class V2Client:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -64,9 +62,7 @@ class AsyncV2Client:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             self._client_wrapper.get_base_url(),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

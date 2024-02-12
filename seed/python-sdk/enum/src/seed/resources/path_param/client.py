@@ -32,10 +32,10 @@ class PathParamClient:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path-param/{value}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json=request_options.additional_headers if request_options is not None else None,
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -77,10 +77,10 @@ class AsyncPathParamClient:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"path-param/{value}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json=request_options.additional_headers if request_options is not None else None,
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))
+            if request_options is not None
+            else None,
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

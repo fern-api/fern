@@ -37,12 +37,12 @@ class DummyClient:
         with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder({"num_events": num_events})},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder({"num_events": num_events})
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder({"num_events": num_events}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -86,12 +86,12 @@ class AsyncDummyClient:
         async with self._client_wrapper.httpx_client.stream(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", "generate-stream"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder({"num_events": num_events})},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder({"num_events": num_events})
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder({"num_events": num_events}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(

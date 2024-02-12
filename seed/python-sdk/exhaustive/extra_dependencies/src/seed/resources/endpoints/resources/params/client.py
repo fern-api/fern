@@ -35,9 +35,7 @@ class ParamsClient:
         _response = self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -79,7 +77,7 @@ class ParamsClient:
                     {
                         "query": query,
                         "number": number,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -128,7 +126,7 @@ class ParamsClient:
                     {
                         "query": query,
                         "numer": numer,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -172,7 +170,7 @@ class ParamsClient:
                 remove_none_from_dict(
                     {
                         "query": query,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -212,13 +210,8 @@ class ParamsClient:
         _response = self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
-            },
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -256,9 +249,7 @@ class AsyncParamsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "GET",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {
@@ -300,7 +291,7 @@ class AsyncParamsClient:
                     {
                         "query": query,
                         "number": number,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -349,7 +340,7 @@ class AsyncParamsClient:
                     {
                         "query": query,
                         "numer": numer,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -393,7 +384,7 @@ class AsyncParamsClient:
                 remove_none_from_dict(
                     {
                         "query": query,
-                        **(request_options.additional_query_parameters if request_options is not None else None),
+                        **(request_options.additional_query_parameters if request_options is not None else {}),
                     }
                 )
             ),
@@ -433,13 +424,8 @@ class AsyncParamsClient:
         _response = await self._client_wrapper.httpx_client.request(
             "PUT",
             urllib.parse.urljoin(f"{self._client_wrapper.get_base_url()}/", f"params/path/{param}"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder(request)},
-                **(request_options.additional_headers if request_options is not None else {}),
-            },
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder(request),
             headers=jsonable_encoder(
                 remove_none_from_dict(
                     {

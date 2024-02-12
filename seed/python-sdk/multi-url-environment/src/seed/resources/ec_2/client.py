@@ -28,12 +28,12 @@ class Ec2Client:
         _response = self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder({"size": size})},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder({"size": size})
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder({"size": size}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
@@ -70,12 +70,12 @@ class AsyncEc2Client:
         _response = await self._client_wrapper.httpx_client.request(
             "POST",
             urllib.parse.urljoin(f"{self._client_wrapper.get_environment().ec_2}/", "ec2/boot"),
-            params=jsonable_encoder(
-                request_options.additional_query_parameters if request_options is not None else None
-            ),
-            json={
-                **{jsonable_encoder({"size": size})},
-                **(request_options.additional_headers if request_options is not None else {}),
+            params=jsonable_encoder(request_options.additional_query_parameters if request_options is not None else {}),
+            json=jsonable_encoder({"size": size})
+            if request_options is None or request_options.additional_body_parameters is None
+            else {
+                **jsonable_encoder({"size": size}),
+                **(jsonable_encoder(remove_none_from_dict(request_options.additional_body_parameters))),
             },
             headers=jsonable_encoder(
                 remove_none_from_dict(
